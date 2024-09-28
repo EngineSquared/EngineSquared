@@ -1,0 +1,61 @@
+name: mirror
+
+on:
+  push:
+    branches-ignore:
+     - 'ga-ignore-**'
+  pull_request:
+    branches-ignore:
+     - 'ga-ignore-**'
+
+env:
+  MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
+  EXECUTABLES: ""
+
+jobs:
+  check_repository_cleanliness:
+    name: Checks if the repository is clean and void of any unwanted files (temp files, binary files, etc.)
+    runs-on: ubuntu-latest
+    env:
+      UNWANTED_REGEX: ^(?!.*tests\/).*gc(no|da|ov)$|(.*\.(a|o|so))$|(.*~)$|^(#.*#)$|^tmp\/.*|.*\/tmp\/.*
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Find temp files in all directories
+        run: |
+          UNWANTED_FILES=$(find . -type f -printf '%P\n' | { grep -P "${{ env.UNWANTED_REGEX }}" || true; })
+          if [ "$UNWANTED_FILES" != "" ]; then
+              IFS=$'\n'$'\r'
+              for LINE in $UNWANTED_FILES; do
+                  echo "::error file=${LINE},line=1,col=1,title=Unwanted file detected::${LINE}"
+              done
+              echo "FAIL_TASK=true" >> "$GITHUB_ENV"
+          else
+              echo "FAIL_TASK=false" >> "$GITHUB_ENV"
+          fi
+
+      - name: Fail if needed
+        if: env.FAIL_TASK == 'true'
+        run: exit 1
+
+  push_to_mirror:
+    name: Pushes the current repository files to a given mirror repository
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    needs: [check_repository_cleanliness]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Push mirror repository
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            ${{ env.MIRROR_URL }}
+          ssh_private_key:
+            ${{ secrets.GIT_SSH_PRIVATE_KEY }}
