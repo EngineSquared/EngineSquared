@@ -10,7 +10,6 @@ on:
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
-  EXECUTABLES: ""
 
 jobs:
   check_repository_cleanliness:
