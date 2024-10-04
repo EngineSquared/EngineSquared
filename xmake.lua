@@ -2,7 +2,7 @@ add_rules("mode.debug", "mode.release")
 add_requires("entt")
 
 target("EngineSquared")
-    set_kind("binary")
+    set_kind("static")
     add_files("src/*.cpp")
     add_files("src/**/*.cpp")
     set_policy("build.warning", true)

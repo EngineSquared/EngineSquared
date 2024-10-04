@@ -1,7 +1,6 @@
 #include <iostream>
 
-auto main(int ac, char **av) -> int
+void hw(void)
 {
 	std::cout << "Hello World!" << std::endl;
-	return (0);
 }
