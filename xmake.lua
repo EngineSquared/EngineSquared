@@ -1,7 +1,7 @@
 add_rules("mode.debug", "mode.release")
 add_requires("entt")
 
-target("test-Engine")
+target("EngineSquared")
     set_kind("binary")
     add_files("src/*.cpp")
     add_files("src/**/*.cpp")
