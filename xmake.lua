@@ -11,7 +11,6 @@ target("EngineSquared")
     add_includedirs("src")
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")
-    set_languages("cxx20")
 
     if is_mode("debug") then
         add_defines("DEBUG")
