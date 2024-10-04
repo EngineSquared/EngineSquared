@@ -39,3 +39,4 @@ build
 .vscode
 CppProperties.json
 .vs
+vsxmake2022
