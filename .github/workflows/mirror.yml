@@ -7,6 +7,7 @@ on:
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
+  BINARY_NAME: "EngineSquared"
 
 jobs:
   check_repository_cleanliness:
@@ -32,6 +33,39 @@ jobs:
           else
               echo "FAIL_TASK=false" >> "$GITHUB_ENV"
           fi
+
+      - name: Fail if needed
+        if: env.FAIL_TASK == 'true'
+        run: exit 1
+
+  check_program_compilation:
+    name: Checks if the libary compiles correctly and binary files got created
+    runs-on: ubuntu-latest
+    needs: [check_repository_cleanliness]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - run: xmake build
+        timeout-minutes: 2
+
+      - name: Verifies that files are present and executable
+        run: |
+          echo "FAIL_TASK=false" >> "$GITHUB_ENV"
+          SEARCH_BINARIES="${{ env.EXECUTABLES }}"
+          IFS=$','
+          for BIN in $SEARCH_BINARIES; do
+            if [ ! -f "${BIN}" ]; then
+              echo "::error file=${BIN},title=Binary not found::${BIN}"
+              echo "FAIL_TASK=true" >> "$GITHUB_ENV"
+            fi
+            if [ ! -x "${BIN}" ]; then
+              echo "::error file=${BIN},title=Binary not executable::${BIN}"
+              echo "FAIL_TASK=true" >> "$GITHUB_ENV"
+            fi
+          done
 
       - name: Fail if needed
         if: env.FAIL_TASK == 'true'
