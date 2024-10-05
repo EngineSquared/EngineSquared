@@ -9,6 +9,10 @@ target("EngineSquared")
     add_files("src/*.cpp")
     add_files("src/**/*.cpp")
     add_includedirs("src")
+    add_includedirs("src/engine", { public = true })
+    add_includedirs("src/engine/entity", { public = true })
+    add_includedirs("src/engine/registry", { public = true })
+    
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")
 
