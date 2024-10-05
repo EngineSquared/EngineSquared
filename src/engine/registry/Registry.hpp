@@ -18,6 +18,11 @@ namespace ES::Engine
         inline entt::registry& GetRegistry() { return *_registry; }
         entt::entity CreateEntity();
 
+        template <typename TResource>
+        inline TResource& RegisterResource(TResource resource);
+        template <typename TResource>
+        inline TResource& GetResource();
+
         void RegisterSystem(USystem const& f);
         void RunSystems();
 
@@ -26,3 +31,5 @@ namespace ES::Engine
         std::vector<USystem> _systems;
     };
 } // namespace ES::Engine
+
+#include "Registry.inl"
