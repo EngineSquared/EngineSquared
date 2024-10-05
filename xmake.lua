@@ -16,7 +16,7 @@ target("EngineSquared")
         add_defines("DEBUG")
     end
 
-for _, file in ipairs(os.files("tests/*.cpp")) do
+for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
     if name == "main" then
         goto continue
