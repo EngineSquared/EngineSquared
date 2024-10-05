@@ -117,7 +117,7 @@ jobs:
           curl -fsSL https://xmake.io/shget.text | bash
 
       - name: Starts tests
-        run: xmake test
+        run: xmake test -y
         timeout-minutes: 2
 
   push_to_mirror:
