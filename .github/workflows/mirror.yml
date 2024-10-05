@@ -90,7 +90,7 @@ jobs:
         run: exit 1
 
   run_tests:
-    name: Run the program tests (using rule make tests_run)
+    name: Run the program tests
     runs-on: ubuntu-latest
     needs: [check_repository_cleanliness]
     steps:
