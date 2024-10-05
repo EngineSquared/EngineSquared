@@ -7,7 +7,6 @@ on:
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
-  BINARY_NAMES: "EngineSquared.a"
 
 jobs:
   check_repository_cleanliness:
@@ -42,6 +41,8 @@ jobs:
     name: Checks if the library compiles correctly and binary files got created
     runs-on: ubuntu-latest
     needs: [check_repository_cleanliness]
+    env:
+      BINARY_NAMES: "./build/linux/x86_64/release/libEngineSquared.a"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
