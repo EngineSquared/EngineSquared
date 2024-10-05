@@ -53,6 +53,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libvulkan-dev
 
+      - uses: actions/cache@v3
+        name: Store XMake repositories in cache
+        with:
+          path: ~/.xmake
+          key: ${{ runner.os }}-xmake-entt-vulkan-glm
+          restore-keys: |
+            ${{ runner.os }}-xmake-entt-vulkan-glm
+
       - name: Install xmake
         run: |
           curl -fsSL https://xmake.io/shget.text | bash
