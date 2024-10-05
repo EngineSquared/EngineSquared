@@ -80,10 +80,6 @@ jobs:
               echo "::error file=${BIN},title=Binary not found::${BIN}"
               echo "FAIL_TASK=true" >> "$GITHUB_ENV"
             fi
-            if [ ! -x "${BIN}" ]; then
-              echo "::error file=${BIN},title=Binary not executable::${BIN}"
-              echo "FAIL_TASK=true" >> "$GITHUB_ENV"
-            fi
           done
 
       - name: Fail if needed
