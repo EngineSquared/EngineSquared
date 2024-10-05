@@ -48,7 +48,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: xmake build
+      - name: Install xmake
+        run: |
+          curl -fsSL https://xmake.io/shget.text | bash
+
+      - name: (Try to) build the project
+        run: xmake build
         timeout-minutes: 2
 
       - name: Verifies that files are present and executable
