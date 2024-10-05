@@ -39,7 +39,7 @@ jobs:
         run: exit 1
 
   check_program_compilation:
-    name: Checks if the libary compiles correctly and binary files got created
+    name: Checks if the library compiles correctly and binary files got created
     runs-on: ubuntu-latest
     needs: [check_repository_cleanliness]
     steps:
