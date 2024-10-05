@@ -30,6 +30,7 @@ for _, file in ipairs(os.files("tests/*.cpp")) do
         add_packages("entt", "vulkansdk", "glfw", "glm", "gtest")
         add_links("gtest")
         add_deps("EngineSquared")
+        add_includedirs("src")
         add_tests("default")
         if is_mode("debug") then
             add_defines("DEBUG")
