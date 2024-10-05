@@ -4,9 +4,6 @@ on:
   push:
     branches-ignore:
      - 'ga-ignore-**'
-  pull_request:
-    branches-ignore:
-     - 'ga-ignore-**'
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
