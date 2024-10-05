@@ -7,7 +7,7 @@ on:
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
-  BINARY_NAME: "EngineSquared"
+  BINARY_NAMES: "EngineSquared.a"
 
 jobs:
   check_repository_cleanliness:
@@ -72,7 +72,7 @@ jobs:
       - name: Verifies that files are present and executable
         run: |
           echo "FAIL_TASK=false" >> "$GITHUB_ENV"
-          SEARCH_BINARIES="${{ env.EXECUTABLES }}"
+          SEARCH_BINARIES="${{ env.BINARY_NAMES }}"
           IFS=$','
           for BIN in $SEARCH_BINARIES; do
             if [ ! -f "${BIN}" ]; then
