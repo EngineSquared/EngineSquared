@@ -89,11 +89,43 @@ jobs:
         if: env.FAIL_TASK == 'true'
         run: exit 1
 
+  run_tests:
+    name: Run the program tests (using rule make tests_run)
+    runs-on: ubuntu-latest
+    needs: [check_repository_cleanliness]
+    container: epitechcontent/epitest-docker:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Vulkan SDK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvulkan-dev
+
+      - uses: actions/cache@v3
+        name: Store XMake repositories in cache
+        with:
+          path: ~/.xmake
+          key: ${{ runner.os }}-xmake-entt-vulkan-glm
+          restore-keys: |
+            ${{ runner.os }}-xmake-entt-vulkan-glm
+
+      - name: Install xmake
+        run: |
+          curl -fsSL https://xmake.io/shget.text | bash
+
+      - name: Starts tests
+        run: xmake test
+        timeout-minutes: 2
+
   push_to_mirror:
     name: Pushes the current repository files to a given mirror repository
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
-    needs: [check_program_compilation]
+    needs: [check_program_compilation, run_tests]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
