@@ -53,7 +53,7 @@ jobs:
           curl -fsSL https://xmake.io/shget.text | bash
 
       - name: (Try to) build the project
-        run: xmake build
+        run: xmake build -y
         timeout-minutes: 2
 
       - name: Verifies that files are present and executable
