@@ -75,7 +75,7 @@ jobs:
     name: Pushes the current repository files to a given mirror repository
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
-    needs: [check_repository_cleanliness]
+    needs: [check_program_compilation]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
