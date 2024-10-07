@@ -7,18 +7,20 @@ namespace ES::Engine
 {
     class Entity {
     public:
-        Entity(int64_t entity = -1)
+        using entity_id_type = uint32_t;
+    public:
+        Entity(entity_id_type entity = -1)
             : _entity(entity)
         { }
 
         Entity(entt::entity entity)
-            : _entity(static_cast<int64_t>(entity)) // TODO: check if this is safe
+            : _entity(static_cast<entity_id_type>(entity)) // TODO: check if this is safe
         { }
 
 
         // TODO: maybe add implementation in a separate file
         operator entt::entity() const { return static_cast<entt::entity>(_entity); }
-        operator int64_t() const { return _entity; }
+        operator entity_id_type() const { return _entity; }
 
         template <typename TComponent>
         TComponent& AddComponent(Registry& registry, TComponent&& component)
@@ -42,6 +44,6 @@ namespace ES::Engine
         ~Entity() = default;
     private:
         // TODO: add a way to check if entity is valid or not (without using neg values for invalid entities)
-        int64_t _entity;
+        entity_id_type _entity;
     };
 } // namespace ES::Engine
