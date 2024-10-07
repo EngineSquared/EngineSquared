@@ -7,4 +7,3 @@ Makefile
 vs*/*
 vsxmake*/*
 build
-docs/*
