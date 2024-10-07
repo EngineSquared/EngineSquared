@@ -1,0 +1,51 @@
+name: Doxygen GitHub Pages Deploy Action
+
+on:
+  push:
+    branches:
+      - main
+      - test-ci
+
+jobs:
+  doxygen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "guillaume.papineau@epitech.eu"
+          git config --global user.name "MasterLaplace"
+
+      - name: Install Doxygen
+        run: |
+          sudo apt-get update
+          sudo apt-get install doxygen
+
+      - name: Generate Doxygen Documentation
+        run: |
+          mkdir -p docs
+          doxygen Doxyfile.cfg
+
+      - name: Create gh-pages branch
+        run: |
+          if [ "$(git branch --list gh-pages)" ]; then
+            git branch -D gh-pages
+          fi
+          git checkout -B gh-pages
+
+      - name: Copy documentation to gh-pages branch
+        run: |
+          cp -r docs/EngineSquared/html/* docs/
+          rm -rf docs/EngineSquared
+
+      - name: Push documentation to gh-pages branch
+        run: |
+          git add .
+          git commit -m "deploy: Deploying documentation to GitHub Pages"
+          git push origin gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
