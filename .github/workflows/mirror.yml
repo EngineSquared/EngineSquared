@@ -4,9 +4,6 @@ on:
   push:
     branches-ignore:
      - 'ga-ignore-**'
-  pull_request:
-    branches-ignore:
-     - 'ga-ignore-**'
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
@@ -40,11 +37,91 @@ jobs:
         if: env.FAIL_TASK == 'true'
         run: exit 1
 
+  check_program_compilation:
+    name: Checks if the library compiles correctly and binary files got created
+    runs-on: ubuntu-latest
+    needs: [check_repository_cleanliness]
+    env:
+      BINARY_NAMES: "./build/linux/x86_64/release/libEngineSquared.a"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Vulkan SDK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvulkan-dev
+
+      - uses: actions/cache@v3
+        name: Store XMake repositories in cache
+        with:
+          path: ~/.xmake
+          key: ${{ runner.os }}-xmake-entt-vulkan-glm
+          restore-keys: |
+            ${{ runner.os }}-xmake-entt-vulkan-glm
+
+      - name: Install xmake
+        run: |
+          curl -fsSL https://xmake.io/shget.text | bash
+
+      - name: (Try to) build the project
+        run: xmake build -y
+        timeout-minutes: 2
+
+      - name: Verifies that files are present and executable
+        run: |
+          echo "FAIL_TASK=false" >> "$GITHUB_ENV"
+          SEARCH_BINARIES="${{ env.BINARY_NAMES }}"
+          IFS=$','
+          for BIN in $SEARCH_BINARIES; do
+            if [ ! -f "${BIN}" ]; then
+              echo "::error file=${BIN},title=Binary not found::${BIN}"
+              echo "FAIL_TASK=true" >> "$GITHUB_ENV"
+            fi
+          done
+
+      - name: Fail if needed
+        if: env.FAIL_TASK == 'true'
+        run: exit 1
+
+  run_tests:
+    name: Run the program tests
+    runs-on: ubuntu-latest
+    needs: [check_repository_cleanliness]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Vulkan SDK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvulkan-dev
+
+      - uses: actions/cache@v3
+        name: Store XMake repositories in cache
+        with:
+          path: ~/.xmake
+          key: ${{ runner.os }}-xmake-entt-vulkan-glm
+          restore-keys: |
+            ${{ runner.os }}-xmake-entt-vulkan-glm
+
+      - name: Install xmake
+        run: |
+          curl -fsSL https://xmake.io/shget.text | bash
+
+      - name: Starts tests
+        run: xmake test -y
+        timeout-minutes: 2
+
   push_to_mirror:
     name: Pushes the current repository files to a given mirror repository
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
-    needs: [check_repository_cleanliness]
+    needs: [check_program_compilation, run_tests]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
