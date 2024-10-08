@@ -39,16 +39,15 @@ TEST(Registry, Resources) {
 		int x;
 	};
 
-	Res res;
-	res.x = 42;
+	reg.RegisterResource<Res>((Res)42);
 
 	reg.RegisterSystem([&](Registry& registry) {
 		registry.GetResource<Res>().x = 69;
 	});
 
-	ASSERT_EQ(res.x, 42);
+	ASSERT_EQ(reg.GetResource<Res>().x, 42);
 
 	reg.RunSystems();
 
-	ASSERT_EQ(res.x, 69);
+	ASSERT_EQ(reg.GetResource<Res>().x, 69);
 }
