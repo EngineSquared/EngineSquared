@@ -26,6 +26,8 @@ namespace ES::Engine
         void RegisterSystem(USystem const& f);
         void RunSystems();
 
+        bool IsEntityValid(entt::entity entity);
+
     private:
         std::unique_ptr<entt::registry> _registry;
         std::vector<USystem> _systems;

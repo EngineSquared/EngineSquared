@@ -23,3 +23,9 @@ void ES::Engine::Registry::RunSystems()
         system(*this);
     }
 }
+
+
+bool ES::Engine::Registry::IsEntityValid(entt::entity entity)
+{
+    return GetRegistry().valid(entity);
+}
