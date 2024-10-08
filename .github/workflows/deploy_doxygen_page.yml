@@ -17,8 +17,8 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config --global user.email "guillaume.papineau@epitech.eu"
-          git config --global user.name "MasterLaplace"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Install Doxygen
         run: |
@@ -42,6 +42,9 @@ jobs:
           cp -r docs/EngineSquared/html/* docs/
           rm -rf docs/EngineSquared
 
+      permissions:
+        contents: write-all
+
       - name: Push documentation to gh-pages branch
         run: |
           git add .
@@ -49,3 +52,7 @@ jobs:
           git push origin gh-pages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
