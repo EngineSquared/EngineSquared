@@ -18,7 +18,10 @@ target("EngineSquared")
     add_includedirs("src/plugin/object/component", { public = true })
     add_includedirs("src/plugin/object/utils", { public = true })
     add_includedirs("src/plugin/object/resource", { public = true })
-    
+    add_includedirs("src/plugin/window/exception", { public = true })
+    add_includedirs("src/plugin/window/resource", { public = true })
+    add_includedirs("src/plugin/input/resource", { public = true })
+
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")
 
