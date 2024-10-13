@@ -31,5 +31,5 @@ jobs:
       - name: Push changes
         run: |
           git add .
-          git commit -m "style: Apply linter" || true
+          git commit -m "style: apply linter" || true
           git push || true
