@@ -28,6 +28,11 @@ namespace ES::Plugin::Window::Resource {
             {
             }
 
+            /**
+             * @brief Create and initialize the window.
+             *
+             * @throws ES::Plugin::Window::Exception::WindowError if the window could not be created.
+             */
             void Create()
             {
                 if (!glfwInit())
@@ -44,14 +49,23 @@ namespace ES::Plugin::Window::Resource {
                 }
 
                 glfwMakeContextCurrent(_window);
-                
             }
 
+            /**
+             * @brief Check if the window should close.
+             *
+             * @return True if the window should close, false otherwise.
+             */
             inline bool ShouldClose() const
             {
                 return glfwWindowShouldClose(_window);
             }
 
+            /**
+             * @brief Get a pointer to the GLFW window.
+             *
+             * @return The GLFW window.
+             */
             inline GLFWwindow* GetGLFWWindow() const
             {
                 return _window;
