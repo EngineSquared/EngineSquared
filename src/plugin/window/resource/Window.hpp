@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <stdexcept>
 
-#include "plugin/window/exception/WindowError.hpp"
+#include "WindowError.hpp"
 
 namespace ES::Plugin::Window::Resource {
     /**

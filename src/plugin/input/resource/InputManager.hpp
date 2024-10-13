@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "Registry.hpp"
-#include "plugin/window/resource/Window.hpp"
+#include "Window.hpp"
 
 namespace ES::Plugin::Input::Resource
 {
