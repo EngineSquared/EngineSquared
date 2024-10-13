@@ -5,8 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <stdexcept>
 
-// TODO: remove relative path include
-#include "../exception/WindowError.hpp"
+#include "plugin/window/exception/WindowError.hpp"
 
 namespace ES::Plugin::Window::Resource {
     /**
