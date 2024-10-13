@@ -27,7 +27,7 @@ namespace ES::Plugin::Collision::System {
 
 		for (auto entityA : view) {
 			for (auto entityB : view) {
-				if (entityA == entityB)
+				if (entityA <= entityB)
 					continue;
 
 				const auto& transformA = view.get<const ES::Plugin::Object::Component::Transform>(entityA);
