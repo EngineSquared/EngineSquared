@@ -44,6 +44,7 @@ namespace ES::Plugin::Window::Resource {
                 }
 
                 glfwMakeContextCurrent(_window);
+                
             }
 
             inline bool ShouldClose() const
@@ -51,7 +52,7 @@ namespace ES::Plugin::Window::Resource {
                 return glfwWindowShouldClose(_window);
             }
 
-            inline GLFWwindow* GetWindow() const
+            inline GLFWwindow* GetGLFWWindow() const
             {
                 return _window;
             }
