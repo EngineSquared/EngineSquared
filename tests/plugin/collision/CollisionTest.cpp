@@ -19,7 +19,7 @@ TEST(Collision, CollisionSystemWithBoxCollider3D) {
 	eA.AddComponent<ES::Plugin::Object::Component::Transform>(registry, glm::vec3(1, 1, 1));
 	eB.AddComponent<ES::Plugin::Object::Component::Transform>(registry, glm::vec3(1, 1, 1));
 
-	registry.RegisterSystem(ES::Plugin::Collision::Resource::CollisionStorage::ResetCollision);
+	registry.RegisterSystem(ES::Plugin::Collision::System::ResetCollision);
 	registry.RegisterSystem(ES::Plugin::Collision::System::CollisionChecker);
 
 	registry.RunSystems();

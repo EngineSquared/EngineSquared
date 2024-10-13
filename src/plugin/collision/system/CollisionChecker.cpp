@@ -42,4 +42,8 @@ namespace ES::Plugin::Collision::System {
 		}
 	}
 
+	void ResetCollision(ES::Engine::Registry& registry)
+	{
+		registry.GetResource<ES::Plugin::Collision::Resource::CollisionStorage>().ClearAllCollisionPair();
+	}
 }
