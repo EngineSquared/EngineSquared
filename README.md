@@ -35,3 +35,9 @@ It is designed to provide accurate physics simulation and visually appealing gra
 1. Run `xmake test`
 2. Install required dependencies if needed (or use `xmake test -y` to install them automatically)
 3. Tests will be executed individually
+
+## Build the documentation
+
+1. Install Doxygen using your [package manager](https://command-not-found.com/doxygen) or download it from the [official website](https://www.doxygen.nl/download.html)
+2. Run `mkdir -p docs && doxygen Doxyfile.cfg` to generate the documentation using Doxygen
+3. Open the generated documentation using a web browser (/docs/EngineSquared/html/index.html)
