@@ -21,6 +21,7 @@ target("EngineSquared")
     add_includedirs("src/plugin/window/exception", { public = true })
     add_includedirs("src/plugin/window/resource", { public = true })
     add_includedirs("src/plugin/input/resource", { public = true })
+    add_includedirs("src/plugin/camera/component", { public = true })
 
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")
