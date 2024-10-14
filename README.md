@@ -38,6 +38,6 @@ It is designed to provide accurate physics simulation and visually appealing gra
 
 ## Build the documentation
 
-1. Install Doxygen using your [package manager](https://command-not-found.com/doxygen) or download it from the [official website](https://www.doxygen.nl/download.html)
-2. Run `mkdir -p docs && doxygen Doxyfile.cfg` to generate the documentation using Doxygen
+1. Download Doxygen from the [official website](https://www.doxygen.nl/download.html)
+2. Create a `docs` folder if it doesn't already exist and run `doxygen Doxyfile.cfg` to generate the documentation using Doxygen
 3. Open the generated documentation using a web browser (/docs/EngineSquared/html/index.html)
