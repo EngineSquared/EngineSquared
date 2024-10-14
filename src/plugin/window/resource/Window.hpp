@@ -22,33 +22,15 @@ namespace ES::Plugin::Window::Resource {
             GLFWwindow* _share;
 
         public:
-            Window(int width, int height, const std::string& title, GLFWmonitor* monitor = nullptr, GLFWwindow* share = nullptr)
-                : _width(width), _height(height), _title(title), _monitor(monitor), _share(share)
-            {
-            }
+            Window(int width, int height, const std::string& title, GLFWmonitor* monitor = nullptr, GLFWwindow* share = nullptr);
+            ~Window();
 
             /**
              * @brief Create and initialize the window.
              *
              * @throws ES::Plugin::Window::Exception::WindowError if the window could not be created.
              */
-            void Create()
-            {
-                if (!glfwInit())
-                {
-                    throw ES::Plugin::Window::Exception::WindowError("Failed to initialize GLFW");
-                }
-
-                _window = glfwCreateWindow(_width, _height, _title.c_str(), _monitor, _share);
-
-                if (!_window)
-                {
-                    glfwTerminate();
-                    throw ES::Plugin::Window::Exception::WindowError("Failed to create GLFW window");
-                }
-
-                glfwMakeContextCurrent(_window);
-            }
+            void Create();
 
             /**
              * @brief Check if the window should close.
@@ -68,15 +50,6 @@ namespace ES::Plugin::Window::Resource {
             inline GLFWwindow* GetGLFWWindow() const
             {
                 return _window;
-            }
-
-            ~Window()
-            {
-                if (_window)
-                {
-                    glfwDestroyWindow(_window);
-                    glfwTerminate();
-                }
             }
     };
 }
