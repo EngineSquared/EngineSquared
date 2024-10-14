@@ -1,0 +1,37 @@
+name: Doxygen GitHub Pages Deploy Action
+on:
+  release:
+    types: [published]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: "true"
+
+      - name: Install Doxygen
+        run: |
+          sudo apt-get update
+          sudo apt-get install doxygen -y
+
+      - name: Install theme
+        run: |
+          git clone https://github.com/jothepro/doxygen-awesome-css.git
+          cd doxygen-awesome-css
+          git checkout v2.3.4
+          cd ..
+
+      - name: Generate Doxygen Documentation
+        run: doxygen Doxyfile
+
+      - name: Create .nojekyll file
+        run: touch docs/html/.nojekyll
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          publish_dir: ./docs/html
