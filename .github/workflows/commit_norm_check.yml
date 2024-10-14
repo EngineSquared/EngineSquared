@@ -26,7 +26,8 @@ jobs:
               echo "Skipping merge commit"
             else
               echo $commit_msg
-              echo "Commit message does not match expected format. Please use the following format: \"keyword(scope): comment\""
+              echo "Commit message does not match Angular convention."
               exit 1
             fi
           fi
+        shell: bash
