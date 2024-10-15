@@ -55,7 +55,6 @@ class Entity {
     template <typename TComponent, typename... TArgs>
     inline TComponent &AddComponent(Registry &registry, TArgs &&...args);
 
-
     /**
      * Check whenever if entity id is a valid id.
      * @return  entity's validity
@@ -64,19 +63,17 @@ class Entity {
 
     /**
      * Utility method to add a component to an entity.
-     * 
+     *
      * @tparam  TComponent  type to add to registry
      * @param   registry    registry used to store the component
      * @param   component   rvalue to add to registry
      * @return  reference of the added component
      */
 
-    template <typename TComponent>
-    inline decltype(auto) AddComponent(Registry& registry, TComponent&& component)
+    template <typename TComponent> inline decltype(auto) AddComponent(Registry &registry, TComponent &&component)
     {
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), component);
     }
-
 
     /**
      * Utility method to add a component to an entity.
@@ -87,42 +84,37 @@ class Entity {
      * @param   args        parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      */
-    template <typename TComponent, typename ...TArgs>
-    inline decltype(auto) AddComponent(Registry& registry, TArgs &&...args)
+    template <typename TComponent, typename... TArgs>
+    inline decltype(auto) AddComponent(Registry &registry, TArgs &&...args)
     {
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
     }
 
     /**
      * Check if entity have one or multiple component's type.
-     * 
+     *
      * @tparam  TComponent  components to check
      * @return  true if entity have all requested component
      */
-    template <typename ...TComponent>
-    inline bool HasComponents(Registry& registry)
+    template <typename... TComponent> inline bool HasComponents(Registry &registry)
     {
         return registry.GetRegistry().all_of<TComponent...>(ToEnttEntity(this->_entity));
     }
-        
+
     /**
-		 * Get components of type TComponent from the entity.
+     * Get components of type TComponent from the entity.
      *
      * @tparam  TComponent  components to get
-		 * @return  components of type TComponent from the entity
+     * @return  components of type TComponent from the entity
      */
-    template <typename... TComponent>
-    inline decltype(auto) GetComponents(Registry &registry)
+    template <typename... TComponent> inline decltype(auto) GetComponents(Registry &registry)
     {
         return registry.GetRegistry().get<TComponent...>(ToEnttEntity(this->_entity));
     }
 
- 
     inline static entity_id_type FromEnttEntity(entt::entity e) { return static_cast<entity_id_type>(e); }
 
-
     inline static entt::entity ToEnttEntity(entity_id_type e) { return static_cast<entt::entity>(e); }
-
 
   private:
     entity_id_type _entity;
