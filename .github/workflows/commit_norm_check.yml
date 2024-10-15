@@ -10,6 +10,7 @@ on:
 
 jobs:
   verify-commit-name:
+    name: Check if the commit title is valid according to Angular's convention
     runs-on: ubuntu-latest
 
     steps:
