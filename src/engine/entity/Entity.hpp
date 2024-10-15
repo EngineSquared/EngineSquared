@@ -43,8 +43,13 @@ namespace ES::Engine
          * @param   component   rvalue to add to registry
          * @return  reference of the added component
          */
+        
         template <typename TComponent>
-        inline TComponent& AddComponent(Registry& registry, TComponent&& component);
+        inline decltype(auto) AddComponent(Registry& registry, TComponent&& component)
+        {
+            return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), component);
+        }
+
 
         /**
          * Utility method to add a component to an entity.
@@ -56,7 +61,10 @@ namespace ES::Engine
          * @return  reference of the added component
          */
         template <typename TComponent, typename ...TArgs>
-        inline TComponent& AddComponent(Registry& registry, TArgs &&...args);
+        inline decltype(auto) AddComponent(Registry& registry, TArgs &&...args)
+        {
+            return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
+        }
 
         /**
          * Check if entity have one or multiple component's type.
@@ -65,7 +73,22 @@ namespace ES::Engine
          * @return  true if entity have all requested component
          */
         template <typename ...TComponent>
-        inline bool HasComponents(Registry& registry);
+        inline bool HasComponents(Registry& registry)
+        {
+            return registry.GetRegistry().all_of<TComponent...>(ToEnttEntity(this->_entity));
+        }
+        
+        /**
+		 * Get components of type TComponent from the entity.
+         *
+         * @tparam  TComponent  components to get
+		 * @return  components of type TComponent from the entity
+         */
+        template <typename... TComponent>
+        inline decltype(auto) GetComponents(Registry &registry)
+        {
+            return registry.GetRegistry().get<TComponent...>(ToEnttEntity(this->_entity));
+        }
 
         /**
          * Check whenever if entity id is a valid id.
@@ -81,7 +104,7 @@ namespace ES::Engine
         {
             return Entity(entt::entity(entt::null));
         }
-    private:
+
         inline static entity_id_type FromEnttEntity(entt::entity e)
         {
             return static_cast<entity_id_type>(e);
