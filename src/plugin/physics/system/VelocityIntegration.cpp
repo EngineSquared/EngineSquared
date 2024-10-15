@@ -1,0 +1,45 @@
+#include "VelocityIntegration.hpp"
+#include "Transform.hpp"
+#include "SoftBodyNode.hpp"
+#include "SoftBodySpring.hpp"
+
+
+namespace ES::Plugin::Physics
+{
+    constexpr float GRAVITY = 9.81f;
+
+    void System::VelocityIntegration(ES::Engine::Registry &registry)
+    {
+        auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
+
+        for (auto entity : nodeView)
+        {
+            auto &node = nodeView.get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
+            auto &transform = nodeView.get<ES::Plugin::Object::Component::Transform>(entity);
+
+            node.ApplyForce(glm::vec3(0, -node.mass * GRAVITY, 0));
+        }
+
+        auto springView = registry.GetRegistry().view<ES::Plugin::Physics::Component::SoftBodySpring>();
+
+        for (auto entity : springView)
+        {
+            auto &spring = springView.get<ES::Plugin::Physics::Component::SoftBodySpring>(entity);
+
+            spring.ApplyForce(registry);
+        }
+
+        for (auto entity : nodeView)
+        {
+            auto &node = nodeView.get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
+            auto &transform = nodeView.get<ES::Plugin::Object::Component::Transform>(entity);
+
+            // TODO: remove hardcoded time step
+            float dt = 1 / 60.0f;
+            glm::vec3 acceleration = node.force * node.inverseMass;
+            node.velocity += acceleration * dt;
+            transform.position += node.velocity * dt;
+            node.Integrate(dt);
+        }
+    }
+}

@@ -1,0 +1,53 @@
+#pragma once
+
+#include <glm/glm.hpp>
+
+namespace ES::Plugin::Physics::Component {
+/**
+ * Component used to represent a soft body node in a soft body simulation.
+ * A soft body node is a point in a soft body that can be connected to other nodes.
+ */
+struct SoftBodyNode {
+    /**
+     * Mass of the node.
+     */
+    float mass;
+    /**
+     * Inverse mass of the node.
+     */
+    float inverseMass;
+    /**
+     * Damping factor applied to the node force.
+     */
+    float damping;
+    /**
+     * Velocity of the node.
+     */
+    glm::vec3 velocity;
+    /**
+     * Force applied to the node.
+     */
+    glm::vec3 force;
+
+    SoftBodyNode(float mass = 1, float damping = 0.95f)
+        : mass(mass), inverseMass(mass >= 0 ? 1 / mass : 0), damping(damping), velocity(0), force(0)
+    {
+    }
+
+    /**
+     * Apply a force to the node.
+     * @param force Force to apply.
+     */
+    void ApplyForce(glm::vec3 force) { this->force += force; }
+
+    /**
+     * Integrates the node velocity and position using the given time step.
+     * @param dt Time step to use for integration.
+     */
+    void Integrate(float dt)
+    {
+        // TODO: use verlet instead of euler
+        this->force = glm::vec3(0);
+    }
+};
+} // namespace ES::Plugin::Physics::Component
