@@ -1,6 +1,7 @@
 #include "Window.hpp"
 
-ES::Plugin::Window::Resource::Window::Window(int width, int height, const std::string &title, GLFWmonitor *monitor, GLFWwindow *share)
+ES::Plugin::Window::Resource::Window::Window(int width, int height, const std::string &title, GLFWmonitor *monitor,
+                                             GLFWwindow *share)
     : _width(width), _height(height), _title(title), _monitor(monitor), _share(share), _window(nullptr)
 {
     Create();
