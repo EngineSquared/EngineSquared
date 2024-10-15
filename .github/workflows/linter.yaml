@@ -1,0 +1,35 @@
+name: Linter GitHub Action
+
+on:
+  push:
+
+jobs:
+  lint_code:
+    name: Lint with clang-format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: sudo apt-get install -y clang-format
+
+      - name: Run clang-format
+        run: |
+          git ls-files -z "*.cpp" "*.hpp" | while IFS= read -rd '' f; do tail -c1 < "$f" | read -r _ || echo >> "$f"; done
+          find . -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Push changes
+        run: |
+          git add .
+          git commit -m "style: apply linter" || true
+          git push || true
