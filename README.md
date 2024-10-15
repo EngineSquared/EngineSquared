@@ -36,6 +36,25 @@ It is designed to provide accurate physics simulation and visually appealing gra
 2. Install required dependencies if needed (or use `xmake test -y` to install them automatically)
 3. Tests will be executed individually
 
+## Coding style
+
+1. Download clang-format from [here](https://releases.llvm.org/download.html) or from [github](https://github.com/llvm/llvm-project/releases/latest)
+2. Add the clang-format executable to your PATH
+
+### Apply the coding style
+
+For bash users, you can use the following command to apply the coding style to the project:
+```bash
+find . -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
+```
+
+For Windows users, you can use the following command to apply the coding style to the project:
+```powershell
+Get-ChildItem -Recurse -Include *.cpp, *.hpp | ForEach-Object { clang-format -i $_.FullName }
+```
+
+For Visual Studio users, you can use the [ClangFormat extension](https://marketplace.visualstudio.com/items?itemName=LLVMExtensions.ClangFormat) to format the code.
+
 ## Build the documentation
 
 1. Download Doxygen from the [official website](https://www.doxygen.nl/download.html)
