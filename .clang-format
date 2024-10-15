@@ -173,7 +173,6 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 SpaceBeforeSquareBrackets: false
 BitFieldColonSpacing: Both
-Standard:        Latest
 StatementAttributeLikeMacros:
   - Q_EMIT
 StatementMacros:
