@@ -54,3 +54,9 @@ Get-ChildItem -Recurse -Include *.cpp, *.hpp | ForEach-Object { clang-format -i 
 ```
 
 For Visual Studio users, you can use the [ClangFormat extension](https://marketplace.visualstudio.com/items?itemName=LLVMExtensions.ClangFormat) to format the code.
+
+## Build the documentation
+
+1. Download Doxygen from the [official website](https://www.doxygen.nl/download.html)
+2. Create a `docs` folder if it doesn't already exist and run `doxygen Doxyfile.cfg` to generate the documentation using Doxygen
+3. Open the generated documentation using a web browser (/docs/EngineSquared/html/index.html)
