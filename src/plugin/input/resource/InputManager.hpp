@@ -2,12 +2,9 @@
 
 #include <GLFW/glfw3.h>
 
-#include <functional>
-#include <map>
 #include <utility>
 
 #include "Registry.hpp"
-#include "Window.hpp"
 
 namespace ES::Plugin::Input::Resource
 {
