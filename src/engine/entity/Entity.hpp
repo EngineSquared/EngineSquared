@@ -63,38 +63,6 @@ class Entity {
      * @return  reference of the added component
      */
     template <typename TComponent, typename... TArgs>
-    inline TComponent &AddComponent(Registry &registry, TArgs &&...args);
-
-    /**
-     * Check whenever if entity id is a valid id.
-     * @return  entity's validity
-     */
-    bool IsValid();
-
-    /**
-     * Utility method to add a component to an entity.
-     *
-     * @tparam  TComponent  type to add to registry
-     * @param   registry    registry used to store the component
-     * @param   component   rvalue to add to registry
-     * @return  reference of the added component
-     */
-
-    template <typename TComponent> inline decltype(auto) AddComponent(Registry &registry, TComponent &&component)
-    {
-        return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), component);
-    }
-
-    /**
-     * Utility method to add a component to an entity.
-     *
-     * @tparam  TComponent  type to add to registry
-     * @tparam  TArgs       type used to create the component
-     * @param   registry    registry used to store the component
-     * @param   args        parameters used to instanciate component directly in registry memory
-     * @return  reference of the added component
-     */
-    template <typename TComponent, typename... TArgs>
     inline decltype(auto) AddComponent(Registry &registry, TArgs &&...args)
     {
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
