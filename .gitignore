@@ -6,4 +6,5 @@ CMakeLists.txt
 Makefile
 vs*/*
 vsxmake*/*
-build
+build/
+docs/
