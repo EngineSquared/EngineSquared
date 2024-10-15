@@ -9,7 +9,6 @@ TEST(Registry, CreateEntity) {
 	Registry reg;
 
 	entt::entity raw_entity = reg.CreateEntity();
-
 }
 
 TEST(Registry, Systems) {
