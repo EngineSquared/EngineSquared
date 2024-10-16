@@ -18,13 +18,7 @@
 int main(int ac, char **av)
 {
     ES::Plugin::Window::Resource::Window window(800, 600, "My Engine");
-
-    ES::Plugin::VkWrapper::VkWrapper vkWrapper;
-
-    uint32_t extensionCount = 0;
-    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-
-    std::cout << extensionCount << " extensions supported\n";
+    ES::Plugin::VkWrapper vkWrapper("My Engine");
 
     glm::mat4 matrix;
     glm::vec4 vec;

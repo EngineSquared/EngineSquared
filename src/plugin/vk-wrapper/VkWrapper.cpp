@@ -9,21 +9,15 @@
 
 #include "VkWrapper.hpp"
 
-namespace ES::Plugin::VkWrapper {
+namespace ES::Plugin {
 
-VkWrapper::VkWrapper()
+VkWrapper::VkWrapper(const std::string &applicationName) : _instance(applicationName)
 {
     std::cout << VKWRAPPER_CONFIG_STRING << std::endl;
-
-    InitVulkan();
 }
 
-VkWrapper::~VkWrapper() { Cleanup(); }
-
-void VkWrapper::InitVulkan() {}
+VkWrapper::~VkWrapper() {}
 
 void VkWrapper::drawFrame() {}
 
-void VkWrapper::Cleanup() {}
-
-} // namespace ES::Plugin::VkWrapper
+} // namespace ES::Plugin
