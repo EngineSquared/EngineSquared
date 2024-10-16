@@ -30,8 +30,17 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 namespace ES::Plugin::Wrapper {
+
+const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
+
+#ifdef VKWRAPPER_DEBUG
+constexpr bool enableValidationLayers = false;
+#else
+constexpr bool enableValidationLayers = true;
+#endif
 
 /**
  * @brief Instance class.
@@ -47,6 +56,9 @@ class Instance {
   public:
     Instance(const std::string &applicationName);
     ~Instance();
+
+  private:
+    [[nodiscard]] bool CheckValidationLayerSupport();
 
   private:
     VkInstance instance;
