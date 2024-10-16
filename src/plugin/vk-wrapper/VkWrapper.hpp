@@ -56,6 +56,7 @@ namespace ES::Plugin {
  *
  * // Create a VkWrapper
  * ES::Plugin::VkWrapper vkWrapper("My Engine");
+ * vkWrapper.PrintAvailableExtensions();
  *
  * while (!window.ShouldClose())
  * {
@@ -70,6 +71,12 @@ class VkWrapper {
     ~VkWrapper();
 
     void drawFrame();
+
+    /**
+     * @brief Print the available extensions for the Vulkan API.
+     *
+     */
+    void PrintAvailableExtensions();
 
   protected:
   private:

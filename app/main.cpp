@@ -20,6 +20,8 @@ int main(int ac, char **av)
     ES::Plugin::Window::Resource::Window window(800, 600, "My Engine");
     ES::Plugin::VkWrapper vkWrapper("My Engine");
 
+    vkWrapper.PrintAvailableExtensions();
+
     glm::mat4 matrix;
     glm::vec4 vec;
     auto test = matrix * vec;
