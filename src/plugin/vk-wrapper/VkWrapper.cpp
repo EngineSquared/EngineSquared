@@ -11,15 +11,9 @@
 
 namespace ES::Plugin::VkWrapper {
 
-VkWrapper::VkWrapper()
-{
-    InitVulkan();
-}
+VkWrapper::VkWrapper() { InitVulkan(); }
 
-VkWrapper::~VkWrapper()
-{
-    Cleanup();
-}
+VkWrapper::~VkWrapper() { Cleanup(); }
 
 void VkWrapper::InitVulkan() {}
 
