@@ -30,6 +30,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 #ifndef UINT32_MAX
 #include <limits>
