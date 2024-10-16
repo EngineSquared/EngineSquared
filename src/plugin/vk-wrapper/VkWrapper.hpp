@@ -31,6 +31,11 @@
 #include <iostream>
 #include <stdexcept>
 
+#ifndef UINT32_MAX
+#include <limits>
+#define UINT32_MAX std::numeric_limits<uint32_t>::max()
+#endif
+
 #include "config.h"
 #include "export.h"
 
