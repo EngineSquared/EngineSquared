@@ -31,6 +31,23 @@ target("EngineSquared")
 
     if is_mode("debug") then
         add_defines("DEBUG")
+    else
+        add_defines("NDEBUG")
+    end
+
+target("App")
+    set_kind("binary")
+    set_default(false)
+    set_languages("cxx20")
+    add_files("app/main.cpp")
+    add_deps("EngineSquared")
+    add_packages("entt", "vulkansdk", "glfw", "glm")
+    add_includedirs("src")
+    if is_mode("debug") then
+        add_defines("DEBUG")
+    else
+        add_defines("NDEBUG")
+        add_cxflags("-O2")
     end
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
