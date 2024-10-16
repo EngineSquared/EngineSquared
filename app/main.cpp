@@ -5,7 +5,7 @@
 ** main
 */
 
-#define GLFW_INCLUDE_VULKAN
+#include "VkWrapper.hpp"
 #include "Window.hpp"
 
 #define GLM_FORCE_RADIANS
@@ -19,6 +19,8 @@ int main(int ac, char **av)
 {
     ES::Plugin::Window::Resource::Window window(800, 600, "My Engine");
 
+    ES::Plugin::VkWrapper::VkWrapper vkWrapper;
+
     uint32_t extensionCount = 0;
     vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
@@ -28,10 +30,18 @@ int main(int ac, char **av)
     glm::vec4 vec;
     auto test = matrix * vec;
 
-    while (!window.ShouldClose())
+    try
     {
-        glfwPollEvents();
+        while (!window.ShouldClose())
+        {
+            glfwPollEvents();
+            vkWrapper.drawFrame();
+        }
     }
-
-    return 0;
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }
