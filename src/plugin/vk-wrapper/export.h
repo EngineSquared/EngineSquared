@@ -10,45 +10,28 @@
  * it under the terms of the GPL-3.0 License as published by the
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
- * @file VKwrapper.hpp
- * @brief VkWrapper class declaration.
- *
- * This class is a wrapper for the Vulkan API.
- * It is used to simplify the use of Vulkan in the Engine².
+ * @file export.h
+ * @brief Compile-Time exportation of the project path.
  *
  * @author @MasterLaplace
  * @version 0.0.0
  * @date 2024-10-15
  **************************************************************************/
 
-#ifndef VKWRAPPER_HPP_
-#define VKWRAPPER_HPP_
+// clang-format off
+#ifndef EXPORT_H_
+    #define EXPORT_H_
 
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
+#ifdef __cplusplus
+#include <filesystem>
 
-#include <cstdlib>
-#include <iostream>
-#include <stdexcept>
+#define PROJECT_SOURCE_DIR std::filesystem::current_path().string() + "/"
+#else
+#include <stdlib.h>
+#include <string.h>
 
-#include "config.h"
-#include "export.h"
+#define PROJECT_SOURCE_DIR getenv("PWD")
+#endif
 
-namespace ES::Plugin::VkWrapper {
-
-class VkWrapper {
-  public:
-    VkWrapper();
-    ~VkWrapper();
-
-    void drawFrame();
-
-  protected:
-  private:
-    void InitVulkan();
-    void Cleanup();
-};
-
-} // namespace ES::Plugin::VkWrapper
-
-#endif /* !VKWRAPPER_HPP_ */
+#endif /* !EXPORT_H_ */
+// clang-format on

@@ -11,7 +11,12 @@
 
 namespace ES::Plugin::VkWrapper {
 
-VkWrapper::VkWrapper() { InitVulkan(); }
+VkWrapper::VkWrapper()
+{
+    std::cout << VKWRAPPER_CONFIG_STRING << std::endl;
+
+    InitVulkan();
+}
 
 VkWrapper::~VkWrapper() { Cleanup(); }
 
