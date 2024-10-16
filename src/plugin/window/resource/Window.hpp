@@ -23,15 +23,15 @@ namespace ES::Plugin::Window::Resource {
  */
 class Window {
   private:
-    int _width;
-    int _height;
+    uint32_t _width;
+    uint32_t _height;
     std::string _title;
     GLFWwindow *_window;
     GLFWmonitor *_monitor;
     GLFWwindow *_share;
 
   public:
-    Window(int width, int height, const std::string &title, GLFWmonitor *monitor = nullptr,
+    Window(uint32_t width, uint32_t height, const std::string &title, GLFWmonitor *monitor = nullptr,
            GLFWwindow *share = nullptr);
     ~Window();
 
