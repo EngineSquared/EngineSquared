@@ -23,6 +23,8 @@ void ES::Plugin::Window::Resource::Window::Create()
         throw ES::Plugin::Window::Exception::WindowError("Failed to initialize GLFW");
     }
 
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+
     _window = glfwCreateWindow(_width, _height, _title.c_str(), _monitor, _share);
 
     if (!_window)

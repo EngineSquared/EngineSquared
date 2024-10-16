@@ -8,8 +8,18 @@
 #include "WindowError.hpp"
 
 namespace ES::Plugin::Window::Resource {
+
 /**
  * The Window class is a singleton to handle the creation and destruction of the game's window.
+ *
+ * @example
+ * @code
+ * Window window(800, 600, "My Game");
+ * while (!window.ShouldClose())
+ * {
+ *    // Game loop
+ * }
+ * @endcode
  */
 class Window {
   private:
@@ -46,4 +56,5 @@ class Window {
      */
     inline GLFWwindow *GetGLFWWindow() const { return _window; }
 };
+
 } // namespace ES::Plugin::Window::Resource
