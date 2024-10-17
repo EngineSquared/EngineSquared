@@ -17,6 +17,10 @@ struct SoftBodyNode {
      */
     float inverseMass;
     /**
+     * Damping factor applied to the node force.
+     */
+    float damping;
+    /**
      * Fricion coefficient of the node.
      */
     float friction;
@@ -33,9 +37,9 @@ struct SoftBodyNode {
      */
     glm::vec3 force;
 
-    SoftBodyNode(float mass = 1, float friction = 0.5f, float elasticity = 0.9f)
-        : mass(mass), inverseMass(mass >= 0 ? 1 / mass : 0), friction(friction), elasticity(elasticity), velocity(0),
-          force(0)
+    SoftBodyNode(float mass = 1, float damping = 0.95f, float friction = 0.5f, float elasticity = 0.9f)
+        : mass(mass), inverseMass(mass >= 0 ? 1 / mass : 0), damping(damping), friction(friction),
+          elasticity(elasticity), velocity(0), force(0)
     {
     }
 
@@ -44,15 +48,5 @@ struct SoftBodyNode {
      * @param force Force to apply.
      */
     void ApplyForce(glm::vec3 force) { this->force += force; }
-
-    /**
-     * Integrates the node velocity and position using the given time step.
-     * @param dt Time step to use for integration.
-     */
-    void Integrate(float dt)
-    {
-        // TODO: use verlet instead of euler
-        this->force = glm::vec3(0);
-    }
 };
 } // namespace ES::Plugin::Physics::Component
