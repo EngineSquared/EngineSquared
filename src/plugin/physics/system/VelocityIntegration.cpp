@@ -7,9 +7,8 @@
 namespace ES::Plugin::Physics {
 constexpr float GRAVITY = 9.81f;
 
-void System::VelocityIntegration(ES::Engine::Registry &registry)
+static void ApplyGravity(ES::Engine::Registry &registry)
 {
-    auto realTimeProvider = registry.GetResource<ES::Plugin::Time::Resource::RealTimeProvider>();
     auto nodeView = registry.GetRegistry()
                         .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
 
@@ -20,7 +19,10 @@ void System::VelocityIntegration(ES::Engine::Registry &registry)
 
         node.ApplyForce(glm::vec3(0, -node.mass * GRAVITY, 0));
     }
+}
 
+static void ApplySpringForces(ES::Engine::Registry &registry)
+{
     auto springView = registry.GetRegistry().view<ES::Plugin::Physics::Component::SoftBodySpring>();
 
     for (auto entity : springView)
@@ -29,6 +31,13 @@ void System::VelocityIntegration(ES::Engine::Registry &registry)
 
         spring.ApplyForce(registry);
     }
+}
+
+static void IntegrateVelocities(ES::Engine::Registry &registry)
+{
+    auto realTimeProvider = registry.GetResource<ES::Plugin::Time::Resource::RealTimeProvider>();
+    auto nodeView = registry.GetRegistry()
+                        .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
 
     float dt = realTimeProvider.GetElapsedTime();
 
@@ -42,5 +51,12 @@ void System::VelocityIntegration(ES::Engine::Registry &registry)
         transform.position += node.velocity * dt;
         node.Integrate(dt);
     }
+}
+
+void System::VelocityIntegration(ES::Engine::Registry &registry)
+{
+    ApplyGravity(registry);
+    ApplySpringForces(registry);
+    IntegrateVelocities(registry);
 }
 } // namespace ES::Plugin::Physics
