@@ -28,6 +28,7 @@ void SoftBodyCollision(ES::Engine::Registry &registry)
     auto nodeView = registry.GetRegistry()
                         .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
 
+    // TODO: implement generic collisions between any type of object and collider
     for (auto boxEntity : boxColliderView)
     {
         auto &boxCollider = boxColliderView.get<ES::Plugin::Collision::Component::BoxCollider3D>(boxEntity);
@@ -42,14 +43,12 @@ void SoftBodyCollision(ES::Engine::Registry &registry)
             {
                 glm::vec3 nodeToBox = nodeTransform.position - boxTransform.position;
 
-                // Find the closest face of the box
                 float distances[3] = {
                     std::abs(nodeToBox.x) - boxCollider.size.x / 2,
                     std::abs(nodeToBox.y) - boxCollider.size.y / 2,
                     std::abs(nodeToBox.z) - boxCollider.size.z / 2,
                 };
 
-                // Identify the closest face and its normal
                 int closestAxis = 0;
                 for (int i = 1; i < 3; ++i)
                 {
