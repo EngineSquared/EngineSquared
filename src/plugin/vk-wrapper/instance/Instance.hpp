@@ -27,10 +27,10 @@
 #include <GLFW/glfw3.h>
 
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include <cstring>
 #include <vector>
 
 namespace ES::Plugin::Wrapper {
