@@ -1,22 +1,23 @@
 #include <gtest/gtest.h>
 
-#include <thread>
 #include <chrono>
+#include <thread>
 
-#include "Registry.hpp"
 #include "Entity.hpp"
-#include "Transform.hpp"
-#include "SoftBodyNode.hpp"
-#include "VelocityIntegration.hpp"
 #include "RealTimeProvider.hpp"
 #include "RealTimeUpdater.hpp"
+#include "Registry.hpp"
+#include "SoftBodyNode.hpp"
+#include "Transform.hpp"
+#include "VelocityIntegration.hpp"
 
 #include "utils/Sleep.hpp"
 
 TEST(VelocityIntegration, BasicGravityIntegration)
 {
     ES::Engine::Registry registry;
-    registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(ES::Plugin::Time::Resource::RealTimeProvider());
+    registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
+        ES::Plugin::Time::Resource::RealTimeProvider());
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
     registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
 
@@ -41,7 +42,8 @@ TEST(VelocityIntegration, BasicGravityIntegration)
 TEST(VelocityIntegration, ForceHigherThanGravity)
 {
     ES::Engine::Registry registry;
-    registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(ES::Plugin::Time::Resource::RealTimeProvider());
+    registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
+        ES::Plugin::Time::Resource::RealTimeProvider());
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
     registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
 
