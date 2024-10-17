@@ -30,6 +30,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <cstring>
 #include <vector>
 
 namespace ES::Plugin::Wrapper {
