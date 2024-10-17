@@ -1,17 +1,17 @@
 #include <gtest/gtest.h>
 
-#include <thread>
 #include <chrono>
+#include <thread>
 
-#include "Registry.hpp"
-#include "Entity.hpp"
-#include "Transform.hpp"
 #include "BoxCollider3D.hpp"
-#include "SoftBodyNode.hpp"
-#include "SoftBodyCollision.hpp"
-#include "VelocityIntegration.hpp"
+#include "Entity.hpp"
 #include "RealTimeProvider.hpp"
 #include "RealTimeUpdater.hpp"
+#include "Registry.hpp"
+#include "SoftBodyCollision.hpp"
+#include "SoftBodyNode.hpp"
+#include "Transform.hpp"
+#include "VelocityIntegration.hpp"
 
 #include "utils/Sleep.hpp"
 
