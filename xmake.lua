@@ -1,5 +1,6 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "glm", "gtest")
+add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "glm", "gtest", "raylib")
+-- TODO: remove raylib, for testing purposes only
 
 add_rules("plugin.vsxmake.autoupdate")
 target("EngineSquared")
@@ -12,6 +13,9 @@ target("EngineSquared")
     add_includedirs("src/engine", { public = true })
     add_includedirs("src/engine/entity", { public = true })
     add_includedirs("src/engine/registry", { public = true })
+    add_includedirs("src/physics", { public = true })
+    add_includedirs("src/physics/component", { public = true })
+    add_includedirs("src/physics/system", { public = true })
     add_includedirs("src/plugin", { public = true })
     add_includedirs("src/plugin/object", { public = true })
     add_includedirs("src/plugin/object/component", { public = true })
@@ -32,6 +36,8 @@ target("EngineSquared")
     add_includedirs("src/plugin/physics/component", { public = true })
     add_includedirs("src/plugin/physics/resource", { public = true })
     add_includedirs("src/plugin/physics/system", { public = true })
+    add_includedirs("src/plugin/time/resource", { public = true })
+    add_includedirs("src/plugin/time/system", { public = true })
 
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")
@@ -61,3 +67,17 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
     ::continue::
 end
+
+-- TODO: remove this after testing is done
+target("EngineSquared-Main")
+    set_kind("binary")
+    set_default(false)
+    set_languages("cxx20")
+    add_files("main.cpp")
+    add_packages("entt", "vulkansdk", "glfw", "glm", "raylib")
+    add_deps("EngineSquared")
+    add_includedirs("src")
+    add_tests("default")
+    if is_mode("debug") then
+        add_defines("DEBUG")
+    end
