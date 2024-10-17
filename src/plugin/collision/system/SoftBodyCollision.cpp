@@ -85,4 +85,4 @@ void SoftBodyCollision(ES::Engine::Registry &registry)
         }
     }
 }
-} // namespace ES::Plugin::Physics::System
+} // namespace ES::Plugin::Collision::System

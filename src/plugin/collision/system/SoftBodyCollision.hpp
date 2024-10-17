@@ -11,4 +11,4 @@ namespace ES::Plugin::Collision::System {
  * @param registry  registry used to get all soft body nodes
  */
 void SoftBodyCollision(ES::Engine::Registry &registry);
-} // namespace ES::Plugin::Physics::System
+} // namespace ES::Plugin::Collision::System
