@@ -4,7 +4,7 @@
 
 #include "Registry.hpp"
 
-namespace ES::Plugin::Physics::System {
+namespace ES::Plugin::Collision::System {
 /**
  * @brief Applies collision detection between soft bodies particles and box colliders.
  *

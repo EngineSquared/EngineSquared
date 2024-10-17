@@ -19,7 +19,7 @@ TEST(SoftBodyCollision, BasicCollision)
 {
     ES::Engine::Registry registry;
 
-    registry.RegisterSystem(ES::Plugin::Physics::System::SoftBodyCollision);
+    registry.RegisterSystem(ES::Plugin::Collision::System::SoftBodyCollision);
     registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
         ES::Plugin::Time::Resource::RealTimeProvider());
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);

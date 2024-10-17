@@ -5,7 +5,7 @@
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
 
-namespace ES::Plugin::Physics::System {
+namespace ES::Plugin::Collision::System {
 
 static bool IsNodeInsideBox(const ES::Plugin::Object::Component::Transform &nodeTransform,
                             const ES::Plugin::Object::Component::Transform &boxTransform,
