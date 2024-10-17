@@ -77,10 +77,8 @@ void SoftBodyCollision(ES::Engine::Registry &registry)
                 glm::vec3 vn = glm::dot(collisionNormal, node.velocity) * collisionNormal;
                 glm::vec3 vt = node.velocity - vn;
 
-                static float elasticity = 0.9f;
-                static float friction = 10.0f;
-                vn *= -elasticity;
-                vt *= std::exp(-friction * dt);
+                vn *= -node.elasticity;
+                vt *= std::exp(-node.friction * dt);
 
                 node.velocity = vn + vt;
             }
