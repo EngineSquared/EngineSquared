@@ -69,8 +69,6 @@ void SoftBodyCollision(ES::Engine::Registry &registry)
 
                 float depth = std::abs(distances[closestAxis]);
 
-                
-
                 if (depth <= 0)
                     continue;
 
