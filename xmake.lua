@@ -57,6 +57,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_links("gtest")
         add_deps("EngineSquared")
         add_includedirs("src")
+        add_includedirs("tests")
         add_tests("default")
         if is_mode("debug") then
             add_defines("DEBUG")
