@@ -11,8 +11,5 @@ float RealTimeProvider::GetElapsedTime()
     return elapsedTime;
 }
 
-void RealTimeProvider::Update()
-{
-    _lastTime = std::chrono::high_resolution_clock::now();
-}
+void RealTimeProvider::Update() { _lastTime = std::chrono::high_resolution_clock::now(); }
 } // namespace ES::Plugin::Time::Resource
