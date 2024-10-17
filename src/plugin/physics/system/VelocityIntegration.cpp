@@ -55,7 +55,6 @@ static void IntegrateVelocities(ES::Engine::Registry &registry)
         node.velocity += acceleration * dt;
         transform.position += node.velocity * dt;
         node.force = glm::vec3(0);
-        printf("node damping: %f\n", node.damping);
         node.velocity *= node.damping;
     }
 }
