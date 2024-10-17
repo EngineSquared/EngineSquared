@@ -17,10 +17,6 @@ struct SoftBodyNode {
      */
     float inverseMass;
     /**
-     * Damping factor applied to the node force.
-     */
-    float damping;
-    /**
      * Fricion coefficient of the node.
      */
     float friction;
@@ -37,8 +33,8 @@ struct SoftBodyNode {
      */
     glm::vec3 force;
 
-    SoftBodyNode(float mass = 1, float damping = 0.95f, float friction = 0.5f, float elasticity = 0.9f)
-        : mass(mass), inverseMass(mass >= 0 ? 1 / mass : 0), damping(damping), friction(friction),
+    SoftBodyNode(float mass = 1, float friction = 0.5f, float elasticity = 0.9f)
+        : mass(mass), inverseMass(mass >= 0 ? 1 / mass : 0), friction(friction),
           elasticity(elasticity), velocity(0), force(0)
     {
     }
