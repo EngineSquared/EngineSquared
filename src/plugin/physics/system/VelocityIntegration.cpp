@@ -30,13 +30,13 @@ void System::VelocityIntegration(ES::Engine::Registry &registry)
         spring.ApplyForce(registry);
     }
 
+    float dt = realTimeProvider.GetElapsedTime();
+
     for (auto entity : nodeView)
     {
         auto &node = nodeView.get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
         auto &transform = nodeView.get<ES::Plugin::Object::Component::Transform>(entity);
 
-        float dt = realTimeProvider.GetElapsedTime();
-        // printf("dt: %f\n", dt);
         glm::vec3 acceleration = node.force * node.inverseMass;
         node.velocity += acceleration * dt;
         transform.position += node.velocity * dt;
