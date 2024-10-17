@@ -1,6 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "glm", "gtest", "raylib")
--- TODO: remove raylib, for testing purposes only
+add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "glm", "gtest")
 
 add_rules("plugin.vsxmake.autoupdate")
 target("EngineSquared")
@@ -67,17 +66,3 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
     ::continue::
 end
-
--- TODO: remove this after testing is done
-target("EngineSquared-Main")
-    set_kind("binary")
-    set_default(false)
-    set_languages("cxx20")
-    add_files("main.cpp")
-    add_packages("entt", "vulkansdk", "glfw", "glm", "raylib")
-    add_deps("EngineSquared")
-    add_includedirs("src")
-    add_tests("default")
-    if is_mode("debug") then
-        add_defines("DEBUG")
-    end
