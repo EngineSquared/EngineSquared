@@ -22,5 +22,6 @@ class RealTimeProvider {
 
   private:
     std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime;
+    float _elapsedTime;
 };
 } // namespace ES::Plugin::Time::Resource
