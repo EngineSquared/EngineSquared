@@ -28,7 +28,6 @@ void SoftBodyCollision(ES::Engine::Registry &registry)
     auto nodeView = registry.GetRegistry()
                         .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
 
-    // TODO: implement generic collisions between any type of object and collider
     for (auto boxEntity : boxColliderView)
     {
         auto &boxCollider = boxColliderView.get<ES::Plugin::Collision::Component::BoxCollider3D>(boxEntity);
