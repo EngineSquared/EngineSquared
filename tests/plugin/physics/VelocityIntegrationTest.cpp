@@ -18,8 +18,8 @@ TEST(VelocityIntegration, BasicGravityIntegration)
     ES::Engine::Registry registry;
     registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
         ES::Plugin::Time::Resource::RealTimeProvider());
-    registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
     registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
+    registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
 
     ES::Engine::Entity entity = registry.CreateEntity();
     registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(entity, glm::vec3(0));
@@ -44,8 +44,8 @@ TEST(VelocityIntegration, ForceHigherThanGravity)
     ES::Engine::Registry registry;
     registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
         ES::Plugin::Time::Resource::RealTimeProvider());
-    registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
     registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
+    registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
 
     ES::Engine::Entity entity = registry.CreateEntity();
     registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(entity, glm::vec3(0));
