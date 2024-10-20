@@ -46,7 +46,6 @@ struct SoftBodySpring {
      */
     void ApplyForce(ES::Engine::Registry &registry)
     {
-        // TODO: should we pass the registry or create this component with other components?
         auto &nodeA = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->nodeA);
         auto &nodeB = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->nodeB);
         auto &transformA = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(this->nodeA);
