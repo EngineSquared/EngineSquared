@@ -65,4 +65,4 @@ void VelocityIntegration(ES::Engine::Registry &registry)
     ApplySpringForces(registry);
     IntegrateVelocities(registry);
 }
-} // namespace ES::Plugin::Physics
+} // namespace ES::Plugin::Physics::System
