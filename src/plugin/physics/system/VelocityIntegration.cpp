@@ -4,7 +4,7 @@
 #include "SoftBodySpring.hpp"
 #include "Transform.hpp"
 
-namespace ES::Plugin::Physics {
+namespace ES::Plugin::Physics::System {
 constexpr float GRAVITY = 9.81f;
 
 static void ApplyGravity(ES::Engine::Registry &registry)
@@ -59,7 +59,7 @@ static void IntegrateVelocities(ES::Engine::Registry &registry)
     }
 }
 
-void System::VelocityIntegration(ES::Engine::Registry &registry)
+void VelocityIntegration(ES::Engine::Registry &registry)
 {
     ApplyGravity(registry);
     ApplySpringForces(registry);
