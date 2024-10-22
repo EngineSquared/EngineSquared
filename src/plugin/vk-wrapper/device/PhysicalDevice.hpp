@@ -37,12 +37,13 @@ namespace ES::Plugin::Wrapper {
  *
  * @example
  * @code
+ * PhysicalDevice physicalDevice;
+ * physicalDevice.pickPhysicalDevice(instance);
  * @endcode
  */
 class PhysicalDevice {
   public:
-    PhysicalDevice(VkInstance instance);
-    ~PhysicalDevice() = default;
+    void pickPhysicalDevice(VkInstance instance);
 
   private:
     [[nodiscard]] bool isDeviceSuitable(VkPhysicalDevice device);

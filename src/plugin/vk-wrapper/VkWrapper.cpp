@@ -15,6 +15,7 @@ VkWrapper::VkWrapper(const std::string &applicationName) : _instance(application
 {
     std::cout << VKWRAPPER_CONFIG_STRING << std::endl;
     _instance.setupDebugMessenger();
+    _instance.pickPhysicalDevice();
 }
 
 VkWrapper::~VkWrapper() {}

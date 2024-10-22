@@ -32,6 +32,7 @@
 #include <vector>
 
 #include "DebugMessenger.hpp"
+#include "PhysicalDevice.hpp"
 
 namespace ES::Plugin::Wrapper {
 
@@ -54,6 +55,8 @@ class Instance {
 
     void setupDebugMessenger();
 
+    void pickPhysicalDevice();
+
   private:
     [[nodiscard]] bool CheckValidationLayerSupport();
 
@@ -62,6 +65,7 @@ class Instance {
   private:
     VkInstance _instance;
     DebugMessenger _debugMessenger;
+    PhysicalDevice physicalDevice;
 };
 
 } // namespace ES::Plugin::Wrapper

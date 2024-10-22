@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-PhysicalDevice::PhysicalDevice(VkInstance instance)
+void PhysicalDevice::pickPhysicalDevice(VkInstance instance)
 {
     uint32_t deviceCount = 0;
     vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
