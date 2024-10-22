@@ -58,11 +58,30 @@ class Instance {
     Instance(const std::string &applicationName);
     ~Instance();
 
+    void setupDebugMessenger();
+
   private:
     [[nodiscard]] bool CheckValidationLayerSupport();
 
+    [[nodiscard]] std::vector<const char *> getRequiredExtensions();
+
+    static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+                                                        VkDebugUtilsMessageTypeFlagsEXT messageType,
+                                                        const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
+                                                        void *pUserData);
+
+    void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
+
+    VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
+                                          const VkAllocationCallbacks *pAllocator,
+                                          VkDebugUtilsMessengerEXT *pDebugMessenger);
+
+    void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT callback,
+                                       const VkAllocationCallbacks *pAllocator);
+
   private:
-    VkInstance instance;
+    VkInstance _instance;
+    VkDebugUtilsMessengerEXT _debugMessenger;
 };
 
 } // namespace ES::Plugin::Wrapper
