@@ -27,6 +27,7 @@ target("EngineSquared")
     add_includedirs("src/plugin/collision/resource", { public = true })
     add_includedirs("src/plugin/vk-wrapper", { public = true })
     add_includedirs("src/plugin/vk-wrapper/instance", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/debugMessenger", { public = true })
 
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")

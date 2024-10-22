@@ -28,20 +28,14 @@
 
 #include <cstdlib>
 #include <cstring>
-#include <iostream>
-#include <stdexcept>
 #include <string>
 #include <vector>
+
+#include "DebugMessenger.hpp"
 
 namespace ES::Plugin::Wrapper {
 
 const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
-
-#ifdef VKWRAPPER_DEBUG
-constexpr bool enableValidationLayers = false;
-#else
-constexpr bool enableValidationLayers = true;
-#endif
 
 /**
  * @brief Instance class.
@@ -65,23 +59,9 @@ class Instance {
 
     [[nodiscard]] std::vector<const char *> getRequiredExtensions();
 
-    static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-                                                        VkDebugUtilsMessageTypeFlagsEXT messageType,
-                                                        const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
-                                                        void *pUserData);
-
-    void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
-
-    VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
-                                          const VkAllocationCallbacks *pAllocator,
-                                          VkDebugUtilsMessengerEXT *pDebugMessenger);
-
-    void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT callback,
-                                       const VkAllocationCallbacks *pAllocator);
-
   private:
     VkInstance _instance;
-    VkDebugUtilsMessengerEXT _debugMessenger;
+    DebugMessenger _debugMessenger;
 };
 
 } // namespace ES::Plugin::Wrapper
