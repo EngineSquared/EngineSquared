@@ -34,6 +34,7 @@ namespace ES::Plugin::Wrapper {
 /**
  * @brief PhysicalDevice class.
  *
+ * This class is used to check if a physical device is suitable for the application.
  *
  * @example
  * @code

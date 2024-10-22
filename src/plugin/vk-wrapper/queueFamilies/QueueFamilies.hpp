@@ -34,6 +34,7 @@ namespace ES::Plugin::Wrapper {
 /**
  * @brief QueueFamilies class.
  *
+ * This class is used to find the queue families of a physical device.
  *
  * @example
  * @code
@@ -48,8 +49,22 @@ class QueueFamilies {
     };
 
   public:
+    /**
+     * @brief Finds the queue families for a given Vulkan physical device.
+     *
+     * This function identifies the queue families that are supported by the specified
+     * Vulkan physical device. Queue families are groups of queues that support a
+     * particular set of operations, such as graphics, compute, or transfer operations.
+     *
+     * @param device The Vulkan physical device for which to find the queue families.
+     */
     void findQueueFamilies(VkPhysicalDevice device);
 
+    /**
+     * @brief Returns whether the queue families have been completely identified.
+     *
+     * @return true if the queue families have been completely identified, false otherwise.
+     */
     [[nodiscard]] bool isComplete() const { return _indices.isComplete(); }
 
   private:

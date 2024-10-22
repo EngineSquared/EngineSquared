@@ -53,13 +53,43 @@ class Instance {
     Instance(const std::string &applicationName);
     ~Instance();
 
+    /**
+     * @brief Sets up the debug messenger for Vulkan instance.
+     *
+     * This function initializes and configures the debug messenger
+     * which is used to capture and handle debug messages from the Vulkan
+     * API. It is essential for debugging and validation purposes, providing
+     * detailed information about the Vulkan operations and potential issues.
+     */
     void setupDebugMessenger();
 
+    /**
+     * @brief Picks a suitable physical device (GPU) for Vulkan operations.
+     *
+     * This function selects a physical device that meets the requirements
+     * for running Vulkan applications. It evaluates available GPUs and
+     * chooses the most appropriate one based on criteria such as support
+     * for required features and extensions.
+     */
     void pickPhysicalDevice();
 
   private:
+    /**
+     * @brief Checks if the required Vulkan validation layers are supported.
+     *
+     * This function verifies whether the necessary Vulkan validation layers
+     * are available on the system. Validation layers are used for debugging
+     * and development purposes to ensure that the Vulkan API is used correctly.
+     *
+     * @return true if all required validation layers are supported, false otherwise.
+     */
     [[nodiscard]] bool CheckValidationLayerSupport();
 
+    /**
+     * @brief Get the Required Extensions object
+     *
+     * @return std::vector<const char *>  The required extensions for the Vulkan API.
+     */
     [[nodiscard]] std::vector<const char *> getRequiredExtensions();
 
   private:
