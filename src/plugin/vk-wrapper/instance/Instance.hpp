@@ -71,7 +71,7 @@ class Instance {
      * chooses the most appropriate one based on criteria such as support
      * for required features and extensions.
      */
-    void pickPhysicalDevice();
+    void setupDevices();
 
   private:
     /**
@@ -95,7 +95,7 @@ class Instance {
   private:
     VkInstance _instance;
     DebugMessenger _debugMessenger;
-    PhysicalDevice physicalDevice;
+    PhysicalDevice _physicalDevice;
 };
 
 } // namespace ES::Plugin::Wrapper

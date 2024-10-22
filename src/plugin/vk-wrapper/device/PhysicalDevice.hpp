@@ -46,6 +46,8 @@ class PhysicalDevice {
   public:
     void pickPhysicalDevice(VkInstance instance);
 
+    [[nodiscard]] VkPhysicalDevice GetPhysicalDevice() const { return physicalDevice; }
+
   private:
     [[nodiscard]] bool isDeviceSuitable(VkPhysicalDevice device);
     [[nodiscard]] uint32_t rateDeviceSuitability(VkPhysicalDevice device);
