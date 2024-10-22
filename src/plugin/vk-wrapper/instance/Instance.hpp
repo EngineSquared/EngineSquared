@@ -32,8 +32,8 @@
 #include <vector>
 
 #include "DebugMessenger.hpp"
-#include "PhysicalDevice.hpp"
 #include "LogicalDevice.hpp"
+#include "PhysicalDevice.hpp"
 
 namespace ES::Plugin::Wrapper {
 
