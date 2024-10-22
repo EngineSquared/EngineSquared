@@ -33,6 +33,7 @@
 
 #include "DebugMessenger.hpp"
 #include "PhysicalDevice.hpp"
+#include "LogicalDevice.hpp"
 
 namespace ES::Plugin::Wrapper {
 
@@ -70,6 +71,14 @@ class Instance {
      * for running Vulkan applications. It evaluates available GPUs and
      * chooses the most appropriate one based on criteria such as support
      * for required features and extensions.
+     *
+     * @brief Creates a logical device from the selected physical device.
+     *
+     * This function creates a logical device, which is an abstraction
+     * representing the GPU. It enables communication with the physical
+     * device and allows the application to execute Vulkan commands.
+     * The logical device is configured with specific features and
+     * extensions required by the application.
      */
     void setupDevices();
 
@@ -95,7 +104,7 @@ class Instance {
   private:
     VkInstance _instance;
     DebugMessenger _debugMessenger;
-    PhysicalDevice _physicalDevice;
+    LogicalDevice _logicalDevice;
 };
 
 } // namespace ES::Plugin::Wrapper

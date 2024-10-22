@@ -67,6 +67,13 @@ class QueueFamilies {
      */
     [[nodiscard]] bool isComplete() const { return _indices.isComplete(); }
 
+    /**
+     * @brief Returns the queue family indices.
+     *
+     * @return The queue family indices.
+     */
+    [[nodiscard]] const QueueFamilyIndices &getIndices() const { return _indices; }
+
   private:
     QueueFamilyIndices _indices;
 };

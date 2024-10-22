@@ -44,6 +44,14 @@ namespace ES::Plugin::Wrapper {
  */
 class PhysicalDevice {
   public:
+    /**
+     * @brief Picks a suitable physical device (GPU) for Vulkan operations.
+     *
+     * This function selects a physical device that meets the requirements
+     * for running Vulkan applications. It evaluates available GPUs and
+     * chooses the most appropriate one based on criteria such as support
+     * for required features and extensions.
+     */
     void pickPhysicalDevice(VkInstance instance);
 
     [[nodiscard]] VkPhysicalDevice GetPhysicalDevice() const { return physicalDevice; }
