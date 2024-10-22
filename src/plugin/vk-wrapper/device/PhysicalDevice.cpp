@@ -37,12 +37,29 @@ PhysicalDevice::PhysicalDevice(VkInstance instance)
 
 bool PhysicalDevice::isDeviceSuitable(VkPhysicalDevice device)
 {
+    _queueFamilies.findQueueFamilies(device);
+
+    return _queueFamilies.isComplete();
+}
+
+uint32_t PhysicalDevice::rateDeviceSuitability(VkPhysicalDevice device)
+{
     VkPhysicalDeviceProperties deviceProperties;
     VkPhysicalDeviceFeatures deviceFeatures;
     vkGetPhysicalDeviceProperties(device, &deviceProperties);
     vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
 
-    return deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && deviceFeatures.geometryShader;
+    uint32_t score = 0;
+
+    if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+        score += 1000;
+
+    score += deviceProperties.limits.maxImageDimension2D;
+
+    if (!deviceFeatures.geometryShader)
+        return 0;
+
+    return score;
 }
 
 } // namespace ES::Plugin::Wrapper

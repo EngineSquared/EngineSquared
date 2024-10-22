@@ -10,49 +10,52 @@
  * it under the terms of the GPL-3.0 License as published by the
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
- * @file PhysicalDevice.hpp
- * @brief PhysicalDevice class declaration.
+ * @file QueueFamilies.hpp
+ * @brief QueueFamilies class declaration.
  *
- * This class is used to check if a physical device is suitable for the application.
- * It also checks if the device has the required queue families.
+ * This class is used to find the queue families of a physical device.
  *
  * @author @MasterLaplace
  * @version 0.0.0
  * @date 2024-10-21
  **************************************************************************/
 
-#ifndef PHYSICALDEVICE_HPP_
-#define PHYSICALDEVICE_HPP_
+#ifndef QUEUEFAMILIES_HPP_
+#define QUEUEFAMILIES_HPP_
 
-#include "QueueFamilies.hpp"
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
 
-#include <map>
-#include <stdexcept>
+#include <optional>
+#include <vector>
 
 namespace ES::Plugin::Wrapper {
 
 /**
- * @brief PhysicalDevice class.
+ * @brief QueueFamilies class.
  *
  *
  * @example
  * @code
  * @endcode
  */
-class PhysicalDevice {
+class QueueFamilies {
   public:
-    PhysicalDevice(VkInstance instance);
-    ~PhysicalDevice() = default;
+    struct QueueFamilyIndices {
+        std::optional<uint32_t> graphicsFamily;
+
+        [[nodiscard]] bool isComplete() const { return graphicsFamily.has_value(); }
+    };
+
+  public:
+    void findQueueFamilies(VkPhysicalDevice device);
+
+    [[nodiscard]] bool isComplete() const { return _indices.isComplete(); }
 
   private:
-    [[nodiscard]] bool isDeviceSuitable(VkPhysicalDevice device);
-    [[nodiscard]] uint32_t rateDeviceSuitability(VkPhysicalDevice device);
-
-  private:
-    VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-    QueueFamilies _queueFamilies;
+    QueueFamilyIndices _indices;
 };
 
 } // namespace ES::Plugin::Wrapper
 
-#endif /* !PHYSICALDEVICE_HPP_ */
+#endif /* !QUEUEFAMILIES_HPP_ */
