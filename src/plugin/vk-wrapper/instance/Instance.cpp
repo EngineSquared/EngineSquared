@@ -112,9 +112,6 @@ void Instance::setupDebugMessenger()
     _debugMessenger.setupDebugMessenger(_instance);
 }
 
-void Instance::setupDevices()
-{
-    _physicalDevice.pickPhysicalDevice(_instance);
-}
+void Instance::setupDevices() { _physicalDevice.pickPhysicalDevice(_instance); }
 
 } // namespace ES::Plugin::Wrapper
