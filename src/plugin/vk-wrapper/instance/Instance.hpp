@@ -29,15 +29,11 @@
 #include <cstdlib>
 #include <cstring>
 #include <string>
-#include <vector>
 
-#include "DebugMessenger.hpp"
 #include "LogicalDevice.hpp"
 #include "PhysicalDevice.hpp"
 
 namespace ES::Plugin::Wrapper {
-
-const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
 
 /**
  * @brief Instance class.

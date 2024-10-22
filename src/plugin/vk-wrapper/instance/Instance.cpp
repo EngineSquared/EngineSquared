@@ -52,6 +52,8 @@ Instance::Instance(const std::string &applicationName)
 
 Instance::~Instance()
 {
+    _logicalDevice.destroy();
+
     if (enableValidationLayers)
         _debugMessenger.DestroyDebugUtilsMessengerEXT(_instance, nullptr);
 
@@ -115,7 +117,7 @@ void Instance::setupDebugMessenger()
 void Instance::setupDevices()
 {
     _physicalDevice.pickPhysicalDevice(_instance);
-    _logicalDevice.createLogicalDevice(_physicalDevice.GetPhysicalDevice());
+    _logicalDevice.create(_physicalDevice.GetPhysicalDevice());
 }
 
 } // namespace ES::Plugin::Wrapper

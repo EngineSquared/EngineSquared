@@ -27,8 +27,11 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 namespace ES::Plugin::Wrapper {
+
+const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
 
 #ifdef VKWRAPPER_DEBUG
 constexpr bool enableValidationLayers = false;

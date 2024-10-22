@@ -32,8 +32,9 @@ namespace ES::Plugin::Wrapper {
  *
  * @example
  * @code
- * Device device;
- * device.createLogicalDevice(physicalDevice);
+ * LogicalDevice device;
+ * device.create(physicalDevice);
+ * device.destroy();
  * @endcode
  */
 class LogicalDevice {
@@ -47,11 +48,16 @@ class LogicalDevice {
      * The logical device is configured with specific features and
      * extensions required by the application.
      */
-    void createLogicalDevice(VkPhysicalDevice physicalDevice);
+    void create(VkPhysicalDevice physicalDevice);
+
+    void destroy() { vkDestroyDevice(_device, nullptr); }
+
+    [[nodiscard]] VkDevice getDevice() const { return _device; }
 
   private:
-    VkDevice device = VK_NULL_HANDLE;
+    VkDevice _device = VK_NULL_HANDLE;
     QueueFamilies _queueFamilies;
+    VkQueue _graphicsQueue;
 };
 
 } // namespace ES::Plugin::Wrapper

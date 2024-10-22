@@ -23,8 +23,7 @@
 #ifndef QUEUEFAMILIES_HPP_
 #define QUEUEFAMILIES_HPP_
 
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
+#include "DebugMessenger.hpp"
 
 #include <optional>
 #include <vector>
