@@ -104,6 +104,7 @@ class Instance {
   private:
     VkInstance _instance;
     DebugMessenger _debugMessenger;
+    PhysicalDevice _physicalDevice;
     LogicalDevice _logicalDevice;
 };
 
