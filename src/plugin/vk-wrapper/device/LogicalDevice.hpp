@@ -24,6 +24,8 @@
 
 #include "QueueFamilies.hpp"
 
+#include <set>
+
 namespace ES::Plugin::Wrapper {
 
 /**
@@ -58,6 +60,7 @@ class LogicalDevice {
     VkDevice _device = VK_NULL_HANDLE;
     QueueFamilies _queueFamilies;
     VkQueue _graphicsQueue;
+    VkQueue _presentQueue;
 };
 
 } // namespace ES::Plugin::Wrapper
