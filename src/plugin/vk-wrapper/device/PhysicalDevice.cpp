@@ -39,7 +39,32 @@ bool PhysicalDevice::isDeviceSuitable(const VkPhysicalDevice device, const VkSur
 {
     _queueFamilies.findQueueFamilies(device, surface);
 
-    return _queueFamilies.isComplete();
+    bool extensionsSupported = checkDeviceExtensionSupport(device);
+
+    bool swapChainAdequate = false;
+    if (extensionsSupported)
+    {
+        SwapChain::SupportDetails swapChainSupport = SwapChain::querySupport(device, surface);
+        swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
+    }
+
+    return _queueFamilies.isComplete() && extensionsSupported && swapChainAdequate;
+}
+
+bool PhysicalDevice::checkDeviceExtensionSupport(const VkPhysicalDevice device)
+{
+    uint32_t extensionCount;
+    vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+
+    std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+    vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+
+    std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
+
+    for (const auto &extension : availableExtensions)
+        requiredExtensions.erase(extension.extensionName);
+
+    return requiredExtensions.empty();
 }
 
 uint32_t PhysicalDevice::rateDeviceSuitability(const VkPhysicalDevice device)

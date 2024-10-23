@@ -25,9 +25,12 @@
 #define PHYSICALDEVICE_HPP_
 
 #include "QueueFamilies.hpp"
+#include "SwapChain.hpp"
 
 #include <map>
+#include <set>
 #include <stdexcept>
+#include <string>
 
 namespace ES::Plugin::Wrapper {
 
@@ -58,6 +61,7 @@ class PhysicalDevice {
 
   private:
     [[nodiscard]] bool isDeviceSuitable(const VkPhysicalDevice device, const VkSurfaceKHR surface);
+    [[nodiscard]] bool checkDeviceExtensionSupport(const VkPhysicalDevice device);
     [[nodiscard]] uint32_t rateDeviceSuitability(const VkPhysicalDevice device);
 
   private:

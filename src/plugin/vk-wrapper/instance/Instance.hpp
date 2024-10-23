@@ -114,6 +114,7 @@ class Instance {
     PhysicalDevice _physicalDevice;
     LogicalDevice _logicalDevice;
     Surface _surface;
+    SwapChain _swapChain;
 };
 
 } // namespace ES::Plugin::Wrapper
