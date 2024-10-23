@@ -32,11 +32,6 @@
 #include <stdexcept>
 #include <vector>
 
-#ifndef UINT32_MAX
-#include <limits>
-#define UINT32_MAX std::numeric_limits<uint32_t>::max()
-#endif
-
 #include "config.h"
 #include "export.h"
 
@@ -68,7 +63,7 @@ namespace ES::Plugin {
  */
 class VkWrapper {
   public:
-    VkWrapper(GLFWwindow *window, const std::string &applicationName);
+    VkWrapper(GLFWwindow *window, uint32_t width, uint32_t height, const std::string &applicationName);
     ~VkWrapper();
 
     void drawFrame();

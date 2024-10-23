@@ -18,7 +18,7 @@
 int main(int ac, char **av)
 {
     ES::Plugin::Window::Resource::Window window(800, 600, "My Engine");
-    ES::Plugin::VkWrapper vkWrapper(window.GetGLFWWindow(), "My Engine");
+    ES::Plugin::VkWrapper vkWrapper(window.GetGLFWWindow(), 800, 600, "My Engine");
 
     vkWrapper.PrintAvailableExtensions();
 

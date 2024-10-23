@@ -22,10 +22,15 @@
 #ifndef SWAPCHAIN_HPP_
 #define SWAPCHAIN_HPP_
 
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
+#include "QueueFamilies.hpp"
 
-#include <vector>
+#include <algorithm>
+#include <cstdint>
+
+#ifndef UINT32_MAX
+#    include <limits>
+#    define UINT32_MAX std::numeric_limits<uint32_t>::max()
+#endif
 
 namespace ES::Plugin::Wrapper {
 
@@ -47,6 +52,41 @@ class SwapChain {
 
   public:
     static [[nodiscard]] SupportDetails querySupport(const VkPhysicalDevice device, const VkSurfaceKHR surface);
+
+    void create(const VkPhysicalDevice physicalDevice, const VkDevice device, const VkSurfaceKHR surface,
+                const uint32_t width, const uint32_t height);
+
+    void destroy(const VkDevice device) { vkDestroySwapchainKHR(device, _swapChain, nullptr); }
+
+  private:
+    [[nodiscard]] VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+
+    [[nodiscard]] VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
+
+    [[nodiscard]] VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, const uint32_t width,
+                                              const uint32_t height);
+
+    /**
+     * @brief Get the Details object for the swap chain support.
+     *
+     * @return const SupportDetails  The details of the swap chain support.
+     */
+    [[nodiscard]] const SupportDetails getDetails() const { return _supportDetails; }
+
+    /**
+     * @brief Get the Swap Chain object.
+     *
+     * @return const VkSwapchainKHR  The swap chain.
+     */
+    [[nodiscard]] const VkSwapchainKHR getSwapChain() const { return _swapChain; }
+
+  private:
+    SupportDetails _supportDetails;
+    VkSurfaceFormatKHR _surfaceFormat;
+    VkPresentModeKHR _presentMode;
+    VkExtent2D _extent;
+    QueueFamilies _queueFamilies;
+    VkSwapchainKHR _swapChain;
 };
 
 } // namespace ES::Plugin::Wrapper

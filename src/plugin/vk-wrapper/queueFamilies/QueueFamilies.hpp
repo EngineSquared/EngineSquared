@@ -26,7 +26,6 @@
 #include "DebugMessenger.hpp"
 
 #include <optional>
-#include <vector>
 
 namespace ES::Plugin::Wrapper {
 

@@ -11,12 +11,14 @@
 
 namespace ES::Plugin {
 
-VkWrapper::VkWrapper(GLFWwindow *window, const std::string &applicationName) : _instance(applicationName)
+VkWrapper::VkWrapper(GLFWwindow *window, uint32_t width, uint32_t height, const std::string &applicationName)
+    : _instance(applicationName)
 {
     std::cout << VKWRAPPER_CONFIG_STRING << std::endl;
     _instance.setupDebugMessenger();
     _instance.createSurface(window);
     _instance.setupDevices();
+    _instance.createSwapChain(width, height);
 }
 
 VkWrapper::~VkWrapper() {}

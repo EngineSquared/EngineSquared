@@ -89,6 +89,19 @@ class Instance {
      */
     void setupDevices();
 
+    /**
+     * @brief Creates a swap chain for the Vulkan API.
+     *
+     * This function creates a swap chain for the Vulkan API. The swap chain
+     * is used to manage the presentation of images to the screen. It is
+     * essential for rendering graphics to the window and ensuring smooth
+     * frame transitions.
+     *
+     * @param width The width of the swap chain.
+     * @param height The height of the swap chain.
+     */
+    void createSwapChain(const uint32_t width, const uint32_t height);
+
   private:
     /**
      * @brief Checks if the required Vulkan validation layers are supported.
