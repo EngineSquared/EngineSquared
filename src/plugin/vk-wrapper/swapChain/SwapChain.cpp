@@ -84,6 +84,10 @@ void SwapChain::create(const VkPhysicalDevice physicalDevice, const VkDevice dev
 
     if (vkCreateSwapchainKHR(device, &createInfo, nullptr, &_swapChain) != VK_SUCCESS)
         throw std::runtime_error("failed to create swap chain!");
+
+    vkGetSwapchainImagesKHR(device, _swapChain, &imageCount, nullptr);
+    _swapChainImages.resize(imageCount);
+    vkGetSwapchainImagesKHR(device, _swapChain, &imageCount, _swapChainImages.data());
 }
 
 VkSurfaceFormatKHR SwapChain::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats)

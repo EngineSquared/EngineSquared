@@ -18,7 +18,7 @@ VkWrapper::VkWrapper(GLFWwindow *window, uint32_t width, uint32_t height, const 
     _instance.setupDebugMessenger();
     _instance.createSurface(window);
     _instance.setupDevices();
-    _instance.createSwapChain(width, height);
+    _instance.createSwapChainImages(width, height);
 }
 
 VkWrapper::~VkWrapper() {}

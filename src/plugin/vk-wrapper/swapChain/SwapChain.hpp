@@ -58,14 +58,6 @@ class SwapChain {
 
     void destroy(const VkDevice device) { vkDestroySwapchainKHR(device, _swapChain, nullptr); }
 
-  private:
-    [[nodiscard]] VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
-
-    [[nodiscard]] VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
-
-    [[nodiscard]] VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, const uint32_t width,
-                                              const uint32_t height);
-
     /**
      * @brief Get the Details object for the swap chain support.
      *
@@ -74,19 +66,49 @@ class SwapChain {
     [[nodiscard]] const SupportDetails getDetails() const { return _supportDetails; }
 
     /**
-     * @brief Get the Swap Chain object.
+     * @brief Get the Surface Format object.
      *
-     * @return const VkSwapchainKHR  The swap chain.
+     * @return const VkSurfaceFormatKHR  The surface format.
      */
-    [[nodiscard]] const VkSwapchainKHR getSwapChain() const { return _swapChain; }
+    [[nodiscard]] const VkSurfaceFormatKHR getSurfaceFormat() const { return _surfaceFormat; }
+
+    /**
+     * @brief Get the Present Mode object.
+     *
+     * @return const VkPresentModeKHR  The present mode.
+     */
+    [[nodiscard]] const VkPresentModeKHR getPresentMode() const { return _presentMode; }
+
+    /**
+     * @brief Get the Extent object.
+     *
+     * @return const VkExtent2D  The extent.
+     */
+    [[nodiscard]] const VkExtent2D getExtent() const { return _extent; }
+
+    /**
+     * @brief Get the Swap Chain Images object.
+     *
+     * @return const std::vector<VkImage>  The swap chain images.
+     */
+    [[nodiscard]] const std::vector<VkImage> getSwapChainImages() const { return _swapChainImages; }
+
+  private:
+    [[nodiscard]] VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+
+    [[nodiscard]] VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
+
+    [[nodiscard]] VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, const uint32_t width,
+                                              const uint32_t height);
 
   private:
     SupportDetails _supportDetails;
+    VkSwapchainKHR _swapChain;
+    std::vector<VkImage> _swapChainImages;
     VkSurfaceFormatKHR _surfaceFormat;
     VkPresentModeKHR _presentMode;
     VkExtent2D _extent;
     QueueFamilies _queueFamilies;
-    VkSwapchainKHR _swapChain;
 };
 
 } // namespace ES::Plugin::Wrapper
