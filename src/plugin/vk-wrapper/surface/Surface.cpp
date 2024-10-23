@@ -17,9 +17,6 @@ void Surface::create(GLFWwindow *window, const VkInstance instance)
         throw std::runtime_error("Failed to create window surface!");
 }
 
-void Surface::destroy(const VkInstance instance)
-{
-    vkDestroySurfaceKHR(instance, surface, nullptr);
-}
+void Surface::destroy(const VkInstance instance) { vkDestroySurfaceKHR(instance, surface, nullptr); }
 
 } // namespace ES::Plugin::Wrapper
