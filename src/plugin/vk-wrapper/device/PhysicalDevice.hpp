@@ -52,13 +52,13 @@ class PhysicalDevice {
      * chooses the most appropriate one based on criteria such as support
      * for required features and extensions.
      */
-    void pickPhysicalDevice(VkInstance instance);
+    void pickPhysicalDevice(const VkInstance instance, const VkSurfaceKHR surface);
 
     [[nodiscard]] VkPhysicalDevice GetPhysicalDevice() const { return physicalDevice; }
 
   private:
-    [[nodiscard]] bool isDeviceSuitable(VkPhysicalDevice device);
-    [[nodiscard]] uint32_t rateDeviceSuitability(VkPhysicalDevice device);
+    [[nodiscard]] bool isDeviceSuitable(const VkPhysicalDevice device, const VkSurfaceKHR surface);
+    [[nodiscard]] uint32_t rateDeviceSuitability(const VkPhysicalDevice device);
 
   private:
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;

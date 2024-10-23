@@ -57,6 +57,7 @@ Instance::~Instance()
     if (enableValidationLayers)
         _debugMessenger.DestroyDebugUtilsMessengerEXT(_instance, nullptr);
 
+    _surface.destroy(_instance);
     vkDestroyInstance(_instance, nullptr);
 }
 
@@ -114,10 +115,12 @@ void Instance::setupDebugMessenger()
     _debugMessenger.setupDebugMessenger(_instance);
 }
 
+void Instance::createSurface(GLFWwindow *window) { _surface.create(window, _instance); }
+
 void Instance::setupDevices()
 {
-    _physicalDevice.pickPhysicalDevice(_instance);
-    _logicalDevice.create(_physicalDevice.GetPhysicalDevice());
+    _physicalDevice.pickPhysicalDevice(_instance, _surface.getSurface());
+    _logicalDevice.create(_physicalDevice.GetPhysicalDevice(), _surface.getSurface());
 }
 
 } // namespace ES::Plugin::Wrapper

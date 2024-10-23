@@ -41,10 +41,30 @@ namespace ES::Plugin::Wrapper {
  */
 class QueueFamilies {
   public:
+    /**
+     * @struct QueueFamilyIndices
+     * @brief Holds indices for Vulkan queue families.
+     *
+     * This structure contains optional indices for graphics and present queue families.
+     * It provides a method to check if the graphics family index and the present family has been set.
+     *
+     * @var std::optional<uint32_t> QueueFamilyIndices::graphicsFamily
+     * Optional index for the graphics queue family.
+     * Check if the physical device supports graphics operations.
+     *
+     * @var std::optional<uint32_t> QueueFamilyIndices::presentFamily
+     * Optional index for the present queue family.
+     * Check if WSI is supported by the physical device.
+     *
+     * @fn bool QueueFamilyIndices::isComplete() const
+     * @brief Checks if the graphics family index and the present family has been set.
+     * @return True if the graphics family index and the present family has a value, false otherwise.
+     */
     struct QueueFamilyIndices {
         std::optional<uint32_t> graphicsFamily;
+        std::optional<uint32_t> presentFamily;
 
-        [[nodiscard]] bool isComplete() const { return graphicsFamily.has_value(); }
+        [[nodiscard]] bool isComplete() const { return graphicsFamily.has_value() && presentFamily.has_value(); }
     };
 
   public:
@@ -57,7 +77,7 @@ class QueueFamilies {
      *
      * @param device The Vulkan physical device for which to find the queue families.
      */
-    void findQueueFamilies(VkPhysicalDevice device);
+    void findQueueFamilies(const VkPhysicalDevice device, const VkSurfaceKHR surface);
 
     /**
      * @brief Returns whether the queue families have been completely identified.

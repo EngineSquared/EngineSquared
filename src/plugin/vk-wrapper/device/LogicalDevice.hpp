@@ -48,7 +48,7 @@ class LogicalDevice {
      * The logical device is configured with specific features and
      * extensions required by the application.
      */
-    void create(VkPhysicalDevice physicalDevice);
+    void create(const VkPhysicalDevice physicalDevice, const VkSurfaceKHR surface);
 
     void destroy() { vkDestroyDevice(_device, nullptr); }
 

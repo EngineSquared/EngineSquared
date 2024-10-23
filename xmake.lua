@@ -30,6 +30,7 @@ target("EngineSquared")
     add_includedirs("src/plugin/vk-wrapper/debugMessenger", { public = true })
     add_includedirs("src/plugin/vk-wrapper/device", { public = true })
     add_includedirs("src/plugin/vk-wrapper/queueFamilies", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/surface", { public = true })
 
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")

@@ -32,6 +32,7 @@
 
 #include "LogicalDevice.hpp"
 #include "PhysicalDevice.hpp"
+#include "Surface.hpp"
 
 namespace ES::Plugin::Wrapper {
 
@@ -59,6 +60,16 @@ class Instance {
      * detailed information about the Vulkan operations and potential issues.
      */
     void setupDebugMessenger();
+
+    /**
+     * @brief Creates a Vulkan surface for the given GLFW window.
+     *
+     * This function initializes a Vulkan surface that is associated with the specified
+     * GLFW window. The surface is necessary for rendering Vulkan graphics to the window.
+     *
+     * @param window A pointer to the GLFWwindow for which the Vulkan surface will be created.
+     */
+    void createSurface(GLFWwindow *window);
 
     /**
      * @brief Picks a suitable physical device (GPU) for Vulkan operations.
@@ -102,6 +113,7 @@ class Instance {
     DebugMessenger _debugMessenger;
     PhysicalDevice _physicalDevice;
     LogicalDevice _logicalDevice;
+    Surface _surface;
 };
 
 } // namespace ES::Plugin::Wrapper
