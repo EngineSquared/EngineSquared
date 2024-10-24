@@ -109,7 +109,6 @@ class SwapChain {
     VkPresentModeKHR _presentMode;
     VkExtent2D _extent;
     QueueFamilies _queueFamilies;
-    
 };
 
 } // namespace ES::Plugin::Wrapper
