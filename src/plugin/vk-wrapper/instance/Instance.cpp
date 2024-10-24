@@ -132,6 +132,6 @@ void Instance::createSwapChainImages(const uint32_t width, const uint32_t height
     _imageView.create(_logicalDevice.getDevice(), _swapChain.getSwapChainImages(), _swapChain.getSurfaceFormat());
 }
 
-void Instance::createGraphicsPipeline() { _graphicsPipeline.create(_logicalDevice.getDevice()); }
+void Instance::createGraphicsPipeline() { _graphicsPipeline.create(_logicalDevice.getDevice(), _swapChain.getExtent()); }
 
 } // namespace ES::Plugin::Wrapper

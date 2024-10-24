@@ -65,8 +65,22 @@ target("shader")
     add_deps("EngineSquared")
     on_build(function(target)
         import("core.base.option")
-        os.execv("glslc", {"shaders/shader.vert", "-o", "shaders/vert.spv"})
-        os.execv("glslc", {"shaders/shader.frag", "-o", "shaders/frag.spv"})
+        import("core.project.config")
+        import("core.base.task")
+        local buildir = path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)")
+        os.mkdir(path.join(buildir, "shaders"))
+
+        local shader_files = os.files("shaders/*.*")
+
+        for _, shader_file in ipairs(shader_files) do
+            local extension = string.sub(path.extension(shader_file), 2)
+            local output_file = path.join("shaders", extension .. ".spv") -- path.filename(shader_file)
+
+            os.execv("glslc", {shader_file, "-o", output_file})
+
+            os.cp(output_file, path.join(buildir, "shaders"))
+            os.rm(output_file)
+        end
     end)
 
 for _, file in ipairs(os.files("tests/**.cpp")) do

@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void GraphicsPipeline::create(const VkDevice device)
+void GraphicsPipeline::create(const VkDevice device, const VkExtent2D swapChainExtent)
 {
     auto vertShaderCode = ShaderModule::readFile(SHADER_DIR "vert.spv");
     auto fragShaderCode = ShaderModule::readFile(SHADER_DIR "frag.spv");
@@ -32,6 +32,22 @@ void GraphicsPipeline::create(const VkDevice device)
     fragShaderStageInfo.pName = "main";
 
     VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo, fragShaderStageInfo};
+
+    VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
+    vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+
+    VkPipelineInputAssemblyStateCreateInfo inputAssembly{};
+    inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
+    inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+    inputAssembly.primitiveRestartEnable = VK_FALSE;
+
+    VkViewport viewport{};
+    viewport.x = 0.0f;
+    viewport.y = 0.0f;
+    viewport.width = (float) swapChainExtent.width;
+    viewport.height = (float) swapChainExtent.height;
+    viewport.minDepth = 0.0f;
+    viewport.maxDepth = 1.0f;
 
     ShaderModule::destroy(device, fragment);
     ShaderModule::destroy(device, vertex);

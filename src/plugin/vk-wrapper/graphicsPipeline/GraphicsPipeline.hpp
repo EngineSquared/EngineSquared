@@ -36,7 +36,7 @@ namespace ES::Plugin::Wrapper {
  */
 class GraphicsPipeline {
   public:
-    void create(const VkDevice device);
+    void create(const VkDevice device, const VkExtent2D swapChainExtent);
 
   private:
 };
