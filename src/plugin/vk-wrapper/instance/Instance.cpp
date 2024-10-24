@@ -52,8 +52,11 @@ Instance::Instance(const std::string &applicationName)
 
 Instance::~Instance()
 {
-    _imageView.destroy(_logicalDevice.getDevice());
-    _swapChain.destroy(_logicalDevice.getDevice());
+    auto device = _logicalDevice.getDevice();
+
+    _graphicsPipeline.destroy(device);
+    _imageView.destroy(device);
+    _swapChain.destroy(device);
     _logicalDevice.destroy();
 
     if (enableValidationLayers)

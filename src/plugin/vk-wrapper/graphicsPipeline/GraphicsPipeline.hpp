@@ -38,7 +38,10 @@ class GraphicsPipeline {
   public:
     void create(const VkDevice device, const VkExtent2D swapChainExtent);
 
+    void destroy(const VkDevice device);
+
   private:
+    VkPipelineLayout _pipelineLayout;
 };
 
 } // namespace ES::Plugin::Wrapper
