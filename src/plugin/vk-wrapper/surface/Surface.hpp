@@ -65,7 +65,7 @@ class Surface {
      */
     void destroy(const VkInstance instance);
 
-    [[nodiscard]] VkSurfaceKHR getSurface() const { return surface; }
+    [[nodiscard]] const VkSurfaceKHR get() const { return surface; }
 
   private:
     VkSurfaceKHR surface;

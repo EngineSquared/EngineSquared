@@ -20,6 +20,7 @@ VkWrapper::VkWrapper(GLFWwindow *window, uint32_t width, uint32_t height, const 
     _instance.setupDevices();
     _instance.createSwapChainImages(width, height);
     _instance.createGraphicsPipeline();
+    _instance.createSemaphores();
 }
 
 VkWrapper::~VkWrapper() {}

@@ -54,7 +54,7 @@ class LogicalDevice {
 
     void destroy() { vkDestroyDevice(_device, nullptr); }
 
-    [[nodiscard]] VkDevice getDevice() const { return _device; }
+    [[nodiscard]] const VkDevice get() const { return _device; }
 
   private:
     VkDevice _device = VK_NULL_HANDLE;

@@ -52,7 +52,7 @@ Instance::Instance(const std::string &applicationName)
 
 Instance::~Instance()
 {
-    auto device = _logicalDevice.getDevice();
+    VkDevice device = _logicalDevice.get();
 
     _framebuffer.destroy(device);
     _graphicsPipeline.destroy(device);
@@ -126,38 +126,47 @@ void Instance::createSurface(GLFWwindow *window) { _surface.create(window, _inst
 
 void Instance::setupDevices()
 {
-    _physicalDevice.pickPhysicalDevice(_instance, _surface.getSurface());
-    _logicalDevice.create(_physicalDevice.GetPhysicalDevice(), _surface.getSurface());
+    _physicalDevice.pickPhysicalDevice(_instance, _surface.get());
+    _logicalDevice.create(_physicalDevice.get(), _surface.get());
 }
 
 void Instance::createSwapChainImages(const uint32_t width, const uint32_t height)
 {
-    _swapChain.create(_physicalDevice.GetPhysicalDevice(), _logicalDevice.getDevice(), _surface.getSurface(), width,
-                      height);
-    _imageView.create(_logicalDevice.getDevice(), _swapChain.getSwapChainImages(), _swapChain.getSurfaceFormat());
+    _swapChain.create(_physicalDevice.get(), _logicalDevice.get(), _surface.get(), width, height);
+    _imageView.create(_logicalDevice.get(), _swapChain.getSwapChainImages(), _swapChain.getSurfaceFormat());
 }
 
 void Instance::createGraphicsPipeline()
 {
-    _renderPass.create(_logicalDevice.getDevice(), _swapChain.getSurfaceFormat().format);
-    _graphicsPipeline.create(_logicalDevice.getDevice(), _swapChain.getExtent(), _renderPass.getRenderPass());
+    _renderPass.create(_logicalDevice.get(), _swapChain.getSurfaceFormat().format);
+    _graphicsPipeline.create(_logicalDevice.get(), _swapChain.getExtent(), _renderPass.get());
 
     Framebuffer::CreateInfo framebufferInfo{};
     framebufferInfo.swapChainExtent = _swapChain.getExtent();
-    framebufferInfo.renderPass = _renderPass.getRenderPass();
+    framebufferInfo.renderPass = _renderPass.get();
     framebufferInfo.swapChainImageViews = _imageView.getImageViews();
 
-    _framebuffer.create(_logicalDevice.getDevice(), framebufferInfo);
+    _framebuffer.create(_logicalDevice.get(), framebufferInfo);
 
     Command::CreateInfo commandInfo{};
-    commandInfo.physicalDevice = _physicalDevice.GetPhysicalDevice();
-    commandInfo.surface = _surface.getSurface();
+    commandInfo.physicalDevice = _physicalDevice.get();
+    commandInfo.surface = _surface.get();
     commandInfo.swapChainExtent = _swapChain.getExtent();
-    commandInfo.renderPass = _renderPass.getRenderPass();
+    commandInfo.renderPass = _renderPass.get();
     commandInfo.swapChainFramebuffers = _framebuffer.getSwapChainFramebuffers();
-    commandInfo.graphicsPipeline = _graphicsPipeline.getGraphicsPipeline();
+    commandInfo.graphicsPipeline = _graphicsPipeline.get();
 
-    _command.create(_logicalDevice.getDevice(), commandInfo);
+    _command.create(_logicalDevice.get(), commandInfo);
+}
+
+void Instance::createSemaphores()
+{
+    VkSemaphoreCreateInfo semaphoreInfo{};
+    semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+
+    if (vkCreateSemaphore(_logicalDevice.get(), &semaphoreInfo, nullptr, &_imageAvailableSemaphore) != VK_SUCCESS ||
+        vkCreateSemaphore(_logicalDevice.get(), &semaphoreInfo, nullptr, &_renderFinishedSemaphore) != VK_SUCCESS)
+        throw std::runtime_error("failed to create semaphores!");
 }
 
 } // namespace ES::Plugin::Wrapper

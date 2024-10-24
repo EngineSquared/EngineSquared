@@ -40,7 +40,7 @@ class RenderPass {
 
     void destroy(const VkDevice device);
 
-    [[nodiscard]] VkRenderPass getRenderPass() const { return _renderPass; }
+    [[nodiscard]] const VkRenderPass get() const { return _renderPass; }
 
   private:
     VkRenderPass _renderPass;

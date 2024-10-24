@@ -118,6 +118,8 @@ class Instance {
 
     void createGraphicsPipeline();
 
+    void createSemaphores();
+
   private:
     /**
      * @brief Checks if the required Vulkan validation layers are supported.
@@ -152,6 +154,8 @@ class Instance {
     RenderPass _renderPass;
     Framebuffer _framebuffer;
     Command _command;
+    VkSemaphore _imageAvailableSemaphore;
+    VkSemaphore _renderFinishedSemaphore;
 };
 
 } // namespace ES::Plugin::Wrapper

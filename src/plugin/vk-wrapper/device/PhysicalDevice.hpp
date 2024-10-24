@@ -56,7 +56,7 @@ class PhysicalDevice {
      */
     void pickPhysicalDevice(const VkInstance instance, const VkSurfaceKHR surface);
 
-    [[nodiscard]] VkPhysicalDevice GetPhysicalDevice() const { return physicalDevice; }
+    [[nodiscard]] const VkPhysicalDevice get() const { return physicalDevice; }
 
   private:
     [[nodiscard]] bool isDeviceSuitable(const VkPhysicalDevice device, const VkSurfaceKHR surface);
