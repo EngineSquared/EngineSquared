@@ -30,8 +30,8 @@
 #include "ImageView.hpp"
 #include "LogicalDevice.hpp"
 #include "PhysicalDevice.hpp"
-#include "Surface.hpp"
 #include "RenderPass.hpp"
+#include "Surface.hpp"
 
 namespace ES::Plugin::Wrapper {
 
