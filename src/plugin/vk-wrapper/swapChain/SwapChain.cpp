@@ -38,7 +38,7 @@ SwapChain::SupportDetails SwapChain::querySupport(const VkPhysicalDevice device,
     return details;
 }
 
-void SwapChain::create(const VkPhysicalDevice physicalDevice, const VkDevice device, const VkSurfaceKHR surface,
+void SwapChain::create(const VkDevice device, const VkPhysicalDevice physicalDevice, const VkSurfaceKHR surface,
                        const uint32_t width, const uint32_t height)
 {
     _supportDetails = querySupport(physicalDevice, surface);

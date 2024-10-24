@@ -52,9 +52,13 @@ namespace ES::Plugin {
  */
 class VkWrapper {
   public:
-    VkWrapper(GLFWwindow *window, uint32_t width, uint32_t height, const std::string &applicationName);
-    ~VkWrapper() = default;
+    void create(GLFWwindow *window, uint32_t width, uint32_t height, const std::string &applicationName);
+    void destroy();
 
+    /**
+     * @brief Draw a frame using the Vulkan API.
+     *
+     */
     void drawFrame();
 
     /**
@@ -62,6 +66,18 @@ class VkWrapper {
      *
      */
     void PrintAvailableExtensions();
+
+    /**
+     * @brief Print the version of the VkWrapper.
+     *
+     */
+    void PrintVersion();
+
+    /**
+     * @brief Print the configuration of the VkWrapper.
+     *
+     */
+    void PrintConfig();
 
   protected:
   private:

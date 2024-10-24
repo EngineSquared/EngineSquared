@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-Instance::Instance(const std::string &applicationName)
+void Instance::create(const std::string &applicationName)
 {
     if (enableValidationLayers && !CheckValidationLayerSupport())
         throw std::runtime_error("validation layers requested, but not available!");
@@ -29,7 +29,7 @@ Instance::Instance(const std::string &applicationName)
     createInfo.pApplicationInfo = &appInfo;
 
     auto extensions = getRequiredExtensions();
-    createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
+    createInfo.enabledExtensionCount = (uint32_t) extensions.size();
     createInfo.ppEnabledExtensionNames = extensions.data();
 #if VKWRAPPER_SYSTEM_MACOS
     createInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
@@ -39,7 +39,7 @@ Instance::Instance(const std::string &applicationName)
 
     if (enableValidationLayers)
     {
-        createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+        createInfo.enabledLayerCount = (uint32_t) validationLayers.size();
         createInfo.ppEnabledLayerNames = validationLayers.data();
 
         _debugMessenger.populateDebugMessengerCreateInfo(debugCreateInfo);
@@ -50,14 +50,18 @@ Instance::Instance(const std::string &applicationName)
         throw std::runtime_error("failed to create instance!");
 }
 
-Instance::~Instance()
+void Instance::destroy()
 {
     VkDevice device = _logicalDevice.get();
 
     vkDeviceWaitIdle(device);
 
-    vkDestroySemaphore(device, _renderFinishedSemaphore, nullptr);
-    vkDestroySemaphore(device, _imageAvailableSemaphore, nullptr);
+    for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
+    {
+        vkDestroySemaphore(device, _renderFinishedSemaphores[i], nullptr);
+        vkDestroySemaphore(device, _imageAvailableSemaphores[i], nullptr);
+        vkDestroyFence(device, _inFlightFences[i], nullptr);
+    }
 
     _framebuffer.destroy(device);
     _graphicsPipeline.destroy(device);
@@ -131,14 +135,19 @@ void Instance::createSurface(GLFWwindow *window) { _surface.create(window, _inst
 
 void Instance::setupDevices()
 {
-    _physicalDevice.pickPhysicalDevice(_instance, _surface.get());
-    _logicalDevice.create(_physicalDevice.get(), _surface.get());
+    auto surface = _surface.get();
+
+    _physicalDevice.pickPhysicalDevice(_instance, surface);
+    _logicalDevice.create(_physicalDevice.get(), surface);
 }
 
 void Instance::createSwapChainImages(const uint32_t width, const uint32_t height)
 {
-    _swapChain.create(_physicalDevice.get(), _logicalDevice.get(), _surface.get(), width, height);
-    _imageView.create(_logicalDevice.get(), _swapChain.getSwapChainImages(), _swapChain.getSurfaceFormat());
+    auto device = _logicalDevice.get();
+    _currentFrame = 0;
+
+    _swapChain.create(device, _physicalDevice.get(), _surface.get(), width, height);
+    _imageView.create(device, _swapChain.getSwapChainImages(), _swapChain.getSurfaceFormat());
 }
 
 void Instance::createGraphicsPipeline()
@@ -148,6 +157,7 @@ void Instance::createGraphicsPipeline()
     auto renderPass = _renderPass.get();
 
     _renderPass.create(device, _swapChain.getSurfaceFormat().format);
+
     _graphicsPipeline.create(device, extent, renderPass);
 
     Framebuffer::CreateInfo framebufferInfo{};
@@ -168,27 +178,56 @@ void Instance::createGraphicsPipeline()
     _command.create(device, commandInfo);
 }
 
-void Instance::createSemaphores()
+void Instance::createSyncObjects()
 {
+    _imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+    _renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+    _inFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
+    _imagesInFlight.resize(_swapChain.getSwapChainImages().size(), VK_NULL_HANDLE);
+
     VkSemaphoreCreateInfo semaphoreInfo{};
     semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
+    VkFenceCreateInfo fenceInfo{};
+    fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+    fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+
     auto device = _logicalDevice.get();
 
-    if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &_imageAvailableSemaphore) != VK_SUCCESS ||
-        vkCreateSemaphore(device, &semaphoreInfo, nullptr, &_renderFinishedSemaphore) != VK_SUCCESS)
-        throw std::runtime_error("failed to create semaphores!");
+    for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
+    {
+        if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &_imageAvailableSemaphores[i]) != VK_SUCCESS ||
+            vkCreateSemaphore(device, &semaphoreInfo, nullptr, &_renderFinishedSemaphores[i]) != VK_SUCCESS ||
+            vkCreateFence(device, &fenceInfo, nullptr, &_inFlightFences[i]) != VK_SUCCESS)
+            throw std::runtime_error("failed to create semaphores!");
+    }
 }
 
-void Instance::acquireNextImage(uint32_t &imageIndex)
+void Instance::drawNextImage()
 {
-    vkAcquireNextImageKHR(_logicalDevice.get(), _swapChain.get(), UINT64_MAX, _imageAvailableSemaphore, VK_NULL_HANDLE,
-                          &imageIndex);
+    auto device = _logicalDevice.get();
+
+    vkWaitForFences(device, 1, &_inFlightFences[_currentFrame], VK_TRUE, UINT64_MAX);
+    vkResetFences(device, 1, &_inFlightFences[_currentFrame]);
+
+    uint32_t imageIndex;
+    vkAcquireNextImageKHR(device, _swapChain.get(), UINT64_MAX, _imageAvailableSemaphores[_currentFrame],
+                          VK_NULL_HANDLE, &imageIndex);
+
+    Command::RecordInfo recordInfo{};
+    recordInfo.currentFrame = imageIndex;
+    recordInfo.imageIndex = imageIndex;
+    recordInfo.renderPass = _renderPass.get();
+    recordInfo.swapChainExtent = _swapChain.getExtent();
+    recordInfo.swapChainFramebuffers = _framebuffer.getSwapChainFramebuffers();
+    recordInfo.graphicsPipeline = _graphicsPipeline.get();
+
+    _command.recordBuffer(recordInfo);
 
     VkSubmitInfo submitInfo{};
     submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-    VkSemaphore waitSemaphores[] = {_imageAvailableSemaphore};
+    VkSemaphore waitSemaphores[] = {_imageAvailableSemaphores[_currentFrame]};
     VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
     submitInfo.waitSemaphoreCount = 1;
     submitInfo.pWaitSemaphores = waitSemaphores;
@@ -196,7 +235,7 @@ void Instance::acquireNextImage(uint32_t &imageIndex)
     submitInfo.commandBufferCount = 1;
     submitInfo.pCommandBuffers = &_command.getCommandBuffer(imageIndex);
 
-    VkSemaphore signalSemaphores[] = {_renderFinishedSemaphore};
+    VkSemaphore signalSemaphores[] = {_renderFinishedSemaphores[_currentFrame]};
     submitInfo.signalSemaphoreCount = 1;
     submitInfo.pSignalSemaphores = signalSemaphores;
 
@@ -214,6 +253,10 @@ void Instance::acquireNextImage(uint32_t &imageIndex)
     presentInfo.pImageIndices = &imageIndex;
 
     vkQueuePresentKHR(_logicalDevice.getPresentQueue(), &presentInfo);
+
+    vkQueueWaitIdle(_logicalDevice.getPresentQueue());
+
+    _currentFrame = (_currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 }
 
 } // namespace ES::Plugin::Wrapper

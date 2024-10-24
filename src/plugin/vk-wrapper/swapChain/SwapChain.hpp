@@ -53,7 +53,7 @@ class SwapChain {
   public:
     [[nodiscard]] static SupportDetails querySupport(const VkPhysicalDevice device, const VkSurfaceKHR surface);
 
-    void create(const VkPhysicalDevice physicalDevice, const VkDevice device, const VkSurfaceKHR surface,
+    void create(const VkDevice device, const VkPhysicalDevice physicalDevice, const VkSurfaceKHR surface,
                 const uint32_t width, const uint32_t height);
 
     void destroy(const VkDevice device) { vkDestroySwapchainKHR(device, _swapChain, nullptr); }

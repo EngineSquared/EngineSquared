@@ -45,17 +45,23 @@ class Command {
         VkPipeline graphicsPipeline;
     };
 
+    struct RecordInfo {
+        uint32_t currentFrame;
+        uint32_t imageIndex;
+        VkRenderPass renderPass;
+        VkExtent2D swapChainExtent;
+        std::vector<VkFramebuffer> swapChainFramebuffers;
+        VkPipeline graphicsPipeline;
+    };
+
   public:
     void create(const VkDevice device, const CreateInfo info);
 
     void destroy(const VkDevice device);
 
-    [[nodiscard]] VkCommandBuffer &getCommandBuffer(uint32_t imageIndex) { return _commandBuffers[imageIndex]; }
+    void recordBuffer(const RecordInfo info);
 
-  private:
-    void record(VkCommandBuffer commandBuffer, uint32_t imageIndex, const VkRenderPass renderPass,
-                const std::vector<VkFramebuffer> swapChainFramebuffers, const VkExtent2D swapChainExten,
-                const VkPipeline graphicsPipeline);
+    [[nodiscard]] VkCommandBuffer &getCommandBuffer(uint32_t imageIndex) { return _commandBuffers[imageIndex]; }
 
   private:
     VkCommandPool _commandPool;

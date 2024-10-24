@@ -37,6 +37,8 @@
 
 namespace ES::Plugin::Wrapper {
 
+const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
+
 /**
  * @class Instance
  * @brief Manages the Vulkan instance and related resources.
@@ -60,14 +62,14 @@ class Instance {
      *
      * @param applicationName The name of the application.
      */
-    Instance(const std::string &applicationName);
+    void create(const std::string &applicationName);
 
     /**
      * @brief Destructor for the Instance class.
      *
      * Cleans up and destroys the Vulkan instance and related resources.
      */
-    ~Instance();
+    void destroy();
 
     /**
      * @brief Sets up the debug messenger for Vulkan instance.
@@ -118,9 +120,9 @@ class Instance {
 
     void createGraphicsPipeline();
 
-    void createSemaphores();
+    void createSyncObjects();
 
-    void acquireNextImage(uint32_t &imageIndex);
+    void drawNextImage();
 
   private:
     /**
@@ -156,8 +158,11 @@ class Instance {
     RenderPass _renderPass;
     Framebuffer _framebuffer;
     Command _command;
-    VkSemaphore _imageAvailableSemaphore;
-    VkSemaphore _renderFinishedSemaphore;
+    std::vector<VkSemaphore> _imageAvailableSemaphores;
+    std::vector<VkSemaphore> _renderFinishedSemaphores;
+    std::vector<VkFence> _inFlightFences;
+    std::vector<VkFence> _imagesInFlight;
+    uint32_t _currentFrame;
 };
 
 } // namespace ES::Plugin::Wrapper

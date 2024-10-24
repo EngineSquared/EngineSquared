@@ -11,22 +11,22 @@
 
 namespace ES::Plugin {
 
-VkWrapper::VkWrapper(GLFWwindow *window, uint32_t width, uint32_t height, const std::string &applicationName)
-    : _instance(applicationName)
+void VkWrapper::create(GLFWwindow *window, uint32_t width, uint32_t height, const std::string &applicationName)
 {
-    std::cout << VKWRAPPER_CONFIG_STRING << std::endl;
+    _instance.create(applicationName);
     _instance.setupDebugMessenger();
     _instance.createSurface(window);
     _instance.setupDevices();
     _instance.createSwapChainImages(width, height);
     _instance.createGraphicsPipeline();
-    _instance.createSemaphores();
+    _instance.createSyncObjects();
 }
+
+void VkWrapper::destroy() { _instance.destroy(); }
 
 void VkWrapper::drawFrame()
 {
-    uint32_t imageIndex;
-    _instance.acquireNextImage(imageIndex);
+    _instance.drawNextImage();
 }
 
 void VkWrapper::PrintAvailableExtensions()
@@ -42,5 +42,9 @@ void VkWrapper::PrintAvailableExtensions()
     for (const auto &extension : extensions)
         std::cout << '\t' << extension.extensionName << std::endl;
 }
+
+void VkWrapper::PrintVersion() { std::cout << "VkWrapper version: " << VKWRAPPER_VERSION_STRING << std::endl; }
+
+void VkWrapper::PrintConfig() { std::cout << "VkWrapper config:\n" << VKWRAPPER_CONFIG_STRING << std::endl; }
 
 } // namespace ES::Plugin
