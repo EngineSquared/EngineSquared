@@ -33,6 +33,7 @@ target("EngineSquared")
     add_includedirs("src/plugin/vk-wrapper/surface", { public = true })
     add_includedirs("src/plugin/vk-wrapper/swapChain", { public = true })
     add_includedirs("src/plugin/vk-wrapper/imageView", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/shaderModule", { public = true })
 
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")

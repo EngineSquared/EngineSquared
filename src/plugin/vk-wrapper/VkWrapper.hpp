@@ -24,17 +24,6 @@
 #ifndef VKWRAPPER_HPP_
 #define VKWRAPPER_HPP_
 
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
-
-#include <cstdlib>
-#include <iostream>
-#include <stdexcept>
-#include <vector>
-
-#include "config.h"
-#include "export.h"
-
 #include "Instance.hpp"
 
 namespace ES::Plugin {

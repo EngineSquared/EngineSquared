@@ -24,7 +24,6 @@
 #ifndef PHYSICALDEVICE_HPP_
 #define PHYSICALDEVICE_HPP_
 
-#include "QueueFamilies.hpp"
 #include "SwapChain.hpp"
 
 #include <map>

@@ -23,12 +23,8 @@
 #ifndef INSTANCE_HPP_
 #define INSTANCE_HPP_
 
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
-
 #include <cstdlib>
 #include <cstring>
-#include <string>
 
 #include "ImageView.hpp"
 #include "LogicalDevice.hpp"
