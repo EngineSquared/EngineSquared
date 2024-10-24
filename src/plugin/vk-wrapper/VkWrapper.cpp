@@ -24,10 +24,7 @@ void VkWrapper::create(GLFWwindow *window, uint32_t width, uint32_t height, cons
 
 void VkWrapper::destroy() { _instance.destroy(); }
 
-void VkWrapper::drawFrame()
-{
-    _instance.drawNextImage();
-}
+void VkWrapper::drawFrame() { _instance.drawNextImage(); }
 
 void VkWrapper::PrintAvailableExtensions()
 {
