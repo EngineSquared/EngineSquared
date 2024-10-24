@@ -51,7 +51,7 @@ class SwapChain {
     };
 
   public:
-    static [[nodiscard]] SupportDetails querySupport(const VkPhysicalDevice device, const VkSurfaceKHR surface);
+    [[nodiscard]] static SupportDetails querySupport(const VkPhysicalDevice device, const VkSurfaceKHR surface);
 
     void create(const VkPhysicalDevice physicalDevice, const VkDevice device, const VkSurfaceKHR surface,
                 const uint32_t width, const uint32_t height);
