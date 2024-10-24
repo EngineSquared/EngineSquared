@@ -54,6 +54,11 @@ Instance::~Instance()
 {
     VkDevice device = _logicalDevice.get();
 
+    vkDeviceWaitIdle(device);
+
+    vkDestroySemaphore(device, _renderFinishedSemaphore, nullptr);
+    vkDestroySemaphore(device, _imageAvailableSemaphore, nullptr);
+
     _framebuffer.destroy(device);
     _graphicsPipeline.destroy(device);
     _renderPass.destroy(device);
@@ -138,25 +143,29 @@ void Instance::createSwapChainImages(const uint32_t width, const uint32_t height
 
 void Instance::createGraphicsPipeline()
 {
-    _renderPass.create(_logicalDevice.get(), _swapChain.getSurfaceFormat().format);
-    _graphicsPipeline.create(_logicalDevice.get(), _swapChain.getExtent(), _renderPass.get());
+    auto device = _logicalDevice.get();
+    auto extent = _swapChain.getExtent();
+    auto renderPass = _renderPass.get();
+
+    _renderPass.create(device, _swapChain.getSurfaceFormat().format);
+    _graphicsPipeline.create(device, extent, renderPass);
 
     Framebuffer::CreateInfo framebufferInfo{};
-    framebufferInfo.swapChainExtent = _swapChain.getExtent();
-    framebufferInfo.renderPass = _renderPass.get();
+    framebufferInfo.swapChainExtent = extent;
+    framebufferInfo.renderPass = renderPass;
     framebufferInfo.swapChainImageViews = _imageView.getImageViews();
 
-    _framebuffer.create(_logicalDevice.get(), framebufferInfo);
+    _framebuffer.create(device, framebufferInfo);
 
     Command::CreateInfo commandInfo{};
     commandInfo.physicalDevice = _physicalDevice.get();
     commandInfo.surface = _surface.get();
-    commandInfo.swapChainExtent = _swapChain.getExtent();
-    commandInfo.renderPass = _renderPass.get();
+    commandInfo.swapChainExtent = extent;
+    commandInfo.renderPass = renderPass;
     commandInfo.swapChainFramebuffers = _framebuffer.getSwapChainFramebuffers();
     commandInfo.graphicsPipeline = _graphicsPipeline.get();
 
-    _command.create(_logicalDevice.get(), commandInfo);
+    _command.create(device, commandInfo);
 }
 
 void Instance::createSemaphores()
@@ -164,9 +173,47 @@ void Instance::createSemaphores()
     VkSemaphoreCreateInfo semaphoreInfo{};
     semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-    if (vkCreateSemaphore(_logicalDevice.get(), &semaphoreInfo, nullptr, &_imageAvailableSemaphore) != VK_SUCCESS ||
-        vkCreateSemaphore(_logicalDevice.get(), &semaphoreInfo, nullptr, &_renderFinishedSemaphore) != VK_SUCCESS)
+    auto device = _logicalDevice.get();
+
+    if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &_imageAvailableSemaphore) != VK_SUCCESS ||
+        vkCreateSemaphore(device, &semaphoreInfo, nullptr, &_renderFinishedSemaphore) != VK_SUCCESS)
         throw std::runtime_error("failed to create semaphores!");
+}
+
+void Instance::acquireNextImage(uint32_t &imageIndex)
+{
+    vkAcquireNextImageKHR(_logicalDevice.get(), _swapChain.get(), UINT64_MAX, _imageAvailableSemaphore, VK_NULL_HANDLE,
+                          &imageIndex);
+
+    VkSubmitInfo submitInfo{};
+    submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+
+    VkSemaphore waitSemaphores[] = {_imageAvailableSemaphore};
+    VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
+    submitInfo.waitSemaphoreCount = 1;
+    submitInfo.pWaitSemaphores = waitSemaphores;
+    submitInfo.pWaitDstStageMask = waitStages;
+    submitInfo.commandBufferCount = 1;
+    submitInfo.pCommandBuffers = &_command.getCommandBuffer(imageIndex);
+
+    VkSemaphore signalSemaphores[] = {_renderFinishedSemaphore};
+    submitInfo.signalSemaphoreCount = 1;
+    submitInfo.pSignalSemaphores = signalSemaphores;
+
+    if (vkQueueSubmit(_logicalDevice.getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
+        throw std::runtime_error("failed to submit draw command buffer!");
+
+    VkPresentInfoKHR presentInfo{};
+    presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+    presentInfo.waitSemaphoreCount = 1;
+    presentInfo.pWaitSemaphores = signalSemaphores;
+
+    VkSwapchainKHR swapChains[] = {_swapChain.get()};
+    presentInfo.swapchainCount = 1;
+    presentInfo.pSwapchains = swapChains;
+    presentInfo.pImageIndices = &imageIndex;
+
+    vkQueuePresentKHR(_logicalDevice.getPresentQueue(), &presentInfo);
 }
 
 } // namespace ES::Plugin::Wrapper

@@ -53,7 +53,7 @@ namespace ES::Plugin {
 class VkWrapper {
   public:
     VkWrapper(GLFWwindow *window, uint32_t width, uint32_t height, const std::string &applicationName);
-    ~VkWrapper();
+    ~VkWrapper() = default;
 
     void drawFrame();
 

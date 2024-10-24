@@ -50,6 +50,8 @@ class Command {
 
     void destroy(const VkDevice device);
 
+    [[nodiscard]] VkCommandBuffer &getCommandBuffer(uint32_t imageIndex) { return _commandBuffers[imageIndex]; }
+
   private:
     void record(VkCommandBuffer commandBuffer, uint32_t imageIndex, const VkRenderPass renderPass,
                 const std::vector<VkFramebuffer> swapChainFramebuffers, const VkExtent2D swapChainExten,

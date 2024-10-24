@@ -120,6 +120,8 @@ class Instance {
 
     void createSemaphores();
 
+    void acquireNextImage(uint32_t &imageIndex);
+
   private:
     /**
      * @brief Checks if the required Vulkan validation layers are supported.

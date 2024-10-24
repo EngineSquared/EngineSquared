@@ -56,6 +56,10 @@ class LogicalDevice {
 
     [[nodiscard]] const VkDevice get() const { return _device; }
 
+    [[nodiscard]] const VkQueue getPresentQueue() { return _presentQueue; }
+
+    [[nodiscard]] const VkQueue getGraphicsQueue() { return _graphicsQueue; }
+
   private:
     VkDevice _device = VK_NULL_HANDLE;
     QueueFamilies _queueFamilies;

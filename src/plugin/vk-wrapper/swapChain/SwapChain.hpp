@@ -58,6 +58,8 @@ class SwapChain {
 
     void destroy(const VkDevice device) { vkDestroySwapchainKHR(device, _swapChain, nullptr); }
 
+    [[nodiscard]] const VkSwapchainKHR get() const { return _swapChain; }
+
     /**
      * @brief Get the Details object for the swap chain support.
      *

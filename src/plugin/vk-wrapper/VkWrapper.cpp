@@ -23,9 +23,11 @@ VkWrapper::VkWrapper(GLFWwindow *window, uint32_t width, uint32_t height, const 
     _instance.createSemaphores();
 }
 
-VkWrapper::~VkWrapper() {}
-
-void VkWrapper::drawFrame() {}
+void VkWrapper::drawFrame()
+{
+    uint32_t imageIndex;
+    _instance.acquireNextImage(imageIndex);
+}
 
 void VkWrapper::PrintAvailableExtensions()
 {
