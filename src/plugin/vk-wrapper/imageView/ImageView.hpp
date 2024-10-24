@@ -56,6 +56,13 @@ class ImageView {
      */
     void destroy(const VkDevice device);
 
+    /**
+     * @brief Get the Image Views object.
+     *
+     * @return const std::vector<VkImageView> The image views.
+     */
+    [[nodiscard]] const std::vector<VkImageView> &getImageViews() const { return _swapChainImageViews; }
+
   private:
     std::vector<VkImageView> _swapChainImageViews;
 };

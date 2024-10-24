@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void GraphicsPipeline::create(const VkDevice device, const VkExtent2D swapChainExtent)
+void GraphicsPipeline::create(const VkDevice device, const VkExtent2D swapChainExtent, const VkRenderPass renderPass)
 {
     auto vertShaderCode = ShaderModule::readFile(SHADER_DIR "vert.spv");
     auto fragShaderCode = ShaderModule::readFile(SHADER_DIR "frag.spv");
@@ -113,10 +113,31 @@ void GraphicsPipeline::create(const VkDevice device, const VkExtent2D swapChainE
     if (vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
         throw std::runtime_error("failed to create pipeline layout!");
 
+    VkGraphicsPipelineCreateInfo pipelineInfo{};
+    pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+    pipelineInfo.stageCount = 2;
+    pipelineInfo.pStages = shaderStages;
+    pipelineInfo.pVertexInputState = &vertexInputInfo;
+    pipelineInfo.pInputAssemblyState = &inputAssembly;
+    pipelineInfo.pViewportState = &viewportState;
+    pipelineInfo.pRasterizationState = &rasterizer;
+    pipelineInfo.pMultisampleState = &multisampling;
+    pipelineInfo.pColorBlendState = &colorBlending;
+    pipelineInfo.layout = _pipelineLayout;
+    pipelineInfo.renderPass = renderPass;
+    pipelineInfo.subpass = 0;
+
+    if (vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &_graphicsPipeline) != VK_SUCCESS)
+        throw std::runtime_error("failed to create graphics pipeline!");
+
     ShaderModule::destroy(device, fragment);
     ShaderModule::destroy(device, vertex);
 }
 
-void GraphicsPipeline::destroy(const VkDevice device) { vkDestroyPipelineLayout(device, _pipelineLayout, nullptr); }
+void GraphicsPipeline::destroy(const VkDevice device)
+{
+    vkDestroyPipeline(device, _graphicsPipeline, nullptr);
+    vkDestroyPipelineLayout(device, _pipelineLayout, nullptr);
+}
 
 } // namespace ES::Plugin::Wrapper

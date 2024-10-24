@@ -55,6 +55,7 @@ Instance::~Instance()
     auto device = _logicalDevice.getDevice();
 
     _graphicsPipeline.destroy(device);
+    _renderPass.destroy(device);
     _imageView.destroy(device);
     _swapChain.destroy(device);
     _logicalDevice.destroy();
@@ -137,7 +138,8 @@ void Instance::createSwapChainImages(const uint32_t width, const uint32_t height
 
 void Instance::createGraphicsPipeline()
 {
-    _graphicsPipeline.create(_logicalDevice.getDevice(), _swapChain.getExtent());
+    _renderPass.create(_logicalDevice.getDevice(), _swapChain.getSurfaceFormat().format);
+    _graphicsPipeline.create(_logicalDevice.getDevice(), _swapChain.getExtent(), _renderPass.getRenderPass());
 }
 
 } // namespace ES::Plugin::Wrapper
