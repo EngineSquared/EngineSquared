@@ -36,10 +36,18 @@ namespace ES::Plugin::Wrapper {
  */
 class Framebuffer {
   public:
-    void create(const VkDevice device, const VkExtent2D swapChainExtent, const VkRenderPass renderPass,
-                const std::vector<VkImageView> &swapChainImageViews);
+    struct CreateInfo {
+        VkExtent2D swapChainExtent;
+        VkRenderPass renderPass;
+        std::vector<VkImageView> swapChainImageViews;
+    };
+
+  public:
+    void create(const VkDevice device, const CreateInfo info);
 
     void destroy(const VkDevice device);
+
+    [[nodiscard]] const std::vector<VkFramebuffer> getSwapChainFramebuffers() const { return _swapChainFramebuffers; }
 
   private:
     std::vector<VkFramebuffer> _swapChainFramebuffers;

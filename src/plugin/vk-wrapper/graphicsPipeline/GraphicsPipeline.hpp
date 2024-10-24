@@ -40,6 +40,8 @@ class GraphicsPipeline {
 
     void destroy(const VkDevice device);
 
+    [[nodiscard]] VkPipeline getGraphicsPipeline() const { return _graphicsPipeline; }
+
   private:
     VkPipelineLayout _pipelineLayout;
     VkPipeline _graphicsPipeline;
