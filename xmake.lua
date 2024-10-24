@@ -36,6 +36,7 @@ target("EngineSquared")
     add_includedirs("src/plugin/vk-wrapper/shaderModule", { public = true })
     add_includedirs("src/plugin/vk-wrapper/graphicsPipeline", { public = true })
     add_includedirs("src/plugin/vk-wrapper/renderPass", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/framebuffer", { public = true })
 
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")

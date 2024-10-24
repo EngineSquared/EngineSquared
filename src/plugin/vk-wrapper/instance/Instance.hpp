@@ -32,6 +32,7 @@
 #include "PhysicalDevice.hpp"
 #include "RenderPass.hpp"
 #include "Surface.hpp"
+#include "Framebuffer.hpp"
 
 namespace ES::Plugin::Wrapper {
 
@@ -148,6 +149,7 @@ class Instance {
     ImageView _imageView;
     GraphicsPipeline _graphicsPipeline;
     RenderPass _renderPass;
+    Framebuffer _framebuffer;
 };
 
 } // namespace ES::Plugin::Wrapper
