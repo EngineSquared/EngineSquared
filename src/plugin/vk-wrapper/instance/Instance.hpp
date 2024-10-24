@@ -26,6 +26,7 @@
 #include <cstdlib>
 #include <cstring>
 
+#include "GraphicsPipeline.hpp"
 #include "ImageView.hpp"
 #include "LogicalDevice.hpp"
 #include "PhysicalDevice.hpp"
@@ -112,6 +113,8 @@ class Instance {
      */
     void createSwapChainImages(const uint32_t width, const uint32_t height);
 
+    void createGraphicsPipeline();
+
   private:
     /**
      * @brief Checks if the required Vulkan validation layers are supported.
@@ -142,6 +145,7 @@ class Instance {
     Surface _surface;
     SwapChain _swapChain;
     ImageView _imageView;
+    GraphicsPipeline _graphicsPipeline;
 };
 
 } // namespace ES::Plugin::Wrapper

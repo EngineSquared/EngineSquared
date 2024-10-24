@@ -34,6 +34,7 @@ target("EngineSquared")
     add_includedirs("src/plugin/vk-wrapper/swapChain", { public = true })
     add_includedirs("src/plugin/vk-wrapper/imageView", { public = true })
     add_includedirs("src/plugin/vk-wrapper/shaderModule", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/graphicsPipeline", { public = true })
 
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")
@@ -58,6 +59,15 @@ target("App")
         add_defines("NDEBUG")
         add_cxflags("-O2")
     end
+
+target("shader")
+    set_kind("phony")
+    add_deps("EngineSquared")
+    on_build(function(target)
+        import("core.base.option")
+        os.execv("glslc", {"shaders/shader.vert", "-o", "shaders/vert.spv"})
+        os.execv("glslc", {"shaders/shader.frag", "-o", "shaders/frag.spv"})
+    end)
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
