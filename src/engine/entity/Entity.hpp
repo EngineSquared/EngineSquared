@@ -71,12 +71,12 @@ class Entity {
     
     /**
      * Utility method to add a temporary component to an entity.
-     * Temporary component are removed when calling RemoveTags system.
+     * Temporary component are removed when calling RemoveTemporaryComponents system.
      * 
      * @tparam  TTempComponent  type to add to registry
      * @param   registry        registry used to store the component
      * @return  reference of the added component
-     * @see     RemoveTags
+     * @see     RemoveTemporaryComponents
      */
     template <typename TTempComponent>
     inline decltype(auto) AddTemporaryComponent(Registry &registry) {
@@ -96,7 +96,7 @@ class Entity {
      * @return  void
      * @see     AddTemporaryComponent
      */
-    static void RemoveTags(Registry &registry) {
+    static void RemoveTemporaryComponents(Registry &registry) {
         if (temporaryComponent.empty()) {
             return;
         }

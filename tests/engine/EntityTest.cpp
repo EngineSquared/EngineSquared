@@ -18,7 +18,7 @@ TEST(Registry, TemporaryComponent)
 
     ASSERT_TRUE(entity.HasComponents<TempComponent>(reg));
 
-    Entity::RemoveTags(reg);
+    Entity::RemoveTemporaryComponents(reg);
 
     ASSERT_FALSE(entity.HasComponents<TempComponent>(reg));
 }
