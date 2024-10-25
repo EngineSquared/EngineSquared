@@ -50,7 +50,20 @@ const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
  *
  * @example
  * @code
- * Instance instance("My Engine");
+ * Instance instance;
+ * instance.create("My Engine");
+ *
+ * instance.setupDebugMessenger();
+ * instance.createSurface(window);
+ * instance.setupDevices();
+ * instance.createSwapChainImages(width, height);
+ * instance.createGraphicsPipeline();
+ * instance.createSyncObjects();
+ *
+ * while (!glfwWindowShouldClose(window))
+ *    instance.drawNextImage();
+ *
+ * instance.destroy();
  * @endcode
  */
 class Instance {

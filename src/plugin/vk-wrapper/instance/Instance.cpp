@@ -154,11 +154,12 @@ void Instance::createGraphicsPipeline()
 {
     auto device = _logicalDevice.get();
     auto extent = _swapChain.getExtent();
-    auto renderPass = _renderPass.get();
 
     _renderPass.create(device, _swapChain.getSurfaceFormat().format);
 
-    _graphicsPipeline.create(device, extent, renderPass);
+    _graphicsPipeline.create(device, extent, _renderPass.get());
+
+    auto renderPass = _renderPass.get();
 
     Framebuffer::CreateInfo framebufferInfo{};
     framebufferInfo.swapChainExtent = extent;
