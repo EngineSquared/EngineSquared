@@ -68,7 +68,7 @@ class Entity {
     {
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
     }
-    
+
     /**
      * Utility method to add a temporary component to an entity.
      * Temporary component are removed when calling RemoveTemporaryComponents system.
@@ -78,29 +78,33 @@ class Entity {
      * @return  reference of the added component
      * @see     RemoveTemporaryComponents
      */
-    template <typename TTempComponent>
-    inline decltype(auto) AddTemporaryComponent(Registry &registry) {
-        if (temporaryComponent.find(std::type_index(typeid(TTempComponent))) == temporaryComponent.end()) {
+    template <typename TTempComponent> inline decltype(auto) AddTemporaryComponent(Registry &registry)
+    {
+        if (temporaryComponent.find(std::type_index(typeid(TTempComponent))) == temporaryComponent.end())
+        {
             temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Registry &registry) {
                 registry.GetRegistry().clear<TTempComponent>();
             };
         }
-        
+
         return this->AddComponent<TTempComponent>(registry);
     }
 
     /**
      * System to remove all temporary component from the registry.
-     * 
+     *
      * @param   registry    registry used to store the component
      * @return  void
      * @see     AddTemporaryComponent
      */
-    static void RemoveTemporaryComponents(Registry &registry) {
-        if (temporaryComponent.empty()) {
+    static void RemoveTemporaryComponents(Registry &registry)
+    {
+        if (temporaryComponent.empty())
+        {
             return;
         }
-        for (const auto& type : temporaryComponent) {
+        for (const auto &type : temporaryComponent)
+        {
             type.second(registry);
         }
         temporaryComponent.clear();
