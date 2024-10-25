@@ -2,6 +2,7 @@
 
 #include "Registry.hpp"
 #include <entt/entt.hpp>
+#include <typeindex>
 
 namespace ES::Engine {
 /**
@@ -67,6 +68,54 @@ class Entity {
     {
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
     }
+    
+    /**
+     * Utility method to add a temporary component to an entity.
+     * Temporary component are removed when calling RemoveTags system.
+     * 
+     * @tparam  TTempComponent  type to add to registry
+     * @param   registry        registry used to store the component
+     * @return  reference of the added component
+     * @see     RemoveTags
+     */
+    template <typename TTempComponent>
+    inline decltype(auto) AddTemporaryComponent(Registry &registry) {
+        if (temporaryComponent.find(std::type_index(typeid(TTempComponent))) == temporaryComponent.end()) {
+            temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Registry &registry) {
+                registry.GetRegistry().clear<TTempComponent>();
+            };
+        }
+        
+        return this->AddComponent<TTempComponent>(registry);
+    }
+
+    /**
+     * System to remove all temporary component from the registry.
+     * 
+     * @param   registry    registry used to store the component
+     * @return  void
+     * @see     AddTemporaryComponent
+     */
+    static void RemoveTags(Registry &registry) {
+        if (temporaryComponent.empty()) {
+            return;
+        }
+        for (const auto& type : temporaryComponent) {
+            type.second(registry);
+        }
+        temporaryComponent.clear();
+    }
+
+    /**
+     * Utility method to remove a component from an entity.
+     *
+     * @tparam  TComponent  type to remove from registry
+     * @param   registry    registry used to store the component
+     */
+    template <typename TComponent> inline void RemoveComponent(Registry &registry)
+    {
+        registry.GetRegistry().remove<TComponent>(ToEnttEntity(this->_entity));
+    }
 
     /**
      * Check if entity have one or multiple component's type.
@@ -96,5 +145,6 @@ class Entity {
 
   private:
     entity_id_type _entity;
+    inline static std::unordered_map<std::type_index, std::function<void(Registry &)>> temporaryComponent = {};
 };
 } // namespace ES::Engine
