@@ -72,7 +72,7 @@ class Entity {
     /**
      * Utility method to add a temporary component to an entity.
      * Temporary component are removed when calling RemoveTemporaryComponents system.
-     * 
+     *
      * @tparam  TTempComponent  type to add to registry
      * @param   registry        registry used to store the component
      * @return  reference of the added component
