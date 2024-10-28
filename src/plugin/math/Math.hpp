@@ -15,5 +15,11 @@ struct Rect {
     glm::vec2 size;
 };
 
+/**
+ * @brief Get euler angles from a quaternion.
+ * 
+ * @param   q   The quaternion to convert
+ * @return      The euler angles
+ */
 glm::vec3 QuaternionToEuler(const glm::quat &q);
 }; // namespace ES::Plugin::Math
