@@ -7,9 +7,9 @@
 #include "Math.hpp"
 
 namespace ES::Plugin::UI::Component {
-    /**
-     * @brief A struct representing a 2D sprite
-     */
+/**
+ * @brief A struct representing a 2D sprite
+ */
 struct Sprite2D {
     /**
      * @brief The ID of the texture to use
@@ -17,7 +17,7 @@ struct Sprite2D {
     ES::Plugin::Object::Utils::AssetID textureID = ES::Plugin::Object::Utils::NULL_ASSET_ID;
     /**
      * @brief The source rectangle of the texture
-     * 
+     *
      * The source rectangle is the part of the texture to use.
      * The position is the upper left corner of the rectangle.
      * The size is the width and height of the rectangle.

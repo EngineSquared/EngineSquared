@@ -10,18 +10,18 @@
 #include "Color.hpp"
 
 namespace ES::Plugin::UI::Component {
-    /**
-     * @brief The different types of display for a button
-     */
+/**
+ * @brief The different types of display for a button
+ */
 namespace DisplayType {
-    /**
-     * @brief A struct representing the tint color of a button
-     * 
-     * @param   imageID         The ID of the image to tint
-     * @param   normalColor     The color to use when the button is in the normal state
-     * @param   hoverColor      The color to use when the button is in the hover state
-     * @param   pressedColor    The color to use when the button is in the pressed state
-     */
+/**
+ * @brief A struct representing the tint color of a button
+ *
+ * @param   imageID         The ID of the image to tint
+ * @param   normalColor     The color to use when the button is in the normal state
+ * @param   hoverColor      The color to use when the button is in the hover state
+ * @param   pressedColor    The color to use when the button is in the pressed state
+ */
 struct TintColor {
     ES::Plugin::Object::Utils::AssetID imageID;
     ES::Plugin::Colors::Utils::Color normalColor;
@@ -31,7 +31,7 @@ struct TintColor {
 
 /**
  * @brief A struct representing the image of a button
- * 
+ *
  * @param   normalImageID   The ID of the image to use when the button is in the normal state
  * @param   hoverImageID    The ID of the image to use when the button is in the hover state
  * @param   pressedImageID  The ID of the image to use when the button is in the pressed state

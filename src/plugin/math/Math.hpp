@@ -17,7 +17,7 @@ struct Rect {
 
 /**
  * @brief Get euler angles from a quaternion.
- * 
+ *
  * @param   q   The quaternion to convert
  * @return      The euler angles
  */

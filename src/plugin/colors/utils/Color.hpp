@@ -1,9 +1,9 @@
 #pragma once
 
 namespace ES::Plugin::Colors::Utils {
-    /**
-     * @brief A color with red, green, blue and alpha channels
-     */
+/**
+ * @brief A color with red, green, blue and alpha channels
+ */
 struct Color {
     unsigned char r;
     unsigned char g;
@@ -24,7 +24,7 @@ inline static const Color DARKGRAY_COLOR = {64, 64, 64, 255};
 
 /**
  * @brief Check if two colors are equal
- * 
+ *
  * @param   lhs The first color
  * @param   rhs The second color
  */
@@ -35,7 +35,7 @@ inline bool operator==(const Color &lhs, const Color &rhs)
 
 /**
  * @brief Check if two colors are not equal
- * 
+ *
  * @param   lhs The first color
  * @param   rhs The second color
  */
