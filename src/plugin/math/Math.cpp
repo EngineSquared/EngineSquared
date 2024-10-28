@@ -1,6 +1,6 @@
 #include <glm/gtc/quaternion.hpp>
 
-#include "math.hpp"
+#include "Math.hpp"
 
 float ES::Plugin::Math::QuaternionToAngle(const glm::quat &q)
 {
