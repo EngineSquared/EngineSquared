@@ -4,6 +4,8 @@
 
 #include <entt/entt.hpp>
 
+#include "Engine.hpp"
+
 #include "AssetID.hpp"
 #include "Color.hpp"
 
@@ -37,6 +39,6 @@ struct Button {
     State state = State::Normal;
     State lastState = State::Normal;
     DisplayType::Variant displayType;
-    entt::delegate<void()> onClick;
+    entt::delegate<void(ES::Engine::Registry &)> onClick;
 };
 }; // namespace ES::Plugin::UI::Component

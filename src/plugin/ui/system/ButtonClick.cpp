@@ -14,7 +14,7 @@ void ES::Plugin::UI::System::ButtonClick(ES::Engine::Registry &r)
         if (button.lastState == ES::Plugin::UI::Component::Button::State::Pressed &&
             button.state == ES::Plugin::UI::Component::Button::State::Hover)
         {
-            button.onClick();
+            button.onClick(r);
         }
     }
 }
