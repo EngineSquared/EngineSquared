@@ -39,9 +39,6 @@ inline bool operator==(const Color &lhs, const Color &rhs)
  * @param   lhs The first color
  * @param   rhs The second color
  */
-inline bool operator!=(const Color &lhs, const Color &rhs)
-{
-    return !(lhs == rhs);
-}
+inline bool operator!=(const Color &lhs, const Color &rhs) { return !(lhs == rhs); }
 
 } // namespace ES::Plugin::Colors::Utils
