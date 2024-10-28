@@ -37,8 +37,6 @@
 
 namespace ES::Plugin::Wrapper {
 
-const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
-
 /**
  * @class Instance
  * @brief Manages the Vulkan instance and related resources.

@@ -35,7 +35,7 @@ void Instance::create(const std::string &applicationName)
     createInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
 #endif
 
-    VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
+    VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo{};
 
     if (enableValidationLayers)
     {
@@ -63,6 +63,7 @@ void Instance::destroy()
         vkDestroyFence(device, _inFlightFences[i], nullptr);
     }
 
+    _command.destroy(device);
     _framebuffer.destroy(device);
     _graphicsPipeline.destroy(device);
     _renderPass.destroy(device);
@@ -184,7 +185,6 @@ void Instance::createSyncObjects()
     _imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
     _renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
     _inFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
-    _imagesInFlight.resize(_swapChain.getSwapChainImages().size(), VK_NULL_HANDLE);
 
     VkSemaphoreCreateInfo semaphoreInfo{};
     semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
@@ -216,7 +216,7 @@ void Instance::drawNextImage()
                           VK_NULL_HANDLE, &imageIndex);
 
     Command::RecordInfo recordInfo{};
-    recordInfo.currentFrame = imageIndex;
+    recordInfo.currentFrame = _currentFrame;
     recordInfo.imageIndex = imageIndex;
     recordInfo.renderPass = _renderPass.get();
     recordInfo.swapChainExtent = _swapChain.getExtent();
@@ -233,14 +233,15 @@ void Instance::drawNextImage()
     submitInfo.waitSemaphoreCount = 1;
     submitInfo.pWaitSemaphores = waitSemaphores;
     submitInfo.pWaitDstStageMask = waitStages;
+
     submitInfo.commandBufferCount = 1;
-    submitInfo.pCommandBuffers = &_command.getCommandBuffer(imageIndex);
+    submitInfo.pCommandBuffers = &_command.getCommandBuffer(_currentFrame);
 
     VkSemaphore signalSemaphores[] = {_renderFinishedSemaphores[_currentFrame]};
     submitInfo.signalSemaphoreCount = 1;
     submitInfo.pSignalSemaphores = signalSemaphores;
 
-    if (vkQueueSubmit(_logicalDevice.getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
+    if (vkQueueSubmit(_logicalDevice.getGraphicsQueue(), 1, &submitInfo, _inFlightFences[_currentFrame]) != VK_SUCCESS)
         throw std::runtime_error("failed to submit draw command buffer!");
 
     VkPresentInfoKHR presentInfo{};
@@ -255,9 +256,12 @@ void Instance::drawNextImage()
 
     vkQueuePresentKHR(_logicalDevice.getPresentQueue(), &presentInfo);
 
-    vkQueueWaitIdle(_logicalDevice.getPresentQueue());
-
-    _currentFrame = (_currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+#if (MAX_FRAMES_IN_FLIGHT & (MAX_FRAMES_IN_FLIGHT - 1)) == 0
+    _currentFrame = (_currentFrame + 1) & (MAX_FRAMES_IN_FLIGHT - 1);
+#else
+    _currentFrame = _currentFrame + 1;
+    _currentFrame *= _currentFrame < MAX_FRAMES_IN_FLIGHT;
+#endif
 }
 
 } // namespace ES::Plugin::Wrapper

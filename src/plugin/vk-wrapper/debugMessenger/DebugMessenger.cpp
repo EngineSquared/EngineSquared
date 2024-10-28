@@ -59,9 +59,6 @@ VkResult DebugMessenger::CreateDebugUtilsMessengerEXT(const VkInstance instance,
                                                       const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
                                                       const VkAllocationCallbacks *pAllocator)
 {
-    if (!enableValidationLayers)
-        return VK_SUCCESS;
-
     auto func = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
     if (func != nullptr)
         return func(instance, pCreateInfo, pAllocator, &_debugMessenger);
