@@ -6,5 +6,5 @@
 
 // Systems
 #include "ButtonClick.hpp"
-#include "UpdateButtonTexture.hpp"
 #include "UpdateButtonState.hpp"
+#include "UpdateButtonTexture.hpp"
