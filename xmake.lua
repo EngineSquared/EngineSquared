@@ -25,6 +25,15 @@ target("EngineSquared")
     add_includedirs("src/plugin/collision/component", { public = true })
     add_includedirs("src/plugin/collision/system", { public = true })
     add_includedirs("src/plugin/collision/resource", { public = true })
+    add_includedirs("src/plugin/time", { public = true })
+    add_includedirs("src/plugin/time/resource", { public = true })
+    add_includedirs("src/plugin/time/system", { public = true })
+    add_includedirs("src/plugin/physics", { public = true })
+    add_includedirs("src/plugin/physics/component", { public = true })
+    add_includedirs("src/plugin/physics/resource", { public = true })
+    add_includedirs("src/plugin/physics/system", { public = true })
+    add_includedirs("src/plugin/time/resource", { public = true })
+    add_includedirs("src/plugin/time/system", { public = true })
 
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")
@@ -40,6 +49,10 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
     end
     target(name)
         set_kind("binary")
+        if is_plat("linux") then
+            add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
+            add_ldflags("--coverage")
+        end
         set_default(false)
         set_languages("cxx20")
         add_files(file)
@@ -48,6 +61,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_links("gtest")
         add_deps("EngineSquared")
         add_includedirs("src")
+        add_includedirs("tests")
         add_tests("default")
         if is_mode("debug") then
             add_defines("DEBUG")
