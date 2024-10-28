@@ -15,5 +15,5 @@ struct Rect {
     glm::vec2 size;
 };
 
-float QuaternionToAngle(const glm::quat &q);
+glm::vec3 QuaternionToEuler(const glm::quat &q);
 }; // namespace ES::Plugin::Math

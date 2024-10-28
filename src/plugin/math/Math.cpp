@@ -2,11 +2,7 @@
 
 #include "Math.hpp"
 
-float ES::Plugin::Math::QuaternionToAngle(const glm::quat &q)
+glm::vec3 ES::Plugin::Math::QuaternionToEuler(const glm::quat &q)
 {
-    float x = q.x;
-    float y = q.y;
-
-    float angle = 2.0f * atan2(y, x);
-    return glm::degrees(angle);
+    return glm::eulerAngles(q);
 }
