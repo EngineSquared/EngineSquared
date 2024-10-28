@@ -48,7 +48,7 @@ void GraphicsPipeline::create(const VkDevice device, const VkExtent2D swapChainE
 
     VkPipelineRasterizationStateCreateInfo rasterizer{};
     rasterizer.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
-    rasterizer.depthClampEnable = VK_FALSE;        // shadow maps require this to be true
+    rasterizer.depthClampEnable = VK_FALSE; // shadow maps require this to be true
     rasterizer.rasterizerDiscardEnable = VK_FALSE;
     rasterizer.polygonMode = VK_POLYGON_MODE_FILL; // VK_POLYGON_MODE_LINE or VK_POLYGON_MODE_POINT
     rasterizer.lineWidth = 1.0f;                   // > 1.0f requires wideLines feature
