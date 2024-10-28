@@ -3,5 +3,5 @@
 #include "Engine.hpp"
 
 namespace ES::Plugin::UI::System {
-    void ButtonClick(ES::Engine::Registry& r);
+void ButtonClick(ES::Engine::Registry &r);
 }

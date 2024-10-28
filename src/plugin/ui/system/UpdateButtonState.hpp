@@ -3,5 +3,5 @@
 #include "Engine.hpp"
 
 namespace ES::Plugin::UI::System {
-    void UpdateButtonState(ES::Engine::Registry& r);
+void UpdateButtonState(ES::Engine::Registry &r);
 }
