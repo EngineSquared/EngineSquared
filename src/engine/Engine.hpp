@@ -1,4 +1,4 @@
 #pragma once
 
-#include "Entity/Entity.hpp"
-#include "Registry/Registry.hpp"
+#include "entity/Entity.hpp"
+#include "registry/Registry.hpp"
