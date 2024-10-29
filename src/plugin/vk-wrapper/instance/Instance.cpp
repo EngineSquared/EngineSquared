@@ -54,7 +54,9 @@ void Instance::destroy()
 {
     VkDevice device = _logicalDevice.get();
 
-    vkDeviceWaitIdle(device);
+    cleanupSwapChain(device);
+    _graphicsPipeline.destroy(device);
+    _renderPass.destroy(device);
 
     for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
@@ -64,11 +66,6 @@ void Instance::destroy()
     }
 
     _command.destroy(device);
-    _framebuffer.destroy(device);
-    _graphicsPipeline.destroy(device);
-    _renderPass.destroy(device);
-    _imageView.destroy(device);
-    _swapChain.destroy(device);
     _logicalDevice.destroy();
 
     if (enableValidationLayers)
@@ -204,16 +201,47 @@ void Instance::createSyncObjects()
     }
 }
 
-void Instance::drawNextImage()
+void Instance::recreateSwapChain(uint32_t width, uint32_t height)
+{
+    auto device = _logicalDevice.get();
+
+    vkDeviceWaitIdle(device);
+
+    cleanupSwapChain(device);
+
+    createSwapChainImages(width, height);
+
+    Framebuffer::CreateInfo framebufferInfo{};
+    framebufferInfo.swapChainExtent = _swapChain.getExtent();
+    framebufferInfo.renderPass = _renderPass.get();
+    framebufferInfo.swapChainImageViews = _imageView.getImageViews();
+
+    _framebuffer.create(device, framebufferInfo);
+}
+
+void Instance::cleanupSwapChain(const VkDevice device)
+{
+    _framebuffer.destroy(device);
+    _imageView.destroy(device);
+    _swapChain.destroy(device);
+}
+
+Result Instance::drawNextImage()
 {
     auto device = _logicalDevice.get();
 
     vkWaitForFences(device, 1, &_inFlightFences[_currentFrame], VK_TRUE, UINT64_MAX);
-    vkResetFences(device, 1, &_inFlightFences[_currentFrame]);
 
     uint32_t imageIndex;
-    vkAcquireNextImageKHR(device, _swapChain.get(), UINT64_MAX, _imageAvailableSemaphores[_currentFrame],
-                          VK_NULL_HANDLE, &imageIndex);
+    VkResult result = vkAcquireNextImageKHR(device, _swapChain.get(), UINT64_MAX,
+                                            _imageAvailableSemaphores[_currentFrame], VK_NULL_HANDLE, &imageIndex);
+
+    if (result == VK_ERROR_OUT_OF_DATE_KHR)
+        return Result::Failure;
+    else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
+        throw std::runtime_error("failed to acquire swap chain image!");
+
+    vkResetFences(device, 1, &_inFlightFences[_currentFrame]);
 
     Command::RecordInfo recordInfo{};
     recordInfo.currentFrame = _currentFrame;
@@ -254,7 +282,9 @@ void Instance::drawNextImage()
     presentInfo.pSwapchains = swapChains;
     presentInfo.pImageIndices = &imageIndex;
 
-    vkQueuePresentKHR(_logicalDevice.getPresentQueue(), &presentInfo);
+    result = vkQueuePresentKHR(_logicalDevice.getPresentQueue(), &presentInfo);
+
+    vkQueueWaitIdle(_logicalDevice.getPresentQueue());
 
 #if (MAX_FRAMES_IN_FLIGHT & (MAX_FRAMES_IN_FLIGHT - 1)) == 0
     _currentFrame = (_currentFrame + 1) & (MAX_FRAMES_IN_FLIGHT - 1);
@@ -262,6 +292,13 @@ void Instance::drawNextImage()
     _currentFrame = _currentFrame + 1;
     _currentFrame *= _currentFrame < MAX_FRAMES_IN_FLIGHT;
 #endif
+
+    if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || _framebufferResized)
+        return Result::Failure;
+    else if (result != VK_SUCCESS)
+        throw std::runtime_error("failed to present swap chain image!");
+
+    return Result::Success;
 }
 
 } // namespace ES::Plugin::Wrapper

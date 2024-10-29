@@ -38,6 +38,18 @@
 namespace ES::Plugin::Wrapper {
 
 /**
+ * @brief Result enum class.
+ *
+ * This enum class is used to represent the result of an operation.
+ * It can be either Success or Failure.
+ * It is used to indicate the success or failure of Vulkan operations.
+ */
+enum class Result : bool {
+    Success = true,
+    Failure = false,
+};
+
+/**
  * @class Instance
  * @brief Manages the Vulkan instance and related resources.
  *
@@ -124,16 +136,83 @@ class Instance {
      * essential for rendering graphics to the window and ensuring smooth
      * frame transitions.
      *
-     * @param width The width of the swap chain.
-     * @param height The height of the swap chain.
+     * @param window The GLFW window for which the swap chain images will be created.
      */
-    void createSwapChainImages(const uint32_t width, const uint32_t height);
+    void createSwapChainImages(uint32_t width, uint32_t height);
 
+    /**
+     * @brief Create a Graphics Pipeline object.
+     *
+     * This function creates a graphics pipeline for the Vulkan API. The graphics
+     * pipeline is used to render graphics to the screen. It defines the sequence
+     * of operations that are performed on the input data to produce the final
+     * rendered image. The graphics pipeline includes a series of stages such as
+     * vertex processing, tessellation, geometry shading, fragment shading, and
+     * blending.
+     * The graphics pipeline also includes a render pass, which defines the
+     * attachments used for rendering and the subpasses that are executed during
+     * rendering.
+     */
     void createGraphicsPipeline();
 
+    /**
+     * @brief Create synchronization objects for the Vulkan API.
+     *
+     * This function creates synchronization objects for the Vulkan API. Synchronization
+     * objects are used to coordinate the execution of commands and ensure that
+     * operations are performed in the correct order. They are essential for
+     * managing the rendering process and avoiding synchronization issues.
+     */
     void createSyncObjects();
 
-    void drawNextImage();
+    /**
+     * @brief Recreates the swap chain for the Vulkan API.
+     *
+     * This function recreates the swap chain for the Vulkan API. It is called
+     * when the window is resized or when the swap chain needs to be recreated
+     * for any other reason. The function waits for the device to become idle,
+     * cleans up the existing swap chain, and creates a new swap chain with the
+     * updated dimensions.
+     */
+    void recreateSwapChain(uint32_t width, uint32_t height);
+
+    /**
+     * @brief Cleans up the swap chain for the Vulkan API.
+     *
+     * This function cleans up the swap chain for the Vulkan API. It destroys
+     * the framebuffers, command buffers, graphics pipeline, render pass, image
+     * views, and swap chain. It is called when the swap chain needs to be
+     * recreated or when the application is shutting down.
+     *
+     * @param device The Vulkan logical device used to clean up the swap chain.
+     */
+    void cleanupSwapChain(const VkDevice device);
+
+    /**
+     * @brief Draws the next image in the swap chain.
+     *
+     * This function draws the next image in the swap chain for the Vulkan API.
+     * It waits for the fences to be signaled, resets the fences, acquires the
+     * next image in the swap chain, records the command buffer, and submits the
+     * command buffer to the graphics queue. It then presents the image to the
+     * screen and increments the current frame index.
+     *
+     * @return Result The result of the draw operation. Success if the image was
+     * drawn successfully, Failure if the swap chain needs to be recreated.
+     */
+    [[nodiscard]] Result drawNextImage();
+
+    /**
+     * @brief Sets the framebuffer resized flag.
+     *
+     * This function sets the framebuffer resized flag to indicate that the
+     * framebuffer needs to be resized.
+     * The flag is used to trigger the recreation of the swap chain when the
+     * window is resized.
+     *
+     * @param resized The new value of the framebuffer resized flag.
+     */
+    void setFramebufferResized(bool resized) { _framebufferResized = resized; }
 
   private:
     /**
@@ -172,8 +251,8 @@ class Instance {
     std::vector<VkSemaphore> _imageAvailableSemaphores;
     std::vector<VkSemaphore> _renderFinishedSemaphores;
     std::vector<VkFence> _inFlightFences;
-    std::vector<VkFence> _imagesInFlight;
     uint32_t _currentFrame;
+    bool _framebufferResized = false;
 };
 
 } // namespace ES::Plugin::Wrapper

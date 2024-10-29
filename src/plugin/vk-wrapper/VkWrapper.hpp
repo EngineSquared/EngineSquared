@@ -58,8 +58,52 @@ class VkWrapper {
     /**
      * @brief Draw a frame using the Vulkan API.
      *
+     * This function draws a frame using the Vulkan API. It waits for the fences
+     * to be signaled, resets the fences, acquires the next image in the swap chain,
+     * records the command buffer, submits the command buffer to the graphics queue,
+     * presents the image to the screen, and increments the current frame index.
+     *
+     * @return Wrapper::Result The result of the draw operation. Success if the
+     * image was drawn successfully, Failure if a Resize is needed.
+     *
+     * @see Wrapper::Result
+     * @see Resize
      */
-    void drawFrame();
+    [[nodiscard]] Wrapper::Result drawFrame();
+
+    /**
+     * @brief Resize the window using the Vulkan API.
+     *
+     * This function resizes the window using the Vulkan API. It gets the new
+     * width and height of the window, waits for the window to be resized, and
+     * recreates the swap chain with the new dimensions.
+     *
+     * @param window The GLFW window to resize.
+     */
+    void Resize(GLFWwindow *window);
+
+    /**
+     * @brief Set the framebuffer resized flag.
+     *
+     * This function sets the framebuffer resized flag to indicate that the
+     * framebuffer needs to be resized.
+     * The flag is used to trigger the recreation of the swap chain when the
+     * window is resized.
+     */
+    inline void setFramebufferResized() { _instance.setFramebufferResized(true); }
+
+    /**
+     * @brief Callback function for the framebuffer resize event.
+     *
+     * This function is called when the framebuffer is resized.
+     * It sets the framebuffer resized flag to indicate that the framebuffer
+     * needs to be resized.
+     *
+     * @param window The GLFW window that was resized.
+     * @param width The new width of the window. (unused)
+     * @param height The new height of the window. (unused)
+     */
+    static void ResizeCallback(GLFWwindow *window, int width, int height);
 
     /**
      * @brief Print the available extensions for the Vulkan API.

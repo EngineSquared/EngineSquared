@@ -24,7 +24,22 @@ void VkWrapper::create(GLFWwindow *window, uint32_t width, uint32_t height, cons
 
 void VkWrapper::destroy() { _instance.destroy(); }
 
-void VkWrapper::drawFrame() { _instance.drawNextImage(); }
+Wrapper::Result VkWrapper::drawFrame() { return _instance.drawNextImage(); }
+
+void VkWrapper::Resize(GLFWwindow *window)
+{
+    int width, height;
+
+    glfwGetFramebufferSize(window, &width, &height);
+
+    while (width == 0 || height == 0)
+    {
+        glfwGetFramebufferSize(window, &width, &height);
+        glfwWaitEvents();
+    }
+
+    _instance.recreateSwapChain(width, height);
+}
 
 void VkWrapper::PrintAvailableExtensions()
 {
@@ -43,5 +58,11 @@ void VkWrapper::PrintAvailableExtensions()
 void VkWrapper::PrintVersion() { std::cout << "VkWrapper version: " << VKWRAPPER_VERSION_STRING << std::endl; }
 
 void VkWrapper::PrintConfig() { std::cout << "VkWrapper config:\n" << VKWRAPPER_CONFIG_STRING << std::endl; }
+
+void VkWrapper::ResizeCallback(GLFWwindow *window, int width, int height)
+{
+    auto vkWrapper = static_cast<VkWrapper *>(glfwGetWindowUserPointer(window));
+    vkWrapper->setFramebufferResized();
+}
 
 } // namespace ES::Plugin

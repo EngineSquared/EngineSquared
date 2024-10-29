@@ -44,8 +44,14 @@ target("EngineSquared")
 
     if is_mode("debug") then
         add_defines("DEBUG")
+        if is_plat("windows") then
+            add_cxflags("/Od", "/Zi")
+        else
+            add_cxflags("-O0 -g3 -ggdb")
+        end
     else
         add_defines("NDEBUG")
+        add_cxflags("-O2")
     end
 
 for _, file in ipairs(os.files("tests/**.cpp")) do

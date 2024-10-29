@@ -58,6 +58,22 @@ class Window {
      * @return The GLFW window.
      */
     inline GLFWwindow *GetGLFWWindow() const { return _window; }
+
+    /**
+     * @brief Get the window size.
+     *
+     * @param[out] width The width of the window.
+     * @param[out] height The height of the window.
+     */
+    void GetWindowSize(int &width, int &height);
+
+    /**
+     * @brief Set the framebuffer size callback.
+     *
+     * @param userPointer The user pointer.
+     * @param callback The callback function.
+     */
+    void SetFramebufferSizeCallback(void *userPointer, GLFWframebuffersizefun callback);
 };
 
 } // namespace ES::Plugin::Window::Resource
