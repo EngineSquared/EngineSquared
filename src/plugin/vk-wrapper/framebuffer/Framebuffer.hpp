@@ -29,9 +29,11 @@ namespace ES::Plugin::Wrapper {
 /**
  * @brief Framebuffer class.
  *
- *
  * @example
  * @code
+ * Framebuffer framebuffer;
+ * framebuffer.create(device, info);
+ * framebuffer.destroy(device);
  * @endcode
  */
 class Framebuffer {
@@ -43,10 +45,32 @@ class Framebuffer {
     };
 
   public:
+    /**
+     * @brief Creates a framebuffer.
+     *
+     * This function creates a framebuffer from the device and the create info.
+     *
+     * @param device  The Vulkan device.
+     * @param info  The create info.
+     */
     void create(const VkDevice device, const CreateInfo info);
 
+    /**
+     * @brief Destroys the framebuffer.
+     *
+     * This function destroys the framebuffer.
+     *
+     * @param device  The Vulkan device.
+     */
     void destroy(const VkDevice device);
 
+    /**
+     * @brief Gets the swap chain framebuffers.
+     *
+     * This function returns the swap chain framebuffers.
+     *
+     * @return The swap chain framebuffers.
+     */
     [[nodiscard]] const std::vector<VkFramebuffer> getSwapChainFramebuffers() const { return _swapChainFramebuffers; }
 
   private:

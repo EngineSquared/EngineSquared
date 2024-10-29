@@ -58,18 +58,67 @@ class DebugMessenger {
     DebugMessenger() = default;
     ~DebugMessenger();
 
+    /**
+     * @brief Sets up the debug messenger for the Vulkan instance.
+     *
+     * This function initializes and configures the debug messenger
+     * which is used to capture and handle debug messages from the Vulkan
+     * API. It is essential for debugging and validation purposes, providing
+     * detailed information about the Vulkan operations and potential issues.
+     *
+     * @param instance  The Vulkan instance.
+     */
     void setupDebugMessenger(const VkInstance instance);
 
+    /**
+     * @brief Callback function for the debug messenger.
+     *
+     * This function is called by the Vulkan API when a debug message is
+     * generated. It is used to handle the debug messages and display them
+     * in the console.
+     *
+     * @param messageSeverity  The severity of the message.
+     * @param messageType  The type of the message.
+     * @param pCallbackData  The debug message data.
+     * @param pUserData  The user data.
+     * @return VK_TRUE if the message is handled, VK_FALSE otherwise.
+     */
     static VKAPI_ATTR VkBool32 VKAPI_CALL callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                                                    VkDebugUtilsMessageTypeFlagsEXT messageType,
                                                    const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
                                                    void *pUserData);
 
+    /**
+     * @brief Populates the debug messenger create info.
+     *
+     * This function initializes the debug messenger create info structure
+     * with the necessary parameters for setting up the debug messenger.
+     *
+     * @param createInfo  The debug messenger create info.
+     */
     void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
 
+    /**
+     * @brief Destroys the debug messenger.
+     *
+     * This function destroys the debug messenger.
+     *
+     * @param instance  The Vulkan instance.
+     * @param pAllocator  The allocator.
+     */
     void DestroyDebugUtilsMessengerEXT(const VkInstance instance, const VkAllocationCallbacks *pAllocator);
 
   private:
+    /**
+     * @brief Creates the debug messenger.
+     *
+     * This function creates the debug messenger for the Vulkan instance.
+     *
+     * @param instance  The Vulkan instance.
+     * @param pCreateInfo  The debug messenger create info.
+     * @param pAllocator  The allocator.
+     * @return The result of the debug messenger creation.
+     */
     VkResult CreateDebugUtilsMessengerEXT(const VkInstance instance,
                                           const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
                                           const VkAllocationCallbacks *pAllocator);

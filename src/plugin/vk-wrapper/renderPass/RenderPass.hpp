@@ -29,17 +29,41 @@ namespace ES::Plugin::Wrapper {
 /**
  * @brief RenderPass class.
  *
- *
  * @example
  * @code
+ * RenderPass renderPass;
+ * renderPass.create(device, swapChainImageFormat);
+ * renderPass.destroy(device);
  * @endcode
  */
 class RenderPass {
   public:
+    /**
+     * @brief Creates a render pass.
+     *
+     * This function creates a render pass from the device and the swap chain image format.
+     *
+     * @param device  The Vulkan device.
+     * @param swapChainImageFormat  The swap chain image format.
+     */
     void create(const VkDevice device, const VkFormat swapChainImageFormat);
 
+    /**
+     * @brief Destroys the render pass.
+     *
+     * This function destroys the render pass.
+     *
+     * @param device  The Vulkan device.
+     */
     void destroy(const VkDevice device);
 
+    /**
+     * @brief Gets the render pass.
+     *
+     * This function returns the render pass.
+     *
+     * @return The render pass.
+     */
     [[nodiscard]] const VkRenderPass get() const { return _renderPass; }
 
   private:

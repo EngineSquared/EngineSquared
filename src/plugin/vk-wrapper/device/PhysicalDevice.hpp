@@ -53,14 +53,55 @@ class PhysicalDevice {
      * for running Vulkan applications. It evaluates available GPUs and
      * chooses the most appropriate one based on criteria such as support
      * for required features and extensions.
+     *
+     * @param instance  The Vulkan instance.
+     * @param surface  The Vulkan surface.
      */
     void pickPhysicalDevice(const VkInstance instance, const VkSurfaceKHR surface);
 
+    /**
+     * @brief Gets the physical device.
+     *
+     * This function returns the physical device.
+     *
+     * @return The physical device.
+     */
     [[nodiscard]] const VkPhysicalDevice get() const { return physicalDevice; }
 
   private:
+    /**
+     * @brief Checks if the physical device is suitable for the application.
+     *
+     * This function verifies if the physical device meets the requirements
+     * for running Vulkan applications. It checks if the device supports
+     * the necessary features and extensions.
+     *
+     * @param device  The physical device to check.
+     * @param surface  The Vulkan surface.
+     * @return true if the device is suitable, false otherwise.
+     */
     [[nodiscard]] bool isDeviceSuitable(const VkPhysicalDevice device, const VkSurfaceKHR surface);
+
+    /**
+     * @brief Checks if the physical device supports the required extensions.
+     *
+     * This function verifies if the physical device supports the necessary
+     * extensions for running Vulkan applications.
+     *
+     * @param device  The physical device to check.
+     * @return true if the device supports the required extensions, false otherwise.
+     */
     [[nodiscard]] bool checkDeviceExtensionSupport(const VkPhysicalDevice device);
+
+    /**
+     * @brief Rates the suitability of the physical device.
+     *
+     * This function evaluates the suitability of the physical device based on
+     * various criteria such as the device type, supported features, and extensions.
+     *
+     * @param device  The physical device to rate.
+     * @return The suitability rating of the device.
+     */
     [[nodiscard]] uint32_t rateDeviceSuitability(const VkPhysicalDevice device);
 
   private:

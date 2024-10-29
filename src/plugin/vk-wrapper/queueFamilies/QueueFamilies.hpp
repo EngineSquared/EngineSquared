@@ -38,6 +38,11 @@ const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_N
  *
  * @example
  * @code
+ * QueueFamilies queueFamilies;
+ * queueFamilies.findQueueFamilies(physicalDevice, surface);
+ * if (!queueFamilies.isComplete())
+ *    throw std::runtime_error("failed to find queue families!");
+ * auto indices = queueFamilies.getIndices();
  * @endcode
  */
 class QueueFamilies {
@@ -65,6 +70,11 @@ class QueueFamilies {
         std::optional<uint32_t> graphicsFamily;
         std::optional<uint32_t> presentFamily;
 
+        /**
+         * @brief Checks if the graphics family index and the present family has been set.
+         *
+         * @return True if the graphics family index and the present family has a value, false otherwise.
+         */
         [[nodiscard]] bool isComplete() const { return graphicsFamily.has_value() && presentFamily.has_value(); }
     };
 

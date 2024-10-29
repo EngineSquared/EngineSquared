@@ -29,17 +29,42 @@ namespace ES::Plugin::Wrapper {
 /**
  * @brief GraphicsPipeline class.
  *
- *
  * @example
  * @code
+ * GraphicsPipeline graphicsPipeline;
+ * graphicsPipeline.create(device, swapChainExtent, renderPass);
+ * graphicsPipeline.destroy(device);
  * @endcode
  */
 class GraphicsPipeline {
   public:
+    /**
+     * @brief Creates a graphics pipeline.
+     *
+     * This function creates a graphics pipeline from the device, the swap chain extent, and the render pass.
+     *
+     * @param device  The Vulkan device.
+     * @param swapChainExtent  The swap chain extent.
+     * @param renderPass  The render pass.
+     */
     void create(const VkDevice device, const VkExtent2D swapChainExtent, const VkRenderPass renderPass);
 
+    /**
+     * @brief Destroys the graphics pipeline.
+     *
+     * This function destroys the graphics pipeline.
+     *
+     * @param device  The Vulkan device.
+     */
     void destroy(const VkDevice device);
 
+    /**
+     * @brief Gets the graphics pipeline.
+     *
+     * This function returns the graphics pipeline.
+     *
+     * @return VkPipeline  The graphics pipeline.
+     */
     [[nodiscard]] const VkPipeline get() const { return _graphicsPipeline; }
 
   private:

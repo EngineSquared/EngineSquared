@@ -83,7 +83,7 @@ class Instance {
      *
      * Initializes the Vulkan instance with the specified application name.
      *
-     * @param applicationName The name of the application.
+     * @param applicationName  The name of the application.
      */
     void create(const std::string &applicationName);
 
@@ -110,7 +110,7 @@ class Instance {
      * This function initializes a Vulkan surface that is associated with the specified
      * GLFW window. The surface is necessary for rendering Vulkan graphics to the window.
      *
-     * @param window A pointer to the GLFWwindow for which the Vulkan surface will be created.
+     * @param window  A pointer to the GLFWwindow for which the Vulkan surface will be created.
      */
     void createSurface(GLFWwindow *window);
 
@@ -136,7 +136,7 @@ class Instance {
      * essential for rendering graphics to the window and ensuring smooth
      * frame transitions.
      *
-     * @param window The GLFW window for which the swap chain images will be created.
+     * @param window  The GLFW window for which the swap chain images will be created.
      */
     void createSwapChainImages(uint32_t width, uint32_t height);
 
@@ -184,7 +184,7 @@ class Instance {
      * views, and swap chain. It is called when the swap chain needs to be
      * recreated or when the application is shutting down.
      *
-     * @param device The Vulkan logical device used to clean up the swap chain.
+     * @param device  The Vulkan logical device used to clean up the swap chain.
      */
     void cleanupSwapChain(const VkDevice device);
 
@@ -210,7 +210,7 @@ class Instance {
      * The flag is used to trigger the recreation of the swap chain when the
      * window is resized.
      *
-     * @param resized The new value of the framebuffer resized flag.
+     * @param resized  The new value of the framebuffer resized flag.
      */
     void setFramebufferResized(bool resized) { _framebufferResized = resized; }
 
@@ -232,7 +232,7 @@ class Instance {
      * This function retrieves the list of required extensions that need to be
      * enabled for the Vulkan instance.
      *
-     * @return std::vector<const char *> The required extensions for the Vulkan API.
+     * @return std::vector<const char *>  The required extensions for the Vulkan API.
      */
     [[nodiscard]] std::vector<const char *> getRequiredExtensions();
 

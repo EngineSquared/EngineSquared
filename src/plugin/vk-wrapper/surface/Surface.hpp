@@ -51,8 +51,8 @@ class Surface {
      * and the Vulkan instance. The surface is used to render graphics to the
      * window or other surface.
      *
-     * @param window The GLFW window.
-     * @param instance The Vulkan instance.
+     * @param window  The GLFW window.
+     * @param instance  The Vulkan instance.
      */
     void create(GLFWwindow *window, const VkInstance instance);
 
@@ -61,10 +61,17 @@ class Surface {
      *
      * This function destroys the surface created for the Vulkan API.
      *
-     * @param instance The Vulkan instance.
+     * @param instance  The Vulkan instance.
      */
     void destroy(const VkInstance instance);
 
+    /**
+     * @brief Returns the surface.
+     *
+     * This function returns the surface created for the Vulkan API.
+     *
+     * @return The surface.
+     */
     [[nodiscard]] const VkSurfaceKHR get() const { return surface; }
 
   private:

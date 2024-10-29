@@ -44,6 +44,10 @@ namespace ES::Plugin::Wrapper {
  */
 class SwapChain {
   public:
+    /**
+     * @brief Details of the swap chain support.
+     *
+     */
     struct SupportDetails {
         VkSurfaceCapabilitiesKHR capabilities;
         std::vector<VkSurfaceFormatKHR> formats;
@@ -122,10 +126,30 @@ class SwapChain {
     [[nodiscard]] const std::vector<VkImage> getSwapChainImages() const { return _swapChainImages; }
 
   private:
+    /**
+     * @brief Choose the swap surface format.
+     *
+     * @param availableFormats  The available formats.
+     * @return VkSurfaceFormatKHR  The chosen format.
+     */
     [[nodiscard]] VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
 
+    /**
+     * @brief Choose the swap present mode.
+     *
+     * @param availablePresentModes  The available present modes.
+     * @return VkPresentModeKHR  The chosen present mode.
+     */
     [[nodiscard]] VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
 
+    /**
+     * @brief Choose the swap extent.
+     *
+     * @param capabilities  The capabilities.
+     * @param width  The width.
+     * @param height  The height.
+     * @return VkExtent2D  The chosen extent.
+     */
     [[nodiscard]] VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, const uint32_t width,
                                               const uint32_t height);
 

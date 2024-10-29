@@ -32,6 +32,9 @@ namespace ES::Plugin::Wrapper {
  *
  * @example
  * @code
+ * ImageView imageView;
+ * imageView.create(device, swapChainImages, surfaceFormat);
+ * imageView.destroy(device);
  * @endcode
  */
 class ImageView {
@@ -40,9 +43,9 @@ class ImageView {
      *
      * This function initializes image views for each image in the swap chain.
      *
-     * @param device The Vulkan logical device used to create the image views.
-     * @param swapChainImages A vector of Vulkan images representing the swap chain images.
-     * @param surfaceFormat The surface format used to create the image views.
+     * @param device  The Vulkan logical device used to create the image views.
+     * @param swapChainImages  A vector of Vulkan images representing the swap chain images.
+     * @param surfaceFormat  The surface format used to create the image views.
      */
     void create(const VkDevice device, std::vector<VkImage> swapChainImages, VkSurfaceFormatKHR surfaceFormat);
 
@@ -52,14 +55,14 @@ class ImageView {
      * The image views are destroyed using the Vulkan logical device provided
      * when the image views were created.
      *
-     * @param device The Vulkan logical device used to destroy the image views.
+     * @param device  The Vulkan logical device used to destroy the image views.
      */
     void destroy(const VkDevice device);
 
     /**
      * @brief Get the Image Views object.
      *
-     * @return const std::vector<VkImageView> The image views.
+     * @return const std::vector<VkImageView>  The image views.
      */
     [[nodiscard]] const std::vector<VkImageView> &getImageViews() const { return _swapChainImageViews; }
 

@@ -52,7 +52,29 @@ namespace ES::Plugin {
  */
 class VkWrapper {
   public:
+    /**
+     * @brief Create the VkWrapper using the Vulkan API.
+     *
+     * This function creates the VkWrapper using the Vulkan API. It creates the
+     * instance, the surface, the physical device, the logical device, the swap
+     * chain, the image views, the render pass, the graphics pipeline, the frame
+     * buffers, the command pool, the command buffers, the semaphores, and the fences.
+     *
+     * @param window  The GLFW window to create the VkWrapper for.
+     * @param width  The width of the window.
+     * @param height  The height of the window.
+     * @param applicationName  The name of the application.
+     */
     void create(GLFWwindow *window, uint32_t width, uint32_t height, const std::string &applicationName);
+
+    /**
+     * @brief Destroy the VkWrapper using the Vulkan API.
+     *
+     * This function destroys the VkWrapper using the Vulkan API. It destroys the
+     * fences, the semaphores, the command buffers, the command pool, the frame
+     * buffers, the graphics pipeline, the render pass, the image views, the swap
+     * chain, the logical device, the physical device, the surface, and the instance.
+     */
     void destroy();
 
     /**
@@ -63,7 +85,7 @@ class VkWrapper {
      * records the command buffer, submits the command buffer to the graphics queue,
      * presents the image to the screen, and increments the current frame index.
      *
-     * @return Wrapper::Result The result of the draw operation. Success if the
+     * @return Wrapper::Result  The result of the draw operation. Success if the
      * image was drawn successfully, Failure if a Resize is needed.
      *
      * @see Wrapper::Result
@@ -78,7 +100,7 @@ class VkWrapper {
      * width and height of the window, waits for the window to be resized, and
      * recreates the swap chain with the new dimensions.
      *
-     * @param window The GLFW window to resize.
+     * @param window  The GLFW window to resize.
      */
     void Resize(GLFWwindow *window);
 
@@ -99,9 +121,9 @@ class VkWrapper {
      * It sets the framebuffer resized flag to indicate that the framebuffer
      * needs to be resized.
      *
-     * @param window The GLFW window that was resized.
-     * @param width The new width of the window. (unused)
-     * @param height The new height of the window. (unused)
+     * @param window  The GLFW window that was resized.
+     * @param width  The new width of the window. (unused)
+     * @param height  The new height of the window. (unused)
      */
     static void ResizeCallback(GLFWwindow *window, int width, int height);
 

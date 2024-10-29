@@ -31,7 +31,6 @@ namespace ES::Plugin::Wrapper {
 /**
  * @brief LogicalDevice class.
  *
- *
  * @example
  * @code
  * LogicalDevice device;
@@ -49,15 +48,44 @@ class LogicalDevice {
      * device and allows the application to execute Vulkan commands.
      * The logical device is configured with specific features and
      * extensions required by the application.
+     *
+     * @param physicalDevice  The selected physical device.
+     * @param surface  The Vulkan surface.
      */
     void create(const VkPhysicalDevice physicalDevice, const VkSurfaceKHR surface);
 
+    /**
+     * @brief Destroys the logical device.
+     *
+     * This function destroys the logical device.
+     */
     void destroy() { vkDestroyDevice(_device, nullptr); }
 
+    /**
+     * @brief Gets the logical device.
+     *
+     * This function returns the logical device.
+     *
+     * @return The logical device.
+     */
     [[nodiscard]] const VkDevice get() const { return _device; }
 
+    /**
+     * @brief Gets the present queue.
+     *
+     * This function returns the present queue.
+     *
+     * @return The present queue.
+     */
     [[nodiscard]] const VkQueue getPresentQueue() { return _presentQueue; }
 
+    /**
+     * @brief Gets the graphics queue.
+     *
+     * This function returns the graphics queue.
+     *
+     * @return The graphics queue.
+     */
     [[nodiscard]] const VkQueue getGraphicsQueue() { return _graphicsQueue; }
 
   private:
