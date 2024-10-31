@@ -2,6 +2,7 @@
 
 #include "SceneManager.hpp"
 
-void ES::Plugin::Scene::System::UpdateScene(ES::Engine::Registry &reg) {
+void ES::Plugin::Scene::System::UpdateScene(ES::Engine::Registry &reg)
+{
     reg.GetResource<ES::Plugin::Scene::Resource::SceneManager>().Update(reg);
 }
