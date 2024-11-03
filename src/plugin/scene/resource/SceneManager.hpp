@@ -39,22 +39,16 @@ class SceneManager {
      */
     template <typename TScene> TScene &RegisterScene(const std::string &name)
     {
-        if constexpr (std::is_base_of<ES::Plugin::Scene::Utils::AScene, TScene>::value)
+        static_assert(std::is_base_of<ES::Plugin::Scene::Utils::AScene, TScene>::value,
+            "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
+        if (_scenes.find(name) != _scenes.end())
         {
-            if (_scenes.find(name) != _scenes.end())
-            {
-                std::cerr << "[WARNING] ES::Plugin::Scene::Resource::SceneManager: Scene " << name << " already exists"
-                          << std::endl;
-            }
-            std::shared_ptr<TScene> new_scene = std::make_shared<TScene>();
-            _scenes[name] = new_scene;
-            return *new_scene.get();
+            std::cerr << "[WARNING] ES::Plugin::Scene::Resource::SceneManager: Scene " << name << " already exists"
+                      << std::endl;
         }
-        else
-        {
-            // static_assert(false, "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
-            static_assert(false, "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
-        }
+        std::shared_ptr<TScene> new_scene = std::make_shared<TScene>();
+        _scenes[name] = new_scene;
+        return *new_scene.get();
     }
 
   private:
