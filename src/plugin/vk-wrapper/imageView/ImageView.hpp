@@ -42,12 +42,21 @@ class ImageView {
     /** @brief Creates image views for the provided swap chain images.
      *
      * This function initializes image views for each image in the swap chain.
+     * This function is used for stereoscopic 3D applications. The layer count
+     * is used to create multiple image views for each image in the swap chain.
+     * The number of image views created is equal to the number of swap chain images
+     * multiplied by the layer count.
+     * The layer count is typically 2 for stereoscopic 3D applications.
+     * The layer count is 1 for non-stereoscopic applications.
      *
      * @param device  The Vulkan logical device used to create the image views.
      * @param swapChainImages  A vector of Vulkan images representing the swap chain images.
      * @param surfaceFormat  The surface format used to create the image views.
+     * @param layerCount  The number of layers in the image views. This is used for
+     *                    stereoscopic 3D applications. The default value is 1.
      */
-    void create(const VkDevice device, std::vector<VkImage> swapChainImages, VkSurfaceFormatKHR surfaceFormat);
+    void create(const VkDevice &device, const std::vector<VkImage> &swapChainImages, VkSurfaceFormatKHR surfaceFormat,
+                uint32_t layerCount = 1);
 
     /** @brief Destroys the image views.
      *
