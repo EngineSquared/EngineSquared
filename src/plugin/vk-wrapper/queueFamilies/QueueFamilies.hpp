@@ -4,7 +4,7 @@
  * VkWrapper is a software package, part of the Engine².
  *
  * This file is part of the VkWrapper project that is under GPL-3.0 License.
- * Copyright © 2024 by @MasterLaplace, All rights reserved.
+ * Copyright © 2024 by @EngineSquared, All rights reserved.
  *
  * VkWrapper is a free software: you can redistribute it and/or modify
  * it under the terms of the GPL-3.0 License as published by the
@@ -41,7 +41,7 @@ const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_N
  * QueueFamilies queueFamilies;
  * queueFamilies.findQueueFamilies(physicalDevice, surface);
  * if (!queueFamilies.isComplete())
- *    throw std::runtime_error("failed to find queue families!");
+ *    throw VkWrapperError("failed to find queue families!");
  * auto indices = queueFamilies.getIndices();
  * @endcode
  */

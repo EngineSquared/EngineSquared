@@ -4,7 +4,7 @@
  * VkWrapper is a software package, part of the Engine².
  *
  * This file is part of the VkWrapper project that is under GPL-3.0 License.
- * Copyright © 2024 by @MasterLaplace, All rights reserved.
+ * Copyright © 2024 by @EngineSquared, All rights reserved.
  *
  * VkWrapper is a free software: you can redistribute it and/or modify
  * it under the terms of the GPL-3.0 License as published by the
@@ -37,9 +37,16 @@ namespace ES::Plugin::Wrapper {
 /**
  * @brief SwapChain class.
  *
+ * This class is used to create a swap chain for the Vulkan API. The swap chain
+ * is used to present images to the screen. It is a queue of images that are
+ * displayed on the screen. The swap chain is used to synchronize the rendering
+ * of images with the refresh rate of the screen.
  *
  * @example
  * @code
+ * SwapChain swapChain;
+ * swapChain.create(device, physicalDevice, surface, width, height);
+ * swapChain.destroy(device);
  * @endcode
  */
 class SwapChain {

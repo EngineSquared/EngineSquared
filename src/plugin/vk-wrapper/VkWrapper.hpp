@@ -4,7 +4,7 @@
  * VkWrapper is a software package, part of the Engine².
  *
  * This file is part of the VkWrapper project that is under GPL-3.0 License.
- * Copyright © 2024 by @MasterLaplace, All rights reserved.
+ * Copyright © 2024 by @EngineSquared, All rights reserved.
  *
  * VkWrapper is a free software: you can redistribute it and/or modify
  * it under the terms of the GPL-3.0 License as published by the
@@ -34,20 +34,28 @@ namespace ES::Plugin {
  * This class is a wrapper for the Vulkan API.
  * It is used to simplify the use of Vulkan in the Engine².
  *
- * @example
+ * @example "Usage of the VkWrapper class:"
  * @code
  * // Create a window
  * ES::Plugin::Window::Resource::Window window(800, 600, "My Engine");
  *
  * // Create a VkWrapper
- * ES::Plugin::VkWrapper vkWrapper("My Engine");
+ * ES::Plugin::VkWrapper vkWrapper;
+ *
+ * // Set the framebuffer resize callback
+ * window.SetFramebufferSizeCallback((void *) &vkWrapper, ES::Plugin::VkWrapper::ResizeCallback);
+ *
  * vkWrapper.PrintAvailableExtensions();
  *
  * while (!window.ShouldClose())
  * {
  *     glfwPollEvents();
- *     vkWrapper.DrawFrame();
+ *     auto result = vkWrapper.DrawFrame();
+ *     if (result == ES::Plugin::Wrapper::Result::Failure)
+ *         vkWrapper.Resize(window.GetGLFWWindow());
  * }
+ *
+ * vkWrapper.destroy();
  * @endcode
  */
 class VkWrapper {
