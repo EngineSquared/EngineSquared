@@ -18,21 +18,21 @@ class SceneManager {
     /**
      * @brief Set the next scene to load.
      * It will be loaded at the next call of Update.
-     * 
+     *
      * @param name  name of the scene to load
      */
     inline void SetNextScene(const std::string &name) { _nextScene = name; }
 
     /**
      * @brief Unload the current scene and load the next scene.
-     * 
+     *
      * @param registry  registry that contains all components
      */
     void Update(ES::Engine::Registry &registry);
 
     /**
      * @brief Register a scene using a name as a key.
-     * 
+     *
      * @tparam TScene   type of the scene to register
      * @param name      name of the scene
      * @return          reference of the registered scene
