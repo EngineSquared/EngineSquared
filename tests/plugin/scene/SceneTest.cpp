@@ -9,26 +9,19 @@
 
 using namespace ES::Plugin::Scene;
 
-class SceneTest1 : public Utils::AScene {
+class SceneTest : public Utils::AScene {
   protected:
-    virtual void OnCreate(ES::Engine::Registry &registry) { std::cout << "Scene 1 Created" << std::endl; }
+    virtual void _onCreate(ES::Engine::Registry &registry) final { }
 
-    virtual void OnDestroy(ES::Engine::Registry &registry) { std::cout << "Scene 1 Destroyed" << std::endl; }
-};
-
-class SceneTest2 : public Utils::AScene {
-  protected:
-    virtual void OnCreate(ES::Engine::Registry &registry) { std::cout << "Scene 2 Created" << std::endl; }
-
-    virtual void OnDestroy(ES::Engine::Registry &registry) { std::cout << "Scene 2 Destroyed" << std::endl; }
+    virtual void _onDestroy(ES::Engine::Registry &registry) final { }
 };
 
 TEST(Scene, SceneManager)
 {
     ES::Engine::Registry registry;
     registry.RegisterResource<ES::Plugin::Scene::Resource::SceneManager>(ES::Plugin::Scene::Resource::SceneManager());
-    registry.GetResource<ES::Plugin::Scene::Resource::SceneManager>().RegisterScene<SceneTest1>("scene1");
-    registry.GetResource<ES::Plugin::Scene::Resource::SceneManager>().RegisterScene<SceneTest2>("scene2");
+    registry.GetResource<ES::Plugin::Scene::Resource::SceneManager>().RegisterScene<SceneTest>("scene1");
+    registry.GetResource<ES::Plugin::Scene::Resource::SceneManager>().RegisterScene<SceneTest>("scene2");
 
     registry.GetResource<ES::Plugin::Scene::Resource::SceneManager>().SetNextScene("scene1");
 
@@ -39,5 +32,7 @@ TEST(Scene, SceneManager)
     registry.GetResource<ES::Plugin::Scene::Resource::SceneManager>().SetNextScene("scene2");
     registry.RunSystems();
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Scene 1 Created\nScene 1 Destroyed\nScene 2 Created\n");
+    EXPECT_EQ(output, "[INFO] ES::Plugin::Scene::Resource::SceneManager: Loading scene: scene1\n"
+    "[INFO] ES::Plugin::Scene::Resource::SceneManager: Unloading scene: scene1\n"
+    "[INFO] ES::Plugin::Scene::Resource::SceneManager: Loading scene: scene2\n");
 }

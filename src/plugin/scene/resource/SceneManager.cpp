@@ -10,39 +10,48 @@
 
 void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Registry &registry)
 {
-    if (nextScene.has_value())
+    if (_nextScene.has_value())
     {
-        if (currentScene.has_value())
+        if (_currentScene.has_value())
         {
-            UnloadScene(registry, currentScene.value());
+            std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Unloading scene: " << _currentScene.value() << std::endl;
+            _unloadScene(registry, _currentScene.value());
         }
-        LoadScene(registry, nextScene.value());
-        currentScene = nextScene;
-        nextScene.reset();
+        std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Loading scene: " << _nextScene.value() << std::endl;
+        _loadScene(registry, _nextScene.value());
+        _currentScene = _nextScene;
+        _nextScene.reset();
+    } else {
+        std::cout << "[WARNING] ES::Plugin::Scene::Resource::SceneManager: Unable to load next scene: No next scene provided" << std::endl;
     }
 }
-void ES::Plugin::Scene::Resource::SceneManager::LoadScene(ES::Engine::Registry &registry, const std::string &name)
+void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Registry &registry, const std::string &name)
 {
-    auto scene = scenes.find(name);
-    if (scene != scenes.end())
+    std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> scene = _getScene(name);
+    if (scene.has_value())
     {
-        scene->second->Load(registry);
-    }
-    else
-    {
-        std::cerr << "[ERROR] ES::Plugin::Scene::Resource::SceneManager: Scene " << name << " not found" << std::endl;
+        scene.value()->Load(registry);
     }
 }
 
-void ES::Plugin::Scene::Resource::SceneManager::UnloadScene(ES::Engine::Registry &registry, const std::string &name)
+void ES::Plugin::Scene::Resource::SceneManager::_unloadScene(ES::Engine::Registry &registry, const std::string &name)
 {
-    auto scene = scenes.find(name);
-    if (scene != scenes.end())
+    std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> scene = _getScene(name);
+    if (scene.has_value())
     {
-        scene->second->Unload(registry);
+        scene.value()->Unload(registry);
+    }
+}
+
+std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> ES::Plugin::Scene::Resource::SceneManager::_getScene(const std::string &name) {
+    auto scene = _scenes.find(name);
+    if (scene != _scenes.end())
+    {
+        return scene->second;
     }
     else
     {
-        std::cerr << "[ERROR] ES::Plugin::Scene::Resource::SceneManager: Scene " << name << " not found" << std::endl;
+        std::cerr << "[ERROR] ES::Plugin::Scene::Resource::SceneManager: Scene not found: " << name << std::endl;
+        return std::nullopt;
     }
 }
