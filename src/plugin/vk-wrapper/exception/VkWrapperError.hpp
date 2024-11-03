@@ -47,7 +47,7 @@ namespace ES::Plugin::Wrapper {
  */
 class VkWrapperError : public std::exception {
   public:
-    VkWrapperError(const std::string &message) : msg("VkWrapper error: " + message) {};
+    VkWrapperError(const std::string &message) : msg("VkWrapper error: " + message){};
 
     const char *what() const throw() override { return this->msg.c_str(); };
 
