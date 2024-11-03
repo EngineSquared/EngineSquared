@@ -67,10 +67,6 @@ jobs:
         run: |
           curl -fsSL https://xmake.io/shget.text | bash
 
-      - name: Setup Xmake
-        run: |
-          xmake f --toolchain=clang
-
       - name: (Try to) build the project
         run: xmake build -y
         timeout-minutes: 2
