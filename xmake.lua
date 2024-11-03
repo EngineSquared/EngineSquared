@@ -47,6 +47,7 @@ target("EngineSquared")
     add_includedirs("src/plugin/vk-wrapper/renderPass", { public = true })
     add_includedirs("src/plugin/vk-wrapper/framebuffer", { public = true })
     add_includedirs("src/plugin/vk-wrapper/command", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/exception", { public = true })
 
     set_policy("build.warning", true)
     add_packages("entt", "vulkansdk", "glfw", "glm")
