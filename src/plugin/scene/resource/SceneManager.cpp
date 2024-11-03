@@ -14,15 +14,21 @@ void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Registry &reg
     {
         if (_currentScene.has_value())
         {
-            std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Unloading scene: " << _currentScene.value() << std::endl;
+            std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Unloading scene: " << _currentScene.value()
+                      << std::endl;
             _unloadScene(registry, _currentScene.value());
         }
-        std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Loading scene: " << _nextScene.value() << std::endl;
+        std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Loading scene: " << _nextScene.value()
+                  << std::endl;
         _loadScene(registry, _nextScene.value());
         _currentScene = _nextScene;
         _nextScene.reset();
-    } else {
-        std::cout << "[WARNING] ES::Plugin::Scene::Resource::SceneManager: Unable to load next scene: No next scene provided" << std::endl;
+    }
+    else
+    {
+        std::cout
+            << "[WARNING] ES::Plugin::Scene::Resource::SceneManager: Unable to load next scene: No next scene provided"
+            << std::endl;
     }
 }
 void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Registry &registry, const std::string &name)
@@ -43,7 +49,9 @@ void ES::Plugin::Scene::Resource::SceneManager::_unloadScene(ES::Engine::Registr
     }
 }
 
-std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> ES::Plugin::Scene::Resource::SceneManager::_getScene(const std::string &name) {
+std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>>
+ES::Plugin::Scene::Resource::SceneManager::_getScene(const std::string &name)
+{
     auto scene = _scenes.find(name);
     if (scene != _scenes.end())
     {
