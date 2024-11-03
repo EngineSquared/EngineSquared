@@ -40,7 +40,7 @@ class SceneManager {
     template <typename TScene> TScene &RegisterScene(const std::string &name)
     {
         static_assert(std::is_base_of<ES::Plugin::Scene::Utils::AScene, TScene>::value,
-            "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
+                      "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
         if (_scenes.find(name) != _scenes.end())
         {
             std::cerr << "[WARNING] ES::Plugin::Scene::Resource::SceneManager: Scene " << name << " already exists"
