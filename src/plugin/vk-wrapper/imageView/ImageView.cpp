@@ -33,7 +33,7 @@ void ImageView::create(const VkDevice device, std::vector<VkImage> swapChainImag
         createInfo.subresourceRange.layerCount = 1;
 
         if (vkCreateImageView(device, &createInfo, nullptr, &_swapChainImageViews[i]) != VK_SUCCESS)
-            throw std::runtime_error("failed to create image views!");
+            throw VkWrapperError("failed to create image views!");
     }
 }
 

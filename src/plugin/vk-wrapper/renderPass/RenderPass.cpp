@@ -50,7 +50,7 @@ void RenderPass::create(const VkDevice device, const VkFormat swapChainImageForm
     renderPassInfo.pDependencies = &dependency;
 
     if (vkCreateRenderPass(device, &renderPassInfo, nullptr, &_renderPass) != VK_SUCCESS)
-        throw std::runtime_error("failed to create render pass!");
+        throw VkWrapperError("failed to create render pass!");
 }
 
 void RenderPass::destroy(const VkDevice device) { vkDestroyRenderPass(device, _renderPass, nullptr); }

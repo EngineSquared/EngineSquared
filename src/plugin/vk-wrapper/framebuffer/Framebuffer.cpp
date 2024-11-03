@@ -29,7 +29,7 @@ void Framebuffer::create(const VkDevice device, const CreateInfo info)
         framebufferInfo.layers = 1;
 
         if (vkCreateFramebuffer(device, &framebufferInfo, nullptr, &_swapChainFramebuffers[i]) != VK_SUCCESS)
-            throw std::runtime_error("failed to create framebuffer!");
+            throw VkWrapperError("failed to create framebuffer!");
     }
 }
 

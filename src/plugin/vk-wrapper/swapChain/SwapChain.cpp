@@ -83,7 +83,7 @@ void SwapChain::create(const VkDevice device, const VkPhysicalDevice physicalDev
     createInfo.oldSwapchain = VK_NULL_HANDLE;
 
     if (vkCreateSwapchainKHR(device, &createInfo, nullptr, &_swapChain) != VK_SUCCESS)
-        throw std::runtime_error("failed to create swap chain!");
+        throw VkWrapperError("failed to create swap chain!");
 
     vkGetSwapchainImagesKHR(device, _swapChain, &imageCount, nullptr);
     _swapChainImages.resize(imageCount);

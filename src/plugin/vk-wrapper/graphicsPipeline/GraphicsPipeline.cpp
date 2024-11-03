@@ -98,7 +98,7 @@ void GraphicsPipeline::create(const VkDevice device, const VkExtent2D swapChainE
     pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 
     if (vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
-        throw std::runtime_error("failed to create pipeline layout!");
+        throw VkWrapperError("failed to create pipeline layout!");
 
     VkGraphicsPipelineCreateInfo pipelineInfo{};
     pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -117,7 +117,7 @@ void GraphicsPipeline::create(const VkDevice device, const VkExtent2D swapChainE
     pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 
     if (vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &_graphicsPipeline) != VK_SUCCESS)
-        throw std::runtime_error("failed to create graphics pipeline!");
+        throw VkWrapperError("failed to create graphics pipeline!");
 
     ShaderModule::destroy(device, fragment);
     ShaderModule::destroy(device, vertex);

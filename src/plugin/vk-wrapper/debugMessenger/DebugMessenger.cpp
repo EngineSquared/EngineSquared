@@ -26,7 +26,7 @@ void DebugMessenger::setupDebugMessenger(const VkInstance instance)
     populateDebugMessengerCreateInfo(createInfo);
 
     if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr) != VK_SUCCESS)
-        throw std::runtime_error("failed to set up debug messenger!");
+        throw VkWrapperError("failed to set up debug messenger!");
 }
 
 VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessenger::callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,

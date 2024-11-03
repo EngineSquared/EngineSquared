@@ -21,7 +21,7 @@ void Command::create(const VkDevice device, const CreateInfo info)
     poolInfo.queueFamilyIndex = _queueFamilies.getIndices().graphicsFamily.value();
 
     if (vkCreateCommandPool(device, &poolInfo, nullptr, &_commandPool) != VK_SUCCESS)
-        throw std::runtime_error("failed to create command pool!");
+        throw VkWrapperError("failed to create command pool!");
 
     _commandBuffers.resize(MAX_FRAMES_IN_FLIGHT);
 
@@ -32,7 +32,7 @@ void Command::create(const VkDevice device, const CreateInfo info)
     allocInfo.commandBufferCount = (uint32_t) _commandBuffers.size();
 
     if (vkAllocateCommandBuffers(device, &allocInfo, _commandBuffers.data()) != VK_SUCCESS)
-        throw std::runtime_error("failed to allocate command buffers!");
+        throw VkWrapperError("failed to allocate command buffers!");
 }
 
 void Command::destroy(const VkDevice device) { vkDestroyCommandPool(device, _commandPool, nullptr); }
@@ -47,7 +47,7 @@ void Command::recordBuffer(const RecordInfo info)
     beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 
     if (vkBeginCommandBuffer(commandBuffer, &beginInfo) != VK_SUCCESS)
-        throw std::runtime_error("failed to begin recording command buffer!");
+        throw VkWrapperError("failed to begin recording command buffer!");
 
     VkRenderPassBeginInfo renderPassInfo{};
     renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -83,7 +83,7 @@ void Command::recordBuffer(const RecordInfo info)
     vkCmdEndRenderPass(commandBuffer);
 
     if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS)
-        throw std::runtime_error("failed to record command buffer!");
+        throw VkWrapperError("failed to record command buffer!");
 }
 
 } // namespace ES::Plugin::Wrapper

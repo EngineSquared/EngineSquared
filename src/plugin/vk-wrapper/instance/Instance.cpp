@@ -14,7 +14,7 @@ namespace ES::Plugin::Wrapper {
 void Instance::create(const std::string &applicationName)
 {
     if (enableValidationLayers && !CheckValidationLayerSupport())
-        throw std::runtime_error("validation layers requested, but not available!");
+        throw VkWrapperError("validation layers requested, but not available!");
 
     VkApplicationInfo appInfo{};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -47,7 +47,7 @@ void Instance::create(const std::string &applicationName)
     }
 
     if (vkCreateInstance(&createInfo, nullptr, &_instance) != VK_SUCCESS)
-        throw std::runtime_error("failed to create instance!");
+        throw VkWrapperError("failed to create instance!");
 }
 
 void Instance::destroy()
@@ -197,7 +197,7 @@ void Instance::createSyncObjects()
         if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &_imageAvailableSemaphores[i]) != VK_SUCCESS ||
             vkCreateSemaphore(device, &semaphoreInfo, nullptr, &_renderFinishedSemaphores[i]) != VK_SUCCESS ||
             vkCreateFence(device, &fenceInfo, nullptr, &_inFlightFences[i]) != VK_SUCCESS)
-            throw std::runtime_error("failed to create semaphores!");
+            throw VkWrapperError("failed to create semaphores!");
     }
 }
 
@@ -239,7 +239,7 @@ Result Instance::drawNextImage()
     if (result == VK_ERROR_OUT_OF_DATE_KHR)
         return Result::Failure;
     else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
-        throw std::runtime_error("failed to acquire swap chain image!");
+        throw VkWrapperError("failed to acquire swap chain image!");
 
     vkResetFences(device, 1, &_inFlightFences[_currentFrame]);
 
@@ -270,7 +270,7 @@ Result Instance::drawNextImage()
     submitInfo.pSignalSemaphores = signalSemaphores;
 
     if (vkQueueSubmit(_logicalDevice.getGraphicsQueue(), 1, &submitInfo, _inFlightFences[_currentFrame]) != VK_SUCCESS)
-        throw std::runtime_error("failed to submit draw command buffer!");
+        throw VkWrapperError("failed to submit draw command buffer!");
 
     VkPresentInfoKHR presentInfo{};
     presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -296,7 +296,7 @@ Result Instance::drawNextImage()
     if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || _framebufferResized)
         return Result::Failure;
     else if (result != VK_SUCCESS)
-        throw std::runtime_error("failed to present swap chain image!");
+        throw VkWrapperError("failed to present swap chain image!");
 
     return Result::Success;
 }
