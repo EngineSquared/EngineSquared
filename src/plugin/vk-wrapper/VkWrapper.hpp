@@ -48,7 +48,7 @@ namespace ES::Plugin {
  *     .applicationName = "My Engine",
  *     .shaders = {{SHADER_DIR "vert.spv", "main"}, {SHADER_DIR "frag.spv", "main"}}
  * };
- * vkWrapper.create(createInfo);
+ * vkWrapper.Create(createInfo);
  *
  * // Set the framebuffer resize callback
  * window.SetFramebufferSizeCallback((void *) &vkWrapper, ES::Plugin::VkWrapper::ResizeCallback);
@@ -63,7 +63,7 @@ namespace ES::Plugin {
  *         vkWrapper.Resize(window.GetGLFWWindow());
  * }
  *
- * vkWrapper.destroy();
+ * vkWrapper.Destroy();
  * @endcode
  */
 class VkWrapper {
@@ -102,7 +102,7 @@ class VkWrapper {
      *
      * @param info  The creation information required for the VkWrapper.
      */
-    void create(const CreateInfo &info);
+    void Create(const CreateInfo &info);
 
     /**
      * @brief Destroy the VkWrapper using the Vulkan API.
@@ -112,7 +112,7 @@ class VkWrapper {
      * buffers, the graphics pipeline, the render pass, the image views, the swap
      * chain, the logical device, the physical device, the surface, and the instance.
      */
-    void destroy();
+    void Destroy();
 
     /**
      * @brief Draw a frame using the Vulkan API.
@@ -128,7 +128,7 @@ class VkWrapper {
      * @see Wrapper::Result
      * @see Resize
      */
-    [[nodiscard]] Wrapper::Result drawFrame();
+    [[nodiscard]] Wrapper::Result DrawFrame();
 
     /**
      * @brief Resize the window using the Vulkan API.
@@ -149,7 +149,7 @@ class VkWrapper {
      * The flag is used to trigger the recreation of the swap chain when the
      * window is resized.
      */
-    inline void setFramebufferResized() { _instance.setFramebufferResized(true); }
+    inline void SetFramebufferResized() { _instance.SetFramebufferResized(true); }
 
     /**
      * @brief Callback function for the framebuffer resize event.

@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void PhysicalDevice::pickPhysicalDevice(const VkInstance &instance, const VkSurfaceKHR &surface)
+void PhysicalDevice::PickPhysicalDevice(const VkInstance &instance, const VkSurfaceKHR &surface)
 {
     uint32_t deviceCount = 0;
     vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
@@ -24,7 +24,7 @@ void PhysicalDevice::pickPhysicalDevice(const VkInstance &instance, const VkSurf
 
     for (const auto &device : devices)
     {
-        if (isDeviceSuitable(device, surface))
+        if (IsDeviceSuitable(device, surface))
         {
             physicalDevice = device;
             break;
@@ -35,23 +35,23 @@ void PhysicalDevice::pickPhysicalDevice(const VkInstance &instance, const VkSurf
         throw VkWrapperError("failed to find a suitable GPU!");
 }
 
-bool PhysicalDevice::isDeviceSuitable(const VkPhysicalDevice &device, const VkSurfaceKHR &surface)
+bool PhysicalDevice::IsDeviceSuitable(const VkPhysicalDevice &device, const VkSurfaceKHR &surface)
 {
-    _queueFamilies.findQueueFamilies(device, surface);
+    _queueFamilies.FindQueueFamilies(device, surface);
 
-    bool extensionsSupported = checkDeviceExtensionSupport(device);
+    bool extensionsSupported = CheckDeviceExtensionSupport(device);
 
     bool swapChainAdequate = false;
     if (extensionsSupported)
     {
-        SwapChain::SupportDetails swapChainSupport = SwapChain::querySupport(device, surface);
+        SwapChain::SupportDetails swapChainSupport = SwapChain::QuerySupport(device, surface);
         swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
     }
 
-    return _queueFamilies.isComplete() && extensionsSupported && swapChainAdequate;
+    return _queueFamilies.IsComplete() && extensionsSupported && swapChainAdequate;
 }
 
-bool PhysicalDevice::checkDeviceExtensionSupport(const VkPhysicalDevice &device)
+bool PhysicalDevice::CheckDeviceExtensionSupport(const VkPhysicalDevice &device)
 {
     uint32_t extensionCount;
     vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
@@ -67,7 +67,7 @@ bool PhysicalDevice::checkDeviceExtensionSupport(const VkPhysicalDevice &device)
     return requiredExtensions.empty();
 }
 
-uint32_t PhysicalDevice::rateDeviceSuitability(const VkPhysicalDevice &device)
+uint32_t PhysicalDevice::RateDeviceSuitability(const VkPhysicalDevice &device)
 {
     VkPhysicalDeviceProperties deviceProperties;
     VkPhysicalDeviceFeatures deviceFeatures;

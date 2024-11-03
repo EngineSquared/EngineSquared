@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-SwapChain::SupportDetails SwapChain::querySupport(const VkPhysicalDevice &device, const VkSurfaceKHR &surface)
+SwapChain::SupportDetails SwapChain::QuerySupport(const VkPhysicalDevice &device, const VkSurfaceKHR &surface)
 {
     SupportDetails details{};
 
@@ -38,14 +38,14 @@ SwapChain::SupportDetails SwapChain::querySupport(const VkPhysicalDevice &device
     return details;
 }
 
-void SwapChain::create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface,
+void SwapChain::Create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface,
                        const uint32_t width, const uint32_t height)
 {
-    _supportDetails = querySupport(physicalDevice, surface);
+    _supportDetails = QuerySupport(physicalDevice, surface);
 
-    _surfaceFormat = chooseSwapSurfaceFormat(_supportDetails.formats);
-    _presentMode = chooseSwapPresentMode(_supportDetails.presentModes);
-    _extent = chooseSwapExtent(_supportDetails.capabilities, width, height);
+    _surfaceFormat = ChooseSwapSurfaceFormat(_supportDetails.formats);
+    _presentMode = ChooseSwapPresentMode(_supportDetails.presentModes);
+    _extent = ChooseSwapExtent(_supportDetails.capabilities, width, height);
 
     uint32_t imageCount = _supportDetails.capabilities.minImageCount + 1;
 
@@ -62,8 +62,8 @@ void SwapChain::create(const VkDevice &device, const VkPhysicalDevice &physicalD
     createInfo.imageArrayLayers = 1;                             // Always 1 unless stereoscopic 3D application (VR)
     createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT; // VK_IMAGE_USAGE_TRANSFER_DST_BIT for post-processing
 
-    _queueFamilies.findQueueFamilies(physicalDevice, surface);
-    auto indices = _queueFamilies.getIndices();
+    _queueFamilies.FindQueueFamilies(physicalDevice, surface);
+    auto indices = _queueFamilies.GetIndices();
 
     uint32_t queueFamilyIndices[] = {indices.graphicsFamily.value(), indices.presentFamily.value()};
 
@@ -90,7 +90,7 @@ void SwapChain::create(const VkDevice &device, const VkPhysicalDevice &physicalD
     vkGetSwapchainImagesKHR(device, _swapChain, &imageCount, _swapChainImages.data());
 }
 
-VkSurfaceFormatKHR SwapChain::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats)
+VkSurfaceFormatKHR SwapChain::ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats)
 {
     for (const auto &availableFormat : availableFormats)
     {
@@ -102,7 +102,7 @@ VkSurfaceFormatKHR SwapChain::chooseSwapSurfaceFormat(const std::vector<VkSurfac
     return availableFormats[0];
 }
 
-VkPresentModeKHR SwapChain::chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes)
+VkPresentModeKHR SwapChain::ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes)
 {
     for (const auto &availablePresentMode : availablePresentModes)
     {
@@ -113,7 +113,7 @@ VkPresentModeKHR SwapChain::chooseSwapPresentMode(const std::vector<VkPresentMod
     return VK_PRESENT_MODE_FIFO_KHR;
 }
 
-VkExtent2D SwapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, const uint32_t width,
+VkExtent2D SwapChain::ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, const uint32_t width,
                                        const uint32_t height)
 {
     if (capabilities.currentExtent.width != UINT32_MAX)

@@ -52,7 +52,7 @@ constexpr bool enableValidationLayers = false;
  * @example
  * @code
  * DebugMessenger debugMessenger;
- * debugMessenger.setupDebugMessenger(instance);
+ * debugMessenger.SetupDebugMessenger(instance);
  * @endcode
  */
 class DebugMessenger {
@@ -70,7 +70,7 @@ class DebugMessenger {
      *
      * @param instance  The Vulkan instance.
      */
-    void setupDebugMessenger(const VkInstance &instance);
+    void SetupDebugMessenger(const VkInstance &instance);
 
     /**
      * @brief Callback function for the debug messenger.
@@ -85,7 +85,7 @@ class DebugMessenger {
      * @param pUserData  The user data.
      * @return VK_TRUE if the message is handled, VK_FALSE otherwise.
      */
-    static VKAPI_ATTR VkBool32 VKAPI_CALL callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+    static VKAPI_ATTR VkBool32 VKAPI_CALL Callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                                                    VkDebugUtilsMessageTypeFlagsEXT messageType,
                                                    const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
                                                    void *pUserData);
@@ -98,7 +98,7 @@ class DebugMessenger {
      *
      * @param createInfo  The debug messenger create info.
      */
-    void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
+    void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
 
     /**
      * @brief Destroys the debug messenger.

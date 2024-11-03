@@ -17,19 +17,19 @@ DebugMessenger::~DebugMessenger()
         DestroyDebugUtilsMessengerEXT(_instance, nullptr);
 }
 
-void DebugMessenger::setupDebugMessenger(const VkInstance &instance)
+void DebugMessenger::SetupDebugMessenger(const VkInstance &instance)
 {
     if (!enableValidationLayers)
         return;
 
     VkDebugUtilsMessengerCreateInfoEXT createInfo;
-    populateDebugMessengerCreateInfo(createInfo);
+    PopulateDebugMessengerCreateInfo(createInfo);
 
     if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr) != VK_SUCCESS)
         throw VkWrapperError("failed to set up debug messenger!");
 }
 
-VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessenger::callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessenger::Callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                                                         VkDebugUtilsMessageTypeFlagsEXT messageType,
                                                         const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
                                                         void *pUserData)
@@ -39,7 +39,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessenger::callback(VkDebugUtilsMessageSever
     return VK_FALSE;
 }
 
-void DebugMessenger::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo)
+void DebugMessenger::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo)
 {
     if (!enableValidationLayers)
         return;
@@ -52,7 +52,7 @@ void DebugMessenger::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreat
     createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
                              VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
                              VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
-    createInfo.pfnUserCallback = DebugMessenger::callback;
+    createInfo.pfnUserCallback = DebugMessenger::Callback;
 }
 
 VkResult DebugMessenger::CreateDebugUtilsMessengerEXT(const VkInstance &instance,

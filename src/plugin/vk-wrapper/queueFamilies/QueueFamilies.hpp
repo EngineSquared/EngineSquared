@@ -39,10 +39,10 @@ const std::vector<const char *> DEVICE_EXTENSIONS = {VK_KHR_SWAPCHAIN_EXTENSION_
  * @example
  * @code
  * QueueFamilies queueFamilies;
- * queueFamilies.findQueueFamilies(physicalDevice, surface);
- * if (!queueFamilies.isComplete())
+ * queueFamilies.FindQueueFamilies(physicalDevice, surface);
+ * if (!queueFamilies.IsComplete())
  *    throw VkWrapperError("failed to find queue families!");
- * auto indices = queueFamilies.getIndices();
+ * auto indices = queueFamilies.GetIndices();
  * @endcode
  */
 class QueueFamilies {
@@ -62,7 +62,7 @@ class QueueFamilies {
      * Optional index for the present queue family.
      * Check if WSI is supported by the physical device.
      *
-     * @fn bool QueueFamilyIndices::isComplete() const
+     * @fn bool QueueFamilyIndices::IsComplete() const
      * @brief Checks if the graphics family index and the present family has been set.
      * @return True if the graphics family index and the present family has a value, false otherwise.
      */
@@ -75,7 +75,7 @@ class QueueFamilies {
          *
          * @return True if the graphics family index and the present family has a value, false otherwise.
          */
-        [[nodiscard]] bool isComplete() const { return graphicsFamily.has_value() && presentFamily.has_value(); }
+        [[nodiscard]] bool IsComplete() const { return graphicsFamily.has_value() && presentFamily.has_value(); }
     };
 
   public:
@@ -88,21 +88,21 @@ class QueueFamilies {
      *
      * @param device The Vulkan physical device for which to find the queue families.
      */
-    void findQueueFamilies(const VkPhysicalDevice &device, const VkSurfaceKHR &surface);
+    void FindQueueFamilies(const VkPhysicalDevice &device, const VkSurfaceKHR &surface);
 
     /**
      * @brief Returns whether the queue families have been completely identified.
      *
      * @return true if the queue families have been completely identified, false otherwise.
      */
-    [[nodiscard]] bool isComplete() const { return _indices.isComplete(); }
+    [[nodiscard]] bool IsComplete() const { return _indices.IsComplete(); }
 
     /**
      * @brief Returns the queue family indices.
      *
      * @return The queue family indices.
      */
-    [[nodiscard]] const QueueFamilyIndices &getIndices() const { return _indices; }
+    [[nodiscard]] const QueueFamilyIndices &GetIndices() const { return _indices; }
 
   private:
     QueueFamilyIndices _indices;

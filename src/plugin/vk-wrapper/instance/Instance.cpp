@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void Instance::create(const std::string &applicationName)
+void Instance::Create(const std::string &applicationName)
 {
     if (enableValidationLayers && !CheckValidationLayerSupport())
         throw VkWrapperError("validation layers requested, but not available!");
@@ -28,7 +28,7 @@ void Instance::create(const std::string &applicationName)
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;
 
-    auto extensions = getRequiredExtensions();
+    auto extensions = GetRequiredExtensions();
     createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
     createInfo.ppEnabledExtensionNames = extensions.data();
 #if VKWRAPPER_SYSTEM_MACOS
@@ -42,7 +42,7 @@ void Instance::create(const std::string &applicationName)
         createInfo.enabledLayerCount = static_cast<uint32_t>(VALIDATION_LAYERS.size());
         createInfo.ppEnabledLayerNames = VALIDATION_LAYERS.data();
 
-        _debugMessenger.populateDebugMessengerCreateInfo(debugCreateInfo);
+        _debugMessenger.PopulateDebugMessengerCreateInfo(debugCreateInfo);
         createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT *) &debugCreateInfo;
     }
 
@@ -50,13 +50,13 @@ void Instance::create(const std::string &applicationName)
         throw VkWrapperError("failed to create instance!");
 }
 
-void Instance::destroy()
+void Instance::Destroy()
 {
-    VkDevice device = _logicalDevice.get();
+    VkDevice device = _logicalDevice.Get();
 
-    cleanupSwapChain(device);
-    _graphicsPipeline.destroy(device);
-    _renderPass.destroy(device);
+    CleanupSwapChain(device);
+    _graphicsPipeline.Destroy(device);
+    _renderPass.Destroy(device);
 
     for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
@@ -65,13 +65,13 @@ void Instance::destroy()
         vkDestroyFence(device, _inFlightFences[i], nullptr);
     }
 
-    _command.destroy(device);
-    _logicalDevice.destroy();
+    _command.Destroy(device);
+    _logicalDevice.Destroy();
 
     if (enableValidationLayers)
         _debugMessenger.DestroyDebugUtilsMessengerEXT(_instance, nullptr);
 
-    _surface.destroy(_instance);
+    _surface.Destroy(_instance);
     vkDestroyInstance(_instance, nullptr);
 }
 
@@ -103,7 +103,7 @@ bool Instance::CheckValidationLayerSupport()
     return true;
 }
 
-std::vector<const char *> Instance::getRequiredExtensions()
+std::vector<const char *> Instance::GetRequiredExtensions()
 {
     uint32_t glfwExtensionCount = 0;
     const char **glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
@@ -120,63 +120,63 @@ std::vector<const char *> Instance::getRequiredExtensions()
     return extensions;
 }
 
-void Instance::setupDebugMessenger()
+void Instance::SetupDebugMessenger()
 {
     if (!enableValidationLayers)
         return;
 
-    _debugMessenger.setupDebugMessenger(_instance);
+    _debugMessenger.SetupDebugMessenger(_instance);
 }
 
-void Instance::createSurface(GLFWwindow *window) { _surface.create(window, _instance); }
+void Instance::CreateSurface(GLFWwindow *window) { _surface.Create(window, _instance); }
 
-void Instance::setupDevices()
+void Instance::SetupDevices()
 {
-    auto surface = _surface.get();
+    auto surface = _surface.Get();
 
-    _physicalDevice.pickPhysicalDevice(_instance, surface);
-    _logicalDevice.create(_physicalDevice.get(), surface);
+    _physicalDevice.PickPhysicalDevice(_instance, surface);
+    _logicalDevice.Create(_physicalDevice.Get(), surface);
 }
 
-void Instance::createSwapChainImages(const uint32_t width, const uint32_t height)
+void Instance::CreateSwapChainImages(const uint32_t width, const uint32_t height)
 {
-    auto device = _logicalDevice.get();
+    auto device = _logicalDevice.Get();
     _currentFrame = 0;
 
-    _swapChain.create(device, _physicalDevice.get(), _surface.get(), width, height);
-    _imageView.create(device, _swapChain.getSwapChainImages(), _swapChain.getSurfaceFormat());
+    _swapChain.Create(device, _physicalDevice.Get(), _surface.Get(), width, height);
+    _imageView.Create(device, _swapChain.GetSwapChainImages(), _swapChain.GetSurfaceFormat());
 }
 
-void Instance::createGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
+void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
 {
-    auto device = _logicalDevice.get();
-    auto extent = _swapChain.getExtent();
+    auto device = _logicalDevice.Get();
+    auto extent = _swapChain.GetExtent();
 
-    _renderPass.create(device, _swapChain.getSurfaceFormat().format);
+    _renderPass.Create(device, _swapChain.GetSurfaceFormat().format);
 
-    _graphicsPipeline.create(device, extent, _renderPass.get(), shaders);
+    _graphicsPipeline.Create(device, extent, _renderPass.Get(), shaders);
 
-    auto renderPass = _renderPass.get();
+    auto renderPass = _renderPass.Get();
 
     Framebuffer::CreateInfo framebufferInfo{};
     framebufferInfo.swapChainExtent = extent;
     framebufferInfo.renderPass = renderPass;
-    framebufferInfo.swapChainImageViews = _imageView.getImageViews();
+    framebufferInfo.swapChainImageViews = _imageView.GetImageViews();
 
-    _framebuffer.create(device, framebufferInfo);
+    _framebuffer.Create(device, framebufferInfo);
 
     Command::CreateInfo commandInfo{};
-    commandInfo.physicalDevice = _physicalDevice.get();
-    commandInfo.surface = _surface.get();
+    commandInfo.physicalDevice = _physicalDevice.Get();
+    commandInfo.surface = _surface.Get();
     commandInfo.swapChainExtent = extent;
     commandInfo.renderPass = renderPass;
-    commandInfo.swapChainFramebuffers = _framebuffer.getSwapChainFramebuffers();
-    commandInfo.graphicsPipeline = _graphicsPipeline.get();
+    commandInfo.swapChainFramebuffers = _framebuffer.GetSwapChainFramebuffers();
+    commandInfo.graphicsPipeline = _graphicsPipeline.Get();
 
-    _command.create(device, commandInfo);
+    _command.Create(device, commandInfo);
 }
 
-void Instance::createSyncObjects()
+void Instance::CreateSyncObjects()
 {
     _imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
     _renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
@@ -189,7 +189,7 @@ void Instance::createSyncObjects()
     fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
     fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-    auto device = _logicalDevice.get();
+    auto device = _logicalDevice.Get();
 
     for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
@@ -200,39 +200,39 @@ void Instance::createSyncObjects()
     }
 }
 
-void Instance::recreateSwapChain(const uint32_t width, const uint32_t height)
+void Instance::RecreateSwapChain(const uint32_t width, const uint32_t height)
 {
-    auto device = _logicalDevice.get();
+    auto device = _logicalDevice.Get();
 
     vkDeviceWaitIdle(device);
 
-    cleanupSwapChain(device);
+    CleanupSwapChain(device);
 
-    createSwapChainImages(width, height);
+    CreateSwapChainImages(width, height);
 
     Framebuffer::CreateInfo framebufferInfo{};
-    framebufferInfo.swapChainExtent = _swapChain.getExtent();
-    framebufferInfo.renderPass = _renderPass.get();
-    framebufferInfo.swapChainImageViews = _imageView.getImageViews();
+    framebufferInfo.swapChainExtent = _swapChain.GetExtent();
+    framebufferInfo.renderPass = _renderPass.Get();
+    framebufferInfo.swapChainImageViews = _imageView.GetImageViews();
 
-    _framebuffer.create(device, framebufferInfo);
+    _framebuffer.Create(device, framebufferInfo);
 }
 
-void Instance::cleanupSwapChain(const VkDevice &device)
+void Instance::CleanupSwapChain(const VkDevice &device)
 {
-    _framebuffer.destroy(device);
-    _imageView.destroy(device);
-    _swapChain.destroy(device);
+    _framebuffer.Destroy(device);
+    _imageView.Destroy(device);
+    _swapChain.Destroy(device);
 }
 
-Result Instance::drawNextImage()
+Result Instance::DrawNextImage()
 {
-    auto device = _logicalDevice.get();
+    auto device = _logicalDevice.Get();
 
     vkWaitForFences(device, 1, &_inFlightFences[_currentFrame], VK_TRUE, UINT64_MAX);
 
     uint32_t imageIndex;
-    VkResult result = vkAcquireNextImageKHR(device, _swapChain.get(), UINT64_MAX,
+    VkResult result = vkAcquireNextImageKHR(device, _swapChain.Get(), UINT64_MAX,
                                             _imageAvailableSemaphores[_currentFrame], VK_NULL_HANDLE, &imageIndex);
 
     if (result == VK_ERROR_OUT_OF_DATE_KHR)
@@ -245,12 +245,12 @@ Result Instance::drawNextImage()
     Command::RecordInfo recordInfo{};
     recordInfo.currentFrame = _currentFrame;
     recordInfo.imageIndex = imageIndex;
-    recordInfo.renderPass = _renderPass.get();
-    recordInfo.swapChainExtent = _swapChain.getExtent();
-    recordInfo.swapChainFramebuffers = _framebuffer.getSwapChainFramebuffers();
-    recordInfo.graphicsPipeline = _graphicsPipeline.get();
+    recordInfo.renderPass = _renderPass.Get();
+    recordInfo.swapChainExtent = _swapChain.GetExtent();
+    recordInfo.swapChainFramebuffers = _framebuffer.GetSwapChainFramebuffers();
+    recordInfo.graphicsPipeline = _graphicsPipeline.Get();
 
-    _command.recordBuffer(recordInfo);
+    _command.RecordBuffer(recordInfo);
 
     VkSubmitInfo submitInfo{};
     submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -262,13 +262,13 @@ Result Instance::drawNextImage()
     submitInfo.pWaitDstStageMask = waitStages;
 
     submitInfo.commandBufferCount = 1;
-    submitInfo.pCommandBuffers = &_command.getCommandBuffer(_currentFrame);
+    submitInfo.pCommandBuffers = &_command.GetCommandBuffer(_currentFrame);
 
     VkSemaphore signalSemaphores[] = {_renderFinishedSemaphores[_currentFrame]};
     submitInfo.signalSemaphoreCount = 1;
     submitInfo.pSignalSemaphores = signalSemaphores;
 
-    if (vkQueueSubmit(_logicalDevice.getGraphicsQueue(), 1, &submitInfo, _inFlightFences[_currentFrame]) != VK_SUCCESS)
+    if (vkQueueSubmit(_logicalDevice.GetGraphicsQueue(), 1, &submitInfo, _inFlightFences[_currentFrame]) != VK_SUCCESS)
         throw VkWrapperError("failed to submit draw command buffer!");
 
     VkPresentInfoKHR presentInfo{};
@@ -276,14 +276,14 @@ Result Instance::drawNextImage()
     presentInfo.waitSemaphoreCount = 1;
     presentInfo.pWaitSemaphores = signalSemaphores;
 
-    VkSwapchainKHR swapChains[] = {_swapChain.get()};
+    VkSwapchainKHR swapChains[] = {_swapChain.Get()};
     presentInfo.swapchainCount = 1;
     presentInfo.pSwapchains = swapChains;
     presentInfo.pImageIndices = &imageIndex;
 
-    result = vkQueuePresentKHR(_logicalDevice.getPresentQueue(), &presentInfo);
+    result = vkQueuePresentKHR(_logicalDevice.GetPresentQueue(), &presentInfo);
 
-    vkQueueWaitIdle(_logicalDevice.getPresentQueue());
+    vkQueueWaitIdle(_logicalDevice.GetPresentQueue());
 
 #if (MAX_FRAMES_IN_FLIGHT & (MAX_FRAMES_IN_FLIGHT - 1)) == 0
     _currentFrame = (_currentFrame + 1) & (MAX_FRAMES_IN_FLIGHT - 1);

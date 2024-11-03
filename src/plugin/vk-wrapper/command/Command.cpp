@@ -11,14 +11,14 @@
 
 namespace ES::Plugin::Wrapper {
 
-void Command::create(const VkDevice &device, const CreateInfo &info)
+void Command::Create(const VkDevice &device, const CreateInfo &info)
 {
-    _queueFamilies.findQueueFamilies(info.physicalDevice, info.surface);
+    _queueFamilies.FindQueueFamilies(info.physicalDevice, info.surface);
 
     VkCommandPoolCreateInfo poolInfo{};
     poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
     poolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-    poolInfo.queueFamilyIndex = _queueFamilies.getIndices().graphicsFamily.value();
+    poolInfo.queueFamilyIndex = _queueFamilies.GetIndices().graphicsFamily.value();
 
     if (vkCreateCommandPool(device, &poolInfo, nullptr, &_commandPool) != VK_SUCCESS)
         throw VkWrapperError("failed to create command pool!");
@@ -29,15 +29,15 @@ void Command::create(const VkDevice &device, const CreateInfo &info)
     allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
     allocInfo.commandPool = _commandPool;
     allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-    allocInfo.commandBufferCount = (uint32_t) _commandBuffers.size();
+    allocInfo.commandBufferCount = static_cast<uint32_t>(_commandBuffers.size());
 
     if (vkAllocateCommandBuffers(device, &allocInfo, _commandBuffers.data()) != VK_SUCCESS)
         throw VkWrapperError("failed to allocate command buffers!");
 }
 
-void Command::destroy(const VkDevice &device) { vkDestroyCommandPool(device, _commandPool, nullptr); }
+void Command::Destroy(const VkDevice &device) { vkDestroyCommandPool(device, _commandPool, nullptr); }
 
-void Command::recordBuffer(const RecordInfo &info)
+void Command::RecordBuffer(const RecordInfo &info)
 {
     auto commandBuffer = _commandBuffers[info.currentFrame];
 

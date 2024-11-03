@@ -35,15 +35,15 @@ const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
  * @code
  * Command command;
  * Command::CreateInfo info = {
- *    .physicalDevice = physicalDevice.get(),
- *    .surface = surface.get(),
- *    .swapChainExtent = swapChain.getExtent(),
- *    .renderPass = renderPass.get(),
- *    .swapChainFramebuffers = framebuffer.getSwapChainFramebuffers(),
- *    .graphicsPipeline = graphicsPipeline.get(),
+ *    .physicalDevice = physicalDevice.Get(),
+ *    .surface = surface.Get(),
+ *    .swapChainExtent = swapChain.GetExtent(),
+ *    .renderPass = renderPass.Get(),
+ *    .swapChainFramebuffers = framebuffer.GetSwapChainFramebuffers(),
+ *    .graphicsPipeline = graphicsPipeline.Get(),
  * };
- * command.create(device, info);
- * command.destroy(device);
+ * command.Create(device, info);
+ * command.Destroy(device);
  * @endcode
  */
 class Command {
@@ -99,7 +99,7 @@ class Command {
      * @param device  The Vulkan device.
      * @param queueFamilies  The queue families.
      */
-    void create(const VkDevice &device, const CreateInfo &info);
+    void Create(const VkDevice &device, const CreateInfo &info);
 
     /**
      * @brief Destroys the command pool.
@@ -108,7 +108,7 @@ class Command {
      *
      * @param device  The Vulkan device.
      */
-    void destroy(const VkDevice &device);
+    void Destroy(const VkDevice &device);
 
     /**
      * @brief Records a command buffer.
@@ -117,7 +117,7 @@ class Command {
      *
      * @param info  The record info.
      */
-    void recordBuffer(const RecordInfo &info);
+    void RecordBuffer(const RecordInfo &info);
 
     /**
      * @brief Gets the command buffer.
@@ -127,7 +127,7 @@ class Command {
      * @param imageIndex  The image index.
      * @return The command buffer.
      */
-    [[nodiscard]] VkCommandBuffer &getCommandBuffer(const uint32_t imageIndex) { return _commandBuffers[imageIndex]; }
+    [[nodiscard]] VkCommandBuffer &GetCommandBuffer(const uint32_t imageIndex) { return _commandBuffers[imageIndex]; }
 
   private:
     VkCommandPool _commandPool;

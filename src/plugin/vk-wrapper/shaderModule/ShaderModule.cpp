@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-std::vector<char> ShaderModule::loadSPVfile(const std::string &filename)
+std::vector<char> ShaderModule::LoadSPVfile(const std::string &filename)
 {
     if (filename.substr(filename.find_last_of(".") + 1) != "spv")
         throw VkWrapperError("file is not an spv file: " + filename);
@@ -30,7 +30,7 @@ std::vector<char> ShaderModule::loadSPVfile(const std::string &filename)
     return buffer;
 }
 
-VkShaderModule ShaderModule::create(const VkDevice &device, const std::vector<char> &code)
+VkShaderModule ShaderModule::Create(const VkDevice &device, const std::vector<char> &code)
 {
     VkShaderModuleCreateInfo createInfo{};
     createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -44,12 +44,12 @@ VkShaderModule ShaderModule::create(const VkDevice &device, const std::vector<ch
     return shaderModule;
 }
 
-void ShaderModule::destroy(const VkDevice &device, const VkShaderModule &shaderModule)
+void ShaderModule::Destroy(const VkDevice &device, const VkShaderModule &shaderModule)
 {
     vkDestroyShaderModule(device, shaderModule, nullptr);
 }
 
-VkPipelineShaderStageCreateInfo ShaderModule::createShaderStage(const VkShaderModule &module,
+VkPipelineShaderStageCreateInfo ShaderModule::CreateShaderStage(const VkShaderModule &module,
                                                                 const VkShaderStageFlagBits stage,
                                                                 const std::string &pName)
 {

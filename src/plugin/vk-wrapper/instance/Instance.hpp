@@ -61,22 +61,22 @@ enum class Result : bool {
  * @example
  * @code
  * Instance instance;
- * instance.create("My Engine");
+ * instance.Create("My Engine");
  *
- * instance.setupDebugMessenger();
- * instance.createSurface(window);
- * instance.setupDevices();
- * instance.createSwapChainImages(width, height);
- * instance.createGraphicsPipeline(shaders);
- * instance.createSyncObjects();
+ * instance.SetupDebugMessenger();
+ * instance.CreateSurface(window);
+ * instance.SetupDevices();
+ * instance.CreateSwapChainImages(width, height);
+ * instance.CreateGraphicsPipeline(shaders);
+ * instance.CreateSyncObjects();
  *
  * while (!glfwWindowShouldClose(window))
  * {
- *    if (instance.drawNextImage() == Result::Failure)
- *        instance.recreateSwapChain(width, height);
+ *    if (instance.DrawNextImage() == Result::Failure)
+ *        instance.RecreateSwapChain(width, height);
  * }
  *
- * instance.destroy();
+ * instance.Destroy();
  * @endcode
  */
 class Instance {
@@ -88,14 +88,14 @@ class Instance {
      *
      * @param applicationName  The name of the application.
      */
-    void create(const std::string &applicationName);
+    void Create(const std::string &applicationName);
 
     /**
      * @brief Destructor for the Instance class.
      *
      * Cleans up and destroys the Vulkan instance and related resources.
      */
-    void destroy();
+    void Destroy();
 
     /**
      * @brief Sets up the debug messenger for Vulkan instance.
@@ -105,7 +105,7 @@ class Instance {
      * API. It is essential for debugging and validation purposes, providing
      * detailed information about the Vulkan operations and potential issues.
      */
-    void setupDebugMessenger();
+    void SetupDebugMessenger();
 
     /**
      * @brief Creates a Vulkan surface for the given GLFW window.
@@ -115,7 +115,7 @@ class Instance {
      *
      * @param window  A pointer to the GLFWwindow for which the Vulkan surface will be created.
      */
-    void createSurface(GLFWwindow *window);
+    void CreateSurface(GLFWwindow *window);
 
     /**
      * @brief Picks a suitable physical device (GPU) for Vulkan operations and creates a logical device.
@@ -129,7 +129,7 @@ class Instance {
      * execute Vulkan commands. It is configured with specific features and
      * extensions required by the application.
      */
-    void setupDevices();
+    void SetupDevices();
 
     /**
      * @brief Creates swap chain images for the Vulkan API.
@@ -141,7 +141,7 @@ class Instance {
      *
      * @param window  The GLFW window for which the swap chain images will be created.
      */
-    void createSwapChainImages(const uint32_t width, const uint32_t height);
+    void CreateSwapChainImages(const uint32_t width, const uint32_t height);
 
     /**
      * @brief Create a Graphics Pipeline object.
@@ -156,7 +156,7 @@ class Instance {
      * attachments used for rendering and the subpasses that are executed during
      * rendering.
      */
-    void createGraphicsPipeline(const ShaderModule::ShaderPaths &shaders);
+    void CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders);
 
     /**
      * @brief Create synchronization objects for the Vulkan API.
@@ -166,7 +166,7 @@ class Instance {
      * operations are performed in the correct order. They are essential for
      * managing the rendering process and avoiding synchronization issues.
      */
-    void createSyncObjects();
+    void CreateSyncObjects();
 
     /**
      * @brief Recreates the swap chain for the Vulkan API.
@@ -177,7 +177,7 @@ class Instance {
      * cleans up the existing swap chain, and creates a new swap chain with the
      * updated dimensions.
      */
-    void recreateSwapChain(const uint32_t width, const uint32_t height);
+    void RecreateSwapChain(const uint32_t width, const uint32_t height);
 
     /**
      * @brief Draws the next image in the swap chain.
@@ -191,7 +191,7 @@ class Instance {
      * @return Result The result of the draw operation. Success if the image was
      * drawn successfully, Failure if the swap chain needs to be recreated.
      */
-    [[nodiscard]] Result drawNextImage();
+    [[nodiscard]] Result DrawNextImage();
 
     /**
      * @brief Sets the framebuffer resized flag.
@@ -203,7 +203,7 @@ class Instance {
      *
      * @param resized  The new value of the framebuffer resized flag.
      */
-    void setFramebufferResized(bool resized) { _framebufferResized = resized; }
+    void SetFramebufferResized(bool resized) { _framebufferResized = resized; }
 
   private:
     /**
@@ -225,7 +225,7 @@ class Instance {
      *
      * @return std::vector<const char *>  The required extensions for the Vulkan API.
      */
-    [[nodiscard]] std::vector<const char *> getRequiredExtensions();
+    [[nodiscard]] std::vector<const char *> GetRequiredExtensions();
 
     /**
      * @brief Cleans up the swap chain for the Vulkan API.
@@ -237,7 +237,7 @@ class Instance {
      *
      * @param device  The Vulkan logical device used to clean up the swap chain.
      */
-    void cleanupSwapChain(const VkDevice &device);
+    void CleanupSwapChain(const VkDevice &device);
 
   private:
     VkInstance _instance;

@@ -33,8 +33,8 @@ namespace ES::Plugin::Wrapper {
  * @example
  * @code
  * ImageView imageView;
- * imageView.create(device, swapChainImages, surfaceFormat);
- * imageView.destroy(device);
+ * imageView.Create(device, swapChainImages, surfaceFormat);
+ * imageView.Destroy(device);
  * @endcode
  */
 class ImageView {
@@ -55,7 +55,7 @@ class ImageView {
      * @param layerCount  The number of layers in the image views. This is used for
      *                    stereoscopic 3D applications. The default value is 1.
      */
-    void create(const VkDevice &device, const std::vector<VkImage> &swapChainImages,
+    void Create(const VkDevice &device, const std::vector<VkImage> &swapChainImages,
                 const VkSurfaceFormatKHR surfaceFormat, const uint32_t layerCount = 1);
 
     /** @brief Destroys the image views.
@@ -66,14 +66,14 @@ class ImageView {
      *
      * @param device  The Vulkan logical device used to destroy the image views.
      */
-    void destroy(const VkDevice &device);
+    void Destroy(const VkDevice &device);
 
     /**
      * @brief Get the Image Views object.
      *
      * @return const std::vector<VkImageView>  The image views.
      */
-    [[nodiscard]] const std::vector<VkImageView> &getImageViews() const { return _swapChainImageViews; }
+    [[nodiscard]] const std::vector<VkImageView> &GetImageViews() const { return _swapChainImageViews; }
 
   private:
     std::vector<VkImageView> _swapChainImageViews;

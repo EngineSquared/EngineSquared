@@ -44,8 +44,8 @@ namespace ES::Plugin::Wrapper {
  * @example
  * @code
  * SwapChain swapChain;
- * swapChain.create(device, physicalDevice, surface, width, height);
- * swapChain.destroy(device);
+ * swapChain.Create(device, physicalDevice, surface, width, height);
+ * swapChain.Destroy(device);
  * @endcode
  */
 class SwapChain {
@@ -68,7 +68,7 @@ class SwapChain {
      * @param surface  The surface.
      * @return SupportDetails  The details of the swap chain support.
      */
-    [[nodiscard]] static SupportDetails querySupport(const VkPhysicalDevice &device, const VkSurfaceKHR &surface);
+    [[nodiscard]] static SupportDetails QuerySupport(const VkPhysicalDevice &device, const VkSurfaceKHR &surface);
 
     /**
      * @brief Create the Swap Chain object.
@@ -79,7 +79,7 @@ class SwapChain {
      * @param width  The width.
      * @param height  The height.
      */
-    void create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface,
+    void Create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface,
                 const uint32_t width, const uint32_t height);
 
     /**
@@ -87,49 +87,49 @@ class SwapChain {
      *
      * @param device  The device.
      */
-    void destroy(const VkDevice &device) { vkDestroySwapchainKHR(device, _swapChain, nullptr); }
+    void Destroy(const VkDevice &device) { vkDestroySwapchainKHR(device, _swapChain, nullptr); }
 
     /**
      * @brief Get the Swap Chain object.
      *
      * @return const VkSwapchainKHR  The swap chain.
      */
-    [[nodiscard]] const VkSwapchainKHR &get() const { return _swapChain; }
+    [[nodiscard]] const VkSwapchainKHR &Get() const { return _swapChain; }
 
     /**
      * @brief Get the Details object for the swap chain support.
      *
      * @return const SupportDetails  The details of the swap chain support.
      */
-    [[nodiscard]] const SupportDetails &getDetails() const { return _supportDetails; }
+    [[nodiscard]] const SupportDetails &GetDetails() const { return _supportDetails; }
 
     /**
      * @brief Get the Surface Format object.
      *
      * @return VkSurfaceFormatKHR  The surface format.
      */
-    [[nodiscard]] VkSurfaceFormatKHR getSurfaceFormat() const { return _surfaceFormat; }
+    [[nodiscard]] VkSurfaceFormatKHR GetSurfaceFormat() const { return _surfaceFormat; }
 
     /**
      * @brief Get the Present Mode object.
      *
      * @return VkPresentModeKHR  The present mode.
      */
-    [[nodiscard]] VkPresentModeKHR getPresentMode() const { return _presentMode; }
+    [[nodiscard]] VkPresentModeKHR GetPresentMode() const { return _presentMode; }
 
     /**
      * @brief Get the Extent object.
      *
      * @return VkExtent2D  The extent.
      */
-    [[nodiscard]] VkExtent2D getExtent() const { return _extent; }
+    [[nodiscard]] VkExtent2D GetExtent() const { return _extent; }
 
     /**
      * @brief Get the Swap Chain Images object.
      *
      * @return const std::vector<VkImage>&  The swap chain images.
      */
-    [[nodiscard]] const std::vector<VkImage> &getSwapChainImages() const { return _swapChainImages; }
+    [[nodiscard]] const std::vector<VkImage> &GetSwapChainImages() const { return _swapChainImages; }
 
   private:
     /**
@@ -138,7 +138,7 @@ class SwapChain {
      * @param availableFormats  The available formats.
      * @return VkSurfaceFormatKHR  The chosen format.
      */
-    [[nodiscard]] VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+    [[nodiscard]] VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
 
     /**
      * @brief Choose the swap present mode.
@@ -146,7 +146,7 @@ class SwapChain {
      * @param availablePresentModes  The available present modes.
      * @return VkPresentModeKHR  The chosen present mode.
      */
-    [[nodiscard]] VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
+    [[nodiscard]] VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
 
     /**
      * @brief Choose the swap extent.
@@ -156,7 +156,7 @@ class SwapChain {
      * @param height  The height.
      * @return VkExtent2D  The chosen extent.
      */
-    [[nodiscard]] VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, const uint32_t width,
+    [[nodiscard]] VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, const uint32_t width,
                                               const uint32_t height);
 
   private:

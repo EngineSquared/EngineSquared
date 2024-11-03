@@ -38,8 +38,8 @@ namespace ES::Plugin::Wrapper {
  * @example
  * @code
  * Surface surface;
- * surface.create(window, instance);
- * surface.destroy(instance);
+ * surface.Create(window, instance);
+ * surface.Destroy(instance);
  * @endcode
  */
 class Surface {
@@ -54,7 +54,7 @@ class Surface {
      * @param window  The GLFW window.
      * @param instance  The Vulkan instance.
      */
-    void create(GLFWwindow *window, const VkInstance &instance);
+    void Create(GLFWwindow *window, const VkInstance &instance);
 
     /**
      * @brief Destroys the surface.
@@ -63,7 +63,7 @@ class Surface {
      *
      * @param instance  The Vulkan instance.
      */
-    void destroy(const VkInstance &instance);
+    void Destroy(const VkInstance &instance);
 
     /**
      * @brief Returns the surface.
@@ -72,7 +72,7 @@ class Surface {
      *
      * @return The surface.
      */
-    [[nodiscard]] const VkSurfaceKHR &get() const { return _surface; }
+    [[nodiscard]] const VkSurfaceKHR &Get() const { return _surface; }
 
   private:
     VkSurfaceKHR _surface;

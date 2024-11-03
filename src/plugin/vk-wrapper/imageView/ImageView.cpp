@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void ImageView::create(const VkDevice &device, const std::vector<VkImage> &swapChainImages,
+void ImageView::Create(const VkDevice &device, const std::vector<VkImage> &swapChainImages,
                        const VkSurfaceFormatKHR surfaceFormat, const uint32_t layerCount)
 {
     _swapChainImageViews.resize(swapChainImages.size() * layerCount);
@@ -42,7 +42,7 @@ void ImageView::create(const VkDevice &device, const std::vector<VkImage> &swapC
     }
 }
 
-void ImageView::destroy(const VkDevice &device)
+void ImageView::Destroy(const VkDevice &device)
 {
     for (const auto &imageView : _swapChainImageViews)
         vkDestroyImageView(device, imageView, nullptr);

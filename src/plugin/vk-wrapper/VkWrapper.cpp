@@ -11,20 +11,20 @@
 
 namespace ES::Plugin {
 
-void VkWrapper::create(const CreateInfo &info)
+void VkWrapper::Create(const CreateInfo &info)
 {
-    _instance.create(info.applicationName);
-    _instance.setupDebugMessenger();
-    _instance.createSurface(info.window);
-    _instance.setupDevices();
-    _instance.createSwapChainImages(info.width, info.height);
-    _instance.createGraphicsPipeline(info.shaders);
-    _instance.createSyncObjects();
+    _instance.Create(info.applicationName);
+    _instance.SetupDebugMessenger();
+    _instance.CreateSurface(info.window);
+    _instance.SetupDevices();
+    _instance.CreateSwapChainImages(info.width, info.height);
+    _instance.CreateGraphicsPipeline(info.shaders);
+    _instance.CreateSyncObjects();
 }
 
-void VkWrapper::destroy() { _instance.destroy(); }
+void VkWrapper::Destroy() { _instance.Destroy(); }
 
-Wrapper::Result VkWrapper::drawFrame() { return _instance.drawNextImage(); }
+Wrapper::Result VkWrapper::DrawFrame() { return _instance.DrawNextImage(); }
 
 void VkWrapper::Resize(GLFWwindow *window)
 {
@@ -38,7 +38,7 @@ void VkWrapper::Resize(GLFWwindow *window)
         glfwWaitEvents();
     }
 
-    _instance.recreateSwapChain(width, height);
+    _instance.RecreateSwapChain(width, height);
 }
 
 void VkWrapper::PrintAvailableExtensions()
@@ -62,7 +62,7 @@ void VkWrapper::PrintConfig() { std::cout << "VkWrapper config:\n" << VKWRAPPER_
 void VkWrapper::ResizeCallback(GLFWwindow *window, int width, int height)
 {
     auto vkWrapper = static_cast<VkWrapper *>(glfwGetWindowUserPointer(window));
-    vkWrapper->setFramebufferResized();
+    vkWrapper->SetFramebufferResized();
 }
 
 } // namespace ES::Plugin

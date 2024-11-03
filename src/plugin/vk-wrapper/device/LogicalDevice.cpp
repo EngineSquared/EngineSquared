@@ -11,10 +11,10 @@
 
 namespace ES::Plugin::Wrapper {
 
-void LogicalDevice::create(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface)
+void LogicalDevice::Create(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface)
 {
-    _queueFamilies.findQueueFamilies(physicalDevice, surface);
-    auto indices = _queueFamilies.getIndices();
+    _queueFamilies.FindQueueFamilies(physicalDevice, surface);
+    auto indices = _queueFamilies.GetIndices();
 
     std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
     std::set<uint32_t> uniqueQueueFamilies = {indices.graphicsFamily.value(), indices.presentFamily.value()};

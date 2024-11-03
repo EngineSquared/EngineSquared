@@ -34,8 +34,8 @@ namespace ES::Plugin::Wrapper {
  * @example
  * @code
  * LogicalDevice device;
- * device.create(physicalDevice);
- * device.destroy();
+ * device.Create(physicalDevice);
+ * device.Destroy();
  * @endcode
  */
 class LogicalDevice {
@@ -52,14 +52,14 @@ class LogicalDevice {
      * @param physicalDevice  The selected physical device.
      * @param surface  The Vulkan surface.
      */
-    void create(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface);
+    void Create(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface);
 
     /**
      * @brief Destroys the logical device.
      *
      * This function destroys the logical device.
      */
-    void destroy() { vkDestroyDevice(_device, nullptr); }
+    void Destroy() { vkDestroyDevice(_device, nullptr); }
 
     /**
      * @brief Gets the logical device.
@@ -68,7 +68,7 @@ class LogicalDevice {
      *
      * @return The logical device.
      */
-    [[nodiscard]] const VkDevice &get() const { return _device; }
+    [[nodiscard]] const VkDevice &Get() const { return _device; }
 
     /**
      * @brief Gets the present queue.
@@ -77,7 +77,7 @@ class LogicalDevice {
      *
      * @return The present queue.
      */
-    [[nodiscard]] const VkQueue &getPresentQueue() { return _presentQueue; }
+    [[nodiscard]] const VkQueue &GetPresentQueue() { return _presentQueue; }
 
     /**
      * @brief Gets the graphics queue.
@@ -86,7 +86,7 @@ class LogicalDevice {
      *
      * @return The graphics queue.
      */
-    [[nodiscard]] const VkQueue &getGraphicsQueue() { return _graphicsQueue; }
+    [[nodiscard]] const VkQueue &GetGraphicsQueue() { return _graphicsQueue; }
 
   private:
     VkDevice _device = VK_NULL_HANDLE;

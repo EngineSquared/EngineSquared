@@ -39,7 +39,7 @@ namespace ES::Plugin::Wrapper {
  * @example
  * @code
  * PhysicalDevice physicalDevice;
- * physicalDevice.pickPhysicalDevice(instance);
+ * physicalDevice.PickPhysicalDevice(instance);
  * @endcode
  */
 class PhysicalDevice {
@@ -55,7 +55,7 @@ class PhysicalDevice {
      * @param instance  The Vulkan instance.
      * @param surface  The Vulkan surface.
      */
-    void pickPhysicalDevice(const VkInstance &instance, const VkSurfaceKHR &surface);
+    void PickPhysicalDevice(const VkInstance &instance, const VkSurfaceKHR &surface);
 
     /**
      * @brief Gets the physical device.
@@ -64,7 +64,7 @@ class PhysicalDevice {
      *
      * @return The physical device.
      */
-    [[nodiscard]] const VkPhysicalDevice &get() const { return physicalDevice; }
+    [[nodiscard]] const VkPhysicalDevice &Get() const { return physicalDevice; }
 
   private:
     /**
@@ -78,7 +78,7 @@ class PhysicalDevice {
      * @param surface  The Vulkan surface.
      * @return true if the device is suitable, false otherwise.
      */
-    [[nodiscard]] bool isDeviceSuitable(const VkPhysicalDevice &device, const VkSurfaceKHR &surface);
+    [[nodiscard]] bool IsDeviceSuitable(const VkPhysicalDevice &device, const VkSurfaceKHR &surface);
 
     /**
      * @brief Checks if the physical device supports the required extensions.
@@ -89,7 +89,7 @@ class PhysicalDevice {
      * @param device  The physical device to check.
      * @return true if the device supports the required extensions, false otherwise.
      */
-    [[nodiscard]] bool checkDeviceExtensionSupport(const VkPhysicalDevice &device);
+    [[nodiscard]] bool CheckDeviceExtensionSupport(const VkPhysicalDevice &device);
 
     /**
      * @brief Rates the suitability of the physical device.
@@ -100,7 +100,7 @@ class PhysicalDevice {
      * @param device  The physical device to rate.
      * @return The suitability rating of the device.
      */
-    [[nodiscard]] uint32_t rateDeviceSuitability(const VkPhysicalDevice &device);
+    [[nodiscard]] uint32_t RateDeviceSuitability(const VkPhysicalDevice &device);
 
   private:
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
