@@ -200,7 +200,7 @@ void Instance::createSyncObjects()
     }
 }
 
-void Instance::recreateSwapChain(uint32_t width, uint32_t height)
+void Instance::recreateSwapChain(const uint32_t width, const uint32_t height)
 {
     auto device = _logicalDevice.get();
 
@@ -218,7 +218,7 @@ void Instance::recreateSwapChain(uint32_t width, uint32_t height)
     _framebuffer.create(device, framebufferInfo);
 }
 
-void Instance::cleanupSwapChain(const VkDevice device)
+void Instance::cleanupSwapChain(const VkDevice &device)
 {
     _framebuffer.destroy(device);
     _imageView.destroy(device);

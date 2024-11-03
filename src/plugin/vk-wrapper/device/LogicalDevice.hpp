@@ -52,7 +52,7 @@ class LogicalDevice {
      * @param physicalDevice  The selected physical device.
      * @param surface  The Vulkan surface.
      */
-    void create(const VkPhysicalDevice physicalDevice, const VkSurfaceKHR surface);
+    void create(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface);
 
     /**
      * @brief Destroys the logical device.
@@ -68,7 +68,7 @@ class LogicalDevice {
      *
      * @return The logical device.
      */
-    [[nodiscard]] const VkDevice get() const { return _device; }
+    [[nodiscard]] const VkDevice &get() const { return _device; }
 
     /**
      * @brief Gets the present queue.
@@ -77,7 +77,7 @@ class LogicalDevice {
      *
      * @return The present queue.
      */
-    [[nodiscard]] const VkQueue getPresentQueue() { return _presentQueue; }
+    [[nodiscard]] const VkQueue &getPresentQueue() { return _presentQueue; }
 
     /**
      * @brief Gets the graphics queue.
@@ -86,7 +86,7 @@ class LogicalDevice {
      *
      * @return The graphics queue.
      */
-    [[nodiscard]] const VkQueue getGraphicsQueue() { return _graphicsQueue; }
+    [[nodiscard]] const VkQueue &getGraphicsQueue() { return _graphicsQueue; }
 
   private:
     VkDevice _device = VK_NULL_HANDLE;

@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void PhysicalDevice::pickPhysicalDevice(const VkInstance instance, const VkSurfaceKHR surface)
+void PhysicalDevice::pickPhysicalDevice(const VkInstance &instance, const VkSurfaceKHR &surface)
 {
     uint32_t deviceCount = 0;
     vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
@@ -35,7 +35,7 @@ void PhysicalDevice::pickPhysicalDevice(const VkInstance instance, const VkSurfa
         throw VkWrapperError("failed to find a suitable GPU!");
 }
 
-bool PhysicalDevice::isDeviceSuitable(const VkPhysicalDevice device, const VkSurfaceKHR surface)
+bool PhysicalDevice::isDeviceSuitable(const VkPhysicalDevice &device, const VkSurfaceKHR &surface)
 {
     _queueFamilies.findQueueFamilies(device, surface);
 
@@ -67,7 +67,7 @@ bool PhysicalDevice::checkDeviceExtensionSupport(const VkPhysicalDevice device)
     return requiredExtensions.empty();
 }
 
-uint32_t PhysicalDevice::rateDeviceSuitability(const VkPhysicalDevice device)
+uint32_t PhysicalDevice::rateDeviceSuitability(const VkPhysicalDevice &device)
 {
     VkPhysicalDeviceProperties deviceProperties;
     VkPhysicalDeviceFeatures deviceFeatures;

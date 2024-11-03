@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void GraphicsPipeline::create(const VkDevice &device, const VkExtent2D &swapChainExtent, const VkRenderPass &renderPass,
+void GraphicsPipeline::create(const VkDevice &device, const VkExtent2D swapChainExtent, const VkRenderPass &renderPass,
                               const ShaderModule::ShaderPaths &shaders)
 {
     auto vertShaderCode = ShaderModule::loadSPVfile(shaders.vertex.first);
@@ -115,7 +115,7 @@ void GraphicsPipeline::create(const VkDevice &device, const VkExtent2D &swapChai
     ShaderModule::destroy(device, vertex);
 }
 
-void GraphicsPipeline::destroy(const VkDevice device)
+void GraphicsPipeline::destroy(const VkDevice &device)
 {
     vkDestroyPipeline(device, _graphicsPipeline, nullptr);
     vkDestroyPipelineLayout(device, _pipelineLayout, nullptr);

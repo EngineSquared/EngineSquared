@@ -97,7 +97,7 @@ class ShaderModule {
      * @param code  The code of the shader.
      * @return The shader module.
      */
-    static VkShaderModule create(const VkDevice device, const std::vector<char> &code);
+    static VkShaderModule create(const VkDevice &device, const std::vector<char> &code);
 
     /**
      * @brief Destroys a shader module.
@@ -107,7 +107,7 @@ class ShaderModule {
      * @param device  The Vulkan device.
      * @param shaderModule  The shader module.
      */
-    static void destroy(const VkDevice device, const VkShaderModule shaderModule);
+    static void destroy(const VkDevice &device, const VkShaderModule &shaderModule);
 
     /**
      * @brief Creates a VkPipelineShaderStageCreateInfo structure for a shader stage.
@@ -118,7 +118,7 @@ class ShaderModule {
      * @return VkPipelineShaderStageCreateInfo structure initialized with the provided parameters.
      */
     static VkPipelineShaderStageCreateInfo
-    createShaderStage(const VkShaderModule &module, const VkShaderStageFlagBits &stage, const std::string &pName);
+    createShaderStage(const VkShaderModule &module, const VkShaderStageFlagBits stage, const std::string &pName);
 };
 
 } // namespace ES::Plugin::Wrapper

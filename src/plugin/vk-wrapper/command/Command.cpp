@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void Command::create(const VkDevice device, const CreateInfo info)
+void Command::create(const VkDevice &device, const CreateInfo &info)
 {
     _queueFamilies.findQueueFamilies(info.physicalDevice, info.surface);
 
@@ -35,9 +35,9 @@ void Command::create(const VkDevice device, const CreateInfo info)
         throw VkWrapperError("failed to allocate command buffers!");
 }
 
-void Command::destroy(const VkDevice device) { vkDestroyCommandPool(device, _commandPool, nullptr); }
+void Command::destroy(const VkDevice &device) { vkDestroyCommandPool(device, _commandPool, nullptr); }
 
-void Command::recordBuffer(const RecordInfo info)
+void Command::recordBuffer(const RecordInfo &info)
 {
     auto commandBuffer = _commandBuffers[info.currentFrame];
 

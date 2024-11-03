@@ -69,7 +69,7 @@ class SwapChain {
      * @param surface  The surface.
      * @return SupportDetails  The details of the swap chain support.
      */
-    [[nodiscard]] static SupportDetails querySupport(const VkPhysicalDevice device, const VkSurfaceKHR surface);
+    [[nodiscard]] static SupportDetails querySupport(const VkPhysicalDevice &device, const VkSurfaceKHR &surface);
 
     /**
      * @brief Create the Swap Chain object.
@@ -80,7 +80,7 @@ class SwapChain {
      * @param width  The width.
      * @param height  The height.
      */
-    void create(const VkDevice device, const VkPhysicalDevice physicalDevice, const VkSurfaceKHR surface,
+    void create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface,
                 const uint32_t width, const uint32_t height);
 
     /**
@@ -88,49 +88,49 @@ class SwapChain {
      *
      * @param device  The device.
      */
-    void destroy(const VkDevice device) { vkDestroySwapchainKHR(device, _swapChain, nullptr); }
+    void destroy(const VkDevice &device) { vkDestroySwapchainKHR(device, _swapChain, nullptr); }
 
     /**
      * @brief Get the Swap Chain object.
      *
      * @return const VkSwapchainKHR  The swap chain.
      */
-    [[nodiscard]] const VkSwapchainKHR get() const { return _swapChain; }
+    [[nodiscard]] const VkSwapchainKHR &get() const { return _swapChain; }
 
     /**
      * @brief Get the Details object for the swap chain support.
      *
      * @return const SupportDetails  The details of the swap chain support.
      */
-    [[nodiscard]] const SupportDetails getDetails() const { return _supportDetails; }
+    [[nodiscard]] const SupportDetails &getDetails() const { return _supportDetails; }
 
     /**
      * @brief Get the Surface Format object.
      *
-     * @return const VkSurfaceFormatKHR  The surface format.
+     * @return VkSurfaceFormatKHR  The surface format.
      */
-    [[nodiscard]] const VkSurfaceFormatKHR getSurfaceFormat() const { return _surfaceFormat; }
+    [[nodiscard]] VkSurfaceFormatKHR getSurfaceFormat() const { return _surfaceFormat; }
 
     /**
      * @brief Get the Present Mode object.
      *
-     * @return const VkPresentModeKHR  The present mode.
+     * @return VkPresentModeKHR  The present mode.
      */
-    [[nodiscard]] const VkPresentModeKHR getPresentMode() const { return _presentMode; }
+    [[nodiscard]] VkPresentModeKHR getPresentMode() const { return _presentMode; }
 
     /**
      * @brief Get the Extent object.
      *
-     * @return const VkExtent2D  The extent.
+     * @return VkExtent2D  The extent.
      */
-    [[nodiscard]] const VkExtent2D getExtent() const { return _extent; }
+    [[nodiscard]] VkExtent2D getExtent() const { return _extent; }
 
     /**
      * @brief Get the Swap Chain Images object.
      *
-     * @return const std::vector<VkImage>  The swap chain images.
+     * @return const std::vector<VkImage>&  The swap chain images.
      */
-    [[nodiscard]] const std::vector<VkImage> getSwapChainImages() const { return _swapChainImages; }
+    [[nodiscard]] const std::vector<VkImage> &getSwapChainImages() const { return _swapChainImages; }
 
   private:
     /**

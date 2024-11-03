@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-SwapChain::SupportDetails SwapChain::querySupport(const VkPhysicalDevice device, const VkSurfaceKHR surface)
+SwapChain::SupportDetails SwapChain::querySupport(const VkPhysicalDevice &device, const VkSurfaceKHR &surface)
 {
     SupportDetails details{};
 
@@ -38,7 +38,7 @@ SwapChain::SupportDetails SwapChain::querySupport(const VkPhysicalDevice device,
     return details;
 }
 
-void SwapChain::create(const VkDevice device, const VkPhysicalDevice physicalDevice, const VkSurfaceKHR surface,
+void SwapChain::create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface,
                        const uint32_t width, const uint32_t height)
 {
     _supportDetails = querySupport(physicalDevice, surface);

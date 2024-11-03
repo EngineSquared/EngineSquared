@@ -138,7 +138,7 @@ class Instance {
      *
      * @param window  The GLFW window for which the swap chain images will be created.
      */
-    void createSwapChainImages(uint32_t width, uint32_t height);
+    void createSwapChainImages(const uint32_t width, const uint32_t height);
 
     /**
      * @brief Create a Graphics Pipeline object.
@@ -174,19 +174,7 @@ class Instance {
      * cleans up the existing swap chain, and creates a new swap chain with the
      * updated dimensions.
      */
-    void recreateSwapChain(uint32_t width, uint32_t height);
-
-    /**
-     * @brief Cleans up the swap chain for the Vulkan API.
-     *
-     * This function cleans up the swap chain for the Vulkan API. It destroys
-     * the framebuffers, command buffers, graphics pipeline, render pass, image
-     * views, and swap chain. It is called when the swap chain needs to be
-     * recreated or when the application is shutting down.
-     *
-     * @param device  The Vulkan logical device used to clean up the swap chain.
-     */
-    void cleanupSwapChain(const VkDevice device);
+    void recreateSwapChain(const uint32_t width, const uint32_t height);
 
     /**
      * @brief Draws the next image in the swap chain.
@@ -235,6 +223,18 @@ class Instance {
      * @return std::vector<const char *>  The required extensions for the Vulkan API.
      */
     [[nodiscard]] std::vector<const char *> getRequiredExtensions();
+
+    /**
+     * @brief Cleans up the swap chain for the Vulkan API.
+     *
+     * This function cleans up the swap chain for the Vulkan API. It destroys
+     * the framebuffers, command buffers, graphics pipeline, render pass, image
+     * views, and swap chain. It is called when the swap chain needs to be
+     * recreated or when the application is shutting down.
+     *
+     * @param device  The Vulkan logical device used to clean up the swap chain.
+     */
+    void cleanupSwapChain(const VkDevice &device);
 
   private:
     VkInstance _instance;

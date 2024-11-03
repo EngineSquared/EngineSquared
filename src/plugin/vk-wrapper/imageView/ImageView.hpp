@@ -55,8 +55,8 @@ class ImageView {
      * @param layerCount  The number of layers in the image views. This is used for
      *                    stereoscopic 3D applications. The default value is 1.
      */
-    void create(const VkDevice &device, const std::vector<VkImage> &swapChainImages, VkSurfaceFormatKHR surfaceFormat,
-                uint32_t layerCount = 1);
+    void create(const VkDevice &device, const std::vector<VkImage> &swapChainImages,
+                const VkSurfaceFormatKHR surfaceFormat, const uint32_t layerCount = 1);
 
     /** @brief Destroys the image views.
      *
@@ -66,7 +66,7 @@ class ImageView {
      *
      * @param device  The Vulkan logical device used to destroy the image views.
      */
-    void destroy(const VkDevice device);
+    void destroy(const VkDevice &device);
 
     /**
      * @brief Get the Image Views object.

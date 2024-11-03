@@ -70,7 +70,7 @@ class DebugMessenger {
      *
      * @param instance  The Vulkan instance.
      */
-    void setupDebugMessenger(const VkInstance instance);
+    void setupDebugMessenger(const VkInstance &instance);
 
     /**
      * @brief Callback function for the debug messenger.
@@ -108,7 +108,7 @@ class DebugMessenger {
      * @param instance  The Vulkan instance.
      * @param pAllocator  The allocator.
      */
-    void DestroyDebugUtilsMessengerEXT(const VkInstance instance, const VkAllocationCallbacks *pAllocator);
+    void DestroyDebugUtilsMessengerEXT(const VkInstance &instance, const VkAllocationCallbacks *pAllocator);
 
   private:
     /**
@@ -121,7 +121,7 @@ class DebugMessenger {
      * @param pAllocator  The allocator.
      * @return The result of the debug messenger creation.
      */
-    VkResult CreateDebugUtilsMessengerEXT(const VkInstance instance,
+    VkResult CreateDebugUtilsMessengerEXT(const VkInstance &instance,
                                           const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
                                           const VkAllocationCallbacks *pAllocator);
 

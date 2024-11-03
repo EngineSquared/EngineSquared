@@ -30,7 +30,7 @@ std::vector<char> ShaderModule::loadSPVfile(const std::string &filename)
     return buffer;
 }
 
-VkShaderModule ShaderModule::create(const VkDevice device, const std::vector<char> &code)
+VkShaderModule ShaderModule::create(const VkDevice &device, const std::vector<char> &code)
 {
     VkShaderModuleCreateInfo createInfo{};
     createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -44,13 +44,13 @@ VkShaderModule ShaderModule::create(const VkDevice device, const std::vector<cha
     return shaderModule;
 }
 
-void ShaderModule::destroy(const VkDevice device, const VkShaderModule shaderModule)
+void ShaderModule::destroy(const VkDevice &device, const VkShaderModule &shaderModule)
 {
     vkDestroyShaderModule(device, shaderModule, nullptr);
 }
 
 VkPipelineShaderStageCreateInfo ShaderModule::createShaderStage(const VkShaderModule &module,
-                                                                const VkShaderStageFlagBits &stage,
+                                                                const VkShaderStageFlagBits stage,
                                                                 const std::string &pName)
 {
     VkPipelineShaderStageCreateInfo shaderStageInfo{};

@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void QueueFamilies::findQueueFamilies(const VkPhysicalDevice device, const VkSurfaceKHR surface)
+void QueueFamilies::findQueueFamilies(const VkPhysicalDevice &device, const VkSurfaceKHR &surface)
 {
     uint32_t queueFamilyCount = 0;
     vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);

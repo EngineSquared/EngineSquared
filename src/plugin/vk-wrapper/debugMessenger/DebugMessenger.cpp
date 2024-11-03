@@ -17,7 +17,7 @@ DebugMessenger::~DebugMessenger()
         DestroyDebugUtilsMessengerEXT(_instance, nullptr);
 }
 
-void DebugMessenger::setupDebugMessenger(const VkInstance instance)
+void DebugMessenger::setupDebugMessenger(const VkInstance &instance)
 {
     if (!enableValidationLayers)
         return;
@@ -55,7 +55,7 @@ void DebugMessenger::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreat
     createInfo.pfnUserCallback = DebugMessenger::callback;
 }
 
-VkResult DebugMessenger::CreateDebugUtilsMessengerEXT(const VkInstance instance,
+VkResult DebugMessenger::CreateDebugUtilsMessengerEXT(const VkInstance &instance,
                                                       const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
                                                       const VkAllocationCallbacks *pAllocator)
 {
@@ -66,7 +66,7 @@ VkResult DebugMessenger::CreateDebugUtilsMessengerEXT(const VkInstance instance,
     return VK_ERROR_EXTENSION_NOT_PRESENT;
 }
 
-void DebugMessenger::DestroyDebugUtilsMessengerEXT(const VkInstance instance, const VkAllocationCallbacks *pAllocator)
+void DebugMessenger::DestroyDebugUtilsMessengerEXT(const VkInstance &instance, const VkAllocationCallbacks *pAllocator)
 {
     if (!enableValidationLayers)
         return;

@@ -99,7 +99,7 @@ class Command {
      * @param device  The Vulkan device.
      * @param queueFamilies  The queue families.
      */
-    void create(const VkDevice device, const CreateInfo info);
+    void create(const VkDevice &device, const CreateInfo &info);
 
     /**
      * @brief Destroys the command pool.
@@ -108,7 +108,7 @@ class Command {
      *
      * @param device  The Vulkan device.
      */
-    void destroy(const VkDevice device);
+    void destroy(const VkDevice &device);
 
     /**
      * @brief Records a command buffer.
@@ -117,7 +117,7 @@ class Command {
      *
      * @param info  The record info.
      */
-    void recordBuffer(const RecordInfo info);
+    void recordBuffer(const RecordInfo &info);
 
     /**
      * @brief Gets the command buffer.
@@ -127,7 +127,7 @@ class Command {
      * @param imageIndex  The image index.
      * @return The command buffer.
      */
-    [[nodiscard]] VkCommandBuffer &getCommandBuffer(uint32_t imageIndex) { return _commandBuffers[imageIndex]; }
+    [[nodiscard]] VkCommandBuffer &getCommandBuffer(const uint32_t imageIndex) { return _commandBuffers[imageIndex]; }
 
   private:
     VkCommandPool _commandPool;

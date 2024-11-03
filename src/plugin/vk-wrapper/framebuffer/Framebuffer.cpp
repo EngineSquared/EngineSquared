@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void Framebuffer::create(const VkDevice device, const CreateInfo info)
+void Framebuffer::create(const VkDevice &device, const CreateInfo &info)
 {
     _swapChainFramebuffers.resize(info.swapChainImageViews.size());
 
@@ -33,7 +33,7 @@ void Framebuffer::create(const VkDevice device, const CreateInfo info)
     }
 }
 
-void Framebuffer::destroy(const VkDevice device)
+void Framebuffer::destroy(const VkDevice &device)
 {
     for (auto framebuffer : _swapChainFramebuffers)
         vkDestroyFramebuffer(device, framebuffer, nullptr);

@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void RenderPass::create(const VkDevice device, const VkFormat swapChainImageFormat)
+void RenderPass::create(const VkDevice &device, const VkFormat swapChainImageFormat)
 {
     VkAttachmentDescription colorAttachment{};
     colorAttachment.format = swapChainImageFormat;
@@ -53,6 +53,6 @@ void RenderPass::create(const VkDevice device, const VkFormat swapChainImageForm
         throw VkWrapperError("failed to create render pass!");
 }
 
-void RenderPass::destroy(const VkDevice device) { vkDestroyRenderPass(device, _renderPass, nullptr); }
+void RenderPass::destroy(const VkDevice &device) { vkDestroyRenderPass(device, _renderPass, nullptr); }
 
 } // namespace ES::Plugin::Wrapper

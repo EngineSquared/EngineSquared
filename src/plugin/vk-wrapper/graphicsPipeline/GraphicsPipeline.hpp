@@ -48,7 +48,7 @@ class GraphicsPipeline {
      * @param renderPass  The render pass.
      * @param shaders  The shader paths.
      */
-    void create(const VkDevice &device, const VkExtent2D &swapChainExtent, const VkRenderPass &renderPass,
+    void create(const VkDevice &device, const VkExtent2D swapChainExtent, const VkRenderPass &renderPass,
                 const ShaderModule::ShaderPaths &shaders);
 
     /**
@@ -58,7 +58,7 @@ class GraphicsPipeline {
      *
      * @param device  The Vulkan device.
      */
-    void destroy(const VkDevice device);
+    void destroy(const VkDevice &device);
 
     /**
      * @brief Gets the graphics pipeline.
@@ -67,7 +67,7 @@ class GraphicsPipeline {
      *
      * @return VkPipeline  The graphics pipeline.
      */
-    [[nodiscard]] const VkPipeline get() const { return _graphicsPipeline; }
+    [[nodiscard]] const VkPipeline &get() const { return _graphicsPipeline; }
 
   private:
     VkPipelineLayout _pipelineLayout;

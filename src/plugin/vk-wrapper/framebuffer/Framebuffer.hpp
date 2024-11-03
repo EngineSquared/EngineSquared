@@ -53,7 +53,7 @@ class Framebuffer {
      * @param device  The Vulkan device.
      * @param info  The create info.
      */
-    void create(const VkDevice device, const CreateInfo info);
+    void create(const VkDevice &device, const CreateInfo &info);
 
     /**
      * @brief Destroys the framebuffer.
@@ -62,7 +62,7 @@ class Framebuffer {
      *
      * @param device  The Vulkan device.
      */
-    void destroy(const VkDevice device);
+    void destroy(const VkDevice &device);
 
     /**
      * @brief Gets the swap chain framebuffers.
@@ -71,7 +71,7 @@ class Framebuffer {
      *
      * @return The swap chain framebuffers.
      */
-    [[nodiscard]] const std::vector<VkFramebuffer> getSwapChainFramebuffers() const { return _swapChainFramebuffers; }
+    [[nodiscard]] const std::vector<VkFramebuffer> &getSwapChainFramebuffers() const { return _swapChainFramebuffers; }
 
   private:
     std::vector<VkFramebuffer> _swapChainFramebuffers;

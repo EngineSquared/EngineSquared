@@ -46,7 +46,7 @@ class RenderPass {
      * @param device  The Vulkan device.
      * @param swapChainImageFormat  The swap chain image format.
      */
-    void create(const VkDevice device, const VkFormat swapChainImageFormat);
+    void create(const VkDevice &device, const VkFormat swapChainImageFormat);
 
     /**
      * @brief Destroys the render pass.
@@ -55,7 +55,7 @@ class RenderPass {
      *
      * @param device  The Vulkan device.
      */
-    void destroy(const VkDevice device);
+    void destroy(const VkDevice &device);
 
     /**
      * @brief Gets the render pass.
@@ -64,7 +64,7 @@ class RenderPass {
      *
      * @return The render pass.
      */
-    [[nodiscard]] const VkRenderPass get() const { return _renderPass; }
+    [[nodiscard]] const VkRenderPass &get() const { return _renderPass; }
 
   private:
     VkRenderPass _renderPass;

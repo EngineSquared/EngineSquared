@@ -88,7 +88,7 @@ class QueueFamilies {
      *
      * @param device The Vulkan physical device for which to find the queue families.
      */
-    void findQueueFamilies(const VkPhysicalDevice device, const VkSurfaceKHR surface);
+    void findQueueFamilies(const VkPhysicalDevice &device, const VkSurfaceKHR &surface);
 
     /**
      * @brief Returns whether the queue families have been completely identified.

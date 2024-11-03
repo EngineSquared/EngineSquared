@@ -11,7 +11,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-void LogicalDevice::create(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface)
+void LogicalDevice::create(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface)
 {
     _queueFamilies.findQueueFamilies(physicalDevice, surface);
     auto indices = _queueFamilies.getIndices();
