@@ -39,11 +39,7 @@ class SceneManager {
      */
     template <typename TScene> TScene &RegisterScene(const std::string &name)
     {
-        if constexpr (!std::is_base_of<ES::Plugin::Scene::Utils::AScene, TScene>::value)
-        {
-            static_assert(0, "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
-        }
-        else
+        if constexpr (std::is_base_of<ES::Plugin::Scene::Utils::AScene, TScene>::value)
         {
             if (_scenes.find(name) != _scenes.end())
             {
@@ -53,6 +49,12 @@ class SceneManager {
             std::shared_ptr<TScene> new_scene = std::make_shared<TScene>();
             _scenes[name] = new_scene;
             return *new_scene.get();
+        }
+        else
+        {
+            // static_assert(false, "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
+            static_assert(std::is_base_of<ES::Plugin::Scene::Utils::AScene, TScene>::value,
+                          "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
         }
     }
 
