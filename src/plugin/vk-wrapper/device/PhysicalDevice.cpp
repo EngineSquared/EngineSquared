@@ -51,7 +51,7 @@ bool PhysicalDevice::isDeviceSuitable(const VkPhysicalDevice &device, const VkSu
     return _queueFamilies.isComplete() && extensionsSupported && swapChainAdequate;
 }
 
-bool PhysicalDevice::checkDeviceExtensionSupport(const VkPhysicalDevice device)
+bool PhysicalDevice::checkDeviceExtensionSupport(const VkPhysicalDevice &device)
 {
     uint32_t extensionCount;
     vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
