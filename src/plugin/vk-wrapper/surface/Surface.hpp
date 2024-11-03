@@ -72,10 +72,10 @@ class Surface {
      *
      * @return The surface.
      */
-    [[nodiscard]] const VkSurfaceKHR get() const { return surface; }
+    [[nodiscard]] const VkSurfaceKHR get() const { return _surface; }
 
   private:
-    VkSurfaceKHR surface;
+    VkSurfaceKHR _surface;
 };
 
 } // namespace ES::Plugin::Wrapper

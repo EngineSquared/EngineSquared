@@ -36,19 +36,21 @@ void LogicalDevice::create(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface
     VkDeviceCreateInfo createInfo{};
     createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 
-    createInfo.queueCreateInfoCount = (uint32_t) queueCreateInfos.size();
+    createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
     createInfo.pQueueCreateInfos = queueCreateInfos.data();
 
     createInfo.pEnabledFeatures = &deviceFeatures;
 
-    createInfo.enabledExtensionCount = (uint32_t) deviceExtensions.size();
-    createInfo.ppEnabledExtensionNames = deviceExtensions.data();
+    createInfo.enabledExtensionCount = static_cast<uint32_t>(DEVICE_EXTENSIONS.size());
+    createInfo.ppEnabledExtensionNames = DEVICE_EXTENSIONS.data();
 
+#ifndef VK_API_VERSION_1_2
     if (enableValidationLayers)
     {
-        createInfo.enabledLayerCount = (uint32_t) validationLayers.size();
-        createInfo.ppEnabledLayerNames = validationLayers.data();
+        createInfo.enabledLayerCount = static_cast<uint32_t>(VALIDATION_LAYERS.size());
+        createInfo.ppEnabledLayerNames = VALIDATION_LAYERS.data();
     }
+#endif
 
     if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &_device) != VK_SUCCESS)
         throw VkWrapperError("Failed to create logical device!");

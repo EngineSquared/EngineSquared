@@ -21,15 +21,15 @@ void Instance::create(const std::string &applicationName)
     appInfo.pApplicationName = applicationName.c_str();
     appInfo.applicationVersion = VK_MAKE_VERSION(0, 0, 0);
     appInfo.pEngineName = "EngineSquared";
-    appInfo.engineVersion = VK_MAKE_VERSION(0, 0, 0);
-    appInfo.apiVersion = VK_API_VERSION_1_0;
+    appInfo.engineVersion = VK_MAKE_VERSION(VKWRAPPER_VERSION_MAJOR, VKWRAPPER_VERSION_MINOR, VKWRAPPER_VERSION_PATCH);
+    appInfo.apiVersion = VK_API_VERSION_1_2;
 
     VkInstanceCreateInfo createInfo{};
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;
 
     auto extensions = getRequiredExtensions();
-    createInfo.enabledExtensionCount = (uint32_t) extensions.size();
+    createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
     createInfo.ppEnabledExtensionNames = extensions.data();
 #if VKWRAPPER_SYSTEM_MACOS
     createInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
@@ -39,8 +39,8 @@ void Instance::create(const std::string &applicationName)
 
     if (enableValidationLayers)
     {
-        createInfo.enabledLayerCount = (uint32_t) validationLayers.size();
-        createInfo.ppEnabledLayerNames = validationLayers.data();
+        createInfo.enabledLayerCount = static_cast<uint32_t>(VALIDATION_LAYERS.size());
+        createInfo.ppEnabledLayerNames = VALIDATION_LAYERS.data();
 
         _debugMessenger.populateDebugMessengerCreateInfo(debugCreateInfo);
         createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT *) &debugCreateInfo;
@@ -77,13 +77,13 @@ void Instance::destroy()
 
 bool Instance::CheckValidationLayerSupport()
 {
-    uint32_t layerCount;
+    uint32_t layerCount = 0;
     vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
     std::vector<VkLayerProperties> availableLayers(layerCount);
     vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
-    for (const char *layerName : validationLayers)
+    for (const char *layerName : VALIDATION_LAYERS)
     {
         bool layerFound = false;
 
@@ -106,8 +106,7 @@ bool Instance::CheckValidationLayerSupport()
 std::vector<const char *> Instance::getRequiredExtensions()
 {
     uint32_t glfwExtensionCount = 0;
-    const char **glfwExtensions;
-    glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+    const char **glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
     std::vector<const char *> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
 

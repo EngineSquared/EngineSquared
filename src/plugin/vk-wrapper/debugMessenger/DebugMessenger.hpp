@@ -36,7 +36,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
+const std::vector<const char *> VALIDATION_LAYERS = {"VK_LAYER_KHRONOS_validation"};
 
 #ifdef VKWRAPPER_DEBUG
 constexpr bool enableValidationLayers = true;

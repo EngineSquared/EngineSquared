@@ -29,7 +29,7 @@
 
 namespace ES::Plugin::Wrapper {
 
-const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+const std::vector<const char *> DEVICE_EXTENSIONS = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
 
 /**
  * @brief QueueFamilies class.

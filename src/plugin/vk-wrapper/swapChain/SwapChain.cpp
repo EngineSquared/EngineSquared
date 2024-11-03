@@ -13,11 +13,11 @@ namespace ES::Plugin::Wrapper {
 
 SwapChain::SupportDetails SwapChain::querySupport(const VkPhysicalDevice device, const VkSurfaceKHR surface)
 {
-    SupportDetails details;
+    SupportDetails details{};
 
     vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &details.capabilities);
 
-    uint32_t formatCount;
+    uint32_t formatCount = 0;
     vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, nullptr);
 
     if (formatCount != 0)
@@ -26,7 +26,7 @@ SwapChain::SupportDetails SwapChain::querySupport(const VkPhysicalDevice device,
         vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, details.formats.data());
     }
 
-    uint32_t presentModeCount;
+    uint32_t presentModeCount = 0;
     vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentModeCount, nullptr);
 
     if (presentModeCount != 0)
@@ -119,7 +119,7 @@ VkExtent2D SwapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilit
     if (capabilities.currentExtent.width != UINT32_MAX)
         return capabilities.currentExtent;
 
-    VkExtent2D actualExtent;
+    VkExtent2D actualExtent{};
 
     actualExtent.width = std::clamp(width, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
     actualExtent.height = std::clamp(height, capabilities.minImageExtent.height, capabilities.maxImageExtent.height);
