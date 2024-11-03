@@ -11,27 +11,19 @@
 
 namespace ES::Plugin::Wrapper {
 
-void GraphicsPipeline::create(const VkDevice device, const VkExtent2D swapChainExtent, const VkRenderPass renderPass)
+void GraphicsPipeline::create(const VkDevice &device, const VkExtent2D &swapChainExtent, const VkRenderPass &renderPass,
+                              const ShaderModule::ShaderPaths &shaders)
 {
-    auto vertShaderCode = ShaderModule::readFile(SHADER_DIR "vert.spv");
-    auto fragShaderCode = ShaderModule::readFile(SHADER_DIR "frag.spv");
+    auto vertShaderCode = ShaderModule::loadSPVfile(shaders.vertex.first);
+    auto fragShaderCode = ShaderModule::loadSPVfile(shaders.fragment.first);
 
     VkShaderModule vertex = ShaderModule::create(device, vertShaderCode);
-    VkShaderModule fragment = ShaderModule::create(device, fragShaderCode);
+    VkShaderModule frag = ShaderModule::create(device, fragShaderCode);
 
-    VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
-    vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-    vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
-    vertShaderStageInfo.module = vertex;
-    vertShaderStageInfo.pName = "main";
+    auto vertShaderStage = ShaderModule::createShaderStage(vertex, VK_SHADER_STAGE_VERTEX_BIT, shaders.vertex.second);
+    auto fragShaderStage = ShaderModule::createShaderStage(frag, VK_SHADER_STAGE_FRAGMENT_BIT, shaders.fragment.second);
 
-    VkPipelineShaderStageCreateInfo fragShaderStageInfo{};
-    fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-    fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-    fragShaderStageInfo.module = fragment;
-    fragShaderStageInfo.pName = "main";
-
-    VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo, fragShaderStageInfo};
+    VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStage, fragShaderStage};
 
     VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
     vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -119,7 +111,7 @@ void GraphicsPipeline::create(const VkDevice device, const VkExtent2D swapChainE
     if (vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &_graphicsPipeline) != VK_SUCCESS)
         throw VkWrapperError("failed to create graphics pipeline!");
 
-    ShaderModule::destroy(device, fragment);
+    ShaderModule::destroy(device, frag);
     ShaderModule::destroy(device, vertex);
 }
 

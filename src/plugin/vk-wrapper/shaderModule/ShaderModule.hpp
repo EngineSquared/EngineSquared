@@ -47,14 +47,46 @@ namespace ES::Plugin::Wrapper {
 class ShaderModule {
   public:
     /**
-     * @brief Reads a file.
+     * @brief ShaderPaths struct.
      *
-     * This function reads a file and returns the content as a vector of chars.
+     * This struct contains the paths to the vertex and fragment shaders.
+     * The paths are stored as a pair of strings, where the first string is the path to the shader file
+     * and the second string is the name of the entry point function (e.g. main).
      *
-     * @param filename  The name of the file.
-     * @return The content of the file as a vector of chars.
+     * @note The paths are stored in the following format: {path, pName}.
+     * @note The SHADER_DIR macro is used to define the directory where the shaders are stored.
+     *       It is optional and can be replaced with the actual path to the shaders.
+     *       It based on the PROJECT_SOURCE_DIR macro wich is defined by export.h.
+     *
+     * @see SHADER_DIR
+     * @see PROJECT_SOURCE_DIR
+     * @see export.h
+     *
+     * @example
+     * @code
+     * ShaderPaths paths = {
+     *     {SHADER_DIR"vertex.spv", "main"},
+     *     {SHADER_DIR"fragment.spv", "main"}
+     * };
+     * @endcode
      */
-    static std::vector<char> readFile(const std::string &filename);
+    struct ShaderPaths {
+        std::pair<std::string /*path*/, std::string /*pName*/> vertex;
+        std::pair<std::string /*path*/, std::string /*pName*/> fragment;
+    };
+
+  public:
+    /**
+     * @brief Loads an SPV file.
+     *
+     * This function loads an SPV file and returns the content as a vector of chars.
+     * The function checks if the file is an SPV file and opens it in binary mode.
+     * It reads the file and returns the content as a vector of chars.
+     *
+     * @param filename  The name of the file. The file must be an SPV file. (e.g. shader.spv)
+     * @return std::vector<char>  The content of the file as a vector of chars.
+     */
+    static std::vector<char> loadSPVfile(const std::string &filename);
 
     /**
      * @brief Creates a shader module.
@@ -76,6 +108,17 @@ class ShaderModule {
      * @param shaderModule  The shader module.
      */
     static void destroy(const VkDevice device, const VkShaderModule shaderModule);
+
+    /**
+     * @brief Creates a VkPipelineShaderStageCreateInfo structure for a shader stage.
+     *
+     * @param module The VkShaderModule containing the compiled shader code.
+     * @param stage The VkShaderStageFlagBits specifying the stage of the pipeline.
+     * @param pName The entry point name of the shader.
+     * @return VkPipelineShaderStageCreateInfo structure initialized with the provided parameters.
+     */
+    static VkPipelineShaderStageCreateInfo
+    createShaderStage(const VkShaderModule &module, const VkShaderStageFlagBits &stage, const std::string &pName);
 };
 
 } // namespace ES::Plugin::Wrapper

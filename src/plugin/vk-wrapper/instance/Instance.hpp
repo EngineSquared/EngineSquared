@@ -153,7 +153,7 @@ class Instance {
      * attachments used for rendering and the subpasses that are executed during
      * rendering.
      */
-    void createGraphicsPipeline();
+    void createGraphicsPipeline(const ShaderModule::ShaderPaths &shaders);
 
     /**
      * @brief Create synchronization objects for the Vulkan API.

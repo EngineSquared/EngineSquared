@@ -148,14 +148,14 @@ void Instance::createSwapChainImages(const uint32_t width, const uint32_t height
     _imageView.create(device, _swapChain.getSwapChainImages(), _swapChain.getSurfaceFormat());
 }
 
-void Instance::createGraphicsPipeline()
+void Instance::createGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
 {
     auto device = _logicalDevice.get();
     auto extent = _swapChain.getExtent();
 
     _renderPass.create(device, _swapChain.getSurfaceFormat().format);
 
-    _graphicsPipeline.create(device, extent, _renderPass.get());
+    _graphicsPipeline.create(device, extent, _renderPass.get(), shaders);
 
     auto renderPass = _renderPass.get();
 

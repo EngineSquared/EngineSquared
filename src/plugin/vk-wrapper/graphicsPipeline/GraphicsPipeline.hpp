@@ -32,7 +32,7 @@ namespace ES::Plugin::Wrapper {
  * @example
  * @code
  * GraphicsPipeline graphicsPipeline;
- * graphicsPipeline.create(device, swapChainExtent, renderPass);
+ * graphicsPipeline.create(device, swapChainExtent, renderPass, shaders);
  * graphicsPipeline.destroy(device);
  * @endcode
  */
@@ -46,8 +46,10 @@ class GraphicsPipeline {
      * @param device  The Vulkan device.
      * @param swapChainExtent  The swap chain extent.
      * @param renderPass  The render pass.
+     * @param shaders  The shader paths.
      */
-    void create(const VkDevice device, const VkExtent2D swapChainExtent, const VkRenderPass renderPass);
+    void create(const VkDevice &device, const VkExtent2D &swapChainExtent, const VkRenderPass &renderPass,
+                const ShaderModule::ShaderPaths &shaders);
 
     /**
      * @brief Destroys the graphics pipeline.

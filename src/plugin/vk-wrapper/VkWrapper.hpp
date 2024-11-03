@@ -41,6 +41,14 @@ namespace ES::Plugin {
  *
  * // Create a VkWrapper
  * ES::Plugin::VkWrapper vkWrapper;
+ * ES::Plugin::VkWrapper::CreateInfo createInfo = {
+ *     .window = window.GetGLFWWindow(),
+ *     .width = 800,
+ *     .height = 600,
+ *     .applicationName = "My Engine",
+ *     .shaders = {{SHADER_DIR "vert.spv", "main"}, {SHADER_DIR "frag.spv", "main"}}
+ * };
+ * vkWrapper.create(createInfo);
  *
  * // Set the framebuffer resize callback
  * window.SetFramebufferSizeCallback((void *) &vkWrapper, ES::Plugin::VkWrapper::ResizeCallback);
@@ -61,6 +69,30 @@ namespace ES::Plugin {
 class VkWrapper {
   public:
     /**
+     * @brief Structure to hold the creation information for the Vulkan wrapper.
+     *
+     * This structure contains all the necessary information required to initialize
+     * the Vulkan wrapper, including the window handle, dimensions, application name,
+     * and shader paths.
+     *
+     * @param window  The GLFW window to create the VkWrapper for.
+     * @param width  The width of the window.
+     * @param height  The height of the window.
+     * @param applicationName  The name of the application.
+     * @param shaders  The paths to the shaders.
+     *
+     * @see Wrapper::ShaderModule::ShaderPaths
+     */
+    struct CreateInfo {
+        GLFWwindow *window;
+        uint32_t width;
+        uint32_t height;
+        std::string applicationName;
+        Wrapper::ShaderModule::ShaderPaths shaders;
+    };
+
+  public:
+    /**
      * @brief Create the VkWrapper using the Vulkan API.
      *
      * This function creates the VkWrapper using the Vulkan API. It creates the
@@ -68,12 +100,9 @@ class VkWrapper {
      * chain, the image views, the render pass, the graphics pipeline, the frame
      * buffers, the command pool, the command buffers, the semaphores, and the fences.
      *
-     * @param window  The GLFW window to create the VkWrapper for.
-     * @param width  The width of the window.
-     * @param height  The height of the window.
-     * @param applicationName  The name of the application.
+     * @param info  The creation information required for the VkWrapper.
      */
-    void create(GLFWwindow *window, uint32_t width, uint32_t height, const std::string &applicationName);
+    void create(const CreateInfo &info);
 
     /**
      * @brief Destroy the VkWrapper using the Vulkan API.
