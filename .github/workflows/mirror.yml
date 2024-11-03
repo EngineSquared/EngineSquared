@@ -69,7 +69,7 @@ jobs:
 
       - name: Setup Xmake
         run: |
-          xmake f -p linux -a x86_64 -m release --toolchain=clang
+          xmake f --toolchain=clang
 
       - name: (Try to) build the project
         run: xmake build -y
