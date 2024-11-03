@@ -53,8 +53,7 @@ class SceneManager {
         else
         {
             // static_assert(false, "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
-            static_assert(false,
-                          "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
+            static_assert(false, "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
         }
     }
 
