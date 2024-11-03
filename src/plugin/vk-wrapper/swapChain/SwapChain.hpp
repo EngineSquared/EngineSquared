@@ -25,7 +25,6 @@
 #include "QueueFamilies.hpp"
 
 #include <algorithm>
-#include <cstdint>
 
 #ifndef UINT32_MAX
 #include <limits>

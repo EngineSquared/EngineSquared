@@ -67,11 +67,14 @@ enum class Result : bool {
  * instance.createSurface(window);
  * instance.setupDevices();
  * instance.createSwapChainImages(width, height);
- * instance.createGraphicsPipeline();
+ * instance.createGraphicsPipeline(shaders);
  * instance.createSyncObjects();
  *
  * while (!glfwWindowShouldClose(window))
- *    instance.drawNextImage();
+ * {
+ *    if (instance.drawNextImage() == Result::Failure)
+ *        instance.recreateSwapChain(width, height);
+ * }
  *
  * instance.destroy();
  * @endcode
