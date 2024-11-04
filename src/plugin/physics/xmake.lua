@@ -34,6 +34,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
         set_default(false)
         set_languages("cxx20")
+        add_deps("engine_squared_core")
         add_files(file)
         add_files("tests/main.cpp")
         add_includedirs("tests/utils", {public = true})
