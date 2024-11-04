@@ -6,11 +6,12 @@ target("engine_squared_core")
     set_languages("cxx20")
     set_policy("build.warning", true)
     add_packages("entt")
-    add_files("**.cpp")
-    add_headerfiles("/**.hpp", { public = true })
-    add_includedirs(".", { public = true })
-    add_includedirs("/entity", { public = true })
-    add_includedirs("/registry", { public = true })
+
+    add_files("src/**.cpp")
+    add_headerfiles("src/**.hpp", { public = true })
+    add_includedirs("src", { public = true })
+    add_includedirs("src/entity", { public = true })
+    add_includedirs("src/registry", { public = true })
 
     if is_mode("debug") then
         add_defines("DEBUG")
