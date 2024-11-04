@@ -1,12 +1,3 @@
-/*
-** EPITECH PROJECT, 2024
-** Title: EngineSquared
-** Author: MasterLaplace
-** Created: 2024-10-23
-** File description:
-** ShaderModule
-*/
-
 #include "ShaderModule.hpp"
 
 namespace ES::Plugin::Wrapper {

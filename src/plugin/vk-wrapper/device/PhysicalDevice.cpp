@@ -1,12 +1,3 @@
-/*
-** EPITECH PROJECT, 2024
-** Title: EngineSquared
-** Author: MasterLaplace
-** Created: 2024-10-21
-** File description:
-** PhysicalDevice
-*/
-
 #include "PhysicalDevice.hpp"
 
 namespace ES::Plugin::Wrapper {

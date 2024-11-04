@@ -1,12 +1,3 @@
-/*
-** EPITECH PROJECT, 2024
-** Title: EngineSquared
-** Author: MasterLaplace
-** Created: 2024-10-22
-** File description:
-** LogicalDevice
-*/
-
 #include "LogicalDevice.hpp"
 
 namespace ES::Plugin::Wrapper {

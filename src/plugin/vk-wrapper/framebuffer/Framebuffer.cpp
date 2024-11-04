@@ -1,12 +1,3 @@
-/*
-** EPITECH PROJECT, 2024
-** Title: EngineSquared
-** Author: MasterLaplace
-** Created: 2024-10-24
-** File description:
-** Framebuffer
-*/
-
 #include "Framebuffer.hpp"
 
 namespace ES::Plugin::Wrapper {

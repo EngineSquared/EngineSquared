@@ -1,12 +1,3 @@
-/*
-** EPITECH PROJECT, 2024
-** Title: EngineSquared
-** Author: MasterLaplace
-** Created: 2024-10-15
-** File description:
-** Instance
-*/
-
 #include "Instance.hpp"
 
 namespace ES::Plugin::Wrapper {
