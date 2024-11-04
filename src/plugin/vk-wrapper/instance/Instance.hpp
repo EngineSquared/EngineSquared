@@ -41,12 +41,12 @@ namespace ES::Plugin::Wrapper {
  * @brief Result enum class.
  *
  * This enum class is used to represent the result of an operation.
- * It can be either Success or Failure.
- * It is used to indicate the success or failure of Vulkan operations.
+ * It can be either Success or NeedResize.
+ * It is used to indicate the success or if a resize is needed.
  */
 enum class Result : bool {
     Success = true,
-    Failure = false,
+    NeedResize = false,
 };
 
 /**
@@ -72,7 +72,7 @@ enum class Result : bool {
  *
  * while (!glfwWindowShouldClose(window))
  * {
- *    if (instance.DrawNextImage() == Result::Failure)
+ *    if (instance.DrawNextImage() == Result::NeedResize)
  *        instance.RecreateSwapChain(width, height);
  * }
  *
@@ -189,7 +189,7 @@ class Instance {
      * screen and increments the current frame index.
      *
      * @return Result The result of the draw operation. Success if the image was
-     * drawn successfully, Failure if the swap chain needs to be recreated.
+     * drawn successfully, NeedResize if the swap chain needs to be recreated.
      */
     [[nodiscard]] Result DrawNextImage();
 

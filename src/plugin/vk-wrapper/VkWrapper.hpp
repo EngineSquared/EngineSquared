@@ -59,7 +59,7 @@ namespace ES::Plugin {
  * {
  *     glfwPollEvents();
  *     auto result = vkWrapper.DrawFrame();
- *     if (result == ES::Plugin::Wrapper::Result::Failure)
+ *     if (result == ES::Plugin::Wrapper::Result::NeedResize)
  *         vkWrapper.Resize(window.GetGLFWWindow());
  * }
  *
@@ -123,7 +123,7 @@ class VkWrapper {
      * presents the image to the screen, and increments the current frame index.
      *
      * @return Wrapper::Result  The result of the draw operation. Success if the
-     * image was drawn successfully, Failure if a Resize is needed.
+     * image was drawn successfully, NeedResize if a Resize is needed.
      *
      * @see Wrapper::Result
      * @see Resize
