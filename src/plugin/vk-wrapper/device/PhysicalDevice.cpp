@@ -26,12 +26,12 @@ void PhysicalDevice::PickPhysicalDevice(const VkInstance &instance, const VkSurf
     {
         if (IsDeviceSuitable(device, surface))
         {
-            physicalDevice = device;
+            _physicalDevice = device;
             break;
         }
     }
 
-    if (physicalDevice == VK_NULL_HANDLE)
+    if (_physicalDevice == VK_NULL_HANDLE)
         throw VkWrapperError("failed to find a suitable GPU!");
 }
 

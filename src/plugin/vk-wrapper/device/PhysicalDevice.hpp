@@ -64,7 +64,7 @@ class PhysicalDevice {
      *
      * @return The physical device.
      */
-    [[nodiscard]] const VkPhysicalDevice &Get() const { return physicalDevice; }
+    [[nodiscard]] const VkPhysicalDevice &Get() const { return _physicalDevice; }
 
   private:
     /**
@@ -103,7 +103,7 @@ class PhysicalDevice {
     [[nodiscard]] uint32_t RateDeviceSuitability(const VkPhysicalDevice &device);
 
   private:
-    VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+    VkPhysicalDevice _physicalDevice = VK_NULL_HANDLE;
     QueueFamilies _queueFamilies;
 };
 
