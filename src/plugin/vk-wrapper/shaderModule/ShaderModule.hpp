@@ -27,9 +27,9 @@
 #include "DebugMessenger.hpp"
 
 #ifdef PROJECT_SOURCE_DIR
-#define SHADER_DIR PROJECT_SOURCE_DIR + "shaders/"
+#    define SHADER_DIR PROJECT_SOURCE_DIR + "shaders/"
 #else
-#define SHADER_DIR ""
+#    define SHADER_DIR ""
 #endif
 
 namespace ES::Plugin::Wrapper {

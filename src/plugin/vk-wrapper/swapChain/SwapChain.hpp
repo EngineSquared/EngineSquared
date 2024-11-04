@@ -27,8 +27,8 @@
 #include <algorithm>
 
 #ifndef UINT32_MAX
-#include <limits>
-#define UINT32_MAX std::numeric_limits<uint32_t>::max()
+#    include <limits>
+#    define UINT32_MAX std::numeric_limits<uint32_t>::max()
 #endif
 
 namespace ES::Plugin::Wrapper {
