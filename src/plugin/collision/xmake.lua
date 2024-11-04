@@ -34,14 +34,17 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
         set_default(false)
         set_languages("cxx20")
-        add_files(file)
-        add_files("tests/main.cpp")
         add_packages("glm", "entt", "gtest")
         add_links("gtest")
+        add_tests("default")
+        
+        add_deps("engine_squared_core")
         add_deps("plugin_collision")
+        
+        add_files(file)
+        add_files("tests/main.cpp")
         add_includedirs("src")
         add_includedirs("tests")
-        add_tests("default")
         if is_mode("debug") then
             add_defines("DEBUG")
         end

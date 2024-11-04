@@ -1,18 +1,20 @@
 add_rules("mode.debug", "mode.release")
 add_requires("entt", "gtest", "glm")
 
+includes("../../engine/xmake.lua")
+
 target("plugin_object")
     set_kind("static")
     set_languages("cxx20")
     set_policy("build.warning", true)
+    add_packages("entt", "glm")
+
+    add_deps("engine_squared_core")
 
     add_includedirs("src/", {public = true})
     add_includedirs("src/component", {public = true})
     add_includedirs("src/resource", {public = true})
     add_includedirs("src/utils", {public = true})
-        
-    add_packages("entt", "glm")
-
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
@@ -27,12 +29,15 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
         set_default(false)
         set_languages("cxx20")
-        add_files(file)
-        add_files("tests/main.cpp")
         add_packages("entt", "gtest", "glm")
         add_links("gtest")
-        add_deps("plugin_object")
         add_tests("default")
+        
+        add_deps("plugin_object")
+        add_deps("engine_squared_core")
+        
+        add_files(file)
+        add_files("tests/main.cpp")
         if is_mode("debug") then
             add_defines("DEBUG")
         end
