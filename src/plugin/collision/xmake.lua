@@ -5,15 +5,15 @@ includes("../../engine/xmake.lua")
 includes("../object/xmake.lua")
 includes("../time/xmake.lua")
 
-target("plugin_collision")
+target("PluginCollision")
     set_kind("static")
     set_languages("cxx20")
     add_packages("glm", "entt")
     set_policy("build.warning", true)
 
-    add_deps("engine_squared_core")
-    add_deps("plugin_object")
-    add_deps("plugin_time")
+    add_deps("EngineSquaredCore")
+    add_deps("PluginObject")
+    add_deps("PluginTime")
     
     add_files("src/**.cpp")
     add_includedirs("src/", {public = true})
@@ -38,8 +38,8 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_links("gtest")
         add_tests("default")
         
-        add_deps("engine_squared_core")
-        add_deps("plugin_collision")
+        add_deps("EngineSquaredCore")
+        add_deps("PluginCollision")
         
         add_files(file)
         add_files("tests/main.cpp")

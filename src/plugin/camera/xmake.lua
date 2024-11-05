@@ -1,7 +1,7 @@
 add_rules("mode.debug", "mode.release")
 add_requires("glm")
 
-target("plugin_camera")
+target("PluginCamera")
     set_kind("static")
     set_languages("cxx20")
     set_policy("build.warning", true)
