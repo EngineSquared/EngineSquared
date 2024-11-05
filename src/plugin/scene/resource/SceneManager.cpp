@@ -10,26 +10,24 @@
 
 void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Registry &registry)
 {
-    if (_nextScene.has_value())
-    {
-        if (_currentScene.has_value())
-        {
-            std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Unloading scene: " << _currentScene.value()
-                      << std::endl;
-            _unloadScene(registry, _currentScene.value());
-        }
-        std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Loading scene: " << _nextScene.value()
-                  << std::endl;
-        _loadScene(registry, _nextScene.value());
-        _currentScene = _nextScene;
-        _nextScene.reset();
-    }
-    else
+    if (!_nextScene.has_value())
     {
         std::cout
             << "[WARNING] ES::Plugin::Scene::Resource::SceneManager: Unable to load next scene: No next scene provided"
             << std::endl;
+        return;
     }
+    if (_currentScene.has_value())
+    {
+        std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Unloading scene: " << _currentScene.value()
+                    << std::endl;
+        _unloadScene(registry, _currentScene.value());
+    }
+    std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Loading scene: " << _nextScene.value()
+                << std::endl;
+    _loadScene(registry, _nextScene.value());
+    _currentScene = _nextScene;
+    _nextScene.reset();
 }
 void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Registry &registry, const std::string &name)
 {
