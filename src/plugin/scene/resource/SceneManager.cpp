@@ -16,11 +16,10 @@ void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Registry &reg
     if (_currentScene.has_value())
     {
         std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Unloading scene: " << _currentScene.value()
-                    << std::endl;
+                  << std::endl;
         _unloadScene(registry, _currentScene.value());
     }
-    std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Loading scene: " << _nextScene.value()
-                << std::endl;
+    std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Loading scene: " << _nextScene.value() << std::endl;
     _loadScene(registry, _nextScene.value());
     _currentScene = _nextScene;
     _nextScene.reset();
