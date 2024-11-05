@@ -1,7 +1,3 @@
-#include <iostream>
-#include <optional>
-#include <string>
-
 #include "Engine.hpp"
 
 #include "AScene.hpp"
