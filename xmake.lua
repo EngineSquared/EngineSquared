@@ -13,6 +13,7 @@ target("EngineSquared")
     add_includedirs("src/engine/entity", { public = true })
     add_includedirs("src/engine/registry", { public = true })
     add_includedirs("src/plugin", { public = true })
+    add_includedirs("src/plugin/utils", { public = true })
     add_includedirs("src/plugin/object", { public = true })
     add_includedirs("src/plugin/object/component", { public = true })
     add_includedirs("src/plugin/object/utils", { public = true })
@@ -34,6 +35,20 @@ target("EngineSquared")
     add_includedirs("src/plugin/physics/system", { public = true })
     add_includedirs("src/plugin/time/resource", { public = true })
     add_includedirs("src/plugin/time/system", { public = true })
+    add_includedirs("src/plugin/vk-wrapper", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/instance", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/debugMessenger", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/device", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/queueFamilies", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/surface", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/swapChain", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/imageView", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/shaderModule", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/graphicsPipeline", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/renderPass", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/framebuffer", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/command", { public = true })
+    add_includedirs("src/plugin/vk-wrapper/exception", { public = true })
     add_includedirs("src/plugin/scene", { public = true })
     add_includedirs("src/plugin/scene/utils", { public = true })
     add_includedirs("src/plugin/scene/resource", { public = true })
@@ -44,6 +59,14 @@ target("EngineSquared")
 
     if is_mode("debug") then
         add_defines("DEBUG")
+        if is_plat("windows") then
+            add_cxflags("/Od", "/Zi")
+        else
+            add_cxflags("-O0 -g3 -ggdb")
+        end
+    else
+        add_defines("NDEBUG")
+        add_cxflags("-O2")
     end
 
 for _, file in ipairs(os.files("tests/**.cpp")) do

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Registry.hpp"
 
 // Require object plugin components
