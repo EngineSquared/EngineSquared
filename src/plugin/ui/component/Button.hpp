@@ -1,7 +1,7 @@
 #pragma once
 
-#include <variant>
 #include <functional>
+#include <variant>
 
 #include <entt/entt.hpp>
 
