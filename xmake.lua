@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "glm", "gtest")
+add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "glm", "gtest")
 
 includes("src/plugin/camera/xmake.lua")
 includes("src/plugin/collision/xmake.lua")
@@ -26,8 +26,17 @@ target("EngineSquared")
     add_deps("PluginWindow")
 
     set_policy("build.warning", true)
-    add_packages("entt", "glm")
+    add_packages("entt", "vulkansdk", "glfw", "glm")
 
     if is_mode("debug") then
         add_defines("DEBUG")
+        if is_plat("windows") then
+            add_cxflags("/Od", "/Zi")
+        else
+            add_cxflags("-O0 -g3 -ggdb")
+        end
+    else
+        add_defines("NDEBUG")
+        add_cxflags("-O2")
     end
+
