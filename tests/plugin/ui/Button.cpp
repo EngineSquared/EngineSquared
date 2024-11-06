@@ -12,12 +12,13 @@ TEST(Button, ButtonClick)
         bool clicked = false;
     };
     ES::Engine::Registry r;
+    r.RegisterSystem(System::ButtonClick);
+    r.RegisterSystem(ES::Engine::Entity::RemoveTemporaryComponents);
 
     r.RegisterResource<onClickCalled>(onClickCalled());
 
     ES::Engine::Entity button = ES::Engine::Entity(r.CreateEntity());
     button.AddComponent<Component::Button>(r);
-    button.AddComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(r);
 
     auto &buttonComponent = button.GetComponents<Component::Button>(r);
     buttonComponent.lastState = Component::Button::State::Pressed;
@@ -27,7 +28,8 @@ TEST(Button, ButtonClick)
 
     EXPECT_FALSE(r.GetResource<onClickCalled>().clicked);
 
-    System::ButtonClick(r);
+    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(r);
+    r.RunSystems();
 
     EXPECT_TRUE(r.GetResource<onClickCalled>().clicked);
 }
@@ -36,9 +38,11 @@ TEST(Button, UpdateButtonTexture)
 {
     ES::Engine::Registry r;
 
+    r.RegisterSystem(System::UpdateButtonTexture);
+    r.RegisterSystem(ES::Engine::Entity::RemoveTemporaryComponents);
+
     ES::Engine::Entity button = ES::Engine::Entity(r.CreateEntity());
     button.AddComponent<Component::Button>(r);
-    button.AddComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(r);
     button.AddComponent<Component::Sprite2D>(r);
 
     auto &buttonComponent = button.GetComponents<Component::Button>(r);
@@ -49,14 +53,17 @@ TEST(Button, UpdateButtonTexture)
                                           .pressedColor = ES::Plugin::Colors::Utils::DARKGRAY_COLOR};
 
     buttonComponent.state = Component::Button::State::Hover;
-    System::UpdateButtonTexture(r);
+    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(r);
+    r.RunSystems();
     EXPECT_EQ(button.GetComponents<Component::Sprite2D>(r).color, ES::Plugin::Colors::Utils::GRAY_COLOR);
 
     buttonComponent.state = Component::Button::State::Pressed;
-    System::UpdateButtonTexture(r);
+    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(r);
+    r.RunSystems();
     EXPECT_EQ(button.GetComponents<Component::Sprite2D>(r).color, ES::Plugin::Colors::Utils::DARKGRAY_COLOR);
 
     buttonComponent.state = Component::Button::State::Normal;
-    System::UpdateButtonTexture(r);
+    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(r);
+    r.RunSystems();
     EXPECT_EQ(button.GetComponents<Component::Sprite2D>(r).color, ES::Plugin::Colors::Utils::WHITE_COLOR);
 }
