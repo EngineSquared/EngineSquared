@@ -1,6 +1,7 @@
 #pragma once
 
 #include <variant>
+#include <functional>
 
 #include <entt/entt.hpp>
 
@@ -75,6 +76,6 @@ struct Button {
     /**
      * @brief The function to call when the button is clicked
      */
-    entt::delegate<void(ES::Engine::Registry &)> onClick;
+    std::function<void(ES::Engine::Registry &)> onClick;
 };
 }; // namespace ES::Plugin::UI::Component
