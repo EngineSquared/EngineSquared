@@ -5,5 +5,5 @@ target("PluginInput")
     set_languages("cxx20")
     set_policy("build.warning", true)
     
-    add_includedirs("./", {public = true})
-    add_includedirs("resource", {public = true})
+    add_includedirs("src", {public = true})
+    add_includedirs("src/resource", {public = true})

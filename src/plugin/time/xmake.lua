@@ -11,6 +11,6 @@ target("PluginTime")
 
     add_deps("EngineSquaredCore")
     
-    add_files("**.cpp")
-    add_includedirs("resource", {public = true})
-    add_includedirs("system", {public = true})
+    add_files("src/**.cpp")
+    add_includedirs("src/resource", {public = true})
+    add_includedirs("src/system", {public = true})

@@ -8,7 +8,7 @@ target("PluginWindow")
 
     add_packages("glfw")
     
-    add_files("**.cpp")
-    add_includedirs("./", {public = true})
-    add_includedirs("resource", {public = true})
-    add_includedirs("exception", {public = true})
+    add_files("src/**.cpp")
+    add_includedirs("src/", {public = true})
+    add_includedirs("src/resource", {public = true})
+    add_includedirs("src/exception", {public = true})
