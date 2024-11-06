@@ -8,22 +8,35 @@
 #include "WindowError.hpp"
 
 namespace ES::Plugin::Window::Resource {
+
 /**
  * The Window class is a singleton to handle the creation and destruction of the game's window.
+ *
+ * @example
+ * @code
+ * Window window(800, 600, "My Game");
+ * while (!window.ShouldClose())
+ * {
+ *    // Game loop
+ * }
+ * @endcode
  */
 class Window {
   private:
-    int _width;
-    int _height;
+    uint32_t _width;
+    uint32_t _height;
     std::string _title;
     GLFWwindow *_window;
     GLFWmonitor *_monitor;
     GLFWwindow *_share;
 
   public:
-    Window(int width, int height, const std::string &title, GLFWmonitor *monitor = nullptr,
+    Window(uint32_t width, uint32_t height, const std::string &title, GLFWmonitor *monitor = nullptr,
            GLFWwindow *share = nullptr);
     ~Window();
+
+    Window(const Window &) = delete;
+    Window &operator=(const Window &) = delete;
 
     /**
      * @brief Create and initialize the window.
@@ -45,5 +58,22 @@ class Window {
      * @return The GLFW window.
      */
     inline GLFWwindow *GetGLFWWindow() const { return _window; }
+
+    /**
+     * @brief Get the window size.
+     *
+     * @param[out] width The width of the window.
+     * @param[out] height The height of the window.
+     */
+    void GetWindowSize(int &width, int &height);
+
+    /**
+     * @brief Set the framebuffer size callback.
+     *
+     * @param userPointer The user pointer.
+     * @param callback The callback function.
+     */
+    void SetFramebufferSizeCallback(void *userPointer, GLFWframebuffersizefun callback);
 };
+
 } // namespace ES::Plugin::Window::Resource

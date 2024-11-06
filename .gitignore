@@ -8,3 +8,4 @@ vs*/*
 vsxmake*/*
 build/
 docs/
+*.spv
