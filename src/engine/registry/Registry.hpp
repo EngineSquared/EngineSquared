@@ -75,6 +75,11 @@ class Registry {
      */
     bool IsEntityValid(entt::entity entity);
 
+    /**
+     * Clear all entities and components from the registry.
+     */
+    void ClearEntities();
+
   private:
     std::unique_ptr<entt::registry> _registry;
     std::vector<USystem> _systems;
