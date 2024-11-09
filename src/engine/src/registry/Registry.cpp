@@ -15,3 +15,5 @@ void ES::Engine::Registry::RunSystems()
 }
 
 bool ES::Engine::Registry::IsEntityValid(entt::entity entity) { return GetRegistry().valid(entity); }
+
+void ES::Engine::Registry::ClearEntities() { this->_registry->clear(); }

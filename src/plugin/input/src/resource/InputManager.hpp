@@ -1,8 +1,7 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-
-#include <utility>
+#include <glm/vec2.hpp>
 
 #include "Registry.hpp"
 
@@ -39,7 +38,7 @@ class InputManager {
      *
      * @return A pair containing the x and y coordinates of the mouse.
      */
-    inline std::pair<double, double> GetMousePosition()
+    inline glm::vec2 GetMousePosition()
     {
         double x, y;
         glfwGetCursorPos(glfwGetCurrentContext(), &x, &y);
