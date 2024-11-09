@@ -23,7 +23,7 @@ template <typename TAssetType> class AssetsManager {
      */
     ES::Plugin::Object::Utils::AssetID Add(TAssetType &&asset)
     {
-        static ES::Plugin::Object::Utils::AssetID id = 0;
+        static ES::Plugin::Object::Utils::AssetID id = 1;
         id++;
         _assets[id] = std::make_shared<TAssetType>(std::move(asset));
         return id;

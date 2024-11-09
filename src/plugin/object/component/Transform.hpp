@@ -39,9 +39,9 @@ struct Transform {
     }
 
     // Getters
-    glm::vec3 getPosition() const { return position; }
-    glm::vec3 getScale() const { return scale; }
-    glm::quat getRotation() const { return rotation; }
+    inline const glm::vec3 &getPosition() const { return position; }
+    inline const glm::vec3 &getScale() const { return scale; }
+    inline const glm::quat &getRotation() const { return rotation; }
 
     // Setters
     void setPosition(const glm::vec3 &newPosition) { position = newPosition; }
