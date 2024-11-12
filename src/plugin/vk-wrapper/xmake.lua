@@ -1,15 +1,17 @@
 add_rules("mode.debug", "mode.release")
-add_requires("vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw")
+add_requires("vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "spdlog")
 
 includes("../utils/xmake.lua")
+includes("../log/xmake.lua")
 
 target("PluginVkWrapper")
     set_kind("static")
     set_languages("cxx20")
-    add_packages("vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw")
+    add_packages("vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "spdlog")
     set_policy("build.warning", true)
 
     add_deps("PluginUtils")
+    add_deps("PluginLog")
 
     add_files("src/**.cpp")
     add_includedirs("src", { public = true })
