@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [check_repository_cleanliness]
     env:
-      BINARY_NAMES: "./build/linux/x86_64/release/libEngineSquared.a"
+      BINARY_NAMES: "./build/linux/x86_64/release/libEngineSquared.a,./build/linux/x86_64/release/libEngineSquaredCore.a,./build/linux/x86_64/release/libPluginCamera.a,./build/linux/x86_64/release/libPluginCollision.a,./build/linux/x86_64/release/libPluginInput.a,./build/linux/x86_64/release/libPluginPhysics.a,./build/linux/x86_64/release/libPluginTime.a,./build/linux/x86_64/release/libPluginWindow.a,./build/linux/x86_64/release/libPluginVkWrapper.a"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
