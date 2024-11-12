@@ -33,7 +33,7 @@ TEST(Scene, SceneManager)
 
     registry.GetResource<ES::Plugin::Scene::Resource::SceneManager>().SetNextScene("scene2");
     registry.RunSystems();
-    std::vector<std::string> output = ES::Plugin::Utils::String::Split(testing::internal::GetCapturedStdout(), '\n');	
+    std::vector<std::string> output = ES::Plugin::Utils::String::Split(testing::internal::GetCapturedStdout(), '\n');
     EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[0], "Loading scene: scene1"));
     EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[1], "Unloading scene: scene1"));
     EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[2], "Loading scene: scene2"));

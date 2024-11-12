@@ -29,9 +29,10 @@ VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessenger::Callback(VkDebugUtilsMessageSever
 {
     std::unordered_map<VkDebugUtilsMessageSeverityFlagBitsEXT, ES::Plugin::Log::Level> severityMap = {
         {VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT, ES::Plugin::Log::Level::info},
-        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT, ES::Plugin::Log::Level::info},
+        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT,    ES::Plugin::Log::Level::info},
         {VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT, ES::Plugin::Log::Level::warn},
-        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT, ES::Plugin::Log::Level::err}};
+        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT,   ES::Plugin::Log::Level::err }
+    };
     if (severityMap.find(messageSeverity) != severityMap.end())
         ES::Plugin::Log::Log(severityMap[messageSeverity], "validation layer: " + std::string(pCallbackData->pMessage));
     else
