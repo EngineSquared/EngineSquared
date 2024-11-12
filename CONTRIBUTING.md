@@ -181,7 +181,33 @@ ReturnType ES::Plugin::Math::3D::FunctionName() {
 
 ### Header
 
-...
+Each `.hpp` must contain an header guard of this form:
+  
+```cpp
+/**************************************************************************
+ * [name of the project] [version of the project]
+ *
+ * [name of the project] is a software package, part of the Engine².
+ *
+ * This file is part of the [name of the project] project that is under GPL-3.0 License.
+ * Copyright © 2024 by @EngineSquared, All rights reserved.
+ *
+ * [name of the project] is a free software: you can redistribute it and/or modify
+ * it under the terms of the GPL-3.0 License as published by the
+ * Free Software Foundation. See the GPL-3.0 License for more details.
+ *
+ * @file [name of the file]
+ * @brief [short description of the file]
+ *
+ * [long description of the file]
+ *
+ * @author @[your name]
+ * @version [version of the file]
+ * @date [date of the file]
+ **************************************************************************/
+```
+
+You can find an example of a header guard in the [vk-wrapper/src/queueFamilies/QueueFamilies.hpp](https://github.com/EngineSquared/EngineSquared/blob/main/src/plugin/vk-wrapper/src/queueFamilies/QueueFamilies.hpp) plugin file.
 
 ### File and folder namming
 
