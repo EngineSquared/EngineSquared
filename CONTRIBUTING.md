@@ -1,6 +1,6 @@
 # CONTRIBUTING GUIDELINES
 
-Engine² is an Open-source physics game engine written in C++ and it's also an Epitech's 4th/5th year end project (EIP). Contribution is welcome, encouraged, and appreciated.
+Engine² is an Open-source physics game engine written in C++ and it's also an Epitech's 4th/5th year-end project (EIP). Contribution is welcome, encouraged, and appreciated.
 It is also essential for the development of the project.
 
 See the [Table of Contents](#table-of-contents) for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉
@@ -19,7 +19,7 @@ See the [Table of Contents](#table-of-contents) for different ways to help and d
   - [Creating an Issue](#creating-an-issue)
   - [Creating a Pull Request](#creating-a-pull-request)
 - [Project Structure](#project-structure)
-- [Commit namming convention](#commit-namming-convention)
+- [Commit naming convention](#commit-naming-convention)
   - [Commit structure](#commit-structure)
     - [Type](#type)
     - [Scope](#scope)
@@ -30,7 +30,7 @@ See the [Table of Contents](#table-of-contents) for different ways to help and d
   - [Automatic Coding Style](#automatic-coding-style)
   - [Namespace convention](#namespace-convention)
   - [Header](#header)
-  - [File and folder namming](#file-and-folder-namming)
+  - [File and folder naming](#file-and-folder-naming)
 - [Code Documentation](#code-documentation)
 - [Testing Policies](#testing-policies)
   - [Unit tests](#unit-tests)
@@ -56,7 +56,7 @@ If not, you can create an issue with the following rules:
 
 Before contributing, make sure to check if there's an existing pull request for the task you want to work on.
 
-When you do a pull request you have to use the following rules:
+When you do a pull request, you have to use the following rules:
 
 - Name the pull request with a short description
 - Describe the pull request with a description of what you did
@@ -71,10 +71,10 @@ To meet the requirements of the project, the pull request has to be approved by 
 
 ## Project structure
 
-Currently, the project contains 2 main parts: the engine squared core and plugins respectevely located in `./src/engine` and `./src/plugin`.
+Currently, the project contains 2 main parts: the engine squared core and plugins, respectively located in `./src/engine` and `./src/plugin`.
 The core contains the minimal code to have a working engine. The plugins contain the code for the plugins that can be added to the engine. The plugins are part of the engine that is used for a specific purpose (`Math` for every utility math functions or `VkWrapper` for all the Vulkan wrapper and utility functions).
 
-## Commit namming convention
+## Commit naming convention
 
 ### Commit structure
 
@@ -102,11 +102,11 @@ Must be one of the following:
 * **perf** : A code change that improves performance
 * **refactor** : A code change that neither fixes a bug nor adds a feature
 * **test** : Adding missing tests or correcting existing tests
-* **chore** : Chore changes (update .gitignore, dependencies, etc)
+* **chore** : Chore changes (update .gitignore, dependencies, etc.)
 
 #### Scope
 
-The scope should be name of the file, the directory or the feature involved in the commit.
+The scope should be the name of the file, the directory or the feature involved in the commit.
 
 Here are some examples:
 
@@ -132,7 +132,7 @@ To have a consistent codebase, we follow a coding style. This coding style is en
 
 ### Local coding style
 
-1. Download clang-format from [here](https://releases.llvm.org/download.html) or from [github](https://github.com/llvm/llvm-project/releases/latest)
+1. Download clang-format from [here](https://releases.llvm.org/download.html) or from [Github](https://github.com/llvm/llvm-project/releases/latest)
 2. Add the clang-format executable to your PATH
 
 #### Apply the coding style
@@ -161,7 +161,7 @@ namespace ES::Plugin::Math::3D {
 }
 ```
 
-and in the `.cpp` file, you should put it in the same namespace like:
+and in the `.cpp` file, you should put it in the same namespace as:
 
 ```cpp
 ReturnType ES::Plugin::Math::3D::FunctionName() {
@@ -209,7 +209,7 @@ Each `.hpp` must contain an header guard of this form:
 
 You can find an example of a header guard in the [vk-wrapper/src/queueFamilies/QueueFamilies.hpp](https://github.com/EngineSquared/EngineSquared/blob/main/src/plugin/vk-wrapper/src/queueFamilies/QueueFamilies.hpp) plugin file.
 
-### File and folder namming
+### File and folder naming
 
 Source and header files should be named with PascalCase convention like `FooBar.hpp` or `FooBar.cpp`.
 
@@ -225,11 +225,11 @@ To have a consistent codebase, we follow a documentation style. This documentati
 
 Library: [GTest](https://google.github.io/googletest/primer.html)
 
-We want to have a good coverage of the codebase. We don't have a coverage goal for the moment but maximizing the coverage is a good thing.
+We want to have a good coverage of the codebase. We don't have a coverage goal at the moment, but maximizing coverage is a good thing.
 
 ### Functional tests
 
-We don't force you to do functional tests but if you can do it, it's better. You can create a little project demonstrating the feature you added.
+We don't force you to do functional tests, but if you can do it, it's better. You can create a little project demonstrating the feature you added.
 
 ## Support and contact
 
