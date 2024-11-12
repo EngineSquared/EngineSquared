@@ -19,19 +19,24 @@ See the [Table of Contents](#table-of-contents) for different ways to help and d
   - [Creating an Issue](#creating-an-issue)
   - [Creating a Pull Request](#creating-a-pull-request)
 - [Project Structure](#project-structure)
-- [Commit Guidelines](#commit-guidelines)
-  - [Format](#format)
-  - [Style](#style)
+- [Commit namming convention](#commit-namming-convention)
+  - [Commit structure](#commit-structure)
+    - [Type](#type)
+    - [Scope](#scope)
+    - [Summary](#summary)
 - [Coding Style](#coding-style)
+  - [Local Coding Style](#local-coding-style)
+    - [Apply the coding style](#apply-the-coding-style)
   - [Automatic Coding Style](#automatic-coding-style)
   - [Namespace convention](#namespace-convention)
   - [Header](#header)
-  - [File namming](#file-namming)
-- [Documentation](#documentation)
-  - [Technical Documentation](#architecture)
-  - [Code](#code)
+  - [File and folder namming](#file-and-folder-namming)
+- [Code Documentation](#code-documentation)
 - [Testing Policies](#testing-policies)
+  - [Unit tests](#unit-tests)
+  - [Functional tests](#functional-tests)
 - [Support and Contact](#support-and-contact)
+- [Core Team](#core-team)
 
 ## How to contribute
 
@@ -130,7 +135,7 @@ To have a consistent codebase, we follow a coding style. This coding style is en
 1. Download clang-format from [here](https://releases.llvm.org/download.html) or from [github](https://github.com/llvm/llvm-project/releases/latest)
 2. Add the clang-format executable to your PATH
 
-### Apply the coding style
+#### Apply the coding style
 
 For bash users, you can use the following command to apply the coding style to the project:
 ```bash
