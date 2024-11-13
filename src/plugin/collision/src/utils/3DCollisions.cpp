@@ -1,7 +1,9 @@
 #include "3DCollisions.hpp"
 
-bool ES::Plugin::Collision::Utils::Box3DCollidesBox3D(const glm::vec3 &posA, const ES::Plugin::Collision::Component::BoxCollider3D &boxA,
-                        const glm::vec3 &posB, const ES::Plugin::Collision::Component::BoxCollider3D &boxB)
+bool ES::Plugin::Collision::Utils::Box3DCollidesBox3D(const glm::vec3 &posA,
+                                                      const ES::Plugin::Collision::Component::BoxCollider3D &boxA,
+                                                      const glm::vec3 &posB,
+                                                      const ES::Plugin::Collision::Component::BoxCollider3D &boxB)
 {
     glm::vec3 boundingBoxAMin = posA;
     glm::vec3 boundingBoxAMax = posA + boxA.size;

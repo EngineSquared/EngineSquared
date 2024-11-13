@@ -15,5 +15,5 @@ namespace ES::Plugin::Collision::Utils {
  * TODO: change fn name
  */
 bool Box3DCollidesBox3D(const glm::vec3 &posA, const ES::Plugin::Collision::Component::BoxCollider3D &boxA,
-                 const glm::vec3 &posB, const ES::Plugin::Collision::Component::BoxCollider3D &boxB);
+                        const glm::vec3 &posB, const ES::Plugin::Collision::Component::BoxCollider3D &boxB);
 } // namespace ES::Plugin::Collision::Utils
