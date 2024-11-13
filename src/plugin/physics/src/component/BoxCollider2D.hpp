@@ -1,3 +1,5 @@
+#pragma once
+
 #include <glm/glm.hpp>
 
 namespace ES::Plugin::Physics::Component {
