@@ -27,7 +27,7 @@ void ES::Plugin::Physics::System::DetectABABCollisions(ES::Engine::Registry &reg
             const auto &boxColliderB = view.get<const ES::Plugin::Physics::Component::BoxCollider3D>(entityB);
 
             if (ES::Plugin::Physics::Utils::Box3DCollidesBox3D(transformA.position, boxColliderA, transformB.position,
-                                                                 boxColliderB))
+                                                               boxColliderB))
             {
                 ES::Engine::Entity collision = registry.CreateEntity();
                 collision.AddComponent<ES::Plugin::Physics::Component::ABABCollision3D>(registry, entityA, entityB);
