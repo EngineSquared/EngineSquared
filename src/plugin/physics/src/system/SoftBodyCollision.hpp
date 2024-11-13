@@ -4,7 +4,7 @@
 
 #include "Registry.hpp"
 
-namespace ES::Plugin::Collision::System {
+namespace ES::Plugin::Physics::System {
 /**
  * @brief Detects collision between soft bodies particles and box colliders.
  *
@@ -25,4 +25,4 @@ void ApplySoftBodyCollisions(ES::Engine::Registry &registry);
  * @param registry  registry used to get all collision entities
  */
 void DeleteSoftBodyCollisions(ES::Engine::Registry &registry);
-} // namespace ES::Plugin::Collision::System
+} // namespace ES::Plugin::Physics::System

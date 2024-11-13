@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace ES::Plugin::Collision::Component {
+namespace ES::Plugin::Physics::Component {
 
 /**
  * Basic collider used to check collisions through DetectABABCollisions system
@@ -13,4 +13,4 @@ struct BoxCollider3D {
      */
     glm::vec3 size;
 };
-} // namespace ES::Plugin::Collision::Component
+} // namespace ES::Plugin::Physics::Component

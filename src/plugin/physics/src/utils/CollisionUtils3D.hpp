@@ -4,7 +4,7 @@
 
 #include "BoxCollider3D.hpp"
 
-namespace ES::Plugin::Collision::Utils {
+namespace ES::Plugin::Physics::Utils {
 /**
  * @brief Check if two 3D boxes are colliding
  *
@@ -14,6 +14,6 @@ namespace ES::Plugin::Collision::Utils {
  * @param   boxB       The size of the second box
  * TODO: change fn name
  */
-bool Box3DCollidesBox3D(const glm::vec3 &posA, const ES::Plugin::Collision::Component::BoxCollider3D &boxA,
-                        const glm::vec3 &posB, const ES::Plugin::Collision::Component::BoxCollider3D &boxB);
-} // namespace ES::Plugin::Collision::Utils
+bool Box3DCollidesBox3D(const glm::vec3 &posA, const ES::Plugin::Physics::Component::BoxCollider3D &boxA,
+                        const glm::vec3 &posB, const ES::Plugin::Physics::Component::BoxCollider3D &boxB);
+} // namespace ES::Plugin::Physics::Utils

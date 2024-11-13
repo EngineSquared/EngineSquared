@@ -2,7 +2,7 @@
 
 #include "CollisionUtils2D.hpp"
 
-using namespace ES::Plugin::Collision;
+using namespace ES::Plugin::Physics;
 
 TEST(Collision, Point2DCollidesRect2D)
 {

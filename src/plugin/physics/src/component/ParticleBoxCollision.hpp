@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-namespace ES::Plugin::Collision::Component {
+namespace ES::Plugin::Physics::Component {
 
 /**
  * Component that represents a collision between a soft body particle and a box collider
@@ -32,4 +32,4 @@ struct ParticleBoxCollision {
     float penetrationDepth;
 };
 
-} // namespace ES::Plugin::Collision::Component
+} // namespace ES::Plugin::Physics::Component

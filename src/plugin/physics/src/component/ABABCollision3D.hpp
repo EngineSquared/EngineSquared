@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace ES::Plugin::Collision::Component {
+namespace ES::Plugin::Physics::Component {
 
 /**
  * Component that represents a collision between two entities in 3D space
@@ -19,4 +19,4 @@ struct ABABCollision3D {
     ES::Engine::Entity entityB;
 };
 
-} // namespace ES::Plugin::Collision::Component
+} // namespace ES::Plugin::Physics::Component

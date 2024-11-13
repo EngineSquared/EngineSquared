@@ -2,7 +2,7 @@
 
 #include "Math.hpp"
 
-namespace ES::Plugin::Collision::Utils {
+namespace ES::Plugin::Physics::Utils {
 /**
  * @brief Check if a 2D point is inside a 2D rectangle
  *
@@ -12,4 +12,4 @@ namespace ES::Plugin::Collision::Utils {
  * @return  false   If the point is outside the rectangle
  */
 bool Point2DCollidesRect2D(const ES::Plugin::Math::Rect &rect, const glm::vec2 &point);
-} // namespace ES::Plugin::Collision::Utils
+} // namespace ES::Plugin::Physics::Utils
