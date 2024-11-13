@@ -1,11 +1,11 @@
 #include "SoftBodyCollision.hpp"
 
+#include "Entity.hpp"
 #include "BoxCollider3D.hpp"
 #include "RealTimeProvider.hpp"
 #include "SoftBodyNode.hpp"
+#include "ParticleBoxCollision.hpp"
 #include "Transform.hpp"
-
-namespace ES::Plugin::Collision::System {
 
 static bool IsNodeInsideBox(const ES::Plugin::Object::Component::Transform &nodeTransform,
                             const ES::Plugin::Object::Component::Transform &boxTransform,
@@ -19,7 +19,7 @@ static bool IsNodeInsideBox(const ES::Plugin::Object::Component::Transform &node
            nodeTransform.position.z <= boxTransform.position.z + boxCollider.size.z / 2;
 }
 
-void SoftBodyCollision(ES::Engine::Registry &registry)
+void ES::Plugin::Collision::System::SoftBodyCollision(ES::Engine::Registry &registry)
 {
     float dt = registry.GetResource<ES::Plugin::Time::Resource::RealTimeProvider>().GetElapsedTime();
     auto boxColliderView =
@@ -67,21 +67,31 @@ void SoftBodyCollision(ES::Engine::Registry &registry)
 
                 float depth = std::abs(distances[closestAxis]);
 
-                if (depth <= 0)
-                    continue;
+                ES::Engine::Entity collision = registry.CreateEntity();
+                collision.AddComponent<ES::Plugin::Collision::Component::ParticleBoxCollision>(
+                    registry, nodeEntity, boxEntity, boxNormal, depth);
 
-                nodeTransform.position += depth * boxNormal;
+                // nodeTransform.position += depth * boxNormal;
 
-                glm::vec3 collisionNormal = glm::normalize(boxNormal);
-                glm::vec3 vn = glm::dot(collisionNormal, node.velocity) * collisionNormal;
-                glm::vec3 vt = node.velocity - vn;
+                // glm::vec3 collisionNormal = glm::normalize(boxNormal);
+                // glm::vec3 vn = glm::dot(collisionNormal, node.velocity) * collisionNormal;
+                // glm::vec3 vt = node.velocity - vn;
 
-                vn *= -node.elasticity;
-                vt *= std::exp(-node.friction * dt);
+                // vn *= -node.elasticity;
+                // vt *= std::exp(-node.friction * dt);
 
-                node.velocity = vn + vt;
+                // node.velocity = vn + vt;
             }
         }
     }
 }
-} // namespace ES::Plugin::Collision::System
+
+void ES::Plugin::Collision::System::RemoveParticleBoxCollisions(ES::Engine::Registry &registry)
+{
+    auto view = registry.GetRegistry().view<ES::Plugin::Collision::Component::ParticleBoxCollision>();
+
+    for (auto entity : view)
+    {
+        registry.GetRegistry().destroy(entity);
+    }
+}

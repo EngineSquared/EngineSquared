@@ -5,6 +5,7 @@ includes("../../engine/xmake.lua")
 includes("../object/xmake.lua")
 includes("../time/xmake.lua")
 includes("../math/xmake.lua")
+includes("../physics/xmake.lua")
 
 target("PluginCollision")
     set_kind("static")
@@ -16,13 +17,15 @@ target("PluginCollision")
     add_deps("PluginObject")
     add_deps("PluginTime")
     add_deps("PluginMath")
-    
+    add_deps("PluginPhysics")
+
     add_files("src/**.cpp")
     add_includedirs("src/", {public = true})
     add_includedirs("src/component", {public = true})
     add_includedirs("src/resource", {public = true})
     add_includedirs("src/system", {public = true})
     add_includedirs("src/utils", {public = true})
+    add_includedirs("src/physics", {public = true})
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
@@ -40,10 +43,10 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_packages("glm", "entt", "gtest")
         add_links("gtest")
         add_tests("default")
-        
+
         add_deps("EngineSquaredCore")
         add_deps("PluginCollision")
-        
+
         add_files(file)
         add_files("tests/main.cpp")
         add_includedirs("src")
