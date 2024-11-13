@@ -1,6 +1,8 @@
+#pragma once
+
 #include <glm/glm.hpp>
 
-namespace ES::Plugin::Collision::Component {
+namespace ES::Plugin::Physics::Component {
 
 /**
  * Basic collider used to check collisions through CollisionChecker system
@@ -11,4 +13,4 @@ struct BoxCollider2D {
      */
     glm::vec2 size;
 };
-} // namespace ES::Plugin::Collision::Component
+} // namespace ES::Plugin::Physics::Component

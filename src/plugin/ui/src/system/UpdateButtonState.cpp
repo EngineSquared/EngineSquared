@@ -1,7 +1,7 @@
 #include "UpdateButtonState.hpp"
 
 #include "BoxCollider2D.hpp"
-#include "CollisionBetweenCollider.hpp"
+#include "CollisionUtils2D.hpp"
 #include "HasChanged.hpp"
 #include "InputManager.hpp"
 #include "Math.hpp"
@@ -15,19 +15,19 @@ void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Registry &r)
     const bool &isMouseLeftPressed = inputManager.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
     const glm::vec2 &mousePos = inputManager.GetMousePosition();
     auto view = r.GetRegistry()
-                    .view<ES::Plugin::UI::Component::Button, ES::Plugin::Collision::Component::BoxCollider2D,
+                    .view<ES::Plugin::UI::Component::Button, ES::Plugin::Physics::Component::BoxCollider2D,
                           ES::Plugin::Object::Component::Transform>();
     for (auto entity : view)
     {
         auto &button = view.get<ES::Plugin::UI::Component::Button>(entity);
-        auto &collider = view.get<ES::Plugin::Collision::Component::BoxCollider2D>(entity);
+        auto &collider = view.get<ES::Plugin::Physics::Component::BoxCollider2D>(entity);
         auto &transform = view.get<ES::Plugin::Object::Component::Transform>(entity);
         const ES::Plugin::Math::Rect &rect = {
             {transform.position.x,                     transform.position.y                    },
             {collider.size.x * transform.getScale().x, collider.size.y * transform.getScale().y}
         };
         button.lastState = button.state;
-        if (ES::Plugin::Collision::Utils::CollidePointRect(rect, mousePos))
+        if (ES::Plugin::Physics::Utils::Point2DCollidesRect2D(rect, mousePos))
         {
             if (isMouseLeftPressed)
             {
