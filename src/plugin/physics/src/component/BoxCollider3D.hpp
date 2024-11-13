@@ -5,7 +5,7 @@
 namespace ES::Plugin::Collision::Component {
 
 /**
- * Basic collider used to check collisions through CollisionCheckerABAB system
+ * Basic collider used to check collisions through DetectABABCollisions system
  */
 struct BoxCollider3D {
     /**

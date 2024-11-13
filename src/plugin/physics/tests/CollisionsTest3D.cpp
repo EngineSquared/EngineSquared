@@ -22,7 +22,7 @@ TEST(Collision, CollisionSystemWithBoxCollider3D)
     eB.AddComponent<ES::Plugin::Object::Component::Transform>(registry, glm::vec3(1, 1, 1));
 
     registry.RegisterSystem(ES::Plugin::Collision::System::RemoveABABCollisions);
-    registry.RegisterSystem(ES::Plugin::Collision::System::CollisionCheckerABAB);
+    registry.RegisterSystem(ES::Plugin::Collision::System::DetectABABCollisions);
 
     registry.RunSystems();
 

@@ -8,7 +8,7 @@
 #include "CollisionCheckerABAB.hpp"
 #include "CollisionUtils3D.hpp"
 
-void ES::Plugin::Collision::System::CollisionCheckerABAB(ES::Engine::Registry &registry)
+void ES::Plugin::Collision::System::DetectABABCollisions(ES::Engine::Registry &registry)
 {
     auto view = registry.GetRegistry()
                     .view<const ES::Plugin::Object::Component::Transform,

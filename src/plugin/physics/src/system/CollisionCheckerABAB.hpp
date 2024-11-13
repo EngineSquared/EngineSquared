@@ -8,7 +8,7 @@ namespace ES::Plugin::Collision::System {
  *
  * @param	registry	registry used to get entities to check
  */
-void CollisionCheckerABAB(ES::Engine::Registry &registry);
+void DetectABABCollisions(ES::Engine::Registry &registry);
 
 /**
  * Remove all ABAB collisions from the registry
