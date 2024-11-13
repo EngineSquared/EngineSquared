@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
 
-#include "Registry.hpp"
-#include "Entity.hpp"
+#include "ABABCollision3D.hpp"
 #include "BoxCollider3D.hpp"
 #include "CollisionCheckerABAB.hpp"
+#include "Entity.hpp"
+#include "Registry.hpp"
 #include "Transform.hpp"
-#include "ABABCollision3D.hpp"
 
 using namespace ES::Plugin::Collision;
 

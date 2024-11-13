@@ -1,7 +1,7 @@
 #include "UpdateButtonState.hpp"
 
-#include "CollisionUtils2D.hpp"
 #include "BoxCollider2D.hpp"
+#include "CollisionUtils2D.hpp"
 #include "HasChanged.hpp"
 #include "InputManager.hpp"
 #include "Math.hpp"

@@ -5,8 +5,8 @@
 
 #include "ABABCollision3D.hpp"
 #include "BoxCollider3D.hpp"
-#include "CollisionUtils3D.hpp"
 #include "CollisionCheckerABAB.hpp"
+#include "CollisionUtils3D.hpp"
 
 void ES::Plugin::Collision::System::CollisionCheckerABAB(ES::Engine::Registry &registry)
 {
