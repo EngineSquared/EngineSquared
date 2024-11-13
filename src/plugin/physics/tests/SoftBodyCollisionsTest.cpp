@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "Collision.hpp"
+#include "Physics.hpp"
 #include "Entity.hpp"
 #include "ParticleBoxCollision.hpp"
 #include "RealTimeProvider.hpp"
