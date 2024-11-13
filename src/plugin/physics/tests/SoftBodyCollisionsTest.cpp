@@ -16,11 +16,9 @@ TEST(SoftBodyCollisions, BasicParticleCollision)
 {
     ES::Engine::Registry registry;
 
-    registry.RegisterSystem(ES::Plugin::Collision::System::RemoveParticleBoxCollisions);
     registry.RegisterSystem(ES::Plugin::Collision::System::SoftBodyCollision);
     registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
         ES::Plugin::Time::Resource::RealTimeProvider());
-    registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
     registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
 
     ES::Engine::Entity particle = registry.CreateEntity();
@@ -39,6 +37,11 @@ TEST(SoftBodyCollisions, BasicParticleCollision)
     auto view = registry.GetRegistry().view<ES::Plugin::Collision::Component::ParticleBoxCollision>();
 
     ASSERT_GT(view.size(), 0);
+
+    for (auto entity : view)
+    {
+        registry.GetRegistry().destroy(entity);
+    }
 
     registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(particle, glm::vec3(0, 100, 0));
 
@@ -70,34 +73,29 @@ TEST(SoftBodyCollisions, VelocityIntegrationWithBasicCollision)
     auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(particle);
     auto &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(particle);
 
-    int i = 0;
-    bool collisionHappened = false;
+    bool bounced = false;
 
-    while (!collisionHappened && i < 50)
+    for (int i = 0; i < 100; i++)
     {
         SleepFor(10);
         registry.RunSystems();
-        auto view = registry.GetRegistry().view<ES::Plugin::Collision::Component::ParticleBoxCollision>();
-        if (view.size() > 0)
-        {
-            collisionHappened = true;
+
+        if (node.velocity.y > 0) {
+            bounced = true;
+        }
+        // Prevent gravity from making the particle bounce again
+        if (bounced && node.velocity.y <= 0) {
             break;
         }
-        i++;
-    }
-    if (!collisionHappened)
-    {
-        FAIL() << "No collision happened";
     }
 
-    for (i = 0; i < 100; i++)
-    {
-        SleepFor(10);
-        registry.RunSystems();
+    if (!bounced) {
+        FAIL() << "Particle did not bounce";
     }
 
-    // particle should have bounced and be on top of the box, so y should be positive
-    EXPECT_GT(transform.position.y, 0);
+    // particle should have bounced and be on top of the box, so y should be higher than 1
+    // (because the box is at 0,0,0 and has a size of 2)
+    EXPECT_GT(transform.position.y, 1);
 
     // force should be zero though
     EXPECT_EQ(node.force.y, 0);

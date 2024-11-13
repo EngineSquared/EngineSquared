@@ -70,28 +70,8 @@ void ES::Plugin::Collision::System::SoftBodyCollision(ES::Engine::Registry &regi
                 ES::Engine::Entity collision = registry.CreateEntity();
                 collision.AddComponent<ES::Plugin::Collision::Component::ParticleBoxCollision>(
                     registry, nodeEntity, boxEntity, boxNormal, depth);
-
-                // nodeTransform.position += depth * boxNormal;
-
-                // glm::vec3 collisionNormal = glm::normalize(boxNormal);
-                // glm::vec3 vn = glm::dot(collisionNormal, node.velocity) * collisionNormal;
-                // glm::vec3 vt = node.velocity - vn;
-
-                // vn *= -node.elasticity;
-                // vt *= std::exp(-node.friction * dt);
-
-                // node.velocity = vn + vt;
             }
         }
     }
 }
 
-void ES::Plugin::Collision::System::RemoveParticleBoxCollisions(ES::Engine::Registry &registry)
-{
-    auto view = registry.GetRegistry().view<ES::Plugin::Collision::Component::ParticleBoxCollision>();
-
-    for (auto entity : view)
-    {
-        registry.GetRegistry().destroy(entity);
-    }
-}

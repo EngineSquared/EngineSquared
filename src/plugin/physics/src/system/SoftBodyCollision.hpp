@@ -11,11 +11,4 @@ namespace ES::Plugin::Collision::System {
  * @param registry  registry used to get all soft body nodes
  */
 void SoftBodyCollision(ES::Engine::Registry &registry);
-
-/**
- * @brief Removes all ParticleBoxCollision components from the registry
- *
- * @param registry  registry used to get all ParticleBoxCollision components
- */
-void RemoveParticleBoxCollisions(ES::Engine::Registry &registry);
 } // namespace ES::Plugin::Collision::System
