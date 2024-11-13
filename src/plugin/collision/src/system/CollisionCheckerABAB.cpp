@@ -3,12 +3,12 @@
 // Require object plugin components
 #include "Transform.hpp"
 
-#include "3DCollisions.hpp"
+#include "ABABCollision3D.hpp"
 #include "BoxCollider3D.hpp"
-#include "CollisionStorage.hpp"
+#include "CollisionUtils3D.hpp"
+#include "CollisionCheckerABAB.hpp"
 
-namespace ES::Plugin::Collision::System {
-void CollisionChecker3D(ES::Engine::Registry &registry)
+void ES::Plugin::Collision::System::CollisionCheckerABAB(ES::Engine::Registry &registry)
 {
     auto view = registry.GetRegistry()
                     .view<const ES::Plugin::Object::Component::Transform,
@@ -26,17 +26,22 @@ void CollisionChecker3D(ES::Engine::Registry &registry)
             const auto &boxColliderA = view.get<const ES::Plugin::Collision::Component::BoxCollider3D>(entityA);
             const auto &boxColliderB = view.get<const ES::Plugin::Collision::Component::BoxCollider3D>(entityB);
 
-            if (Utils::Box3DCollidesBox3D(transformA.position, boxColliderA, transformB.position, boxColliderB))
+            if (ES::Plugin::Collision::Utils::Box3DCollidesBox3D(transformA.position, boxColliderA, transformB.position,
+                                                                 boxColliderB))
             {
-                registry.GetResource<ES::Plugin::Collision::Resource::CollisionStorage>().AddCollisionPair(
-                    ES::Engine::Entity::FromEnttEntity(entityA), ES::Engine::Entity::FromEnttEntity(entityB));
+                ES::Engine::Entity collision = registry.CreateEntity();
+                collision.AddComponent<ES::Plugin::Collision::Component::ABABCollision3D>(registry, entityA, entityB);
             }
         }
     }
 }
 
-void ResetCollision(ES::Engine::Registry &registry)
+void ES::Plugin::Collision::System::RemoveABABCollisions(ES::Engine::Registry &registry)
 {
-    registry.GetResource<ES::Plugin::Collision::Resource::CollisionStorage>().ClearAllCollisionPair();
+    auto view = registry.GetRegistry().view<ES::Plugin::Collision::Component::ABABCollision3D>();
+
+    for (auto entity : view)
+    {
+        registry.GetRegistry().destroy(entity);
+    }
 }
-} // namespace ES::Plugin::Collision::System

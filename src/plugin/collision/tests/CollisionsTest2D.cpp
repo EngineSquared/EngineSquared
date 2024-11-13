@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "2DCollisions.hpp"
+#include "CollisionUtils2D.hpp"
 
 using namespace ES::Plugin::Collision;
 

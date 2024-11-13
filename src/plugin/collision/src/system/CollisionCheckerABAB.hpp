@@ -8,10 +8,12 @@ namespace ES::Plugin::Collision::System {
  *
  * @param	registry	registry used to get entities to check
  */
-void CollisionChecker3D(ES::Engine::Registry &registry);
+void CollisionCheckerABAB(ES::Engine::Registry &registry);
+
 /**
- * Reset all collisions
- * Should be used just before CollisionChecker system
+ * Remove all ABAB collisions from the registry
+ *
+ * @param	registry	registry used to get entities to check
  */
-void ResetCollision(ES::Engine::Registry &registry);
+void RemoveABABCollisions(ES::Engine::Registry &registry);
 } // namespace ES::Plugin::Collision::System

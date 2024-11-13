@@ -1,6 +1,6 @@
 #include "UpdateButtonState.hpp"
 
-#include "2DCollisions.hpp"
+#include "CollisionUtils2D.hpp"
 #include "BoxCollider2D.hpp"
 #include "HasChanged.hpp"
 #include "InputManager.hpp"

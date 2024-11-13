@@ -1,4 +1,4 @@
-#include "2DCollisions.hpp"
+#include "CollisionUtils2D.hpp"
 
 bool ES::Plugin::Collision::Utils::Point2DCollidesRect2D(const ES::Plugin::Math::Rect &rect, const glm::vec2 &point)
 {

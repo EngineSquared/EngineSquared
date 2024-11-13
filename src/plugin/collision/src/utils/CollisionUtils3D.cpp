@@ -1,4 +1,4 @@
-#include "3DCollisions.hpp"
+#include "CollisionUtils3D.hpp"
 
 bool ES::Plugin::Collision::Utils::Box3DCollidesBox3D(const glm::vec3 &posA,
                                                       const ES::Plugin::Collision::Component::BoxCollider3D &boxA,

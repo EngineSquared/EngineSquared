@@ -1,16 +1,17 @@
 #include <gtest/gtest.h>
 
+#include "Registry.hpp"
+#include "Entity.hpp"
 #include "BoxCollider3D.hpp"
-#include "CollisionChecker.hpp"
-#include "CollisionStorage.hpp"
+#include "CollisionCheckerABAB.hpp"
 #include "Transform.hpp"
+#include "ABABCollision3D.hpp"
 
 using namespace ES::Plugin::Collision;
 
 TEST(Collision, CollisionSystemWithBoxCollider3D)
 {
     ES::Engine::Registry registry;
-    registry.RegisterResource<Resource::CollisionStorage>(Resource::CollisionStorage());
 
     ES::Engine::Entity eA(registry.CreateEntity());
     ES::Engine::Entity eB(registry.CreateEntity());
@@ -20,16 +21,20 @@ TEST(Collision, CollisionSystemWithBoxCollider3D)
     eA.AddComponent<ES::Plugin::Object::Component::Transform>(registry, glm::vec3(1, 1, 1));
     eB.AddComponent<ES::Plugin::Object::Component::Transform>(registry, glm::vec3(1, 1, 1));
 
-    registry.RegisterSystem(ES::Plugin::Collision::System::ResetCollision);
-    registry.RegisterSystem(ES::Plugin::Collision::System::CollisionChecker3D);
+    registry.RegisterSystem(ES::Plugin::Collision::System::RemoveABABCollisions);
+    registry.RegisterSystem(ES::Plugin::Collision::System::CollisionCheckerABAB);
 
     registry.RunSystems();
 
-    EXPECT_TRUE(registry.GetResource<Resource::CollisionStorage>().IsCollidingPair(eA, eB));
+    auto view = registry.GetRegistry().view<ES::Plugin::Collision::Component::ABABCollision3D>();
+
+    EXPECT_EQ(view.size(), 1);
 
     eA.GetComponents<ES::Plugin::Object::Component::Transform>(registry).setPosition(9, 9, 9);
 
     registry.RunSystems();
 
-    EXPECT_FALSE(registry.GetResource<Resource::CollisionStorage>().IsCollidingPair(eA, eB));
+    view = registry.GetRegistry().view<ES::Plugin::Collision::Component::ABABCollision3D>();
+
+    EXPECT_EQ(view.size(), 0);
 }
