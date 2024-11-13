@@ -12,7 +12,6 @@ namespace ES::Plugin::Physics::Utils {
  * @param   boxA       The size of the first box
  * @param   posB   The position of the second box
  * @param   boxB       The size of the second box
- * TODO: change fn name
  */
 bool Box3DCollidesBox3D(const glm::vec3 &posA, const ES::Plugin::Physics::Component::BoxCollider3D &boxA,
                         const glm::vec3 &posB, const ES::Plugin::Physics::Component::BoxCollider3D &boxB);
