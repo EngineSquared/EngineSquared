@@ -1,9 +1,11 @@
+#pragma once
+
 #include <glm/glm.hpp>
 
 namespace ES::Plugin::Collision::Component {
 
 /**
- * Basic collider used to check collisions through CollisionChecker system
+ * Basic collider used to check collisions through CollisionChecker3D system
  */
 struct BoxCollider3D {
     /**

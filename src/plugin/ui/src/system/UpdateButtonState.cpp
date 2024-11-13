@@ -1,7 +1,7 @@
 #include "UpdateButtonState.hpp"
 
 #include "BoxCollider2D.hpp"
-#include "CollisionBetweenCollider.hpp"
+#include "2DCollisions.hpp"
 #include "HasChanged.hpp"
 #include "InputManager.hpp"
 #include "Math.hpp"
@@ -27,7 +27,7 @@ void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Registry &r)
             {collider.size.x * transform.getScale().x, collider.size.y * transform.getScale().y}
         };
         button.lastState = button.state;
-        if (ES::Plugin::Collision::Utils::CollidePointRect(rect, mousePos))
+        if (ES::Plugin::Collision::Utils::Point2DCollidesRect2D(rect, mousePos))
         {
             if (isMouseLeftPressed)
             {
