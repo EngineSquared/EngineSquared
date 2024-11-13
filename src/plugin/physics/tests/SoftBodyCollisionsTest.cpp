@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "Physics.hpp"
 #include "Entity.hpp"
 #include "ParticleBoxCollision.hpp"
+#include "Physics.hpp"
 #include "RealTimeProvider.hpp"
 #include "RealTimeUpdater.hpp"
 #include "Registry.hpp"
