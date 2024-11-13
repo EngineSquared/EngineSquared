@@ -74,4 +74,3 @@ void ES::Plugin::Collision::System::SoftBodyCollision(ES::Engine::Registry &regi
         }
     }
 }
-

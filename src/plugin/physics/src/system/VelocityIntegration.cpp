@@ -69,7 +69,8 @@ static void ApplyCollisions(ES::Engine::Registry &registry)
     {
         auto &collision = nodeView.get<ES::Plugin::Collision::Component::ParticleBoxCollision>(entity);
         auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(collision.particleEntity);
-        auto &nodeTransform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(collision.particleEntity);
+        auto &nodeTransform =
+            registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(collision.particleEntity);
 
         nodeTransform.position += collision.penetrationDepth * collision.normal;
 

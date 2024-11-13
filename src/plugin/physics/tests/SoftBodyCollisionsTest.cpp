@@ -80,16 +80,19 @@ TEST(SoftBodyCollisions, VelocityIntegrationWithBasicCollision)
         SleepFor(10);
         registry.RunSystems();
 
-        if (node.velocity.y > 0) {
+        if (node.velocity.y > 0)
+        {
             bounced = true;
         }
         // Prevent gravity from making the particle bounce again
-        if (bounced && node.velocity.y <= 0) {
+        if (bounced && node.velocity.y <= 0)
+        {
             break;
         }
     }
 
-    if (!bounced) {
+    if (!bounced)
+    {
         FAIL() << "Particle did not bounce";
     }
 
