@@ -1,10 +1,10 @@
 #include "SoftBodyCollision.hpp"
 
-#include "Entity.hpp"
 #include "BoxCollider3D.hpp"
+#include "Entity.hpp"
+#include "ParticleBoxCollision.hpp"
 #include "RealTimeProvider.hpp"
 #include "SoftBodyNode.hpp"
-#include "ParticleBoxCollision.hpp"
 #include "Transform.hpp"
 
 static bool IsNodeInsideBox(const ES::Plugin::Object::Component::Transform &nodeTransform,

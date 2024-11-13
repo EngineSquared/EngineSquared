@@ -2,13 +2,13 @@
 
 #include "Collision.hpp"
 #include "Entity.hpp"
+#include "ParticleBoxCollision.hpp"
 #include "RealTimeProvider.hpp"
 #include "RealTimeUpdater.hpp"
 #include "Registry.hpp"
-#include "VelocityIntegration.hpp"
-#include "Transform.hpp"
 #include "SoftBodyNode.hpp"
-#include "ParticleBoxCollision.hpp"
+#include "Transform.hpp"
+#include "VelocityIntegration.hpp"
 
 #include "utils/Sleep.hpp"
 
@@ -73,21 +73,25 @@ TEST(SoftBodyCollisions, VelocityIntegrationWithBasicCollision)
     int i = 0;
     bool collisionHappened = false;
 
-    while (!collisionHappened && i < 50) {
+    while (!collisionHappened && i < 50)
+    {
         SleepFor(10);
         registry.RunSystems();
         auto view = registry.GetRegistry().view<ES::Plugin::Collision::Component::ParticleBoxCollision>();
-        if (view.size() > 0) {
+        if (view.size() > 0)
+        {
             collisionHappened = true;
             break;
         }
         i++;
     }
-    if (!collisionHappened) {
+    if (!collisionHappened)
+    {
         FAIL() << "No collision happened";
     }
 
-    for (i = 0; i < 100; i++) {
+    for (i = 0; i < 100; i++)
+    {
         SleepFor(10);
         registry.RunSystems();
     }
