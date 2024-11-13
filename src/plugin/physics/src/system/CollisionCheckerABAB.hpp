@@ -7,7 +7,7 @@ namespace ES::Plugin::Physics::System {
  * Collision system used to check for collisions between entities with a BoxCollider3D component
  *
  * @see ES::Plugin::Physics::Component::BoxCollider3D
- * 
+ *
  * @param	registry	registry used to get entities to check
  */
 void DetectABABCollisions(ES::Engine::Registry &registry);
