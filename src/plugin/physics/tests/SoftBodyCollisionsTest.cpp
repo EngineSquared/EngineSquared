@@ -16,7 +16,7 @@ TEST(SoftBodyCollisions, BasicParticleCollision)
 {
     ES::Engine::Registry registry;
 
-    registry.RegisterSystem(ES::Plugin::Collision::System::SoftBodyCollision);
+    registry.RegisterSystem(ES::Plugin::Collision::System::DetectSoftBodyCollisions);
     registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
         ES::Plugin::Time::Resource::RealTimeProvider());
     registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
@@ -56,10 +56,11 @@ TEST(SoftBodyCollisions, VelocityIntegrationWithBasicCollision)
 {
     ES::Engine::Registry registry;
 
-    registry.RegisterSystem(ES::Plugin::Collision::System::SoftBodyCollision);
+    registry.RegisterSystem(ES::Plugin::Collision::System::DetectSoftBodyCollisions);
     registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
         ES::Plugin::Time::Resource::RealTimeProvider());
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
+    registry.RegisterSystem(ES::Plugin::Collision::System::ApplySoftBodyCollisions);
     registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
 
     ES::Engine::Entity particle = registry.CreateEntity();

@@ -6,9 +6,23 @@
 
 namespace ES::Plugin::Collision::System {
 /**
- * @brief Applies collision detection between soft bodies particles and box colliders.
+ * @brief Detects collision between soft bodies particles and box colliders.
  *
  * @param registry  registry used to get all soft body nodes
  */
-void SoftBodyCollision(ES::Engine::Registry &registry);
+void DetectSoftBodyCollisions(ES::Engine::Registry &registry);
+
+/**
+ * @brief Applies collisions between soft bodies particles and box colliders.
+ *
+ * @param registry  registry used to get all soft body nodes
+ */
+void ApplySoftBodyCollisions(ES::Engine::Registry &registry);
+
+/**
+ * @brief Deletes all collision entities.
+ *
+ * @param registry  registry used to get all collision entities
+ */
+void DeleteSoftBodyCollisions(ES::Engine::Registry &registry);
 } // namespace ES::Plugin::Collision::System
