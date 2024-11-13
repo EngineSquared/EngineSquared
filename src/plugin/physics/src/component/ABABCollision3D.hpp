@@ -2,8 +2,6 @@
 
 #include "Entity.hpp"
 
-#include <glm/glm.hpp>
-
 namespace ES::Plugin::Physics::Component {
 
 /**
