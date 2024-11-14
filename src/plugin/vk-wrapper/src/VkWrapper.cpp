@@ -42,10 +42,10 @@ void VkWrapper::PrintAvailableExtensions()
     std::vector<VkExtensionProperties> extensions(extensionCount);
     vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
-    ES::Utils::Log::Info("available extensions (" + std::to_string(extensionCount) + "):");
-
+    std::string available_extensions = "available extensions (" + std::to_string(extensionCount) + "):";
     for (const auto &extension : extensions)
-        ES::Utils::Log::Info("\t" + std::string(extension.extensionName));
+        available_extensions += "\t" + std::string(extension.extensionName);
+    ES::Utils::Log::Info(available_extensions);
 }
 
 void VkWrapper::PrintVersion() { ES::Utils::Log::Info("VkWrapper version: " VKWRAPPER_VERSION_STRING); }
