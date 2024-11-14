@@ -42,15 +42,15 @@ void VkWrapper::PrintAvailableExtensions()
     std::vector<VkExtensionProperties> extensions(extensionCount);
     vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
-    ES::Plugin::Log::Info("available extensions (" + std::to_string(extensionCount) + "):");
+    ES::Utils::Log::Info("available extensions (" + std::to_string(extensionCount) + "):");
 
     for (const auto &extension : extensions)
-        ES::Plugin::Log::Info("\t" + std::string(extension.extensionName));
+        ES::Utils::Log::Info("\t" + std::string(extension.extensionName));
 }
 
-void VkWrapper::PrintVersion() { ES::Plugin::Log::Info("VkWrapper version: " VKWRAPPER_VERSION_STRING); }
+void VkWrapper::PrintVersion() { ES::Utils::Log::Info("VkWrapper version: " VKWRAPPER_VERSION_STRING); }
 
-void VkWrapper::PrintConfig() { ES::Plugin::Log::Info("VkWrapper config:\n" VKWRAPPER_CONFIG_STRING); }
+void VkWrapper::PrintConfig() { ES::Utils::Log::Info("VkWrapper config:\n" VKWRAPPER_CONFIG_STRING); }
 
 void VkWrapper::ResizeCallback(GLFWwindow *window, int width, int height)
 {

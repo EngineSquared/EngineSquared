@@ -4,7 +4,7 @@ add_requires("gtest", {optional = true})
 
 includes("../../engine/xmake.lua")
 includes("../utils/xmake.lua")
-includes("../log/xmake.lua")
+includes("../../utils/log/xmake.lua")
 
 target("PluginScene")
     set_kind("static")
@@ -13,7 +13,7 @@ target("PluginScene")
     add_packages("entt", "spdlog")
 
     add_deps("EngineSquaredCore")
-    add_deps("PluginLog")
+    add_deps("UtilsLog")
     add_deps("PluginUtils")
 
     add_files("src/**.cpp")

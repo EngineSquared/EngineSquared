@@ -10,7 +10,7 @@ void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Registry &reg
 {
     if (!_nextScene.has_value())
     {
-        ES::Plugin::Log::Warn("Unable to load next scene: No next scene provided");
+        ES::Utils::Log::Warn("Unable to load next scene: No next scene provided");
         return;
     }
     if (_currentScene.has_value())
@@ -23,7 +23,7 @@ void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Registry &reg
 }
 void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Registry &registry, const std::string &name)
 {
-    ES::Plugin::Log::Info("Loading scene: " + _nextScene.value());
+    ES::Utils::Log::Info("Loading scene: " + _nextScene.value());
     std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> scene = _getScene(name);
     if (scene.has_value())
     {
@@ -33,7 +33,7 @@ void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Registry 
 
 void ES::Plugin::Scene::Resource::SceneManager::_unloadScene(ES::Engine::Registry &registry, const std::string &name)
 {
-    ES::Plugin::Log::Info("Unloading scene: " + _currentScene.value());
+    ES::Utils::Log::Info("Unloading scene: " + _currentScene.value());
     std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> scene = _getScene(name);
     if (scene.has_value())
     {
@@ -51,7 +51,7 @@ ES::Plugin::Scene::Resource::SceneManager::_getScene(const std::string &name)
     }
     else
     {
-        ES::Plugin::Log::Error("Scene not found: " + name);
+        ES::Utils::Log::Error("Scene not found: " + name);
         return std::nullopt;
     }
 }

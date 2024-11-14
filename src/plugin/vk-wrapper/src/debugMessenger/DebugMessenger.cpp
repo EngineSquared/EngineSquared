@@ -27,16 +27,16 @@ VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessenger::Callback(VkDebugUtilsMessageSever
                                                         const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
                                                         void *pUserData)
 {
-    std::unordered_map<VkDebugUtilsMessageSeverityFlagBitsEXT, ES::Plugin::Log::Level> severityMap = {
-        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT, ES::Plugin::Log::Level::info},
-        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT,    ES::Plugin::Log::Level::info},
-        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT, ES::Plugin::Log::Level::warn},
-        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT,   ES::Plugin::Log::Level::err }
+    std::unordered_map<VkDebugUtilsMessageSeverityFlagBitsEXT, ES::Utils::Log::Level> severityMap = {
+        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT, ES::Utils::Log::Level::info},
+        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT,    ES::Utils::Log::Level::info},
+        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT, ES::Utils::Log::Level::warn},
+        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT,   ES::Utils::Log::Level::err }
     };
     if (severityMap.find(messageSeverity) != severityMap.end())
-        ES::Plugin::Log::Log(severityMap[messageSeverity], "validation layer: " + std::string(pCallbackData->pMessage));
+        ES::Utils::Log::Log(severityMap[messageSeverity], "validation layer: " + std::string(pCallbackData->pMessage));
     else
-        ES::Plugin::Log::Log(ES::Plugin::Log::Level::info, "validation layer: " + std::string(pCallbackData->pMessage));
+        ES::Utils::Log::Log(ES::Utils::Log::Level::info, "validation layer: " + std::string(pCallbackData->pMessage));
     return VK_FALSE;
 }
 
