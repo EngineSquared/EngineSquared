@@ -27,12 +27,12 @@
 
 #include <iostream>
 #include <stdexcept>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
+#include "Logger.hpp"
 #include "config.h"
 #include "export.h"
-#include "Logger.hpp"
 
 #include "VkWrapperError.hpp"
 
