@@ -4,7 +4,7 @@ add_requires("glm", "entt", "gtest")
 includes("../../engine/xmake.lua")
 includes("../time/xmake.lua")
 includes("../object/xmake.lua")
-includes("../collision/xmake.lua")
+includes("../math/xmake.lua")
 
 target("PluginPhysics")
     set_kind("static")
@@ -15,11 +15,13 @@ target("PluginPhysics")
     add_deps("EngineSquaredCore")
     add_deps("PluginTime")
     add_deps("PluginObject")
-    add_deps("PluginCollision")
-    
+    add_deps("PluginMath")
+
     add_files("src/**.cpp")
+    add_includedirs("src/", {public = true})
     add_includedirs("src/component", {public = true})
     add_includedirs("src/system", {public = true})
+    add_includedirs("src/utils", {public = true})
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
