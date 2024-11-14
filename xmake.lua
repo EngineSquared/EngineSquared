@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "glm", "gtest")
+add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "glm", "gtest", "spdlog")
 
 includes("src/plugin/camera/xmake.lua")
 includes("src/plugin/colors/xmake.lua")
@@ -13,6 +13,7 @@ includes("src/plugin/ui/xmake.lua")
 includes("src/plugin/utils/xmake.lua")
 includes("src/plugin/vk-wrapper/xmake.lua")
 includes("src/plugin/window/xmake.lua")
+includes("src/utils/log/xmake.lua")
 includes("src/engine/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
@@ -35,9 +36,10 @@ target("EngineSquared")
     add_deps("PluginUtils")
     add_deps("PluginVkWrapper")
     add_deps("PluginWindow")
+    add_deps("UtilsLog")
 
     set_policy("build.warning", true)
-    add_packages("entt", "vulkansdk", "glfw", "glm")
+    add_packages("entt", "vulkansdk", "glfw", "glm", "spdlog")
 
     if is_mode("debug") then
         add_defines("DEBUG")
@@ -50,3 +52,30 @@ target("EngineSquared")
         add_defines("NDEBUG")
         add_cxflags("-O2")
     end
+
+for _, file in ipairs(os.files("tests/**.cpp")) do
+    local name = path.basename(file)
+    if name == "main" then
+        goto continue
+    end
+    target(name)
+        set_kind("binary")
+        if is_plat("linux") then
+            add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
+            add_ldflags("--coverage")
+        end
+        set_default(false)
+        set_languages("cxx20")
+        add_files(file)
+        add_files("tests/main.cpp")
+        add_packages("entt", "vulkansdk", "glfw", "glm", "gtest", "spdlog")
+        add_links("gtest")
+        add_deps("EngineSquared")
+        add_includedirs("src")
+        add_includedirs("tests")
+        add_tests("default")
+        if is_mode("debug") then
+            add_defines("DEBUG")
+        end
+    ::continue::
+end

@@ -1,5 +1,7 @@
 #include "Engine.hpp"
 
+#include "Logger.hpp"
+
 #include "AScene.hpp"
 
 #include "SceneManager.hpp"
@@ -8,24 +10,20 @@ void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Registry &reg
 {
     if (!_nextScene.has_value())
     {
-        std::cout
-            << "[WARNING] ES::Plugin::Scene::Resource::SceneManager: Unable to load next scene: No next scene provided"
-            << std::endl;
+        ES::Utils::Log::Warn("Unable to load next scene: No next scene provided");
         return;
     }
     if (_currentScene.has_value())
     {
-        std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Unloading scene: " << _currentScene.value()
-                  << std::endl;
         _unloadScene(registry, _currentScene.value());
     }
-    std::cout << "[INFO] ES::Plugin::Scene::Resource::SceneManager: Loading scene: " << _nextScene.value() << std::endl;
     _loadScene(registry, _nextScene.value());
     _currentScene = _nextScene;
     _nextScene.reset();
 }
 void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Registry &registry, const std::string &name)
 {
+    ES::Utils::Log::Info("Loading scene: " + _nextScene.value());
     std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> scene = _getScene(name);
     if (scene.has_value())
     {
@@ -35,6 +33,7 @@ void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Registry 
 
 void ES::Plugin::Scene::Resource::SceneManager::_unloadScene(ES::Engine::Registry &registry, const std::string &name)
 {
+    ES::Utils::Log::Info("Unloading scene: " + _currentScene.value());
     std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> scene = _getScene(name);
     if (scene.has_value())
     {
@@ -52,7 +51,7 @@ ES::Plugin::Scene::Resource::SceneManager::_getScene(const std::string &name)
     }
     else
     {
-        std::cerr << "[ERROR] ES::Plugin::Scene::Resource::SceneManager: Scene not found: " << name << std::endl;
+        ES::Utils::Log::Error("Scene not found: " + name);
         return std::nullopt;
     }
 }

@@ -1,3 +1,5 @@
+#include "Logger.hpp"
+
 #include "VkWrapper.hpp"
 
 namespace ES::Plugin {
@@ -40,15 +42,15 @@ void VkWrapper::PrintAvailableExtensions()
     std::vector<VkExtensionProperties> extensions(extensionCount);
     vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
-    std::cout << "available extensions (" << extensionCount << "):" << std::endl;
-
+    std::string available_extensions = "available extensions (" + std::to_string(extensionCount) + "):";
     for (const auto &extension : extensions)
-        std::cout << '\t' << extension.extensionName << std::endl;
+        available_extensions += "\t" + std::string(extension.extensionName);
+    ES::Utils::Log::Info(available_extensions);
 }
 
-void VkWrapper::PrintVersion() { std::cout << "VkWrapper version: " << VKWRAPPER_VERSION_STRING << std::endl; }
+void VkWrapper::PrintVersion() { ES::Utils::Log::Info("VkWrapper version: " VKWRAPPER_VERSION_STRING); }
 
-void VkWrapper::PrintConfig() { std::cout << "VkWrapper config:\n" << VKWRAPPER_CONFIG_STRING << std::endl; }
+void VkWrapper::PrintConfig() { ES::Utils::Log::Info("VkWrapper config:\n" VKWRAPPER_CONFIG_STRING); }
 
 void VkWrapper::ResizeCallback(GLFWwindow *window, int width, int height)
 {

@@ -25,8 +25,10 @@ VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessenger::Callback(VkDebugUtilsMessageSever
                                                         const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
                                                         void *pUserData)
 {
-    std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
-
+    if (_severityMap.find(messageSeverity) != _severityMap.end())
+        ES::Utils::Log::Log(_severityMap[messageSeverity], "validation layer: " + std::string(pCallbackData->pMessage));
+    else
+        ES::Utils::Log::Log(ES::Utils::Log::Level::info, "validation layer: " + std::string(pCallbackData->pMessage));
     return VK_FALSE;
 }
 

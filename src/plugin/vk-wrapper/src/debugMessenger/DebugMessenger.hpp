@@ -27,8 +27,10 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <unordered_map>
 #include <vector>
 
+#include "Logger.hpp"
 #include "config.h"
 #include "export.h"
 
@@ -128,6 +130,13 @@ class DebugMessenger {
   private:
     VkDebugUtilsMessengerEXT _debugMessenger = VK_NULL_HANDLE;
     VkInstance _instance = VK_NULL_HANDLE;
+
+    inline static std::unordered_map<VkDebugUtilsMessageSeverityFlagBitsEXT, ES::Utils::Log::Level> _severityMap = {
+        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT, ES::Utils::Log::Level::info},
+        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT,    ES::Utils::Log::Level::info},
+        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT, ES::Utils::Log::Level::warn},
+        {VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT,   ES::Utils::Log::Level::err }
+    };
 };
 
 } // namespace ES::Plugin::Wrapper
