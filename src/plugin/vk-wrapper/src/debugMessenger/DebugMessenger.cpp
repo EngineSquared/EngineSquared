@@ -1,5 +1,3 @@
-#include "Logger.hpp"
-
 #include "DebugMessenger.hpp"
 
 namespace ES::Plugin::Wrapper {
