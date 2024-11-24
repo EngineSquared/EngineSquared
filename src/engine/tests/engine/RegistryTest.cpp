@@ -54,8 +54,18 @@ TEST(Registry, FixedUpdate)
 
     int x = 17;
 
-    reg.RegisterSystem([&](Registry &registry) { x *= 3; std::cout << "1"; }, ScheduleLabel::FIXED);
-    reg.RegisterSystem([&](Registry &registry) { x += 3; std::cout << "2"; }, ScheduleLabel::FIXED);
+    reg.RegisterSystem(
+        [&](Registry &registry) {
+            x *= 3;
+            std::cout << "1";
+        },
+        ScheduleLabel::FIXED);
+    reg.RegisterSystem(
+        [&](Registry &registry) {
+            x += 3;
+            std::cout << "2";
+        },
+        ScheduleLabel::FIXED);
 
     using namespace std::chrono_literals;
     std::this_thread::sleep_for(reg.GetFixedDeltaTime() * 2.1s);

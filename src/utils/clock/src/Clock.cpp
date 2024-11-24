@@ -1,12 +1,9 @@
 #include "Clock.hpp"
 
+unsigned int ES::Utils::Clock::GetElapsedTicks() { return _elapsedTicks; }
 
-
-unsigned int ES::Utils::Clock::GetElapsedTicks() {
-    return _elapsedTicks;
-}
-
-void ES::Utils::Clock::Update() {
+void ES::Utils::Clock::Update()
+{
     auto currentTime = std::chrono::high_resolution_clock::now();
     this->_elapsedTime = std::chrono::duration<float>(currentTime - this->_lastTime).count();
     this->_lastTime = currentTime;
