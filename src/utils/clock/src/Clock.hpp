@@ -5,6 +5,7 @@ namespace ES::Utils
 {
     /**
      * Clock class is used to provide a time provider. It can be used to update the time and get the elapsed tick since the last update.
+     * Btw, if you set tick rate to 1, you will get the elapsed time in seconds like a classic time provider.
      */
     class Clock {
     public:
@@ -13,6 +14,10 @@ namespace ES::Utils
          */
         inline static const float DEFAULT_TICK_RATE = 1.0 / 50.0;
     public:
+        /**
+         * Construct a new Clock object
+         * If no tick rate is provided, the default tick rate will be used (50 ticks per second)
+         */
         Clock(float tickRate = DEFAULT_TICK_RATE) : _tickRate(tickRate), _lastTime(std::chrono::high_resolution_clock::now()), _elapsedTime(0.0f), _elapsedTicks(0) {}
 
         /**
