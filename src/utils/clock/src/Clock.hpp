@@ -1,51 +1,56 @@
 #pragma once
 #include <chrono>
 
-namespace ES::Utils
-{
+namespace ES::Utils {
+/**
+ * Clock class is used to provide a time provider. It can be used to update the time and get the elapsed tick since the
+ * last update.
+ */
+class Clock {
+  public:
     /**
-     * Clock class is used to provide a time provider. It can be used to update the time and get the elapsed tick since the last update.
+     * Default tick rate of the clock (50 ticks per second)
      */
-    class Clock {
-    public:
-        /**
-         * Default tick rate of the clock (50 ticks per second)
-         */
-        inline static const float DEFAULT_TICK_RATE = 1.0 / 50.0;
-    public:
-        Clock(float tickRate = DEFAULT_TICK_RATE) : _tickRate(tickRate), _lastTime(std::chrono::high_resolution_clock::now()), _elapsedTime(0.0f), _elapsedTicks(0) {}
+    inline static const float DEFAULT_TICK_RATE = 1.0 / 50.0;
 
-        /**
-         * Get the elapsed time since the last time update
-         *
-         * @return the elapsed time in seconds
-         */
-        unsigned int GetElapsedTicks();
+  public:
+    Clock(float tickRate = DEFAULT_TICK_RATE)
+        : _tickRate(tickRate), _lastTime(std::chrono::high_resolution_clock::now()), _elapsedTime(0.0f),
+          _elapsedTicks(0)
+    {
+    }
 
-        /**
-         * Update the time provider. It will update the elapsed time since the last update and convert it to elapsed ticks
-         */
-        void Update();
+    /**
+     * Get the elapsed time since the last time update
+     *
+     * @return the elapsed time in seconds
+     */
+    unsigned int GetElapsedTicks();
 
-        /**
-         * Set the tick rate of the clock
-         *
-         * @param tickRate the tick rate in seconds
-         */
-        void SetTickRate(float tickRate) { _tickRate = tickRate; }
+    /**
+     * Update the time provider. It will update the elapsed time since the last update and convert it to elapsed ticks
+     */
+    void Update();
 
-        /**
-         * Get the tick rate of the clock
-         *
-         * @return the tick rate in seconds
-         */
-        float GetTickRate() const { return _tickRate; }
+    /**
+     * Set the tick rate of the clock
+     *
+     * @param tickRate the tick rate in seconds
+     */
+    void SetTickRate(float tickRate) { _tickRate = tickRate; }
 
-    private:
-        float _tickRate;
-        std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime;
-        float _elapsedTime;
-        unsigned int _elapsedTicks;
-    };
-    
+    /**
+     * Get the tick rate of the clock
+     *
+     * @return the tick rate in seconds
+     */
+    float GetTickRate() const { return _tickRate; }
+
+  private:
+    float _tickRate;
+    std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime;
+    float _elapsedTime;
+    unsigned int _elapsedTicks;
+};
+
 } // namespace ES::Utils

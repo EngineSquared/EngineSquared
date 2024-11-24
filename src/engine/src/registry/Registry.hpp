@@ -65,10 +65,12 @@ class Registry {
      * The function must take a Registry as first parameter.
      * The function must return void.
      * The function will be called by the registry in the order they were added.
-     * If the label is FIXED, the system will be called at a fixed rate and you will need to call GetFixedDeltaTime to get the delta time.
-     * 
+     * If the label is FIXED, the system will be called at a fixed rate and you will need to call GetFixedDeltaTime to
+     * get the delta time.
+     *
      * @param   f   The function to add.
-     * @param   label   The label of the schedule. It can be NON_FIXED for systems that don't need to be called at a fixed rate or FIXED for systems that need to be called at a fixed rate.
+     * @param   label   The label of the schedule. It can be NON_FIXED for systems that don't need to be called at a
+     * fixed rate or FIXED for systems that need to be called at a fixed rate.
      * @see ScheduleLabel
      * @see GetFixedDeltaTime
      */
@@ -97,7 +99,6 @@ class Registry {
     void ClearEntities();
 
   private:
-    
     std::unique_ptr<entt::registry> _registry;
     std::unordered_map<ES::Engine::ScheduleLabel, std::vector<USystem>> _systems;
     ES::Utils::Clock _fixedUpdateclock;
