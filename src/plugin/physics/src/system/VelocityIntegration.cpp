@@ -36,11 +36,10 @@ static void ApplySpringForces(ES::Engine::Registry &registry)
 
 static void IntegrateVelocities(ES::Engine::Registry &registry)
 {
-    auto realTimeProvider = registry.GetResource<ES::Plugin::Time::Resource::RealTimeProvider>();
     auto nodeView = registry.GetRegistry()
                         .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
 
-    float dt = realTimeProvider.GetElapsedTime();
+    float dt = registry.GetFixedDeltaTime();
 
     for (auto entity : nodeView)
     {
