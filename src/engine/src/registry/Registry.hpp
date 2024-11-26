@@ -3,6 +3,11 @@
 #include <entt/entt.hpp>
 #include <functional>
 #include <memory>
+#include <unordered_map>
+
+#include "Clock.hpp"
+
+#include "ScheduleLabel.hpp"
 
 namespace ES::Engine {
 /**
@@ -60,10 +65,23 @@ class Registry {
      * The function must take a Registry as first parameter.
      * The function must return void.
      * The function will be called by the registry in the order they were added.
+     * If the label is FIXED, the system will be called at a fixed rate and you will need to call GetFixedDeltaTime to
+     * get the delta time.
      *
      * @param   f   The function to add.
+     * @param   label   The label of the schedule. It can be NON_FIXED for systems that don't need to be called at a
+     * fixed rate or FIXED for systems that need to be called at a fixed rate.
+     * @see ScheduleLabel
+     * @see GetFixedDeltaTime
      */
-    void RegisterSystem(USystem const &f);
+    void RegisterSystem(USystem const &f, ES::Engine::ScheduleLabel label = ES::Engine::ScheduleLabel::NON_FIXED);
+
+    /**
+     * Get the fixed delta time for the fixed systems.
+     *
+     * @return  the fixed delta time
+     */
+    float GetFixedDeltaTime() const { return _fixedUpdateclock.GetTickRate(); }
 
     /**
      * Run all the systems. The systems will be called in the order they were added. It will also update the delta time.
@@ -82,7 +100,8 @@ class Registry {
 
   private:
     std::unique_ptr<entt::registry> _registry;
-    std::vector<USystem> _systems;
+    std::unordered_map<ES::Engine::ScheduleLabel, std::vector<USystem>> _systems;
+    ES::Utils::Clock _fixedUpdateclock;
 };
 } // namespace ES::Engine
 
