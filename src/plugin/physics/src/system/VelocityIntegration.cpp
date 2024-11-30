@@ -39,7 +39,7 @@ static void IntegrateVelocities(ES::Engine::Registry &registry)
     auto nodeView = registry.GetRegistry()
                         .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
 
-    float dt = registry.GetFixedDeltaTime();
+    float dt = 0.02; // registry.GetFixedDeltaTime();
 
     for (auto entity : nodeView)
     {

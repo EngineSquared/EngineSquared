@@ -77,7 +77,7 @@ void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Registry 
 
 void ES::Plugin::Physics::System::ApplySoftBodyCollisions(ES::Engine::Registry &registry)
 {
-    auto dt = registry.GetFixedDeltaTime();
+    auto dt = 0.02f; // registry.GetFixedDeltaTime();
     auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::ParticleBoxCollision>();
 
     for (auto entity : nodeView)
