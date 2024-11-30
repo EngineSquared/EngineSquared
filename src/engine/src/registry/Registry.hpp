@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "FixedTimeUpdate.hpp"
-#include "RelativeTimeUpdate.hpp"
 #include "IScheduler.hpp"
+#include "RelativeTimeUpdate.hpp"
 #include "Startup.hpp"
 #include "Update.hpp"
 
