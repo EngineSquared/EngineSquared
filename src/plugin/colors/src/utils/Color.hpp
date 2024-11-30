@@ -11,7 +11,7 @@ struct Color {
      * @param   lhs The first color
      * @param   rhs The second color
      */
-    friend bool operator==(const Color& lhs, const Color& rhs) = default;
+    friend bool operator==(const Color &lhs, const Color &rhs) = default;
 
     unsigned char r;
     unsigned char g;

@@ -52,7 +52,9 @@ VkResult DebugMessenger::CreateDebugUtilsMessengerEXT(const VkInstance &instance
                                                       const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
                                                       const VkAllocationCallbacks *pAllocator)
 {
-    if (auto func = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT"); func != nullptr)
+    if (auto func =
+            (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+        func != nullptr)
         return func(instance, pCreateInfo, pAllocator, &_debugMessenger);
 
     return VK_ERROR_EXTENSION_NOT_PRESENT;

@@ -45,7 +45,7 @@ struct SoftBodyNode {
 
     /**
      * Apply a force to the node.
-     * 
+     *
      * @param   appliedForce    Force to apply.
      */
     void ApplyForce(const glm::vec3 &appliedForce) { this->force += appliedForce; }
