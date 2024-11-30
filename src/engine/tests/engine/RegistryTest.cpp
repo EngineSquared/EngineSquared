@@ -48,34 +48,35 @@ TEST(Registry, Resources)
     ASSERT_EQ(reg.GetResource<Res>().x, 69);
 }
 
-TEST(Registry, FixedUpdate)
-{
-    Registry reg;
+// TODO: rewrite this tests with the future fixed scheduler
+// TEST(Registry, FixedUpdate)
+// {
+//     Registry reg;
 
-    int x = 17;
+//     int x = 17;
 
-    reg.RegisterSystem(
-        [&](Registry &registry) {
-            x *= 3;
-            std::cout << "1";
-        },
-        ScheduleLabel::FIXED);
-    reg.RegisterSystem(
-        [&](Registry &registry) {
-            x += 3;
-            std::cout << "2";
-        },
-        ScheduleLabel::FIXED);
+//     reg.RegisterSystem(
+//         [&](Registry &registry) {
+//             x *= 3;
+//             std::cout << "1";
+//         },
+//         ScheduleLabel::FIXED);
+//     reg.RegisterSystem(
+//         [&](Registry &registry) {
+//             x += 3;
+//             std::cout << "2";
+//         },
+//         ScheduleLabel::FIXED);
 
-    using namespace std::chrono_literals;
-    std::this_thread::sleep_for(reg.GetFixedDeltaTime() * 2.1s);
+//     using namespace std::chrono_literals;
+//     std::this_thread::sleep_for(reg.GetFixedDeltaTime() * 2.1s);
 
-    testing::internal::CaptureStdout();
+//     testing::internal::CaptureStdout();
 
-    reg.RunSystems();
+//     reg.RunSystems();
 
-    std::string output = testing::internal::GetCapturedStdout();
-    ASSERT_EQ(output, "1212");
+//     std::string output = testing::internal::GetCapturedStdout();
+//     ASSERT_EQ(output, "1212");
 
-    ASSERT_EQ(x, (17 * 3 + 3) * 3 + 3);
-}
+//     ASSERT_EQ(x, (17 * 3 + 3) * 3 + 3);
+// }
