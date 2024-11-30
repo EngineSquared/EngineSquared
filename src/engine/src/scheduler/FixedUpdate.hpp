@@ -29,8 +29,10 @@ class FixedUpdate : public IScheduler {
         unsigned int ticks = static_cast<unsigned int>(_elapsedTime / _tickRate);
         _elapsedTime -= ticks * _tickRate;
 
-        for (unsigned int i = 0; i < ticks; i++) {
-            for (auto &system : systems) {
+        for (unsigned int i = 0; i < ticks; i++)
+        {
+            for (auto &system : systems)
+            {
                 system(_registry);
             }
         }
