@@ -84,15 +84,13 @@ class Registry {
      * Add system to the registry. A system is a function that will be called by the registry.
      * The function must take a Registry as first parameter.
      * The function must return void.
-     * The function will be called by the registry in the order they were added.
-     * If the label is FIXED, the system will be called at a fixed rate and you will need to call GetFixedDeltaTime to
-     * get the delta time.
+     * The function will be called by the registry according to the scheduler choosen.
      *
+     * @tparam  TScheduler  The type of scheduler to use.
      * @param   f   The function to add.
      * @param   label   The label of the schedule. It can be NON_FIXED for systems that don't need to be called at a
      * fixed rate or FIXED for systems that need to be called at a fixed rate.
-     * @see ScheduleLabel
-     * @see GetFixedDeltaTime
+     * @see IScheduler
      */
     template <typename TScheduler = ES::Engine::Scheduler::Update> inline void RegisterSystem(USystem const &f);
 
