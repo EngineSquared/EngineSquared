@@ -2,7 +2,7 @@
 
 #include "BoxCollider3D.hpp"
 #include "Entity.hpp"
-#include "FixedTimeUpdate.hpp"
+#include "RelativeTimeUpdate.hpp"
 #include "ParticleBoxCollision.hpp"
 #include "RealTimeProvider.hpp"
 #include "SoftBodyNode.hpp"
@@ -78,7 +78,7 @@ void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Registry 
 
 void ES::Plugin::Physics::System::ApplySoftBodyCollisions(ES::Engine::Registry &registry)
 {
-    auto dt = registry.GetScheduler<ES::Engine::Scheduler::FixedTimeUpdate>().GetTickRate();
+    auto dt = registry.GetScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
     auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::ParticleBoxCollision>();
 
     for (auto entity : nodeView)

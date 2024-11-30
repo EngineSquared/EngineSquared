@@ -7,6 +7,7 @@ ES::Engine::Registry::Registry() : _registry(nullptr)
     this->RegisterScheduler<ES::Engine::Scheduler::Startup>();
     this->RegisterScheduler<ES::Engine::Scheduler::Update>();
     this->RegisterScheduler<ES::Engine::Scheduler::FixedTimeUpdate>();
+    this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
 }
 
 entt::entity ES::Engine::Registry::CreateEntity() { return this->_registry->create(); }

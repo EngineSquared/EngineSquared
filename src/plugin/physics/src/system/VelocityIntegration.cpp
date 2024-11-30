@@ -1,5 +1,5 @@
 #include "VelocityIntegration.hpp"
-#include "FixedTimeUpdate.hpp"
+#include "RelativeTimeUpdate.hpp"
 #include "ParticleBoxCollision.hpp"
 #include "RealTimeProvider.hpp"
 #include "SoftBodyNode.hpp"
@@ -40,7 +40,7 @@ static void IntegrateVelocities(ES::Engine::Registry &registry)
     auto nodeView = registry.GetRegistry()
                         .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
 
-    float dt = registry.GetScheduler<ES::Engine::Scheduler::FixedTimeUpdate>().GetTickRate();
+    float dt = registry.GetScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
 
     for (auto entity : nodeView)
     {
