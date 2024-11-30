@@ -23,11 +23,11 @@ class RelativeTimeUpdate : public IScheduler {
           _lastTime(std::chrono::high_resolution_clock::now())
     {
     }
-    void operator()(std::vector<USystem> systems)
+    void operator()(std::vector<USystem> systems) override
     {
         auto currentTime = std::chrono::high_resolution_clock::now();
         auto diff = std::chrono::duration<float>(currentTime - _lastTime).count();
-        unsigned int ticks = static_cast<unsigned int>(diff / _tickRate);
+        auto ticks = static_cast<unsigned int>(diff / _tickRate);
         float remainder = diff - ticks * _tickRate;
 
         for (unsigned int i = 0; i < ticks; i++)

@@ -71,7 +71,7 @@ class Registry {
      * @tparam TScheduler The type of scheduler to use.
      * @param scheduler The scheduler to add.
      */
-    template <typename TScheduler> inline TScheduler &RegisterScheduler();
+    template <typename TScheduler> TScheduler &RegisterScheduler();
 
     /**
      * Get a scheduler from the registry.
@@ -79,7 +79,7 @@ class Registry {
      * @tparam TScheduler The type of scheduler to get.
      * @return The scheduler.
      */
-    template <typename TScheduler> inline TScheduler &GetScheduler();
+    template <typename TScheduler> TScheduler &GetScheduler();
 
     /**
      * Add system to the registry. A system is a function that will be called by the registry.
@@ -91,7 +91,7 @@ class Registry {
      * @param   f   The function to add.
      * @see IScheduler
      */
-    template <typename TScheduler = ES::Engine::Scheduler::Update> inline void RegisterSystem(USystem const &f);
+    template <typename TScheduler = ES::Engine::Scheduler::Update> void RegisterSystem(USystem const &f);
 
     /**
      * Run all the systems. The systems will be called in the order they were added. It will also update the delta time.

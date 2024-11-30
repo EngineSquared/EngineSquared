@@ -22,11 +22,11 @@ class FixedTimeUpdate : public IScheduler {
           _elapsedTime(0.0f)
     {
     }
-    void operator()(std::vector<USystem> systems)
+    void operator()(std::vector<USystem> systems) override
     {
         auto currentTime = std::chrono::high_resolution_clock::now();
         _elapsedTime += std::chrono::duration<float>(currentTime - _lastTime).count();
-        unsigned int ticks = static_cast<unsigned int>(_elapsedTime / _tickRate);
+        auto ticks = static_cast<unsigned int>(_elapsedTime / _tickRate);
         _elapsedTime -= ticks * _tickRate;
 
         for (unsigned int i = 0; i < ticks; i++)

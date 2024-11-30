@@ -14,7 +14,7 @@ using USystem = std::function<void(Registry &)>;
 class Update : public IScheduler {
   public:
     Update(Registry &registry) : IScheduler(registry) {}
-    void operator()(std::vector<USystem> systems)
+    void operator()(std::vector<USystem> systems) override
     {
         for (auto &system : systems)
         {

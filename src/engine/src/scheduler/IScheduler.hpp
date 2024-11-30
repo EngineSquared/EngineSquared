@@ -11,7 +11,7 @@ using USystem = std::function<void(Registry &)>;
 
 class IScheduler {
   public:
-    IScheduler(Registry &registry) : _registry(registry) {}
+    explicit IScheduler(Registry &registry) : _registry(registry) {}
     virtual void operator()(std::vector<USystem> systems) = 0;
 
   protected:
