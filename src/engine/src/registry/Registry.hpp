@@ -65,7 +65,7 @@ class Registry {
 
     /**
      * Add a new scheduler to the registry.
-     * TODO: complete doxygen!!
+     * A scheduler is a class that inherit from IScheduler and that will be called by the registry.
      *
      * @tparam TScheduler The type of scheduler to use.
      * @param scheduler The scheduler to add.
