@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 
 #include "Entity.hpp"
-#include "FixedUpdate.hpp"
+#include "FixedTimeUpdate.hpp"
 #include "Registry.hpp"
 
 using namespace ES::Engine;
 using namespace std::chrono_literals;
 
-TEST(Registry, FixedUpdate)
+TEST(Registry, FixedTimeUpdate)
 {
     Registry reg;
 
@@ -16,8 +16,8 @@ TEST(Registry, FixedUpdate)
     // using a tick rate of 1/5 instead of the default 1/50
     // because sleep_for is not precise enough
 
-    reg.RegisterSystem<Scheduler::FixedUpdate>([&](Registry &registry) { update_count++; });
-    reg.GetScheduler<Scheduler::FixedUpdate>().SetTickRate(1.0 / 5.0);
+    reg.RegisterSystem<Scheduler::FixedTimeUpdate>([&](Registry &registry) { update_count++; });
+    reg.GetScheduler<Scheduler::FixedTimeUpdate>().SetTickRate(1.0 / 5.0);
 
     // First update just after creating should not run the system
     reg.RunSystems();

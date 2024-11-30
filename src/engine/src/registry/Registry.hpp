@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "FixedUpdate.hpp"
+#include "FixedTimeUpdate.hpp"
 #include "IScheduler.hpp"
 #include "Startup.hpp"
 #include "Update.hpp"

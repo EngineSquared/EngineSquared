@@ -13,11 +13,11 @@ class Registry;
 namespace ES::Engine::Scheduler {
 using USystem = std::function<void(Registry &)>;
 
-class FixedUpdate : public IScheduler {
+class FixedTimeUpdate : public IScheduler {
     inline static constexpr float DEFAULT_TICK_RATE = 1.0 / 50.0;
 
   public:
-    FixedUpdate(Registry &registry, float tickRate = DEFAULT_TICK_RATE)
+    FixedTimeUpdate(Registry &registry, float tickRate = DEFAULT_TICK_RATE)
         : IScheduler(registry), _tickRate(tickRate), _lastTime(std::chrono::high_resolution_clock::now()),
           _elapsedTime(0.0f)
     {
