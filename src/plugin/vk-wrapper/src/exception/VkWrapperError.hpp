@@ -51,7 +51,7 @@ class VkWrapperError : public std::exception {
 
     const char *what() const throw() override { return this->msg.c_str(); };
 
-  protected:
+  private:
     std::string msg;
 };
 
