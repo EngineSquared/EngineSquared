@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "Entity.hpp"
-#include "Startup.hpp"
 #include "Registry.hpp"
+#include "Startup.hpp"
 
 using namespace ES::Engine;
 
