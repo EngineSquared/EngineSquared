@@ -18,10 +18,7 @@ class Clock {
      * Construct a new Clock object
      * If no tick rate is provided, the default tick rate will be used (50 ticks per second)
      */
-    explicit Clock(float tickRate = DEFAULT_TICK_RATE)
-        : _tickRate(tickRate)
-    {
-    }
+    explicit Clock(float tickRate = DEFAULT_TICK_RATE) : _tickRate(tickRate) {}
 
     /**
      * Get the elapsed time since the last time update

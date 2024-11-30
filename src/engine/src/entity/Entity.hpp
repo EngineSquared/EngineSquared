@@ -51,7 +51,8 @@ class Entity {
 
     template <typename TComponent> inline decltype(auto) AddComponent(Registry &registry, TComponent &&component)
     {
-        return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TComponent>(component));
+        return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity),
+                                                          std::forward<TComponent>(component));
     }
 
     /**

@@ -13,7 +13,7 @@ static void UpdateButtonTextureColor(ES::Plugin::UI::Component::Button &button,
     auto const &displayType = std::get<ES::Plugin::UI::Component::DisplayType::TintColor>(button.displayType);
     switch (button.state)
     {
-    using enum ES::Plugin::UI::Component::Button::State;
+        using enum ES::Plugin::UI::Component::Button::State;
     case Normal: sprite.color = displayType.normalColor; break;
     case Hover: sprite.color = displayType.hoverColor; break;
     case Pressed: sprite.color = displayType.pressedColor; break;
@@ -26,7 +26,7 @@ static void UpdateButtonTextureImage(ES::Plugin::UI::Component::Button &button,
     auto const &displayType = std::get<ES::Plugin::UI::Component::DisplayType::Image>(button.displayType);
     switch (button.state)
     {
-    using enum ES::Plugin::UI::Component::Button::State;
+        using enum ES::Plugin::UI::Component::Button::State;
     case Normal: sprite.textureID = displayType.normalImageID; break;
     case Hover: sprite.textureID = displayType.hoverImageID; break;
     case Pressed: sprite.textureID = displayType.pressedImageID; break;
