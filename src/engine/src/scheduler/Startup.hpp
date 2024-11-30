@@ -13,7 +13,7 @@ using USystem = std::function<void(Registry &)>;
 
 class Startup : public IScheduler {
   public:
-    Startup(Registry &registry) : IScheduler(registry) {}
+    explicit Startup(Registry &registry) : IScheduler(registry) {}
     void operator()(std::vector<USystem> systems) override
     {
         if (!_firstRun)

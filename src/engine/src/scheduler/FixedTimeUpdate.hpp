@@ -18,9 +18,11 @@ class FixedTimeUpdate : public IScheduler {
 
   public:
     FixedTimeUpdate(Registry &registry, float tickRate = DEFAULT_TICK_RATE)
-        : IScheduler(registry), _tickRate(tickRate), _lastTime(std::chrono::high_resolution_clock::now()),
-          _elapsedTime(0.0f)
+        : IScheduler(registry)
     {
+        _tickRate = tickRate;
+        _lastTime = std::chrono::high_resolution_clock::now();
+        _elapsedTime = 0.0f;
     }
     void operator()(std::vector<USystem> systems) override
     {
