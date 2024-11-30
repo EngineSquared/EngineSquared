@@ -18,9 +18,9 @@ TEST(Registry, Systems)
 
     int x = 42;
 
-    reg.RegisterSystem([&](Registry &registry) { x = 69; });
+    reg.RegisterSystem([&x](const Registry &) { x = 69; });
 
-    reg.RegisterSystem([&](Registry &registry) { x = 144; });
+    reg.RegisterSystem([&x](const Registry &) { x = 144; });
 
     ASSERT_EQ(x, 42);
 
@@ -55,13 +55,13 @@ TEST(Registry, FixedUpdate)
     int x = 17;
 
     reg.RegisterSystem(
-        [&](Registry &registry) {
+        [&x](const Registry &) {
             x *= 3;
             std::cout << "1";
         },
         ScheduleLabel::FIXED);
     reg.RegisterSystem(
-        [&](Registry &registry) {
+        [&x](const Registry &) {
             x += 3;
             std::cout << "2";
         },
