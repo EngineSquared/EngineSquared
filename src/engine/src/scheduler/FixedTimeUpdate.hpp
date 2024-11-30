@@ -17,8 +17,7 @@ class FixedTimeUpdate : public IScheduler {
     inline static constexpr float DEFAULT_TICK_RATE = 1.0 / 50.0;
 
   public:
-    FixedTimeUpdate(Registry &registry, float tickRate = DEFAULT_TICK_RATE)
-        : IScheduler(registry)
+    FixedTimeUpdate(Registry &registry, float tickRate = DEFAULT_TICK_RATE) : IScheduler(registry)
     {
         _tickRate = tickRate;
         _lastTime = std::chrono::high_resolution_clock::now();
