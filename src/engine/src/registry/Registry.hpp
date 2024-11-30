@@ -88,8 +88,6 @@ class Registry {
      *
      * @tparam  TScheduler  The type of scheduler to use.
      * @param   f   The function to add.
-     * @param   label   The label of the schedule. It can be NON_FIXED for systems that don't need to be called at a
-     * fixed rate or FIXED for systems that need to be called at a fixed rate.
      * @see IScheduler
      */
     template <typename TScheduler = ES::Engine::Scheduler::Update> inline void RegisterSystem(USystem const &f);
