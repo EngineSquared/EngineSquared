@@ -18,7 +18,7 @@ void ES::Engine::Registry::RegisterSystem(USystem const &f, ES::Engine::Schedule
 
 void ES::Engine::Registry::RunSystems()
 {
-    for (auto &system : this->_systems[ScheduleLabel::NON_FIXED])
+    for (const auto &system : this->_systems[ScheduleLabel::NON_FIXED])
     {
         system(*this);
     }
@@ -28,7 +28,7 @@ void ES::Engine::Registry::RunSystems()
 
     for (unsigned int i = 0; i < elapsedTicks; i++)
     {
-        for (auto &system : this->_systems[ScheduleLabel::FIXED])
+        for (const auto &system : this->_systems[ScheduleLabel::FIXED])
         {
             system(*this);
         }

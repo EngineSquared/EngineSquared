@@ -9,7 +9,7 @@ TEST(Registry, CreateEntity)
 {
     Registry reg;
 
-    entt::entity raw_entity = reg.CreateEntity();
+    reg.CreateEntity();
 }
 
 TEST(Registry, Systems)
@@ -37,9 +37,9 @@ TEST(Registry, Resources)
         int x;
     };
 
-    reg.RegisterResource<Res>((Res) 42);
+    reg.RegisterResource<Res>({42});
 
-    reg.RegisterSystem([&](Registry &registry) { registry.GetResource<Res>().x = 69; });
+    reg.RegisterSystem([](Registry &registry) { registry.GetResource<Res>().x = 69; });
 
     ASSERT_EQ(reg.GetResource<Res>().x, 42);
 

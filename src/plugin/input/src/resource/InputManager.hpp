@@ -40,7 +40,8 @@ class InputManager {
      */
     inline glm::vec2 GetMousePosition()
     {
-        double x, y;
+        double x;
+        double y;
         glfwGetCursorPos(glfwGetCurrentContext(), &x, &y);
         return {x, y};
     }

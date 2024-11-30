@@ -48,7 +48,7 @@ class Registry {
      * @param   resource    rvalue of the resource to add
      * @return  reference of the added resource
      */
-    template <typename TResource> inline TResource &RegisterResource(TResource &&resource);
+    template <typename TResource> TResource &RegisterResource(TResource &&resource);
 
     /**
      * Get a reference's resource.
@@ -58,7 +58,7 @@ class Registry {
      * @tparam  TResource   type of the resource to get
      * @return  reference of the resource
      */
-    template <typename TResource> inline TResource &GetResource();
+    template <typename TResource> TResource &GetResource();
 
     /**
      * Add system to the registry. A system is a function that will be called by the registry.

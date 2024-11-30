@@ -1,4 +1,6 @@
 #include "Instance.hpp"
+#include <algorithm>
+#include <ranges>
 
 namespace ES::Plugin::Wrapper {
 
@@ -34,7 +36,7 @@ void Instance::Create(const std::string &applicationName)
         createInfo.ppEnabledLayerNames = VALIDATION_LAYERS.data();
 
         _debugMessenger.PopulateDebugMessengerCreateInfo(debugCreateInfo);
-        createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT *) &debugCreateInfo;
+        createInfo.pNext = &debugCreateInfo;
     }
 
     if (vkCreateInstance(&createInfo, nullptr, &_instance) != VK_SUCCESS)
@@ -66,7 +68,7 @@ void Instance::Destroy()
     vkDestroyInstance(_instance, nullptr);
 }
 
-bool Instance::CheckValidationLayerSupport()
+bool Instance::CheckValidationLayerSupport() const
 {
     uint32_t layerCount = 0;
     vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
@@ -74,27 +76,14 @@ bool Instance::CheckValidationLayerSupport()
     std::vector<VkLayerProperties> availableLayers(layerCount);
     vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
-    for (const char *layerName : VALIDATION_LAYERS)
-    {
-        bool layerFound = false;
-
-        for (const auto &layerProperties : availableLayers)
-        {
-            if (strcmp(layerName, layerProperties.layerName) == 0)
-            {
-                layerFound = true;
-                break;
-            }
-        }
-
-        if (!layerFound)
-            return false;
-    }
-
-    return true;
+    return std::ranges::all_of(VALIDATION_LAYERS, [&availableLayers](const char *layerName) {
+        return std::ranges::any_of(availableLayers, [layerName](const VkLayerProperties &layerProperties) {
+            return strcmp(layerName, layerProperties.layerName) == 0;
+        });
+    });
 }
 
-std::vector<const char *> Instance::GetRequiredExtensions()
+std::vector<const char *> Instance::GetRequiredExtensions() const
 {
     uint32_t glfwExtensionCount = 0;
     const char **glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);

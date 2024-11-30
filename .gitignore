@@ -9,3 +9,6 @@ vsxmake*/*
 build/
 docs/
 *.spv
+
+# sonar
+.sonarlint/*
