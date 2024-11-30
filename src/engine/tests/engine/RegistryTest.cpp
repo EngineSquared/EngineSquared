@@ -47,4 +47,3 @@ TEST(Registry, Resources)
 
     ASSERT_EQ(reg.GetResource<Res>().x, 69);
 }
-
