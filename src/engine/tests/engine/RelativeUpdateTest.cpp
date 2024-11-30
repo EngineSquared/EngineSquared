@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "Entity.hpp"
-#include "RelativeTimeUpdate.hpp"
 #include "Registry.hpp"
+#include "RelativeTimeUpdate.hpp"
 
 using namespace ES::Engine;
 using namespace std::chrono_literals;
@@ -18,7 +18,7 @@ TEST(Registry, RelativeTimeUpdateBasic)
 
     // Relative time update uses the highest precision available given how often it is called
     // it only uses multiple updates if the time difference is greater than the target tick rate
-    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&](Registry &registry) { 
+    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&](Registry &registry) {
         if (deltaTime1 == 0.0f)
         {
             deltaTime1 = reg.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
@@ -27,7 +27,7 @@ TEST(Registry, RelativeTimeUpdateBasic)
         {
             deltaTime2 = reg.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
         }
-     });
+    });
     reg.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
 
     reg.RunSystems();
@@ -47,7 +47,7 @@ TEST(Registry, RelativeTimeUpdateSubsteps)
     float deltaTimes[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
     // If called with a delta time > target tick rate, it should run multiple times, with the remainder
-    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&](Registry &registry) { 
+    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&](Registry &registry) {
         for (int i = 0; i < 5; i++)
         {
             if (deltaTimes[i] == 0.0f)
@@ -56,7 +56,7 @@ TEST(Registry, RelativeTimeUpdateSubsteps)
                 break;
             }
         }
-     });
+    });
     reg.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
 
     reg.RunSystems();
