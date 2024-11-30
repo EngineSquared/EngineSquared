@@ -6,6 +6,7 @@
 #include "RealTimeProvider.hpp"
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
+#include "FixedUpdate.hpp"
 
 static bool IsNodeInsideBox(const ES::Plugin::Object::Component::Transform &nodeTransform,
                             const ES::Plugin::Object::Component::Transform &boxTransform,
@@ -77,7 +78,7 @@ void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Registry 
 
 void ES::Plugin::Physics::System::ApplySoftBodyCollisions(ES::Engine::Registry &registry)
 {
-    auto dt = 0.02f; // registry.GetFixedDeltaTime();
+    auto dt = registry.GetScheduler<ES::Engine::Scheduler::FixedUpdate>().GetTickRate();
     auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::ParticleBoxCollision>();
 
     for (auto entity : nodeView)

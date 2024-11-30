@@ -4,6 +4,7 @@
 #include "SoftBodyNode.hpp"
 #include "SoftBodySpring.hpp"
 #include "Transform.hpp"
+#include "FixedUpdate.hpp"
 
 namespace ES::Plugin::Physics::System {
 constexpr float GRAVITY = 9.81f;
@@ -39,7 +40,7 @@ static void IntegrateVelocities(ES::Engine::Registry &registry)
     auto nodeView = registry.GetRegistry()
                         .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
 
-    float dt = 0.02; // registry.GetFixedDeltaTime();
+    float dt = registry.GetScheduler<ES::Engine::Scheduler::FixedUpdate>().GetTickRate();
 
     for (auto entity : nodeView)
     {

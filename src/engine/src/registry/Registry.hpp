@@ -73,6 +73,14 @@ class Registry {
     template <typename TScheduler> inline TScheduler &RegisterScheduler();
 
     /**
+     * Get a scheduler from the registry.
+     *
+     * @tparam TScheduler The type of scheduler to get.
+     * @return The scheduler.
+     */
+    template <typename TScheduler> inline TScheduler &GetScheduler();
+
+    /**
      * Add system to the registry. A system is a function that will be called by the registry.
      * The function must take a Registry as first parameter.
      * The function must return void.
