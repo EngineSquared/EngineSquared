@@ -17,4 +17,4 @@ class IScheduler {
   protected:
     Registry &_registry;
 };
-} // namespace ES::Engine::IScheduler
+} // namespace ES::Engine::Scheduler
