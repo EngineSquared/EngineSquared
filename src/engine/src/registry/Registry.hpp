@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "IScheduler.hpp"
+#include "Startup.hpp"
 #include "Update.hpp"
 
 namespace ES::Engine {

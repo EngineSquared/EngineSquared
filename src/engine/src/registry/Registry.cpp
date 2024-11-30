@@ -4,6 +4,7 @@ ES::Engine::Registry::Registry() : _registry(nullptr)
 {
     this->_registry = std::make_unique<entt::registry>();
 
+    this->RegisterScheduler<ES::Engine::Scheduler::Startup>();
     this->RegisterScheduler<ES::Engine::Scheduler::Update>();
 }
 
