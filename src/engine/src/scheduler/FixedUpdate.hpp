@@ -40,7 +40,9 @@ class FixedUpdate : public IScheduler {
         _lastTime = currentTime;
     }
 
-    float GetTickRate() inline const { return _tickRate; }
+    inline float GetTickRate() const { return _tickRate; }
+
+    inline void SetTickRate(float tickRate) { _tickRate = tickRate; }
 
   private:
     float _tickRate;
