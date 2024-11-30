@@ -23,7 +23,6 @@ void DebugMessenger::SetupDebugMessenger(const VkInstance &instance)
 VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessenger::Callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                                                         [[maybe_unused]] VkDebugUtilsMessageTypeFlagsEXT messageType,
                                                         const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
-                                                        //NOSONAR
                                                         [[maybe_unused]] void *pUserData)
 {
     if (_severityMap.contains(messageSeverity))
