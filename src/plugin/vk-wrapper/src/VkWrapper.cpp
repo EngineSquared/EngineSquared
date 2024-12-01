@@ -1,5 +1,3 @@
-#include <format>
-
 #include "Logger.hpp"
 
 #include "VkWrapper.hpp"
