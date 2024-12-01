@@ -1,8 +1,6 @@
 #include "Registry.hpp"
 
-ES::Engine::Registry::Registry()
-{
-}
+ES::Engine::Registry::Registry() {}
 
 entt::entity ES::Engine::Registry::CreateEntity() { return this->_registry->create(); }
 
