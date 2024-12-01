@@ -68,7 +68,7 @@ jobs:
           curl -fsSL https://xmake.io/shget.text | bash
 
       - name: Setup xmake
-        run: xmake f --toolchain=clang -y
+        run: xmake f --toolchain=clang
 
       - name: (Try to) build the project
         run: xmake build -y
