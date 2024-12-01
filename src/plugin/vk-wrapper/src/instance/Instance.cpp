@@ -211,7 +211,7 @@ Result Instance::DrawNextImage()
 
     vkWaitForFences(device, 1, &_inFlightFences[_currentFrame], VK_TRUE, UINT64_MAX);
 
-    uint32_t imageIndex;
+    uint32_t imageIndex = 0;
     VkResult result = vkAcquireNextImageKHR(device, _swapChain.Get(), UINT64_MAX,
                                             _imageAvailableSemaphores[_currentFrame], VK_NULL_HANDLE, &imageIndex);
 
