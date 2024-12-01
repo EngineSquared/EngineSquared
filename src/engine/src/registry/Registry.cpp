@@ -1,7 +1,5 @@
 #include "Registry.hpp"
 
-ES::Engine::Registry::Registry() {}
-
 entt::entity ES::Engine::Registry::CreateEntity() { return this->_registry->create(); }
 
 void ES::Engine::Registry::RegisterSystem(USystem const &f, ES::Engine::ScheduleLabel label)
