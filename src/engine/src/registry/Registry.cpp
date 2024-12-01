@@ -1,12 +1,10 @@
 #include "Registry.hpp"
 
-ES::Engine::Registry::Registry() : _registry(nullptr)
+ES::Engine::Registry::Registry()
+    : _registry(std::make_unique<entt::registry>()),
+      _systems{{ScheduleLabel::NON_FIXED, std::vector<USystem>()}, {ScheduleLabel::FIXED, std::vector<USystem>()}},
+      _fixedUpdateclock(ES::Utils::Clock())
 {
-    this->_registry = std::make_unique<entt::registry>();
-    this->_systems = std::unordered_map<ScheduleLabel, std::vector<USystem>>();
-    this->_systems[ScheduleLabel::NON_FIXED] = std::vector<USystem>();
-    this->_systems[ScheduleLabel::FIXED] = std::vector<USystem>();
-    this->_fixedUpdateclock = ES::Utils::Clock();
 }
 
 entt::entity ES::Engine::Registry::CreateEntity() { return this->_registry->create(); }
