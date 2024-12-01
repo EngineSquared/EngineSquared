@@ -2,8 +2,8 @@
 
 namespace ES::Plugin::Wrapper {
 
-void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkExtent2D swapChainExtent, const VkRenderPass &renderPass,
-                              const ShaderModule::ShaderPaths &shaders)
+void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkExtent2D swapChainExtent,
+                              const VkRenderPass &renderPass, const ShaderModule::ShaderPaths &shaders)
 {
     auto vertShaderCode = ShaderModule::LoadSPVfile(shaders.vertex.first);
     auto fragShaderCode = ShaderModule::LoadSPVfile(shaders.fragment.first);
