@@ -235,18 +235,18 @@ Result Instance::DrawNextImage()
     VkSubmitInfo submitInfo{};
     submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-    VkSemaphore waitSemaphores[] = {_imageAvailableSemaphores[_currentFrame]};
-    VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
+    std::array<VkSemaphore, 1> waitSemaphores = {_imageAvailableSemaphores[_currentFrame]};
+    std::array<VkPipelineStageFlags, 1> waitStages = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
     submitInfo.waitSemaphoreCount = 1;
-    submitInfo.pWaitSemaphores = waitSemaphores;
-    submitInfo.pWaitDstStageMask = waitStages;
+    submitInfo.pWaitSemaphores = waitSemaphores.data();
+    submitInfo.pWaitDstStageMask = waitStages.data();
 
     submitInfo.commandBufferCount = 1;
     submitInfo.pCommandBuffers = &_command.GetCommandBuffer(_currentFrame);
 
-    VkSemaphore signalSemaphores[] = {_renderFinishedSemaphores[_currentFrame]};
+    std::array<VkSemaphore, 1> signalSemaphores = {_renderFinishedSemaphores[_currentFrame]};
     submitInfo.signalSemaphoreCount = 1;
-    submitInfo.pSignalSemaphores = signalSemaphores;
+    submitInfo.pSignalSemaphores = signalSemaphores.data();
 
     if (vkQueueSubmit(_logicalDevice.GetGraphicsQueue(), 1, &submitInfo, _inFlightFences[_currentFrame]) != VK_SUCCESS)
         throw VkWrapperError("failed to submit draw command buffer!");
@@ -254,11 +254,11 @@ Result Instance::DrawNextImage()
     VkPresentInfoKHR presentInfo{};
     presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
     presentInfo.waitSemaphoreCount = 1;
-    presentInfo.pWaitSemaphores = signalSemaphores;
+    presentInfo.pWaitSemaphores = signalSemaphores.data();
 
-    VkSwapchainKHR swapChains[] = {_swapChain.Get()};
+    std::array<VkSwapchainKHR, 1> swapChains = {_swapChain.Get()};
     presentInfo.swapchainCount = 1;
-    presentInfo.pSwapchains = swapChains;
+    presentInfo.pSwapchains = swapChains.data();
     presentInfo.pImageIndices = &imageIndex;
 
     result = vkQueuePresentKHR(_logicalDevice.GetPresentQueue(), &presentInfo);

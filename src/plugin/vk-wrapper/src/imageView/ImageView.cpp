@@ -33,7 +33,7 @@ void ImageView::Create(const VkDevice &device, const std::vector<VkImage> &swapC
     }
 }
 
-void ImageView::Destroy(const VkDevice &device)
+void ImageView::Destroy(const VkDevice &device) const
 {
     for (const auto &imageView : _swapChainImageViews)
         vkDestroyImageView(device, imageView, nullptr);

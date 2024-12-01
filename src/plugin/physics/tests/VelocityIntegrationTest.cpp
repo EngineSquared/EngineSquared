@@ -25,8 +25,8 @@ TEST(VelocityIntegration, BasicGravityIntegration)
     registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(entity, glm::vec3(0));
     registry.GetRegistry().emplace<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
 
-    auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
-    auto &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
+    auto const &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
+    auto const &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
 
     // registry uses a real time provider to get the elapsed time, so we should sleep a bit
     SleepFor(10);
@@ -52,7 +52,7 @@ TEST(VelocityIntegration, ForceHigherThanGravity)
     registry.GetRegistry().emplace<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
 
     auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
-    auto &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
+    auto const &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
 
     node.ApplyForce(glm::vec3(0, 100, 0));
 
