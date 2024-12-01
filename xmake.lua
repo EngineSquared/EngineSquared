@@ -21,7 +21,6 @@ target("EngineSquared")
     set_kind("static")
     set_default(true)
     set_languages("cxx20")
-    set_toolset("cxx", "clang")
 
     add_deps("EngineSquaredCore")
 

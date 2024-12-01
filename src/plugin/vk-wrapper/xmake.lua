@@ -10,6 +10,7 @@ target("PluginVkWrapper")
     set_languages("cxx20")
     add_packages("vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "spdlog")
     set_policy("build.warning", true)
+    set_toolchains("clang", {force = true})
 
     add_deps("PluginUtils")
     add_deps("UtilsLog")
