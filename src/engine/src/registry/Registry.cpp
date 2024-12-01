@@ -1,9 +1,6 @@
 #include "Registry.hpp"
 
 ES::Engine::Registry::Registry()
-    : _registry(std::make_unique<entt::registry>()),
-      _systems{{ScheduleLabel::NON_FIXED, std::vector<USystem>()}, {ScheduleLabel::FIXED, std::vector<USystem>()}},
-      _fixedUpdateclock(ES::Utils::Clock())
 {
 }
 

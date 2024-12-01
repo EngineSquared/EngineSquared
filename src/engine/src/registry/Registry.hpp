@@ -99,9 +99,11 @@ class Registry {
     void ClearEntities();
 
   private:
-    std::unique_ptr<entt::registry> _registry;
-    std::unordered_map<ES::Engine::ScheduleLabel, std::vector<USystem>> _systems;
-    ES::Utils::Clock _fixedUpdateclock;
+    std::unique_ptr<entt::registry> _registry = std::make_unique<entt::registry>();
+    std::unordered_map<ES::Engine::ScheduleLabel, std::vector<USystem>> _systems = {
+        {ES::Engine::ScheduleLabel::NON_FIXED, std::vector<USystem>()},
+        {ES::Engine::ScheduleLabel::FIXED, std::vector<USystem>()}};
+    ES::Utils::Clock _fixedUpdateclock = ES::Utils::Clock();
 };
 } // namespace ES::Engine
 
