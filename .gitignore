@@ -9,3 +9,7 @@ vsxmake*/*
 build/
 docs/
 *.spv
+
+# sonar
+.sonarlint/*
+sonar-project.properties

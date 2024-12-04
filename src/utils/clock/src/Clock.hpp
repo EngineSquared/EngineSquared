@@ -11,25 +11,21 @@ class Clock {
     /**
      * Default tick rate of the clock (50 ticks per second)
      */
-    inline static const float DEFAULT_TICK_RATE = 1.0 / 50.0;
+    inline static const float DEFAULT_TICK_RATE = 1.0f / 50.0f;
 
   public:
     /**
      * Construct a new Clock object
      * If no tick rate is provided, the default tick rate will be used (50 ticks per second)
      */
-    Clock(float tickRate = DEFAULT_TICK_RATE)
-        : _tickRate(tickRate), _lastTime(std::chrono::high_resolution_clock::now()), _elapsedTime(0.0f),
-          _elapsedTicks(0)
-    {
-    }
+    explicit Clock(float tickRate = DEFAULT_TICK_RATE) : _tickRate(tickRate) {}
 
     /**
      * Get the elapsed time since the last time update
      *
      * @return the elapsed time in seconds
      */
-    unsigned int GetElapsedTicks();
+    unsigned int GetElapsedTicks() const { return _elapsedTicks; }
 
     /**
      * Update the time provider. It will update the elapsed time since the last update and convert it to elapsed ticks
@@ -52,9 +48,9 @@ class Clock {
 
   private:
     float _tickRate;
-    std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime;
-    float _elapsedTime;
-    unsigned int _elapsedTicks;
+    std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime = std::chrono::high_resolution_clock::now();
+    float _elapsedTime = 0.0f;
+    unsigned int _elapsedTicks = 0;
 };
 
 } // namespace ES::Utils

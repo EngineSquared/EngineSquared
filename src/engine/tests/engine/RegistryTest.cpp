@@ -9,7 +9,7 @@ TEST(Registry, CreateEntity)
 {
     Registry reg;
 
-    entt::entity raw_entity = reg.CreateEntity();
+    reg.CreateEntity();
 }
 
 TEST(Registry, Systems)
@@ -18,9 +18,9 @@ TEST(Registry, Systems)
 
     int x = 42;
 
-    reg.RegisterSystem([&](Registry &registry) { x = 69; });
+    reg.RegisterSystem([&x](const Registry &) { x = 69; });
 
-    reg.RegisterSystem([&](Registry &registry) { x = 144; });
+    reg.RegisterSystem([&x](const Registry &) { x = 144; });
 
     ASSERT_EQ(x, 42);
 
@@ -37,9 +37,9 @@ TEST(Registry, Resources)
         int x;
     };
 
-    reg.RegisterResource<Res>((Res) 42);
+    reg.RegisterResource<Res>({42});
 
-    reg.RegisterSystem([&](Registry &registry) { registry.GetResource<Res>().x = 69; });
+    reg.RegisterSystem([](Registry &registry) { registry.GetResource<Res>().x = 69; });
 
     ASSERT_EQ(reg.GetResource<Res>().x, 42);
 
@@ -55,13 +55,13 @@ TEST(Registry, FixedUpdate)
     int x = 17;
 
     reg.RegisterSystem(
-        [&](Registry &registry) {
+        [&x](const Registry &) {
             x *= 3;
             std::cout << "1";
         },
         ScheduleLabel::FIXED);
     reg.RegisterSystem(
-        [&](Registry &registry) {
+        [&x](const Registry &) {
             x += 3;
             std::cout << "2";
         },

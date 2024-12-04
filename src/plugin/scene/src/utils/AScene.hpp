@@ -8,7 +8,7 @@ namespace ES::Plugin::Scene::Utils {
 class AScene {
   public:
     AScene(void) = default;
-    ~AScene() = default;
+    virtual ~AScene() = default;
 
     /**
      * @brief Method used to instantiate new entities with their components
@@ -27,6 +27,6 @@ class AScene {
   protected:
     virtual void _onCreate(ES::Engine::Registry &registry) = 0;
 
-    virtual void _onDestroy(ES::Engine::Registry &registry){};
+    virtual void _onDestroy(ES::Engine::Registry &registry) = 0;
 };
 } // namespace ES::Plugin::Scene::Utils

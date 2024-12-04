@@ -6,7 +6,10 @@ using namespace ES::Plugin::Physics;
 
 TEST(Collision, Point2DCollidesRect2D)
 {
-    ES::Plugin::Math::Rect rect1({0, 0}, {1, 1});
+    ES::Plugin::Math::Rect rect1{
+        {0, 0},
+        {1, 1}
+    };
 
     EXPECT_TRUE(Utils::Point2DCollidesRect2D(rect1, {0.5, 0.5}));
     EXPECT_TRUE(Utils::Point2DCollidesRect2D(rect1, {0, 0}));

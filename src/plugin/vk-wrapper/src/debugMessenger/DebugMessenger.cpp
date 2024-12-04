@@ -21,18 +21,18 @@ void DebugMessenger::SetupDebugMessenger(const VkInstance &instance)
 }
 
 VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessenger::Callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-                                                        VkDebugUtilsMessageTypeFlagsEXT messageType,
+                                                        [[maybe_unused]] VkDebugUtilsMessageTypeFlagsEXT messageType,
                                                         const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
-                                                        void *pUserData)
+                                                        [[maybe_unused]] void *pUserData)
 {
-    if (_severityMap.find(messageSeverity) != _severityMap.end())
+    if (_severityMap.contains(messageSeverity))
         ES::Utils::Log::Log(_severityMap[messageSeverity], "validation layer: " + std::string(pCallbackData->pMessage));
     else
         ES::Utils::Log::Log(ES::Utils::Log::Level::info, "validation layer: " + std::string(pCallbackData->pMessage));
     return VK_FALSE;
 }
 
-void DebugMessenger::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo)
+void DebugMessenger::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo) const
 {
     if (!enableValidationLayers)
         return;
@@ -52,8 +52,9 @@ VkResult DebugMessenger::CreateDebugUtilsMessengerEXT(const VkInstance &instance
                                                       const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
                                                       const VkAllocationCallbacks *pAllocator)
 {
-    auto func = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-    if (func != nullptr)
+    if (auto func =
+            (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+        func != nullptr)
         return func(instance, pCreateInfo, pAllocator, &_debugMessenger);
 
     return VK_ERROR_EXTENSION_NOT_PRESENT;

@@ -29,16 +29,13 @@ TEST(SoftBodyCollisions, BasicParticleCollision)
     registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(ground, glm::vec3(0, 0, 0));
     registry.GetRegistry().emplace<ES::Plugin::Physics::Component::BoxCollider3D>(ground, glm::vec3(2, 2, 2));
 
-    auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(particle);
-    auto &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(particle);
-
     registry.RunSystems();
 
     auto view = registry.GetRegistry().view<ES::Plugin::Physics::Component::ParticleBoxCollision>();
 
     ASSERT_GT(view.size(), 0);
 
-    for (auto entity : view)
+    for (auto &entity : view)
     {
         registry.GetRegistry().destroy(entity);
     }
@@ -71,8 +68,8 @@ TEST(SoftBodyCollisions, VelocityIntegrationWithBasicCollision)
     registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(ground, glm::vec3(0, 0, 0));
     registry.GetRegistry().emplace<ES::Plugin::Physics::Component::BoxCollider3D>(ground, glm::vec3(2, 2, 2));
 
-    auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(particle);
-    auto &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(particle);
+    auto const &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(particle);
+    auto const &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(particle);
 
     bool bounced = false;
 

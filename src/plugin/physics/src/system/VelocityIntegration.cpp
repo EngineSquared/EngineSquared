@@ -10,14 +10,11 @@ constexpr float GRAVITY = 9.81f;
 
 static void ApplyGravity(ES::Engine::Registry &registry)
 {
-    auto nodeView = registry.GetRegistry()
-                        .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
+    auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::SoftBodyNode>();
 
     for (auto entity : nodeView)
     {
         auto &node = nodeView.get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
-        auto &transform = nodeView.get<ES::Plugin::Object::Component::Transform>(entity);
-
         node.ApplyForce(glm::vec3(0, -GRAVITY, 0));
     }
 }

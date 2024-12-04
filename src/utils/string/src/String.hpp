@@ -18,5 +18,5 @@ std::vector<std::string> Split(const std::string &str, const char &delimiter);
  * @param   suffix                      The suffix to check for
  * @return  bool                        True if the string ends with the suffix, false otherwise
  */
-bool EndsWith(const std::string &str, const std::string &suffix);
+bool EndsWith(std::string_view str, std::string_view suffix);
 } // namespace ES::Plugin::Utils::String

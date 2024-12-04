@@ -89,7 +89,7 @@ class PhysicalDevice {
      * @param device  The physical device to check.
      * @return true if the device supports the required extensions, false otherwise.
      */
-    [[nodiscard]] bool CheckDeviceExtensionSupport(const VkPhysicalDevice &device);
+    [[nodiscard]] bool CheckDeviceExtensionSupport(const VkPhysicalDevice &device) const;
 
     /**
      * @brief Rates the suitability of the physical device.
@@ -100,7 +100,7 @@ class PhysicalDevice {
      * @param device  The physical device to rate.
      * @return The suitability rating of the device.
      */
-    [[nodiscard]] uint32_t RateDeviceSuitability(const VkPhysicalDevice &device);
+    [[nodiscard]] uint32_t RateDeviceSuitability(const VkPhysicalDevice &device) const;
 
   private:
     VkPhysicalDevice _physicalDevice = VK_NULL_HANDLE;

@@ -13,7 +13,7 @@ class RealTimeProvider {
      *
      * @return the elapsed time in seconds
      */
-    float GetElapsedTime();
+    inline float GetElapsedTime() const { return _elapsedTime; };
 
     /**
      * Update the time provider

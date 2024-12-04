@@ -42,7 +42,7 @@ bool PhysicalDevice::IsDeviceSuitable(const VkPhysicalDevice &device, const VkSu
     return _queueFamilies.IsComplete() && extensionsSupported && swapChainAdequate;
 }
 
-bool PhysicalDevice::CheckDeviceExtensionSupport(const VkPhysicalDevice &device)
+bool PhysicalDevice::CheckDeviceExtensionSupport(const VkPhysicalDevice &device) const
 {
     uint32_t extensionCount;
     vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
@@ -50,7 +50,7 @@ bool PhysicalDevice::CheckDeviceExtensionSupport(const VkPhysicalDevice &device)
     std::vector<VkExtensionProperties> availableExtensions(extensionCount);
     vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
 
-    std::set<std::string> requiredExtensions(DEVICE_EXTENSIONS.begin(), DEVICE_EXTENSIONS.end());
+    std::set<std::string, std::less<>> requiredExtensions(DEVICE_EXTENSIONS.begin(), DEVICE_EXTENSIONS.end());
 
     for (const auto &extension : availableExtensions)
         requiredExtensions.erase(extension.extensionName);
@@ -58,7 +58,7 @@ bool PhysicalDevice::CheckDeviceExtensionSupport(const VkPhysicalDevice &device)
     return requiredExtensions.empty();
 }
 
-uint32_t PhysicalDevice::RateDeviceSuitability(const VkPhysicalDevice &device)
+uint32_t PhysicalDevice::RateDeviceSuitability(const VkPhysicalDevice &device) const
 {
     VkPhysicalDeviceProperties deviceProperties;
     VkPhysicalDeviceFeatures deviceFeatures;

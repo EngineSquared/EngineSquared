@@ -21,24 +21,24 @@ class Entity {
      *
      * @param   entt    index value in the registry
      */
-    Entity(entt::entity entity = entt::null) : _entity(FromEnttEntity(entity)) {}
+    explicit(false) Entity(entt::entity entity = entt::null) : _entity(FromEnttEntity(entity)) {}
     ~Entity() = default;
 
     /**
-     * Explicit cast into entt::entity.
+     * Implicit cast into entt::entity.
      */
-    operator entt::entity() const { return static_cast<entt::entity>(_entity); }
+    explicit(false) operator entt::entity() const { return static_cast<entt::entity>(_entity); }
 
     /**
      * Explicit cast into entity_id_type.
      */
-    operator entity_id_type() const { return _entity; }
+    explicit operator entity_id_type() const { return _entity; }
 
     /**
      * Check whenever if entity id is a valid id.
      * @return  entity's validity
      */
-    bool IsValid();
+    bool IsValid() const;
 
     /**
      * Utility method to add a component to an entity.
@@ -51,7 +51,8 @@ class Entity {
 
     template <typename TComponent> inline decltype(auto) AddComponent(Registry &registry, TComponent &&component)
     {
-        return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), component);
+        return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity),
+                                                          std::forward<TComponent>(component));
     }
 
     /**
@@ -80,10 +81,10 @@ class Entity {
      */
     template <typename TTempComponent> inline decltype(auto) AddTemporaryComponent(Registry &registry)
     {
-        if (temporaryComponent.find(std::type_index(typeid(TTempComponent))) == temporaryComponent.end())
+        if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
-            temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Registry &registry) {
-                registry.GetRegistry().clear<TTempComponent>();
+            temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Registry &reg) {
+                reg.GetRegistry().clear<TTempComponent>();
             };
         }
 
@@ -103,9 +104,9 @@ class Entity {
         {
             return;
         }
-        for (const auto &type : temporaryComponent)
+        for (const auto &[typeIndex, func] : temporaryComponent)
         {
-            type.second(registry);
+            func(registry);
         }
         temporaryComponent.clear();
     }

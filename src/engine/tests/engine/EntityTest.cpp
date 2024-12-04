@@ -12,7 +12,7 @@ TEST(Registry, TemporaryComponent)
 {
     Registry reg;
 
-    Entity entity = Entity(reg.CreateEntity());
+    auto entity = Entity(reg.CreateEntity());
 
     entity.AddTemporaryComponent<TempComponent>(reg);
 
