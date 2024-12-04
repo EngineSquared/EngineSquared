@@ -26,7 +26,7 @@ class Registry {
     using USystem = std::function<void(Registry &)>;
 
   public:
-    Registry() = default;
+    Registry();
     ~Registry() = default;
 
     /**
