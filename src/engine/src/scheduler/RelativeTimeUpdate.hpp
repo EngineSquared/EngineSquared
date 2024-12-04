@@ -19,7 +19,8 @@ class RelativeTimeUpdate : public IScheduler {
 
   public:
     RelativeTimeUpdate(Registry &registry, float tickRate = DEFAULT_TARGET_TICK_RATE)
-        : IScheduler(registry), _tickRate(tickRate), _deltaTime(0.0f), _lastTime(std::chrono::high_resolution_clock::now())
+        : IScheduler(registry), _tickRate(tickRate), _deltaTime(0.0f),
+          _lastTime(std::chrono::high_resolution_clock::now())
     {
     }
 
