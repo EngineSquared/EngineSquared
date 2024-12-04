@@ -1,5 +1,8 @@
 #include <gtest/gtest.h>
 
+#include <array>
+#include <chrono>
+
 #include "Entity.hpp"
 #include "Registry.hpp"
 #include "RelativeTimeUpdate.hpp"
@@ -44,15 +47,15 @@ TEST(Registry, RelativeTimeUpdateSubsteps)
 
     int update_count = 0;
 
-    float deltaTimes[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    std::array<float, 5> deltaTimes = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
     // If called with a delta time > target tick rate, it should run multiple times, with the remainder
-    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&](Registry &registry) {
+    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&deltaTimes](Registry &registry) {
         for (int i = 0; i < 5; i++)
         {
             if (deltaTimes[i] == 0.0f)
             {
-                deltaTimes[i] = reg.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
+                deltaTimes[i] = registry.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
                 break;
             }
         }

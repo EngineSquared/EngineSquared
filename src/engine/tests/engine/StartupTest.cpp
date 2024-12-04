@@ -11,7 +11,7 @@ TEST(Registry, StartupScheduler)
     Registry reg;
 
     int update_count = 0;
-    reg.RegisterSystem<Scheduler::Startup>([&](Registry &registry) { update_count++; });
+    reg.RegisterSystem<Scheduler::Startup>([&update_count](Registry &) { update_count++; });
 
     reg.RunSystems();
     reg.RunSystems();
