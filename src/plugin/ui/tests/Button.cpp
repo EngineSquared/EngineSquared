@@ -17,7 +17,7 @@ TEST(Button, ButtonClick)
 
     r.RegisterResource<onClickCalled>(onClickCalled());
 
-    ES::Engine::Entity button = ES::Engine::Entity(r.CreateEntity());
+    auto button = ES::Engine::Entity(r.CreateEntity());
     button.AddComponent<Component::Button>(r);
 
     auto &buttonComponent = button.GetComponents<Component::Button>(r);
@@ -41,7 +41,7 @@ TEST(Button, UpdateButtonTexture)
     r.RegisterSystem(System::UpdateButtonTexture);
     r.RegisterSystem(ES::Engine::Entity::RemoveTemporaryComponents);
 
-    ES::Engine::Entity button = ES::Engine::Entity(r.CreateEntity());
+    auto button = ES::Engine::Entity(r.CreateEntity());
     button.AddComponent<Component::Button>(r);
     button.AddComponent<Component::Sprite2D>(r);
 

@@ -2,8 +2,8 @@
 
 namespace ES::Plugin::Wrapper {
 
-void GraphicsPipeline::Create(const VkDevice &device, const VkExtent2D swapChainExtent, const VkRenderPass &renderPass,
-                              const ShaderModule::ShaderPaths &shaders)
+void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkExtent2D swapChainExtent,
+                              const VkRenderPass &renderPass, const ShaderModule::ShaderPaths &shaders)
 {
     auto vertShaderCode = ShaderModule::LoadSPVfile(shaders.vertex.first);
     auto fragShaderCode = ShaderModule::LoadSPVfile(shaders.fragment.first);
@@ -14,7 +14,7 @@ void GraphicsPipeline::Create(const VkDevice &device, const VkExtent2D swapChain
     auto vertShaderStage = ShaderModule::CreateShaderStage(vertex, VK_SHADER_STAGE_VERTEX_BIT, shaders.vertex.second);
     auto fragShaderStage = ShaderModule::CreateShaderStage(frag, VK_SHADER_STAGE_FRAGMENT_BIT, shaders.fragment.second);
 
-    VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStage, fragShaderStage};
+    std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages = {vertShaderStage, fragShaderStage};
 
     VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
     vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -86,7 +86,7 @@ void GraphicsPipeline::Create(const VkDevice &device, const VkExtent2D swapChain
     VkGraphicsPipelineCreateInfo pipelineInfo{};
     pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
     pipelineInfo.stageCount = 2;
-    pipelineInfo.pStages = shaderStages;
+    pipelineInfo.pStages = shaderStages.data();
     pipelineInfo.pVertexInputState = &vertexInputInfo;
     pipelineInfo.pInputAssemblyState = &inputAssembly;
     pipelineInfo.pViewportState = &viewportState;

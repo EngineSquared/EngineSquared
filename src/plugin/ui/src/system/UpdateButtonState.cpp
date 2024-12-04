@@ -20,8 +20,8 @@ void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Registry &r)
     for (auto entity : view)
     {
         auto &button = view.get<ES::Plugin::UI::Component::Button>(entity);
-        auto &collider = view.get<ES::Plugin::Physics::Component::BoxCollider2D>(entity);
-        auto &transform = view.get<ES::Plugin::Object::Component::Transform>(entity);
+        auto const &collider = view.get<ES::Plugin::Physics::Component::BoxCollider2D>(entity);
+        auto const &transform = view.get<ES::Plugin::Object::Component::Transform>(entity);
         const ES::Plugin::Math::Rect &rect = {
             {transform.position.x,                     transform.position.y                    },
             {collider.size.x * transform.getScale().x, collider.size.y * transform.getScale().y}

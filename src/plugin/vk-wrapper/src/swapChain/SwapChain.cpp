@@ -56,13 +56,13 @@ void SwapChain::Create(const VkDevice &device, const VkPhysicalDevice &physicalD
     _queueFamilies.FindQueueFamilies(physicalDevice, surface);
     auto indices = _queueFamilies.GetIndices();
 
-    uint32_t queueFamilyIndices[] = {indices.graphicsFamily.value(), indices.presentFamily.value()};
+    std::array<uint32_t, 2> queueFamilyIndices = {indices.graphicsFamily.value(), indices.presentFamily.value()};
 
     if (indices.graphicsFamily != indices.presentFamily)
     {
         createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
         createInfo.queueFamilyIndexCount = 2;
-        createInfo.pQueueFamilyIndices = queueFamilyIndices;
+        createInfo.pQueueFamilyIndices = queueFamilyIndices.data();
     }
     else
         createInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
@@ -81,7 +81,7 @@ void SwapChain::Create(const VkDevice &device, const VkPhysicalDevice &physicalD
     vkGetSwapchainImagesKHR(device, _swapChain, &imageCount, _swapChainImages.data());
 }
 
-VkSurfaceFormatKHR SwapChain::ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats)
+VkSurfaceFormatKHR SwapChain::ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats) const
 {
     for (const auto &availableFormat : availableFormats)
     {
@@ -93,7 +93,7 @@ VkSurfaceFormatKHR SwapChain::ChooseSwapSurfaceFormat(const std::vector<VkSurfac
     return availableFormats[0];
 }
 
-VkPresentModeKHR SwapChain::ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes)
+VkPresentModeKHR SwapChain::ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes) const
 {
     for (const auto &availablePresentMode : availablePresentModes)
     {
@@ -105,7 +105,7 @@ VkPresentModeKHR SwapChain::ChooseSwapPresentMode(const std::vector<VkPresentMod
 }
 
 VkExtent2D SwapChain::ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, const uint32_t width,
-                                       const uint32_t height)
+                                       const uint32_t height) const
 {
     if (capabilities.currentExtent.width != UINT32_MAX)
         return capabilities.currentExtent;

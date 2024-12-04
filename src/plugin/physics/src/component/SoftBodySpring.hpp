@@ -28,16 +28,16 @@ struct SoftBodySpring {
      * Entity of the first node connected to the spring.
      * This entity should have a SoftBodyNode component.
      */
-    ES::Engine::Entity nodeA;
+    ES::Engine::Entity entityNodeA;
     /**
      * Entity of the second node connected to the spring.
      * This entity should have a SoftBodyNode component.
      */
-    ES::Engine::Entity nodeB;
+    ES::Engine::Entity entityNodeB;
 
     SoftBodySpring(ES::Engine::Entity nodeA, ES::Engine::Entity nodeB, float stiffness = 1, float damping = 0.99f,
                    float restLength = 1)
-        : stiffness(stiffness), damping(damping), restLength(restLength), nodeA(nodeA), nodeB(nodeB)
+        : stiffness(stiffness), damping(damping), restLength(restLength), entityNodeA(nodeA), entityNodeB(nodeB)
     {
     }
 
@@ -46,10 +46,10 @@ struct SoftBodySpring {
      */
     void ApplyForce(ES::Engine::Registry &registry)
     {
-        auto &nodeA = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->nodeA);
-        auto &nodeB = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->nodeB);
-        auto &transformA = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(this->nodeA);
-        auto &transformB = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(this->nodeB);
+        auto &nodeA = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->entityNodeA);
+        auto &nodeB = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->entityNodeB);
+        auto &transformA = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(this->entityNodeA);
+        auto &transformB = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(this->entityNodeB);
 
         auto direction = transformB.position - transformA.position;
         float currentLength = glm::length(direction);

@@ -31,22 +31,23 @@ struct SoftBodyNode {
     /**
      * Velocity of the node.
      */
-    glm::vec3 velocity;
+    glm::vec3 velocity = glm::vec3(0);
     /**
      * Force applied to the node.
      */
-    glm::vec3 force;
+    glm::vec3 force = glm::vec3(0);
 
     SoftBodyNode(float mass = 1, float damping = 0.95f, float friction = 0.5f, float elasticity = 0.9f)
         : mass(mass), inverseMass(mass >= 0 ? 1 / mass : 0), damping(damping), friction(friction),
-          elasticity(elasticity), velocity(0), force(0)
+          elasticity(elasticity)
     {
     }
 
     /**
      * Apply a force to the node.
-     * @param force Force to apply.
+     *
+     * @param   appliedForce    Force to apply.
      */
-    void ApplyForce(glm::vec3 force) { this->force += force; }
+    void ApplyForce(const glm::vec3 &appliedForce) { this->force += appliedForce; }
 };
 } // namespace ES::Plugin::Physics::Component

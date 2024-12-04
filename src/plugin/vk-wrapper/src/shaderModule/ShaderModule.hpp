@@ -118,7 +118,7 @@ class ShaderModule {
      * @return VkPipelineShaderStageCreateInfo structure initialized with the provided parameters.
      */
     static VkPipelineShaderStageCreateInfo
-    CreateShaderStage(const VkShaderModule &module, const VkShaderStageFlagBits stage, const std::string &pName);
+    CreateShaderStage(const VkShaderModule &shaderModule, const VkShaderStageFlagBits stage, const std::string &pName);
 };
 
 } // namespace ES::Plugin::Wrapper

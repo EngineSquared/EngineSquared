@@ -10,7 +10,7 @@ namespace ES::Plugin::Window::Exception {
  */
 class WindowError : public std::runtime_error {
   public:
-    WindowError(const std::string &message) : std::runtime_error("Window error: " + message) {}
+    explicit WindowError(const std::string &message) : std::runtime_error("Window error: " + message) {}
 };
 
 } // namespace ES::Plugin::Window::Exception

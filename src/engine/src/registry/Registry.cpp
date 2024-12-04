@@ -14,6 +14,7 @@ entt::entity ES::Engine::Registry::CreateEntity() { return this->_registry->crea
 
 void ES::Engine::Registry::RunSystems()
 {
+
     for (auto &scheduler : this->_schedulers)
     {
         scheduler.second->operator()(this->_systems[scheduler.first]);

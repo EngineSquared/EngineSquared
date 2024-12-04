@@ -8,6 +8,19 @@
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
 
+static int FindClosestAxis(const std::array<float, 3> &distances)
+{
+    int closestAxis = 0;
+    for (int i = 1; i < 3; ++i)
+    {
+        if (distances[i] > distances[closestAxis])
+        {
+            closestAxis = i;
+        }
+    }
+    return closestAxis;
+}
+
 static bool IsNodeInsideBox(const ES::Plugin::Object::Component::Transform &nodeTransform,
                             const ES::Plugin::Object::Component::Transform &boxTransform,
                             const ES::Plugin::Physics::Component::BoxCollider3D &boxCollider)
@@ -22,7 +35,6 @@ static bool IsNodeInsideBox(const ES::Plugin::Object::Component::Transform &node
 
 void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Registry &registry)
 {
-    float dt = registry.GetResource<ES::Plugin::Time::Resource::RealTimeProvider>().GetElapsedTime();
     auto boxColliderView =
         registry.GetRegistry()
             .view<ES::Plugin::Physics::Component::BoxCollider3D, ES::Plugin::Object::Component::Transform>();
@@ -31,40 +43,23 @@ void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Registry 
 
     for (auto boxEntity : boxColliderView)
     {
-        auto &boxCollider = boxColliderView.get<ES::Plugin::Physics::Component::BoxCollider3D>(boxEntity);
-        auto &boxTransform = boxColliderView.get<ES::Plugin::Object::Component::Transform>(boxEntity);
+        auto const &boxCollider = boxColliderView.get<ES::Plugin::Physics::Component::BoxCollider3D>(boxEntity);
+        auto const &boxTransform = boxColliderView.get<ES::Plugin::Object::Component::Transform>(boxEntity);
 
         for (auto nodeEntity : nodeView)
         {
-            auto &node = nodeView.get<ES::Plugin::Physics::Component::SoftBodyNode>(nodeEntity);
-            auto &nodeTransform = nodeView.get<ES::Plugin::Object::Component::Transform>(nodeEntity);
+            auto const &nodeTransform = nodeView.get<ES::Plugin::Object::Component::Transform>(nodeEntity);
 
             if (IsNodeInsideBox(nodeTransform, boxTransform, boxCollider))
             {
                 glm::vec3 nodeToBox = nodeTransform.position - boxTransform.position;
 
-                float distances[3] = {
-                    std::abs(nodeToBox.x) - boxCollider.size.x / 2,
-                    std::abs(nodeToBox.y) - boxCollider.size.y / 2,
-                    std::abs(nodeToBox.z) - boxCollider.size.z / 2,
-                };
+                glm::vec3 distances = glm::abs(nodeToBox) - boxCollider.size / 2.0f;
 
-                int closestAxis = 0;
-                for (int i = 1; i < 3; ++i)
-                {
-                    if (distances[i] > distances[closestAxis])
-                    {
-                        closestAxis = i;
-                    }
-                }
+                int closestAxis = FindClosestAxis({distances.x, distances.y, distances.z});
 
                 glm::vec3 boxNormal(0.0f);
-                if (closestAxis == 0)
-                    boxNormal.x = (nodeToBox.x > 0) ? 1.0f : -1.0f;
-                else if (closestAxis == 1)
-                    boxNormal.y = (nodeToBox.y > 0) ? 1.0f : -1.0f;
-                else if (closestAxis == 2)
-                    boxNormal.z = (nodeToBox.z > 0) ? 1.0f : -1.0f;
+                boxNormal[closestAxis] = (nodeToBox[closestAxis] > 0) ? 1.0f : -1.0f;
 
                 float depth = std::abs(distances[closestAxis]);
 
@@ -83,7 +78,7 @@ void ES::Plugin::Physics::System::ApplySoftBodyCollisions(ES::Engine::Registry &
 
     for (auto entity : nodeView)
     {
-        auto &collision = nodeView.get<ES::Plugin::Physics::Component::ParticleBoxCollision>(entity);
+        auto const &collision = nodeView.get<ES::Plugin::Physics::Component::ParticleBoxCollision>(entity);
         auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(collision.particleEntity);
         auto &nodeTransform =
             registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(collision.particleEntity);
