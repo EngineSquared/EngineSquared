@@ -29,23 +29,7 @@ class FixedTimeUpdate : public IScheduler {
           _elapsedTime(0.0f)
     {
     }
-    void operator()(std::vector<USystem> systems) override
-    {
-        auto currentTime = std::chrono::high_resolution_clock::now();
-        _elapsedTime += std::chrono::duration<float>(currentTime - _lastTime).count();
-        auto ticks = static_cast<unsigned int>(_elapsedTime / _tickRate);
-        _elapsedTime -= ticks * _tickRate;
-
-        for (unsigned int i = 0; i < ticks; i++)
-        {
-            for (auto &system : systems)
-            {
-                system(_registry);
-            }
-        }
-
-        _lastTime = currentTime;
-    }
+    void operator()(std::vector<USystem> systems) override;
 
     /**
      * @brief Get the fixed tick rate

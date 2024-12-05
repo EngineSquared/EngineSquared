@@ -17,20 +17,7 @@ using USystem = std::function<void(Registry &)>;
 class Startup : public IScheduler {
   public:
     explicit Startup(Registry &registry) : IScheduler(registry) {}
-    void operator()(std::vector<USystem> systems) override
-    {
-        if (!_firstRun)
-        {
-            return;
-        }
-
-        for (auto &system : systems)
-        {
-            system(_registry);
-        }
-
-        _firstRun = false;
-    }
+    void operator()(std::vector<USystem> systems) override;
 
   private:
     bool _firstRun = true;
