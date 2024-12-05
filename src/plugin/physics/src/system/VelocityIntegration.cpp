@@ -1,6 +1,5 @@
 #include "VelocityIntegration.hpp"
 #include "ParticleBoxCollision.hpp"
-#include "RealTimeProvider.hpp"
 #include "RelativeTimeUpdate.hpp"
 #include "SoftBodyNode.hpp"
 #include "SoftBodySpring.hpp"

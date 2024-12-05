@@ -4,8 +4,6 @@
 #include <thread>
 
 #include "Entity.hpp"
-#include "RealTimeProvider.hpp"
-#include "RealTimeUpdater.hpp"
 #include "Registry.hpp"
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
@@ -16,9 +14,6 @@
 TEST(VelocityIntegration, BasicGravityIntegration)
 {
     ES::Engine::Registry registry;
-    registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
-        ES::Plugin::Time::Resource::RealTimeProvider());
-    registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
 
     ES::Engine::Entity entity = registry.CreateEntity();
@@ -42,9 +37,6 @@ TEST(VelocityIntegration, BasicGravityIntegration)
 TEST(VelocityIntegration, ForceHigherThanGravity)
 {
     ES::Engine::Registry registry;
-    registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
-        ES::Plugin::Time::Resource::RealTimeProvider());
-    registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
 
     ES::Engine::Entity entity = registry.CreateEntity();
