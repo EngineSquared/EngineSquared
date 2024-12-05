@@ -15,7 +15,7 @@ using USystem = std::function<void(Registry &)>;
 
 /**
  * @brief RelativeTimeUpdate is a scheduler that runs systems at a rate that is not fixed
- * It is made to run systems at a rate relative to the time 
+ * It is made to run systems at a rate relative to the time
  */
 class RelativeTimeUpdate : public IScheduler {
     inline static constexpr float DEFAULT_TARGET_TICK_RATE = 1.0 / 50.0;
