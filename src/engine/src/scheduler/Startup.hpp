@@ -11,6 +11,9 @@ class Registry;
 namespace ES::Engine::Scheduler {
 using USystem = std::function<void(Registry &)>;
 
+/**
+ * @brief Startup scheduler that runs systems only once
+ */
 class Startup : public IScheduler {
   public:
     explicit Startup(Registry &registry) : IScheduler(registry) {}

@@ -9,6 +9,9 @@ class Registry;
 namespace ES::Engine::Scheduler {
 using USystem = std::function<void(Registry &)>;
 
+/**
+ * @brief Interface to be implemented for every schedulers
+ */
 class IScheduler {
   public:
     explicit IScheduler(Registry &registry) : _registry(registry) {}

@@ -13,6 +13,13 @@ class Registry;
 namespace ES::Engine::Scheduler {
 using USystem = std::function<void(Registry &)>;
 
+/**
+ * @brief FixedTimeUpdate is a scheduler that runs systems at a fixed rate
+ * It is made to only be run a certain amount of times per second, skipping updates when
+ * the framerate is high and running multiple updates when the framerate is low.
+ * The time that passes is accumulated if the time between updates is greater than the tick rate
+ * or if there is a remainder from the last update(s).
+ */
 class FixedTimeUpdate : public IScheduler {
     inline static constexpr float DEFAULT_TICK_RATE = 1.0 / 50.0;
 
@@ -40,8 +47,20 @@ class FixedTimeUpdate : public IScheduler {
         _lastTime = currentTime;
     }
 
+    /**
+     * @brief Get the fixed tick rate
+     *
+     * @return float The fixed tick rate
+     */
     inline float GetTickRate() const { return _tickRate; }
 
+    /**
+     * @brief Set the fixed tick rate
+     *
+     * @param tickRate The fixed tick rate
+     * @note This can cause issues if the value is changed during an update.
+     *      It is recommended to change this value before the update loop starts.
+     */
     inline void SetTickRate(float tickRate) { _tickRate = tickRate; }
 
   private:

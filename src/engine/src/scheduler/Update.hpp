@@ -11,6 +11,9 @@ class Registry;
 namespace ES::Engine::Scheduler {
 using USystem = std::function<void(Registry &)>;
 
+/**
+ * @brief Update scheduler that runs systems every time it is called
+ */
 class Update : public IScheduler {
   public:
     explicit Update(Registry &registry) : IScheduler(registry) {}
