@@ -16,9 +16,9 @@ entt::entity ES::Engine::Registry::CreateEntity() { return this->_registry->crea
 void ES::Engine::Registry::RunSystems()
 {
 
-    for (auto &scheduler : this->_schedulers)
+    for (auto &[schedulerIndex, scheduler] : this->_schedulers)
     {
-        scheduler.second->RunSystems(this->_systems[scheduler.first]);
+        scheduler->RunSystems(this->_systems[schedulerIndex]);
     }
 
     for (auto &scheduler : this->_schedulersToDelete)
