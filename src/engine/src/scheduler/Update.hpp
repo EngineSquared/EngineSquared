@@ -17,6 +17,6 @@ using USystem = std::function<void(Registry &)>;
 class Update : public IScheduler {
   public:
     explicit Update(Registry &registry) : IScheduler(registry) {}
-    void operator()(std::vector<USystem> systems) override;
+    void RunSystems(std::vector<USystem> systems) override;
 };
 } // namespace ES::Engine::Scheduler

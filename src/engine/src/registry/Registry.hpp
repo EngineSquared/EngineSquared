@@ -71,7 +71,7 @@ class Registry {
      * @tparam TScheduler The type of scheduler to use.
      * @param scheduler The scheduler to add.
      */
-    template <typename TScheduler> TScheduler &RegisterScheduler();
+    template <typename TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&... args);
 
     /**
      * Get a scheduler from the registry.
@@ -94,6 +94,14 @@ class Registry {
     template <typename TScheduler = ES::Engine::Scheduler::Update> void RegisterSystem(USystem const &f);
 
     /**
+     * Deletes a scheduler from the registry.
+     *
+     * @tparam TScheduler The type of scheduler to delete.
+     * @note This will delete the scheduler at the end of the frame.
+     */
+    template <typename TScheduler> void DeleteScheduler();
+
+    /**
      * Run all the systems. The systems will be called in the order they were added. It will also update the delta time.
      */
     void RunSystems();
@@ -111,6 +119,7 @@ class Registry {
   private:
     std::unique_ptr<entt::registry> _registry;
     std::map<std::type_index, std::unique_ptr<Scheduler::IScheduler>> _schedulers;
+    std::vector<std::type_index> _schedulersToDelete;
     std::unordered_map<std::type_index, std::vector<USystem>> _systems;
 };
 } // namespace ES::Engine

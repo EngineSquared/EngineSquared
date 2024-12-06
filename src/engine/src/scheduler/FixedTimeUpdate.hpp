@@ -29,7 +29,7 @@ class FixedTimeUpdate : public IScheduler {
           _elapsedTime(0.0f)
     {
     }
-    void operator()(std::vector<USystem> systems) override;
+    void RunSystems(std::vector<USystem> systems) override;
 
     /**
      * @brief Get the fixed tick rate

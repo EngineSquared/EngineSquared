@@ -28,7 +28,7 @@ class RelativeTimeUpdate : public IScheduler {
     {
     }
 
-    void operator()(std::vector<USystem> systems) override;
+    void RunSystems(std::vector<USystem> systems) override;
 
     inline float GetTargetTickRate() const { return _tickRate; }
 

@@ -16,10 +16,10 @@ using USystem = std::function<void(Registry &)>;
  */
 class Startup : public IScheduler {
   public:
-    explicit Startup(Registry &registry) : IScheduler(registry) {}
-    void operator()(std::vector<USystem> systems) override;
+    explicit Startup(Registry &registry, std::function<void()> callback) : IScheduler(registry), _callback(callback) {}
+    void RunSystems(std::vector<USystem> systems) override;
 
   private:
-    bool _firstRun = true;
+    std::function<void()> _callback;
 };
 } // namespace ES::Engine::Scheduler

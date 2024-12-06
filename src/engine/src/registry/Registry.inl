@@ -14,10 +14,15 @@ template <typename TResource> inline TResource &Registry::GetResource()
     return this->_registry->ctx().get<TResource>();
 }
 
-template <typename TScheduler> inline TScheduler &Registry::RegisterScheduler()
+template <typename TScheduler, typename... Args> inline TScheduler &Registry::RegisterScheduler(Args &&... args)
 {
-    this->_schedulers[std::type_index(typeid(TScheduler))] = std::make_unique<TScheduler>(*this);
+    this->_schedulers[std::type_index(typeid(TScheduler))] = std::make_unique<TScheduler>(*this, std::forward<Args>(args)...);
     return *static_cast<TScheduler *>(this->_schedulers[std::type_index(typeid(TScheduler))].get());
+}
+
+template <typename TScheduler> void Registry::DeleteScheduler()
+{
+    this->_schedulersToDelete.push_back(std::type_index(typeid(TScheduler)));
 }
 
 template <typename TScheduler> inline TScheduler &Registry::GetScheduler()
