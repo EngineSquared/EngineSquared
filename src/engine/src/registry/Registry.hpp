@@ -71,7 +71,7 @@ class Registry {
      * @tparam TScheduler The type of scheduler to use.
      * @param scheduler The scheduler to add.
      */
-    template <typename TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&... args);
+    template <typename TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&...args);
 
     /**
      * Get a scheduler from the registry.
