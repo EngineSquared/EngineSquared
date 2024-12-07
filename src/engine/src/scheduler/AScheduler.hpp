@@ -9,13 +9,6 @@ namespace ES::Engine::Scheduler {
 class AScheduler : public IScheduler {
   public:
     explicit AScheduler(Registry &registry) : _registry(registry) {}
-    /**
-     * @brief Run the systems according to the scheduler policy
-     *
-     * @param systems The systems to run
-     * @see USystem
-     */
-    virtual void RunSystems(std::vector<USystem> systems) = 0;
 
   protected:
     Registry &_registry;
