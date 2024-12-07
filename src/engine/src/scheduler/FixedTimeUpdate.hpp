@@ -20,8 +20,7 @@ class FixedTimeUpdate : public AScheduler {
 
   public:
     FixedTimeUpdate(Registry &registry, float tickRate = DEFAULT_TICK_RATE)
-        : AScheduler(registry), _tickRate(tickRate), _lastTime(std::chrono::high_resolution_clock::now()),
-          _elapsedTime(0.0f)
+        : AScheduler(registry), _tickRate(tickRate)
     {
     }
     void RunSystems(std::vector<USystem> systems) override;
@@ -44,7 +43,7 @@ class FixedTimeUpdate : public AScheduler {
 
   private:
     float _tickRate;
-    std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime;
-    float _elapsedTime;
+    std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime = std::chrono::high_resolution_clock::now();
+    float _elapsedTime = 0.0f;
 };
 } // namespace ES::Engine::Scheduler

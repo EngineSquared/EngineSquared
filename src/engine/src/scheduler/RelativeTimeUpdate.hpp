@@ -18,8 +18,7 @@ class RelativeTimeUpdate : public AScheduler {
 
   public:
     RelativeTimeUpdate(Registry &registry, float tickRate = DEFAULT_TARGET_TICK_RATE)
-        : AScheduler(registry), _tickRate(tickRate), _deltaTime(0.0f),
-          _lastTime(std::chrono::high_resolution_clock::now())
+        : AScheduler(registry), _tickRate(tickRate)
     {
     }
 
@@ -55,7 +54,7 @@ class RelativeTimeUpdate : public AScheduler {
 
   private:
     float _tickRate;
-    float _deltaTime;
-    std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime;
+    float _deltaTime = 0.0f;
+    std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime = std::chrono::high_resolution_clock::now();
 };
 } // namespace ES::Engine::Scheduler
