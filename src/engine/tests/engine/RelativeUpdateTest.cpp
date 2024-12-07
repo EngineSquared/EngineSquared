@@ -21,7 +21,7 @@ TEST(Registry, RelativeTimeUpdateBasic)
 
     // Relative time update uses the highest precision available given how often it is called
     // it only uses multiple updates if the time difference is greater than the target tick rate
-    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&](Registry &registry) {
+    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&](const Registry &registry) {
         if (deltaTime1 == 0.0f)
         {
             deltaTime1 = reg.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
