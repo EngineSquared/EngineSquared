@@ -15,6 +15,7 @@ namespace ES::Engine::Scheduler {
  * or if there is a remainder from the last update(s).
  */
 class FixedTimeUpdate : public AScheduler {
+  private:
     inline static constexpr float DEFAULT_TICK_RATE = 1.0 / 50.0;
 
   public:
