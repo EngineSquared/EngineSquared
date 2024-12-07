@@ -4,15 +4,9 @@
 
 #include <chrono>
 
-#include "IScheduler.hpp"
-
-namespace ES::Engine {
-class Registry;
-}
+#include "AScheduler.hpp"
 
 namespace ES::Engine::Scheduler {
-using USystem = std::function<void(Registry &)>;
-
 /**
  * @brief FixedTimeUpdate is a scheduler that runs systems at a fixed rate
  * It is made to only be run a certain amount of times per second, skipping updates when
@@ -20,12 +14,12 @@ using USystem = std::function<void(Registry &)>;
  * The time that passes is accumulated if the time between updates is greater than the tick rate
  * or if there is a remainder from the last update(s).
  */
-class FixedTimeUpdate : public IScheduler {
+class FixedTimeUpdate : public AScheduler {
     inline static constexpr float DEFAULT_TICK_RATE = 1.0 / 50.0;
 
   public:
     FixedTimeUpdate(Registry &registry, float tickRate = DEFAULT_TICK_RATE)
-        : IScheduler(registry), _tickRate(tickRate), _lastTime(std::chrono::high_resolution_clock::now()),
+        : AScheduler(registry), _tickRate(tickRate), _lastTime(std::chrono::high_resolution_clock::now()),
           _elapsedTime(0.0f)
     {
     }

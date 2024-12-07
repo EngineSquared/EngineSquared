@@ -4,26 +4,20 @@
 
 #include <chrono>
 
-#include "IScheduler.hpp"
-
-namespace ES::Engine {
-class Registry;
-}
+#include "AScheduler.hpp"
 
 namespace ES::Engine::Scheduler {
-using USystem = std::function<void(Registry &)>;
-
 /**
  * @brief RelativeTimeUpdate is a scheduler that runs systems at a rate that is not fixed
  * It is made to run systems at a rate relative to the time
  */
-class RelativeTimeUpdate : public IScheduler {
+class RelativeTimeUpdate : public AScheduler {
     inline static constexpr float DEFAULT_TARGET_TICK_RATE = 1.0 / 50.0;
     inline static constexpr float REMAINDER_THRESHOLD = 0.0001f;
 
   public:
     RelativeTimeUpdate(Registry &registry, float tickRate = DEFAULT_TARGET_TICK_RATE)
-        : IScheduler(registry), _tickRate(tickRate), _deltaTime(0.0f),
+        : AScheduler(registry), _tickRate(tickRate), _deltaTime(0.0f),
           _lastTime(std::chrono::high_resolution_clock::now())
     {
     }

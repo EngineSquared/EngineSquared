@@ -2,21 +2,15 @@
 
 #include <entt/entt.hpp>
 
-#include "IScheduler.hpp"
-
-namespace ES::Engine {
-class Registry;
-}
+#include "AScheduler.hpp"
 
 namespace ES::Engine::Scheduler {
-using USystem = std::function<void(Registry &)>;
-
 /**
  * @brief Startup scheduler that runs systems only once
  */
-class Startup : public IScheduler {
+class Startup : public AScheduler {
   public:
-    explicit Startup(Registry &registry, std::function<void()> callback) : IScheduler(registry), _callback(callback) {}
+    explicit Startup(Registry &registry, std::function<void()> callback) : AScheduler(registry), _callback(callback) {}
     void RunSystems(std::vector<USystem> systems) override;
 
   private:

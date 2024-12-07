@@ -2,21 +2,15 @@
 
 #include <entt/entt.hpp>
 
-#include "IScheduler.hpp"
-
-namespace ES::Engine {
-class Registry;
-}
+#include "AScheduler.hpp"
 
 namespace ES::Engine::Scheduler {
-using USystem = std::function<void(Registry &)>;
-
 /**
  * @brief Update scheduler that runs systems every time it is called
  */
-class Update : public IScheduler {
+class Update : public AScheduler {
   public:
-    explicit Update(Registry &registry) : IScheduler(registry) {}
+    explicit Update(Registry &registry) : AScheduler(registry) {}
     void RunSystems(std::vector<USystem> systems) override;
 };
 } // namespace ES::Engine::Scheduler
