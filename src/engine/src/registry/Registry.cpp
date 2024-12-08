@@ -1,29 +1,33 @@
 #include "Registry.hpp"
 
-entt::entity ES::Engine::Registry::CreateEntity() { return this->_registry->create(); }
-
-void ES::Engine::Registry::RegisterSystem(USystem const &f, ES::Engine::ScheduleLabel label)
+ES::Engine::Registry::Registry() : _registry(nullptr)
 {
-    this->_systems[label].push_back(f);
+    this->_registry = std::make_unique<entt::registry>();
+
+    this->RegisterScheduler<ES::Engine::Scheduler::Startup>(
+        [this]() { this->DeleteScheduler<ES::Engine::Scheduler::Startup>(); });
+    this->RegisterScheduler<ES::Engine::Scheduler::Update>();
+    this->RegisterScheduler<ES::Engine::Scheduler::FixedTimeUpdate>();
+    this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
 }
+
+entt::entity ES::Engine::Registry::CreateEntity() { return this->_registry->create(); }
 
 void ES::Engine::Registry::RunSystems()
 {
-    for (const auto &system : this->_systems[ScheduleLabel::NON_FIXED])
+
+    for (auto &[schedulerIndex, scheduler] : this->_schedulers)
     {
-        system(*this);
+        scheduler->RunSystems(this->_systems[schedulerIndex]);
     }
 
-    this->_fixedUpdateclock.Update();
-    auto elapsedTicks = this->_fixedUpdateclock.GetElapsedTicks();
-
-    for (unsigned int i = 0; i < elapsedTicks; i++)
+    for (auto &scheduler : this->_schedulersToDelete)
     {
-        for (const auto &system : this->_systems[ScheduleLabel::FIXED])
-        {
-            system(*this);
-        }
+        this->_schedulers.erase(scheduler);
+        this->_systems.erase(scheduler);
     }
+
+    this->_schedulersToDelete.clear();
 }
 
 bool ES::Engine::Registry::IsEntityValid(entt::entity entity) { return GetRegistry().valid(entity); }

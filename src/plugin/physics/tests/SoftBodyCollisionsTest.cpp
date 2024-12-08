@@ -3,8 +3,6 @@
 #include "Entity.hpp"
 #include "ParticleBoxCollision.hpp"
 #include "Physics.hpp"
-#include "RealTimeProvider.hpp"
-#include "RealTimeUpdater.hpp"
 #include "Registry.hpp"
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
@@ -17,9 +15,6 @@ TEST(SoftBodyCollisions, BasicParticleCollision)
     ES::Engine::Registry registry;
 
     registry.RegisterSystem(ES::Plugin::Physics::System::DetectSoftBodyCollisions);
-    registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
-        ES::Plugin::Time::Resource::RealTimeProvider());
-    registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
 
     ES::Engine::Entity particle = registry.CreateEntity();
     registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(particle, glm::vec3(0, 1, 0));
@@ -54,11 +49,8 @@ TEST(SoftBodyCollisions, VelocityIntegrationWithBasicCollision)
     ES::Engine::Registry registry;
 
     registry.RegisterSystem(ES::Plugin::Physics::System::DetectSoftBodyCollisions);
-    registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
-        ES::Plugin::Time::Resource::RealTimeProvider());
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
     registry.RegisterSystem(ES::Plugin::Physics::System::ApplySoftBodyCollisions);
-    registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
 
     ES::Engine::Entity particle = registry.CreateEntity();
     registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(particle, glm::vec3(0, 2.1, 0));

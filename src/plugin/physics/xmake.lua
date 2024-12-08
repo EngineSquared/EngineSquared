@@ -2,7 +2,6 @@ add_rules("mode.debug", "mode.release")
 add_requires("glm", "entt", "gtest")
 
 includes("../../engine/xmake.lua")
-includes("../time/xmake.lua")
 includes("../object/xmake.lua")
 includes("../math/xmake.lua")
 
@@ -13,7 +12,6 @@ target("PluginPhysics")
     set_policy("build.warning", true)
 
     add_deps("EngineSquaredCore")
-    add_deps("PluginTime")
     add_deps("PluginObject")
     add_deps("PluginMath")
 

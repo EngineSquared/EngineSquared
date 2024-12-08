@@ -3,11 +3,15 @@
 #include <entt/entt.hpp>
 #include <functional>
 #include <memory>
+#include <typeindex>
 #include <unordered_map>
+#include <vector>
 
-#include "Clock.hpp"
-
-#include "ScheduleLabel.hpp"
+#include "FixedTimeUpdate.hpp"
+#include "IScheduler.hpp"
+#include "RelativeTimeUpdate.hpp"
+#include "Startup.hpp"
+#include "Update.hpp"
 
 namespace ES::Engine {
 /**
@@ -22,7 +26,7 @@ class Registry {
     using USystem = std::function<void(Registry &)>;
 
   public:
-    Registry() = default;
+    Registry();
     ~Registry() = default;
 
     /**
@@ -61,27 +65,41 @@ class Registry {
     template <typename TResource> TResource &GetResource();
 
     /**
+     * Add a new scheduler to the registry.
+     * A scheduler is a class that inherit from IScheduler and that will be called by the registry.
+     *
+     * @tparam TScheduler The type of scheduler to use.
+     * @param scheduler The scheduler to add.
+     */
+    template <typename TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&...args);
+
+    /**
+     * Get a scheduler from the registry.
+     *
+     * @tparam TScheduler The type of scheduler to get.
+     * @return The scheduler.
+     */
+    template <typename TScheduler> TScheduler &GetScheduler();
+
+    /**
      * Add system to the registry. A system is a function that will be called by the registry.
      * The function must take a Registry as first parameter.
      * The function must return void.
-     * The function will be called by the registry in the order they were added.
-     * If the label is FIXED, the system will be called at a fixed rate and you will need to call GetFixedDeltaTime to
-     * get the delta time.
+     * The function will be called by the registry according to the scheduler choosen.
      *
+     * @tparam  TScheduler  The type of scheduler to use.
      * @param   f   The function to add.
-     * @param   label   The label of the schedule. It can be NON_FIXED for systems that don't need to be called at a
-     * fixed rate or FIXED for systems that need to be called at a fixed rate.
-     * @see ScheduleLabel
-     * @see GetFixedDeltaTime
+     * @see IScheduler
      */
-    void RegisterSystem(USystem const &f, ES::Engine::ScheduleLabel label = ES::Engine::ScheduleLabel::NON_FIXED);
+    template <typename TScheduler = ES::Engine::Scheduler::Update> void RegisterSystem(USystem const &f);
 
     /**
-     * Get the fixed delta time for the fixed systems.
+     * Deletes a scheduler from the registry.
      *
-     * @return  the fixed delta time
+     * @tparam TScheduler The type of scheduler to delete.
+     * @note This will delete the scheduler at the end of the frame.
      */
-    float GetFixedDeltaTime() const { return _fixedUpdateclock.GetTickRate(); }
+    template <typename TScheduler> void DeleteScheduler();
 
     /**
      * Run all the systems. The systems will be called in the order they were added. It will also update the delta time.
@@ -99,12 +117,10 @@ class Registry {
     void ClearEntities();
 
   private:
-    std::unique_ptr<entt::registry> _registry = std::make_unique<entt::registry>();
-    std::unordered_map<ES::Engine::ScheduleLabel, std::vector<USystem>> _systems = {
-        {ES::Engine::ScheduleLabel::NON_FIXED, std::vector<USystem>()},
-        {ES::Engine::ScheduleLabel::FIXED,     std::vector<USystem>()}
-    };
-    ES::Utils::Clock _fixedUpdateclock = ES::Utils::Clock();
+    std::unique_ptr<entt::registry> _registry;
+    std::map<std::type_index, std::unique_ptr<Scheduler::IScheduler>> _schedulers;
+    std::vector<std::type_index> _schedulersToDelete;
+    std::unordered_map<std::type_index, std::vector<USystem>> _systems;
 };
 } // namespace ES::Engine
 
