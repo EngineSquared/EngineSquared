@@ -124,7 +124,11 @@ jobs:
           curl -fsSL https://xmake.io/shget.text | bash
 
       - name: Starts tests
-        run: xmake test -y
+        run: |
+          xmake test -y || {
+            find "build/.gens/" -type f -name "*.stdout.log" -exec echo "File: {}" \; -exec cat "{}" \;
+            exit 1
+          }
         timeout-minutes: 2
 
       - name: Check tests coverage
