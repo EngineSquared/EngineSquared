@@ -28,9 +28,6 @@
 #include <string>
 #include <vector>
 
-#define TINYOBJLOADER_IMPLEMENTATION
-#include <tiny_obj_loader.h>
-
 #include "Vertex.hpp"
 
 #include "Logger.hpp"

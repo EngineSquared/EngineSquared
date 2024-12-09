@@ -1,5 +1,8 @@
 #include "OBJLoader.hpp"
 
+#define TINYOBJLOADER_IMPLEMENTATION
+#include "tiny_obj_loader.h"
+
 namespace ES::Plugin::Object::Resource {
 
 bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex> &vertices,
