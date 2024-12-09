@@ -54,6 +54,7 @@ template <typename TAssetType> class AssetsManager {
     bool Contains(ES::Plugin::Object::Utils::AssetID id) { return _assets.contains(id); }
 
   private:
-    std::unordered_map<ES::Plugin::Object::Utils::AssetID, std::shared_ptr<TAssetType>> _assets = std::unordered_map<ES::Plugin::Object::Utils::AssetID, std::shared_ptr<TAssetType>>()
+    std::unordered_map<ES::Plugin::Object::Utils::AssetID, std::shared_ptr<TAssetType>> _assets =
+        std::unordered_map<ES::Plugin::Object::Utils::AssetID, std::shared_ptr<TAssetType>>()
 };
 } // namespace ES::Plugin::Object::Resource
