@@ -13,7 +13,8 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
-    std::string warn, err;
+    std::string warn;
+    std::string err;
 
     if (path.empty())
     {

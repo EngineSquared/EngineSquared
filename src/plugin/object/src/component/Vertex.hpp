@@ -41,17 +41,23 @@ struct Vertex {
     glm::vec3 color;
     glm::vec2 texCoord;
 
-    bool operator==(const Vertex &other) const
-    {
-        return pos == other.pos && color == other.color && texCoord == other.texCoord;
-    }
+    bool operator==(const Vertex &other) const = default;
 };
 
 } // namespace ES::Plugin::Object::Component
 
 namespace std {
 
+/**
+ * @brief Hash function for the Vertex structure.
+ */
 template <> struct hash<ES::Plugin::Object::Component::Vertex> {
+    /**
+     * @brief Hash function for the Vertex structure.
+     *
+     * @param vertex Vertex to hash.
+     * @return std::size_t Hash value.
+     */
     size_t operator()(ES::Plugin::Object::Component::Vertex const &vertex) const
     {
         return ((hash<glm::vec3>()(vertex.pos) ^ (hash<glm::vec3>()(vertex.color) << 1)) >> 1) ^
