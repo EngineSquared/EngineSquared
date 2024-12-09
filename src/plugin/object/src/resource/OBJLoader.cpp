@@ -10,7 +10,19 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex
     std::vector<tinyobj::material_t> materials;
     std::string warn, err;
 
-    if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str()))
+    if (path.empty())
+    {
+        ES::Utils::Log::Warn("The path is empty.");
+        return false;
+    }
+
+    else if (path.ends_with(".obj") == false)
+    {
+        ES::Utils::Log::Warn("The file is not a .obj file.");
+        return false;
+    }
+
+    else if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str()))
     {
         ES::Utils::Log::Warn(warn + err);
         return false;

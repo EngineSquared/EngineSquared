@@ -52,7 +52,7 @@ class OBJLoader {
      * @param indices vector to store the indices
      * @return true if the model was loaded successfully, false otherwise
      */
-    static bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex> &vertices,
+    static bool loadModel(const std::string &path, std::vector<Component::Vertex> &vertices,
                                      std::vector<uint32_t> &indices);
 };
 
