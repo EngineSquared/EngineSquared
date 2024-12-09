@@ -53,7 +53,7 @@ class OBJLoader {
      * @return true if the model was loaded successfully, false otherwise
      */
     static bool loadModel(const std::string &path, std::vector<Component::Vertex> &vertices,
-                                     std::vector<uint32_t> &indices);
+                          std::vector<uint32_t> &indices);
 };
 
 } // namespace ES::Plugin::Object::Resource
