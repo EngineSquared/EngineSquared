@@ -2,8 +2,8 @@
 
 #include "AssetID.hpp"
 #include "AssetsManager.hpp"
-#include "OBJLoader.hpp"
-#include "Vertex.hpp"
-#include "MeshID.hpp"
 #include "Mesh.hpp"
+#include "MeshID.hpp"
+#include "OBJLoader.hpp"
 #include "Transform.hpp"
+#include "Vertex.hpp"
