@@ -14,6 +14,9 @@ TEST(OBJLoader, loadModel)
     std::vector<uint32_t> indices;
 
     EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "cube.obj", vertices, indices), true);
+
+    EXPECT_EQ(vertices.empty(), false);
+    EXPECT_EQ(indices.empty(), false);
 }
 
 TEST(OBJLoader, loadModel_empty_path)
