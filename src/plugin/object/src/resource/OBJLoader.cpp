@@ -3,6 +3,8 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
+#include "Logger.hpp"
+
 namespace ES::Plugin::Object::Resource {
 
 bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex> &vertices,
@@ -59,6 +61,8 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex
             indices.push_back(uniqueVertices[vertex]);
         }
     }
+
+    return true;
 }
 
 } // namespace ES::Plugin::Object::Resource

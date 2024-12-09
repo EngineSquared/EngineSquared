@@ -30,8 +30,6 @@
 
 #include "Vertex.hpp"
 
-#include "Logger.hpp"
-
 namespace ES::Plugin::Object::Resource {
 
 /**

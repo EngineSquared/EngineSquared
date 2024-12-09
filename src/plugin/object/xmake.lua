@@ -5,7 +5,7 @@ includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
 
 target("PluginObject")
-    set_kind("headeronly")
+    set_kind("static")
     set_languages("cxx20")
     set_policy("build.warning", true)
     add_packages("entt", "glm", "tinyobjloader", "spdlog")
@@ -18,6 +18,8 @@ target("PluginObject")
     add_includedirs("src/component", {public = true})
     add_includedirs("src/resource", {public = true})
     add_includedirs("src/utils", {public = true})
+
+    add_files("src/**.cpp")
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
