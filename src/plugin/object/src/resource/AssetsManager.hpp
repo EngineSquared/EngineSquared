@@ -11,7 +11,7 @@ namespace ES::Plugin::Object::Resource {
  */
 template <typename TAssetType> class AssetsManager {
   public:
-    AssetsManager() {}
+    AssetsManager() = default;
 
     ~AssetsManager() = default;
 
