@@ -2,7 +2,9 @@
 
 #include "OBJLoader.hpp"
 
-#define OBJ_FILE_PATH "src/plugin/object/tests/assets"
+#include "export.h"
+
+#define OBJ_FILE_PATH PROJECT_SOURCE_DIR "assets/"
 
 using namespace ES::Plugin::Object;
 
@@ -11,7 +13,7 @@ TEST(OBJLoader, loadModel)
     std::vector<Component::Vertex> vertices;
     std::vector<uint32_t> indices;
 
-    EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "/cube.obj", vertices, indices), true);
+    EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "cube.obj", vertices, indices), true);
 }
 
 TEST(OBJLoader, loadModel_fail)
@@ -19,7 +21,7 @@ TEST(OBJLoader, loadModel_fail)
     std::vector<Component::Vertex> vertices;
     std::vector<uint32_t> indices;
 
-    EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "/cube_fail.obj", vertices, indices), false);
+    EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "cube_fail.obj", vertices, indices), false);
 }
 
 TEST(OBJLoader, loadModel_empty_path)
@@ -35,7 +37,7 @@ TEST(OBJLoader, loadModel_not_obj_file)
     std::vector<Component::Vertex> vertices;
     std::vector<uint32_t> indices;
 
-    EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "/cube.png", vertices, indices), false);
+    EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "cube.png", vertices, indices), false);
 }
 
 TEST(OBJLoader, loadModel_wrong_path)

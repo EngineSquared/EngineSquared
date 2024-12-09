@@ -39,12 +39,22 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_tests("default")
 
         add_deps("PluginObject")
+        add_deps("PluginUtils")
         add_deps("EngineSquaredCore")
 
         add_files(file)
         add_files("tests/main.cpp")
         if is_mode("debug") then
             add_defines("DEBUG")
+        end
+
+        local buildir = path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)")
+        os.mkdir(path.join(buildir, "assets"))
+
+        local assets_files = os.files("assets/*.*")
+
+        for _, assets_file in ipairs(assets_files) do
+            os.cp(assets_file, path.join(buildir, "assets"))
         end
     ::continue::
 end
