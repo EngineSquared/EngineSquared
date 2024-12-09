@@ -126,7 +126,12 @@ jobs:
       - name: Starts tests
         run: |
           xmake test -y -D || {
-            find "build/.gens/" -type f -name "*.stdout.log" -exec echo "File: {}" \; -exec cat "{}" \;
+            find build/.gens/ -type f -name "*.stdout.log" | while read -r file; do
+              if grep -q "FAILED" "$file"; then
+                echo "File: $file"
+                cat "$file"
+              fi
+            done
             exit 1
           }
         timeout-minutes: 2
