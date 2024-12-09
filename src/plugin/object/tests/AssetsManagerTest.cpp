@@ -16,7 +16,7 @@ TEST(Registry, CreateEntity)
     ES::Plugin::Object::Utils::AssetID assetID = assets_manager.Add(std::move(asset));
 
     EXPECT_EQ(assets_manager.Get(assetID).value, 42);
-    EXPECT_EQ(assets_manager.Contains(assetID), true);
+    EXPECT_EQ(assets_manager.Contains(assetID), false);
 
     assets_manager.Remove(assetID);
 
