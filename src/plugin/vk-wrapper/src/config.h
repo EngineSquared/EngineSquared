@@ -41,19 +41,19 @@
 ////////////////////////////////////////////////////////////
 #if defined(_MSC_VER) || defined(_MSVC_LANG)
     #define VKWRAPPER_COMPILER_MSVC
-    const char* const VKWRAPPER_COMPILER_STRING = "MSVC";
+    #define VKWRAPPER_COMPILER_STRING "MSVC"
 #elif defined(__GNUC__) || defined(__GNUG__)
     #define VKWRAPPER_COMPILER_GCC
-    const char* const VKWRAPPER_COMPILER_STRING = "GCC";
+    #define VKWRAPPER_COMPILER_STRING "GCC"
 #elif defined(__clang__) || defined(__llvm__)
     #define VKWRAPPER_COMPILER_CLANG
-    const char* const VKWRAPPER_COMPILER_STRING = "Clang";
+    #define VKWRAPPER_COMPILER_STRING "Clang"
 #elif defined(__MINGW32__) || defined(__MINGW64__)
     #define VKWRAPPER_COMPILER_MINGW
-    const char* const VKWRAPPER_COMPILER_STRING = "MinGW";
+    #define VKWRAPPER_COMPILER_STRING "MinGW"
 #elif defined(__CYGWIN__)
     #define VKWRAPPER_COMPILER_CYGWIN
-    const char* const VKWRAPPER_COMPILER_STRING = "Cygwin";
+    #define VKWRAPPER_COMPILER_STRING "Cygwin"
 #else
     #error [Config@Distribution]: This compiler is not supported by VKWRAPPER library.
 #endif
@@ -65,38 +65,38 @@
 #if defined(_WIN32) || defined(__WIN32__) || defined(VKWRAPPER_COMPILER_MINGW) || defined(VKWRAPPER_COMPILER_CYGWIN)
 
     #define VKWRAPPER_SYSTEM_WINDOWS
-    const char* const VKWRAPPER_SYSTEM_STRING = "Windows";
+    #define VKWRAPPER_SYSTEM_STRING "Windows"
 
 // Android is based on the Linux VKWRAPPER, so it has to appear before Linux
 #elif defined(__ANDROID__)
 
     #define VKWRAPPER_SYSTEM_ANDROID
-    const char* const VKWRAPPER_SYSTEM_STRING = "Android";
+    #define VKWRAPPER_SYSTEM_STRING "Android"
 
 #elif defined(linux) || defined(__linux)
 
     #define VKWRAPPER_SYSTEM_LINUX
-    const char* const VKWRAPPER_SYSTEM_STRING = "Linux";
+    #define VKWRAPPER_SYSTEM_STRING "Linux"
 
 #elif defined(__unix) || defined(__unix__)
 
     #define VKWRAPPER_SYSTEM_UNIX
-    const char* const VKWRAPPER_SYSTEM_STRING = "Unix";
+    #define VKWRAPPER_SYSTEM_STRING "Unix"
 
 #elif defined(__APPLE__) || defined(MACOSX) || defined(macintosh) || defined(Macintosh)
 
     #define VKWRAPPER_SYSTEM_MACOS
-    const char* const VKWRAPPER_SYSTEM_STRING = "MacOS";
+    #define VKWRAPPER_SYSTEM_STRING "MacOS"
 
 #elif defined(__FreeBSD__) || defined(__FreeBSD_VKWRAPPER__)
 
     #define VKWRAPPER_SYSTEM_FREEBSD
-    const char* const VKWRAPPER_SYSTEM_STRING = "FreeBSD";
+    #define VKWRAPPER_SYSTEM_STRING "FreeBSD"
 
 #elif defined(LAPLACE_KERNEL_PANIC)
 
     #define VKWRAPPER_SYSTEM_KERNEL
-    const char* const VKWRAPPER_SYSTEM_STRING = "Laplace Kernel";
+    #define VKWRAPPER_SYSTEM_STRING "Laplace Kernel"
 
 #else
     #error [Config@Distribution]: This operating system is not supported by VKWRAPPER library.
@@ -266,10 +266,10 @@
 #if (defined(_DEBUG) || defined(DEBUG)) && !defined(NDEBUG)
 
     #define VKWRAPPER_DEBUG
-    const char* const VKWRAPPER_DEBUG_STRING = "Debug";
+    #define VKWRAPPER_DEBUG_STRING "Debug"
 
 #else
-    const char* const VKWRAPPER_DEBUG_STRING = "Release";
+    #define VKWRAPPER_DEBUG_STRING "Release"
 #endif
 
 
@@ -405,25 +405,25 @@
 #ifdef FLAG_VERSION_MAJOR
     #define VKWRAPPER_VERSION_MAJOR FLAG_VERSION_MAJOR
 #else
-    const short VKWRAPPER_VERSION_MAJOR = 0;
+    #define VKWRAPPER_VERSION_MAJOR 0
 #endif
 
 #ifdef FLAG_VERSION_MINOR
     #define VKWRAPPER_VERSION_MINOR FLAG_VERSION_MINOR
 #else
-    const short VKWRAPPER_VERSION_MINOR = 0;
+    #define VKWRAPPER_VERSION_MINOR 0
 #endif
 
 #ifdef FLAG_VERSION_PATCH
     #define VKWRAPPER_VERSION_PATCH FLAG_VERSION_PATCH
 #else
-    const short VKWRAPPER_VERSION_PATCH = 0;
+    #define VKWRAPPER_VERSION_PATCH 0
 #endif
 
 #ifdef FLAG_VERSION_TWEAK
     #define VKWRAPPER_VERSION_TWEAK FLAG_VERSION_TWEAK
 #else
-    const short VKWRAPPER_VERSION_TWEAK = 0;
+    #define VKWRAPPER_VERSION_TWEAK 0
 #endif
 
 ////////////////////////////////////////////////////////////
