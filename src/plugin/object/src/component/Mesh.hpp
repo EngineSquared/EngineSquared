@@ -48,8 +48,10 @@ struct Mesh {
  * This structure is used to load a mesh from a file.
  * @note This structure is used by the entt resource cache.
  */
-struct MeshLoader : entt::resource_loader<Mesh> {
-    std::shared_ptr<Mesh> load(const std::string &file) const { return std::make_shared<Mesh>(file); }
+struct MeshLoader final {
+    using result_type = std::shared_ptr<Mesh>;
+
+    result_type operator()(const std::string &file) const { return std::make_shared<Mesh>(file); }
 };
 
 } // namespace ES::Plugin::Object::Component
