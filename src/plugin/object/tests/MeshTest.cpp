@@ -16,7 +16,7 @@ using namespace ES::Plugin::Object;
  *        The mesh is loaded from a file and stored in the cache.
  *        The mesh is then retrieved from the cache and its vertices are checked.
  */
-TEST(Mesh, component_mesh_entt_cache_loader)
+TEST(MeshTest, component_mesh_entt_cache_loader)
 {
     entt::resource_cache<Component::Mesh, Component::MeshLoader> cache{};
 

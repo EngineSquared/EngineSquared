@@ -8,7 +8,7 @@
 
 using namespace ES::Plugin::Object;
 
-TEST(OBJLoader, loadModel)
+TEST(OBJLoaderTest, loadModel)
 {
     std::vector<Component::Vertex> vertices;
     std::vector<uint32_t> indices;
@@ -19,7 +19,7 @@ TEST(OBJLoader, loadModel)
     EXPECT_EQ(indices.empty(), false);
 }
 
-TEST(OBJLoader, loadModel_empty_path)
+TEST(OBJLoaderTest, loadModel_empty_path)
 {
     std::vector<Component::Vertex> vertices;
     std::vector<uint32_t> indices;
@@ -27,7 +27,7 @@ TEST(OBJLoader, loadModel_empty_path)
     EXPECT_EQ(Resource::OBJLoader::loadModel("", vertices, indices), false);
 }
 
-TEST(OBJLoader, loadModel_not_obj_file)
+TEST(OBJLoaderTest, loadModel_not_obj_file)
 {
     std::vector<Component::Vertex> vertices;
     std::vector<uint32_t> indices;
@@ -35,7 +35,7 @@ TEST(OBJLoader, loadModel_not_obj_file)
     EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "cube.png", vertices, indices), false);
 }
 
-TEST(OBJLoader, loadModel_wrong_path)
+TEST(OBJLoaderTest, loadModel_wrong_path)
 {
     std::vector<Component::Vertex> vertices;
     std::vector<uint32_t> indices;

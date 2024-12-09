@@ -4,7 +4,7 @@
 
 using namespace ES::Plugin::Object;
 
-TEST(Vertex, component_vertex_struct_size_comparaison)
+TEST(VertexTest, component_vertex_struct_size_comparaison)
 {
     Component::Vertex vertex{};
     vertex.pos = {1.0f, 2.0f, 3.0f};
@@ -14,7 +14,7 @@ TEST(Vertex, component_vertex_struct_size_comparaison)
     EXPECT_EQ((sizeof(glm::vec3(1)) + sizeof(glm::vec3(1)) + sizeof(glm::vec2(1, 2))), sizeof(vertex));
 }
 
-TEST(Vertex, component_vertex_equal_operator)
+TEST(VertexTest, component_vertex_equal_operator)
 {
     Component::Vertex vertex1{};
     vertex1.pos = {1.0f, 2.0f, 3.0f};
@@ -29,7 +29,7 @@ TEST(Vertex, component_vertex_equal_operator)
     EXPECT_EQ(vertex1 == vertex2, true);
 }
 
-TEST(Vertex, component_vertex_equal_operator_fail)
+TEST(VertexTest, component_vertex_equal_operator_fail)
 {
     Component::Vertex vertex1{};
     vertex1.pos = {1.0f, 2.0f, 3.0f};
@@ -44,7 +44,7 @@ TEST(Vertex, component_vertex_equal_operator_fail)
     EXPECT_EQ(vertex1 == vertex2, false);
 }
 
-TEST(Vertex, component_vertex_hash_extension)
+TEST(VertexTest, component_vertex_hash_extension)
 {
     Component::Vertex vertex{};
     vertex.pos = {1.0f, 2.0f, 3.0f};
