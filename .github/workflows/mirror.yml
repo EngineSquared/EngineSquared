@@ -127,6 +127,7 @@ jobs:
         run: |
           xmake test -y || {
             echo "test failed"
+            tree build/.gens/
             find "build/.gens/" -type f -name "*.stdout.log" -exec echo "File: {}" \; -exec cat "{}" \;
             exit 1
           }
