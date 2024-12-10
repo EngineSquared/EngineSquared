@@ -47,20 +47,21 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         if is_mode("debug") then
             add_defines("DEBUG")
         end
+
+        on_build(function (target)
+            local buildir = path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)")
+            local assets_files = os.files("src/plugin/object/tests/assets/*.*")
+
+            os.mkdir(path.join(buildir, "assets"))
+
+            for _, assets_file in ipairs(assets_files) do
+                os.cp(assets_file, path.join(buildir, "assets"))
+            end
+        end)
+
+        on_clean(function (target)
+            os.rm(path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)", "assets"))
+        end)
     ::continue::
 end
 
-on_build(function (target)
-    local buildir = path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)")
-    local assets_files = os.files("src/plugin/object/tests/assets/*.*")
-
-    os.mkdir(path.join(buildir, "assets"))
-
-    for _, assets_file in ipairs(assets_files) do
-        os.cp(assets_file, path.join(buildir, "assets"))
-    end
-end)
-
-on_clean(function (target)
-    os.rm(path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)", "assets"))
-end)
