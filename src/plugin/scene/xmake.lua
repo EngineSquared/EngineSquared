@@ -38,10 +38,10 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_links("gtest")
         add_tests("default")
         add_packages("glm", "entt", "gtest", "spdlog")
-        
+
         add_deps("PluginScene")
         add_deps("EngineSquaredCore")
-        
+
         add_files(file)
         add_files("tests/main.cpp")
         if is_mode("debug") then
