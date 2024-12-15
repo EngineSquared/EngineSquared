@@ -56,10 +56,10 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex
             if (uniqueVertices.count(vertex) == 0)
             {
                 uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
-                vertices.push_back(vertex);
+                vertices.emplace_back(vertex);
             }
 
-            indices.push_back(uniqueVertices[vertex]);
+            indices.emplace_back(uniqueVertices[vertex]);
         }
     }
 
