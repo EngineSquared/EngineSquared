@@ -38,9 +38,9 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_links("gtest")
         add_tests("default")
 
+        add_deps("EngineSquaredCore")
         add_deps("PluginObject")
         add_deps("PluginUtils")
-        add_deps("EngineSquaredCore")
 
         add_files(file)
         add_files("tests/main.cpp")
@@ -48,7 +48,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_defines("DEBUG")
         end
 
-        on_build(function (target)
+        after_build(function (target)
             local buildir = path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)")
             local assets_files = os.files("src/plugin/object/tests/assets/*.*")
 
@@ -64,4 +64,3 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end)
     ::continue::
 end
-
