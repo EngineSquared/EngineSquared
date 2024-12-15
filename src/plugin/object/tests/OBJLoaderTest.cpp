@@ -32,7 +32,7 @@ TEST(OBJLoaderTest, loadModel_not_obj_file)
     std::vector<Component::Vertex> vertices;
     std::vector<uint32_t> indices;
 
-    EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "cube.png", vertices, indices), false);
+    EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "not_obj.txt", vertices, indices), false);
 }
 
 TEST(OBJLoaderTest, loadModel_wrong_path)
