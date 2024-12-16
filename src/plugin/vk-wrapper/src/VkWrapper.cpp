@@ -21,8 +21,8 @@ Wrapper::Result VkWrapper::DrawFrame() { return _instance.DrawNextImage(); }
 
 void VkWrapper::Resize(GLFWwindow *window)
 {
-    int width;
-    int height;
+    int width = 0;
+    int height = 0;
 
     glfwGetFramebufferSize(window, &width, &height);
 

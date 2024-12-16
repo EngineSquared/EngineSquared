@@ -145,8 +145,10 @@ void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
 
     _framebuffer.Create(device, framebufferInfo);
 
+    auto physicalDevice = _physicalDevice.Get();
+
     Command::CreateInfo commandInfo{};
-    commandInfo.physicalDevice = _physicalDevice.Get();
+    commandInfo.physicalDevice = physicalDevice;
     commandInfo.surface = _surface.Get();
     commandInfo.swapChainExtent = extent;
     commandInfo.renderPass = renderPass;

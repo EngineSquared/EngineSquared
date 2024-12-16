@@ -70,6 +70,19 @@ class GraphicsPipeline {
     [[nodiscard]] const VkPipeline &Get() const { return _graphicsPipeline; }
 
   private:
+    /**
+     * @brief Sets up the color blend attachment.
+     *
+     * The color blend attachment in vulkan is used to blend the color of the fragment with the color of the
+     * framebuffer. It is used to create effects like transparency.
+     *
+     * @param colorBlendAttachment  The color blend attachment.
+     * @param enableBlend  The enable blend.
+     */
+    void SetupColorBlendAttachment(VkPipelineColorBlendAttachmentState &colorBlendAttachment,
+                                   const VkBool32 enableBlend);
+
+  private:
     VkPipelineLayout _pipelineLayout;
     VkPipeline _graphicsPipeline;
 };

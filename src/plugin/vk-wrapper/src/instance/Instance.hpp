@@ -254,7 +254,7 @@ class Instance {
     std::vector<VkSemaphore> _imageAvailableSemaphores;
     std::vector<VkSemaphore> _renderFinishedSemaphores;
     std::vector<VkFence> _inFlightFences;
-    uint32_t _currentFrame;
+    uint32_t _currentFrame = 0;
     bool _framebufferResized = false;
 };
 
