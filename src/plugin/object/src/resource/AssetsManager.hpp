@@ -11,7 +11,7 @@ namespace ES::Plugin::Object::Resource {
  */
 template <typename TAssetType> class AssetsManager {
   public:
-    AssetsManager() : _assets(std::unordered_map<ES::Plugin::Object::Utils::AssetID, std::shared_ptr<TAssetType>>()) {}
+    AssetsManager() = default;
 
     ~AssetsManager() = default;
 
@@ -51,9 +51,10 @@ template <typename TAssetType> class AssetsManager {
      * \param   id  id of the asset
      * \return  true if the asset exists, false otherwise.
      */
-    bool Contains(ES::Plugin::Object::Utils::AssetID id) { return _assets.find(id) != _assets.end(); }
+    bool Contains(ES::Plugin::Object::Utils::AssetID id) { return _assets.contains(id); }
 
   private:
-    std::unordered_map<ES::Plugin::Object::Utils::AssetID, std::shared_ptr<TAssetType>> _assets;
+    std::unordered_map<ES::Plugin::Object::Utils::AssetID, std::shared_ptr<TAssetType>> _assets =
+        std::unordered_map<ES::Plugin::Object::Utils::AssetID, std::shared_ptr<TAssetType>>();
 };
 } // namespace ES::Plugin::Object::Resource
