@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "glm", "gtest", "spdlog")
+add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "glm", "gtest", "spdlog", "tinyobjloader")
 
 includes("src/plugin/camera/xmake.lua")
 includes("src/plugin/colors/xmake.lua")
@@ -37,7 +37,7 @@ target("EngineSquared")
     add_deps("UtilsLog")
 
     set_policy("build.warning", true)
-    add_packages("entt", "vulkansdk", "glfw", "glm", "spdlog")
+    add_packages("entt", "vulkansdk", "glfw", "glm", "spdlog", "tinyobjloader")
 
     if is_mode("debug") then
         add_defines("DEBUG")
@@ -66,7 +66,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_languages("cxx20")
         add_files(file)
         add_files("tests/main.cpp")
-        add_packages("entt", "vulkansdk", "glfw", "glm", "gtest", "spdlog")
+        add_packages("entt", "vulkansdk", "glfw", "glm", "gtest", "spdlog", "tinyobjloader")
         add_links("gtest")
         add_deps("EngineSquared")
         add_includedirs("src")
