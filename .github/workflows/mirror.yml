@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [check_repository_cleanliness]
     env:
-      BINARY_NAMES: "./build/linux/x86_64/release/libEngineSquared.a,./build/linux/x86_64/release/libEngineSquaredCore.a,./build/linux/x86_64/release/libPluginCamera.a,./build/linux/x86_64/release/libPluginInput.a,./build/linux/x86_64/release/libPluginPhysics.a,./build/linux/x86_64/release/libPluginTime.a,./build/linux/x86_64/release/libPluginWindow.a,./build/linux/x86_64/release/libPluginVkWrapper.a"
+      BINARY_NAMES: "./build/linux/x86_64/release/libEngineSquared.a,./build/linux/x86_64/release/libEngineSquaredCore.a,./build/linux/x86_64/release/libPluginCamera.a,./build/linux/x86_64/release/libPluginInput.a,./build/linux/x86_64/release/libPluginPhysics.a,./build/linux/x86_64/release/libPluginWindow.a,./build/linux/x86_64/release/libPluginVkWrapper.a"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -124,7 +124,16 @@ jobs:
           curl -fsSL https://xmake.io/shget.text | bash
 
       - name: Starts tests
-        run: xmake test -y
+        run: |
+          xmake test -y -D || {
+            find build/.gens/ -type f -name "*.stdout.log" | while read -r file; do
+              if grep -q "FAILED" "$file"; then
+                echo "File: $file"
+                cat "$file"
+              fi
+            done
+            exit 1
+          }
         timeout-minutes: 2
 
       - name: Check tests coverage

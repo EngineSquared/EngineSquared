@@ -11,7 +11,7 @@ TEST(Registry, CreateEntity)
     };
 
     AssetsManager<TestAssets> assets_manager;
-    TestAssets asset(42);
+    TestAssets asset{42};
 
     ES::Plugin::Object::Utils::AssetID assetID = assets_manager.Add(std::move(asset));
 

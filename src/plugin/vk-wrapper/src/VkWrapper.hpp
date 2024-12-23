@@ -36,10 +36,8 @@ namespace ES::Plugin {
  *
  * @example "Usage of the VkWrapper class:"
  * @code
- * // Create a window
  * ES::Plugin::Window::Resource::Window window(800, 600, "My Engine");
  *
- * // Create a VkWrapper
  * ES::Plugin::VkWrapper vkWrapper;
  * ES::Plugin::VkWrapper::CreateInfo createInfo = {
  *     .window = window.GetGLFWWindow(),
@@ -50,7 +48,6 @@ namespace ES::Plugin {
  * };
  * vkWrapper.Create(createInfo);
  *
- * // Set the framebuffer resize callback
  * window.SetFramebufferSizeCallback((void *) &vkWrapper, ES::Plugin::VkWrapper::ResizeCallback);
  *
  * vkWrapper.PrintAvailableExtensions();
@@ -168,21 +165,20 @@ class VkWrapper {
      * @brief Print the available extensions for the Vulkan API.
      *
      */
-    void PrintAvailableExtensions();
+    void PrintAvailableExtensions() const;
 
     /**
      * @brief Print the version of the VkWrapper.
      *
      */
-    void PrintVersion();
+    void PrintVersion() const;
 
     /**
      * @brief Print the configuration of the VkWrapper.
      *
      */
-    void PrintConfig();
+    void PrintConfig() const;
 
-  protected:
   private:
     Wrapper::Instance _instance;
 };

@@ -3,7 +3,7 @@
 namespace ES::Plugin::Window::Resource {
 
 Window::Window(uint32_t width, uint32_t height, const std::string &title, GLFWmonitor *monitor, GLFWwindow *share)
-    : _width(width), _height(height), _title(title), _monitor(monitor), _share(share), _window(nullptr)
+    : _width(width), _height(height), _title(title), _window(nullptr), _monitor(monitor), _share(share)
 {
     Create();
 }

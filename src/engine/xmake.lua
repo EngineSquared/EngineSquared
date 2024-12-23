@@ -12,6 +12,7 @@ target("EngineSquaredCore")
     add_includedirs("src", { public = true })
     add_includedirs("src/entity", { public = true })
     add_includedirs("src/registry", { public = true })
+    add_includedirs("src/scheduler", { public = true })
 
     if is_mode("debug") then
         add_defines("DEBUG")

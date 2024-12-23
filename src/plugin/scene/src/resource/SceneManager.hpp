@@ -23,7 +23,7 @@ class SceneManager {
      *
      * @param name  name of the scene to load
      */
-    inline void SetNextScene(const std::string &name) { _nextScene = name; }
+    inline void SetNextScene(const std::string_view &name) { _nextScene = name; }
 
     /**
      * @brief Unload the current scene and load the next scene.
@@ -41,9 +41,9 @@ class SceneManager {
      */
     template <typename TScene> TScene &RegisterScene(const std::string &name)
     {
-        static_assert(std::is_base_of<ES::Plugin::Scene::Utils::AScene, TScene>::value,
+        static_assert(std::is_base_of_v<ES::Plugin::Scene::Utils::AScene, TScene>,
                       "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
-        if (_scenes.find(name) != _scenes.end())
+        if (_scenes.contains(name))
         {
             ES::Utils::Log::Warn("Scene " + name + " already exists");
         }
@@ -59,7 +59,15 @@ class SceneManager {
 
     [[nodiscard]] std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> _getScene(const std::string &name);
 
-    std::map<std::string, std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> _scenes;
+    struct TransparentHash {
+        using is_transparent = void;
+        std::size_t operator()(const std::string &str) const noexcept { return std::hash<std::string>{}(str); }
+        std::size_t operator()(std::string_view str) const noexcept { return std::hash<std::string_view>{}(str); }
+        std::size_t operator()(const char *str) const noexcept { return std::hash<std::string_view>{}(str); }
+    };
+    std::unordered_map<std::string, std::shared_ptr<ES::Plugin::Scene::Utils::AScene>, TransparentHash, std::equal_to<>>
+        _scenes;
+
     std::optional<std::string> _nextScene;
     std::optional<std::string> _currentScene;
 };
