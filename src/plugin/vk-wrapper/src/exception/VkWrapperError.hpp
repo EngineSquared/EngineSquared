@@ -34,7 +34,6 @@ namespace ES::Plugin::Wrapper {
  * @example "Catching an exception"
  * @code
  * try {
- *    // Vulkan code
  * } catch (VkWrapperError &e) {
  *   std::cerr << e.what() << std::endl;
  * }
@@ -47,11 +46,11 @@ namespace ES::Plugin::Wrapper {
  */
 class VkWrapperError : public std::exception {
   public:
-    VkWrapperError(const std::string &message) : msg("VkWrapper error: " + message){};
+    explicit VkWrapperError(const std::string &message) : msg("VkWrapper error: " + message){};
 
     const char *what() const throw() override { return this->msg.c_str(); };
 
-  protected:
+  private:
     std::string msg;
 };
 

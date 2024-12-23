@@ -138,7 +138,8 @@ class SwapChain {
      * @param availableFormats  The available formats.
      * @return VkSurfaceFormatKHR  The chosen format.
      */
-    [[nodiscard]] VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+    [[nodiscard]] VkSurfaceFormatKHR
+    ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats) const;
 
     /**
      * @brief Choose the swap present mode.
@@ -146,7 +147,8 @@ class SwapChain {
      * @param availablePresentModes  The available present modes.
      * @return VkPresentModeKHR  The chosen present mode.
      */
-    [[nodiscard]] VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
+    [[nodiscard]] VkPresentModeKHR
+    ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes) const;
 
     /**
      * @brief Choose the swap extent.
@@ -157,7 +159,7 @@ class SwapChain {
      * @return VkExtent2D  The chosen extent.
      */
     [[nodiscard]] VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, const uint32_t width,
-                                              const uint32_t height);
+                                              const uint32_t height) const;
 
   private:
     SupportDetails _supportDetails;

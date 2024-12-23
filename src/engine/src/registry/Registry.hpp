@@ -3,6 +3,15 @@
 #include <entt/entt.hpp>
 #include <functional>
 #include <memory>
+#include <typeindex>
+#include <unordered_map>
+#include <vector>
+
+#include "FixedTimeUpdate.hpp"
+#include "IScheduler.hpp"
+#include "RelativeTimeUpdate.hpp"
+#include "Startup.hpp"
+#include "Update.hpp"
 
 namespace ES::Engine {
 /**
@@ -43,7 +52,7 @@ class Registry {
      * @param   resource    rvalue of the resource to add
      * @return  reference of the added resource
      */
-    template <typename TResource> inline TResource &RegisterResource(TResource &&resource);
+    template <typename TResource> TResource &RegisterResource(TResource &&resource);
 
     /**
      * Get a reference's resource.
@@ -53,17 +62,44 @@ class Registry {
      * @tparam  TResource   type of the resource to get
      * @return  reference of the resource
      */
-    template <typename TResource> inline TResource &GetResource();
+    template <typename TResource> TResource &GetResource();
+
+    /**
+     * Add a new scheduler to the registry.
+     * A scheduler is a class that inherit from IScheduler and that will be called by the registry.
+     *
+     * @tparam TScheduler The type of scheduler to use.
+     * @param scheduler The scheduler to add.
+     */
+    template <typename TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&...args);
+
+    /**
+     * Get a scheduler from the registry.
+     *
+     * @tparam TScheduler The type of scheduler to get.
+     * @return The scheduler.
+     */
+    template <typename TScheduler> TScheduler &GetScheduler();
 
     /**
      * Add system to the registry. A system is a function that will be called by the registry.
      * The function must take a Registry as first parameter.
      * The function must return void.
-     * The function will be called by the registry in the order they were added.
+     * The function will be called by the registry according to the scheduler choosen.
      *
+     * @tparam  TScheduler  The type of scheduler to use.
      * @param   f   The function to add.
+     * @see IScheduler
      */
-    void RegisterSystem(USystem const &f);
+    template <typename TScheduler = ES::Engine::Scheduler::Update> void RegisterSystem(USystem const &f);
+
+    /**
+     * Deletes a scheduler from the registry.
+     *
+     * @tparam TScheduler The type of scheduler to delete.
+     * @note This will delete the scheduler at the end of the frame.
+     */
+    template <typename TScheduler> void DeleteScheduler();
 
     /**
      * Run all the systems. The systems will be called in the order they were added. It will also update the delta time.
@@ -82,7 +118,9 @@ class Registry {
 
   private:
     std::unique_ptr<entt::registry> _registry;
-    std::vector<USystem> _systems;
+    std::map<std::type_index, std::unique_ptr<Scheduler::IScheduler>> _schedulers;
+    std::vector<std::type_index> _schedulersToDelete;
+    std::unordered_map<std::type_index, std::vector<USystem>> _systems;
 };
 } // namespace ES::Engine
 

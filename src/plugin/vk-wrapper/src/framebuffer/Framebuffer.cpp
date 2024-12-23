@@ -8,13 +8,13 @@ void Framebuffer::Create(const VkDevice &device, const CreateInfo &info)
 
     for (uint32_t i = 0; i < info.swapChainImageViews.size(); ++i)
     {
-        VkImageView attachments[] = {info.swapChainImageViews[i]};
+        std::array<VkImageView, 1> attachments = {info.swapChainImageViews[i]};
 
         VkFramebufferCreateInfo framebufferInfo{};
         framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
         framebufferInfo.renderPass = info.renderPass;
         framebufferInfo.attachmentCount = 1;
-        framebufferInfo.pAttachments = attachments;
+        framebufferInfo.pAttachments = attachments.data();
         framebufferInfo.width = info.swapChainExtent.width;
         framebufferInfo.height = info.swapChainExtent.height;
         framebufferInfo.layers = 1;
@@ -24,7 +24,7 @@ void Framebuffer::Create(const VkDevice &device, const CreateInfo &info)
     }
 }
 
-void Framebuffer::Destroy(const VkDevice &device)
+void Framebuffer::Destroy(const VkDevice &device) const
 {
     for (auto framebuffer : _swapChainFramebuffers)
         vkDestroyFramebuffer(device, framebuffer, nullptr);

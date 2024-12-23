@@ -4,8 +4,6 @@
 #include <thread>
 
 #include "Entity.hpp"
-#include "RealTimeProvider.hpp"
-#include "RealTimeUpdater.hpp"
 #include "Registry.hpp"
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
@@ -16,17 +14,14 @@
 TEST(VelocityIntegration, BasicGravityIntegration)
 {
     ES::Engine::Registry registry;
-    registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
-        ES::Plugin::Time::Resource::RealTimeProvider());
-    registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
 
     ES::Engine::Entity entity = registry.CreateEntity();
     registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(entity, glm::vec3(0));
     registry.GetRegistry().emplace<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
 
-    auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
-    auto &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
+    auto const &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
+    auto const &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
 
     // registry uses a real time provider to get the elapsed time, so we should sleep a bit
     SleepFor(10);
@@ -42,9 +37,6 @@ TEST(VelocityIntegration, BasicGravityIntegration)
 TEST(VelocityIntegration, ForceHigherThanGravity)
 {
     ES::Engine::Registry registry;
-    registry.RegisterResource<ES::Plugin::Time::Resource::RealTimeProvider>(
-        ES::Plugin::Time::Resource::RealTimeProvider());
-    registry.RegisterSystem(ES::Plugin::Time::System::RealTimeUpdater);
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
 
     ES::Engine::Entity entity = registry.CreateEntity();
@@ -52,7 +44,7 @@ TEST(VelocityIntegration, ForceHigherThanGravity)
     registry.GetRegistry().emplace<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
 
     auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
-    auto &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
+    auto const &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
 
     node.ApplyForce(glm::vec3(0, 100, 0));
 

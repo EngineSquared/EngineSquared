@@ -100,7 +100,7 @@ class DebugMessenger {
      *
      * @param createInfo  The debug messenger create info.
      */
-    void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
+    void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo) const;
 
     /**
      * @brief Destroys the debug messenger.

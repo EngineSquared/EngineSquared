@@ -66,7 +66,7 @@ class ImageView {
      *
      * @param device  The Vulkan logical device used to destroy the image views.
      */
-    void Destroy(const VkDevice &device);
+    void Destroy(const VkDevice &device) const;
 
     /**
      * @brief Get the Image Views object.

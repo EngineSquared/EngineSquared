@@ -215,7 +215,7 @@ class Instance {
      *
      * @return true if all required validation layers are supported, false otherwise.
      */
-    [[nodiscard]] bool CheckValidationLayerSupport();
+    [[nodiscard]] bool CheckValidationLayerSupport() const;
 
     /**
      * @brief Gets the required extensions for the Vulkan API.
@@ -225,7 +225,7 @@ class Instance {
      *
      * @return std::vector<const char *>  The required extensions for the Vulkan API.
      */
-    [[nodiscard]] std::vector<const char *> GetRequiredExtensions();
+    [[nodiscard]] std::vector<const char *> GetRequiredExtensions() const;
 
     /**
      * @brief Cleans up the swap chain for the Vulkan API.

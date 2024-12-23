@@ -1,4 +1,6 @@
 #include "Instance.hpp"
+#include <algorithm>
+#include <ranges>
 
 namespace ES::Plugin::Wrapper {
 
@@ -34,7 +36,7 @@ void Instance::Create(const std::string &applicationName)
         createInfo.ppEnabledLayerNames = VALIDATION_LAYERS.data();
 
         _debugMessenger.PopulateDebugMessengerCreateInfo(debugCreateInfo);
-        createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT *) &debugCreateInfo;
+        createInfo.pNext = &debugCreateInfo;
     }
 
     if (vkCreateInstance(&createInfo, nullptr, &_instance) != VK_SUCCESS)
@@ -66,7 +68,7 @@ void Instance::Destroy()
     vkDestroyInstance(_instance, nullptr);
 }
 
-bool Instance::CheckValidationLayerSupport()
+bool Instance::CheckValidationLayerSupport() const
 {
     uint32_t layerCount = 0;
     vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
@@ -74,27 +76,14 @@ bool Instance::CheckValidationLayerSupport()
     std::vector<VkLayerProperties> availableLayers(layerCount);
     vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
-    for (const char *layerName : VALIDATION_LAYERS)
-    {
-        bool layerFound = false;
-
-        for (const auto &layerProperties : availableLayers)
-        {
-            if (strcmp(layerName, layerProperties.layerName) == 0)
-            {
-                layerFound = true;
-                break;
-            }
-        }
-
-        if (!layerFound)
-            return false;
-    }
-
-    return true;
+    return std::ranges::all_of(VALIDATION_LAYERS, [&availableLayers](const char *layerName) {
+        return std::ranges::any_of(availableLayers, [layerName](const VkLayerProperties &layerProperties) {
+            return strcmp(layerName, layerProperties.layerName) == 0;
+        });
+    });
 }
 
-std::vector<const char *> Instance::GetRequiredExtensions()
+std::vector<const char *> Instance::GetRequiredExtensions() const
 {
     uint32_t glfwExtensionCount = 0;
     const char **glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
@@ -222,7 +211,7 @@ Result Instance::DrawNextImage()
 
     vkWaitForFences(device, 1, &_inFlightFences[_currentFrame], VK_TRUE, UINT64_MAX);
 
-    uint32_t imageIndex;
+    uint32_t imageIndex = 0;
     VkResult result = vkAcquireNextImageKHR(device, _swapChain.Get(), UINT64_MAX,
                                             _imageAvailableSemaphores[_currentFrame], VK_NULL_HANDLE, &imageIndex);
 
@@ -246,18 +235,18 @@ Result Instance::DrawNextImage()
     VkSubmitInfo submitInfo{};
     submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-    VkSemaphore waitSemaphores[] = {_imageAvailableSemaphores[_currentFrame]};
-    VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
+    std::array<VkSemaphore, 1> waitSemaphores = {_imageAvailableSemaphores[_currentFrame]};
+    std::array<VkPipelineStageFlags, 1> waitStages = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
     submitInfo.waitSemaphoreCount = 1;
-    submitInfo.pWaitSemaphores = waitSemaphores;
-    submitInfo.pWaitDstStageMask = waitStages;
+    submitInfo.pWaitSemaphores = waitSemaphores.data();
+    submitInfo.pWaitDstStageMask = waitStages.data();
 
     submitInfo.commandBufferCount = 1;
     submitInfo.pCommandBuffers = &_command.GetCommandBuffer(_currentFrame);
 
-    VkSemaphore signalSemaphores[] = {_renderFinishedSemaphores[_currentFrame]};
+    std::array<VkSemaphore, 1> signalSemaphores = {_renderFinishedSemaphores[_currentFrame]};
     submitInfo.signalSemaphoreCount = 1;
-    submitInfo.pSignalSemaphores = signalSemaphores;
+    submitInfo.pSignalSemaphores = signalSemaphores.data();
 
     if (vkQueueSubmit(_logicalDevice.GetGraphicsQueue(), 1, &submitInfo, _inFlightFences[_currentFrame]) != VK_SUCCESS)
         throw VkWrapperError("failed to submit draw command buffer!");
@@ -265,11 +254,11 @@ Result Instance::DrawNextImage()
     VkPresentInfoKHR presentInfo{};
     presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
     presentInfo.waitSemaphoreCount = 1;
-    presentInfo.pWaitSemaphores = signalSemaphores;
+    presentInfo.pWaitSemaphores = signalSemaphores.data();
 
-    VkSwapchainKHR swapChains[] = {_swapChain.Get()};
+    std::array<VkSwapchainKHR, 1> swapChains = {_swapChain.Get()};
     presentInfo.swapchainCount = 1;
-    presentInfo.pSwapchains = swapChains;
+    presentInfo.pSwapchains = swapChains.data();
     presentInfo.pImageIndices = &imageIndex;
 
     result = vkQueuePresentKHR(_logicalDevice.GetPresentQueue(), &presentInfo);

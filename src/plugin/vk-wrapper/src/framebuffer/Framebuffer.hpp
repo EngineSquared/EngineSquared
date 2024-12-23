@@ -62,7 +62,7 @@ class Framebuffer {
      *
      * @param device  The Vulkan device.
      */
-    void Destroy(const VkDevice &device);
+    void Destroy(const VkDevice &device) const;
 
     /**
      * @brief Gets the swap chain framebuffers.

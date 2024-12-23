@@ -13,9 +13,15 @@ using namespace ES::Plugin::Scene;
 
 class SceneTest : public Utils::AScene {
   protected:
-    virtual void _onCreate(ES::Engine::Registry &registry) final {}
+    void _onCreate(ES::Engine::Registry &registry) final
+    {
+        // This method is intentionally left empty because no initialization is needed for this test scene.
+    }
 
-    virtual void _onDestroy(ES::Engine::Registry &registry) final {}
+    void _onDestroy(ES::Engine::Registry &registry) final
+    {
+        // This method is intentionally left empty because no initialization is needed for this test scene.
+    }
 };
 
 TEST(Scene, SceneManager)

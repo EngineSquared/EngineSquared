@@ -17,14 +17,14 @@ TEST(Button, ButtonClick)
 
     r.RegisterResource<onClickCalled>(onClickCalled());
 
-    ES::Engine::Entity button = ES::Engine::Entity(r.CreateEntity());
+    auto button = ES::Engine::Entity(r.CreateEntity());
     button.AddComponent<Component::Button>(r);
 
     auto &buttonComponent = button.GetComponents<Component::Button>(r);
     buttonComponent.lastState = Component::Button::State::Pressed;
     buttonComponent.state = Component::Button::State::Hover;
 
-    buttonComponent.onClick = [](ES::Engine::Registry &r) { r.GetResource<onClickCalled>().clicked = true; };
+    buttonComponent.onClick = [](ES::Engine::Registry &reg) { reg.GetResource<onClickCalled>().clicked = true; };
 
     EXPECT_FALSE(r.GetResource<onClickCalled>().clicked);
 
@@ -41,7 +41,7 @@ TEST(Button, UpdateButtonTexture)
     r.RegisterSystem(System::UpdateButtonTexture);
     r.RegisterSystem(ES::Engine::Entity::RemoveTemporaryComponents);
 
-    ES::Engine::Entity button = ES::Engine::Entity(r.CreateEntity());
+    auto button = ES::Engine::Entity(r.CreateEntity());
     button.AddComponent<Component::Button>(r);
     button.AddComponent<Component::Sprite2D>(r);
 
