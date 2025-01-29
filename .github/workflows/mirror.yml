@@ -55,18 +55,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libvulkan-dev
 
-      - uses: actions/cache@v3
-        name: Store XMake repositories in cache
-        with:
-          path: ~/.xmake
-          key: ${{ runner.os }}-xmake-entt-vulkan-glm
-          restore-keys: |
-            ${{ runner.os }}-xmake-entt-vulkan-glm
-
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
+          actions-cache-folder: '.xmake-cache'
+          actions-cache-key: '${{ runner.os }}-xmake-install'
+          package-cache: true
+          package-cache-key: '${{ runner.os }}-xmake-entt-vulkan-glm'
+          project-path: '.'
 
       - name: (Try to) build the project
         run: xmake build -y
@@ -112,18 +109,15 @@ jobs:
         run: |
           pip3 install gcovr
 
-      - uses: actions/cache@v3
-        name: Store XMake repositories in cache
-        with:
-          path: ~/.xmake
-          key: ${{ runner.os }}-xmake-entt-vulkan-glm
-          restore-keys: |
-            ${{ runner.os }}-xmake-entt-vulkan-glm
-
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
+          actions-cache-folder: '.xmake-cache'
+          actions-cache-key: '${{ runner.os }}-xmake-install'
+          package-cache: true
+          package-cache-key: '${{ runner.os }}-xmake-entt-vulkan-glm'
+          project-path: '.'
 
       - name: Starts tests
         run: |
