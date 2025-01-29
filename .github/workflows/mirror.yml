@@ -67,7 +67,7 @@ jobs:
 
       - name: (Try to) build the project
         run: xmake build -y
-        timeout-minutes: 20
+        timeout-minutes: 5
 
       - name: Verifies that files are present and executable
         run: |
@@ -130,7 +130,7 @@ jobs:
             done
             exit 1
           }
-        timeout-minutes: 20
+        timeout-minutes: 5
 
       - name: Check tests coverage
         uses: threeal/gcovr-action@v1.1.0
