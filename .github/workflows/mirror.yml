@@ -64,8 +64,9 @@ jobs:
             ${{ runner.os }}-xmake-entt-vulkan-glm
 
       - name: Install xmake
-        run: |
-          curl -fsSL https://xmake.io/shget.text | bash
+        uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: latest
 
       - name: (Try to) build the project
         run: xmake build -y
@@ -120,8 +121,9 @@ jobs:
             ${{ runner.os }}-xmake-entt-vulkan-glm
 
       - name: Install xmake
-        run: |
-          curl -fsSL https://xmake.io/shget.text | bash
+        uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: latest
 
       - name: Starts tests
         run: |
