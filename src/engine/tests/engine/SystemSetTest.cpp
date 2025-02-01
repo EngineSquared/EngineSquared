@@ -51,4 +51,3 @@ TEST(Registry, SystemSet)
 
     ASSERT_TRUE(did_run);
 }
-
