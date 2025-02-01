@@ -94,6 +94,15 @@ class Registry {
     template <typename TScheduler = ES::Engine::Scheduler::Update> void RegisterSystem(USystem const &f);
 
     /**
+     * Add multiple systems as a tuple to the registry.
+     *
+     * @tparam  TScheduler  The type of scheduler to use.
+     * @param   systems  Arg containing multiple systems to register.
+     */
+    template <typename TScheduler = ES::Engine::Scheduler::Update, typename... Systems>
+    void RegisterSystem(Systems... systems);
+
+    /**
      * Deletes a scheduler from the registry.
      *
      * @tparam TScheduler The type of scheduler to delete.

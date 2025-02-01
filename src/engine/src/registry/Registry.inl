@@ -34,4 +34,10 @@ template <typename TScheduler> inline void Registry::RegisterSystem(USystem cons
 {
     this->_systems[std::type_index(typeid(TScheduler))].push_back(f);
 }
+
+template <typename TScheduler, typename... Systems>
+inline void Registry::RegisterSystem(Systems... systems)
+{
+    this->_systems[std::type_index(typeid(TScheduler))].push_back([systems...](Registry &registry) { (systems(registry), ...); });
+}
 } // namespace ES::Engine
