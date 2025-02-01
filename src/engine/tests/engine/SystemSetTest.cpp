@@ -10,14 +10,14 @@ using namespace ES::Engine;
 static int count = 0;
 static bool did_run = false;
 
-void TestSystemSetFirst(Registry &reg)
+void TestSystemSetFirst(const Registry &)
 {
     count++;
     bool is_valid = count == 1 || count == 3;
     ASSERT_TRUE(is_valid);
 }
 
-void TestSystemSetSecond(Registry &reg)
+void TestSystemSetSecond(const Registry &)
 {
     count++;
     bool is_valid = count == 2 || count == 4;
@@ -29,9 +29,9 @@ class RunTwiceUpdate : public Scheduler::Update {
   public:
     using USystem = std::function<void(Registry &)>;
 
-    RunTwiceUpdate(Registry &reg) : Scheduler::Update(reg) {}
+    explicit RunTwiceUpdate(Registry &reg) : Scheduler::Update(reg) {}
 
-    void RunSystems(std::vector<USystem> systems)
+    void RunSystems(std::vector<USystem> systems) final
     {
         Scheduler::Update::RunSystems(systems);
         Scheduler::Update::RunSystems(systems);
