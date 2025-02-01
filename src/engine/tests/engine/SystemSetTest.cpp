@@ -33,7 +33,6 @@ class RunTwiceUpdate : public Scheduler::Update {
 
     void RunSystems(std::vector<USystem> systems)
     {
-        printf("run systems run twice");
         Scheduler::Update::RunSystems(systems);
         Scheduler::Update::RunSystems(systems);
     }
