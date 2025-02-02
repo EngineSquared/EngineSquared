@@ -30,11 +30,6 @@ template <typename TScheduler> inline TScheduler &Registry::GetScheduler()
     return *static_cast<TScheduler *>(this->_schedulers[std::type_index(typeid(TScheduler))].get());
 }
 
-template <typename TScheduler> inline void Registry::RegisterSystem(USystem const &f)
-{
-    this->_systems[std::type_index(typeid(TScheduler))].push_back(f);
-}
-
 template <typename TScheduler, typename... Systems>
 inline void Registry::RegisterSystem(Systems... systems)
 {

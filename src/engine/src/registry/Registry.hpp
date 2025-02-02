@@ -82,22 +82,15 @@ class Registry {
     template <typename TScheduler> TScheduler &GetScheduler();
 
     /**
-     * Add system to the registry. A system is a function that will be called by the registry.
+     * Add one or multiple systems to the registry. A system is a function that will be called by the registry.
      * The function must take a Registry as first parameter.
      * The function must return void.
      * The function will be called by the registry according to the scheduler choosen.
+     * If multiple systems are added, they will be called as a group, in the order they were added.
      *
      * @tparam  TScheduler  The type of scheduler to use.
-     * @param   f   The function to add.
+     * @param   systems    The systems to add.
      * @see IScheduler
-     */
-    template <typename TScheduler = ES::Engine::Scheduler::Update> void RegisterSystem(USystem const &f);
-
-    /**
-     * Add multiple systems as a tuple to the registry.
-     *
-     * @tparam  TScheduler  The type of scheduler to use.
-     * @param   systems  Arg containing multiple systems to register.
      */
     template <typename TScheduler = ES::Engine::Scheduler::Update, typename... Systems>
     void RegisterSystem(Systems... systems);
