@@ -11,7 +11,7 @@ static int count = 0;
 static bool first_did_run = false;
 static bool second_did_run = false;
 
-// This test aims to check if, when adding multiple systems as a systemset, 
+// This test aims to check if, when adding multiple systems as a systemset,
 // they are called in the order they were added and they are not interrupted by other systems.
 
 // This system should always be called first.
