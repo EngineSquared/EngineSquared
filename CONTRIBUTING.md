@@ -69,6 +69,12 @@ If the pull request is related to a graphical feature, you have to add a screens
 
 To meet the requirements of the project, the pull request has to be approved by the core team and have tests if applicable. (Look at [Testing Policies](#testing-policies) for more details)
 
+> [!IMPORTANT]
+> In the case your feature is "critical" (we don't have a definition of "critical" yet but for example, it can be a major feature or modification/addition of data inside CONTRIBUTING), you must add "critical" label to your pull request.
+> If it's a draft, it will do nothing.
+> If it's a final version, it will be automatically merged only if all the core team members approve it (and all other needed CI job succeed).
+> When "critical" label is added, the Core teams will automatically be added as reviewers.
+
 ## Project structure
 
 Currently, the project contains 2 main parts: the engine squared core and plugins, respectively located in `./src/engine` and `./src/plugin`.
