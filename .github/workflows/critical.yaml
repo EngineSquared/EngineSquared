@@ -1,0 +1,64 @@
+name: Check critical PRs
+
+# run on every PR that have a label "critical"
+# and the PR is not a draft
+# if not critical, do nothing
+# if critical, check that every member of the "CoreTeam" has reviewed the PR and approved it after the last commit
+
+on:
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+  pull_request:
+    types: [labeled, unlabeled, opened, reopened]
+
+jobs:
+  request-review:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'critical') && !github.event.pull_request.draft
+
+    steps:
+    - name: Get team members
+      uses: actions/github-script@v6
+      
+      with:
+        github-token: ${{ secrets.PAT_CI_TEST }}
+        script: |
+          const labelName = 'critical';
+          const teamSlug = 'coreteam';
+          const org = 'EngineSquared';
+
+          const teamMembers = await github.rest.teams.listMembersInOrg({
+            org: org,
+            team_slug: teamSlug
+          });
+
+          let reviews = await github.rest.pulls.listReviews({
+            owner: org,
+            repo: context.repo.repo,
+            pull_number: context.payload.pull_request.number
+          });
+
+          const last_commit = await github.rest.pulls.get({
+            owner: org,
+            repo: context.repo.repo,
+            pull_number: context.payload.pull_request.number
+          });
+
+          reviews.data = reviews.data.filter(review => review.commit_id === last_commit.data.head.sha);
+          
+          const teamMemberNames = teamMembers.data.map(member => member.login);
+          const reviewers = reviews.data.map(review => review.user.login);
+          const author = context.payload.pull_request.user.login;
+          const missingReviewers = teamMemberNames.filter(member => member !== author).filter(member => !reviewers.includes(member));
+
+          if (missingReviewers.length > 0) {
+            for (const reviewer of missingReviewers) {
+              await github.rest.pulls.requestReviewers({
+                owner: org,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                reviewers: [reviewer]
+              });
+            }
+            throw new Error(`Need review from ${missingReviewers.join(', ')} before merging`);
+          }
