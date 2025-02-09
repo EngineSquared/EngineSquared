@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "Entity.hpp"
 #include "Core.hpp"
+#include "Entity.hpp"
 
 #include "Update.hpp"
 

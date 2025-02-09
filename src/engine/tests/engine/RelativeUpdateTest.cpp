@@ -3,8 +3,8 @@
 #include <array>
 #include <chrono>
 
-#include "Entity.hpp"
 #include "Core.hpp"
+#include "Entity.hpp"
 #include "RelativeTimeUpdate.hpp"
 
 using namespace ES::Engine;

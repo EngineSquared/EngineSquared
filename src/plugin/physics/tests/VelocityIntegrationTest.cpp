@@ -3,8 +3,8 @@
 #include <chrono>
 #include <thread>
 
-#include "Entity.hpp"
 #include "Core.hpp"
+#include "Entity.hpp"
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
 #include "VelocityIntegration.hpp"

@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
+#include "Core.hpp"
 #include "Entity.hpp"
 #include "FixedTimeUpdate.hpp"
-#include "Core.hpp"
 
 using namespace ES::Engine;
 using namespace std::chrono_literals;

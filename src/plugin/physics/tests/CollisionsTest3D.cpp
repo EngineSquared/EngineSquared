@@ -3,8 +3,8 @@
 #include "ABABCollision3D.hpp"
 #include "BoxCollider3D.hpp"
 #include "CollisionCheckerABAB.hpp"
-#include "Entity.hpp"
 #include "Core.hpp"
+#include "Entity.hpp"
 #include "Transform.hpp"
 
 using namespace ES::Plugin::Physics;

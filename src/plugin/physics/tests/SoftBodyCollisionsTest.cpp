@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
+#include "Core.hpp"
 #include "Entity.hpp"
 #include "ParticleBoxCollision.hpp"
 #include "Physics.hpp"
-#include "Core.hpp"
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
 #include "VelocityIntegration.hpp"
