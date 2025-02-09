@@ -4,7 +4,7 @@
 #include <thread>
 
 #include "Entity.hpp"
-#include "Registry.hpp"
+#include "Core.hpp"
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
 #include "VelocityIntegration.hpp"
@@ -13,7 +13,7 @@
 
 TEST(VelocityIntegration, BasicGravityIntegration)
 {
-    ES::Engine::Registry registry;
+    ES::Engine::Core registry;
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
 
     ES::Engine::Entity entity = registry.CreateEntity();
@@ -36,7 +36,7 @@ TEST(VelocityIntegration, BasicGravityIntegration)
 
 TEST(VelocityIntegration, ForceHigherThanGravity)
 {
-    ES::Engine::Registry registry;
+    ES::Engine::Core registry;
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
 
     ES::Engine::Entity entity = registry.CreateEntity();

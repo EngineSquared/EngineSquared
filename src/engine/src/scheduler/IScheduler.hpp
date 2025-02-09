@@ -3,11 +3,11 @@
 #include <entt/entt.hpp>
 
 namespace ES::Engine {
-class Registry;
+class Core;
 }
 
 namespace ES::Engine::Scheduler {
-using USystem = std::function<void(Registry &)>;
+using USystem = std::function<void(Core &)>;
 
 /**
  * @brief Interface to be implemented for every schedulers

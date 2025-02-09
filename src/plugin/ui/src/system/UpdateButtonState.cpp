@@ -9,7 +9,7 @@
 
 #include "Button.hpp"
 
-void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Registry &r)
+void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Core &r)
 {
     auto &inputManager = r.GetResource<ES::Plugin::Input::Resource::InputManager>();
     const bool &isMouseLeftPressed = inputManager.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);

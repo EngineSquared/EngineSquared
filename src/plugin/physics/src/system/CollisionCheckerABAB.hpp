@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Registry.hpp"
+#include "Core.hpp"
 
 namespace ES::Plugin::Physics::System {
 /**
@@ -10,12 +10,12 @@ namespace ES::Plugin::Physics::System {
  *
  * @param	registry	registry used to get entities to check
  */
-void DetectABABCollisions(ES::Engine::Registry &registry);
+void DetectABABCollisions(ES::Engine::Core &registry);
 
 /**
  * Remove all ABAB collisions from the registry
  *
  * @param	registry	registry used to get entities to check
  */
-void RemoveABABCollisions(ES::Engine::Registry &registry);
+void RemoveABABCollisions(ES::Engine::Core &registry);
 } // namespace ES::Plugin::Physics::System

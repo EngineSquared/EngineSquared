@@ -3,7 +3,7 @@
 #include "Entity.hpp"
 #include "ParticleBoxCollision.hpp"
 #include "Physics.hpp"
-#include "Registry.hpp"
+#include "Core.hpp"
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
 #include "VelocityIntegration.hpp"
@@ -12,7 +12,7 @@
 
 TEST(SoftBodyCollisions, BasicParticleCollision)
 {
-    ES::Engine::Registry registry;
+    ES::Engine::Core registry;
 
     registry.RegisterSystem(ES::Plugin::Physics::System::DetectSoftBodyCollisions);
 
@@ -46,7 +46,7 @@ TEST(SoftBodyCollisions, BasicParticleCollision)
 
 TEST(SoftBodyCollisions, VelocityIntegrationWithBasicCollision)
 {
-    ES::Engine::Registry registry;
+    ES::Engine::Core registry;
 
     registry.RegisterSystem(ES::Plugin::Physics::System::DetectSoftBodyCollisions);
     registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);

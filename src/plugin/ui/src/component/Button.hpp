@@ -76,6 +76,6 @@ struct Button {
     /**
      * @brief The function to call when the button is clicked
      */
-    std::function<void(ES::Engine::Registry &)> onClick;
+    std::function<void(ES::Engine::Core &)> onClick;
 };
 }; // namespace ES::Plugin::UI::Component

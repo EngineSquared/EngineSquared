@@ -4,14 +4,14 @@
 #include "BoxCollider3D.hpp"
 #include "CollisionCheckerABAB.hpp"
 #include "Entity.hpp"
-#include "Registry.hpp"
+#include "Core.hpp"
 #include "Transform.hpp"
 
 using namespace ES::Plugin::Physics;
 
 TEST(Collision, CollisionSystemWithBoxCollider3D)
 {
-    ES::Engine::Registry registry;
+    ES::Engine::Core registry;
 
     ES::Engine::Entity eA(registry.CreateEntity());
     ES::Engine::Entity eB(registry.CreateEntity());
