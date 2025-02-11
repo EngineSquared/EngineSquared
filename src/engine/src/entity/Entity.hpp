@@ -22,6 +22,14 @@ class Entity {
      * @param   entt    index value in the registry
      */
     explicit(false) Entity(entt::entity entity = entt::null) : _entity(FromEnttEntity(entity)) {}
+
+    /**
+     * Create a ES Entity from an entity_id_type
+     *
+     * @param   entity  index value in the registry
+     */
+    explicit(false) Entity(entity_id_type entity) : _entity(entity) {}
+
     ~Entity() = default;
 
     /**
