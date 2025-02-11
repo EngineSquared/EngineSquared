@@ -2,7 +2,8 @@
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
-
+    this->_registry = std::make_unique<entt::registry>();
+    
     this->RegisterScheduler<ES::Engine::Scheduler::Startup>(
         [this]() { this->DeleteScheduler<ES::Engine::Scheduler::Startup>(); });
     this->RegisterScheduler<ES::Engine::Scheduler::Update>();
