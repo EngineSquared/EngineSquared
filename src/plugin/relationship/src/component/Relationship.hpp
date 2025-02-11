@@ -24,22 +24,20 @@
 
 #include "Entity.hpp"
 
-namespace ES::Plugin::Relationship::Component
-{
-    /**
-     * Component that represents a relationship between entities
-     */
-    struct Relationship
-    {
-        // @brief number of children of the entity
-        std::size_t children = 0;
-        // @brief first child of the entity
-        ES::Engine::Entity first = ES::Engine::Entity::entity_null_id;
-        // @brief previous sibling of the entity
-        ES::Engine::Entity prev = ES::Engine::Entity::entity_null_id;
-        // @brief next sibling of the entity
-        ES::Engine::Entity next = ES::Engine::Entity::entity_null_id;
-        // @brief parent of the entity
-        ES::Engine::Entity parent = ES::Engine::Entity::entity_null_id;
-    };
-}
+namespace ES::Plugin::Relationship::Component {
+/**
+ * Component that represents a relationship between entities
+ */
+struct Relationship {
+    // @brief number of children of the entity
+    std::size_t children = 0;
+    // @brief first child of the entity
+    ES::Engine::Entity first = ES::Engine::Entity::entity_null_id;
+    // @brief previous sibling of the entity
+    ES::Engine::Entity prev = ES::Engine::Entity::entity_null_id;
+    // @brief next sibling of the entity
+    ES::Engine::Entity next = ES::Engine::Entity::entity_null_id;
+    // @brief parent of the entity
+    ES::Engine::Entity parent = ES::Engine::Entity::entity_null_id;
+};
+} // namespace ES::Plugin::Relationship::Component
