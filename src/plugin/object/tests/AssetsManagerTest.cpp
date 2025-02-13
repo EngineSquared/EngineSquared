@@ -4,7 +4,7 @@
 
 using namespace ES::Plugin::Object::Resource;
 
-TEST(Registry, CreateEntity)
+TEST(Core, CreateEntity)
 {
     struct TestAssets {
         int value;

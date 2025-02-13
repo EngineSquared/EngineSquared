@@ -8,9 +8,9 @@ namespace ES::Engine::Scheduler {
  */
 class AScheduler : public IScheduler {
   public:
-    explicit AScheduler(Registry &registry) : _registry(registry) {}
+    explicit AScheduler(Core &registry) : _registry(registry) {}
 
   protected:
-    Registry &_registry;
+    Core &_registry;
 };
 } // namespace ES::Engine::Scheduler

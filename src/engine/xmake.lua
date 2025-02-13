@@ -11,7 +11,7 @@ target("EngineSquaredCore")
     add_headerfiles("src/**.hpp", { public = true })
     add_includedirs("src", { public = true })
     add_includedirs("src/entity", { public = true })
-    add_includedirs("src/registry", { public = true })
+    add_includedirs("src/core", { public = true })
     add_includedirs("src/scheduler", { public = true })
 
     if is_mode("debug") then

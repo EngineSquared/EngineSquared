@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "Registry.hpp"
+#include "Core.hpp"
 
 namespace ES::Plugin::Physics::System {
 /**
@@ -10,5 +10,5 @@ namespace ES::Plugin::Physics::System {
  *
  * @param registry  registry used to get all soft body nodes
  */
-void VelocityIntegration(ES::Engine::Registry &registry);
+void VelocityIntegration(ES::Engine::Core &registry);
 } // namespace ES::Plugin::Physics::System

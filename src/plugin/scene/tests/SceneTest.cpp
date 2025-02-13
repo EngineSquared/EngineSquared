@@ -13,12 +13,12 @@ using namespace ES::Plugin::Scene;
 
 class SceneTest : public Utils::AScene {
   protected:
-    void _onCreate(ES::Engine::Registry &registry) final
+    void _onCreate(ES::Engine::Core &registry) final
     {
         // This method is intentionally left empty because no initialization is needed for this test scene.
     }
 
-    void _onDestroy(ES::Engine::Registry &registry) final
+    void _onDestroy(ES::Engine::Core &registry) final
     {
         // This method is intentionally left empty because no initialization is needed for this test scene.
     }
@@ -26,7 +26,7 @@ class SceneTest : public Utils::AScene {
 
 TEST(Scene, SceneManager)
 {
-    ES::Engine::Registry registry;
+    ES::Engine::Core registry;
     registry.RegisterResource<Resource::SceneManager>(Resource::SceneManager());
     registry.GetResource<Resource::SceneManager>().RegisterScene<SceneTest>("scene1");
     registry.GetResource<Resource::SceneManager>().RegisterScene<SceneTest>("scene2");

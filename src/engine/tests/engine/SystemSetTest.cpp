@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
+#include "Core.hpp"
 #include "Entity.hpp"
-#include "Registry.hpp"
 
 #include "Update.hpp"
 
@@ -15,7 +15,7 @@ static bool second_did_run = false;
 // they are called in the order they were added and they are not interrupted by other systems.
 
 // This system should always be called first.
-void TestSystemSetFirst(const Registry &)
+void TestSystemSetFirst(const Core &)
 {
     count++;
     bool is_valid = count == 1 || count == 3;
@@ -24,7 +24,7 @@ void TestSystemSetFirst(const Registry &)
 }
 
 // This system should always be called second.
-void TestSystemSetSecond(const Registry &)
+void TestSystemSetSecond(const Core &)
 {
     count++;
     bool is_valid = count == 2 || count == 4;
@@ -34,15 +34,15 @@ void TestSystemSetSecond(const Registry &)
 
 // This system should NOT run between one of the two systems in the systemset.
 // It could be run before or after the systemset, so we check if either both or none of the flags are set.
-void TestOtherSystem(const Registry &)
+void TestOtherSystem(const Core &)
 {
     bool is_valid = first_did_run == second_did_run;
     ASSERT_TRUE(is_valid);
 }
 
-TEST(Registry, SystemSet)
+TEST(Core, SystemSet)
 {
-    Registry reg;
+    Core reg;
 
     reg.RegisterSystem(TestSystemSetFirst, TestSystemSetSecond);
 
