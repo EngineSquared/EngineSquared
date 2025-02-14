@@ -9,5 +9,5 @@ namespace ES::Plugin::UI::System {
  *
  * @param   r   The registry to use
  */
-void ButtonClick(ES::Engine::Registry &r);
+void ButtonClick(ES::Engine::Core &r);
 } // namespace ES::Plugin::UI::System

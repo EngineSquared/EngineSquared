@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Registry.hpp"
+#include "Core.hpp"
 #include <entt/entt.hpp>
 #include <typeindex>
 
@@ -57,7 +57,7 @@ class Entity {
      * @return  reference of the added component
      */
 
-    template <typename TComponent> inline decltype(auto) AddComponent(Registry &registry, TComponent &&component)
+    template <typename TComponent> inline decltype(auto) AddComponent(Core &registry, TComponent &&component)
     {
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity),
                                                           std::forward<TComponent>(component));
@@ -73,7 +73,7 @@ class Entity {
      * @return  reference of the added component
      */
     template <typename TComponent, typename... TArgs>
-    inline decltype(auto) AddComponent(Registry &registry, TArgs &&...args)
+    inline decltype(auto) AddComponent(Core &registry, TArgs &&...args)
     {
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
     }
@@ -87,11 +87,11 @@ class Entity {
      * @return  reference of the added component
      * @see     RemoveTemporaryComponents
      */
-    template <typename TTempComponent> inline decltype(auto) AddTemporaryComponent(Registry &registry)
+    template <typename TTempComponent> inline decltype(auto) AddTemporaryComponent(Core &registry)
     {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
-            temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Registry &reg) {
+            temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Core &reg) {
                 reg.GetRegistry().clear<TTempComponent>();
             };
         }
@@ -106,7 +106,7 @@ class Entity {
      * @return  void
      * @see     AddTemporaryComponent
      */
-    static void RemoveTemporaryComponents(Registry &registry)
+    static void RemoveTemporaryComponents(Core &registry)
     {
         if (temporaryComponent.empty())
         {
@@ -125,7 +125,7 @@ class Entity {
      * @tparam  TComponent  type to remove from registry
      * @param   registry    registry used to store the component
      */
-    template <typename TComponent> inline void RemoveComponent(Registry &registry)
+    template <typename TComponent> inline void RemoveComponent(Core &registry)
     {
         registry.GetRegistry().remove<TComponent>(ToEnttEntity(this->_entity));
     }
@@ -136,7 +136,7 @@ class Entity {
      * @tparam  TComponent  components to check
      * @return  true if entity have all requested component
      */
-    template <typename... TComponent> inline bool HasComponents(Registry &registry)
+    template <typename... TComponent> inline bool HasComponents(Core &registry)
     {
         return registry.GetRegistry().all_of<TComponent...>(ToEnttEntity(this->_entity));
     }
@@ -147,7 +147,7 @@ class Entity {
      * @tparam  TComponent  components to get
      * @return  components of type TComponent from the entity
      */
-    template <typename... TComponent> inline decltype(auto) GetComponents(Registry &registry)
+    template <typename... TComponent> inline decltype(auto) GetComponents(Core &registry)
     {
         return registry.GetRegistry().get<TComponent...>(ToEnttEntity(this->_entity));
     }
@@ -158,6 +158,6 @@ class Entity {
 
   private:
     entity_id_type _entity;
-    inline static std::unordered_map<std::type_index, std::function<void(Registry &)>> temporaryComponent = {};
+    inline static std::unordered_map<std::type_index, std::function<void(Core &)>> temporaryComponent = {};
 };
 } // namespace ES::Engine

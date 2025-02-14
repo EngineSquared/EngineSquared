@@ -8,7 +8,7 @@
 namespace ES::Plugin::Physics::System {
 constexpr float GRAVITY = 9.81f;
 
-static void ApplyGravity(ES::Engine::Registry &registry)
+static void ApplyGravity(ES::Engine::Core &registry)
 {
     auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::SoftBodyNode>();
 
@@ -19,7 +19,7 @@ static void ApplyGravity(ES::Engine::Registry &registry)
     }
 }
 
-static void ApplySpringForces(ES::Engine::Registry &registry)
+static void ApplySpringForces(ES::Engine::Core &registry)
 {
     auto springView = registry.GetRegistry().view<ES::Plugin::Physics::Component::SoftBodySpring>();
 
@@ -31,7 +31,7 @@ static void ApplySpringForces(ES::Engine::Registry &registry)
     }
 }
 
-static void IntegrateVelocities(ES::Engine::Registry &registry)
+static void IntegrateVelocities(ES::Engine::Core &registry)
 {
     auto nodeView = registry.GetRegistry()
                         .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
@@ -56,7 +56,7 @@ static void IntegrateVelocities(ES::Engine::Registry &registry)
     }
 }
 
-void VelocityIntegration(ES::Engine::Registry &registry)
+void VelocityIntegration(ES::Engine::Core &registry)
 {
     ApplyGravity(registry);
     ApplySpringForces(registry);
