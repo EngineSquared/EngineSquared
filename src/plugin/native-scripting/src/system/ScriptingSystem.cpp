@@ -11,6 +11,6 @@ void ES::Plugin::NativeScripting::System::UpdateScripts(ES::Engine::Registry &re
             nsComponent.OnCreate(nsComponent.seInstance);
         }
 
-        nsComponent.OnUpdate(nsComponent.seInstance, 0.0f);
-    });
+            nsComponent.OnUpdate(nsComponent.seInstance, 0.0f);
+        });
 }

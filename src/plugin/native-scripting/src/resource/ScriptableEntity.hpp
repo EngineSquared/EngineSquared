@@ -30,4 +30,4 @@ class ScriptableEntity {
         ES::Engine::Entity _entity;
         ES::Engine::Registry *_registry = nullptr;
 };
-}
+} // namespace ES::Plugin::NativeScripting::Resource

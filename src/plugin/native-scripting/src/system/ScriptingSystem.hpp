@@ -6,4 +6,4 @@
 
 namespace ES::Plugin::NativeScripting::System {
 void UpdateScripts(ES::Engine::Registry &registry);
-} // namespace ES::Engine::Plugin::System::
+} // namespace ES::Plugin::NativeScripting::System
