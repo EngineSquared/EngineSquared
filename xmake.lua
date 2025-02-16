@@ -35,6 +35,7 @@ target("EngineSquared")
     add_deps("PluginUtils")
     add_deps("PluginVkWrapper")
     add_deps("PluginWindow")
+    add_deps("PluginNativeScripting")
     add_deps("UtilsLog")
 
     set_policy("build.warning", true)

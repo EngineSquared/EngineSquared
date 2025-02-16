@@ -4,7 +4,6 @@
 
 #include "NativeScripting.hpp"
 
-namespace ES::Plugin::ScriptingSystem::System
-{
-void UpdateScripts(ES::Engine::Registry &reg);
+namespace ES::Plugin::NativeScripting::System {
+void UpdateScripts(ES::Engine::Registry &registry);
 } // namespace ES::Engine::Plugin::System::

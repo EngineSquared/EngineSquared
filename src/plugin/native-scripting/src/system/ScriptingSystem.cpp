@@ -1,13 +1,13 @@
 #include "ScriptingSystem.hpp"
 
-void ES::Plugin::ScriptingSystem::System::UpdateScripts(ES::Engine::Registry &reg)
+void ES::Plugin::NativeScripting::System::UpdateScripts(ES::Engine::Registry &registry)
 {
-    reg.GetRegistry().view<ES::Plugin::NativeScripting::Component::NativeScripting>().each([=](auto entity, auto &nsComponent)
+    registry.GetRegistry().view<ES::Plugin::NativeScripting::Component::NativeScripting>().each([=](auto entity, auto &nsComponent)
     {
         if (!nsComponent.seInstance)
         {
             nsComponent.Instantiate();
-            nsComponent.seInstance->entity = entity;
+            nsComponent.seInstance->SetEntity(entity);
             nsComponent.OnCreate(nsComponent.seInstance);
         }
 
