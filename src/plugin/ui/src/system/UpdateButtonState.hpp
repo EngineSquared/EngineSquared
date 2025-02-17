@@ -9,5 +9,5 @@ namespace ES::Plugin::UI::System {
  * @param   r   The registry to use
  * @param   e   The entity to update
  */
-void UpdateButtonState(ES::Engine::Registry &r);
+void UpdateButtonState(ES::Engine::Core &r);
 } // namespace ES::Plugin::UI::System

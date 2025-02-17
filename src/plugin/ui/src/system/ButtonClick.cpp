@@ -3,7 +3,7 @@
 #include "Button.hpp"
 #include "HasChanged.hpp"
 
-void ES::Plugin::UI::System::ButtonClick(ES::Engine::Registry &r)
+void ES::Plugin::UI::System::ButtonClick(ES::Engine::Core &r)
 {
     auto view = r.GetRegistry()
                     .view<ES::Plugin::UI::Component::Button,

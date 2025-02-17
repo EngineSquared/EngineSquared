@@ -30,7 +30,7 @@ class SceneManager {
      *
      * @param registry  registry that contains all components
      */
-    void Update(ES::Engine::Registry &registry);
+    void Update(ES::Engine::Core &registry);
 
     /**
      * @brief Register a scene using a name as a key.
@@ -53,9 +53,9 @@ class SceneManager {
     }
 
   private:
-    void _loadScene(ES::Engine::Registry &registry, const std::string &name);
+    void _loadScene(ES::Engine::Core &registry, const std::string &name);
 
-    void _unloadScene(ES::Engine::Registry &registry, const std::string &name);
+    void _unloadScene(ES::Engine::Core &registry, const std::string &name);
 
     [[nodiscard]] std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> _getScene(const std::string &name);
 

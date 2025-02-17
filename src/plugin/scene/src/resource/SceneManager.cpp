@@ -6,7 +6,7 @@
 
 #include "SceneManager.hpp"
 
-void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Registry &registry)
+void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Core &registry)
 {
     if (!_nextScene.has_value())
     {
@@ -21,7 +21,7 @@ void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Registry &reg
     _currentScene = _nextScene;
     _nextScene.reset();
 }
-void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Registry &registry, const std::string &name)
+void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Core &registry, const std::string &name)
 {
     ES::Utils::Log::Info("Loading scene: " + _nextScene.value());
     std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> scene = _getScene(name);
@@ -31,7 +31,7 @@ void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Registry 
     }
 }
 
-void ES::Plugin::Scene::Resource::SceneManager::_unloadScene(ES::Engine::Registry &registry, const std::string &name)
+void ES::Plugin::Scene::Resource::SceneManager::_unloadScene(ES::Engine::Core &registry, const std::string &name)
 {
     ES::Utils::Log::Info("Unloading scene: " + _currentScene.value());
     std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> scene = _getScene(name);

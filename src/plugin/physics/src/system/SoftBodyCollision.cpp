@@ -32,7 +32,7 @@ static bool IsNodeInsideBox(const ES::Plugin::Object::Component::Transform &node
            nodeTransform.position.z <= boxTransform.position.z + boxCollider.size.z / 2;
 }
 
-void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Registry &registry)
+void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Core &registry)
 {
     auto boxColliderView =
         registry.GetRegistry()
@@ -70,7 +70,7 @@ void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Registry 
     }
 }
 
-void ES::Plugin::Physics::System::ApplySoftBodyCollisions(ES::Engine::Registry &registry)
+void ES::Plugin::Physics::System::ApplySoftBodyCollisions(ES::Engine::Core &registry)
 {
     auto dt = registry.GetScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
     auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::ParticleBoxCollision>();
@@ -96,7 +96,7 @@ void ES::Plugin::Physics::System::ApplySoftBodyCollisions(ES::Engine::Registry &
     }
 }
 
-void ES::Plugin::Physics::System::DeleteSoftBodyCollisions(ES::Engine::Registry &registry)
+void ES::Plugin::Physics::System::DeleteSoftBodyCollisions(ES::Engine::Core &registry)
 {
     auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::ParticleBoxCollision>();
 
