@@ -79,6 +79,25 @@ class Entity {
     }
 
     /**
+     * Utility method to add a component to an entity if it does not already exist.
+     * 
+     * @tparam  TComponent  type to add to registry
+     * @tparam  TArgs       type used to create the component
+     * @param   registry    registry used to store the component
+     * @param   args        parameters used to instanciate component directly in registry memory
+     * @return  reference of the added component
+     */
+    template <typename TComponent, typename... TArgs>
+    inline decltype(auto) AddComponentIfNotExists(Core &registry, TArgs &&...args)
+    {
+        if (this->HasComponents<TComponent>(registry))
+        {
+            return this->GetComponents<TComponent>(registry);
+        }
+        return this->AddComponent<TComponent>(registry, std::forward<TArgs>(args)...);
+    }
+
+    /**
      * Utility method to add a temporary component to an entity.
      * Temporary component are removed when calling RemoveTemporaryComponents system.
      *
@@ -152,6 +171,18 @@ class Entity {
         return registry.GetRegistry().get<TComponent...>(ToEnttEntity(this->_entity));
     }
 
+    /**
+     * Try to get a component of type TComponent from the entity.
+     *
+     * @tparam  TComponent  components to get
+     * @return  components of type TComponent from the entity
+     */
+    template <typename TComponent> inline decltype(auto) TryGetComponent(Core &registry)
+    {
+        return registry.GetRegistry().try_get<TComponent>(ToEnttEntity(this->_entity));
+    }
+
+
     inline static entity_id_type FromEnttEntity(entt::entity e) { return static_cast<entity_id_type>(e); }
 
     inline static entt::entity ToEnttEntity(entity_id_type e) { return static_cast<entt::entity>(e); }
@@ -160,4 +191,5 @@ class Entity {
     entity_id_type _entity;
     inline static std::unordered_map<std::type_index, std::function<void(Core &)>> temporaryComponent = {};
 };
+
 } // namespace ES::Engine
