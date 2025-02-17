@@ -23,8 +23,8 @@
 #ifndef INSTANCE_HPP_
 #define INSTANCE_HPP_
 
-#include <cstdlib>
 #include <algorithm>
+#include <cstdlib>
 #include <ranges>
 
 #include "Command.hpp"
