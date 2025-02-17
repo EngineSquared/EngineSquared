@@ -25,6 +25,6 @@
 #include "component/Relationship.hpp"
 
 namespace ES::Plugin::Relationship::Utils {
-    auto SetChildOf(ES::Engine::Core &core, ES::Engine::Entity parent, ES::Engine::Entity child) -> void;
-    auto IsChildOf(ES::Engine::Core &core, ES::Engine::Entity parent, ES::Engine::Entity child) -> bool;
-}
+auto SetChildOf(ES::Engine::Core &core, ES::Engine::Entity parent, ES::Engine::Entity child) -> void;
+auto IsChildOf(ES::Engine::Core &core, ES::Engine::Entity parent, ES::Engine::Entity child) -> bool;
+} // namespace ES::Plugin::Relationship::Utils

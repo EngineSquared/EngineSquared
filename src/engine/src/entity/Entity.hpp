@@ -80,7 +80,7 @@ class Entity {
 
     /**
      * Utility method to add a component to an entity if it does not already exist.
-     * 
+     *
      * @tparam  TComponent  type to add to registry
      * @tparam  TArgs       type used to create the component
      * @param   registry    registry used to store the component
@@ -181,7 +181,6 @@ class Entity {
     {
         return registry.GetRegistry().try_get<TComponent>(ToEnttEntity(this->_entity));
     }
-
 
     inline static entity_id_type FromEnttEntity(entt::entity e) { return static_cast<entity_id_type>(e); }
 

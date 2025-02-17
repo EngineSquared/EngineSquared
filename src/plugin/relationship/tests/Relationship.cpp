@@ -31,5 +31,3 @@ TEST(Relationship, add_child)
 
     ES::Plugin::Relationship::Utils::SetChildOf(core, entity1, entity2);
 }
-
-
