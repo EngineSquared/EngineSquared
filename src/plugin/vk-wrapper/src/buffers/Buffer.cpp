@@ -69,15 +69,10 @@ void Buffers::CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice
 {
     VkDeviceSize bufferSize = sizeof(UniformBufferObject);
 
-    // _uniformBuffers.resize(swapChainImages.size());
-    // _uniformBuffersMemory.resize(swapChainImages.size());
-    // _uniformBuffersMapped.resize(swapChainImages.size());
-
     _uniformBuffers.resize(MAX_FRAMES_IN_FLIGHT);
     _uniformBuffersMemory.resize(MAX_FRAMES_IN_FLIGHT);
     _uniformBuffersMapped.resize(MAX_FRAMES_IN_FLIGHT);
 
-    // for (size_t i = 0; i < swapChainImages.size(); ++i)
     for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
         CreateBuffer(device, physicalDevice, bufferSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
@@ -100,7 +95,6 @@ void Buffers::Destroy(const VkDevice &device)
 void Buffers::DestroyUniformBuffers(const VkDevice &device,
                                     [[maybe_unused]] const std::vector<VkImage> &swapChainImages)
 {
-    // for (size_t i = 0; i < swapChainImages.size(); ++i)
     for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
         vkDestroyBuffer(device, _uniformBuffers[i], nullptr);
@@ -121,11 +115,6 @@ void Buffers::UpdateUniformBuffer(const VkDevice &device, const VkExtent2D swapC
     ubo.proj =
         glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float) swapChainExtent.height, 0.1f, 10.0f);
     ubo.proj[1][1] *= -1;
-
-    // void *data = nullptr;
-    // vkMapMemory(device, _uniformBuffersMemory[currentImage], 0, sizeof(ubo), 0, &data);
-    // memcpy(data, &ubo, sizeof(ubo));
-    // vkUnmapMemory(device, _uniformBuffersMemory[currentImage]);
 
     memcpy(_uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
 }

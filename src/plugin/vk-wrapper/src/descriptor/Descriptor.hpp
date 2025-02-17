@@ -51,8 +51,25 @@ class Descriptor {
      */
     void Create(const VkDevice &device);
 
+    /**
+     * @brief Creates the descriptor pool.
+     *
+     * This function creates the descriptor pool.
+     * The descriptor pool is used to allocate descriptor sets.
+     *
+     * @param device  The Vulkan device.
+     */
     void CreateDescriptorPool(const VkDevice &device);
 
+    /**
+     * @brief Creates the descriptor set.
+     *
+     * This function creates the descriptor set.
+     * The descriptor set is used to store the resources that are going to be used in the shaders.
+     *
+     * @param device  The Vulkan device.
+     * @param uniformBuffer  The uniform buffer.
+     */
     void CreateDescriptorSet(const VkDevice &device, const std::vector<VkBuffer> &uniformBuffer);
 
     /**

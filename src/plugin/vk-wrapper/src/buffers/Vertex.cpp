@@ -12,12 +12,6 @@ VkVertexInputBindingDescription Vertex::GetBindingDescription()
     return bindingDescription;
 }
 
-/*
-float : VK_FORMAT_R32_SFLOAT
-vec2 : VK_FORMAT_R32G32_SFLOAT
-vec3 : VK_FORMAT_R32G32B32_SFLOAT
-vec4 : VK_FORMAT_R32G32B32A32_SFLOAT
-*/
 std::array<VkVertexInputAttributeDescription, 2> Vertex::GetAttributeDescriptions()
 {
     std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions{};
