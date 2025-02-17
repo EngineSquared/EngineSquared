@@ -1,6 +1,4 @@
 #include "Instance.hpp"
-#include <algorithm>
-#include <ranges>
 
 namespace ES::Plugin::Wrapper {
 

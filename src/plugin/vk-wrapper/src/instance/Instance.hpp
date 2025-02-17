@@ -24,6 +24,8 @@
 #define INSTANCE_HPP_
 
 #include <cstdlib>
+#include <algorithm>
+#include <ranges>
 
 #include "Command.hpp"
 #include "Descriptor.hpp"

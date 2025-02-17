@@ -10,8 +10,8 @@
  * it under the terms of the GPL-3.0 License as published by the
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
- * @file VertexBuffer.hpp
- * @brief VertexBuffer class declaration.
+ * @file Buffer.hpp
+ * @brief Buffer class declaration.
  *
  *
  * @author @MasterLaplace
@@ -19,8 +19,8 @@
  * @date 2024-11-03
  **************************************************************************/
 
-#ifndef VERTEXBUFFER_HPP_
-#define VERTEXBUFFER_HPP_
+#ifndef BUFFER_HPP_
+#define BUFFER_HPP_
 
 #include "UniformObject.hpp"
 #include "Vertex.hpp"
@@ -196,4 +196,4 @@ class Buffers {
 
 } // namespace ES::Plugin::Wrapper
 
-#endif /* !VERTEXBUFFER_HPP_ */
+#endif /* !BUFFER_HPP_ */

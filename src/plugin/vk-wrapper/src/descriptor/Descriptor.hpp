@@ -19,8 +19,8 @@
  * @date 2024-11-04
  **************************************************************************/
 
-#ifndef DESCRIPTORLAYOUT_HPP_
-#define DESCRIPTORLAYOUT_HPP_
+#ifndef DESCRIPTOR_HPP_
+#define DESCRIPTOR_HPP_
 
 #include "Buffer.hpp"
 
@@ -116,4 +116,4 @@ class Descriptor {
 
 } // namespace ES::Plugin::Wrapper
 
-#endif /* !DESCRIPTORLAYOUT_HPP_ */
+#endif /* !DESCRIPTOR_HPP_ */
