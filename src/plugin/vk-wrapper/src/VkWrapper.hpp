@@ -165,19 +165,19 @@ class VkWrapper {
      * @brief Print the available extensions for the Vulkan API.
      *
      */
-    void PrintAvailableExtensions() const;
+    static void PrintAvailableExtensions();
 
     /**
      * @brief Print the version of the VkWrapper.
      *
      */
-    void PrintVersion() const;
+    static void PrintVersion();
 
     /**
      * @brief Print the configuration of the VkWrapper.
      *
      */
-    void PrintConfig() const;
+    static void PrintConfig();
 
   private:
     Wrapper::Instance _instance;

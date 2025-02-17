@@ -35,7 +35,7 @@ void VkWrapper::Resize(GLFWwindow *window)
     _instance.RecreateSwapChain(width, height);
 }
 
-void VkWrapper::PrintAvailableExtensions() const
+void VkWrapper::PrintAvailableExtensions()
 {
     uint32_t extensionCount = 0;
     vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
@@ -45,13 +45,13 @@ void VkWrapper::PrintAvailableExtensions() const
 
     std::string available_extensions = fmt::format("available extensions ({}):", extensionCount);
     for (const auto &extension : extensions)
-        available_extensions += "\t" + std::string(extension.extensionName);
+        available_extensions += "\n\t" + std::string(extension.extensionName);
     ES::Utils::Log::Info(available_extensions);
 }
 
-void VkWrapper::PrintVersion() const { ES::Utils::Log::Info("VkWrapper version: " VKWRAPPER_VERSION_STRING); }
+void VkWrapper::PrintVersion() { ES::Utils::Log::Info("VkWrapper version: " VKWRAPPER_VERSION_STRING); }
 
-void VkWrapper::PrintConfig() const { ES::Utils::Log::Info("VkWrapper config:\n" VKWRAPPER_CONFIG_STRING); }
+void VkWrapper::PrintConfig() { ES::Utils::Log::Info("VkWrapper config:\n" VKWRAPPER_CONFIG_STRING); }
 
 void VkWrapper::ResizeCallback(GLFWwindow *window, [[maybe_unused]] int width, [[maybe_unused]] int height)
 {
