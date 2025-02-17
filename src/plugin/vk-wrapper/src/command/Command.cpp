@@ -13,7 +13,11 @@ void Command::Create(const VkDevice &device, const CreateInfo &info)
 
     if (vkCreateCommandPool(device, &poolInfo, nullptr, &_commandPool) != VK_SUCCESS)
         throw VkWrapperError("failed to create command pool!");
+}
 
+void Command::CreateCommandBuffers(const VkDevice &device,
+                                   [[maybe_unused]] const std::vector<VkFramebuffer> &swapChainFramebuffers)
+{
     _commandBuffers.resize(MAX_FRAMES_IN_FLIGHT);
 
     VkCommandBufferAllocateInfo allocInfo{};
@@ -26,7 +30,11 @@ void Command::Create(const VkDevice &device, const CreateInfo &info)
         throw VkWrapperError("failed to allocate command buffers!");
 }
 
-void Command::Destroy(const VkDevice &device) { vkDestroyCommandPool(device, _commandPool, nullptr); }
+void Command::Destroy(const VkDevice &device)
+{
+    vkFreeCommandBuffers(device, _commandPool, static_cast<uint32_t>(_commandBuffers.size()), _commandBuffers.data());
+    vkDestroyCommandPool(device, _commandPool, nullptr);
+}
 
 void Command::RecordBuffer(const RecordInfo &info)
 {
@@ -69,7 +77,15 @@ void Command::RecordBuffer(const RecordInfo &info)
     scissor.extent = info.swapChainExtent;
     vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 
-    vkCmdDraw(commandBuffer, 3, 1, 0, 0);
+    VkDeviceSize offsets{};
+    vkCmdBindVertexBuffers(commandBuffer, 0, 1, &info.vertexBuffer, &offsets);
+
+    vkCmdBindIndexBuffer(commandBuffer, info.indexBuffer, 0, VK_INDEX_TYPE_UINT16);
+
+    vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, info.pipelineLayout, 0, 1,
+                            &info.descriptorSet, 0, nullptr);
+
+    vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(INDICES.size()), 1, 0, 0, 0);
 
     vkCmdEndRenderPass(commandBuffer);
 

@@ -23,10 +23,12 @@
 #ifndef INSTANCE_HPP_
 #define INSTANCE_HPP_
 
+#include <algorithm>
 #include <cstdlib>
-#include <cstring>
+#include <ranges>
 
 #include "Command.hpp"
+#include "Descriptor.hpp"
 #include "Framebuffer.hpp"
 #include "GraphicsPipeline.hpp"
 #include "ImageView.hpp"
@@ -247,14 +249,16 @@ class Instance {
     Surface _surface;
     SwapChain _swapChain;
     ImageView _imageView;
+    Descriptor _descriptorLayout;
     GraphicsPipeline _graphicsPipeline;
     RenderPass _renderPass;
     Framebuffer _framebuffer;
+    Buffers _buffers;
     Command _command;
     std::vector<VkSemaphore> _imageAvailableSemaphores;
     std::vector<VkSemaphore> _renderFinishedSemaphores;
     std::vector<VkFence> _inFlightFences;
-    uint32_t _currentFrame;
+    uint32_t _currentFrame = 0;
     bool _framebufferResized = false;
 };
 

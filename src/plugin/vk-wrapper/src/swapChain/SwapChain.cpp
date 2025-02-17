@@ -71,7 +71,7 @@ void SwapChain::Create(const VkDevice &device, const VkPhysicalDevice &physicalD
     createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
     createInfo.presentMode = _presentMode;
     createInfo.clipped = VK_TRUE;
-    createInfo.oldSwapchain = VK_NULL_HANDLE;
+    createInfo.oldSwapchain = (_swapChain != VK_NULL_HANDLE) ? _swapChain : VK_NULL_HANDLE;
 
     if (vkCreateSwapchainKHR(device, &createInfo, nullptr, &_swapChain) != VK_SUCCESS)
         throw VkWrapperError("failed to create swap chain!");
