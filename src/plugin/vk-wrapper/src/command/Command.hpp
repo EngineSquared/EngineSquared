@@ -22,11 +22,10 @@
 #ifndef COMMAND_HPP_
 #define COMMAND_HPP_
 
+#include "Buffer.hpp"
 #include "QueueFamilies.hpp"
 
 namespace ES::Plugin::Wrapper {
-
-const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
 
 /**
  * @brief Command class.
@@ -80,6 +79,10 @@ class Command {
      * @var VkExtent2D RecordInfo::swapChainExtent  The swap chain extent.
      * @var std::vector<VkFramebuffer> RecordInfo::swapChainFramebuffers  The swap chain framebuffers.
      * @var VkPipeline RecordInfo::graphicsPipeline  The graphics pipeline.
+     * @var VkPipelineLayout RecordInfo::pipelineLayout  The pipeline layout.
+     * @var VkDescriptorSet RecordInfo::descriptorSet  The descriptor set.
+     * @var VkBuffer RecordInfo::vertexBuffer  The vertex buffer.
+     * @var VkBuffer RecordInfo::indexBuffer  The index buffer.
      */
     struct RecordInfo {
         uint32_t currentFrame;
@@ -88,18 +91,34 @@ class Command {
         VkExtent2D swapChainExtent;
         std::vector<VkFramebuffer> swapChainFramebuffers;
         VkPipeline graphicsPipeline;
+        VkPipelineLayout pipelineLayout;
+        VkDescriptorSet descriptorSet;
+        VkBuffer vertexBuffer;
+        VkBuffer indexBuffer;
     };
 
   public:
     /**
-     * @brief Creates a command pool.
+     * @brief Creates a command pool and command buffers.
      *
      * This function creates a command pool from the device and the queue families.
+     * It also creates command buffers using the command pool.
      *
      * @param device  The Vulkan device.
      * @param queueFamilies  The queue families.
      */
     void Create(const VkDevice &device, const CreateInfo &info);
+
+    /**
+     * @brief Creates command buffers separately.
+     *
+     * This function creates command buffers using the command pool.
+     * It creates a command buffer for each image in the swap chain.
+     *
+     * @param device  The Vulkan device.
+     * @param swapChainFramebuffers  The swap chain framebuffers.
+     */
+    void CreateCommandBuffers(const VkDevice &device, const std::vector<VkFramebuffer> &swapChainFramebuffers);
 
     /**
      * @brief Destroys the command pool.
@@ -118,6 +137,15 @@ class Command {
      * @param info  The record info.
      */
     void RecordBuffer(const RecordInfo &info);
+
+    /**
+     * @brief Gets the command pool.
+     *
+     * This function returns the command pool.
+     *
+     * @return The command pool.
+     */
+    [[nodiscard]] const VkCommandPool &GetCommandPool() { return _commandPool; }
 
     /**
      * @brief Gets the command buffer.

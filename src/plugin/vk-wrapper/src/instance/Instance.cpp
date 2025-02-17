@@ -51,6 +51,9 @@ void Instance::Destroy()
 
     _graphicsPipeline.Destroy(device);
     _renderPass.Destroy(device);
+    _buffers.DestroyUniformBuffers(device, _swapChain.GetSwapChainImages());
+    _descriptorLayout.Destroy(device);
+    _buffers.Destroy(device);
 
     for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
@@ -135,7 +138,8 @@ void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
 
     _renderPass.Create(device, _swapChain.GetSurfaceFormat().format);
 
-    _graphicsPipeline.Create(device, extent, _renderPass.Get(), shaders);
+    _descriptorLayout.Create(device);
+    _graphicsPipeline.Create(device, _renderPass.Get(), shaders, _descriptorLayout.Get());
 
     auto renderPass = _renderPass.Get();
 
@@ -157,6 +161,14 @@ void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
     commandInfo.graphicsPipeline = _graphicsPipeline.Get();
 
     _command.Create(device, commandInfo);
+
+    _buffers.Create(device, physicalDevice, _command.GetCommandPool(), _logicalDevice.GetGraphicsQueue(),
+                    _swapChain.GetSwapChainImages());
+
+    _descriptorLayout.CreateDescriptorPool(device);
+    _descriptorLayout.CreateDescriptorSet(device, _buffers.GetUniformBuffers());
+
+    _command.CreateCommandBuffers(device, _framebuffer.GetSwapChainFramebuffers());
 }
 
 void Instance::CreateSyncObjects()
@@ -223,6 +235,8 @@ Result Instance::DrawNextImage()
     else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
         throw VkWrapperError("failed to acquire swap chain image!");
 
+    _buffers.UpdateUniformBuffer(device, _swapChain.GetExtent(), _currentFrame);
+
     vkResetFences(device, 1, &_inFlightFences[_currentFrame]);
 
     Command::RecordInfo recordInfo{};
@@ -232,6 +246,10 @@ Result Instance::DrawNextImage()
     recordInfo.swapChainExtent = _swapChain.GetExtent();
     recordInfo.swapChainFramebuffers = _framebuffer.GetSwapChainFramebuffers();
     recordInfo.graphicsPipeline = _graphicsPipeline.Get();
+    recordInfo.pipelineLayout = _graphicsPipeline.GetLayout();
+    recordInfo.descriptorSet = _descriptorLayout.GetDescriptorSets()[_currentFrame];
+    recordInfo.vertexBuffer = _buffers.GetVertexBuffer();
+    recordInfo.indexBuffer = _buffers.GetIndexBuffer();
 
     _command.RecordBuffer(recordInfo);
 

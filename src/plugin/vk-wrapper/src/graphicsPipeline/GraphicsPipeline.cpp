@@ -2,8 +2,8 @@
 
 namespace ES::Plugin::Wrapper {
 
-void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkExtent2D swapChainExtent,
-                              const VkRenderPass &renderPass, const ShaderModule::ShaderPaths &shaders)
+void GraphicsPipeline::Create(const VkDevice &device, const VkRenderPass &renderPass,
+                              const ShaderModule::ShaderPaths &shaders, const VkDescriptorSetLayout &descriptorLayout)
 {
     auto vertShaderCode = ShaderModule::LoadSPVfile(shaders.vertex.first);
     auto fragShaderCode = ShaderModule::LoadSPVfile(shaders.fragment.first);
@@ -16,8 +16,15 @@ void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkE
 
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages = {vertShaderStage, fragShaderStage};
 
+    auto bindingDescription = Vertex::GetBindingDescription();
+    auto attributeDescriptions = Vertex::GetAttributeDescriptions();
+
     VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
     vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+    vertexInputInfo.vertexBindingDescriptionCount = 1;
+    vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
+    vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+    vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
     VkPipelineInputAssemblyStateCreateInfo inputAssembly{};
     inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
@@ -64,6 +71,8 @@ void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkE
 
     VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
     pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+    pipelineLayoutInfo.setLayoutCount = 1;
+    pipelineLayoutInfo.pSetLayouts = &descriptorLayout;
 
     if (vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
         throw VkWrapperError("failed to create pipeline layout!");

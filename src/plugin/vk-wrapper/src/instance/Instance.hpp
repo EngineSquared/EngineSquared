@@ -26,6 +26,7 @@
 #include <cstdlib>
 
 #include "Command.hpp"
+#include "Descriptor.hpp"
 #include "Framebuffer.hpp"
 #include "GraphicsPipeline.hpp"
 #include "ImageView.hpp"
@@ -246,9 +247,11 @@ class Instance {
     Surface _surface;
     SwapChain _swapChain;
     ImageView _imageView;
+    Descriptor _descriptorLayout;
     GraphicsPipeline _graphicsPipeline;
     RenderPass _renderPass;
     Framebuffer _framebuffer;
+    Buffers _buffers;
     Command _command;
     std::vector<VkSemaphore> _imageAvailableSemaphores;
     std::vector<VkSemaphore> _renderFinishedSemaphores;

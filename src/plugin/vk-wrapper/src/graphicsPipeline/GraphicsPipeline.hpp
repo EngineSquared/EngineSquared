@@ -22,6 +22,7 @@
 #ifndef GRAPHICSPIPELINE_HPP_
 #define GRAPHICSPIPELINE_HPP_
 
+#include "Buffer.hpp"
 #include "ShaderModule.hpp"
 
 namespace ES::Plugin::Wrapper {
@@ -41,15 +42,15 @@ class GraphicsPipeline {
     /**
      * @brief Creates a graphics pipeline.
      *
-     * This function creates a graphics pipeline from the device, the swap chain extent, and the render pass.
+     * This function creates a graphics pipeline from the device and the render pass.
      *
      * @param device  The Vulkan device.
-     * @param swapChainExtent  The swap chain extent.
      * @param renderPass  The render pass.
      * @param shaders  The shader paths.
+     * @param descriptorLayout  The descriptor layout.
      */
-    void Create(const VkDevice &device, const VkExtent2D swapChainExtent, const VkRenderPass &renderPass,
-                const ShaderModule::ShaderPaths &shaders);
+    void Create(const VkDevice &device, const VkRenderPass &renderPass, const ShaderModule::ShaderPaths &shaders,
+                const VkDescriptorSetLayout &descriptorLayout);
 
     /**
      * @brief Destroys the graphics pipeline.
@@ -68,6 +69,15 @@ class GraphicsPipeline {
      * @return VkPipeline  The graphics pipeline.
      */
     [[nodiscard]] const VkPipeline &Get() const { return _graphicsPipeline; }
+
+    /**
+     * @brief Gets the pipeline layout.
+     *
+     * This function returns the pipeline layout.
+     *
+     * @return VkPipelineLayout  The pipeline layout.
+     */
+    [[nodiscard]] const VkPipelineLayout &GetLayout() const { return _pipelineLayout; }
 
   private:
     /**
