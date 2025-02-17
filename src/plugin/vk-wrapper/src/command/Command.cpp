@@ -77,9 +77,8 @@ void Command::RecordBuffer(const RecordInfo &info)
     scissor.extent = info.swapChainExtent;
     vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 
-    VkBuffer vertexBuffers[] = {info.vertexBuffer};
-    VkDeviceSize offsets[] = {0};
-    vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
+    VkDeviceSize offsets{};
+    vkCmdBindVertexBuffers(commandBuffer, 0, 1, &info.vertexBuffer, &offsets);
 
     vkCmdBindIndexBuffer(commandBuffer, info.indexBuffer, 0, VK_INDEX_TYPE_UINT16);
 
