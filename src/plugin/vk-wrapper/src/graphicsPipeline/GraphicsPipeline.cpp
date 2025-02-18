@@ -2,8 +2,8 @@
 
 namespace ES::Plugin::Wrapper {
 
-void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkExtent2D swapChainExtent,
-                              const VkRenderPass &renderPass, const ShaderModule::ShaderPaths &shaders)
+void GraphicsPipeline::Create(const VkDevice &device, const VkRenderPass &renderPass,
+                              const ShaderModule::ShaderPaths &shaders, const VkDescriptorSetLayout &descriptorLayout)
 {
     auto vertShaderCode = ShaderModule::LoadSPVfile(shaders.vertex.first);
     auto fragShaderCode = ShaderModule::LoadSPVfile(shaders.fragment.first);
@@ -16,8 +16,15 @@ void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkE
 
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages = {vertShaderStage, fragShaderStage};
 
+    auto bindingDescription = Vertex::GetBindingDescription();
+    auto attributeDescriptions = Vertex::GetAttributeDescriptions();
+
     VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
     vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+    vertexInputInfo.vertexBindingDescriptionCount = 1;
+    vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
+    vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+    vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
     VkPipelineInputAssemblyStateCreateInfo inputAssembly{};
     inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
@@ -36,7 +43,7 @@ void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkE
     rasterizer.polygonMode = VK_POLYGON_MODE_FILL; // VK_POLYGON_MODE_LINE or VK_POLYGON_MODE_POINT
     rasterizer.lineWidth = 1.0f;                   // > 1.0f requires wideLines feature
     rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
-    rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+    rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
     rasterizer.depthBiasEnable = VK_FALSE; // shadow maps require this to be true
 
     VkPipelineMultisampleStateCreateInfo multisampling{};
@@ -46,22 +53,7 @@ void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkE
     multisampling.minSampleShading = 1.0f;
 
     VkPipelineColorBlendAttachmentState colorBlendAttachment{};
-    colorBlendAttachment.colorWriteMask =
-        VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-    colorBlendAttachment.blendEnable = VK_FALSE;
-    colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;
-    colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO;
-
-    if (colorBlendAttachment.blendEnable)
-    {
-        colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-        colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-    }
-
-    colorBlendAttachment.colorBlendOp = VK_BLEND_OP_ADD;
-    colorBlendAttachment.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-    colorBlendAttachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
-    colorBlendAttachment.alphaBlendOp = VK_BLEND_OP_ADD;
+    SetupColorBlendAttachment(colorBlendAttachment, VK_FALSE);
 
     VkPipelineColorBlendStateCreateInfo colorBlending{};
     colorBlending.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
@@ -79,6 +71,8 @@ void GraphicsPipeline::Create(const VkDevice &device, [[maybe_unused]] const VkE
 
     VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
     pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+    pipelineLayoutInfo.setLayoutCount = 1;
+    pipelineLayoutInfo.pSetLayouts = &descriptorLayout;
 
     if (vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
         throw VkWrapperError("failed to create pipeline layout!");
@@ -110,6 +104,27 @@ void GraphicsPipeline::Destroy(const VkDevice &device)
 {
     vkDestroyPipeline(device, _graphicsPipeline, nullptr);
     vkDestroyPipelineLayout(device, _pipelineLayout, nullptr);
+}
+
+void GraphicsPipeline::SetupColorBlendAttachment(VkPipelineColorBlendAttachmentState &colorBlendAttachment,
+                                                 const VkBool32 enableBlend)
+{
+    colorBlendAttachment.colorWriteMask =
+        VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+    colorBlendAttachment.blendEnable = enableBlend;
+    colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;
+    colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO;
+
+    if (enableBlend)
+    {
+        colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+        colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+    }
+
+    colorBlendAttachment.colorBlendOp = VK_BLEND_OP_ADD;
+    colorBlendAttachment.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
+    colorBlendAttachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
+    colorBlendAttachment.alphaBlendOp = VK_BLEND_OP_ADD;
 }
 
 } // namespace ES::Plugin::Wrapper

@@ -37,9 +37,9 @@ namespace ES::Plugin::Wrapper {
  * @brief SwapChain class.
  *
  * This class is used to create a swap chain for the Vulkan API. The swap chain
- * is used to present images to the screen. It is a queue of images that are
- * displayed on the screen. The swap chain is used to synchronize the rendering
- * of images with the refresh rate of the screen.
+ * is used to present images to the screen. It is a wainting queue of images that
+ * will be displayed on the screen. The swap chain is used to synchronize the
+ * rendering of images with the refresh rate of the screen.
  *
  * @example
  * @code
@@ -163,7 +163,7 @@ class SwapChain {
 
   private:
     SupportDetails _supportDetails;
-    VkSwapchainKHR _swapChain;
+    VkSwapchainKHR _swapChain = VK_NULL_HANDLE;
     std::vector<VkImage> _swapChainImages;
     VkSurfaceFormatKHR _surfaceFormat;
     VkPresentModeKHR _presentMode;

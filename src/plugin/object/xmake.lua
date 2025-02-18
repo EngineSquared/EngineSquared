@@ -50,7 +50,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
 
         after_build(function (target)
             local buildir = path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)")
-            local assets_files = os.files("src/plugin/object/tests/assets/*.*")
+            local assets_files = os.files("$(scriptdir)" .. "/tests/assets/*.*")
 
             os.mkdir(path.join(buildir, "assets"))
 
