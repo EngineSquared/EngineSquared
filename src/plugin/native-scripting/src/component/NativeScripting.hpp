@@ -14,11 +14,11 @@ struct NativeScripting {
 
     std::function<void(ES::Plugin::NativeScripting::Resource::ScriptableEntity *)> OnCreate;
     std::function<void(ES::Plugin::NativeScripting::Resource::ScriptableEntity *)> OnDestroy;
-    std::function<void(ES::Plugin::NativeScripting::Resource::ScriptableEntity *, float ts)> OnUpdate;
+    std::function<void(ES::Plugin::NativeScripting::Resource::ScriptableEntity *)> OnUpdate;
 
     template <typename T> void Bind(ES::Engine::Registry &registry)
     {
-        Instantiate = [&]() { seInstance = new T(registry); };
+        Instantiate = [&]() { seInstance = new T(); };
         DestroyInstance = [&]() {
             delete (T *) seInstance;
             seInstance = nullptr;
@@ -30,8 +30,8 @@ struct NativeScripting {
         OnDestroy = [](ES::Plugin::NativeScripting::Resource::ScriptableEntity *instance) {
             ((T *) instance)->OnDestroy();
         };
-        OnUpdate = [](ES::Plugin::NativeScripting::Resource::ScriptableEntity *instance, float ts) {
-            ((T *) instance)->OnUpdate(ts);
+        OnUpdate = [&registry](ES::Plugin::NativeScripting::Resource::ScriptableEntity *instance) {
+            ((T *) instance)->OnUpdate(registry);
         };
     }
 };

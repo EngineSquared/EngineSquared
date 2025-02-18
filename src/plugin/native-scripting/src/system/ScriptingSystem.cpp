@@ -7,10 +7,10 @@ void ES::Plugin::NativeScripting::System::UpdateScripts(ES::Engine::Registry &re
             if (!nsComponent.seInstance)
             {
                 nsComponent.Instantiate();
-                nsComponent.seInstance->SetEntity(entity);
+                nsComponent.seInstance->entity = entity;
                 nsComponent.OnCreate(nsComponent.seInstance);
             }
 
-            nsComponent.OnUpdate(nsComponent.seInstance, 0.0f);
+            nsComponent.OnUpdate(nsComponent.seInstance);
         });
 }
