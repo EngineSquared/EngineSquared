@@ -27,7 +27,7 @@
 namespace ES::Plugin::Relationship::Utils {
 /**
  * Set the child of an entity to another entity.
- * 
+ *
  * @param   core    core of the engine
  * @param   parent  parent entity
  * @param   child   child entity
@@ -36,7 +36,7 @@ auto SetChildOf(ES::Engine::Core &core, ES::Engine::Entity child, ES::Engine::En
 
 /**
  * Check if an entity is a child of another entity.
- * 
+ *
  * @param   core    core of the engine
  * @param   parent  parent entity
  * @param   child   child entity
@@ -46,7 +46,7 @@ auto IsChildOf(ES::Engine::Core &core, ES::Engine::Entity child, ES::Engine::Ent
 
 /**
  * Remove the parent of an entity.
- * 
+ *
  * @param   core    core of the engine
  * @param   child   child entity
  */
@@ -54,7 +54,7 @@ auto RemoveParent(ES::Engine::Core &core, ES::Engine::Entity child) -> void;
 
 /**
  * Get the parent of an entity.
- * 
+ *
  * @param   core    core of the engine
  * @param   child   child entity
  * @return  parent entity

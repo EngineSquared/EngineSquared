@@ -1,6 +1,6 @@
-#include <format>
 #include "utils/Utils.hpp"
 #include "Logger.hpp"
+#include <format>
 
 // Temp
 #include <iostream>
@@ -36,7 +36,8 @@ auto ES::Plugin::Relationship::Utils::SetChildOf(ES::Engine::Core &core, ES::Eng
 auto ES::Plugin::Relationship::Utils::IsChildOf(ES::Engine::Core &core, ES::Engine::Entity child,
                                                 ES::Engine::Entity parent) -> bool
 {
-    const ES::Plugin::Relationship::Component::Relationship *childRS = child.TryGetComponent<ES::Plugin::Relationship::Component::Relationship>(core);
+    const ES::Plugin::Relationship::Component::Relationship *childRS =
+        child.TryGetComponent<ES::Plugin::Relationship::Component::Relationship>(core);
     return childRS && childRS->parent == parent;
 }
 
@@ -76,12 +77,12 @@ auto ES::Plugin::Relationship::Utils::RemoveParent(ES::Engine::Core &core, ES::E
 
 auto ES::Plugin::Relationship::Utils::GetParent(ES::Engine::Core &core, ES::Engine::Entity child) -> ES::Engine::Entity
 {
-    const ES::Plugin::Relationship::Component::Relationship &childRS = child.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core);
+    const ES::Plugin::Relationship::Component::Relationship &childRS =
+        child.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core);
 
     if (childRS.parent == ES::Engine::Entity::entity_null_id)
     {
-        ES::Utils::Log::Warn(std::format("Entity {} has no parent",
-                                         ES::Engine::Entity::entity_id_type(child)));
+        ES::Utils::Log::Warn(std::format("Entity {} has no parent", ES::Engine::Entity::entity_id_type(child)));
         return ES::Engine::Entity::entity_null_id;
     }
     return childRS.parent;

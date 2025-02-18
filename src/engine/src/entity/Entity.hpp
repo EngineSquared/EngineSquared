@@ -188,7 +188,7 @@ class Entity {
 
     /**
      * Compare two entities id.
-     * 
+     *
      * @param   rhs     entity to compare
      * @return  true if entities id are equals
      */
@@ -196,7 +196,7 @@ class Entity {
 
     /**
      * Compare two entities id.
-     * 
+     *
      * @param   rhs     entity to compare
      * @return  true if entities id are different
      */
@@ -204,7 +204,7 @@ class Entity {
 
     /**
      * Compare two entities id.
-     * 
+     *
      * @param   rhs     entity to compare
      * @return  true if entities id are equals
      */
@@ -212,7 +212,7 @@ class Entity {
 
     /**
      * Compare two entities id.
-     * 
+     *
      * @param   rhs     entity to compare
      * @return  true if entities id are different
      */

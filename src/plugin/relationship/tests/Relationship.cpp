@@ -55,7 +55,8 @@ TEST(Relationship, multiple_children)
     parent.AddComponent<ES::Plugin::Relationship::Component::Relationship>(core);
 
     ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).children, 0);
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first, ES::Engine::Entity::entity_null_id);
+    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first,
+              ES::Engine::Entity::entity_null_id);
     ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
     ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
     ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
@@ -103,7 +104,8 @@ TEST(Relationship, multiple_children)
     ES::Plugin::Relationship::Utils::RemoveParent(core, child1);
 
     ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).children, 0);
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first, ES::Engine::Entity::entity_null_id);
+    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first,
+              ES::Engine::Entity::entity_null_id);
     ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
     ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
     ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
@@ -127,7 +129,7 @@ TEST(Relationship, remove_parent)
 
     ES::Plugin::Relationship::Utils::SetChildOf(core, child, parent);
     ES::Plugin::Relationship::Utils::SetChildOf(core, child, parent);
-    
+
     ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child, parent));
 
     ES::Plugin::Relationship::Utils::RemoveParent(core, parent);
