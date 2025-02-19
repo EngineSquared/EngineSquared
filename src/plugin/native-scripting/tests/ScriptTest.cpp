@@ -6,7 +6,10 @@
 
 class speedManager : public ES::Plugin::NativeScripting::Utils::ScriptableEntity {
   public:
-    void OnCreate([[maybe_unused]] const ES::Engine::Registry &registry) { std::cout << "OnCreate called" << std::endl; }
+    void OnCreate([[maybe_unused]] const ES::Engine::Registry &registry)
+    {
+        std::cout << "OnCreate called" << std::endl;
+    }
 
     void OnUpdate(ES::Engine::Registry &registry)
     {
