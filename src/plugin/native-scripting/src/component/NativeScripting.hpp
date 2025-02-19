@@ -19,9 +19,7 @@ struct NativeScripting {
     template <typename T> void Bind(ES::Engine::Registry &registry)
     {
         Instantiate = [this]() { seInstance = std::make_unique<T>(); };
-        DestroyInstance = [this]() {
-            seInstance.reset();
-        };
+        DestroyInstance = [this]() { seInstance.reset(); };
 
         OnCreate = [&registry](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
             static_cast<T *>(instance)->OnCreate(registry);
