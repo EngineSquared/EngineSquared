@@ -1,16 +1,12 @@
 #include <gtest/gtest.h>
 
+#include "Entity.hpp"
 #include "NativeScripting.hpp"
 #include "Registry.hpp"
-#include "Entity.hpp"
 
-class speedManager : public ES::Plugin::NativeScripting::Utils::ScriptableEntity
-{
-public:
-    void OnCreate(ES::Engine::Registry &registry)
-    {
-        std::cout << "OnCreate called" << std::endl;
-    }
+class speedManager : public ES::Plugin::NativeScripting::Utils::ScriptableEntity {
+  public:
+    void OnCreate(ES::Engine::Registry &registry) { std::cout << "OnCreate called" << std::endl; }
 
     void OnUpdate(ES::Engine::Registry &registry)
     {
@@ -31,7 +27,8 @@ static void InitPlayer(ES::Engine::Registry &registry)
     float speed = 1.0f;
 
     ES::Engine::Entity playerEntity(registry.CreateEntity());
-    auto &scriptComponent = playerEntity.AddComponent<ES::Plugin::NativeScripting::Component::NativeScripting>(registry);
+    auto &scriptComponent =
+        playerEntity.AddComponent<ES::Plugin::NativeScripting::Component::NativeScripting>(registry);
 
     scriptComponent.Bind<speedManager>(registry);
     scriptComponent.Instantiate();
