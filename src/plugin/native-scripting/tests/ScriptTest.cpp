@@ -6,7 +6,7 @@
 
 class speedManager : public ES::Plugin::NativeScripting::Utils::ScriptableEntity {
   public:
-    void OnCreate(ES::Engine::Registry &registry) { std::cout << "OnCreate called" << std::endl; }
+    void OnCreate([[maybe_unused]] const ES::Engine::Registry &registry) { std::cout << "OnCreate called" << std::endl; }
 
     void OnUpdate(ES::Engine::Registry &registry)
     {
@@ -19,7 +19,10 @@ class speedManager : public ES::Plugin::NativeScripting::Utils::ScriptableEntity
         }
     }
 
-    void OnDestroy() {}
+    void OnDestroy()
+    {
+        // Left empty as OnDestroy does not perform anything here
+    }
 };
 
 static void InitPlayer(ES::Engine::Registry &registry)
@@ -32,7 +35,7 @@ static void InitPlayer(ES::Engine::Registry &registry)
 
     scriptComponent.Bind<speedManager>(registry);
     scriptComponent.Instantiate();
-    scriptComponent.OnCreate(scriptComponent.seInstance);
+    scriptComponent.OnCreate(scriptComponent.seInstance.get());
 
     registry.GetRegistry().emplace<float>(playerEntity, speed);
 }
@@ -46,7 +49,7 @@ static void RunNativeScripts(ES::Engine::Registry &registry)
         auto &scriptComponent = view.get<ES::Plugin::NativeScripting::Component::NativeScripting>(entity);
         if (scriptComponent.seInstance)
         {
-            scriptComponent.OnUpdate(scriptComponent.seInstance);
+            scriptComponent.OnUpdate(scriptComponent.seInstance.get());
         }
     }
 }
