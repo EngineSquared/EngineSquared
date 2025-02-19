@@ -7,14 +7,14 @@ namespace ES::Plugin::NativeScripting::Component {
  * Component used to allow native scripting for entities.
  */
 struct NativeScripting {
-    ES::Plugin::NativeScripting::Resource::ScriptableEntity *seInstance = nullptr;
+    ES::Plugin::NativeScripting::Utils::ScriptableEntity *seInstance = nullptr;
 
     std::function<void()> Instantiate;
     std::function<void()> DestroyInstance;
 
-    std::function<void(ES::Plugin::NativeScripting::Resource::ScriptableEntity *)> OnCreate;
-    std::function<void(ES::Plugin::NativeScripting::Resource::ScriptableEntity *)> OnDestroy;
-    std::function<void(ES::Plugin::NativeScripting::Resource::ScriptableEntity *)> OnUpdate;
+    std::function<void(ES::Plugin::NativeScripting::Utils::ScriptableEntity *)> OnCreate;
+    std::function<void(ES::Plugin::NativeScripting::Utils::ScriptableEntity *)> OnDestroy;
+    std::function<void(ES::Plugin::NativeScripting::Utils::ScriptableEntity *)> OnUpdate;
 
     template <typename T> void Bind(ES::Engine::Registry &registry)
     {
@@ -24,13 +24,13 @@ struct NativeScripting {
             seInstance = nullptr;
         };
 
-        OnCreate = [](ES::Plugin::NativeScripting::Resource::ScriptableEntity *instance) {
-            ((T *) instance)->OnCreate();
+        OnCreate = [&registry](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
+            ((T *) instance)->OnCreate(registry);
         };
-        OnDestroy = [](ES::Plugin::NativeScripting::Resource::ScriptableEntity *instance) {
+        OnDestroy = [](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
             ((T *) instance)->OnDestroy();
         };
-        OnUpdate = [&registry](ES::Plugin::NativeScripting::Resource::ScriptableEntity *instance) {
+        OnUpdate = [&registry](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
             ((T *) instance)->OnUpdate(registry);
         };
     }
