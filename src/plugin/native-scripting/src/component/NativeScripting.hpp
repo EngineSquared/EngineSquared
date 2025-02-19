@@ -7,7 +7,7 @@ namespace ES::Plugin::NativeScripting::Component {
  * Component used to allow native scripting for entities.
  */
 struct NativeScripting {
-    ES::Plugin::NativeScripting::Utils::ScriptableEntity *seInstance = nullptr;
+    std::unique_ptr<ES::Plugin::NativeScripting::Utils::ScriptableEntity> seInstance = nullptr;
 
     std::function<void()> Instantiate;
     std::function<void()> DestroyInstance;
@@ -18,20 +18,19 @@ struct NativeScripting {
 
     template <typename T> void Bind(ES::Engine::Registry &registry)
     {
-        Instantiate = [&]() { seInstance = new T(); };
-        DestroyInstance = [&]() {
-            delete (T *) seInstance;
-            seInstance = nullptr;
+        Instantiate = [this]() { seInstance = std::make_unique<T>(); };
+        DestroyInstance = [this]() {
+            seInstance.reset();
         };
 
         OnCreate = [&registry](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
-            ((T *) instance)->OnCreate(registry);
+            static_cast<T *>(instance)->OnCreate(registry);
         };
         OnDestroy = [](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
-            ((T *) instance)->OnDestroy();
+            static_cast<T *>(instance)->OnDestroy();
         };
         OnUpdate = [&registry](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
-            ((T *) instance)->OnUpdate(registry);
+            static_cast<T *>(instance)->OnUpdate(registry);
         };
     }
 };
