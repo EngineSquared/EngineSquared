@@ -186,21 +186,7 @@ class Entity {
 
     inline static entt::entity ToEnttEntity(entity_id_type e) { return static_cast<entt::entity>(e); }
 
-    /**
-     * Compare two entities id.
-     *
-     * @param   rhs     entity to compare
-     * @return  true if entities id are equals
-     */
-    inline bool operator==(const Entity &rhs) const { return _entity == rhs._entity; }
-
-    /**
-     * Compare two entities id.
-     *
-     * @param   rhs     entity to compare
-     * @return  true if entities id are different
-     */
-    inline bool operator!=(const Entity &rhs) const { return _entity != rhs._entity; }
+    inline bool operator==(const Entity &rhs) const = default;
 
     /**
      * Compare two entities id.
