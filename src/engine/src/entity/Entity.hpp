@@ -13,7 +13,7 @@ namespace ES::Engine {
 class Entity {
   public:
     using entity_id_type = uint32_t;
-    static const entity_id_type entity_null_id = entt::null;
+    inline static const entity_id_type entity_null_id = entt::null;
 
   public:
     /**
