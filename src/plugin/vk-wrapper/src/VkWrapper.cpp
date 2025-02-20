@@ -1,21 +1,43 @@
 #include "Logger.hpp"
-
 #include "VkWrapper.hpp"
 
 namespace ES::Plugin {
 
-void VkWrapper::Create(const CreateInfo &info)
+void VkWrapper::CreateInstance(GLFWwindow *window, const std::string &applicationName, const uint32_t width,
+                               const uint32_t height)
 {
-    _instance.Create(info.applicationName);
+    _instance.Create(applicationName);
     _instance.SetupDebugMessenger();
-    _instance.CreateSurface(info.window);
+    _instance.CreateSurface(window);
     _instance.SetupDevices();
-    _instance.CreateSwapChainImages(info.width, info.height);
-    _instance.CreateGraphicsPipeline(info.shaders);
+    _instance.CreateSwapChainImages(width, height);
+}
+
+void VkWrapper::CreatePipeline()
+{
+    _instance.CreateGraphicsPipeline(_shaders, _textures);
     _instance.CreateSyncObjects();
 }
 
 void VkWrapper::Destroy() { _instance.Destroy(); }
+
+void VkWrapper::AddTexture(const std::string &texturePath)
+{
+    Wrapper::Texture texture;
+    texture.Create(texturePath);
+    _textures.push_back(texture);
+}
+
+void VkWrapper::AddShader(const std::string &shaderPath, const std::string &fname, const ShaderType &shaderType)
+{
+    switch (shaderType)
+    {
+    case ShaderType::VERTEX: _shaders.vertex = {shaderPath, fname}; break;
+    case ShaderType::FRAGMENT: _shaders.fragment = {shaderPath, fname}; break;
+
+    default: break;
+    }
+}
 
 Wrapper::Result VkWrapper::DrawFrame() { return _instance.DrawNextImage(); }
 

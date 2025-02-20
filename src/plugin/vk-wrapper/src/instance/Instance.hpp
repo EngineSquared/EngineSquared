@@ -157,8 +157,11 @@ class Instance {
      * The graphics pipeline also includes a render pass, which defines the
      * attachments used for rendering and the subpasses that are executed during
      * rendering.
+     *
+     * @param shaders  The paths to the shader files.
+     * @param textures  The textures used in the graphics pipeline.
      */
-    void CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders);
+    void CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders, const std::vector<Texture> &textures);
 
     /**
      * @brief Create synchronization objects for the Vulkan API.

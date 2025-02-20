@@ -66,26 +66,18 @@ namespace ES::Plugin {
 class VkWrapper {
   public:
     /**
-     * @brief Structure to hold the creation information for the Vulkan wrapper.
+     * @brief ShaderType enum class.
      *
-     * This structure contains all the necessary information required to initialize
-     * the Vulkan wrapper, including the window handle, dimensions, application name,
-     * and shader paths.
-     *
-     * @param window  The GLFW window to create the VkWrapper for.
-     * @param width  The width of the window.
-     * @param height  The height of the window.
-     * @param applicationName  The name of the application.
-     * @param shaders  The paths to the shaders.
-     *
-     * @see Wrapper::ShaderModule::ShaderPaths
+     * This enum class is used to represent the type of the shader.
+     * It can be either VERTEX, FRAGMENT, GEOMETRY, TESSELLATION_CONTROL, or
+     * TESSELLATION_EVALUATION.
      */
-    struct CreateInfo {
-        GLFWwindow *window;
-        uint32_t width;
-        uint32_t height;
-        std::string applicationName;
-        Wrapper::ShaderModule::ShaderPaths shaders;
+    enum class ShaderType : uint8_t {
+        VERTEX,
+        FRAGMENT,
+        GEOMETRY,
+        TESSELLATION_CONTROL,
+        TESSELLATION_EVALUATION
     };
 
   public:
@@ -93,13 +85,23 @@ class VkWrapper {
      * @brief Create the VkWrapper using the Vulkan API.
      *
      * This function creates the VkWrapper using the Vulkan API. It creates the
-     * instance, the surface, the physical device, the logical device, the swap
-     * chain, the image views, the render pass, the graphics pipeline, the frame
-     * buffers, the command pool, the command buffers, the semaphores, and the fences.
+     * instance, the surface, get the physical device, the logical device, the swap
+     * chain, the image views.
      *
-     * @param info  The creation information required for the VkWrapper.
+     * @param window  The GLFW window to create the VkWrapper for.
+     * @param applicationName  The name of the application.
+     * @param width  The width of the window.
+     * @param height  The height of the window.
      */
-    void Create(const CreateInfo &info);
+    void CreateInstance(GLFWwindow *window, const std::string &applicationName, const uint32_t width, const uint32_t height);
+
+    /**
+     * @brief Create the graphics pipeline using the Vulkan API.
+     *
+     * This function creates the graphics pipeline using the Vulkan API. It creates
+     * the graphics pipeline with the specified shaders and textures.
+     */
+    void CreatePipeline();
 
     /**
      * @brief Destroy the VkWrapper using the Vulkan API.
@@ -110,6 +112,31 @@ class VkWrapper {
      * chain, the logical device, the physical device, the surface, and the instance.
      */
     void Destroy();
+
+    /**
+     * @brief Add a texture to the VkWrapper.
+     *
+     * @param texturePath  The path to the texture.
+     */
+    void AddTexture(const std::string &texturePath);
+
+    /**
+     * @brief Add a 3D model to the VkWrapper.
+     *
+     * @param modelPath  The path to the model.
+     */
+    void AddModel(const std::string &modelPath);
+
+    /**
+     * @brief Add a shader to the VkWrapper.
+     *
+     * @note if a shader with the same type is added, the new shader will replace the old one.
+     *
+     * @param shaderPath  The path to the shader.
+     * @param fname  The name of the shader.
+     * @param shaderType  The type of the shader.
+     */
+    void AddShader(const std::string &shaderPath, const std::string &fname, const ShaderType &shaderType);
 
     /**
      * @brief Draw a frame using the Vulkan API.
@@ -181,6 +208,8 @@ class VkWrapper {
 
   private:
     Wrapper::Instance _instance;
+    Wrapper::ShaderModule::ShaderPaths _shaders;
+    std::vector<Wrapper::Texture> _textures;
 };
 
 } // namespace ES::Plugin

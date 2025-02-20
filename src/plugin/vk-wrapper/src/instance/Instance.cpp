@@ -128,7 +128,7 @@ void Instance::CreateSwapChainImages(const uint32_t width, const uint32_t height
     _imageView.Create(device, _swapChain.GetSwapChainImages(), _swapChain.GetSurfaceFormat());
 }
 
-void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
+void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders, const std::vector<Texture> &textures)
 {
     const auto &device = _logicalDevice.Get();
     const auto &extent = _swapChain.GetExtent();
@@ -159,8 +159,15 @@ void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
 
     _command.Create(device, commandInfo);
 
-    _buffers.Create(device, physicalDevice, _command.GetCommandPool(), _logicalDevice.GetGraphicsQueue(),
-                    _swapChain.GetSwapChainImages());
+    Buffers::CreateInfo buffersInfo{};
+    buffersInfo.device = device;
+    buffersInfo.physicalDevice = physicalDevice;
+    buffersInfo.commandPool = _command.GetCommandPool();
+    buffersInfo.graphicsQueue = _logicalDevice.GetGraphicsQueue();
+    buffersInfo.swapChainImages = _swapChain.GetSwapChainImages();
+    buffersInfo.textures = textures;
+
+    _buffers.Create(buffersInfo);
 
     _descriptorLayout.CreateDescriptorPool(device);
     _descriptorLayout.CreateDescriptorSet(device, _buffers.GetUniformBuffers());
@@ -181,7 +188,7 @@ void Instance::CreateSyncObjects()
     fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
     fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-    auto device = _logicalDevice.Get();
+    const auto &device = _logicalDevice.Get();
 
     for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
@@ -194,7 +201,7 @@ void Instance::CreateSyncObjects()
 
 void Instance::RecreateSwapChain(const uint32_t width, const uint32_t height)
 {
-    auto device = _logicalDevice.Get();
+    const auto &device = _logicalDevice.Get();
 
     vkDeviceWaitIdle(device);
 

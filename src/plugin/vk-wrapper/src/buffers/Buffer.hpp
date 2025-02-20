@@ -22,6 +22,7 @@
 #ifndef BUFFER_HPP_
 #define BUFFER_HPP_
 
+#include "Texture.hpp"
 #include "UniformObject.hpp"
 #include "Vertex.hpp"
 
@@ -41,23 +42,50 @@ const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
  * @example
  * @code
  * Buffers buffers;
- * buffers.Create(device, physicalDevice, commandPool, graphicsQueue, swapChainImages);
- * buffers.Destroy(device);
+ * Buffers::CreateInfo info = {
+ *   .device = device,
+ *   .physicalDevice = physicalDevice,
+ *   .commandPool = commandPool,
+ *   .graphicsQueue = graphicsQueue,
+ *   .swapChainImages = swapChainImages,
+ *   .textures = textures,
+ * };
+ * buffers.Create(info);
+ * buffers.Destroy(device, swapChainImages);
  * @endcode
  */
 class Buffers {
   public:
     /**
-     * @brief Create the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
+     * @brief Structure to hold the creation information for the Buffers.
+     *
+     * This structure contains all the necessary information required to create the Buffers,
+     * including the device, the physical device, the command pool, the graphics queue, the swap chain images,
+     * and the textures.
      *
      * @param device The Vulkan device.
      * @param physicalDevice The Vulkan physical device.
      * @param commandPool The Vulkan command pool.
      * @param graphicsQueue The Vulkan graphics queue.
      * @param swapChainImages The swap chain images. Only used for the uniform buffer.
+     * @param textures The textures.
      */
-    void Create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkCommandPool &commandPool,
-                const VkQueue &graphicsQueue, const std::vector<VkImage> &swapChainImages);
+    struct CreateInfo {
+        VkDevice device;
+        VkPhysicalDevice physicalDevice;
+        VkCommandPool commandPool;
+        VkQueue graphicsQueue;
+        std::vector<VkImage> swapChainImages;
+        std::vector<Texture> textures;
+    };
+
+  public:
+    /**
+     * @brief Create the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
+     *
+     * @param info The creation information required for the Buffers.
+     */
+    void Create(const CreateInfo &info);
 
     /**
      * @brief Destroy the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
@@ -202,6 +230,7 @@ class Buffers {
     std::vector<VkBuffer> _uniformBuffers;
     std::vector<VkDeviceMemory> _uniformBuffersMemory;
     std::vector<void *> _uniformBuffersMapped;
+    std::vector<Texture> _textures;
 };
 
 } // namespace ES::Plugin::Wrapper
