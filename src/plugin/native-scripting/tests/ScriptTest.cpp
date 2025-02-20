@@ -38,8 +38,6 @@ static void InitPlayer(ES::Engine::Registry &registry)
         playerEntity.AddComponent<ES::Plugin::NativeScripting::Component::NativeScripting>(registry);
 
     scriptComponent.Bind<speedManager>(registry);
-    scriptComponent.Instantiate();
-    scriptComponent.OnCreate(scriptComponent.seInstance.get());
 
     registry.GetRegistry().emplace<float>(playerEntity, speed);
 }
