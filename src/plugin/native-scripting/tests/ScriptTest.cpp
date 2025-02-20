@@ -1,16 +1,13 @@
 #include <gtest/gtest.h>
 
+#include "Core.hpp"
 #include "Entity.hpp"
 #include "NativeScripting.hpp"
-#include "Core.hpp"
 #include "ScriptingSystem.hpp"
 
 class speedManager : public ES::Plugin::NativeScripting::Utils::ScriptableEntity {
   public:
-    void OnCreate([[maybe_unused]] const ES::Engine::Core &core)
-    {
-        std::cout << "OnCreate called" << std::endl;
-    }
+    void OnCreate([[maybe_unused]] const ES::Engine::Core &core) { std::cout << "OnCreate called" << std::endl; }
 
     void OnUpdate(ES::Engine::Core &core)
     {
@@ -34,8 +31,7 @@ static void InitPlayer(ES::Engine::Core &core)
     float speed = 1.0f;
 
     ES::Engine::Entity playerEntity(core.CreateEntity());
-    auto &scriptComponent =
-        playerEntity.AddComponent<ES::Plugin::NativeScripting::Component::NativeScripting>(core);
+    auto &scriptComponent = playerEntity.AddComponent<ES::Plugin::NativeScripting::Component::NativeScripting>(core);
 
     scriptComponent.Bind<speedManager>(core);
 
