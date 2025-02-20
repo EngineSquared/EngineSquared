@@ -18,19 +18,19 @@ struct NativeScripting {
     std::function<void(ES::Plugin::NativeScripting::Utils::ScriptableEntity *)> OnDestroy;
     std::function<void(ES::Plugin::NativeScripting::Utils::ScriptableEntity *)> OnUpdate;
 
-    template <typename T> void Bind(ES::Engine::Registry &registry)
+    template <typename T> void Bind(ES::Engine::Core &core)
     {
         Instantiate = [this]() { seInstance = std::make_unique<T>(); };
         DestroyInstance = [this]() { seInstance.reset(); };
 
-        OnCreate = [&registry](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
-            static_cast<T *>(instance)->OnCreate(registry);
+        OnCreate = [&core](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
+            static_cast<T *>(instance)->OnCreate(core);
         };
         OnDestroy = [](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
             static_cast<T *>(instance)->OnDestroy();
         };
-        OnUpdate = [&registry](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
-            static_cast<T *>(instance)->OnUpdate(registry);
+        OnUpdate = [&core](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
+            static_cast<T *>(instance)->OnUpdate(core);
         };
     }
 };

@@ -1,9 +1,9 @@
 #include "ScriptingSystem.hpp"
 
-void ES::Plugin::NativeScripting::System::UpdateScripts(ES::Engine::Registry &registry)
+void ES::Plugin::NativeScripting::System::UpdateScripts(ES::Engine::Core &core)
 {
-    registry.GetRegistry().view<ES::Plugin::NativeScripting::Component::NativeScripting>().each(
-        [&registry](auto entity, auto &nsComponent) {
+    core.GetRegistry().view<ES::Plugin::NativeScripting::Component::NativeScripting>().each(
+        [&core](auto entity, auto &nsComponent) {
             if (!nsComponent.seInstance.get())
             {
                 nsComponent.Instantiate();

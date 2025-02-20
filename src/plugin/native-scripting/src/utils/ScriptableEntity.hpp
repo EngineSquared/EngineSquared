@@ -5,7 +5,7 @@
 namespace ES::Plugin::NativeScripting::Utils {
 class ScriptableEntity {
   public:
-    template <typename T> T &GetComponent(ES::Engine::Registry &registry) { return entity.GetComponents<T>(registry); }
+    template <typename T> T &GetComponent(ES::Engine::Core &core) { return entity.GetComponents<T>(core); }
 
     ES::Engine::Entity entity;
 };
