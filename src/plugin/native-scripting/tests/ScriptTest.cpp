@@ -2,8 +2,8 @@
 
 #include "Entity.hpp"
 #include "NativeScripting.hpp"
-#include "ScriptingSystem.hpp"
 #include "Registry.hpp"
+#include "ScriptingSystem.hpp"
 
 class speedManager : public ES::Plugin::NativeScripting::Utils::ScriptableEntity {
   public:
@@ -50,14 +50,14 @@ TEST(NativeScripting, speedManagerScript)
 
     registry.RegisterSystem<ES::Engine::Scheduler::Startup>(InitPlayer);
     registry.RegisterSystem<ES::Engine::Scheduler::Update>(ES::Plugin::NativeScripting::System::UpdateScripts);
-    
+
     testing::internal::CaptureStdout();
-    
+
     registry.RunSystems();
 
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ(output, "OnCreate called\n");
-    
+
     auto view = registry.GetRegistry().view<float>();
     for (auto entity : view)
     {
