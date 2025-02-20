@@ -166,37 +166,6 @@ class Buffers {
                              const std::vector<VkImage> &swapChainImages);
 
     /**
-     * @brief Create a Texture Buffer object in the Vulkan API.
-     *
-     * The texture buffer is used to store the texture data from an image file.
-     *
-     * @param device  The Vulkan device.
-     * @param physicalDevice  The Vulkan physical device.
-     * @param commandPool  The Vulkan command pool.
-     * @param graphicsQueue  The Vulkan graphics queue.
-     * @param texture  The texture.
-     */
-    void CreateTextureBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
-                             const VkCommandPool &commandPool, const VkQueue &graphicsQueue, Texture &texture);
-
-    /**
-     * @brief Create a Texture View object in the Vulkan API.
-     *
-     * @param device  The Vulkan device.
-     * @param texture  The texture.
-     */
-    void CreateTextureView(const VkDevice &device, Texture &texture);
-
-    /**
-     * @brief Create a Texture Sampler object in the Vulkan API.
-     *
-     * @param device  The Vulkan device.
-     * @param physicalDevice  The Vulkan physical device.
-     * @param texture  The texture.
-     */
-    void CreateTextureSampler(const VkDevice &device, const VkPhysicalDevice &physicalDevice, Texture &texture);
-
-    /**
      * @brief Create a Buffer object in the Vulkan API.
      *
      * @param device  The Vulkan device.

@@ -94,71 +94,6 @@ void Buffers::CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice
     }
 }
 
-void Buffers::CreateTextureBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
-                                  const VkCommandPool &commandPool, const VkQueue &graphicsQueue, Texture &texture)
-{
-    VkBuffer stagingBuffer{};
-    VkDeviceMemory stagingBufferMemory{};
-    auto size = texture.GetSize();
-
-    CreateBuffer(device, physicalDevice, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-                 VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer,
-                 stagingBufferMemory);
-
-    void *data = nullptr;
-    vkMapMemory(device, stagingBufferMemory, 0, size, 0, &data);
-    memcpy(data, texture.GetPixels(), static_cast<size_t>(size));
-    vkUnmapMemory(device, stagingBufferMemory);
-
-    auto &image = texture.GetImage();
-
-    CreateImage(device, physicalDevice, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL,
-                VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, texture);
-
-    TransitionImageLayout(device, commandPool, graphicsQueue, image, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED,
-                          VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
-
-    CopyBufferToImage(device, commandPool, graphicsQueue, stagingBuffer, texture);
-
-    TransitionImageLayout(device, commandPool, graphicsQueue, image, VK_FORMAT_R8G8B8A8_SRGB,
-                          VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
-
-    vkDestroyBuffer(device, stagingBuffer, nullptr);
-    vkFreeMemory(device, stagingBufferMemory, nullptr);
-}
-
-void Buffers::CreateTextureView(const VkDevice &device, Texture &texture)
-{
-    texture.SetTextureView(ImageView::CreateImageView(device, texture.GetImage(), VK_FORMAT_R8G8B8A8_SRGB, 0));
-}
-
-void Buffers::CreateTextureSampler(const VkDevice &device, const VkPhysicalDevice &physicalDevice, Texture &texture)
-{
-    VkPhysicalDeviceProperties properties{};
-    vkGetPhysicalDeviceProperties(physicalDevice, &properties);
-
-    VkSamplerCreateInfo samplerInfo{};
-    samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-    samplerInfo.magFilter = VK_FILTER_LINEAR;
-    samplerInfo.minFilter = VK_FILTER_LINEAR;
-    samplerInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-    samplerInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-    samplerInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-    samplerInfo.anisotropyEnable = VK_TRUE;
-    samplerInfo.maxAnisotropy = properties.limits.maxSamplerAnisotropy;
-    samplerInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
-    samplerInfo.unnormalizedCoordinates = VK_FALSE;
-    samplerInfo.compareEnable = VK_FALSE;
-    samplerInfo.compareOp = VK_COMPARE_OP_ALWAYS;
-    samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-    samplerInfo.mipLodBias = 0.0f;
-    samplerInfo.minLod = 0.0f;
-    samplerInfo.maxLod = 0.0f;
-
-    if (vkCreateSampler(device, &samplerInfo, nullptr, &texture.GetSampler()) != VK_SUCCESS)
-        throw VkWrapperError("failed to create texture sampler!");
-}
-
 void Buffers::Destroy(const VkDevice &device, [[maybe_unused]] const std::vector<VkImage> &swapChainImages)
 {
     for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
@@ -359,7 +294,7 @@ VkCommandBuffer Buffers::BeginSingleTimeCommands(const VkDevice &device, const V
     allocInfo.commandPool = commandPool;
     allocInfo.commandBufferCount = 1;
 
-    VkCommandBuffer commandBuffer{};
+    VkCommandBuffer commandBuffer;
     vkAllocateCommandBuffers(device, &allocInfo, &commandBuffer);
 
     VkCommandBufferBeginInfo beginInfo{};
