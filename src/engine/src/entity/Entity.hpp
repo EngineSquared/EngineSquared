@@ -13,7 +13,7 @@ namespace ES::Engine {
 class Entity {
   public:
     using entity_id_type = uint32_t;
-    static const entity_id_type entity_null_id = entt::null;
+    inline static const entity_id_type entity_null_id = entt::null;
 
   public:
     /**
@@ -22,6 +22,14 @@ class Entity {
      * @param   entt    index value in the registry
      */
     explicit(false) Entity(entt::entity entity = entt::null) : _entity(FromEnttEntity(entity)) {}
+
+    /**
+     * Create a ES Entity from an entity_id_type
+     *
+     * @param   entity  index value in the registry
+     */
+    explicit(false) Entity(entity_id_type entity) : _entity(entity) {}
+
     ~Entity() = default;
 
     /**
@@ -68,6 +76,25 @@ class Entity {
     inline decltype(auto) AddComponent(Core &registry, TArgs &&...args)
     {
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
+    }
+
+    /**
+     * Utility method to add a component to an entity if it does not already exist.
+     *
+     * @tparam  TComponent  type to add to registry
+     * @tparam  TArgs       type used to create the component
+     * @param   registry    registry used to store the component
+     * @param   args        parameters used to instanciate component directly in registry memory
+     * @return  reference of the added component
+     */
+    template <typename TComponent, typename... TArgs>
+    inline decltype(auto) AddComponentIfNotExists(Core &registry, TArgs &&...args)
+    {
+        if (this->HasComponents<TComponent>(registry))
+        {
+            return this->GetComponents<TComponent>(registry);
+        }
+        return this->AddComponent<TComponent>(registry, std::forward<TArgs>(args)...);
     }
 
     /**
@@ -144,12 +171,42 @@ class Entity {
         return registry.GetRegistry().get<TComponent...>(ToEnttEntity(this->_entity));
     }
 
+    /**
+     * Try to get a component of type TComponent from the entity.
+     *
+     * @tparam  TComponent  components to get
+     * @return  components of type TComponent from the entity
+     */
+    template <typename TComponent> inline decltype(auto) TryGetComponent(Core &registry)
+    {
+        return registry.GetRegistry().try_get<TComponent>(ToEnttEntity(this->_entity));
+    }
+
     inline static entity_id_type FromEnttEntity(entt::entity e) { return static_cast<entity_id_type>(e); }
 
     inline static entt::entity ToEnttEntity(entity_id_type e) { return static_cast<entt::entity>(e); }
+
+    bool operator==(const Entity &rhs) const = default;
+
+    /**
+     * Compare two entities id.
+     *
+     * @param   rhs     entity to compare
+     * @return  true if entities id are equals
+     */
+    inline bool operator==(const entity_id_type &rhs) const { return _entity == rhs; }
+
+    /**
+     * Compare two entities id.
+     *
+     * @param   rhs     entity to compare
+     * @return  true if entities id are different
+     */
+    inline bool operator!=(const entity_id_type &rhs) const { return _entity != rhs; }
 
   private:
     entity_id_type _entity;
     inline static std::unordered_map<std::type_index, std::function<void(Core &)>> temporaryComponent = {};
 };
+
 } // namespace ES::Engine
