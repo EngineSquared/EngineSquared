@@ -5,6 +5,8 @@
 namespace ES::Plugin::NativeScripting::Component {
 /**
  * Component used to allow native scripting for entities.
+ * Implementation is well explained and inspired from this Youtube video made by @TheCherno
+ * https://www.youtube.com/watch?v=iIUhg88MK5M&t=901s&pp=ygUbbmF0aXZlIHNjcmlwdGluZyB0aGUgY2hlcm5v
  */
 struct NativeScripting {
     std::unique_ptr<ES::Plugin::NativeScripting::Utils::ScriptableEntity> seInstance = nullptr;

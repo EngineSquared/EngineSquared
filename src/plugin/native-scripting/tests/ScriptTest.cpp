@@ -2,6 +2,7 @@
 
 #include "Entity.hpp"
 #include "NativeScripting.hpp"
+#include "ScriptingSystem.hpp"
 #include "Registry.hpp"
 
 class speedManager : public ES::Plugin::NativeScripting::Utils::ScriptableEntity {
@@ -40,43 +41,21 @@ static void InitPlayer(ES::Engine::Registry &registry)
     registry.GetRegistry().emplace<float>(playerEntity, speed);
 }
 
-static void RunNativeScripts(ES::Engine::Registry &registry)
-{
-    auto view = registry.GetRegistry().view<ES::Plugin::NativeScripting::Component::NativeScripting>();
-
-    for (auto entity : view)
-    {
-        auto &scriptComponent = view.get<ES::Plugin::NativeScripting::Component::NativeScripting>(entity);
-        if (scriptComponent.seInstance)
-        {
-            scriptComponent.OnUpdate(scriptComponent.seInstance.get());
-        }
-    }
-}
-
 TEST(NativeScripting, speedManagerScript)
 {
     ES::Engine::Registry registry;
 
     registry.RegisterSystem<ES::Engine::Scheduler::Startup>(InitPlayer);
-    registry.RegisterSystem<ES::Engine::Scheduler::Update>(RunNativeScripts);
-
+    registry.RegisterSystem<ES::Engine::Scheduler::Update>(ES::Plugin::NativeScripting::System::UpdateScripts);
+    
     testing::internal::CaptureStdout();
-
-    auto view = registry.GetRegistry().view<float>();
-    for (auto entity : view)
-    {
-        auto speed = view.get<float>(entity);
-        EXPECT_EQ(speed, 1.0f) << "Initial speed should be 1.0f";
-    }
-
+    
     registry.RunSystems();
 
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ(output, "OnCreate called\n");
-
-    registry.RunSystems();
-
+    
+    auto view = registry.GetRegistry().view<float>();
     for (auto entity : view)
     {
         auto speed = view.get<float>(entity);
