@@ -8,5 +8,5 @@ namespace ES::Plugin::Scene::System {
  *
  * @param   reg The registry to load and unload.
  */
-void UpdateScene(ES::Engine::Registry &reg);
+void UpdateScene(ES::Engine::Core &reg);
 } // namespace ES::Plugin::Scene::System

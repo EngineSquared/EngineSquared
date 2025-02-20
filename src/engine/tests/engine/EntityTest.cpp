@@ -1,16 +1,16 @@
 #include <gtest/gtest.h>
 
+#include "Core.hpp"
 #include "Entity.hpp"
-#include "Registry.hpp"
 
 using namespace ES::Engine;
 
 // Act as a tag component
 struct TempComponent {};
 
-TEST(Registry, TemporaryComponent)
+TEST(Core, TemporaryComponent)
 {
-    Registry reg;
+    Core reg;
 
     auto entity = Entity(reg.CreateEntity());
 

@@ -33,7 +33,7 @@ static void UpdateButtonTextureImage(ES::Plugin::UI::Component::Button &button,
     }
 }
 
-void ES::Plugin::UI::System::UpdateButtonTexture(ES::Engine::Registry &r)
+void ES::Plugin::UI::System::UpdateButtonTexture(ES::Engine::Core &r)
 {
     auto view = r.GetRegistry()
                     .view<ES::Plugin::UI::Component::Button, ES::Plugin::UI::Component::Sprite2D,

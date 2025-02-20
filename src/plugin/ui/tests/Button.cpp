@@ -11,7 +11,7 @@ TEST(Button, ButtonClick)
     struct onClickCalled {
         bool clicked = false;
     };
-    ES::Engine::Registry r;
+    ES::Engine::Core r;
     r.RegisterSystem(System::ButtonClick);
     r.RegisterSystem(ES::Engine::Entity::RemoveTemporaryComponents);
 
@@ -24,7 +24,7 @@ TEST(Button, ButtonClick)
     buttonComponent.lastState = Component::Button::State::Pressed;
     buttonComponent.state = Component::Button::State::Hover;
 
-    buttonComponent.onClick = [](ES::Engine::Registry &reg) { reg.GetResource<onClickCalled>().clicked = true; };
+    buttonComponent.onClick = [](ES::Engine::Core &reg) { reg.GetResource<onClickCalled>().clicked = true; };
 
     EXPECT_FALSE(r.GetResource<onClickCalled>().clicked);
 
@@ -36,7 +36,7 @@ TEST(Button, ButtonClick)
 
 TEST(Button, UpdateButtonTexture)
 {
-    ES::Engine::Registry r;
+    ES::Engine::Core r;
 
     r.RegisterSystem(System::UpdateButtonTexture);
     r.RegisterSystem(ES::Engine::Entity::RemoveTemporaryComponents);

@@ -44,7 +44,7 @@ struct SoftBodySpring {
     /**
      * Apply a force to the spring.
      */
-    void ApplyForce(ES::Engine::Registry &registry)
+    void ApplyForce(ES::Engine::Core &registry)
     {
         auto &nodeA = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->entityNodeA);
         auto &nodeB = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->entityNodeB);

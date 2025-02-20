@@ -1,7 +1,7 @@
 #pragma once
 
+#include "core/Core.hpp"
 #include "entity/Entity.hpp"
-#include "registry/Registry.hpp"
 
 #include "scheduler/FixedTimeUpdate.hpp"
 #include "scheduler/Startup.hpp"

@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/vec2.hpp>
 
-#include "Registry.hpp"
+#include "Core.hpp"
 
 namespace ES::Plugin::Input::Resource {
 /**

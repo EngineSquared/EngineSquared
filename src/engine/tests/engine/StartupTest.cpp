@@ -1,17 +1,17 @@
 #include <gtest/gtest.h>
 
+#include "Core.hpp"
 #include "Entity.hpp"
-#include "Registry.hpp"
 #include "Startup.hpp"
 
 using namespace ES::Engine;
 
-TEST(Registry, StartupScheduler)
+TEST(Core, StartupScheduler)
 {
-    Registry reg;
+    Core reg;
 
     int update_count = 0;
-    reg.RegisterSystem<Scheduler::Startup>([&update_count](const Registry &) { update_count++; });
+    reg.RegisterSystem<Scheduler::Startup>([&update_count](const Core &) { update_count++; });
 
     reg.RunSystems();
     reg.RunSystems();

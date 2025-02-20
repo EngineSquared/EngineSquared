@@ -1,4 +1,4 @@
-#include "Registry.hpp"
+#include "Core.hpp"
 
 // Require object plugin components
 #include "Transform.hpp"
@@ -8,7 +8,7 @@
 #include "CollisionCheckerABAB.hpp"
 #include "CollisionUtils3D.hpp"
 
-void ES::Plugin::Physics::System::DetectABABCollisions(ES::Engine::Registry &registry)
+void ES::Plugin::Physics::System::DetectABABCollisions(ES::Engine::Core &registry)
 {
     auto view = registry.GetRegistry()
                     .view<const ES::Plugin::Object::Component::Transform,
@@ -36,7 +36,7 @@ void ES::Plugin::Physics::System::DetectABABCollisions(ES::Engine::Registry &reg
     }
 }
 
-void ES::Plugin::Physics::System::RemoveABABCollisions(ES::Engine::Registry &registry)
+void ES::Plugin::Physics::System::RemoveABABCollisions(ES::Engine::Core &registry)
 {
     auto view = registry.GetRegistry().view<ES::Plugin::Physics::Component::ABABCollision3D>();
 
