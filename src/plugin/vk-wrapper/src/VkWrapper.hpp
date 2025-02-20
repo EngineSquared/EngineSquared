@@ -102,8 +102,7 @@ class VkWrapper {
      * @param width  The width of the window.
      * @param height  The height of the window.
      */
-    void CreateInstance(GLFWwindow *window, const std::string &applicationName, const uint32_t width,
-                        const uint32_t height);
+    void CreateInstance(GLFWwindow *window, const std::string &applicationName, const uint32_t width, const uint32_t height);
 
     /**
      * @brief Create the graphics pipeline using the Vulkan API.
@@ -124,36 +123,18 @@ class VkWrapper {
     void Destroy();
 
     /**
-     * @brief Add a texture to the VkWrapper and get the texture id.
+     * @brief Add a texture to the VkWrapper.
      *
      * @param texturePath  The path to the texture.
-     * @param textureId  The id of the texture.
      */
-    void AddTexture(const std::string &texturePath, uint32_t &textureId);
+    void AddTexture(const std::string &texturePath);
 
     /**
-     * @brief Add a 3D model to the VkWrapper and get the model id.
+     * @brief Add a 3D model to the VkWrapper.
      *
      * @param modelPath  The path to the model.
-     * @param modelId  The id of the model.
      */
-    void AddModel(const std::string &modelPath, uint32_t &modelId);
-
-    /**
-     * @brief Bind a texture to a model using the texture id and the model id.
-     *
-     * @param textureId  The id of the texture.
-     * @param modelId  The id of the model.
-     */
-    void AddModel(const Object::Component::Mesh &model, const std::string &modelName, uint32_t &modelId);
-
-    /**
-     * @brief Bind a texture to a model using the texture id and the model id.
-     *
-     * @param textureId  The id of the texture.
-     * @param modelId  The id of the model.
-     */
-    void BindTexture(const uint32_t textureId, const uint32_t modelId);
+    void AddModel(const std::string &modelPath);
 
     /**
      * @brief Add a shader to the VkWrapper.
@@ -237,8 +218,7 @@ class VkWrapper {
   private:
     Wrapper::Instance _instance;
     Wrapper::ShaderModule::ShaderPaths _shaders;
-    entt::resource_cache<Wrapper::Texture, Wrapper::TextureLoader> _textures{};
-    entt::resource_cache<Object::Component::Mesh, Object::Component::MeshLoader> _models{};
+    std::vector<Wrapper::Texture> _textures;
 };
 
 } // namespace ES::Plugin

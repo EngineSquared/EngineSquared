@@ -135,9 +135,7 @@ void Instance::CreateSwapChainImages(const uint32_t width, const uint32_t height
     _imageView.Create(device, _swapChain.GetSwapChainImages(), _swapChain.GetSurfaceFormat());
 }
 
-void Instance::CreateGraphicsPipeline(
-    const ShaderModule::ShaderPaths &shaders, const entt::resource_cache<Texture, TextureLoader> &textures,
-    const entt::resource_cache<Object::Component::Mesh, Object::Component::MeshLoader> &models)
+void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders, const std::vector<Texture> &textures)
 {
     const auto &device = _logicalDevice.Get();
     const auto &extent = _swapChain.GetExtent();
@@ -174,8 +172,9 @@ void Instance::CreateGraphicsPipeline(
     buffersInfo.commandPool = _command.GetCommandPool();
     buffersInfo.graphicsQueue = _logicalDevice.GetGraphicsQueue();
     buffersInfo.swapChainImages = _swapChain.GetSwapChainImages();
+    buffersInfo.textures = textures;
 
-    _buffers.Create(buffersInfo, textures);
+    _buffers.Create(buffersInfo);
 
     _descriptorLayout.CreateDescriptorPool(device);
     _descriptorLayout.CreateDescriptorSet(device, _buffers.GetUniformBuffers(),

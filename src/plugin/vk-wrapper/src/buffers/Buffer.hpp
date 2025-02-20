@@ -22,7 +22,6 @@
 #ifndef BUFFER_HPP_
 #define BUFFER_HPP_
 
-#include "ImageView.hpp"
 #include "Texture.hpp"
 #include "UniformObject.hpp"
 #include "Vertex.hpp"
@@ -52,8 +51,9 @@ const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
  *   .commandPool = commandPool,
  *   .graphicsQueue = graphicsQueue,
  *   .swapChainImages = swapChainImages,
+ *   .textures = textures,
  * };
- * buffers.Create(info, textures);
+ * buffers.Create(info);
  * buffers.Destroy(device, swapChainImages);
  * @endcode
  */
@@ -71,6 +71,7 @@ class Buffers {
      * @param commandPool The Vulkan command pool.
      * @param graphicsQueue The Vulkan graphics queue.
      * @param swapChainImages The swap chain images. Only used for the uniform buffer.
+     * @param textures The textures.
      */
     struct CreateInfo {
         VkDevice device;
@@ -78,6 +79,7 @@ class Buffers {
         VkCommandPool commandPool;
         VkQueue graphicsQueue;
         std::vector<VkImage> swapChainImages;
+        std::vector<Texture> textures;
     };
 
   public:
@@ -85,9 +87,8 @@ class Buffers {
      * @brief Create the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
      *
      * @param info The creation information required for the Buffers.
-     * @param textures The textures.
      */
-    void Create(const CreateInfo &info, const entt::resource_cache<Texture, TextureLoader> &textures);
+    void Create(const CreateInfo &info);
 
     /**
      * @brief Destroy the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
@@ -232,7 +233,7 @@ class Buffers {
     std::vector<VkBuffer> _uniformBuffers;
     std::vector<VkDeviceMemory> _uniformBuffersMemory;
     std::vector<void *> _uniformBuffersMapped;
-    VkImageView _textureView;
+    std::vector<Texture> _textures;
 };
 
 } // namespace ES::Plugin::Wrapper

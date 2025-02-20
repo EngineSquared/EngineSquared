@@ -159,12 +159,8 @@ class Instance {
      *
      * @param shaders  The paths to the shader files.
      * @param textures  The textures used in the graphics pipeline.
-     * @param models  The models used in the graphics pipeline.
      */
-    void
-    CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders,
-                           const entt::resource_cache<Texture, TextureLoader> &textures,
-                           const entt::resource_cache<Object::Component::Mesh, Object::Component::MeshLoader> &models);
+    void CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders, const std::vector<Texture> &textures);
 
     /**
      * @brief Create synchronization objects for the Vulkan API.

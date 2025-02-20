@@ -1,3 +1,4 @@
+#include "Logger.hpp"
 #include "VkWrapper.hpp"
 #include "Logger.hpp"
 
@@ -15,7 +16,7 @@ void VkWrapper::CreateInstance(GLFWwindow *window, const std::string &applicatio
 
 void VkWrapper::CreatePipeline()
 {
-    _instance.CreateGraphicsPipeline(_shaders, _textures, _models);
+    _instance.CreateGraphicsPipeline(_shaders, _textures);
     _instance.CreateSyncObjects();
 }
 
@@ -62,6 +63,24 @@ void VkWrapper::BindTexture(const uint32_t textureId, const uint32_t modelId)
         model->textures.emplace_back(textureId);
     else
         ES::Utils::Log::Warn("texture already bound to model");
+}
+
+void VkWrapper::AddShader(const std::string &shaderPath, const std::string &fname, const ShaderType &shaderType)
+{
+    switch (shaderType)
+    {
+    case ShaderType::VERTEX: _shaders.vertex = {shaderPath, fname}; break;
+    case ShaderType::FRAGMENT: _shaders.fragment = {shaderPath, fname}; break;
+
+    default: break;
+    }
+}
+
+void VkWrapper::AddTexture(const std::string &texturePath)
+{
+    Wrapper::Texture texture;
+    texture.Create(texturePath);
+    _textures.push_back(texture);
 }
 
 void VkWrapper::AddShader(const std::string &shaderPath, const std::string &fname, const ShaderType &shaderType)
