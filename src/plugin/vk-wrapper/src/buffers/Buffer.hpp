@@ -165,6 +165,9 @@ class Buffers {
     void CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
                              const std::vector<VkImage> &swapChainImages);
 
+    void CreateTextureBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
+                             const VkCommandPool &commandPool, const VkQueue &graphicsQueue, Texture &texture);
+
     /**
      * @brief Create a Buffer object in the Vulkan API.
      *
@@ -210,49 +213,14 @@ class Buffers {
     void CopyBuffer(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
                     const VkBuffer &srcBuffer, const VkBuffer &dstBuffer, VkDeviceSize size);
 
-    /**
-     * @brief Transition the image layout in the Vulkan API.
-     *
-     * @param device  The Vulkan device.
-     * @param commandPool  The Vulkan command pool.
-     * @param graphicsQueue  The Vulkan graphics queue.
-     * @param image  The image.
-     * @param format  The format of the image.
-     * @param oldLayout  The old layout of the image.
-     * @param newLayout  The new layout of the image.
-     */
     void TransitionImageLayout(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
                                const VkImage &image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
 
-    /**
-     * @brief Copy a buffer to an image in the Vulkan API.
-     *
-     * @param device  The Vulkan device.
-     * @param commandPool  The Vulkan command pool.
-     * @param graphicsQueue  The Vulkan graphics queue.
-     * @param buffer  The buffer.
-     * @param texture  The texture.
-     */
     void CopyBufferToImage(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
                            VkBuffer buffer, Texture &texture);
 
-    /**
-     * @brief Begin a single time command in the Vulkan API.
-     *
-     * @param device  The Vulkan device.
-     * @param commandPool  The Vulkan command pool.
-     * @return VkCommandBuffer  The command buffer.
-     */
     VkCommandBuffer BeginSingleTimeCommands(const VkDevice &device, const VkCommandPool &commandPool);
 
-    /**
-     * @brief End a single time command in the Vulkan API.
-     *
-     * @param device  The Vulkan device.
-     * @param commandPool  The Vulkan command pool.
-     * @param graphicsQueue  The Vulkan graphics queue.
-     * @param commandBuffer  The command buffer.
-     */
     void EndSingleTimeCommands(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
                                VkCommandBuffer commandBuffer);
 

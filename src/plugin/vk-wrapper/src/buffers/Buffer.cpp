@@ -94,6 +94,39 @@ void Buffers::CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice
     }
 }
 
+void Buffers::CreateTextureBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
+                                  const VkCommandPool &commandPool, const VkQueue &graphicsQueue, Texture &texture)
+{
+    VkBuffer stagingBuffer{};
+    VkDeviceMemory stagingBufferMemory{};
+    auto size = texture.GetSize();
+
+    CreateBuffer(device, physicalDevice, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+                 VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer,
+                 stagingBufferMemory);
+
+    void *data = nullptr;
+    vkMapMemory(device, stagingBufferMemory, 0, size, 0, &data);
+    memcpy(data, texture.GetPixels(), static_cast<size_t>(size));
+    vkUnmapMemory(device, stagingBufferMemory);
+
+    auto &image = texture.GetImage();
+
+    CreateImage(device, physicalDevice, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL,
+                VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, texture);
+
+    TransitionImageLayout(device, commandPool, graphicsQueue, image, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED,
+                          VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+
+    CopyBufferToImage(device, commandPool, graphicsQueue, stagingBuffer, texture);
+
+    TransitionImageLayout(device, commandPool, graphicsQueue, image, VK_FORMAT_R8G8B8A8_SRGB,
+                          VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+
+    vkDestroyBuffer(device, stagingBuffer, nullptr);
+    vkFreeMemory(device, stagingBufferMemory, nullptr);
+}
+
 void Buffers::Destroy(const VkDevice &device, [[maybe_unused]] const std::vector<VkImage> &swapChainImages)
 {
     for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
@@ -172,7 +205,7 @@ void Buffers::CreateImage(const VkDevice &device, const VkPhysicalDevice &physic
     imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
 
     auto &image = texture.GetImage();
-    auto &imageMemory = texture.GetMemory();
+    auto &imageMemory = texture.GetImageMemory();
 
     if (vkCreateImage(device, &imageInfo, nullptr, &image) != VK_SUCCESS)
         throw VkWrapperError("failed to create image!");
@@ -236,8 +269,8 @@ void Buffers::TransitionImageLayout(const VkDevice &device, const VkCommandPool 
     barrier.subresourceRange.baseArrayLayer = 0;
     barrier.subresourceRange.layerCount = 1;
 
-    VkPipelineStageFlags sourceStage{};
-    VkPipelineStageFlags destinationStage{};
+    VkPipelineStageFlags sourceStage;
+    VkPipelineStageFlags destinationStage;
 
     if (oldLayout == VK_IMAGE_LAYOUT_UNDEFINED && newLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL)
     {
