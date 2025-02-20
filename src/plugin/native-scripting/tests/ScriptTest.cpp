@@ -43,8 +43,9 @@ TEST(NativeScripting, speedManagerScript)
     ES::Engine::Core core;
 
     core.RegisterSystem<ES::Engine::Scheduler::Startup>(InitPlayer);
-    core.RegisterSystem<ES::Engine::Scheduler::Update>(ES::Plugin::NativeScripting::System::UpdateScripts);
+    core.RunSystems();
 
+    core.RegisterSystem<ES::Engine::Scheduler::Update>(ES::Plugin::NativeScripting::System::UpdateScripts);
     testing::internal::CaptureStdout();
 
     core.RunSystems();
@@ -56,6 +57,6 @@ TEST(NativeScripting, speedManagerScript)
     for (auto entity : view)
     {
         auto speed = view.get<float>(entity);
-        EXPECT_EQ(speed, 3.0f) << "Speed should be 3.0f after OnUpdate()";
+        EXPECT_FLOAT_EQ(speed, 3.0f) << "Speed should be 3.0f after OnUpdate()";
     }
 }
