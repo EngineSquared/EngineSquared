@@ -39,18 +39,21 @@ namespace ES::Plugin {
  * ES::Plugin::Window::Resource::Window window(800, 600, "My Engine");
  *
  * ES::Plugin::VkWrapper vkWrapper;
- * ES::Plugin::VkWrapper::CreateInfo createInfo = {
- *     .window = window.GetGLFWWindow(),
- *     .width = 800,
- *     .height = 600,
- *     .applicationName = "My Engine",
- *     .shaders = {{SHADER_DIR "vert.spv", "main"}, {SHADER_DIR "frag.spv", "main"}}
- * };
- * vkWrapper.Create(createInfo);
+ * ES::Plugin::VkWrapper::CreateInfo createInfo;
+ *
+ * vkWrapper.CreateInstance(window.GetGLFWWindow(), "VkWrapper Test", 800, 600);
+ *
+ * vkWrapper.AddTexture("exemple.png");
+ *
+ * vkWrapper.AddShader(SHADER_DIR "vert.spv", "main", VkWrapper::ShaderType::VERTEX);
+ * vkWrapper.AddShader(SHADER_DIR "frag.spv", "main", VkWrapper::ShaderType::FRAGMENT);
+ *
+ * vkWrapper.CreatePipeline();
  *
  * window.SetFramebufferSizeCallback((void *) &vkWrapper, ES::Plugin::VkWrapper::ResizeCallback);
  *
- * vkWrapper.PrintAvailableExtensions();
+ * VkWrapper::PrintConfig();
+ * VkWrapper::PrintAvailableExtensions();
  *
  * while (!window.ShouldClose())
  * {
