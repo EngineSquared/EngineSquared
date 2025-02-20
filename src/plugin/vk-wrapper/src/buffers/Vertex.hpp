@@ -33,9 +33,9 @@
 namespace ES::Plugin::Wrapper {
 
 /**
- * @brief Vertex class.
+ * @brief Vertex structure.
  *
- * This class is used to represent a vertex in the Vulkan API.
+ * This structure is used to represent a vertex in the Vulkan API.
  * It contains the position and color of the vertex.
  *
  * @example "Get the binding and attribute descriptions for the vertex."

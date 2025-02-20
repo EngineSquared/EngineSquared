@@ -65,21 +65,9 @@ class Buffers {
      * @note The uniform buffer is destroyed in the DestroyUniformBuffers function.
      *
      * @param device The Vulkan device.
+     * @param swapChainImages The swap chain images.
      */
-    void Destroy(const VkDevice &device);
-
-    /**
-     * @brief Create a Uniform Buffer object in the Vulkan API.
-     *
-     * Updates the buffer by applying a transformation to its contents at each frame. The buffer must be destroyed at
-     * the end of the program. Depends on the number of frames in the swap chain.
-     *
-     * @param device  The Vulkan device.
-     * @param physicalDevice  The Vulkan physical device.
-     * @param swapChainImages  The swap chain images.
-     */
-    void CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
-                             const std::vector<VkImage> &swapChainImages);
+    void Destroy(const VkDevice &device, const std::vector<VkImage> &swapChainImages);
 
     /**
      * @brief Update the Uniform Buffer object in the Vulkan API.
@@ -89,14 +77,6 @@ class Buffers {
      * @param currentImage  The current image.
      */
     void UpdateUniformBuffer(const VkDevice &device, const VkExtent2D swapChainExtent, const uint32_t currentImage);
-
-    /**
-     * @brief Destroy the UniformBuffer object.
-     *
-     * @param device The Vulkan device.
-     * @param swapChainImages The swap chain images.
-     */
-    void DestroyUniformBuffers(const VkDevice &device, const std::vector<VkImage> &swapChainImages);
 
     /**
      * @brief Get the uniform buffers.
@@ -141,6 +121,19 @@ class Buffers {
      */
     void CreateIndexBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
                            const VkCommandPool &commandPool, const VkQueue &graphicsQueue);
+
+    /**
+     * @brief Create a Uniform Buffer object in the Vulkan API.
+     *
+     * Updates the buffer by applying a transformation to its contents at each frame. The buffer must be destroyed at
+     * the end of the program. Depends on the number of frames in the swap chain.
+     *
+     * @param device  The Vulkan device.
+     * @param physicalDevice  The Vulkan physical device.
+     * @param swapChainImages  The swap chain images.
+     */
+    void CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
+                             const std::vector<VkImage> &swapChainImages);
 
     /**
      * @brief Create a Buffer object in the Vulkan API.

@@ -83,23 +83,19 @@ void Buffers::CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice
     }
 }
 
-void Buffers::Destroy(const VkDevice &device)
-{
-    vkDestroyBuffer(device, _indexBuffer, nullptr);
-    vkFreeMemory(device, _indexBufferMemory, nullptr);
-
-    vkDestroyBuffer(device, _vertexBuffer, nullptr);
-    vkFreeMemory(device, _vertexBufferMemory, nullptr);
-}
-
-void Buffers::DestroyUniformBuffers(const VkDevice &device,
-                                    [[maybe_unused]] const std::vector<VkImage> &swapChainImages)
+void Buffers::Destroy(const VkDevice &device, [[maybe_unused]] const std::vector<VkImage> &swapChainImages)
 {
     for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
         vkDestroyBuffer(device, _uniformBuffers[i], nullptr);
         vkFreeMemory(device, _uniformBuffersMemory[i], nullptr);
     }
+
+    vkDestroyBuffer(device, _indexBuffer, nullptr);
+    vkFreeMemory(device, _indexBufferMemory, nullptr);
+
+    vkDestroyBuffer(device, _vertexBuffer, nullptr);
+    vkFreeMemory(device, _vertexBufferMemory, nullptr);
 }
 
 void Buffers::UpdateUniformBuffer(const VkDevice &device, const VkExtent2D swapChainExtent, const uint32_t currentImage)
@@ -168,7 +164,7 @@ void Buffers::CopyBuffer(const VkDevice &device, const VkCommandPool &commandPoo
     allocInfo.commandPool = commandPool;
     allocInfo.commandBufferCount = 1;
 
-    VkCommandBuffer commandBuffer{};
+    VkCommandBuffer commandBuffer;
     vkAllocateCommandBuffers(device, &allocInfo, &commandBuffer);
 
     VkCommandBufferBeginInfo beginInfo{};
