@@ -135,6 +135,9 @@ class Buffers {
     void CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
                              const std::vector<VkImage> &swapChainImages);
 
+    void CreateTextureBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
+                             const VkCommandPool &commandPool, const VkQueue &graphicsQueue, Texture &texture);
+
     /**
      * @brief Create a Buffer object in the Vulkan API.
      *
@@ -149,6 +152,9 @@ class Buffers {
     void CreateBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkDeviceSize size,
                       const VkBufferUsageFlags usage, const VkMemoryPropertyFlags properties, VkBuffer &buffer,
                       VkDeviceMemory &bufferMemory);
+
+    void CreateImage(const VkDevice &device, const VkPhysicalDevice &physicalDevice, VkFormat format,
+                     VkImageTiling tiling, VkImageUsageFlags usage, Texture &texture);
 
     /**
      * @brief Find the memory type in the physical device.
@@ -176,6 +182,17 @@ class Buffers {
      */
     void CopyBuffer(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
                     const VkBuffer &srcBuffer, const VkBuffer &dstBuffer, VkDeviceSize size);
+
+    void TransitionImageLayout(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
+                               const VkImage &image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
+
+    void CopyBufferToImage(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
+                           VkBuffer buffer, Texture &texture);
+
+    VkCommandBuffer BeginSingleTimeCommands(const VkDevice &device, const VkCommandPool &commandPool);
+
+    void EndSingleTimeCommands(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
+                               VkCommandBuffer commandBuffer);
 
   private:
     VkBuffer _vertexBuffer;
