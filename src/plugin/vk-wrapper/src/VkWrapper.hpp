@@ -43,13 +43,7 @@ namespace ES::Plugin {
  *
  * vkWrapper.CreateInstance(window.GetGLFWWindow(), "VkWrapper Test", 800, 600);
  *
- * uint32_t textureId;
- * vkWrapper.AddTexture("exemple.png", textureId);
- *
- * uint32_t modelId;
- * vkWrapper.AddModel("exemple.obj", modelId);
- *
- * vkWrapper.BinTexture(modelId, textureId);
+ * vkWrapper.AddTexture("exemple.png");
  *
  * vkWrapper.AddShader(SHADER_DIR "vert.spv", "main", VkWrapper::ShaderType::VERTEX);
  * vkWrapper.AddShader(SHADER_DIR "frag.spv", "main", VkWrapper::ShaderType::FRAGMENT);
