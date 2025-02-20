@@ -102,7 +102,8 @@ class VkWrapper {
      * @param width  The width of the window.
      * @param height  The height of the window.
      */
-    void CreateInstance(GLFWwindow *window, const std::string &applicationName, const uint32_t width, const uint32_t height);
+    void CreateInstance(GLFWwindow *window, const std::string &applicationName, const uint32_t width,
+                        const uint32_t height);
 
     /**
      * @brief Create the graphics pipeline using the Vulkan API.

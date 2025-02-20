@@ -1,4 +1,3 @@
-#include "Logger.hpp"
 #include "VkWrapper.hpp"
 #include "Logger.hpp"
 
