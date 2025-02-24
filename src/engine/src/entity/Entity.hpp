@@ -18,7 +18,7 @@ class Entity {
   public:
     /**
      * Create a ES Entity from entity_id_type
-     * 
+     *
      * @param   entity  index value in the registry
      */
     explicit(false) Entity(entity_id_type entity = entity_null_id) : _entity(entity) {}
