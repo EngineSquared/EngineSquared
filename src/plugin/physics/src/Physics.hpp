@@ -7,5 +7,7 @@
 #include "CollisionUtils2D.hpp"
 #include "CollisionUtils3D.hpp"
 #include "ParticleBoxCollision.hpp"
+#include "PhysicsManager.hpp"
+#include "PhysicsUpdate.hpp"
 #include "SoftBodyCollision.hpp"
 #include "VelocityIntegration.hpp"
