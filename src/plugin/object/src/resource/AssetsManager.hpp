@@ -27,7 +27,7 @@ template <typename TAssetType> class AssetsManager {
     {
         if (_assets.contains(id))
         {
-            ES::Utils::Log::Warn("Asset with id " + std::to_string(id) + " already exists. Overwriting.");
+            ES::Utils::Log::Warn(std::format("Asset with id {} already exists. Overwriting.", id));
         }
         _assets[id] = std::make_shared<TAssetType>(std::move(asset));
         return *_assets[id];
