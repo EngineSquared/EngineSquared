@@ -43,15 +43,14 @@ void Instance::Create(const std::string &applicationName)
 
 void Instance::Destroy()
 {
-    VkDevice device = _logicalDevice.Get();
+    const auto &device = _logicalDevice.Get();
 
     CleanupSwapChain(device);
 
     _graphicsPipeline.Destroy(device);
     _renderPass.Destroy(device);
-    _buffers.DestroyUniformBuffers(device, _swapChain.GetSwapChainImages());
+    _buffers.Destroy(device, _swapChain.GetSwapChainImages());
     _descriptorLayout.Destroy(device);
-    _buffers.Destroy(device);
 
     for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
@@ -114,7 +113,7 @@ void Instance::CreateSurface(GLFWwindow *window) { _surface.Create(window, _inst
 
 void Instance::SetupDevices()
 {
-    auto surface = _surface.Get();
+    const auto &surface = _surface.Get();
 
     _physicalDevice.PickPhysicalDevice(_instance, surface);
     _logicalDevice.Create(_physicalDevice.Get(), surface);
@@ -122,24 +121,24 @@ void Instance::SetupDevices()
 
 void Instance::CreateSwapChainImages(const uint32_t width, const uint32_t height)
 {
-    auto device = _logicalDevice.Get();
+    const auto &device = _logicalDevice.Get();
     _currentFrame = 0;
 
     _swapChain.Create(device, _physicalDevice.Get(), _surface.Get(), width, height);
     _imageView.Create(device, _swapChain.GetSwapChainImages(), _swapChain.GetSurfaceFormat());
 }
 
-void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
+void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders, const std::vector<Texture> &textures)
 {
-    auto device = _logicalDevice.Get();
-    auto extent = _swapChain.GetExtent();
+    const auto &device = _logicalDevice.Get();
+    const auto &extent = _swapChain.GetExtent();
 
     _renderPass.Create(device, _swapChain.GetSurfaceFormat().format);
 
     _descriptorLayout.Create(device);
     _graphicsPipeline.Create(device, _renderPass.Get(), shaders, _descriptorLayout.Get());
 
-    auto renderPass = _renderPass.Get();
+    const auto &renderPass = _renderPass.Get();
 
     Framebuffer::CreateInfo framebufferInfo{};
     framebufferInfo.swapChainExtent = extent;
@@ -148,7 +147,7 @@ void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
 
     _framebuffer.Create(device, framebufferInfo);
 
-    auto physicalDevice = _physicalDevice.Get();
+    const auto &physicalDevice = _physicalDevice.Get();
 
     Command::CreateInfo commandInfo{};
     commandInfo.physicalDevice = physicalDevice;
@@ -160,8 +159,15 @@ void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders)
 
     _command.Create(device, commandInfo);
 
-    _buffers.Create(device, physicalDevice, _command.GetCommandPool(), _logicalDevice.GetGraphicsQueue(),
-                    _swapChain.GetSwapChainImages());
+    Buffers::CreateInfo buffersInfo{};
+    buffersInfo.device = device;
+    buffersInfo.physicalDevice = physicalDevice;
+    buffersInfo.commandPool = _command.GetCommandPool();
+    buffersInfo.graphicsQueue = _logicalDevice.GetGraphicsQueue();
+    buffersInfo.swapChainImages = _swapChain.GetSwapChainImages();
+    buffersInfo.textures = textures;
+
+    _buffers.Create(buffersInfo);
 
     _descriptorLayout.CreateDescriptorPool(device);
     _descriptorLayout.CreateDescriptorSet(device, _buffers.GetUniformBuffers());
@@ -182,7 +188,7 @@ void Instance::CreateSyncObjects()
     fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
     fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-    auto device = _logicalDevice.Get();
+    const auto &device = _logicalDevice.Get();
 
     for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
@@ -195,7 +201,7 @@ void Instance::CreateSyncObjects()
 
 void Instance::RecreateSwapChain(const uint32_t width, const uint32_t height)
 {
-    auto device = _logicalDevice.Get();
+    const auto &device = _logicalDevice.Get();
 
     vkDeviceWaitIdle(device);
 
@@ -220,7 +226,7 @@ void Instance::CleanupSwapChain(const VkDevice &device)
 
 Result Instance::DrawNextImage()
 {
-    auto device = _logicalDevice.Get();
+    const auto &device = _logicalDevice.Get();
 
     vkWaitForFences(device, 1, &_inFlightFences[_currentFrame], VK_TRUE, UINT64_MAX);
 

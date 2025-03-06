@@ -22,6 +22,7 @@
 #ifndef BUFFER_HPP_
 #define BUFFER_HPP_
 
+#include "Texture.hpp"
 #include "UniformObject.hpp"
 #include "Vertex.hpp"
 
@@ -41,23 +42,50 @@ const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
  * @example
  * @code
  * Buffers buffers;
- * buffers.Create(device, physicalDevice, commandPool, graphicsQueue, swapChainImages);
- * buffers.Destroy(device);
+ * Buffers::CreateInfo info = {
+ *   .device = device,
+ *   .physicalDevice = physicalDevice,
+ *   .commandPool = commandPool,
+ *   .graphicsQueue = graphicsQueue,
+ *   .swapChainImages = swapChainImages,
+ *   .textures = textures,
+ * };
+ * buffers.Create(info);
+ * buffers.Destroy(device, swapChainImages);
  * @endcode
  */
 class Buffers {
   public:
     /**
-     * @brief Create the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
+     * @brief Structure to hold the creation information for the Buffers.
+     *
+     * This structure contains all the necessary information required to create the Buffers,
+     * including the device, the physical device, the command pool, the graphics queue, the swap chain images,
+     * and the textures.
      *
      * @param device The Vulkan device.
      * @param physicalDevice The Vulkan physical device.
      * @param commandPool The Vulkan command pool.
      * @param graphicsQueue The Vulkan graphics queue.
      * @param swapChainImages The swap chain images. Only used for the uniform buffer.
+     * @param textures The textures.
      */
-    void Create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkCommandPool &commandPool,
-                const VkQueue &graphicsQueue, const std::vector<VkImage> &swapChainImages);
+    struct CreateInfo {
+        VkDevice device;
+        VkPhysicalDevice physicalDevice;
+        VkCommandPool commandPool;
+        VkQueue graphicsQueue;
+        std::vector<VkImage> swapChainImages;
+        std::vector<Texture> textures;
+    };
+
+  public:
+    /**
+     * @brief Create the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
+     *
+     * @param info The creation information required for the Buffers.
+     */
+    void Create(const CreateInfo &info);
 
     /**
      * @brief Destroy the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
@@ -65,21 +93,9 @@ class Buffers {
      * @note The uniform buffer is destroyed in the DestroyUniformBuffers function.
      *
      * @param device The Vulkan device.
+     * @param swapChainImages The swap chain images.
      */
-    void Destroy(const VkDevice &device);
-
-    /**
-     * @brief Create a Uniform Buffer object in the Vulkan API.
-     *
-     * Updates the buffer by applying a transformation to its contents at each frame. The buffer must be destroyed at
-     * the end of the program. Depends on the number of frames in the swap chain.
-     *
-     * @param device  The Vulkan device.
-     * @param physicalDevice  The Vulkan physical device.
-     * @param swapChainImages  The swap chain images.
-     */
-    void CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
-                             const std::vector<VkImage> &swapChainImages);
+    void Destroy(const VkDevice &device, const std::vector<VkImage> &swapChainImages);
 
     /**
      * @brief Update the Uniform Buffer object in the Vulkan API.
@@ -89,14 +105,6 @@ class Buffers {
      * @param currentImage  The current image.
      */
     void UpdateUniformBuffer(const VkDevice &device, const VkExtent2D swapChainExtent, const uint32_t currentImage);
-
-    /**
-     * @brief Destroy the UniformBuffer object.
-     *
-     * @param device The Vulkan device.
-     * @param swapChainImages The swap chain images.
-     */
-    void DestroyUniformBuffers(const VkDevice &device, const std::vector<VkImage> &swapChainImages);
 
     /**
      * @brief Get the uniform buffers.
@@ -143,6 +151,22 @@ class Buffers {
                            const VkCommandPool &commandPool, const VkQueue &graphicsQueue);
 
     /**
+     * @brief Create a Uniform Buffer object in the Vulkan API.
+     *
+     * Updates the buffer by applying a transformation to its contents at each frame. The buffer must be destroyed at
+     * the end of the program. Depends on the number of frames in the swap chain.
+     *
+     * @param device  The Vulkan device.
+     * @param physicalDevice  The Vulkan physical device.
+     * @param swapChainImages  The swap chain images.
+     */
+    void CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
+                             const std::vector<VkImage> &swapChainImages);
+
+    void CreateTextureBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
+                             const VkCommandPool &commandPool, const VkQueue &graphicsQueue, Texture &texture);
+
+    /**
      * @brief Create a Buffer object in the Vulkan API.
      *
      * @param device  The Vulkan device.
@@ -156,6 +180,9 @@ class Buffers {
     void CreateBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkDeviceSize size,
                       const VkBufferUsageFlags usage, const VkMemoryPropertyFlags properties, VkBuffer &buffer,
                       VkDeviceMemory &bufferMemory);
+
+    void CreateImage(const VkDevice &device, const VkPhysicalDevice &physicalDevice, VkFormat format,
+                     VkImageTiling tiling, VkImageUsageFlags usage, Texture &texture);
 
     /**
      * @brief Find the memory type in the physical device.
@@ -184,6 +211,17 @@ class Buffers {
     void CopyBuffer(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
                     const VkBuffer &srcBuffer, const VkBuffer &dstBuffer, VkDeviceSize size);
 
+    void TransitionImageLayout(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
+                               const VkImage &image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
+
+    void CopyBufferToImage(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
+                           VkBuffer buffer, Texture &texture);
+
+    VkCommandBuffer BeginSingleTimeCommands(const VkDevice &device, const VkCommandPool &commandPool);
+
+    void EndSingleTimeCommands(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
+                               VkCommandBuffer commandBuffer);
+
   private:
     VkBuffer _vertexBuffer;
     VkDeviceMemory _vertexBufferMemory;
@@ -192,6 +230,7 @@ class Buffers {
     std::vector<VkBuffer> _uniformBuffers;
     std::vector<VkDeviceMemory> _uniformBuffersMemory;
     std::vector<void *> _uniformBuffersMapped;
+    std::vector<Texture> _textures;
 };
 
 } // namespace ES::Plugin::Wrapper
