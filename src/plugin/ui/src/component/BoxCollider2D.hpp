@@ -13,4 +13,4 @@ struct BoxCollider2D {
      */
     glm::vec2 size;
 };
-} // namespace ES::Plugin::Physics::Component
+} // namespace ES::Plugin::UI::Component
