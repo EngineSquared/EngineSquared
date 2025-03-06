@@ -1,6 +1,9 @@
 #pragma once
 
+// clang-format off
 #include <Jolt/Jolt.h>
+// clang-format on
+
 #include <Jolt/Physics/Collision/ObjectLayer.h>
 
 namespace ES::Plugin::Physics::Utils {

@@ -2,7 +2,7 @@
 
 #include "Math.hpp"
 
-namespace ES::Plugin::Physics::Utils {
+namespace ES::Plugin::UI::Utils {
 /**
  * @brief Check if a 2D point is inside a 2D rectangle
  *
