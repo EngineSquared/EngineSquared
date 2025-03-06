@@ -7,37 +7,29 @@
 #include <limits>
 
 namespace ES::Plugin::Physics::Resource {
-    PhysicsManager::PhysicsManager() {
-        JPH::RegisterDefaultAllocator();
+PhysicsManager::PhysicsManager()
+{
+    JPH::RegisterDefaultAllocator();
 
-        JPH::Factory::sInstance = new JPH::Factory();
+    JPH::Factory::sInstance = new JPH::Factory();
 
-        _factory = std::make_shared<JPH::Factory>();
+    _factory = std::make_shared<JPH::Factory>();
 
-        JPH::RegisterTypes();
+    JPH::RegisterTypes();
 
-        _tempAllocator = std::make_shared<JPH::TempAllocatorMalloc>();
-        _jobSystem = std::make_shared<JPH::JobSystemThreadPool>(JPH::cMaxPhysicsJobs, JPH::cMaxPhysicsBarriers);
+    _tempAllocator = std::make_shared<JPH::TempAllocatorMalloc>();
+    _jobSystem = std::make_shared<JPH::JobSystemThreadPool>(JPH::cMaxPhysicsJobs, JPH::cMaxPhysicsBarriers);
 
-        _broadPhaseLayerInterface = std::make_shared<Utils::BPLayerInterfaceImpl>();
-        _objectLayerPairFilter = std::make_shared<Utils::ObjectLayerPairFilterImpl>();
-        _objectVsBroadPhaseLayerFilter = std::make_shared<Utils::ObjectVsBroadPhaseLayerFilterImpl>();
+    _broadPhaseLayerInterface = std::make_shared<Utils::BPLayerInterfaceImpl>();
+    _objectLayerPairFilter = std::make_shared<Utils::ObjectLayerPairFilterImpl>();
+    _objectVsBroadPhaseLayerFilter = std::make_shared<Utils::ObjectVsBroadPhaseLayerFilterImpl>();
 
-        _physicsSystem = std::make_shared<JPH::PhysicsSystem>();
+    _physicsSystem = std::make_shared<JPH::PhysicsSystem>();
 
-        // Default values from Jolt Physics samples
-        _physicsSystem->Init(
-            10240,
-            0,
-            65536,
-            20480,
-            *_broadPhaseLayerInterface,
-            *_objectVsBroadPhaseLayerFilter,
-            *_objectLayerPairFilter
-        );
-    }
-
-    PhysicsManager::~PhysicsManager() {
-        delete JPH::Factory::sInstance;
-    }
+    // Default values from Jolt Physics samples
+    _physicsSystem->Init(10240, 0, 65536, 20480, *_broadPhaseLayerInterface, *_objectVsBroadPhaseLayerFilter,
+                         *_objectLayerPairFilter);
 }
+
+PhysicsManager::~PhysicsManager() { delete JPH::Factory::sInstance; }
+} // namespace ES::Plugin::Physics::Resource
