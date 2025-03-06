@@ -2,6 +2,8 @@
 
 #include <unordered_map>
 
+#include "Logger.hpp"
+
 #include "AssetID.hpp"
 
 namespace ES::Plugin::Object::Resource {
@@ -21,12 +23,13 @@ template <typename TAssetType> class AssetsManager {
      * \param   asset   asset to be added
      * \return  id of the added asset
      */
-    ES::Plugin::Object::Utils::AssetID Add(TAssetType &&asset)
+    TAssetType &Add(const ES::Plugin::Object::Utils::AssetID &id, TAssetType &&asset)
     {
-        static ES::Plugin::Object::Utils::AssetID id = 1;
-        id++;
-        _assets[id] = std::make_shared<TAssetType>(std::move(asset));
-        return id;
+      if (_assets.contains(id)) {
+        ES::Utils::Log::Warn("Asset with id " + std::to_string(id) + " already exists. Overwriting.");
+      }
+      _assets[id] = std::make_shared<TAssetType>(std::move(asset));
+      return *_assets[id];
     }
 
     /**
