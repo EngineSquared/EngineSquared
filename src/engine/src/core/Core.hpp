@@ -22,9 +22,9 @@ namespace ES::Engine {
  * you can create entities and add components to them.
  */
 
- /* Forward declaration to the ES::Engine::Entity class
-  * Required to avoid include loop between Entity and Core headers
-  */
+/* Forward declaration to the ES::Engine::Entity class
+ * Required to avoid include loop between Entity and Core headers
+ */
 class Entity;
 
 class Core {
