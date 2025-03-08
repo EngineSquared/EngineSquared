@@ -21,6 +21,12 @@ namespace ES::Engine {
  * To use ECS, you need to create a registry and register all the components and systems you need and after that
  * you can create entities and add components to them.
  */
+
+ /* Forward declaration to the ES::Engine::Entity class
+  * Required to avoid include loop between Entity and Core headers
+  */
+class Entity;
+
 class Core {
   private:
     using USystem = std::function<void(Core &)>;
@@ -41,7 +47,7 @@ class Core {
      *
      * @return  The entity created.
      */
-    entt::entity CreateEntity();
+    ES::Engine::Entity CreateEntity();
 
     /**
      * Store a resource instance.

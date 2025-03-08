@@ -26,19 +26,19 @@ class SceneTest : public Utils::AScene {
 
 TEST(Scene, SceneManager)
 {
-    ES::Engine::Core registry;
-    registry.RegisterResource<Resource::SceneManager>(Resource::SceneManager());
-    registry.GetResource<Resource::SceneManager>().RegisterScene<SceneTest>("scene1");
-    registry.GetResource<Resource::SceneManager>().RegisterScene<SceneTest>("scene2");
+    ES::Engine::Core core;
+    core.RegisterResource<Resource::SceneManager>(Resource::SceneManager());
+    core.GetResource<Resource::SceneManager>().RegisterScene<SceneTest>("scene1");
+    core.GetResource<Resource::SceneManager>().RegisterScene<SceneTest>("scene2");
 
-    registry.GetResource<Resource::SceneManager>().SetNextScene("scene1");
+    core.GetResource<Resource::SceneManager>().SetNextScene("scene1");
 
     testing::internal::CaptureStdout();
-    registry.RegisterSystem(System::UpdateScene);
-    registry.RunSystems();
+    core.RegisterSystem(System::UpdateScene);
+    core.RunSystems();
 
-    registry.GetResource<Resource::SceneManager>().SetNextScene("scene2");
-    registry.RunSystems();
+    core.GetResource<Resource::SceneManager>().SetNextScene("scene2");
+    core.RunSystems();
     std::vector<std::string> output = ES::Plugin::Utils::String::Split(testing::internal::GetCapturedStdout(), '\n');
     EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[0], "Loading scene: scene1"));
     EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[1], "Unloading scene: scene1"));
