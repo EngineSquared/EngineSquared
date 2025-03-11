@@ -64,7 +64,7 @@ void ChangeClearColor(ES::Engine::Core &core [[maybe_unused]])
     core.GetResource<VkWrapper>().ChangeClearColor({0.0f, 0.0f, 0.0f, 1.0f});
 }
 
-void DisplayConfigs(ES::Engine::Core &core)
+void DisplayConfigs(ES::Engine::Core &core [[maybe_unused]])
 {
     VkWrapper::PrintConfig();
     VkWrapper::PrintAvailableExtensions();
