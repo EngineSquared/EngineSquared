@@ -1,9 +1,9 @@
 #pragma once
-#include <map>
-#include <string>
 #include "Material.hpp"
 #include "Object.hpp"
+#include <map>
+#include <string>
 
 namespace ESGL {
-    using MaterialCache = ES::Plugin::Object::Resource::AssetsManager<Material>;
+using MaterialCache = ES::Plugin::Object::Resource::AssetsManager<Material>;
 }

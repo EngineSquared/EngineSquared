@@ -3,8 +3,7 @@
 #include "GLFW/glfw3.h"
 
 namespace ESGL {
-    struct ESGLFWWINDOW
-    {
-        GLFWwindow *window;
-    };
-}
+struct ESGLFWWINDOW {
+    GLFWwindow *window;
+};
+} // namespace ESGL
