@@ -1,7 +1,7 @@
 #pragma once
 
-#include <entt/entt.hpp>
 #include "System.hpp"
+#include <entt/entt.hpp>
 
 namespace ES::Engine {
 class Core;
