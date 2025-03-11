@@ -33,7 +33,6 @@ class Window {
   public:
     Window(uint32_t width, uint32_t height, const std::string &title, GLFWmonitor *monitor = nullptr,
            GLFWwindow *share = nullptr);
-    ~Window();
 
     Window &operator=(const Window &) = delete;
 
@@ -43,6 +42,11 @@ class Window {
      * @throws ES::Plugin::Window::Exception::WindowError if the window could not be created.
      */
     void Create();
+
+    /**
+     * @brief Destroy the window.
+     */
+    void Destroy();
 
     /**
      * @brief Check if the window should close.

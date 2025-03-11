@@ -6,7 +6,8 @@ void InitVkWrapper(ES::Engine::Core &core)
 {
     VkWrapper &vkWrapper = core.RegisterResource<VkWrapper>(VkWrapper());
     auto &window = core.GetResource<Window::Resource::Window>();
-    int width, height;
+    int width = 800;
+    int height = 600;
 
     try
     {
@@ -23,7 +24,8 @@ void InitVkWrapper(ES::Engine::Core &core)
 void AddTextureAndModel(ES::Engine::Core &core)
 {
     auto &vkWrapper = core.GetResource<VkWrapper>();
-    uint32_t textureId, modelId;
+    uint32_t textureId = 0;
+    uint32_t modelId = 0;
 
     try
     {
@@ -47,11 +49,9 @@ void AddShaders(ES::Engine::Core &core)
 
 void CreatePipeline(ES::Engine::Core &core)
 {
-    auto &vkWrapper = core.GetResource<VkWrapper>();
-
     try
     {
-        vkWrapper.CreatePipeline();
+        core.GetResource<VkWrapper>().CreatePipeline();
     }
     catch (const VkWrapperError &e)
     {
@@ -59,7 +59,7 @@ void CreatePipeline(ES::Engine::Core &core)
     }
 }
 
-void ChangeClearColor(ES::Engine::Core &core)
+void ChangeClearColor(ES::Engine::Core &core [[maybe_unused]])
 {
     core.GetResource<VkWrapper>().ChangeClearColor({0.0f, 0.0f, 0.0f, 1.0f});
 }
@@ -78,8 +78,7 @@ void DrawFrame(ES::Engine::Core &core)
     {
         if (vkWrapper.DrawFrame() == Wrapper::Result::NeedResize)
         {
-            auto &window = core.GetResource<Window::Resource::Window>();
-            vkWrapper.Resize(window.GetGLFWWindow());
+            vkWrapper.Resize(core.GetResource<Window::Resource::Window>().GetGLFWWindow());
         }
     }
     catch (const VkWrapperError &e)
@@ -88,10 +87,6 @@ void DrawFrame(ES::Engine::Core &core)
     }
 }
 
-void Destroy(ES::Engine::Core &core)
-{
-    auto &vkWrapper = core.GetResource<VkWrapper>();
-    vkWrapper.Destroy();
-}
+void Destroy(ES::Engine::Core &core) { core.GetResource<VkWrapper>().Destroy(); }
 
 } // namespace ES::Plugin::Wrapper::System

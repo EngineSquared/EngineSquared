@@ -8,13 +8,13 @@ Window::Window(uint32_t width, uint32_t height, const std::string &title, GLFWmo
     Create();
 }
 
-Window::~Window()
+void Window::Destroy()
 {
-    if (_window)
-    {
+    if (!_window)
+        throw ES::Plugin::Window::Exception::WindowError("Window is not created");
+
         glfwDestroyWindow(_window);
         glfwTerminate();
-    }
 }
 
 void Window::Create()
@@ -37,6 +37,9 @@ void Window::Create()
 
 void Window::GetWindowSize(int &width, int &height)
 {
+    if (!_window)
+        throw ES::Plugin::Window::Exception::WindowError("Window is not created");
+
     glfwGetWindowSize(_window, &width, &height);
     _width = width;
     _height = height;
@@ -44,6 +47,9 @@ void Window::GetWindowSize(int &width, int &height)
 
 void Window::SetFramebufferSizeCallback(void *userPointer, GLFWframebuffersizefun callback)
 {
+    if (!_window)
+        throw ES::Plugin::Window::Exception::WindowError("Window is not created");
+
     glfwSetWindowUserPointer(_window, userPointer);
     glfwSetFramebufferSizeCallback(_window, callback);
 }
