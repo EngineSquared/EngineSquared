@@ -174,12 +174,11 @@ void Instance::CreateGraphicsPipeline(
     buffersInfo.commandPool = _command.GetCommandPool();
     buffersInfo.graphicsQueue = _logicalDevice.GetGraphicsQueue();
     buffersInfo.swapChainImages = _swapChain.GetSwapChainImages();
-    buffersInfo.textures = textures;
 
-    _buffers.Create(buffersInfo);
+    _buffers.Create(buffersInfo, textures);
 
     _descriptorLayout.CreateDescriptorPool(device);
-    _descriptorLayout.CreateDescriptorSet(device, _buffers.GetUniformBuffers(), const_cast<Texture &>(*textures[0]));
+    _descriptorLayout.CreateDescriptorSet(device, _buffers.GetUniformBuffers(), const_cast<Texture &>(*textures.begin()->second));
 
     _command.CreateCommandBuffers(device, _framebuffer.GetSwapChainFramebuffers());
 }
