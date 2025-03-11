@@ -13,8 +13,8 @@ void Window::Destroy()
     if (!_window)
         throw ES::Plugin::Window::Exception::WindowError("Window is not created");
 
-        glfwDestroyWindow(_window);
-        glfwTerminate();
+    glfwDestroyWindow(_window);
+    glfwTerminate();
 }
 
 void Window::Create()
