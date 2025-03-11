@@ -56,7 +56,7 @@ void VkWrapper::BindTexture(const uint32_t textureId, const uint32_t modelId)
     const auto &texture = _textures[textureId];
     const auto &model = _models[modelId];
 
-    auto it = std::ranges::find(model->textures.begin(), model->textures.end(), textureId);
+    auto it = std::ranges::find(model->textures, textureId);
 
     if (it == model->textures.end())
         model->textures.emplace_back(textureId);
