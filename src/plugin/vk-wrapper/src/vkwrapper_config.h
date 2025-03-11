@@ -10,7 +10,7 @@
  * it under the terms of the GPL-3.0 License as published by the
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
- * @file config.h
+ * @file vkwrapper_config.h.h
  * @brief Compile-Time Configuration Parameters for VkWrapper.
  *
  * @author @MasterLaplace
@@ -19,8 +19,8 @@
  **************************************************************************/
 
 // clang-format off
-#ifndef CONFIG_H_
-    #define CONFIG_H_
+#ifndef VKWRAPPER_CONFIG_H_
+    #define VKWRAPPER_CONFIG_H_
 
 #ifdef __cplusplus
     #include <utility>
@@ -33,8 +33,8 @@
     #include <stdint.h>
 #endif
 
-#ifndef DISTRIBUTION_H_
-    #define DISTRIBUTION_H_
+#ifndef VKWRAPPER_DISTRIBUTION_H_
+    #define VKWRAPPER_DISTRIBUTION_H_
 
 ////////////////////////////////////////////////////////////
 // Identify the Compiler
@@ -393,11 +393,11 @@
     #define PACKED( __Declaration__ ) __Declaration__
 #endif
 
-#endif /* !DISTRIBUTION_H_ */
+#endif /* !VKWRAPPER_DISTRIBUTION_H_ */
 
 
-#ifndef VERSION_H_
-    #define VERSION_H_
+#ifndef VKWRAPPER_VERSION_H_
+    #define VKWRAPPER_VERSION_H_
 
 ////////////////////////////////////////////////////////////
 // Define the VKWRAPPER version
@@ -456,7 +456,7 @@
         TOSTRING(VKWRAPPER_VERSION_PATCH) "." \
         TOSTRING(VKWRAPPER_VERSION_TWEAK)
 
-#endif /* !VERSION_H_ */
+#endif /* !VKWRAPPER_VERSION_H_ */
 
 
 ////////////////////////////////////////////////////////////
@@ -468,5 +468,5 @@
         "VKWRAPPER_COMPILER=" VKWRAPPER_COMPILER_STRING "\n" \
         "VKWRAPPER_DEBUG=" VKWRAPPER_DEBUG_STRING "\n"
 
-#endif /* !CONFIG_H_ */
+#endif /* !VKWRAPPER_CONFIG_H_ */
 // clang-format on

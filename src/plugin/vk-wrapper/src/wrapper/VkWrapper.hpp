@@ -39,7 +39,6 @@ namespace ES::Plugin {
  * ES::Plugin::Window::Resource::Window window(800, 600, "My Engine");
  *
  * ES::Plugin::VkWrapper vkWrapper;
- * ES::Plugin::VkWrapper::CreateInfo createInfo;
  *
  * vkWrapper.CreateInstance(window.GetGLFWWindow(), "VkWrapper Test", 800, 600);
  *

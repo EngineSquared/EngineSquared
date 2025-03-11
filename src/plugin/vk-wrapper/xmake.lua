@@ -31,6 +31,7 @@ target("PluginVkWrapper")
 
     add_files("src/**.cpp")
     add_includedirs("src", { public = true })
+    add_includedirs("src/wrapper", { public = true })
     add_includedirs("src/instance", { public = true })
     add_includedirs("src/debugMessenger", { public = true })
     add_includedirs("src/device", { public = true })

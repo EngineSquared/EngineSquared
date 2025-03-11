@@ -31,7 +31,7 @@
 #include <vector>
 
 #include "Logger.hpp"
-#include "config.h"
+#include "vkwrapper_config.h"
 #include "export.h"
 
 #include "VkWrapperError.hpp"

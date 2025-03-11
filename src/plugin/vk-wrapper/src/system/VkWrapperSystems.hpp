@@ -26,106 +26,68 @@
 #define VKWRAPPERSYSTEMS_HPP_
 
 #include "Engine.hpp"
-
 #include "VkWrapper.hpp"
-
 #include "Window.hpp"
 
 #define ASSETS_DIR PROJECT_SOURCE_DIR + "assets/"
 
 namespace ES::Plugin::Wrapper::System {
 
-void InitVkWrapper(ES::Engine::Core &core)
-{
-    VkWrapper &vkWrapper = core.RegisterResource<VkWrapper>(VkWrapper());
-    auto &window = core.GetResource<Window::Resource::Window>();
-    int width, height;
+/**
+ * @brief Initialize the VkWrapper.
+ *
+ * @param core  The Engine² Core.
+ */
+void InitVkWrapper(ES::Engine::Core &core);
 
-    try
-    {
-        window.GetWindowSize(width, height);
-        vkWrapper.CreateInstance(window.GetGLFWWindow(), "EngineSquarred", width, height);
-        window.SetFramebufferSizeCallback((void *) &vkWrapper, VkWrapper::ResizeCallback);
-    }
-    catch (const VkWrapperError &e)
-    {
-        ES::Utils::Log::Error(e.what());
-    }
-}
+/**
+ * @brief Add a texture and a model to the VkWrapper.
+ *
+ * @param core  The Engine² Core.
+ */
+void AddTextureAndModel(ES::Engine::Core &core);
 
-void AddTextureAndModel(ES::Engine::Core &core)
-{
-    auto &vkWrapper = core.GetResource<VkWrapper>();
-    uint32_t textureId, modelId;
+/**
+ * @brief Add the shaders to the VkWrapper.
+ *
+ * @param core  The Engine² Core.
+ */
+void AddShaders(ES::Engine::Core &core);
 
-    try
-    {
-        vkWrapper.AddTexture(ASSETS_DIR "images/texture.png", textureId);
-        vkWrapper.AddModel(ASSETS_DIR "models/plan.obj", modelId);
-        vkWrapper.BindTexture(textureId, modelId);
-    }
-    catch (const VkWrapperError &e)
-    {
-        ES::Utils::Log::Error(e.what());
-    }
-}
+/**
+ * @brief Create the graphics pipeline.
+ *
+ * @param core  The Engine² Core.
+ */
+void CreatePipeline(ES::Engine::Core &core);
 
-void AddShaders(ES::Engine::Core &core)
-{
-    auto &vkWrapper = core.GetResource<VkWrapper>();
+/**
+ * @brief Change the clear color of the VkWrapper.
+ *
+ * @param core  The Engine² Core.
+ */
+void ChangeClearColor(ES::Engine::Core &core);
 
-    vkWrapper.AddShader(SHADER_DIR "vert.spv", "main", VkWrapper::ShaderType::VERTEX);
-    vkWrapper.AddShader(SHADER_DIR "frag.spv", "main", VkWrapper::ShaderType::FRAGMENT);
-}
+/**
+ * @brief Display the available extensions for the Vulkan API.
+ *
+ * @param core  The Engine² Core.
+ */
+void DisplayConfigs(ES::Engine::Core &core);
 
-void CreatePipeline(ES::Engine::Core &core)
-{
-    auto &vkWrapper = core.GetResource<VkWrapper>();
+/**
+ * @brief Draw a frame.
+ *
+ * @param core  The Engine² Core.
+ */
+void DrawFrame(ES::Engine::Core &core);
 
-    try
-    {
-        vkWrapper.CreatePipeline();
-    }
-    catch (const VkWrapperError &e)
-    {
-        ES::Utils::Log::Error(e.what());
-    }
-}
-
-void ChangeClearColor(ES::Engine::Core &core)
-{
-    core.GetResource<VkWrapper>().ChangeClearColor({0.0f, 0.0f, 0.0f, 1.0f});
-}
-
-void DisplayConfigs(ES::Engine::Core &core)
-{
-    VkWrapper::PrintConfig();
-    VkWrapper::PrintAvailableExtensions();
-}
-
-void DrawFrame(ES::Engine::Core &core)
-{
-    auto &vkWrapper = core.GetResource<VkWrapper>();
-
-    try
-    {
-        if (vkWrapper.DrawFrame() == Wrapper::Result::NeedResize)
-        {
-            auto &window = core.GetResource<Window::Resource::Window>();
-            vkWrapper.Resize(window.GetGLFWWindow());
-        }
-    }
-    catch (const VkWrapperError &e)
-    {
-        ES::Utils::Log::Error(e.what());
-    }
-}
-
-void Destroy(ES::Engine::Core &core)
-{
-    auto &vkWrapper = core.GetResource<VkWrapper>();
-    vkWrapper.Destroy();
-}
+/**
+ * @brief Destroy the VkWrapper.
+ *
+ * @param core  The Engine² Core.
+ */
+void Destroy(ES::Engine::Core &core);
 
 } // namespace ES::Plugin::Wrapper::System
 
