@@ -1,16 +1,5 @@
 
-/*author: r3dux
-version : 0.3 - 15 / 01 / 2014
-      description : Gets GLSL source code either provided as strings or can load from filenames,
-                    compiles the shaders, creates a shader program which the shaders are linked
-                    to, then the program is validated and is ready for use via myProgram.use(),
-                    <draw - stuff - here> then calling myProgram.disable();
-
-        Attributes and uniforms are stored in <string, int> maps and can be added
-            via calls to addAttribute(<name - of - attribute>) and then the attribute
-            index can be obtained via myProgram.attribute(<name - of - attribute>) - Uniforms
-            work in the exact same way.
-*/
+// Original author: r3dux
 
 #ifndef SHADER_PROGRAM_HPP
 #define SHADER_PROGRAM_HPP

@@ -1,5 +1,4 @@
-// File: Viewer.cpp
-// Author: mankyu sung
+// Original author: mankyu sung
 
 #include "Viewer.hpp"
 #include <glm/gtc/quaternion.hpp>
