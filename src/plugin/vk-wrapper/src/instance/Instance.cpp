@@ -10,9 +10,10 @@ void Instance::Create(const std::string &applicationName)
     VkApplicationInfo appInfo{};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     appInfo.pApplicationName = applicationName.c_str();
-    appInfo.applicationVersion = VK_MAKE_VERSION(0, 0, 0);
+    appInfo.applicationVersion = VK_MAKE_API_VERSION(0, 0, 0, 0);
     appInfo.pEngineName = "EngineSquared";
-    appInfo.engineVersion = VK_MAKE_VERSION(VKWRAPPER_VERSION_MAJOR, VKWRAPPER_VERSION_MINOR, VKWRAPPER_VERSION_PATCH);
+    appInfo.engineVersion = VK_MAKE_API_VERSION(VKWRAPPER_VERSION_MAJOR, VKWRAPPER_VERSION_MINOR,
+                                                VKWRAPPER_VERSION_PATCH, VKWRAPPER_VERSION_TWEAK);
     appInfo.apiVersion = VK_API_VERSION_1_2;
 
     VkInstanceCreateInfo createInfo{};
