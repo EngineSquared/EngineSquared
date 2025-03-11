@@ -27,6 +27,9 @@
 #include "Vertex.hpp"
 
 #include <chrono>
+#include <entt/core/hashed_string.hpp>
+#include <entt/resource/cache.hpp>
+#include <unordered_map>
 
 namespace ES::Plugin::Wrapper {
 
