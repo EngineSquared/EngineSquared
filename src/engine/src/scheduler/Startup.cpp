@@ -1,10 +1,10 @@
 #include "Startup.hpp"
 
-void ES::Engine::Scheduler::Startup::RunSystems(std::vector<USystem> systems)
+void ES::Engine::Scheduler::Startup::RunSystems(std::vector<std::unique_ptr<SystemBase>> &systems)
 {
     for (auto &system : systems)
     {
-        system(_registry);
+        (*system)(_registry);
     }
 
     _callback();

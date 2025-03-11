@@ -18,7 +18,7 @@ void ES::Engine::Core::RunSystems()
 
     for (auto &[schedulerIndex, scheduler] : this->_schedulers)
     {
-        scheduler->RunSystems(this->_systems[schedulerIndex]);
+        scheduler->RunSystems(this->_systems[schedulerIndex].GetSystems());
     }
 
     for (auto &scheduler : this->_schedulersToDelete)

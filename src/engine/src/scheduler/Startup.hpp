@@ -11,7 +11,7 @@ namespace ES::Engine::Scheduler {
 class Startup : public AScheduler {
   public:
     explicit Startup(Core &registry, std::function<void()> callback) : AScheduler(registry), _callback(callback) {}
-    void RunSystems(std::vector<USystem> systems) override;
+    void RunSystems(std::vector<std::unique_ptr<SystemBase>> &systems) override;
 
   private:
     std::function<void()> _callback;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <entt/entt.hpp>
+#include "System.hpp"
 
 namespace ES::Engine {
 class Core;
@@ -19,6 +20,6 @@ class IScheduler {
      *
      * @param systems The systems to run
      */
-    virtual void RunSystems(std::vector<USystem> systems) = 0;
+    virtual void RunSystems(std::vector<std::unique_ptr<SystemBase>> /* TODO: Use "using" defined type*/ &systems) = 0;
 };
 } // namespace ES::Engine::Scheduler
