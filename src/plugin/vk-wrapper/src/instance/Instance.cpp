@@ -42,7 +42,7 @@ void Instance::Create(const std::string &applicationName)
         throw VkWrapperError("failed to create instance!");
 }
 
-void Instance::Destroy()
+void Instance::Destroy(entt::resource_cache<Texture, TextureLoader> &textures)
 {
     const auto &device = _logicalDevice.Get();
 
@@ -58,6 +58,12 @@ void Instance::Destroy()
         vkDestroySemaphore(device, _renderFinishedSemaphores[i], nullptr);
         vkDestroySemaphore(device, _imageAvailableSemaphores[i], nullptr);
         vkDestroyFence(device, _inFlightFences[i], nullptr);
+    }
+
+    for (auto [id, res] : textures)
+    {
+        if (res)
+            const_cast<Texture &>(*res).Destroy(device);
     }
 
     _command.Destroy(device);
@@ -129,7 +135,9 @@ void Instance::CreateSwapChainImages(const uint32_t width, const uint32_t height
     _imageView.Create(device, _swapChain.GetSwapChainImages(), _swapChain.GetSurfaceFormat());
 }
 
-void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders, const std::vector<Texture> &textures)
+void Instance::CreateGraphicsPipeline(
+    const ShaderModule::ShaderPaths &shaders, const entt::resource_cache<Texture, TextureLoader> &textures,
+    const entt::resource_cache<Object::Component::Mesh, Object::Component::MeshLoader> &models)
 {
     const auto &device = _logicalDevice.Get();
     const auto &extent = _swapChain.GetExtent();
@@ -171,7 +179,7 @@ void Instance::CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders, 
     _buffers.Create(buffersInfo);
 
     _descriptorLayout.CreateDescriptorPool(device);
-    _descriptorLayout.CreateDescriptorSet(device, _buffers.GetUniformBuffers());
+    _descriptorLayout.CreateDescriptorSet(device, _buffers.GetUniformBuffers(), const_cast<Texture &>(*textures[0]));
 
     _command.CreateCommandBuffers(device, _framebuffer.GetSwapChainFramebuffers());
 }

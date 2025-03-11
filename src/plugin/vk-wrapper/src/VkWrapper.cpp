@@ -15,17 +15,53 @@ void VkWrapper::CreateInstance(GLFWwindow *window, const std::string &applicatio
 
 void VkWrapper::CreatePipeline()
 {
-    _instance.CreateGraphicsPipeline(_shaders, _textures);
+    _instance.CreateGraphicsPipeline(_shaders, _textures, _models);
     _instance.CreateSyncObjects();
 }
 
-void VkWrapper::Destroy() { _instance.Destroy(); }
-
-void VkWrapper::AddTexture(const std::string &texturePath)
+void VkWrapper::Destroy()
 {
-    Wrapper::Texture texture;
-    texture.Create(texturePath);
-    _textures.push_back(texture);
+    _instance.Destroy(_textures);
+
+    _textures.clear();
+    _models.clear();
+}
+
+void VkWrapper::AddTexture(const std::string &texturePath, uint32_t &textureId)
+{
+    textureId = entt::hashed_string{texturePath.c_str()};
+
+    if (!_textures.load(textureId, texturePath).second)
+        throw Wrapper::VkWrapperError("failed to load texture: " + texturePath);
+}
+
+void VkWrapper::AddModel(const std::string &modelPath, uint32_t &modelId)
+{
+    modelId = entt::hashed_string{modelPath.c_str()};
+
+    if (!_models.load(modelId, modelPath).second)
+        throw Wrapper::VkWrapperError("failed to load model: " + modelPath);
+}
+
+void VkWrapper::AddModel(const Object::Component::Mesh &model, const std::string &modelName, uint32_t &modelId)
+{
+    modelId = entt::hashed_string{modelName.c_str()};
+
+    if (!_models.load(modelId, model).second)
+        throw Wrapper::VkWrapperError("failed to load model: " + modelName);
+}
+
+void VkWrapper::BindTexture(const uint32_t textureId, const uint32_t modelId)
+{
+    const auto &texture = _textures[textureId];
+    const auto &model = _models[modelId];
+
+    auto it = std::find(model->textures.begin(), model->textures.end(), textureId);
+
+    if (it == model->textures.end())
+        model->textures.emplace_back(textureId);
+    else
+        ES::Utils::Log::Warn("texture already bound to model");
 }
 
 void VkWrapper::AddShader(const std::string &shaderPath, const std::string &fname, const ShaderType &shaderType)

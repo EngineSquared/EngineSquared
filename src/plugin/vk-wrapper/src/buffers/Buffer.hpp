@@ -73,6 +73,7 @@ class Buffers {
      * @param graphicsQueue The Vulkan graphics queue.
      * @param swapChainImages The swap chain images. Only used for the uniform buffer.
      * @param textures The textures.
+     * @param models The models.
      */
     struct CreateInfo {
         VkDevice device;
@@ -80,7 +81,8 @@ class Buffers {
         VkCommandPool commandPool;
         VkQueue graphicsQueue;
         std::vector<VkImage> swapChainImages;
-        std::vector<Texture> textures;
+        entt::resource_cache<Texture, TextureLoader> textures;
+        entt::resource_cache<Object::Component::Mesh, Object::Component::MeshLoader> models;
     };
 
   public:
