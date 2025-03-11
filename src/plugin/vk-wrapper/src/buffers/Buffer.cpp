@@ -9,10 +9,18 @@ void Buffers::Create(const CreateInfo &info)
 
     CreateUniformBuffer(info.device, info.physicalDevice, info.swapChainImages);
 
-    _textures = info.textures;
+    for (auto [id, res] : info.textures)
+    {
+        if (!res)
+            continue;
 
-    for (auto &texture : _textures)
-        CreateTextureBuffer(info.device, info.physicalDevice, info.commandPool, info.graphicsQueue, texture);
+        const auto &texture = info.textures[id];
+
+        CreateTextureBuffer(info.device, info.physicalDevice, info.commandPool, info.graphicsQueue,
+                            const_cast<Texture &>(*texture));
+        CreateTextureView(info.device, const_cast<Texture &>(*texture));
+        CreateTextureSampler(info.device, info.physicalDevice, const_cast<Texture &>(*texture));
+    }
 }
 
 void Buffers::CreateVertexBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
@@ -159,11 +167,6 @@ void Buffers::Destroy(const VkDevice &device, [[maybe_unused]] const std::vector
     {
         vkDestroyBuffer(device, _uniformBuffers[i], nullptr);
         vkFreeMemory(device, _uniformBuffersMemory[i], nullptr);
-    }
-
-    for (auto &texture : _textures)
-    {
-        texture.Destroy(device);
     }
 
     vkDestroyBuffer(device, _indexBuffer, nullptr);

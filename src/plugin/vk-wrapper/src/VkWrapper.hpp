@@ -118,18 +118,36 @@ class VkWrapper {
     void Destroy();
 
     /**
-     * @brief Add a texture to the VkWrapper.
+     * @brief Add a texture to the VkWrapper and get the texture id.
      *
      * @param texturePath  The path to the texture.
+     * @param textureId  The id of the texture.
      */
-    void AddTexture(const std::string &texturePath);
+    void AddTexture(const std::string &texturePath, uint32_t &textureId);
 
     /**
-     * @brief Add a 3D model to the VkWrapper.
+     * @brief Add a 3D model to the VkWrapper and get the model id.
      *
      * @param modelPath  The path to the model.
+     * @param modelId  The id of the model.
      */
-    void AddModel(const std::string &modelPath);
+    void AddModel(const std::string &modelPath, uint32_t &modelId);
+
+    /**
+     * @brief Bind a texture to a model using the texture id and the model id.
+     *
+     * @param textureId  The id of the texture.
+     * @param modelId  The id of the model.
+     */
+    void AddModel(const Object::Component::Mesh &model, const std::string &modelName, uint32_t &modelId);
+
+    /**
+     * @brief Bind a texture to a model using the texture id and the model id.
+     *
+     * @param textureId  The id of the texture.
+     * @param modelId  The id of the model.
+     */
+    void BindTexture(const uint32_t textureId, const uint32_t modelId);
 
     /**
      * @brief Add a shader to the VkWrapper.
@@ -213,7 +231,8 @@ class VkWrapper {
   private:
     Wrapper::Instance _instance;
     Wrapper::ShaderModule::ShaderPaths _shaders;
-    std::vector<Wrapper::Texture> _textures;
+    entt::resource_cache<Wrapper::Texture, Wrapper::TextureLoader> _textures{};
+    entt::resource_cache<Object::Component::Mesh, Object::Component::MeshLoader> _models{};
 };
 
 } // namespace ES::Plugin
