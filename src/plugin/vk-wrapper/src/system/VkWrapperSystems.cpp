@@ -95,4 +95,3 @@ void Destroy(ES::Engine::Core &core)
 }
 
 } // namespace ES::Plugin::Wrapper::System
-
