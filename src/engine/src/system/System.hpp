@@ -18,10 +18,10 @@ namespace ES::Engine {
     template <typename TSystem>
     class System : public SystemBase {
       public:
-        System(TSystem system) : SystemBase(), _system(system) {}
-        ~System() = default;
+        explicit System(TSystem system) : SystemBase(), _system(system) {}
+        ~System() final = default;
 
-        void operator()(Core &core) const { _system(core); }
+        void operator()(Core &core) const final { _system(core); }
       private:
         TSystem _system;   
     };
@@ -45,7 +45,7 @@ namespace ES::Engine {
             {
               std::size_t id = 0;
               if constexpr (std::is_class_v<TCallable>) {
-                id = entt::type_id<TCallable>().hash();;
+                id = entt::type_id<TCallable>().hash();
               } else {
                 id = std::hash<TCallable>{}(callable);
               }

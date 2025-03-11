@@ -10,7 +10,7 @@ void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems(std::vector<std::uniq
     for (unsigned int i = 0; i < ticks; i++)
     {
         _deltaTime = _tickRate;
-        for (auto &system : systems)
+        for (auto const &system : systems)
         {
             (*system)(_registry);
         }
@@ -19,7 +19,7 @@ void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems(std::vector<std::uniq
     if (remainder > REMAINDER_THRESHOLD)
     {
         _deltaTime = remainder;
-        for (auto &system : systems)
+        for (auto const &system : systems)
         {
             (*system)(_registry);
         }

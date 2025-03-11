@@ -9,7 +9,7 @@ void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems(std::vector<std::unique_
 
     for (unsigned int i = 0; i < ticks; i++)
     {
-        for (auto &system : systems)
+        for (auto const &system : systems)
         {
             (*system)(_registry);
         }
