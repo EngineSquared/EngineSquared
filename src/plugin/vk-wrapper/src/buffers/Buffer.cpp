@@ -2,24 +2,22 @@
 
 namespace ES::Plugin::Wrapper {
 
-void Buffers::Create(const CreateInfo &info)
+void Buffers::Create(const CreateInfo &info, const entt::resource_cache<Texture, TextureLoader> &textures)
 {
     CreateVertexBuffer(info.device, info.physicalDevice, info.commandPool, info.graphicsQueue);
     CreateIndexBuffer(info.device, info.physicalDevice, info.commandPool, info.graphicsQueue);
 
     CreateUniformBuffer(info.device, info.physicalDevice, info.swapChainImages);
 
-    for (auto [id, res] : info.textures)
+    for (const auto &texture : textures)
     {
-        if (!res)
+        if (!texture.second)
             continue;
 
-        const auto &texture = info.textures[id];
-
         CreateTextureBuffer(info.device, info.physicalDevice, info.commandPool, info.graphicsQueue,
-                            const_cast<Texture &>(*texture));
-        CreateTextureView(info.device, const_cast<Texture &>(*texture));
-        CreateTextureSampler(info.device, info.physicalDevice, const_cast<Texture &>(*texture));
+                            const_cast<Texture &>(*texture.second));
+        CreateTextureView(info.device, const_cast<Texture &>(*texture.second));
+        CreateTextureSampler(info.device, info.physicalDevice, const_cast<Texture &>(*texture.second));
     }
 }
 

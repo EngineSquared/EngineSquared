@@ -81,8 +81,6 @@ class Buffers {
         VkCommandPool commandPool;
         VkQueue graphicsQueue;
         std::vector<VkImage> swapChainImages;
-        entt::resource_cache<Texture, TextureLoader> textures;
-        entt::resource_cache<Object::Component::Mesh, Object::Component::MeshLoader> models;
     };
 
   public:
@@ -90,8 +88,9 @@ class Buffers {
      * @brief Create the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
      *
      * @param info The creation information required for the Buffers.
+     * @param textures The textures.
      */
-    void Create(const CreateInfo &info);
+    void Create(const CreateInfo &info, const entt::resource_cache<Texture, TextureLoader> &textures);
 
     /**
      * @brief Destroy the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
