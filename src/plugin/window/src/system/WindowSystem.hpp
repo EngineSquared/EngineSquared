@@ -36,29 +36,41 @@ namespace ES::Plugin::Window::System {
 const int DEFAULT_WIDTH = 800;
 const int DEFAULT_HEIGHT = 800;
 
-void CreateGLFWWindow(ES::Engine::Core &core)
-{
-    try
-    {
-        core.RegisterResource<Resource::Window>(
-            Resource::Window(DEFAULT_WIDTH, DEFAULT_HEIGHT, "EngineSquarred", nullptr, nullptr));
-    }
-    catch (const Exception::WindowError &e)
-    {
-        std::cerr << e.what() << std::endl;
-    }
-}
+/**
+ * @brief Create a GLFW window.
+ *
+ * This function creates a GLFW window.
+ *
+ * @param core  The Engine² Core.
+ */
+void CreateWindow(ES::Engine::Core &core);
 
-void GLFWEnableVSync(ES::Engine::Core &core) { glfwSwapInterval(1); }
+/**
+ * @brief Enable VSync.
+ *
+ * This function enables VSync.
+ *
+ * @param core  The Engine² Core.
+ */
+void EnableVSync(ES::Engine::Core &core);
 
-void PollEvents(ES::Engine::Core &core) { glfwPollEvents(); }
+/**
+ * @brief Poll GLFW events.
+ *
+ * This function polls GLFW events.
+ *
+ * @param core  The Engine² Core.
+ */
+void PollEvents(ES::Engine::Core &core);
 
-void UpdateKey(ES::Engine::Core &core)
-{
-    GLFWwindow *window = core.GetResource<Resource::Window>().GetGLFWWindow();
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
+/**
+ * @brief Update the key.
+ *
+ * This function updates the key.
+ *
+ * @param core  The Engine² Core.
+ */
+void UpdateKey(ES::Engine::Core &core);
 
 } // namespace ES::Plugin::Window::System
 

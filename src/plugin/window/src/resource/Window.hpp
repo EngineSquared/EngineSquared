@@ -35,7 +35,6 @@ class Window {
            GLFWwindow *share = nullptr);
     ~Window();
 
-    Window(const Window &) = delete;
     Window &operator=(const Window &) = delete;
 
     /**
