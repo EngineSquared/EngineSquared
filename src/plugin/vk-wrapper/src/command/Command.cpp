@@ -55,7 +55,7 @@ void Command::RecordBuffer(const RecordInfo &info)
     renderPassInfo.renderArea.offset = {0, 0};
     renderPassInfo.renderArea.extent = info.swapChainExtent;
 
-    VkClearValue clearColor = {{{0.0f, 0.0f, 0.0f, 1.0f}}};
+    VkClearValue clearColor = {_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a};
     renderPassInfo.clearValueCount = 1;
     renderPassInfo.pClearValues = &clearColor;
 

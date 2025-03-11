@@ -213,6 +213,18 @@ class Instance {
      */
     void SetFramebufferResized(bool resized) { _framebufferResized = resized; }
 
+    /**
+     * @brief Sets the clear color for the Vulkan API.
+     *
+     * This function sets the clear color for the Vulkan API. The clear color
+     * is used to clear the screen before rendering the next frame. It is
+     * specified as a vector of four floating-point values representing the
+     * red, green, blue, and alpha components of the color.
+     *
+     * @param color  The clear color to set.
+     */
+    void SetClearColor(const glm::vec4 &color) { _command.SetClearColor(color); }
+
   private:
     /**
      * @brief Checks if the required Vulkan validation layers are supported.

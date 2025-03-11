@@ -160,10 +160,20 @@ class Command {
         return _commandBuffers[imageIndex];
     }
 
+    /**
+     * @brief Sets the clear color.
+     *
+     * This function sets the clear color.
+     *
+     * @param color  The clear color.
+     */
+    inline void SetClearColor(const glm::vec4 &color) { _clearColor = color; }
+
   private:
     VkCommandPool _commandPool;
     QueueFamilies _queueFamilies;
     std::vector<VkCommandBuffer> _commandBuffers;
+    glm::vec4 _clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
 };
 
 } // namespace ES::Plugin::Wrapper
