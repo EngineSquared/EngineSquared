@@ -13,12 +13,12 @@ TEST(Core, CreateEntity)
     AssetsManager<TestAssets> assets_manager;
     TestAssets asset{42};
 
-    ES::Plugin::Object::Utils::AssetID assetID = assets_manager.Add(std::move(asset));
+    assets_manager.Add(1, std::move(asset));
 
-    EXPECT_EQ(assets_manager.Get(assetID).value, 42);
-    EXPECT_EQ(assets_manager.Contains(assetID), true);
+    EXPECT_EQ(assets_manager.Get(1).value, 42);
+    EXPECT_EQ(assets_manager.Contains(1), true);
 
-    assets_manager.Remove(assetID);
+    assets_manager.Remove(1);
 
-    EXPECT_EQ(assets_manager.Contains(assetID), false);
+    EXPECT_EQ(assets_manager.Contains(1), false);
 }
