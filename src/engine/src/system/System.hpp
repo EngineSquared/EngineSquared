@@ -17,10 +17,10 @@ class SystemBase {
 
 template <typename TSystem> class System : public SystemBase {
   public:
-    System(TSystem system) : SystemBase(), _system(system) {}
-    ~System() = default;
+    explicit System(TSystem system) : SystemBase(), _system(system) {}
+    ~System() final = default;
 
-    void operator()(Core &core) const { _system(core); }
+    void operator()(Core &core) const final { _system(core); }
 
   private:
     TSystem _system;
