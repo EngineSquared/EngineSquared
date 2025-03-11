@@ -41,7 +41,8 @@ struct Mesh {
     std::vector<uint32_t> textures;
 
     explicit Mesh(const std::string &file) { Resource::OBJLoader::loadModel(file, vertices, indices); }
-    explicit Mesh(const Mesh &model) : vertices(model.vertices), indices(model.indices), textures(model.textures) {}
+    explicit Mesh(const Mesh &model) = default;
+    ~Mesh() = default;
 };
 
 /**
