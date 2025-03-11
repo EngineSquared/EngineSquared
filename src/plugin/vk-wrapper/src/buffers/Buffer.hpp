@@ -52,9 +52,8 @@ const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
  *   .commandPool = commandPool,
  *   .graphicsQueue = graphicsQueue,
  *   .swapChainImages = swapChainImages,
- *   .textures = textures,
  * };
- * buffers.Create(info);
+ * buffers.Create(info, textures);
  * buffers.Destroy(device, swapChainImages);
  * @endcode
  */
@@ -72,8 +71,6 @@ class Buffers {
      * @param commandPool The Vulkan command pool.
      * @param graphicsQueue The Vulkan graphics queue.
      * @param swapChainImages The swap chain images. Only used for the uniform buffer.
-     * @param textures The textures.
-     * @param models The models.
      */
     struct CreateInfo {
         VkDevice device;
