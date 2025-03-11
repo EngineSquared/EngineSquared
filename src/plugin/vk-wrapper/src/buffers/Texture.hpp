@@ -34,6 +34,11 @@ namespace ES::Plugin::Wrapper {
 class Texture {
   public:
     /**
+     * @brief Construct a new Texture object.
+     */
+    explicit Texture() = default;
+
+    /**
      * @brief Construct a new Texture object
      *
      * @param texturePath  Path to the texture file.
@@ -46,6 +51,13 @@ class Texture {
      * @param _device  The Vulkan device.
      */
     void Destroy(const VkDevice &_device);
+
+    /**
+     * @brief Set the Texture View object
+     *
+     * @param textureView  The Vulkan texture view.
+     */
+    void SetTextureView(const VkImageView &textureView) { _imageView = textureView; }
 
     /**
      * @brief Get the Pixels object
@@ -94,7 +106,21 @@ class Texture {
      *
      * @return VkDeviceMemory&  The Vulkan image memory.
      */
-    VkDeviceMemory &GetImageMemory() { return _imageMemory; }
+    VkDeviceMemory &GetMemory() { return _imageMemory; }
+
+    /**
+     * @brief Get the Image View object
+     *
+     * @return VkImageView  The Vulkan image view.
+     */
+    [[nodiscard]] VkImageView GetView() const { return _imageView; }
+
+    /**
+     * @brief Get the Texture Sampler object
+     *
+     * @return VkSampler  The Vulkan texture sampler.
+     */
+    [[nodiscard]] VkSampler &GetSampler() { return textureSampler; }
 
   protected:
   private:
@@ -103,7 +129,26 @@ class Texture {
     int _height = 0;
     int _channels = 0;
     VkImage _image = VK_NULL_HANDLE;
+    VkImageView _imageView = VK_NULL_HANDLE;
+    VkSampler textureSampler = VK_NULL_HANDLE;
     VkDeviceMemory _imageMemory = VK_NULL_HANDLE;
+};
+
+/**
+ * @brief TextureLoader structure.
+ *
+ * This structure is used to load a texture from a file.
+ * @note This structure is used by the entt resource cache.
+ */
+struct TextureLoader final {
+    using result_type = std::shared_ptr<Texture>;
+
+    result_type operator()(const std::string &file) const
+    {
+        auto texture = std::make_shared<Texture>();
+        texture->Create(file);
+        return texture;
+    }
 };
 
 } // namespace ES::Plugin::Wrapper
