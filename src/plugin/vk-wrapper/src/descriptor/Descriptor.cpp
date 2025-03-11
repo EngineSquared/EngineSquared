@@ -47,7 +47,8 @@ void Descriptor::CreateDescriptorPool(const VkDevice &device)
         throw VkWrapperError("failed to create descriptor pool!");
 }
 
-void Descriptor::CreateDescriptorSet(const VkDevice &device, const std::vector<VkBuffer> &uniformBuffers, Texture &texture)
+void Descriptor::CreateDescriptorSet(const VkDevice &device, const std::vector<VkBuffer> &uniformBuffers,
+                                     Texture &texture)
 {
     std::vector<VkDescriptorSetLayout> layouts(MAX_FRAMES_IN_FLIGHT, _descriptorSetLayout);
 
