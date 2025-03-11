@@ -6,7 +6,7 @@ void Framebuffer::Create(const VkDevice &device, const CreateInfo &info)
 {
     _swapChainFramebuffers.resize(info.swapChainImageViews.size());
 
-    for (uint32_t i = 0; i < info.swapChainImageViews.size(); ++i)
+    for (size_t i = 0; i < info.swapChainImageViews.size(); ++i)
     {
         std::array<VkImageView, 1> attachments = {info.swapChainImageViews[i]};
 
