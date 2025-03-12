@@ -51,9 +51,7 @@ void Viewer::zoom(float changeVert)
     getFrustrumInfo();
 }
 
-const float pi = glm::pi<float>();
-
-glm::quat setFromAxisAngle(glm::vec3 &axis, float angle)
+glm::quat setFromAxisAngle(const glm::vec3 &axis, float angle)
 {
 
     float cosAng = cosf(angle / 2.0f);
@@ -127,21 +125,21 @@ void Viewer::lookFrom(const glm::vec3 &pos)
     getFrustrumInfo();
 }
 
-glm::vec3 Viewer::getViewPoint() const { return (m_viewPoint); }
+glm::vec3 Viewer::getViewPoint() const { return m_viewPoint; }
 
-glm::vec3 Viewer::getViewCenter() const { return (m_viewCenter); }
+glm::vec3 Viewer::getViewCenter() const { return m_viewCenter; }
 
-glm::vec3 Viewer::getUpVector() const { return (m_upVector); }
+glm::vec3 Viewer::getUpVector() const { return m_upVector; }
 
-float Viewer::getFieldOfView() const { return (m_fieldOfView); }
+float Viewer::getFieldOfView() const { return m_fieldOfView; }
 
-float Viewer::getAspectRatio() const { return (m_aspectRatio); }
+float Viewer::getAspectRatio() const { return m_aspectRatio; }
 
-glm::vec3 Viewer::getViewDir() const { return (m_viewDir); }
+glm::vec3 Viewer::getViewDir() const { return m_viewDir; }
 
-glm::vec3 Viewer::getImagePlaneHorizDir() const { return (m_imagePlaneHorizDir); }
+glm::vec3 Viewer::getImagePlaneHorizDir() const { return m_imagePlaneHorizDir; }
 
-glm::vec3 Viewer::getImagePlaneVertDir() const { return (m_imagePlaneVertDir); }
+glm::vec3 Viewer::getImagePlaneVertDir() const { return m_imagePlaneVertDir; }
 
 void Viewer::setAspectRatio(float aspectRatio)
 {

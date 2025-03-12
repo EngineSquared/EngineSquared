@@ -1,6 +1,7 @@
-// File: Viewer.h
-
 #pragma once
+
+#include <glm/glm.hpp>
+
 namespace ESGL {
 class Viewer;
 }
@@ -18,8 +19,6 @@ class Viewer;
  *		   frustrum in radians
  *		- The aspect ratio (the ratio width/height for the resultant image)
  */
-
-#include <glm/glm.hpp>
 
 namespace ESGL {
 class Viewer {

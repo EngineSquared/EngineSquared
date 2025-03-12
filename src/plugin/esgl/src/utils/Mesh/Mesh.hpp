@@ -24,11 +24,11 @@ class Mesh {
     void draw()
     {
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, triIndices.size() * sizeof(glm::vec<3, unsigned int>), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, triIndices.size() * sizeof(glm::vec<3, unsigned int>), GL_UNSIGNED_INT, nullptr);
         glBindVertexArray(0);
     }
 
-    void destroyGlBuffers()
+    void destroyGlBuffers() const
     {
         glDeleteBuffers(1, &VBO_position);
         glDeleteBuffers(1, &VBO_normal);

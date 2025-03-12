@@ -41,7 +41,7 @@ class ShaderProgram {
     // ---------- PRIVATE METHODS ----------
 
     // Private method to compile a shader of a given type
-    GLuint compileShader(const std::string &shaderSource, GLenum shaderType)
+    const GLuint compileShader(const std::string &shaderSource, GLenum shaderType)
     {
         std::string shaderTypeString;
         switch (shaderType)
@@ -154,7 +154,7 @@ class ShaderProgram {
     }
 
     // Private method to load the shader source code from a file
-    std::string loadShaderFromFile(const std::string filename) const
+    std::string loadShaderFromFile(const std::string &filename) const
     {
         // Create an input filestream and attempt to open the specified file
         std::ifstream file(filename.c_str());
@@ -191,7 +191,7 @@ class ShaderProgram {
             glGetProgramiv(id, GL_INFO_LOG_LENGTH, &infoLogLength);
         }
 
-        GLchar *infoLog = new GLchar[infoLogLength + 1];
+        auto infoLog = new GLchar[infoLogLength + 1];
         if (type == ObjectType::SHADER)
         {
             glGetShaderInfoLog(id, infoLogLength, nullptr, infoLog);
@@ -270,7 +270,7 @@ class ShaderProgram {
     }
 
     // Method to disable the shader - we'll also suggest this for inlining
-    inline void disable() { glUseProgram(0); }
+    inline void disable() const { glUseProgram(0); }
 
     // Method to return the bound location of a named attribute, or -1 if the attribute was not found
     GLuint attribute(const std::string &attributeName)
