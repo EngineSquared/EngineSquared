@@ -11,7 +11,7 @@
 #include "Loader.hpp"
 #include "Material.hpp"
 
-namespace ES::Plugin::ESGL {
+namespace ES::Plugin::ESGL::Utils {
 class Mesh {
   public:
     Mesh() = default;

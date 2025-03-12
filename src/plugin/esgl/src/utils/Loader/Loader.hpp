@@ -14,7 +14,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-namespace ES::Plugin::ESGL {
+namespace ES::Plugin::ESGL::Utils {
 class ShaderProgram {
   private:
     // static DEBUG flag - if set to false then, errors aside, we'll run completely silent

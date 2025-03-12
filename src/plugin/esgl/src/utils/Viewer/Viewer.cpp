@@ -9,7 +9,7 @@ static constexpr float DEFAULT_ZOOM_FRACTION = 2.5;
 static constexpr float DEFAULT_ROTATE_SPEED = 2.0;
 
 using namespace std;
-using namespace ES::Plugin::ESGL;
+using namespace ES::Plugin::ESGL::Utils;
 
 Viewer::Viewer(const glm::vec3 &viewPoint, const glm::vec3 &viewCenter, const glm::vec3 &upVector, float fieldOfView,
                float aspectRatio)

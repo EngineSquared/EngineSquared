@@ -3,7 +3,7 @@
 #include <array>
 #include <glm/glm.hpp>
 
-namespace ES::Plugin::ESGL {
+namespace ES::Plugin::ESGL::Utils {
 class Viewer;
 }
 /**
@@ -21,7 +21,7 @@ class Viewer;
  *		- The aspect ratio (the ratio width/height for the resultant image)
  */
 
-namespace ES::Plugin::ESGL {
+namespace ES::Plugin::ESGL::Utils {
 class Viewer {
   public:
     /** Constructor */

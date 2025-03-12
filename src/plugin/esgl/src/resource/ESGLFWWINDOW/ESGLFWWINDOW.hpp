@@ -2,7 +2,7 @@
 
 #include "GLFW/glfw3.h"
 
-namespace ES::Plugin::ESGL {
+namespace ES::Plugin::ESGL::Resource {
 struct ESGLFWWINDOW {
     GLFWwindow *window;
 };

@@ -2,7 +2,7 @@
 
 #include <glm/vec3.hpp>
 
-namespace ES::Plugin::ESGL {
+namespace ES::Plugin::ESGL::Utils {
 class Material {
   public:
     Material() = default;

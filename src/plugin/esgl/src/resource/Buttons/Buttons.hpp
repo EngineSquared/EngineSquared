@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <map>
 
-namespace ES::Plugin::ESGL {
+namespace ES::Plugin::ESGL::Resource {
 struct Button {
     bool pressed = false;
     bool updated = false;
