@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt")
+add_requires("entt", "fmt")
 
 target("EngineSquaredCore")
     set_kind("static")
@@ -31,7 +31,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
         set_default(false)
         set_languages("cxx20")
-        add_packages("entt", "gtest", "glm")
+        add_packages("entt", "gtest", "glm", "fmt")
         add_links("gtest")
         add_tests("default")
         
