@@ -28,7 +28,7 @@
 #include <string>
 #include <vector>
 
-#include "Vertex.hpp"
+#include "component/Vertex.hpp"
 
 namespace ES::Plugin::Object::Resource {
 

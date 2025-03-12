@@ -1,4 +1,5 @@
 #include "Core.hpp"
+#include "Entity.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
@@ -11,7 +12,10 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
 }
 
-entt::entity ES::Engine::Core::CreateEntity() { return this->_registry->create(); }
+ES::Engine::Entity ES::Engine::Core::CreateEntity()
+{
+    return static_cast<ES::Engine::Entity>(this->_registry->create());
+}
 
 void ES::Engine::Core::RunSystems()
 {

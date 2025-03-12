@@ -20,8 +20,8 @@
  * @date 2024-12-06
  **************************************************************************/
 
-#ifndef VERTEX_HPP_
-#define VERTEX_HPP_
+#ifndef COMPONENT_VERTEX_HPP_
+#define COMPONENT_VERTEX_HPP_
 
 #include <glm/glm.hpp>
 
@@ -37,9 +37,20 @@ namespace ES::Plugin::Object::Component {
  * It contains the position, color, and texture coordinates of the vertex.
  */
 struct Vertex {
-    glm::vec3 pos;
-    glm::vec3 color;
-    glm::vec2 texCoord;
+    glm::vec3 pos{};
+    glm::vec3 color{};
+    glm::vec2 texCoord{};
+
+    Vertex() = default;
+
+    /**
+     * @brief Vertex constructor.
+     *
+     * @param p Position of the vertex.
+     * @param c Color of the vertex.
+     * @param t Texture coordinates of the vertex.
+     */
+    Vertex(glm::vec3 p, glm::vec3 c, glm::vec2 t) : pos(p), color(c), texCoord(t) {}
 
     bool operator==(const Vertex &other) const = default;
 };
@@ -67,4 +78,4 @@ template <> struct hash<ES::Plugin::Object::Component::Vertex> {
 
 } // namespace std
 
-#endif /* !VERTEX_HPP_ */
+#endif /* !COMPONENT_VERTEX_HPP_ */
