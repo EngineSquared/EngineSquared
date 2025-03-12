@@ -2,9 +2,11 @@
 
 #include <unordered_map>
 
+#include "AssetID.hpp"
 #include "Logger.hpp"
 
-#include "AssetID.hpp"
+#include <fmt/format.h>
+
 
 namespace ES::Plugin::Object::Resource {
 /**
@@ -27,7 +29,7 @@ template <typename TAssetType> class AssetsManager {
     {
         if (_assets.contains(id))
         {
-            ES::Utils::Log::Warn(std::format("Asset with id {} already exists. Overwriting.", id));
+            ES::Utils::Log::Warn(fmt::format("Asset with id {} already exists. Overwriting.", id));
         }
         _assets[id] = std::make_shared<TAssetType>(std::move(asset));
         return *_assets[id];
