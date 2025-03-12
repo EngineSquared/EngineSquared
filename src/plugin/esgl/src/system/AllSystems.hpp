@@ -72,7 +72,7 @@ void SetupGLFWHints(ES::Engine::Core &core)
 void CreateGLFWWindow(ES::Engine::Core &core)
 {
     if (!core.RegisterResource<ESGL::ESGLFWWINDOW>(
-                 {glfwCreateWindow(DEFAULT_WIDTH, DEFAULT_HEIGHT, "OpenGL Framework", NULL, NULL)})
+                 {glfwCreateWindow(DEFAULT_WIDTH, DEFAULT_HEIGHT, "OpenGL Framework", nullptr, nullptr)})
              .window)
     {
         glfwTerminate();

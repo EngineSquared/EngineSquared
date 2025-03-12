@@ -1,8 +1,5 @@
 #pragma once
 
-// #include <Windows.h>
-// #include <GL/gl3w.h>
-// #include <windows.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/gtc/type_ptr.hpp>

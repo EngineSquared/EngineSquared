@@ -9,7 +9,6 @@
 #include <map>
 #include <sstream>
 
-// #include <windows.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -42,7 +41,7 @@ class ShaderProgram {
     // ---------- PRIVATE METHODS ----------
 
     // Private method to compile a shader of a given type
-    GLuint compileShader(std::string shaderSource, GLenum shaderType)
+    GLuint compileShader(const std::string &shaderSource, GLenum shaderType)
     {
         std::string shaderTypeString;
         switch (shaderType)
@@ -70,7 +69,7 @@ class ShaderProgram {
         // Params: GLuint shader, GLsizei count, const GLchar **string, const GLint *length
         // Note: The pointer to an array of source chars will be null terminated, so we don't need to specify the length
         // and can instead use NULL.
-        glShaderSource(shaderId, 1, &shaderSourceChars, NULL);
+        glShaderSource(shaderId, 1, &shaderSourceChars, nullptr);
 
         // Compile the shader
         glCompileShader(shaderId);
@@ -98,7 +97,7 @@ class ShaderProgram {
     // Private method to compile/attach/link/verify the shaders.
     // Note: Rather than returning a boolean as a success/fail status we'll just consider
     // a failure here to be an unrecoverable error and throw a runtime_error.
-    void initialise(std::string vertexShaderSource, std::string fragmentShaderSource)
+    void initialise(const std::string &vertexShaderSource, const std::string &fragmentShaderSource)
     {
         // Compile the shaders and return their id values
         vertexShaderId = compileShader(vertexShaderSource, GL_VERTEX_SHADER);
@@ -155,7 +154,7 @@ class ShaderProgram {
     }
 
     // Private method to load the shader source code from a file
-    std::string loadShaderFromFile(const std::string filename)
+    std::string loadShaderFromFile(const std::string filename) const
     {
         // Create an input filestream and attempt to open the specified file
         std::ifstream file(filename.c_str());
@@ -180,7 +179,7 @@ class ShaderProgram {
     }
 
     // Private method to return the current shader program info log as a string
-    std::string getInfoLog(ObjectType type, int id)
+    std::string getInfoLog(ObjectType type, int id) const
     {
         GLint infoLogLength;
         if (type == ObjectType::SHADER)
@@ -195,11 +194,11 @@ class ShaderProgram {
         GLchar *infoLog = new GLchar[infoLogLength + 1];
         if (type == ObjectType::SHADER)
         {
-            glGetShaderInfoLog(id, infoLogLength, NULL, infoLog);
+            glGetShaderInfoLog(id, infoLogLength, nullptr, infoLog);
         }
         else // type must be ObjectType::PROGRAM
         {
-            glGetProgramInfoLog(id, infoLogLength, NULL, infoLog);
+            glGetProgramInfoLog(id, infoLogLength, nullptr, infoLog);
         }
 
         // Convert the info log to a string
@@ -239,7 +238,7 @@ class ShaderProgram {
     }
 
     // Method to initialise a shader program from shaders provided as files
-    void initFromFiles(std::string vertexShaderFilename, std::string fragmentShaderFilename)
+    void initFromFiles(const std::string &vertexShaderFilename, const std::string &fragmentShaderFilename)
     {
         // Get the shader file contents as strings
         std::string vertexShaderSource = loadShaderFromFile(vertexShaderFilename);
@@ -249,7 +248,7 @@ class ShaderProgram {
     }
 
     // Method to initialise a shader program from shaders provided as strings
-    void initFromStrings(std::string vertexShaderSource, std::string fragmentShaderSource)
+    void initFromStrings(const std::string &vertexShaderSource, const std::string &fragmentShaderSource)
     {
         initialise(vertexShaderSource, fragmentShaderSource);
     }
@@ -274,7 +273,7 @@ class ShaderProgram {
     inline void disable() { glUseProgram(0); }
 
     // Method to return the bound location of a named attribute, or -1 if the attribute was not found
-    GLuint attribute(const std::string attributeName)
+    GLuint attribute(const std::string &attributeName)
     {
         // You could do this method with the single line:
         //
@@ -303,7 +302,7 @@ class ShaderProgram {
     }
 
     // Method to returns the bound location of a named uniform
-    GLuint uniform(const std::string uniformName)
+    GLuint uniform(const std::string &uniformName)
     {
         // Note: You could do this method with the single line:
         //
@@ -329,7 +328,7 @@ class ShaderProgram {
     }
 
     // Method to add an attribute to the shader and return the bound location
-    int addAttribute(const std::string attributeName)
+    int addAttribute(const std::string &attributeName)
     {
         // Add the attribute location value for the attributeName key
         attributeMap[attributeName] = glGetAttribLocation(programId, attributeName.c_str());
@@ -353,7 +352,7 @@ class ShaderProgram {
     }
 
     // Method to add a uniform to the shader and return the bound location
-    int addUniform(const std::string uniformName)
+    int addUniform(const std::string &uniformName)
     {
         // Add the uniform location value for the uniformName key
         uniformMap[uniformName] = glGetUniformLocation(programId, uniformName.c_str());
