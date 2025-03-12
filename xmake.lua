@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "gtest", "spdlog", "tinyobjloader", "glm >=1.0.1", "glfw >=3.4", "glew")
+add_requires("entt", "vulkan-headers", "vulkansdk", "vulkan-hpp", "gtest", "spdlog", "tinyobjloader", "glm >=1.0.1", "glfw >=3.4", "glew", "fmt")
 
 includes("src/plugin/camera/xmake.lua")
 includes("src/plugin/colors/xmake.lua")
@@ -42,7 +42,7 @@ target("EngineSquared")
     add_deps("UtilsLog")
 
     set_policy("build.warning", true)
-    add_packages("entt", "vulkansdk", "glfw", "glm", "spdlog", "tinyobjloader", "glew")
+    add_packages("entt", "vulkansdk", "glfw", "glm", "spdlog", "tinyobjloader", "glew", "fmt")
 
     if is_mode("debug") then
         add_defines("DEBUG")
