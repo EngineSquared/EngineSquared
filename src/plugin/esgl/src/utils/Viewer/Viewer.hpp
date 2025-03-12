@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <glm/glm.hpp>
 
 namespace ESGL {
@@ -153,7 +154,7 @@ class Viewer {
 
     /** These are used for tracking */
 
-    float m_lastDesired[3];
+    std::array<float, 3> m_lastDesired;
 
     /**
      * The following values contain the geometry of our viewing volume: the

@@ -46,14 +46,14 @@ class Mesh {
         glGenBuffers(1, &VBO_position);
         glBindBuffer(GL_ARRAY_BUFFER, VBO_position);
         glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
         glEnableVertexAttribArray(0);
 
         // Vertex Normal VBO
         glGenBuffers(1, &VBO_normal);
         glBindBuffer(GL_ARRAY_BUFFER, VBO_normal);
         glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), normals.data(), GL_STATIC_DRAW);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
         glEnableVertexAttribArray(1);
 
         // Element indices buffer
@@ -66,6 +66,9 @@ class Mesh {
     }
 
   private:
-    GLuint VAO, VBO_position, VBO_normal, IBO;
+    GLuint VAO;
+    GLuint VBO_position;
+    GLuint VBO_normal;
+    GLuint IBO;
 };
 } // namespace ESGL

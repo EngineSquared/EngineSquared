@@ -41,7 +41,7 @@ class ShaderProgram {
     // ---------- PRIVATE METHODS ----------
 
     // Private method to compile a shader of a given type
-    const GLuint compileShader(const std::string &shaderSource, GLenum shaderType)
+    GLuint compileShader(const std::string &shaderSource, GLenum shaderType) const
     {
         std::string shaderTypeString;
         switch (shaderType)
@@ -191,21 +191,19 @@ class ShaderProgram {
             glGetProgramiv(id, GL_INFO_LOG_LENGTH, &infoLogLength);
         }
 
-        auto infoLog = new GLchar[infoLogLength + 1];
+        std::vector<GLchar> infoLog(infoLogLength + 1);
+
         if (type == ObjectType::SHADER)
         {
-            glGetShaderInfoLog(id, infoLogLength, nullptr, infoLog);
+            glGetShaderInfoLog(id, infoLogLength, nullptr, infoLog.data());
         }
         else // type must be ObjectType::PROGRAM
         {
-            glGetProgramInfoLog(id, infoLogLength, nullptr, infoLog);
+            glGetProgramInfoLog(id, infoLogLength, nullptr, infoLog.data());
         }
 
         // Convert the info log to a string
-        std::string infoLogString(infoLog);
-
-        // Delete the char array version of the log
-        delete[] infoLog;
+        std::string infoLogString(infoLog.data());
 
         // Finally, return the string version of the info log
         return infoLogString;
