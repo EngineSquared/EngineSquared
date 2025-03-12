@@ -7,7 +7,6 @@
 
 #include <fmt/format.h>
 
-
 namespace ES::Plugin::Object::Resource {
 /**
  * AssetsManager is a simple class that store assets. It provides methods to add, get, and remove assets.
