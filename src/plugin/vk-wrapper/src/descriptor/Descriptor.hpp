@@ -69,8 +69,9 @@ class Descriptor {
      *
      * @param device  The Vulkan device.
      * @param uniformBuffer  The uniform buffer.
+     * @param texture  The texture.
      */
-    void CreateDescriptorSet(const VkDevice &device, const std::vector<VkBuffer> &uniformBuffer);
+    void CreateDescriptorSet(const VkDevice &device, const std::vector<VkBuffer> &uniformBuffer, Texture &texture);
 
     /**
      * @brief Destroys the descriptor set layout.

@@ -39,7 +39,11 @@ bool PhysicalDevice::IsDeviceSuitable(const VkPhysicalDevice &device, const VkSu
         swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
     }
 
-    return _queueFamilies.IsComplete() && extensionsSupported && swapChainAdequate;
+    VkPhysicalDeviceFeatures supportedFeatures{};
+    vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
+
+    return _queueFamilies.IsComplete() && extensionsSupported && swapChainAdequate &&
+           supportedFeatures.samplerAnisotropy;
 }
 
 bool PhysicalDevice::CheckDeviceExtensionSupport(const VkPhysicalDevice &device) const
@@ -60,8 +64,8 @@ bool PhysicalDevice::CheckDeviceExtensionSupport(const VkPhysicalDevice &device)
 
 uint32_t PhysicalDevice::RateDeviceSuitability(const VkPhysicalDevice &device) const
 {
-    VkPhysicalDeviceProperties deviceProperties;
-    VkPhysicalDeviceFeatures deviceFeatures;
+    VkPhysicalDeviceProperties deviceProperties{};
+    VkPhysicalDeviceFeatures deviceFeatures{};
     vkGetPhysicalDeviceProperties(device, &deviceProperties);
     vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
 
@@ -71,6 +75,7 @@ uint32_t PhysicalDevice::RateDeviceSuitability(const VkPhysicalDevice &device) c
         score += 1000;
 
     score += deviceProperties.limits.maxImageDimension2D;
+    score += deviceFeatures.samplerAnisotropy ? 1000 : 0;
 
     if (!deviceFeatures.geometryShader)
         return 0;

@@ -16,8 +16,8 @@ void GraphicsPipeline::Create(const VkDevice &device, const VkRenderPass &render
 
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages = {vertShaderStage, fragShaderStage};
 
-    auto bindingDescription = Vertex::GetBindingDescription();
-    auto attributeDescriptions = Vertex::GetAttributeDescriptions();
+    auto bindingDescription = VkVertex::GetBindingDescription();
+    auto attributeDescriptions = VkVertex::GetAttributeDescriptions();
 
     VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
     vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;

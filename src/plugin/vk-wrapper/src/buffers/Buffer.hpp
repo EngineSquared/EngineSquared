@@ -22,10 +22,15 @@
 #ifndef BUFFER_HPP_
 #define BUFFER_HPP_
 
+#include "ImageView.hpp"
+#include "Texture.hpp"
 #include "UniformObject.hpp"
 #include "Vertex.hpp"
 
 #include <chrono>
+#include <entt/core/hashed_string.hpp>
+#include <entt/resource/cache.hpp>
+#include <unordered_map>
 
 namespace ES::Plugin::Wrapper {
 
@@ -41,14 +46,25 @@ const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
  * @example
  * @code
  * Buffers buffers;
- * buffers.Create(device, physicalDevice, commandPool, graphicsQueue, swapChainImages);
- * buffers.Destroy(device);
+ * Buffers::CreateInfo info = {
+ *   .device = device,
+ *   .physicalDevice = physicalDevice,
+ *   .commandPool = commandPool,
+ *   .graphicsQueue = graphicsQueue,
+ *   .swapChainImages = swapChainImages,
+ * };
+ * buffers.Create(info, textures);
+ * buffers.Destroy(device, swapChainImages);
  * @endcode
  */
 class Buffers {
   public:
     /**
-     * @brief Create the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
+     * @brief Structure to hold the creation information for the Buffers.
+     *
+     * This structure contains all the necessary information required to create the Buffers,
+     * including the device, the physical device, the command pool, the graphics queue, the swap chain images,
+     * and the textures.
      *
      * @param device The Vulkan device.
      * @param physicalDevice The Vulkan physical device.
@@ -56,8 +72,22 @@ class Buffers {
      * @param graphicsQueue The Vulkan graphics queue.
      * @param swapChainImages The swap chain images. Only used for the uniform buffer.
      */
-    void Create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkCommandPool &commandPool,
-                const VkQueue &graphicsQueue, const std::vector<VkImage> &swapChainImages);
+    struct CreateInfo {
+        VkDevice device;
+        VkPhysicalDevice physicalDevice;
+        VkCommandPool commandPool;
+        VkQueue graphicsQueue;
+        std::vector<VkImage> swapChainImages;
+    };
+
+  public:
+    /**
+     * @brief Create the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
+     *
+     * @param info The creation information required for the Buffers.
+     * @param textures The textures.
+     */
+    void Create(const CreateInfo &info, const entt::resource_cache<Texture, TextureLoader> &textures);
 
     /**
      * @brief Destroy the VertexBuffer object, the IndexBuffer object and the UniformBuffer object.
@@ -65,21 +95,9 @@ class Buffers {
      * @note The uniform buffer is destroyed in the DestroyUniformBuffers function.
      *
      * @param device The Vulkan device.
+     * @param swapChainImages The swap chain images.
      */
-    void Destroy(const VkDevice &device);
-
-    /**
-     * @brief Create a Uniform Buffer object in the Vulkan API.
-     *
-     * Updates the buffer by applying a transformation to its contents at each frame. The buffer must be destroyed at
-     * the end of the program. Depends on the number of frames in the swap chain.
-     *
-     * @param device  The Vulkan device.
-     * @param physicalDevice  The Vulkan physical device.
-     * @param swapChainImages  The swap chain images.
-     */
-    void CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
-                             const std::vector<VkImage> &swapChainImages);
+    void Destroy(const VkDevice &device, const std::vector<VkImage> &swapChainImages);
 
     /**
      * @brief Update the Uniform Buffer object in the Vulkan API.
@@ -89,14 +107,6 @@ class Buffers {
      * @param currentImage  The current image.
      */
     void UpdateUniformBuffer(const VkDevice &device, const VkExtent2D swapChainExtent, const uint32_t currentImage);
-
-    /**
-     * @brief Destroy the UniformBuffer object.
-     *
-     * @param device The Vulkan device.
-     * @param swapChainImages The swap chain images.
-     */
-    void DestroyUniformBuffers(const VkDevice &device, const std::vector<VkImage> &swapChainImages);
 
     /**
      * @brief Get the uniform buffers.
@@ -143,6 +153,50 @@ class Buffers {
                            const VkCommandPool &commandPool, const VkQueue &graphicsQueue);
 
     /**
+     * @brief Create a Uniform Buffer object in the Vulkan API.
+     *
+     * Updates the buffer by applying a transformation to its contents at each frame. The buffer must be destroyed at
+     * the end of the program. Depends on the number of frames in the swap chain.
+     *
+     * @param device  The Vulkan device.
+     * @param physicalDevice  The Vulkan physical device.
+     * @param swapChainImages  The swap chain images.
+     */
+    void CreateUniformBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
+                             const std::vector<VkImage> &swapChainImages);
+
+    /**
+     * @brief Create a Texture Buffer object in the Vulkan API.
+     *
+     * The texture buffer is used to store the texture data from an image file.
+     *
+     * @param device  The Vulkan device.
+     * @param physicalDevice  The Vulkan physical device.
+     * @param commandPool  The Vulkan command pool.
+     * @param graphicsQueue  The Vulkan graphics queue.
+     * @param texture  The texture.
+     */
+    void CreateTextureBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice,
+                             const VkCommandPool &commandPool, const VkQueue &graphicsQueue, Texture &texture);
+
+    /**
+     * @brief Create a Texture View object in the Vulkan API.
+     *
+     * @param device  The Vulkan device.
+     * @param texture  The texture.
+     */
+    void CreateTextureView(const VkDevice &device, Texture &texture);
+
+    /**
+     * @brief Create a Texture Sampler object in the Vulkan API.
+     *
+     * @param device  The Vulkan device.
+     * @param physicalDevice  The Vulkan physical device.
+     * @param texture  The texture.
+     */
+    void CreateTextureSampler(const VkDevice &device, const VkPhysicalDevice &physicalDevice, Texture &texture);
+
+    /**
      * @brief Create a Buffer object in the Vulkan API.
      *
      * @param device  The Vulkan device.
@@ -156,6 +210,9 @@ class Buffers {
     void CreateBuffer(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkDeviceSize size,
                       const VkBufferUsageFlags usage, const VkMemoryPropertyFlags properties, VkBuffer &buffer,
                       VkDeviceMemory &bufferMemory);
+
+    void CreateImage(const VkDevice &device, const VkPhysicalDevice &physicalDevice, VkFormat format,
+                     VkImageTiling tiling, VkImageUsageFlags usage, Texture &texture);
 
     /**
      * @brief Find the memory type in the physical device.
@@ -184,6 +241,52 @@ class Buffers {
     void CopyBuffer(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
                     const VkBuffer &srcBuffer, const VkBuffer &dstBuffer, VkDeviceSize size);
 
+    /**
+     * @brief Transition the image layout in the Vulkan API.
+     *
+     * @param device  The Vulkan device.
+     * @param commandPool  The Vulkan command pool.
+     * @param graphicsQueue  The Vulkan graphics queue.
+     * @param image  The image.
+     * @param format  The format of the image.
+     * @param oldLayout  The old layout of the image.
+     * @param newLayout  The new layout of the image.
+     */
+    void TransitionImageLayout(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
+                               const VkImage &image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
+
+    /**
+     * @brief Copy a buffer to an image in the Vulkan API.
+     *
+     * @param device  The Vulkan device.
+     * @param commandPool  The Vulkan command pool.
+     * @param graphicsQueue  The Vulkan graphics queue.
+     * @param buffer  The buffer.
+     * @param texture  The texture.
+     */
+    void CopyBufferToImage(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
+                           VkBuffer buffer, Texture &texture);
+
+    /**
+     * @brief Begin a single time command in the Vulkan API.
+     *
+     * @param device  The Vulkan device.
+     * @param commandPool  The Vulkan command pool.
+     * @return VkCommandBuffer  The command buffer.
+     */
+    VkCommandBuffer BeginSingleTimeCommands(const VkDevice &device, const VkCommandPool &commandPool);
+
+    /**
+     * @brief End a single time command in the Vulkan API.
+     *
+     * @param device  The Vulkan device.
+     * @param commandPool  The Vulkan command pool.
+     * @param graphicsQueue  The Vulkan graphics queue.
+     * @param commandBuffer  The command buffer.
+     */
+    void EndSingleTimeCommands(const VkDevice &device, const VkCommandPool &commandPool, const VkQueue &graphicsQueue,
+                               VkCommandBuffer commandBuffer);
+
   private:
     VkBuffer _vertexBuffer;
     VkDeviceMemory _vertexBufferMemory;
@@ -192,6 +295,7 @@ class Buffers {
     std::vector<VkBuffer> _uniformBuffers;
     std::vector<VkDeviceMemory> _uniformBuffersMemory;
     std::vector<void *> _uniformBuffersMapped;
+    VkImageView _textureView;
 };
 
 } // namespace ES::Plugin::Wrapper
