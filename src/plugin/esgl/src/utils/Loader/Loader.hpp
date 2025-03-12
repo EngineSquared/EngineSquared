@@ -33,10 +33,10 @@ class ShaderProgram {
     bool initialised = false;
 
     // Map of attributes and their binding locations
-    std::map<std::string, int> attributeMap;
+    std::map<std::string, int, std::less<>> attributeMap;
 
     // Map of uniforms and their binding locations
-    std::map<std::string, int> uniformMap;
+    std::map<std::string, int, std::less<>> uniformMap;
 
     // Has this shader program been initialised?
 
@@ -286,7 +286,7 @@ class ShaderProgram {
 
         // Create an iterator to look through our attribute map (only create iterator on first run -
         // reuse it for all further calls).
-        static std::map<std::string, int>::const_iterator attributeIter;
+        static std::map<std::string, int, std::less<>>::const_iterator attributeIter;
 
         // Try to find the named attribute
         attributeIter = attributeMap.find(attributeName);
@@ -312,7 +312,7 @@ class ShaderProgram {
 
         // Create an iterator to look through our uniform map (only create iterator on first run -
         // reuse it for all further calls).
-        static std::map<std::string, int>::const_iterator uniformIter;
+        static std::map<std::string, int, std::less<>>::const_iterator uniformIter;
 
         // Try to find the named uniform
         uniformIter = uniformMap.find(uniformName);

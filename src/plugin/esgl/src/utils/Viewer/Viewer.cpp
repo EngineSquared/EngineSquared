@@ -14,9 +14,12 @@ using namespace ESGL;
 Viewer::Viewer(const glm::vec3 &viewPoint, const glm::vec3 &viewCenter, const glm::vec3 &upVector, float fieldOfView,
                float aspectRatio)
     : m_viewPoint(viewPoint), m_viewCenter(viewCenter), m_upVector(upVector), m_fieldOfView(fieldOfView),
-      m_aspectRatio(aspectRatio), m_translateSpeed(DEFAULT_TRANSLATE_SPEED), m_zoomFraction(DEFAULT_ZOOM_FRACTION),
-      m_rotateSpeed(DEFAULT_ROTATE_SPEED)
+      m_aspectRatio(aspectRatio)
 {
+    m_translateSpeed = DEFAULT_TRANSLATE_SPEED;
+    m_zoomFraction = DEFAULT_ZOOM_FRACTION;
+    m_rotateSpeed = DEFAULT_ROTATE_SPEED;
+
     m_upVector = glm::normalize(m_upVector);
 
     getFrustrumInfo();

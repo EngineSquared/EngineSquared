@@ -65,7 +65,6 @@ class Mesh {
         glBindVertexArray(0);
     }
 
-  private:
     GLuint VAO;
     GLuint VBO_position;
     GLuint VBO_normal;
