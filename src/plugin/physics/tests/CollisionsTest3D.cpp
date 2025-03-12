@@ -11,30 +11,30 @@ using namespace ES::Plugin::Physics;
 
 TEST(Collision, CollisionSystemWithBoxCollider3D)
 {
-    ES::Engine::Core registry;
+    ES::Engine::Core core;
 
-    ES::Engine::Entity eA(registry.CreateEntity());
-    ES::Engine::Entity eB(registry.CreateEntity());
+    ES::Engine::Entity eA = core.CreateEntity();
+    ES::Engine::Entity eB = core.CreateEntity();
 
-    eA.AddComponent<ES::Plugin::Physics::Component::BoxCollider3D>(registry, glm::vec3(1, 1, 1));
-    eB.AddComponent<ES::Plugin::Physics::Component::BoxCollider3D>(registry, glm::vec3(1, 1, 1));
-    eA.AddComponent<ES::Plugin::Object::Component::Transform>(registry, glm::vec3(1, 1, 1));
-    eB.AddComponent<ES::Plugin::Object::Component::Transform>(registry, glm::vec3(1, 1, 1));
+    eA.AddComponent<ES::Plugin::Physics::Component::BoxCollider3D>(core, glm::vec3(1, 1, 1));
+    eB.AddComponent<ES::Plugin::Physics::Component::BoxCollider3D>(core, glm::vec3(1, 1, 1));
+    eA.AddComponent<ES::Plugin::Object::Component::Transform>(core, glm::vec3(1, 1, 1));
+    eB.AddComponent<ES::Plugin::Object::Component::Transform>(core, glm::vec3(1, 1, 1));
 
-    registry.RegisterSystem(ES::Plugin::Physics::System::RemoveABABCollisions);
-    registry.RegisterSystem(ES::Plugin::Physics::System::DetectABABCollisions);
+    core.RegisterSystem(ES::Plugin::Physics::System::RemoveABABCollisions);
+    core.RegisterSystem(ES::Plugin::Physics::System::DetectABABCollisions);
 
-    registry.RunSystems();
+    core.RunSystems();
 
-    auto view = registry.GetRegistry().view<ES::Plugin::Physics::Component::ABABCollision3D>();
+    auto view = core.GetRegistry().view<ES::Plugin::Physics::Component::ABABCollision3D>();
 
     EXPECT_EQ(view.size(), 1);
 
-    eA.GetComponents<ES::Plugin::Object::Component::Transform>(registry).setPosition(9, 9, 9);
+    eA.GetComponents<ES::Plugin::Object::Component::Transform>(core).setPosition(9, 9, 9);
 
-    registry.RunSystems();
+    core.RunSystems();
 
-    view = registry.GetRegistry().view<ES::Plugin::Physics::Component::ABABCollision3D>();
+    view = core.GetRegistry().view<ES::Plugin::Physics::Component::ABABCollision3D>();
 
     EXPECT_EQ(view.size(), 0);
 }

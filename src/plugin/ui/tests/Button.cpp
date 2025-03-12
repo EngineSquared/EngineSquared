@@ -11,41 +11,41 @@ TEST(Button, ButtonClick)
     struct onClickCalled {
         bool clicked = false;
     };
-    ES::Engine::Core r;
-    r.RegisterSystem(System::ButtonClick);
-    r.RegisterSystem(ES::Engine::Entity::RemoveTemporaryComponents);
+    ES::Engine::Core core;
+    core.RegisterSystem(System::ButtonClick);
+    core.RegisterSystem(ES::Engine::Entity::RemoveTemporaryComponents);
 
-    r.RegisterResource<onClickCalled>(onClickCalled());
+    core.RegisterResource<onClickCalled>(onClickCalled());
 
-    auto button = ES::Engine::Entity(r.CreateEntity());
-    button.AddComponent<Component::Button>(r);
+    auto button = core.CreateEntity();
+    button.AddComponent<Component::Button>(core);
 
-    auto &buttonComponent = button.GetComponents<Component::Button>(r);
+    auto &buttonComponent = button.GetComponents<Component::Button>(core);
     buttonComponent.lastState = Component::Button::State::Pressed;
     buttonComponent.state = Component::Button::State::Hover;
 
     buttonComponent.onClick = [](ES::Engine::Core &reg) { reg.GetResource<onClickCalled>().clicked = true; };
 
-    EXPECT_FALSE(r.GetResource<onClickCalled>().clicked);
+    EXPECT_FALSE(core.GetResource<onClickCalled>().clicked);
 
-    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(r);
-    r.RunSystems();
+    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
+    core.RunSystems();
 
-    EXPECT_TRUE(r.GetResource<onClickCalled>().clicked);
+    EXPECT_TRUE(core.GetResource<onClickCalled>().clicked);
 }
 
 TEST(Button, UpdateButtonTexture)
 {
-    ES::Engine::Core r;
+    ES::Engine::Core core;
 
-    r.RegisterSystem(System::UpdateButtonTexture);
-    r.RegisterSystem(ES::Engine::Entity::RemoveTemporaryComponents);
+    core.RegisterSystem(System::UpdateButtonTexture);
+    core.RegisterSystem(ES::Engine::Entity::RemoveTemporaryComponents);
 
-    auto button = ES::Engine::Entity(r.CreateEntity());
-    button.AddComponent<Component::Button>(r);
-    button.AddComponent<Component::Sprite2D>(r);
+    auto button = core.CreateEntity();
+    button.AddComponent<Component::Button>(core);
+    button.AddComponent<Component::Sprite2D>(core);
 
-    auto &buttonComponent = button.GetComponents<Component::Button>(r);
+    auto &buttonComponent = button.GetComponents<Component::Button>(core);
     buttonComponent.displayType =
         Component::DisplayType::TintColor{.imageID = ES::Plugin::Object::Utils::NULL_ASSET_ID,
                                           .normalColor = ES::Plugin::Colors::Utils::WHITE_COLOR,
@@ -53,17 +53,17 @@ TEST(Button, UpdateButtonTexture)
                                           .pressedColor = ES::Plugin::Colors::Utils::DARKGRAY_COLOR};
 
     buttonComponent.state = Component::Button::State::Hover;
-    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(r);
-    r.RunSystems();
-    EXPECT_EQ(button.GetComponents<Component::Sprite2D>(r).color, ES::Plugin::Colors::Utils::GRAY_COLOR);
+    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
+    core.RunSystems();
+    EXPECT_EQ(button.GetComponents<Component::Sprite2D>(core).color, ES::Plugin::Colors::Utils::GRAY_COLOR);
 
     buttonComponent.state = Component::Button::State::Pressed;
-    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(r);
-    r.RunSystems();
-    EXPECT_EQ(button.GetComponents<Component::Sprite2D>(r).color, ES::Plugin::Colors::Utils::DARKGRAY_COLOR);
+    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
+    core.RunSystems();
+    EXPECT_EQ(button.GetComponents<Component::Sprite2D>(core).color, ES::Plugin::Colors::Utils::DARKGRAY_COLOR);
 
     buttonComponent.state = Component::Button::State::Normal;
-    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(r);
-    r.RunSystems();
-    EXPECT_EQ(button.GetComponents<Component::Sprite2D>(r).color, ES::Plugin::Colors::Utils::WHITE_COLOR);
+    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
+    core.RunSystems();
+    EXPECT_EQ(button.GetComponents<Component::Sprite2D>(core).color, ES::Plugin::Colors::Utils::WHITE_COLOR);
 }
