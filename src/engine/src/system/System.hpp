@@ -6,6 +6,8 @@
 #include <memory>
 #include <vector>
 
+#include "Logger.hpp"
+
 namespace ES::Engine {
 class Core;
 
@@ -51,8 +53,7 @@ class SystemContainer {
 
         if (_idToIndex.find(id) != _idToIndex.end())
         {
-            // TODO: log error
-            std::cout << "System already exists" << std::endl;
+            ES::Utils::Log::Warn("System already exists");
             return;
         }
         std::size_t index = _orderedSystems.size();
