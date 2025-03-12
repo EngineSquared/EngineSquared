@@ -12,7 +12,7 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
 }
 
-ES::Engine::Entity ES::Engine::Core::CreateEntity() { return ES::Engine::Entity(this->_registry->create()); }
+ES::Engine::Entity ES::Engine::Core::CreateEntity() { return static_cast<ES::Engine::Entity>(this->_registry->create()); }
 
 void ES::Engine::Core::RunSystems()
 {
