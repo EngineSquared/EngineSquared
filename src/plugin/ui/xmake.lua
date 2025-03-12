@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "glm", "glfw")
+add_requires("entt", "glm", "glfw", "spdlog")
 add_requires("gtest", {optional = true})
 
 includes("../../engine/xmake.lua")
@@ -14,7 +14,7 @@ target("PluginUI")
     set_kind("static")
     set_languages("cxx20")
     set_policy("build.warning", true)
-    add_packages("entt", "glm", "glfw")
+    add_packages("entt", "glm", "glfw", "spdlog")
 
     add_deps("EngineSquaredCore")
     add_deps("PluginColors")
