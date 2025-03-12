@@ -9,19 +9,12 @@ int a = 0;
 int b = 0;
 int c = 0;
 
-class TestSystemClass
-{
+class TestSystemClass {
   public:
-    void operator()(Core &registry) const
-    {
-        a++;
-    }
+    void operator()(Core &registry) const { a++; }
 };
 
-void TestSystemFunction(const Core &)
-{
-    b++;
-}
+void TestSystemFunction(const Core &) { b++; }
 
 TEST(Systems, Casual)
 {
