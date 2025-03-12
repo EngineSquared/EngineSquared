@@ -46,7 +46,7 @@ template <typename TCallable> class System : public SystemBase {
     void operator()(Core &core) const final { _system(core); }
 
   private:
-   [[no_unique_address]] TCallable _system;
+    [[no_unique_address]] TCallable _system;
 };
 
 /**

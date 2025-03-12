@@ -6,15 +6,15 @@
 using namespace ES::Engine;
 
 struct A {
-  int value = 0;
+    int value = 0;
 };
 
 struct B {
-  int value = 0;
+    int value = 0;
 };
 
 struct C {
-  int value = 0;
+    int value = 0;
 };
 
 class TestSystemClass {
@@ -41,8 +41,9 @@ TEST(Systems, Casual)
     reg.RegisterSystem(TestSystemFunction);
 
     // Test for lambda Systems
-    reg.RegisterSystem([](Core &core) { core.GetResource<C>().value++; }, [](Core &core) { core.GetResource<C>().value++; });
-    reg.RegisterSystem([](Core &core) { core.GetResource<C>().value++; }); 
+    reg.RegisterSystem([](Core &core) { core.GetResource<C>().value++; },
+                       [](Core &core) { core.GetResource<C>().value++; });
+    reg.RegisterSystem([](Core &core) { core.GetResource<C>().value++; });
 
     reg.RunSystems();
 
