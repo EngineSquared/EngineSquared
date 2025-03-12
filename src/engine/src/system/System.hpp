@@ -42,11 +42,11 @@ class SystemContainer {
 
         if constexpr (std::is_class_v<TCallable>)
         {
-          id = typeid(callable).hash_code();
+            id = typeid(callable).hash_code();
         }
         else
         {
-          id = std::hash<TCallable>{}(callable);
+            id = std::hash<TCallable>{}(callable);
         }
 
         if (_idToIndex.find(id) != _idToIndex.end())
