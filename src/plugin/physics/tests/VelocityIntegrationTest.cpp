@@ -13,19 +13,19 @@
 
 TEST(VelocityIntegration, BasicGravityIntegration)
 {
-    ES::Engine::Core registry;
-    registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
+    ES::Engine::Core core;
+    core.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
 
-    ES::Engine::Entity entity = registry.CreateEntity();
-    registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(entity, glm::vec3(0));
-    registry.GetRegistry().emplace<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
+    ES::Engine::Entity entity = core.CreateEntity();
+    core.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(entity, glm::vec3(0));
+    core.GetRegistry().emplace<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
 
-    auto const &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
-    auto const &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
+    auto const &node = core.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
+    auto const &transform = core.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
 
     // registry uses a real time provider to get the elapsed time, so we should sleep a bit
     SleepFor(10);
-    registry.RunSystems();
+    core.RunSystems();
     // gravity is applied to the node, so the position should be negative
     EXPECT_LT(transform.position.y, 0);
     // velocity should be as well
@@ -36,20 +36,20 @@ TEST(VelocityIntegration, BasicGravityIntegration)
 
 TEST(VelocityIntegration, ForceHigherThanGravity)
 {
-    ES::Engine::Core registry;
-    registry.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
+    ES::Engine::Core core;
+    core.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
 
-    ES::Engine::Entity entity = registry.CreateEntity();
-    registry.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(entity, glm::vec3(0));
-    registry.GetRegistry().emplace<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
+    ES::Engine::Entity entity = core.CreateEntity();
+    core.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(entity, glm::vec3(0));
+    core.GetRegistry().emplace<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
 
-    auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
-    auto const &transform = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
+    auto &node = core.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
+    auto const &transform = core.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
 
     node.ApplyForce(glm::vec3(0, 100, 0));
 
     SleepFor(10);
-    registry.RunSystems();
+    core.RunSystems();
     // here position should be positive
     EXPECT_GT(transform.position.y, 0);
     // velocity should be as well
