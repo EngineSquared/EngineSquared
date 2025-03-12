@@ -22,7 +22,7 @@ class RelativeTimeUpdate : public AScheduler {
     {
     }
 
-    void RunSystems(std::vector<std::unique_ptr<SystemBase>> &systems) override;
+    void RunSystems(USystemList &systems) override;
 
     /**
      * @brief Get the target tick rate

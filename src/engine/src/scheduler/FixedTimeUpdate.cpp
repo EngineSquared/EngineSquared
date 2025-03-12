@@ -1,6 +1,6 @@
 #include "FixedTimeUpdate.hpp"
 
-void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems(std::vector<std::unique_ptr<SystemBase>> &systems)
+void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems(USystemList &systems)
 {
     auto currentTime = std::chrono::high_resolution_clock::now();
     _elapsedTime += std::chrono::duration<float>(currentTime - _lastTime).count();

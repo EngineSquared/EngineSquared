@@ -20,7 +20,7 @@ class FixedTimeUpdate : public AScheduler {
 
   public:
     FixedTimeUpdate(Core &registry, float tickRate = DEFAULT_TICK_RATE) : AScheduler(registry), _tickRate(tickRate) {}
-    void RunSystems(std::vector<std::unique_ptr<SystemBase>> &systems) override;
+    void RunSystems(USystemList &systems) override;
 
     /**
      * @brief Get the fixed tick rate

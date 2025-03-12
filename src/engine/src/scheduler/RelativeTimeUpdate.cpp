@@ -1,6 +1,6 @@
 #include "RelativeTimeUpdate.hpp"
 
-void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems(std::vector<std::unique_ptr<SystemBase>> &systems)
+void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems(USystemList &systems)
 {
     auto currentTime = std::chrono::high_resolution_clock::now();
     auto diff = std::chrono::duration<float>(currentTime - _lastTime).count();

@@ -1,6 +1,6 @@
 #include "Startup.hpp"
 
-void ES::Engine::Scheduler::Startup::RunSystems(std::vector<std::unique_ptr<SystemBase>> &systems)
+void ES::Engine::Scheduler::Startup::RunSystems(USystemList &systems)
 {
     for (auto const &system : systems)
     {

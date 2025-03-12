@@ -8,8 +8,7 @@ class Core;
 }
 
 namespace ES::Engine::Scheduler {
-using USystem = std::function<void(Core &)>;
-
+using USystemList = std::vector<std::unique_ptr<SystemBase>>;
 /**
  * @brief Interface to be implemented for every schedulers
  */
@@ -20,6 +19,6 @@ class IScheduler {
      *
      * @param systems The systems to run
      */
-    virtual void RunSystems(std::vector<std::unique_ptr<SystemBase>> /* TODO: Use "using" defined type*/ &systems) = 0;
+    virtual void RunSystems(USystemList &systems) = 0;
 };
 } // namespace ES::Engine::Scheduler

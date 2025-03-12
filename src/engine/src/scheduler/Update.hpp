@@ -12,6 +12,6 @@ class Update : public AScheduler {
   public:
     using AScheduler::AScheduler;
     virtual ~Update() = default;
-    void RunSystems(std::vector<std::unique_ptr<SystemBase>> &systems) override;
+    void RunSystems(USystemList &systems) override;
 };
 } // namespace ES::Engine::Scheduler
