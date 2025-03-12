@@ -73,7 +73,7 @@ void ChangeClearColor(ES::Engine::Core &core);
  *
  * @param core  The Engine² Core.
  */
-void DisplayConfigs(ES::Engine::Core &core);
+void DisplayConfigs(const ES::Engine::Core &core);
 
 /**
  * @brief Draw a frame.
