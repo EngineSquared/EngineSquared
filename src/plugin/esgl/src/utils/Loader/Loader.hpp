@@ -225,7 +225,7 @@ class ShaderProgram {
         glUseProgram(programId);
     }
 
-    void Destroy()
+    void Destroy() const
     {
         if (programId == 0)
         {
@@ -254,7 +254,7 @@ class ShaderProgram {
     }
 
     // Method to enable the shader program - we'll suggest this for inlining
-    inline void use()
+    inline void use() const
     {
         // Santity check that we're initialised and ready to go...
         if (initialised)

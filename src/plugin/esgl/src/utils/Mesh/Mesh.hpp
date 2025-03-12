@@ -21,7 +21,7 @@ class Mesh {
     std::vector<glm::vec3> normals;
     std::vector<glm::vec<3, unsigned int>> triIndices;
 
-    void draw()
+    void draw() const
     {
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, triIndices.size() * sizeof(glm::vec<3, unsigned int>), GL_UNSIGNED_INT, nullptr);
