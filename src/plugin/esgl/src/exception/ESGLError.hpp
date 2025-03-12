@@ -34,4 +34,3 @@ class ESGLError : public std::exception {
 };
 
 } // namespace ESGL
-
