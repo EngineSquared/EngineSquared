@@ -1,8 +1,8 @@
 #pragma once
 
+#include "Core.hpp"
 #include <entt/entt.hpp>
 #include <typeindex>
-#include "Core.hpp"
 
 namespace ES::Engine {
 /**
