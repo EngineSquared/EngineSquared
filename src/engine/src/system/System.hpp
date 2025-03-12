@@ -39,14 +39,14 @@ class SystemContainer {
     template <typename TCallable> void AddSystem(TCallable callable)
     {
         std::size_t id = 0;
+
         if constexpr (std::is_class_v<TCallable>)
         {
-            id = entt::type_id<TCallable>().hash();
-            ;
+          id = typeid(callable).hash_code();
         }
         else
         {
-            id = std::hash<TCallable>{}(callable);
+          id = std::hash<TCallable>{}(callable);
         }
 
         if (_idToIndex.find(id) != _idToIndex.end())
