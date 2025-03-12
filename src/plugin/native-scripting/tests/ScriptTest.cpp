@@ -30,7 +30,7 @@ static void InitPlayer(ES::Engine::Core &core)
 {
     float speed = 1.0f;
 
-    ES::Engine::Entity playerEntity(core.CreateEntity());
+    ES::Engine::Entity playerEntity = core.CreateEntity();
     auto &scriptComponent = playerEntity.AddComponent<ES::Plugin::NativeScripting::Component::NativeScripting>(core);
 
     scriptComponent.Bind<speedManager>(core);
