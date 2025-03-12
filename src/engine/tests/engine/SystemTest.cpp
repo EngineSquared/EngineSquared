@@ -5,20 +5,32 @@
 
 using namespace ES::Engine;
 
-int a = 0;
-int b = 0;
-int c = 0;
+struct A {
+  int value = 0;
+};
+
+struct B {
+  int value = 0;
+};
+
+struct C {
+  int value = 0;
+};
 
 class TestSystemClass {
   public:
-    void operator()(Core &registry) const { a++; }
+    void operator()(Core &core) const { core.GetResource<A>().value++; }
 };
 
-void TestSystemFunction(const Core &) { b++; }
+void TestSystemFunction(Core &core) { core.GetResource<B>().value++; }
 
 TEST(Systems, Casual)
 {
     Core reg;
+
+    reg.RegisterResource<A>({});
+    reg.RegisterResource<B>({});
+    reg.RegisterResource<C>({});
 
     // Test for class Systems
     reg.RegisterSystem(TestSystemClass(), TestSystemClass());
@@ -29,12 +41,12 @@ TEST(Systems, Casual)
     reg.RegisterSystem(TestSystemFunction);
 
     // Test for lambda Systems
-    reg.RegisterSystem([](Core &) { c++; }, [](Core &) { c++; });
-    reg.RegisterSystem([](Core &) { c++; });
+    reg.RegisterSystem([](Core &core) { core.GetResource<C>().value++; }, [](Core &core) { core.GetResource<C>().value++; });
+    reg.RegisterSystem([](Core &core) { core.GetResource<C>().value++; }); 
 
     reg.RunSystems();
 
-    ASSERT_EQ(a, 1);
-    ASSERT_EQ(b, 1);
-    ASSERT_EQ(c, 3);
+    ASSERT_EQ(reg.GetResource<A>().value, 1);
+    ASSERT_EQ(reg.GetResource<B>().value, 1);
+    ASSERT_EQ(reg.GetResource<C>().value, 3);
 }
