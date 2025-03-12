@@ -31,7 +31,6 @@
 #include "Descriptor.hpp"
 #include "Framebuffer.hpp"
 #include "GraphicsPipeline.hpp"
-#include "ImageView.hpp"
 #include "LogicalDevice.hpp"
 #include "PhysicalDevice.hpp"
 #include "RenderPass.hpp"
@@ -97,7 +96,7 @@ class Instance {
      *
      * Cleans up and destroys the Vulkan instance and related resources.
      */
-    void Destroy();
+    void Destroy(entt::resource_cache<Texture, TextureLoader> &textures);
 
     /**
      * @brief Sets up the debug messenger for Vulkan instance.
@@ -157,8 +156,15 @@ class Instance {
      * The graphics pipeline also includes a render pass, which defines the
      * attachments used for rendering and the subpasses that are executed during
      * rendering.
+     *
+     * @param shaders  The paths to the shader files.
+     * @param textures  The textures used in the graphics pipeline.
+     * @param models  The models used in the graphics pipeline.
      */
-    void CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders);
+    void
+    CreateGraphicsPipeline(const ShaderModule::ShaderPaths &shaders,
+                           const entt::resource_cache<Texture, TextureLoader> &textures,
+                           const entt::resource_cache<Object::Component::Mesh, Object::Component::MeshLoader> &models);
 
     /**
      * @brief Create synchronization objects for the Vulkan API.

@@ -69,6 +69,18 @@ class ImageView {
     void Destroy(const VkDevice &device) const;
 
     /**
+     * @brief Create a Image View object for a single image.
+     *
+     * @param device  The Vulkan logical device used to create the image view.
+     * @param image  The Vulkan image used to create the image view.
+     * @param format  The format of the image.
+     * @param layer  The layer of the image.
+     * @return VkImageView  The image view.
+     */
+    [[nodiscard]] static VkImageView CreateImageView(const VkDevice &device, VkImage image, VkFormat format,
+                                                     uint32_t layer);
+
+    /**
      * @brief Get the Image Views object.
      *
      * @return const std::vector<VkImageView>  The image views.

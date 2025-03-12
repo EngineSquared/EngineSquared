@@ -23,6 +23,7 @@
 #define VERTEX_HPP_
 
 #include "DebugMessenger.hpp"
+#include "Mesh.hpp"
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -33,9 +34,9 @@
 namespace ES::Plugin::Wrapper {
 
 /**
- * @brief Vertex class.
+ * @brief Vertex structure.
  *
- * This class is used to represent a vertex in the Vulkan API.
+ * This structure is used to represent a vertex in the Vulkan API.
  * It contains the position and color of the vertex.
  *
  * @example "Get the binding and attribute descriptions for the vertex."
@@ -44,9 +45,15 @@ namespace ES::Plugin::Wrapper {
  * auto attributeDescriptions = Vertex::GetAttributeDescriptions();
  * @endcode
  */
-struct Vertex {
-    glm::vec2 position;
-    glm::vec3 color;
+struct VkVertex : public Object::Component::Vertex {
+    /**
+     * @brief Construct a new VkVertex object.
+     *
+     * @param pos  The position of the vertex.
+     * @param color  The color of the vertex.
+     * @param texCoord  The texture coordinate of the vertex.
+     */
+    VkVertex(const glm::vec3 &pos, const glm::vec3 &color, const glm::vec2 &texCoord);
 
     /**
      * @brief Get the Binding Description object for the vertex.
@@ -58,16 +65,16 @@ struct Vertex {
     /**
      * @brief Get the Attribute Descriptions object for the vertex.
      *
-     * @return std::array<VkVertexInputAttributeDescription, 2>  The attribute descriptions.
+     * @return std::array<VkVertexInputAttributeDescription, 3>  The attribute descriptions.
      */
-    static std::array<VkVertexInputAttributeDescription, 2> GetAttributeDescriptions();
+    static std::array<VkVertexInputAttributeDescription, 3> GetAttributeDescriptions();
 };
 
-const std::vector<Vertex> VERTICES = {
-    {{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
-    {{0.5f, -0.5f},  {0.0f, 1.0f, 0.0f}},
-    {{0.5f, 0.5f},   {0.0f, 0.0f, 1.0f}},
-    {{-0.5f, 0.5f},  {1.0f, 1.0f, 1.0f}}
+const std::vector<VkVertex> VERTICES = {
+    {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
+    {{0.5f, -0.5f, 0.0f},  {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
+    {{0.5f, 0.5f, 0.0f},   {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
+    {{-0.5f, 0.5f, 0.0f},  {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f}}
 };
 
 const std::vector<uint16_t> INDICES = {0, 1, 2, 2, 3, 0};
