@@ -3,7 +3,7 @@
 #include <array>
 #include <glm/glm.hpp>
 
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 class Viewer;
 }
 /**
@@ -21,7 +21,7 @@ class Viewer;
  *		- The aspect ratio (the ratio width/height for the resultant image)
  */
 
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 class Viewer {
   public:
     /** Constructor */
@@ -164,4 +164,4 @@ class Viewer {
      */
     void getFrustrumInfo();
 };
-} // namespace ESGL
+} // namespace ES::Plugin::ESGL

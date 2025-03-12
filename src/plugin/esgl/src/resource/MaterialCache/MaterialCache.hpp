@@ -4,6 +4,6 @@
 #include <map>
 #include <string>
 
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 using MaterialCache = ES::Plugin::Object::Resource::AssetsManager<Material>;
 }

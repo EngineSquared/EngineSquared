@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "utils/Viewer/Viewer.hpp"
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 class Camera {
   public:
     Camera(int w, int h)
@@ -15,4 +15,4 @@ class Camera {
     glm::mat4 view;
     glm::mat4 projection;
 };
-} // namespace ESGL
+} // namespace ES::Plugin::ESGL

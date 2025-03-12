@@ -14,7 +14,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 class ShaderProgram {
   private:
     // static DEBUG flag - if set to false then, errors aside, we'll run completely silent
@@ -376,5 +376,5 @@ class ShaderProgram {
     }
 
 }; // End of class
-} // namespace ESGL
+} // namespace ES::Plugin::ESGL
 #endif // SHADER_PROGRAM_HPP

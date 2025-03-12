@@ -2,8 +2,8 @@
 
 #include "GLFW/glfw3.h"
 
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 struct ESGLFWWINDOW {
     GLFWwindow *window;
 };
-} // namespace ESGL
+} // namespace ES::Plugin::ESGL

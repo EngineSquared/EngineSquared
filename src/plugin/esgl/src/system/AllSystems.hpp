@@ -14,7 +14,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 const int DEFAULT_WIDTH = 800;
 const int DEFAULT_HEIGHT = 800;
 
@@ -283,4 +283,4 @@ void RenderMeshes(ES::Engine::Core &core)
             shader.disable();
         });
 }
-} // namespace ESGL
+} // namespace ES::Plugin::ESGL

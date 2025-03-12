@@ -11,7 +11,7 @@
 #include "Loader.hpp"
 #include "Material.hpp"
 
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 class Mesh {
   public:
     Mesh() = default;
@@ -70,4 +70,4 @@ class Mesh {
     GLuint VBO_normal;
     GLuint IBO;
 };
-} // namespace ESGL
+} // namespace ES::Plugin::ESGL

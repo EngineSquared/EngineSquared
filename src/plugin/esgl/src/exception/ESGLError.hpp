@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 
 /**
  * @brief ESGLError is an exception class that should be thrown when an error
@@ -33,4 +33,4 @@ class ESGLError : public std::exception {
     std::string msg;
 };
 
-} // namespace ESGL
+} // namespace ES::Plugin::ESGL

@@ -10,10 +10,10 @@
 #include "Material.hpp"
 #include "utils/Mesh/Mesh.hpp"
 
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 struct Model {
     std::string shaderName;
     std::string materialName;
     Mesh mesh;
 };
-} // namespace ESGL
+} // namespace ES::Plugin::ESGL

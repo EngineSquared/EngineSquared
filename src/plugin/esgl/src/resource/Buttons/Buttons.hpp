@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <map>
 
-namespace ESGL {
+namespace ES::Plugin::ESGL {
 struct Button {
     bool pressed = false;
     bool updated = false;
@@ -19,4 +19,4 @@ struct Buttons {
     glm::vec<2, double, glm::defaultp> lastMousePos = {0.0f, 0.0f};
     glm::vec<2, double, glm::defaultp> currentMousePos = {0.0f, 0.0f};
 };
-} // namespace ESGL
+} // namespace ES::Plugin::ESGL
