@@ -9,6 +9,8 @@
 #include <map>
 #include <sstream>
 
+#include "ESGLError.hpp"
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -48,8 +50,8 @@ class ShaderProgram {
         {
         case GL_VERTEX_SHADER: shaderTypeString = "GL_VERTEX_SHADER"; break;
         case GL_FRAGMENT_SHADER: shaderTypeString = "GL_FRAGMENT_SHADER"; break;
-        case GL_GEOMETRY_SHADER: throw std::runtime_error("Geometry shaders are unsupported at this time."); break;
-        default: throw std::runtime_error("Bad shader type enum in compileShader."); break;
+        case GL_GEOMETRY_SHADER: throw ESGLError("Geometry shaders are unsupported at this time."); break;
+        default: throw ESGLError("Bad shader type enum in compileShader."); break;
         }
 
         // Generate a shader id
@@ -57,8 +59,8 @@ class ShaderProgram {
         GLuint shaderId = glCreateShader(shaderType);
         if (shaderId == 0)
         {
-            // Display the shader log via a runtime_error
-            throw std::runtime_error("Could not create shader of type " + shaderTypeString + ": " +
+            // Display the shader log via a ESGLError
+            throw ESGLError("Could not create shader of type " + shaderTypeString + ": " +
                                      getInfoLog(ObjectType::SHADER, shaderId));
         }
 
@@ -74,7 +76,7 @@ class ShaderProgram {
         // Compile the shader
         glCompileShader(shaderId);
 
-        // Check the compilation status and throw a runtime_error if shader compilation failed
+        // Check the compilation status and throw a ESGLError if shader compilation failed
         GLint shaderStatus;
         glGetShaderiv(shaderId, GL_COMPILE_STATUS, &shaderStatus);
         if (shaderStatus == GL_FALSE)
@@ -96,7 +98,7 @@ class ShaderProgram {
 
     // Private method to compile/attach/link/verify the shaders.
     // Note: Rather than returning a boolean as a success/fail status we'll just consider
-    // a failure here to be an unrecoverable error and throw a runtime_error.
+    // a failure here to be an unrecoverable error and throw a ESGLError.
     void initialise(const std::string &vertexShaderSource, const std::string &fragmentShaderSource)
     {
         // Compile the shaders and return their id values
@@ -115,7 +117,7 @@ class ShaderProgram {
         glDetachShader(programId, vertexShaderId);
         glDetachShader(programId, fragmentShaderId);
 
-        // Check the program link status and throw a runtime_error if program linkage failed.
+        // Check the program link status and throw a ESGLError if program linkage failed.
         GLint programLinkSuccess = GL_FALSE;
         glGetProgramiv(programId, GL_LINK_STATUS, &programLinkSuccess);
         if (programLinkSuccess == GL_TRUE)
@@ -133,7 +135,7 @@ class ShaderProgram {
         // Validate the shader program
         glValidateProgram(programId);
 
-        // Check the validation status and throw a runtime_error if program validation failed
+        // Check the validation status and throw a ESGLError if program validation failed
         GLint programValidatationStatus;
         glGetProgramiv(programId, GL_VALIDATE_STATUS, &programValidatationStatus);
         if (programValidatationStatus == GL_TRUE)
@@ -263,7 +265,7 @@ class ShaderProgram {
         {
             std::string msg = "Shader program " + programId;
             msg += " not initialised - aborting.";
-            throw std::runtime_error(msg);
+            throw ESGLError(msg);
         }
     }
 

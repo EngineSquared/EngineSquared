@@ -14,6 +14,7 @@ target("PluginESGL")
     add_files("src/**.cpp")
 
     add_includedirs("src/", {public = true})
+    add_includedirs("src/exception/", {public = true})
     add_includedirs("src/utils/Material/", {public = true})
     add_includedirs("src/utils/Viewer/", {public = true})
     add_includedirs("src/utils/Loader/", {public = true})
