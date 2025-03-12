@@ -61,7 +61,7 @@ class ShaderProgram {
         {
             // Display the shader log via a OpenGLError
             throw OpenGLError("Could not create shader of type " + shaderTypeString + ": " +
-                            getInfoLog(ObjectType::SHADER, shaderId));
+                              getInfoLog(ObjectType::SHADER, shaderId));
         }
 
         // Get the source string as a pointer to an array of characters

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GLFWWindow.hpp"
 #include "Entity.hpp"
+#include "GLFWWindow.hpp"
 #include "MaterialCache.hpp"
 #include "Model.hpp"
 #include "Object.hpp"

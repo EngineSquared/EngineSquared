@@ -6,4 +6,4 @@ namespace ES::Plugin::OpenGL::Resource {
 struct GLFWWindow {
     GLFWwindow *window;
 };
-} // namespace ES::Plugin::OpenGL
+} // namespace ES::Plugin::OpenGL::Resource
