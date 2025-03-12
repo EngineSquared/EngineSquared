@@ -13,7 +13,7 @@ namespace ES::Engine::Scheduler {
  */
 class RelativeTimeUpdate : public AScheduler {
   private:
-    inline static constexpr float DEFAULT_TARGET_TICK_RATE = 1.0 / 50.0;
+    inline static constexpr float DEFAULT_TARGET_TICK_RATE = 1.0f / 50.0f;
     inline static constexpr float REMAINDER_THRESHOLD = 0.0001f;
 
   public:
