@@ -19,4 +19,4 @@ struct Buttons {
     glm::vec<2, double, glm::defaultp> lastMousePos = {0.0f, 0.0f};
     glm::vec<2, double, glm::defaultp> currentMousePos = {0.0f, 0.0f};
 };
-} // namespace ES::Plugin::ESGL
+} // namespace ES::Plugin::ESGL::Resource

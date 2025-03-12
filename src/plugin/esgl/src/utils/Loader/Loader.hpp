@@ -376,5 +376,5 @@ class ShaderProgram {
     }
 
 }; // End of class
-} // namespace ES::Plugin::ESGL
+} // namespace ES::Plugin::ESGL::Utils
 #endif // SHADER_PROGRAM_HPP

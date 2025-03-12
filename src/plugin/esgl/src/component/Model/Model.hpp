@@ -16,4 +16,4 @@ struct Model {
     std::string materialName;
     Utils::Mesh mesh;
 };
-} // namespace ES::Plugin::ESGL
+} // namespace ES::Plugin::ESGL::Component

@@ -164,4 +164,4 @@ class Viewer {
      */
     void getFrustrumInfo();
 };
-} // namespace ES::Plugin::ESGL
+} // namespace ES::Plugin::ESGL::Utils

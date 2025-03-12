@@ -253,7 +253,8 @@ void SetupCamera(ES::Engine::Core &core)
 {
     auto &shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
     shaderProgram.use();
-    glUniform3fv(shaderProgram.uniform("CamPos"), 1, glm::value_ptr(core.GetResource<Resource::Camera>().viewer.getViewPoint()));
+    glUniform3fv(shaderProgram.uniform("CamPos"), 1,
+                 glm::value_ptr(core.GetResource<Resource::Camera>().viewer.getViewPoint()));
     shaderProgram.disable();
 }
 
@@ -263,7 +264,8 @@ void RenderMeshes(ES::Engine::Core &core)
     auto &projection = core.GetResource<Resource::Camera>().projection;
     core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Transform>().each(
         [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform) {
-            auto &shader = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{model.shaderName.c_str()});
+            auto &shader =
+                core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{model.shaderName.c_str()});
             const auto material =
                 core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
             shader.use();
@@ -283,4 +285,4 @@ void RenderMeshes(ES::Engine::Core &core)
             shader.disable();
         });
 }
-} // namespace ES::Plugin::ESGL
+} // namespace ES::Plugin::ESGL::System
