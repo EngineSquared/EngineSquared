@@ -71,7 +71,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_languages("cxx20")
         add_files(file)
         add_files("tests/main.cpp")
-        add_packages("entt", "vulkansdk", "glfw", "glm", "gtest", "spdlog", "tinyobjloader")
+        add_packages("entt", "vulkansdk", "glfw", "glm", "gtest", "spdlog", "tinyobjloader", "fmt")
         add_links("gtest")
         add_deps("EngineSquared")
         add_includedirs("src")
