@@ -102,10 +102,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Vulkan SDK
+      - name: Update apt-get
         run: |
           sudo apt-get update
+
+      - name: Install Vulkan SDK
+        run: |
           sudo apt-get install -y libvulkan-dev
+
+      - name: Install OpenGL
+        run: |
+          sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
 
       - name: Install python3 and pip
         run: |
