@@ -1,11 +1,13 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt")
+add_requires("entt", "spdlog")
+
+add_includedirs("../utils/log/src", { public = true })
 
 target("EngineSquaredCore")
     set_kind("static")
     set_languages("cxx20")
     set_policy("build.warning", true)
-    add_packages("entt")
+    add_packages("entt", "spdlog")
 
     add_files("src/**.cpp")
     add_headerfiles("src/**.hpp", { public = true })
