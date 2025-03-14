@@ -9,10 +9,10 @@
 
 #include "FixedTimeUpdate.hpp"
 #include "IScheduler.hpp"
+#include "Logger.hpp"
 #include "RelativeTimeUpdate.hpp"
 #include "Startup.hpp"
 #include "Update.hpp"
-#include "Logger.hpp"
 
 namespace ES::Engine {
 /**
@@ -51,7 +51,7 @@ class Core {
     ES::Engine::Entity CreateEntity();
 
     /**
-     * Kill an entity. It will remove all components from the entity. 
+     * Kill an entity. It will remove all components from the entity.
      *
      * @param   entity  The entity to kill.
      */

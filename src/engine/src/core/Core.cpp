@@ -3,9 +3,9 @@
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
-    #ifdef DEBUG
+#ifdef DEBUG
     ES::Utils::Log::Info("Create Core");
-    #endif
+#endif
     this->_registry = std::make_unique<entt::registry>();
 
     this->RegisterScheduler<ES::Engine::Scheduler::Startup>(
@@ -17,9 +17,9 @@ ES::Engine::Core::Core() : _registry(nullptr)
 
 ES::Engine::Core::~Core()
 {
-    #ifdef DEBUG
+#ifdef DEBUG
     ES::Utils::Log::Info("Destroy Core");
-    #endif
+#endif
 }
 
 ES::Engine::Entity ES::Engine::Core::CreateEntity()
