@@ -42,7 +42,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_languages("cxx20")
         add_links("gtest")
         add_tests("default")
-        add_packages("entt", "vulkansdk", "glm", "glfw")
+        add_packages("entt", "glm", "glfw")
 
         add_deps("OpenGL")
 
