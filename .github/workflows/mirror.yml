@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [check_repository_cleanliness]
     env:
-      BINARY_NAMES: "./build/linux/x86_64/release/libEngineSquared.a,./build/linux/x86_64/release/libEngineSquaredCore.a,./build/linux/x86_64/release/libPluginCamera.a,./build/linux/x86_64/release/libPluginInput.a,./build/linux/x86_64/release/libPluginPhysics.a,./build/linux/x86_64/release/libPluginWindow.a,./build/linux/x86_64/release/libPluginVkWrapper.a"
+      BINARY_NAMES: "./build/linux/x86_64/release/libEngineSquared.a,./build/linux/x86_64/release/libEngineSquaredCore.a,./build/linux/x86_64/release/libPluginCamera.a,./build/linux/x86_64/release/libPluginInput.a,./build/linux/x86_64/release/libPluginPhysics.a,./build/linux/x86_64/release/libPluginWindow.a"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -53,10 +53,6 @@ jobs:
       - name: Update apt-get
         run: |
           sudo apt-get update
-
-      - name: Install Vulkan SDK
-        run: |
-          sudo apt-get install -y libvulkan-dev
 
       - name: Install OpenGL
         run: |
@@ -105,10 +101,6 @@ jobs:
       - name: Update apt-get
         run: |
           sudo apt-get update
-
-      - name: Install Vulkan SDK
-        run: |
-          sudo apt-get install -y libvulkan-dev
 
       - name: Install OpenGL
         run: |
