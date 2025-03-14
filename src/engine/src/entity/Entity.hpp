@@ -43,7 +43,7 @@ class Entity {
     {
         Entity entity = registry.CreateEntity();
 #ifdef DEBUG
-        ES::Utils::Log::Info(std::string("[EntityID:") + std::to_string(entity_id_type(entity)) + "] Create Entity");
+        ES::Utils::Log::Info(fmt::format("[EntityID:{}] Create Entity", entity_id_type(entity)));
 #endif
         return entity;
     }
@@ -57,7 +57,7 @@ class Entity {
     void Destroy(Core &registry)
     {
 #ifdef DEBUG
-        ES::Utils::Log::Info(std::string("[EntityID:") + std::to_string(_entity) + "] Destroy Entity");
+        ES::Utils::Log::Info(fmt::format("[EntityID:{}] Destroy Entity", _entity));
 #endif
         registry.KillEntity(*this);
     }
@@ -90,8 +90,7 @@ class Entity {
     template <typename TComponent> inline decltype(auto) AddComponent(Core &registry, TComponent &&component)
     {
 #ifdef DEBUG
-        ES::Utils::Log::Info(std::string("[EntityID:") + std::to_string(_entity) +
-                             "] AddComponent: " + typeid(TComponent).name() + " ");
+        ES::Utils::Log::Info(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
 #endif
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity),
                                                           std::forward<TComponent>(component));
@@ -110,8 +109,7 @@ class Entity {
     inline decltype(auto) AddComponent(Core &registry, TArgs &&...args)
     {
 #ifdef DEBUG
-        ES::Utils::Log::Info(std::string("[EntityID:") + std::to_string(_entity) +
-                             "] AddComponent: " + typeid(TComponent).name() + " ");
+        ES::Utils::Log::Info(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
 #endif
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
     }
@@ -150,7 +148,7 @@ class Entity {
         {
             temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Core &reg) {
 #ifdef DEBUG
-                ES::Utils::Log::Info(std::string("RemoveTemporaryComponent: ") + typeid(TTempComponent).name());
+                ES::Utils::Log::Info(fmt::format("RemoveTemporaryComponent: {}", typeid(TTempComponent).name()));
 #endif
                 reg.GetRegistry().clear<TTempComponent>();
             };
@@ -188,8 +186,7 @@ class Entity {
     template <typename TComponent> inline void RemoveComponent(Core &registry)
     {
 #ifdef DEBUG
-        ES::Utils::Log::Info(std::string("[EntityID:") + std::to_string(_entity) +
-                             "] RemoveComponent: " + typeid(TComponent).name() + " ");
+        ES::Utils::Log::Info(fmt::format("[EntityID:{}] RemoveComponent: {}", _entity, typeid(TComponent).name()));
 #endif
         registry.GetRegistry().remove<TComponent>(ToEnttEntity(this->_entity));
     }

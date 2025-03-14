@@ -35,12 +35,12 @@ void ES::Engine::Core::KillEntity(ES::Engine::Entity &entity)
 void ES::Engine::Core::RunSystems()
 {
 
-    for (auto &[schedulerIndex, scheduler] : this->_schedulers)
+    for (const auto &[schedulerIndex, scheduler] : this->_schedulers)
     {
         scheduler->RunSystems(this->_systems[schedulerIndex]);
     }
 
-    for (auto &scheduler : this->_schedulersToDelete)
+    for (const auto &scheduler : this->_schedulersToDelete)
     {
         this->_schedulers.erase(scheduler);
         this->_systems.erase(scheduler);
