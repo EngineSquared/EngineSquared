@@ -1,6 +1,8 @@
 add_rules("mode.debug", "mode.release")
 add_requires("entt", "fmt", "spdlog")
 
+add_includedirs("../utils/log/src", { public = true })
+
 target("EngineSquaredCore")
     set_kind("static")
     set_languages("cxx20")

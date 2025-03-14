@@ -92,7 +92,7 @@ class Core {
      *
      * @return The running state.
      */
-    bool &IsRunning();
+    bool IsRunning();
 
     /**
      * Stop the core execution
