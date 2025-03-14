@@ -15,21 +15,21 @@ class SceneTest : public Utils::AScene {
     inline static int _numScenes = 0;
 
   public:
-    SceneTest() : Utils::AScene(), _sceneId(_numScenes++) {}
+    SceneTest() : Utils::AScene() {}
 
   protected:
     void _onCreate(ES::Engine::Core &core) final
     {
-        core.GetResource<std::vector<std::string>>().push_back("Creating scene: " + std::to_string(_sceneId));
+        core.GetResource<std::vector<std::string>>().push_back(fmt::format("Creating scene: {}", _sceneId));
     }
 
     void _onDestroy(ES::Engine::Core &core) final
     {
-        core.GetResource<std::vector<std::string>>().push_back("Destroying scene: " + std::to_string(_sceneId));
+        core.GetResource<std::vector<std::string>>().push_back(fmt::format("Destroying scene: {}", _sceneId));
     }
 
   private:
-    int _sceneId;
+    int _sceneId = _numScenes++;
 };
 
 TEST(Scene, SceneManager)
