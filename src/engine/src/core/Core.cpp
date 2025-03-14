@@ -11,7 +11,6 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->RegisterScheduler<ES::Engine::Scheduler::Update>();
     this->RegisterScheduler<ES::Engine::Scheduler::FixedTimeUpdate>();
     this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
-    _running = false;
 }
 
 ES::Engine::Entity ES::Engine::Core::CreateEntity()
