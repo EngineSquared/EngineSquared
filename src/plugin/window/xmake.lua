@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("glfw", "entt")
+add_requires("glfw", "entt", "spdlog")
 
 includes("../../engine/xmake.lua")
 
@@ -10,7 +10,7 @@ target("PluginWindow")
 
     add_deps("EngineSquaredCore")
 
-    add_packages("glfw", "entt")
+    add_packages("glfw", "entt", "spdlog")
 
     add_files("src/**.cpp")
     add_includedirs("src/", {public = true})
