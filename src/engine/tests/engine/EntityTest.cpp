@@ -26,7 +26,6 @@ TEST(Core, TemporaryComponent)
 
     ASSERT_FALSE(entity.HasComponents<TempComponent>(core));
 
-    
     entity.AddTemporaryComponent<TempComponentWithAttribut>(core, 1);
 
     ASSERT_TRUE(entity.HasComponents<TempComponentWithAttribut>(core));

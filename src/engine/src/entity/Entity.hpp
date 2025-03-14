@@ -108,7 +108,8 @@ class Entity {
      * @return  reference of the added component
      * @see     RemoveTemporaryComponents
      */
-    template <typename TTempComponent, typename... TArgs> inline decltype(auto) AddTemporaryComponent(Core &registry, TArgs &&...args)
+    template <typename TTempComponent, typename... TArgs>
+    inline decltype(auto) AddTemporaryComponent(Core &registry, TArgs &&...args)
     {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
