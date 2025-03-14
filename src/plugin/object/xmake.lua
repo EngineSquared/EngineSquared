@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "gtest", "glm", "tinyobjloader", "spdlog")
+add_requires("entt", "gtest", "glm", "tinyobjloader", "spdlog", "fmt")
 
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
@@ -8,7 +8,7 @@ target("PluginObject")
     set_kind("static")
     set_languages("cxx20")
     set_policy("build.warning", true)
-    add_packages("entt", "glm", "tinyobjloader", "spdlog")
+    add_packages("entt", "glm", "tinyobjloader", "spdlog", "fmt")
 
     add_deps("EngineSquaredCore")
     add_deps("UtilsLog")
@@ -34,7 +34,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
         set_default(false)
         set_languages("cxx20")
-        add_packages("entt", "gtest", "glm", "tinyobjloader", "spdlog")
+        add_packages("entt", "gtest", "glm", "tinyobjloader", "spdlog", "fmt")
         add_links("gtest")
         add_tests("default")
 
