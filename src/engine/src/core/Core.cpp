@@ -2,7 +2,7 @@
 #include "Entity.hpp"
 #include "Logger.hpp"
 
-ES::Engine::Core::Core() : _registry(nullptr), _running(false)
+ES::Engine::Core::Core() : _registry(nullptr)
 {
     this->_registry = std::make_unique<entt::registry>();
 
@@ -11,6 +11,7 @@ ES::Engine::Core::Core() : _registry(nullptr), _running(false)
     this->RegisterScheduler<ES::Engine::Scheduler::Update>();
     this->RegisterScheduler<ES::Engine::Scheduler::FixedTimeUpdate>();
     this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
+    _running = false;
 }
 
 ES::Engine::Entity ES::Engine::Core::CreateEntity()
