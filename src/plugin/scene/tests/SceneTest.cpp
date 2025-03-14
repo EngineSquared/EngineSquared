@@ -12,35 +12,43 @@
 using namespace ES::Plugin::Scene;
 
 class SceneTest : public Utils::AScene {
-  protected:
-    void _onCreate(ES::Engine::Core &registry) final
+    inline static int _numScenes = 0;
+public:
+    SceneTest() : Utils::AScene(), _sceneId(_numScenes++) {}
+protected:
+    void _onCreate(ES::Engine::Core &core) final
     {
-        // This method is intentionally left empty because no initialization is needed for this test scene.
+        core.GetResource<std::vector<std::string>>().push_back("Creating scene: " + std::to_string(_sceneId));
     }
-
-    void _onDestroy(ES::Engine::Core &registry) final
+    
+    void _onDestroy(ES::Engine::Core &core) final
     {
-        // This method is intentionally left empty because no initialization is needed for this test scene.
+        core.GetResource<std::vector<std::string>>().push_back("Destroying scene: " + std::to_string(_sceneId));
     }
+private:
+    int _sceneId;
 };
 
 TEST(Scene, SceneManager)
 {
     ES::Engine::Core core;
+    core.RegisterResource<std::vector<std::string>>(std::vector<std::string>());
     core.RegisterResource<Resource::SceneManager>(Resource::SceneManager());
+    core.RegisterSystem(System::UpdateScene);
+    
     core.GetResource<Resource::SceneManager>().RegisterScene<SceneTest>("scene1");
     core.GetResource<Resource::SceneManager>().RegisterScene<SceneTest>("scene2");
-
+    
     core.GetResource<Resource::SceneManager>().SetNextScene("scene1");
-
-    testing::internal::CaptureStdout();
-    core.RegisterSystem(System::UpdateScene);
     core.RunSystems();
 
     core.GetResource<Resource::SceneManager>().SetNextScene("scene2");
     core.RunSystems();
-    std::vector<std::string> output = ES::Plugin::Utils::String::Split(testing::internal::GetCapturedStdout(), '\n');
-    EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[0], "Loading scene: scene1"));
-    EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[1], "Unloading scene: scene1"));
-    EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[2], "Loading scene: scene2"));
+    
+    std::vector<std::string> output = core.GetResource<std::vector<std::string>>();
+    
+    EXPECT_EQ(output.size(), 3);
+    EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[0], "Creating scene: 0"));
+    EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[1], "Destroying scene: 0"));
+    EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[2], "Creating scene: 1"));
 }
