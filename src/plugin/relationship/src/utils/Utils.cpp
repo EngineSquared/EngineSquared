@@ -1,6 +1,6 @@
 #include "utils/Utils.hpp"
 #include "Logger.hpp"
-#include <format>
+#include <fmt/format.h>
 
 // Temp
 #include <iostream>
@@ -10,7 +10,7 @@ auto ES::Plugin::Relationship::Utils::SetChildOf(ES::Engine::Core &core, ES::Eng
 {
     if (IsChildOf(core, parent, child))
     {
-        ES::Utils::Log::Warn(std::format("Entity {} is already a child of the parent {}",
+        ES::Utils::Log::Warn(fmt::format("Entity {} is already a child of the parent {}",
                                          ES::Engine::Entity::entity_id_type(child),
                                          ES::Engine::Entity::entity_id_type(parent)));
         return;
@@ -82,7 +82,7 @@ auto ES::Plugin::Relationship::Utils::GetParent(ES::Engine::Core &core, ES::Engi
 
     if (childRS.parent == ES::Engine::Entity::entity_null_id)
     {
-        ES::Utils::Log::Warn(std::format("Entity {} has no parent", ES::Engine::Entity::entity_id_type(child)));
+        ES::Utils::Log::Warn(fmt::format("Entity {} has no parent", ES::Engine::Entity::entity_id_type(child)));
         return ES::Engine::Entity::entity_null_id;
     }
     return childRS.parent;

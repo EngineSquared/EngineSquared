@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "glm", "glfw", "spdlog")
+add_requires("entt", "glm", "glfw", "fmt")
 add_requires("gtest", {optional = true})
 
 includes("../../engine/xmake.lua")
@@ -14,7 +14,7 @@ target("PluginUI")
     set_kind("static")
     set_languages("cxx20")
     set_policy("build.warning", true)
-    add_packages("entt", "glm", "glfw", "spdlog")
+    add_packages("entt", "glm", "glfw", "fmt")
 
     add_deps("EngineSquaredCore")
     add_deps("PluginColors")
@@ -43,7 +43,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_languages("cxx20")
         add_links("gtest")
         add_tests("default")
-        add_packages("glm", "entt", "gtest", "spdlog", "spdlog")
+        add_packages("glm", "entt", "gtest", "spdlog", "fmt")
         
         add_deps("PluginUI")
         add_deps("EngineSquaredCore")

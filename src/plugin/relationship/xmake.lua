@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "gtest", "spdlog")
+add_requires("entt", "gtest", "spdlog", "fmt")
 
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
@@ -8,7 +8,7 @@ target("PluginRelationship")
     set_kind("static")
     set_languages("cxx20")
     set_policy("build.warning", true)
-    add_packages("entt", "spdlog")
+    add_packages("entt", "spdlog", "fmt")
 
     add_deps("EngineSquaredCore")
     add_deps("UtilsLog")
