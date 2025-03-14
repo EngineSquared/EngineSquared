@@ -10,7 +10,7 @@
  * it under the terms of the GPL-3.0 License as published by the
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
- * @file config.h
+ * @file vkwrapper_config.h.h
  * @brief Compile-Time Configuration Parameters for VkWrapper.
  *
  * @author @MasterLaplace
@@ -19,8 +19,9 @@
  **************************************************************************/
 
 // clang-format off
-#ifndef CONFIG_H_
-    #define CONFIG_H_
+// NOSONAR: Suppress all SonarQube warnings in this file
+#ifndef VKWRAPPER_CONFIG_H_
+    #define VKWRAPPER_CONFIG_H_
 
 #ifdef __cplusplus
     #include <utility>
@@ -33,27 +34,27 @@
     #include <stdint.h>
 #endif
 
-#ifndef DISTRIBUTION_H_
-    #define DISTRIBUTION_H_
+#ifndef VKWRAPPER_DISTRIBUTION_H_
+    #define VKWRAPPER_DISTRIBUTION_H_
 
 ////////////////////////////////////////////////////////////
 // Identify the Compiler
 ////////////////////////////////////////////////////////////
 #if defined(_MSC_VER) || defined(_MSVC_LANG)
     #define VKWRAPPER_COMPILER_MSVC
-    #define VKWRAPPER_COMPILER_STRING "MSVC"
+    #define VKWRAPPER_COMPILER_STRING "MSVC" // NOSONAR
 #elif defined(__GNUC__) || defined(__GNUG__)
     #define VKWRAPPER_COMPILER_GCC
-    #define VKWRAPPER_COMPILER_STRING "GCC"
+    #define VKWRAPPER_COMPILER_STRING "GCC" // NOSONAR
 #elif defined(__clang__) || defined(__llvm__)
     #define VKWRAPPER_COMPILER_CLANG
-    #define VKWRAPPER_COMPILER_STRING "Clang"
+    #define VKWRAPPER_COMPILER_STRING "Clang" // NOSONAR
 #elif defined(__MINGW32__) || defined(__MINGW64__)
     #define VKWRAPPER_COMPILER_MINGW
-    #define VKWRAPPER_COMPILER_STRING "MinGW"
+    #define VKWRAPPER_COMPILER_STRING "MinGW" // NOSONAR
 #elif defined(__CYGWIN__)
     #define VKWRAPPER_COMPILER_CYGWIN
-    #define VKWRAPPER_COMPILER_STRING "Cygwin"
+    #define VKWRAPPER_COMPILER_STRING "Cygwin" // NOSONAR
 #else
     #error [Config@Distribution]: This compiler is not supported by VKWRAPPER library.
 #endif
@@ -65,38 +66,38 @@
 #if defined(_WIN32) || defined(__WIN32__) || defined(VKWRAPPER_COMPILER_MINGW) || defined(VKWRAPPER_COMPILER_CYGWIN)
 
     #define VKWRAPPER_SYSTEM_WINDOWS
-    #define VKWRAPPER_SYSTEM_STRING "Windows"
+    #define VKWRAPPER_SYSTEM_STRING "Windows" // NOSONAR
 
 // Android is based on the Linux VKWRAPPER, so it has to appear before Linux
 #elif defined(__ANDROID__)
 
     #define VKWRAPPER_SYSTEM_ANDROID
-    #define VKWRAPPER_SYSTEM_STRING "Android"
+    #define VKWRAPPER_SYSTEM_STRING "Android" // NOSONAR
 
 #elif defined(linux) || defined(__linux)
 
     #define VKWRAPPER_SYSTEM_LINUX
-    #define VKWRAPPER_SYSTEM_STRING "Linux"
+    #define VKWRAPPER_SYSTEM_STRING "Linux" // NOSONAR
 
 #elif defined(__unix) || defined(__unix__)
 
     #define VKWRAPPER_SYSTEM_UNIX
-    #define VKWRAPPER_SYSTEM_STRING "Unix"
+    #define VKWRAPPER_SYSTEM_STRING "Unix" // NOSONAR
 
 #elif defined(__APPLE__) || defined(MACOSX) || defined(macintosh) || defined(Macintosh)
 
     #define VKWRAPPER_SYSTEM_MACOS
-    #define VKWRAPPER_SYSTEM_STRING "MacOS"
+    #define VKWRAPPER_SYSTEM_STRING "MacOS" // NOSONAR
 
 #elif defined(__FreeBSD__) || defined(__FreeBSD_VKWRAPPER__)
 
     #define VKWRAPPER_SYSTEM_FREEBSD
-    #define VKWRAPPER_SYSTEM_STRING "FreeBSD"
+    #define VKWRAPPER_SYSTEM_STRING "FreeBSD" // NOSONAR
 
 #elif defined(LAPLACE_KERNEL_PANIC)
 
     #define VKWRAPPER_SYSTEM_KERNEL
-    #define VKWRAPPER_SYSTEM_STRING "Laplace Kernel"
+    #define VKWRAPPER_SYSTEM_STRING "Laplace Kernel" // NOSONAR
 
 #else
     #error [Config@Distribution]: This operating system is not supported by VKWRAPPER library.
@@ -266,10 +267,10 @@
 #if (defined(_DEBUG) || defined(DEBUG)) && !defined(NDEBUG)
 
     #define VKWRAPPER_DEBUG
-    #define VKWRAPPER_DEBUG_STRING "Debug"
+    #define VKWRAPPER_DEBUG_STRING "Debug" // NOSONAR
 
 #else
-    #define VKWRAPPER_DEBUG_STRING "Release"
+    #define VKWRAPPER_DEBUG_STRING "Release" // NOSONAR
 #endif
 
 
@@ -393,11 +394,11 @@
     #define PACKED( __Declaration__ ) __Declaration__
 #endif
 
-#endif /* !DISTRIBUTION_H_ */
+#endif /* !VKWRAPPER_DISTRIBUTION_H_ */
 
 
-#ifndef VERSION_H_
-    #define VERSION_H_
+#ifndef VKWRAPPER_VERSION_H_
+    #define VKWRAPPER_VERSION_H_
 
 ////////////////////////////////////////////////////////////
 // Define the VKWRAPPER version
@@ -405,25 +406,25 @@
 #ifdef FLAG_VERSION_MAJOR
     #define VKWRAPPER_VERSION_MAJOR FLAG_VERSION_MAJOR
 #else
-    #define VKWRAPPER_VERSION_MAJOR 0
+    #define VKWRAPPER_VERSION_MAJOR 0 // NOSONAR
 #endif
 
 #ifdef FLAG_VERSION_MINOR
     #define VKWRAPPER_VERSION_MINOR FLAG_VERSION_MINOR
 #else
-    #define VKWRAPPER_VERSION_MINOR 0
+    #define VKWRAPPER_VERSION_MINOR 0 // NOSONAR
 #endif
 
 #ifdef FLAG_VERSION_PATCH
     #define VKWRAPPER_VERSION_PATCH FLAG_VERSION_PATCH
 #else
-    #define VKWRAPPER_VERSION_PATCH 0
+    #define VKWRAPPER_VERSION_PATCH 0 // NOSONAR
 #endif
 
 #ifdef FLAG_VERSION_TWEAK
     #define VKWRAPPER_VERSION_TWEAK FLAG_VERSION_TWEAK
 #else
-    #define VKWRAPPER_VERSION_TWEAK 0
+    #define VKWRAPPER_VERSION_TWEAK 0 // NOSONAR
 #endif
 
 ////////////////////////////////////////////////////////////
@@ -456,7 +457,7 @@
         TOSTRING(VKWRAPPER_VERSION_PATCH) "." \
         TOSTRING(VKWRAPPER_VERSION_TWEAK)
 
-#endif /* !VERSION_H_ */
+#endif /* !VKWRAPPER_VERSION_H_ */
 
 
 ////////////////////////////////////////////////////////////
@@ -468,5 +469,5 @@
         "VKWRAPPER_COMPILER=" VKWRAPPER_COMPILER_STRING "\n" \
         "VKWRAPPER_DEBUG=" VKWRAPPER_DEBUG_STRING "\n"
 
-#endif /* !CONFIG_H_ */
+#endif /* !VKWRAPPER_CONFIG_H_ */
 // clang-format on

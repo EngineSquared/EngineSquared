@@ -3,7 +3,9 @@ add_requires("vulkan-headers", "vulkansdk", "vulkan-hpp", "glfw", "glm", "spdlog
 
 includes("../utils/xmake.lua")
 includes("../object/xmake.lua")
+includes("../window/xmake.lua")
 includes("../../utils/log/xmake.lua")
+includes("../../engine/xmake.lua")
 
 target("PluginVkWrapper")
     set_kind("static")
@@ -23,10 +25,13 @@ target("PluginVkWrapper")
 
     add_deps("PluginUtils")
     add_deps("PluginObject")
+    add_deps("PluginWindow")
     add_deps("UtilsLog")
+    add_deps("EngineSquaredCore")
 
     add_files("src/**.cpp")
     add_includedirs("src", { public = true })
+    add_includedirs("src/wrapper", { public = true })
     add_includedirs("src/instance", { public = true })
     add_includedirs("src/debugMessenger", { public = true })
     add_includedirs("src/device", { public = true })
@@ -42,3 +47,4 @@ target("PluginVkWrapper")
     add_includedirs("src/exception", { public = true })
     add_includedirs("src/buffers", { public = true })
     add_includedirs("src/descriptor", { public = true })
+    add_includedirs("src/system", { public = true })

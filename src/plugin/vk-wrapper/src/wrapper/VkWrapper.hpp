@@ -10,7 +10,7 @@
  * it under the terms of the GPL-3.0 License as published by the
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
- * @file VKwrapper.hpp
+ * @file VkWrapper.hpp
  * @brief VkWrapper class declaration.
  *
  * This class is a wrapper for the Vulkan API.
@@ -39,7 +39,6 @@ namespace ES::Plugin {
  * ES::Plugin::Window::Resource::Window window(800, 600, "My Engine");
  *
  * ES::Plugin::VkWrapper vkWrapper;
- * ES::Plugin::VkWrapper::CreateInfo createInfo;
  *
  * vkWrapper.CreateInstance(window.GetGLFWWindow(), "VkWrapper Test", 800, 600);
  *
@@ -202,6 +201,15 @@ class VkWrapper {
      * window is resized.
      */
     inline void SetFramebufferResized() { _instance.SetFramebufferResized(true); }
+
+    /**
+     * @brief Set the clear color of the VkWrapper.
+     *
+     * This function sets the clear color of the VkWrapper.
+     *
+     * @param color  The color to set.
+     */
+    inline void ChangeClearColor(const glm::vec4 &color) { _instance.SetClearColor(color); }
 
     /**
      * @brief Callback function for the framebuffer resize event.
