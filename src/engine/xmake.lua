@@ -1,11 +1,15 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "fmt")
+add_requires("entt", "spdlog", "fmt")
+
+includes("../utils/log/xmake.lua")
+
 
 target("EngineSquaredCore")
     set_kind("static")
     set_languages("cxx20")
     set_policy("build.warning", true)
-    add_packages("entt")
+    add_packages("entt", "spdlog")
+    add_deps("UtilsLog")
 
     add_files("src/**.cpp")
     add_headerfiles("src/**.hpp", { public = true })
@@ -13,6 +17,7 @@ target("EngineSquaredCore")
     add_includedirs("src/entity", { public = true })
     add_includedirs("src/core", { public = true })
     add_includedirs("src/scheduler", { public = true })
+    add_includedirs("src/system", { public = true })
 
     if is_mode("debug") then
         add_defines("DEBUG")
@@ -31,7 +36,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
         set_default(false)
         set_languages("cxx20")
-        add_packages("entt", "gtest", "glm", "fmt")
+        add_packages("entt", "gtest", "glm", "spdlog", "fmt")
         add_links("gtest")
         add_tests("default")
         

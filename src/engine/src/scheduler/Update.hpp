@@ -10,7 +10,8 @@ namespace ES::Engine::Scheduler {
  */
 class Update : public AScheduler {
   public:
-    explicit Update(Core &registry) : AScheduler(registry) {}
-    void RunSystems(std::vector<USystem> systems) override;
+    using AScheduler::AScheduler;
+    virtual ~Update() = default;
+    void RunSystems(USystemList &systems) override;
 };
 } // namespace ES::Engine::Scheduler
