@@ -18,10 +18,7 @@ ES::Engine::Entity ES::Engine::Core::CreateEntity()
     return static_cast<ES::Engine::Entity>(this->_registry->create());
 }
 
-bool &ES::Engine::Core::IsRunning()
-{
-    return _running;
-}
+bool &ES::Engine::Core::IsRunning() { return _running; }
 
 void ES::Engine::Core::Stop()
 {
