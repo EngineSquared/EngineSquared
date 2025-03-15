@@ -7,8 +7,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Update.hpp"
 #include "SchedulerContainer.hpp"
+#include "Update.hpp"
 
 namespace ES::Engine {
 /**
