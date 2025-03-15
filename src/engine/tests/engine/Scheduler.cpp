@@ -14,7 +14,7 @@ class SchedulerTest1 : public ES::Engine::Scheduler::AScheduler {
     explicit SchedulerTest1(Core &core) : AScheduler(core){};
     ~SchedulerTest1() final = default;
 
-    void RunSystems() override final { _registry.GetResource<ResourceTest>().data.push_back(1); }
+    void RunSystems() override { _registry.GetResource<ResourceTest>().data.push_back(1); }
 };
 
 class SchedulerTest2 : public ES::Engine::Scheduler::AScheduler {
