@@ -1,12 +1,12 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "spdlog")
+add_requires("entt", "spdlog", "fmt")
 
 includes("../../engine/xmake.lua")
 
 target("PluginNativeScripting")
     set_kind("static")
     set_languages("cxx20")
-    add_packages("entt", "spdlog")
+    add_packages("entt", "spdlog", "fmt")
     set_policy("build.warning", true)
 
     add_deps("EngineSquaredCore")

@@ -6,3 +6,4 @@
 #include "scheduler/FixedTimeUpdate.hpp"
 #include "scheduler/Startup.hpp"
 #include "scheduler/Update.hpp"
+#include "scheduler/RelativeTimeUpdate.hpp"
