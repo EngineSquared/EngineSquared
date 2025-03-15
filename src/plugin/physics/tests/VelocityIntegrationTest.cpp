@@ -7,6 +7,7 @@
 #include "Entity.hpp"
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
+#include "RelativeTimeUpdate.hpp"
 #include "VelocityIntegration.hpp"
 
 #include "utils/Sleep.hpp"
