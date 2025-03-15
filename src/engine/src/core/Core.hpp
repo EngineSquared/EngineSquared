@@ -85,6 +85,23 @@ class Core {
     template <typename TScheduler> TScheduler &GetScheduler();
 
     /**
+     * Get the running state of the core
+     *
+     * @return The running state.
+     */
+    bool IsRunning();
+
+    /**
+     * Stop the core execution
+     */
+    void Stop();
+
+    /**
+     * Execute the core loop
+     */
+    void RunCore();
+
+    /**
      * Add one or multiple systems to the registry. A system is a function that will be called by the registry.
      * The function must take a Registry as first parameter.
      * The function must return void.
@@ -125,6 +142,7 @@ class Core {
     std::unique_ptr<entt::registry> _registry;
     ES::Engine::SchedulerContainer _schedulers;
     std::vector<std::type_index> _schedulersToDelete;
+    bool _running = false;
 };
 } // namespace ES::Engine
 

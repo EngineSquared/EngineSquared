@@ -2,7 +2,7 @@
 
 namespace ES::Plugin::Window::System {
 
-void CreateWindow(ES::Engine::Core &core)
+void CreateWindowSystem(ES::Engine::Core &core)
 {
     try
     {

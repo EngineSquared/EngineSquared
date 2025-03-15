@@ -3,6 +3,7 @@
 #include "FixedTimeUpdate.hpp"
 #include "RelativeTimeUpdate.hpp"
 #include "Startup.hpp"
+#include "Logger.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
@@ -18,6 +19,24 @@ ES::Engine::Core::Core() : _registry(nullptr)
 ES::Engine::Entity ES::Engine::Core::CreateEntity()
 {
     return static_cast<ES::Engine::Entity>(this->_registry->create());
+}
+
+bool ES::Engine::Core::IsRunning() { return _running; }
+
+void ES::Engine::Core::Stop()
+{
+    if (!_running)
+        ES::Utils::Log::Warn("The core is already shutted down");
+    _running = false;
+}
+
+void ES::Engine::Core::RunCore()
+{
+    _running = true;
+    while (_running)
+    {
+        RunSystems();
+    }
 }
 
 void ES::Engine::Core::RunSystems()
