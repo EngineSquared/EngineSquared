@@ -33,7 +33,6 @@ template <typename TScheduler> inline TScheduler &Core::GetScheduler()
 template <typename TScheduler, typename... Systems>
 inline void Core::RegisterSystem(Systems... systems)
 {
-    this->_schedulers.GetScheduler<TScheduler>().AddSystems<Systems...>(systems...);
-    // this->_systems[std::type_index(typeid(TScheduler))].AddSystems<Systems...>(systems...);
+    this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
 }
 } // namespace ES::Engine
