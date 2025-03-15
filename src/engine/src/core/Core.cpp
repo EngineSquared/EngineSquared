@@ -19,16 +19,14 @@ ES::Engine::Entity ES::Engine::Core::CreateEntity()
 
 void ES::Engine::Core::RunSystems()
 {
-
-    for (const auto &[schedulerIndex, scheduler] : this->_schedulers)
+    for (const auto &scheduler : this->_schedulers.GetSchedulers())
     {
-        scheduler->RunSystems(this->_systems[schedulerIndex].GetSystems());
+        scheduler->RunSystems();
     }
 
     for (const auto &scheduler : this->_schedulersToDelete)
     {
-        this->_schedulers.erase(scheduler);
-        this->_systems.erase(scheduler);
+        this->_schedulers.DeleteScheduler(scheduler);
     }
 
     this->_schedulersToDelete.clear();

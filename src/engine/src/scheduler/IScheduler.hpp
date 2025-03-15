@@ -14,11 +14,12 @@ using USystemList = std::vector<std::unique_ptr<SystemBase>>;
  */
 class IScheduler {
   public:
+    virtual ~IScheduler() = default;
     /**
      * @brief Run the systems according to the scheduler policy
      *
      * @param systems The systems to run
      */
-    virtual void RunSystems(USystemList &systems) = 0;
+    virtual void RunSystems(void) = 0;
 };
 } // namespace ES::Engine::Scheduler

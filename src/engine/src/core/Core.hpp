@@ -126,9 +126,70 @@ class Core {
 
   private:
     std::unique_ptr<entt::registry> _registry;
-    std::map<std::type_index, std::unique_ptr<Scheduler::IScheduler>> _schedulers;
+
+    class SchedulerContainer {
+      public:
+        SchedulerContainer() = default;
+        ~SchedulerContainer() = default;
+
+        template <typename TScheduler, typename... Args> void AddScheduler(ES::Engine::Core &core, Args &&...args)
+        {
+          if (_idToIndex.contains(std::type_index(typeid(TScheduler))))
+          {
+            ES::Utils::Log::Warn(fmt::format("Scheduler already exists: {}", typeid(TScheduler).name()));
+            return;
+          }
+          #ifdef DEBUG
+          ES::Utils::Log::Info(fmt::format("Adding scheduler: {}", typeid(TScheduler).name()));
+          #endif
+          std::size_t index = _orderedSchedulers.size();
+          auto schedulerPtr = std::make_unique<TScheduler>(core, std::forward<Args>(args)...);
+          _orderedSchedulers.push_back(std::move(schedulerPtr));
+          _idToIndex[std::type_index(typeid(TScheduler))] = index;
+        }
+
+        template <typename TScheduler> inline TScheduler &GetScheduler()
+        {
+          return *static_cast<TScheduler *>(_orderedSchedulers[_idToIndex[std::type_index(typeid(TScheduler))]].get());
+        }
+
+        inline std::vector<std::unique_ptr<Scheduler::AScheduler>> &GetSchedulers() { return _orderedSchedulers; }
+
+        template <typename TScheduler> void DeleteScheduler()
+        {
+          DeleteScheduler(std::type_index(typeid(TScheduler)));
+        }
+
+
+        void DeleteScheduler(std::type_index id)
+        {
+          if (_idToIndex.contains(id))
+          {
+            #ifdef DEBUG
+            ES::Utils::Log::Info(fmt::format("Deleting scheduler: {}", id.name()));
+            #endif
+            _orderedSchedulers.erase(_orderedSchedulers.begin() + _idToIndex[id]);
+            for (auto &[key, value] : _idToIndex)
+            {
+              if (value > _idToIndex[id])
+              {
+                value--;
+              }
+            }
+            _idToIndex.erase(id);
+          } else {
+            ES::Utils::Log::Warn(fmt::format("Scheduler does not exist: {}", id.name()));
+          }
+        }
+
+      private:
+        std::unordered_map<std::type_index, std::size_t> _idToIndex; ///< Map to store unique ids for each scheduler.
+        // TODO: Have a better data structure to avoid moving all the elements when deleting a scheduler.
+        std::vector<std::unique_ptr<Scheduler::AScheduler>> _orderedSchedulers;  ///< Vector to store schedulers in order.  
+      };
+
+    SchedulerContainer _schedulers;
     std::vector<std::type_index> _schedulersToDelete;
-    std::unordered_map<std::type_index, SystemContainer> _systems;
 };
 } // namespace ES::Engine
 

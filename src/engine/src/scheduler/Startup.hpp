@@ -13,7 +13,7 @@ class Startup : public AScheduler {
     explicit Startup(Core &registry, const std::function<void()> &callback) : AScheduler(registry), _callback(callback)
     {
     }
-    void RunSystems(USystemList &systems) override;
+    void RunSystems() override;
 
   private:
     std::function<void()> _callback;
