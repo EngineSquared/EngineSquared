@@ -5,31 +5,24 @@
 
 using namespace ES::Engine;
 
-struct ResourceTest
-{
+struct ResourceTest {
     std::vector<int> data;
 };
 
-class SchedulerTest1 : public ES::Engine::Scheduler::AScheduler
-{
-    public:
-        SchedulerTest1(Core &core) : AScheduler(core){};
-        ~SchedulerTest1() = default;
-    
-        void RunSystems() override {
-            _registry.GetResource<ResourceTest>().data.push_back(1);
-        }
+class SchedulerTest1 : public ES::Engine::Scheduler::AScheduler {
+  public:
+    SchedulerTest1(Core &core) : AScheduler(core){};
+    ~SchedulerTest1() = default;
+
+    void RunSystems() override { _registry.GetResource<ResourceTest>().data.push_back(1); }
 };
 
-class SchedulerTest2 : public ES::Engine::Scheduler::AScheduler
-{
-    public:
-        SchedulerTest2(Core &core) : AScheduler(core){};
-        ~SchedulerTest2() = default;
-    
-        void RunSystems() override {
-            _registry.GetResource<ResourceTest>().data.push_back(2);
-        }
+class SchedulerTest2 : public ES::Engine::Scheduler::AScheduler {
+  public:
+    SchedulerTest2(Core &core) : AScheduler(core){};
+    ~SchedulerTest2() = default;
+
+    void RunSystems() override { _registry.GetResource<ResourceTest>().data.push_back(2); }
 };
 
 TEST(SchedulerContainer, CasualUse)
