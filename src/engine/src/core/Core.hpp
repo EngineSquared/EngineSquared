@@ -145,7 +145,7 @@ class Core {
     std::unique_ptr<entt::registry> _registry;
     std::map<std::type_index, std::unique_ptr<Scheduler::IScheduler>> _schedulers;
     std::vector<std::type_index> _schedulersToDelete;
-    std::unordered_map<std::type_index, std::vector<USystem>> _systems;
+    std::unordered_map<std::type_index, SystemContainer> _systems;
     bool _running = false;
 };
 } // namespace ES::Engine
