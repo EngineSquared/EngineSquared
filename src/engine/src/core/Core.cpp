@@ -1,9 +1,9 @@
 #include "Core.hpp"
 #include "Entity.hpp"
 #include "FixedTimeUpdate.hpp"
+#include "Logger.hpp"
 #include "RelativeTimeUpdate.hpp"
 #include "Startup.hpp"
-#include "Logger.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
