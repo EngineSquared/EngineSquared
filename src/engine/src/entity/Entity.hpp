@@ -102,11 +102,14 @@ class Entity {
      * Temporary component are removed when calling RemoveTemporaryComponents system.
      *
      * @tparam  TTempComponent  type to add to registry
+     * @tparam  TArgs           type used to create the component
      * @param   registry        registry used to store the component
+     * @param   args            parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      * @see     RemoveTemporaryComponents
      */
-    template <typename TTempComponent> inline decltype(auto) AddTemporaryComponent(Core &registry)
+    template <typename TTempComponent, typename... TArgs>
+    inline decltype(auto) AddTemporaryComponent(Core &registry, TArgs &&...args)
     {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
@@ -115,7 +118,7 @@ class Entity {
             };
         }
 
-        return this->AddComponent<TTempComponent>(registry);
+        return this->AddComponent<TTempComponent>(registry, std::forward<TArgs>(args)...);
     }
 
     /**
