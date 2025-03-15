@@ -1,8 +1,8 @@
 #include "Core.hpp"
+#include "Entity.hpp"
 #include "FixedTimeUpdate.hpp"
 #include "RelativeTimeUpdate.hpp"
 #include "Startup.hpp"
-#include "Entity.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
