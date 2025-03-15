@@ -22,7 +22,7 @@ class RelativeTimeUpdate : public AScheduler {
     {
     }
 
-    void RunSystems(USystemList &systems) override;
+    void RunSystems() override;
 
     /**
      * @brief Get the target tick rate

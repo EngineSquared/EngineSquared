@@ -1,6 +1,6 @@
 #include "RelativeTimeUpdate.hpp"
 
-void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems(USystemList &systems)
+void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems()
 {
     auto currentTime = std::chrono::high_resolution_clock::now();
     auto diff = std::chrono::duration<float>(currentTime - _lastTime).count();
@@ -10,7 +10,7 @@ void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems(USystemList &systems)
     for (unsigned int i = 0; i < ticks; i++)
     {
         _deltaTime = _tickRate;
-        for (auto const &system : systems)
+        for (auto const &system : this->_systemsList.GetSystems())
         {
             (*system)(_registry);
         }
@@ -19,7 +19,7 @@ void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems(USystemList &systems)
     if (remainder > REMAINDER_THRESHOLD)
     {
         _deltaTime = remainder;
-        for (auto const &system : systems)
+        for (auto const &system : this->_systemsList.GetSystems())
         {
             (*system)(_registry);
         }

@@ -5,6 +5,7 @@
 
 #include "Core.hpp"
 #include "Entity.hpp"
+#include "RelativeTimeUpdate.hpp"
 #include "SoftBodyNode.hpp"
 #include "Transform.hpp"
 #include "VelocityIntegration.hpp"
@@ -14,7 +15,7 @@
 TEST(VelocityIntegration, BasicGravityIntegration)
 {
     ES::Engine::Core core;
-    core.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
+    core.RegisterSystem<ES::Engine::Scheduler::RelativeTimeUpdate>(ES::Plugin::Physics::System::VelocityIntegration);
 
     ES::Engine::Entity entity = core.CreateEntity();
     core.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(entity, glm::vec3(0));
@@ -37,7 +38,7 @@ TEST(VelocityIntegration, BasicGravityIntegration)
 TEST(VelocityIntegration, ForceHigherThanGravity)
 {
     ES::Engine::Core core;
-    core.RegisterSystem(ES::Plugin::Physics::System::VelocityIntegration);
+    core.RegisterSystem<ES::Engine::Scheduler::RelativeTimeUpdate>(ES::Plugin::Physics::System::VelocityIntegration);
 
     ES::Engine::Entity entity = core.CreateEntity();
     core.GetRegistry().emplace<ES::Plugin::Object::Component::Transform>(entity, glm::vec3(0));

@@ -11,7 +11,6 @@ namespace ES::Engine::Scheduler {
 class Update : public AScheduler {
   public:
     using AScheduler::AScheduler;
-    virtual ~Update() = default;
-    void RunSystems(USystemList &systems) override;
+    void RunSystems() override;
 };
 } // namespace ES::Engine::Scheduler
