@@ -58,7 +58,7 @@ class SchedulerContainer {
      * @return TScheduler& A reference to the scheduler of the specified type.
      * @throws SchedulerError If the scheduler of the specified type is not found.
      */
-    template <typename TScheduler> inline TScheduler &GetScheduler();
+    template <typename TScheduler> TScheduler &GetScheduler();
 
     /**
      * @brief Retrieves the list of schedulers.

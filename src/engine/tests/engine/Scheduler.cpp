@@ -11,16 +11,16 @@ struct ResourceTest {
 
 class SchedulerTest1 : public ES::Engine::Scheduler::AScheduler {
   public:
-    SchedulerTest1(Core &core) : AScheduler(core){};
-    ~SchedulerTest1() = default;
+    explicit SchedulerTest1(Core &core) : AScheduler(core){};
+    ~SchedulerTest1() final = default;
 
-    void RunSystems() override { _registry.GetResource<ResourceTest>().data.push_back(1); }
+    void RunSystems() override final { _registry.GetResource<ResourceTest>().data.push_back(1); }
 };
 
 class SchedulerTest2 : public ES::Engine::Scheduler::AScheduler {
   public:
-    SchedulerTest2(Core &core) : AScheduler(core){};
-    ~SchedulerTest2() = default;
+  explicit SchedulerTest2(Core &core) : AScheduler(core){};
+    ~SchedulerTest2() final = default;
 
     void RunSystems() override { _registry.GetResource<ResourceTest>().data.push_back(2); }
 };
