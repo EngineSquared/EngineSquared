@@ -12,6 +12,7 @@
 #include "RelativeTimeUpdate.hpp"
 #include "Startup.hpp"
 #include "Update.hpp"
+#include "Shutdown.hpp"
 
 namespace ES::Engine {
 /**

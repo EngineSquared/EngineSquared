@@ -22,9 +22,13 @@ bool ES::Engine::Core::IsRunning() { return _running; }
 
 void ES::Engine::Core::Stop()
 {
-    if (!_running)
+    if (!_running) {
         ES::Utils::Log::Warn("The core is already shutted down");
+        return;
+    }
     _running = false;
+    this->RegisterScheduler<ES::Engine::Scheduler::Shutdown>(
+        [this]() { this->DeleteScheduler<ES::Engine::Scheduler::Shutdown>(); });
 }
 
 void ES::Engine::Core::RunCore()
