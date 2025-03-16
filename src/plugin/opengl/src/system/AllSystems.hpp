@@ -2,11 +2,11 @@
 
 #include "Entity.hpp"
 #include "GLFWWindow.hpp"
+#include "Logger.hpp"
 #include "MaterialCache.hpp"
 #include "Model.hpp"
 #include "Object.hpp"
 #include "ShaderManager.hpp"
-#include "Logger.hpp"
 #include "core/Core.hpp"
 #include "entt/entt.hpp"
 #include "resource/Buttons/Buttons.hpp"

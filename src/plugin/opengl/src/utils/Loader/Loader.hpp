@@ -9,8 +9,8 @@
 #include <map>
 #include <sstream>
 
-#include "OpenGLError.hpp"
 #include "Logger.hpp"
+#include "OpenGLError.hpp"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -82,8 +82,8 @@ class ShaderProgram {
         glGetShaderiv(shaderId, GL_COMPILE_STATUS, &shaderStatus);
         if (shaderStatus == GL_FALSE)
         {
-            ES::Utils::Log::Error(fmt::format("{} compilation failed: {}", shaderTypeString,
-                      getInfoLog(ObjectType::SHADER, shaderId)));
+            ES::Utils::Log::Error(
+                fmt::format("{} compilation failed: {}", shaderTypeString, getInfoLog(ObjectType::SHADER, shaderId)));
         }
         else
         {
@@ -130,7 +130,8 @@ class ShaderProgram {
         }
         else
         {
-            ES::Utils::Log::Error(fmt::format("Shader program link failed: {}", getInfoLog(ObjectType::PROGRAM, programId)));
+            ES::Utils::Log::Error(
+                fmt::format("Shader program link failed: {}", getInfoLog(ObjectType::PROGRAM, programId)));
         }
 
         // Validate the shader program
@@ -148,8 +149,8 @@ class ShaderProgram {
         }
         else
         {
-            ES::Utils::Log::Error(fmt::format("Shader program validation failed: {}",
-                      getInfoLog(ObjectType::PROGRAM, programId)));
+            ES::Utils::Log::Error(
+                fmt::format("Shader program validation failed: {}", getInfoLog(ObjectType::PROGRAM, programId)));
         }
 
         // Finally, the shader program is initialised
@@ -343,7 +344,8 @@ class ShaderProgram {
         {
             if (DEBUG_SHADER)
             {
-                ES::Utils::Log::Info(fmt::format("Attribute {} bound to location: {}", attributeName, attributeMap[attributeName]));
+                ES::Utils::Log::Info(
+                    fmt::format("Attribute {} bound to location: {}", attributeName, attributeMap[attributeName]));
             }
         }
 
@@ -366,7 +368,8 @@ class ShaderProgram {
         {
             if (DEBUG_SHADER)
             {
-                ES::Utils::Log::Info(fmt::format("Uniform {} bound to location: {}", uniformName, uniformMap[uniformName]));
+                ES::Utils::Log::Info(
+                    fmt::format("Uniform {} bound to location: {}", uniformName, uniformMap[uniformName]));
             }
         }
 
