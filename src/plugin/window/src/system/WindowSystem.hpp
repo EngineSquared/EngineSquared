@@ -43,7 +43,7 @@ const int DEFAULT_HEIGHT = 800;
  *
  * @param core  The Engine² Core.
  */
-void CreateWindow(ES::Engine::Core &core);
+void CreateWindowSystem(ES::Engine::Core &core);
 
 /**
  * @brief Enable VSync.

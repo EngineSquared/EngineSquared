@@ -16,11 +16,11 @@ namespace ES::Engine::Scheduler {
  */
 class FixedTimeUpdate : public AScheduler {
   private:
-    inline static constexpr float DEFAULT_TICK_RATE = 1.0 / 50.0;
+    inline static constexpr float DEFAULT_TICK_RATE = 1.0f / 50.0f;
 
   public:
     FixedTimeUpdate(Core &registry, float tickRate = DEFAULT_TICK_RATE) : AScheduler(registry), _tickRate(tickRate) {}
-    void RunSystems(std::vector<USystem> systems) override;
+    void RunSystems() override;
 
     /**
      * @brief Get the fixed tick rate
