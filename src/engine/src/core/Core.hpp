@@ -133,6 +133,9 @@ class Core {
      */
     bool IsEntityValid(entt::entity entity);
 
+    template <typename... TPlugins>
+    void AddPlugins();
+
     /**
      * Clear all entities and components from the registry.
      */

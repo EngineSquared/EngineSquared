@@ -17,6 +17,7 @@ target("EngineSquaredCore")
     add_includedirs("src/core", { public = true })
     add_includedirs("src/scheduler", { public = true })
     add_includedirs("src/system", { public = true })
+    add_includedirs("src/plugin", { public = true })
     add_includedirs("../utils/log/src", { public = true })
 
     if is_mode("debug") then

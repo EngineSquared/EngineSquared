@@ -35,4 +35,12 @@ inline void Core::RegisterSystem(Systems... systems)
 {
     this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
 }
+
+template <typename... TPlugins>
+void Core::AddPlugins()
+{
+    (TPlugins(*this).Build(), ...);
+}
+
 } // namespace ES::Engine
+
