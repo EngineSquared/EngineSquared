@@ -6,6 +6,7 @@
 #include "Model.hpp"
 #include "Object.hpp"
 #include "ShaderManager.hpp"
+#include "Logger.hpp"
 #include "core/Core.hpp"
 #include "entt/entt.hpp"
 #include "resource/Buttons/Buttons.hpp"
@@ -57,7 +58,7 @@ void InitGLFW(ES::Engine::Core &core)
 {
     if (!glfwInit())
     {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
+        ES::Utils::Log::Error("Failed to initialize GLFW");
         return;
     }
 }
@@ -76,7 +77,7 @@ void CreateGLFWWindow(ES::Engine::Core &core)
              .window)
     {
         glfwTerminate();
-        std::cerr << "Failed to create GLFW window" << std::endl;
+        ES::Utils::Log::Error("Failed to create GLFW window");
         return;
     }
 }
@@ -92,19 +93,19 @@ void InitGLEW(ES::Engine::Core &core)
     if (GLEW_OK != err)
     {
         /* Problem: glewInit failed, something is seriously wrong. */
-        std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
+        ES::Utils::Log::Error(glewGetErrorString(err));
     }
-    std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
+    ES::Utils::Log::Info(fmt::format("Using GLEW {}", glewGetString(GLEW_VERSION)));
 }
 
 void CheckGLEWVersion(ES::Engine::Core &core)
 {
     if (!glewIsSupported("GL_VERSION_4_2"))
     {
-        std::cerr << "OpenGL 4.2 not supported" << std::endl;
+        ES::Utils::Log::Error("OpenGL 4.2 not supported");
         return;
     }
-    std::cout << "OpenGL 4.2 supported" << std::endl;
+    ES::Utils::Log::Info("OpenGL 4.2 supported");
 }
 
 void GLFWEnableVSync(ES::Engine::Core &core) { glfwSwapInterval(1); }

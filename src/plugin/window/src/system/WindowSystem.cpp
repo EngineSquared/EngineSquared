@@ -11,7 +11,7 @@ void CreateWindowSystem(ES::Engine::Core &core)
     }
     catch (const Exception::WindowError &e)
     {
-        std::cerr << e.what() << std::endl;
+        ES::Utils::Log::Error(e.what());
     }
 }
 
