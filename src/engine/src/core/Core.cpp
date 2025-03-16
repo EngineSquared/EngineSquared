@@ -1,5 +1,6 @@
 #include "Core.hpp"
 #include "Entity.hpp"
+#include "Logger.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
@@ -17,15 +18,33 @@ ES::Engine::Entity ES::Engine::Core::CreateEntity()
     return static_cast<ES::Engine::Entity>(this->_registry->create());
 }
 
+bool ES::Engine::Core::IsRunning() { return _running; }
+
+void ES::Engine::Core::Stop()
+{
+    if (!_running)
+        ES::Utils::Log::Warn("The core is already shutted down");
+    _running = false;
+}
+
+void ES::Engine::Core::RunCore()
+{
+    _running = true;
+    while (_running)
+    {
+        RunSystems();
+    }
+}
+
 void ES::Engine::Core::RunSystems()
 {
 
-    for (auto &[schedulerIndex, scheduler] : this->_schedulers)
+    for (const auto &[schedulerIndex, scheduler] : this->_schedulers)
     {
-        scheduler->RunSystems(this->_systems[schedulerIndex]);
+        scheduler->RunSystems(this->_systems[schedulerIndex].GetSystems());
     }
 
-    for (auto &scheduler : this->_schedulersToDelete)
+    for (const auto &scheduler : this->_schedulersToDelete)
     {
         this->_schedulers.erase(scheduler);
         this->_systems.erase(scheduler);
