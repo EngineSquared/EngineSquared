@@ -1,18 +1,18 @@
 #include <gtest/gtest.h>
 
-#include "Core.hpp"
 #include "APlugin.hpp"
+#include "Core.hpp"
 
 struct ResourceTest {
     std::vector<std::string> data;
 };
 
-class PluginTestA : public ES::Engine::APlugin
-{
-public:
-    explicit PluginTestA(ES::Engine::Core &core): ES::Engine::APlugin(core) {
-        // empty
-    };
+class PluginTestA : public ES::Engine::APlugin {
+  public:
+    explicit PluginTestA(ES::Engine::Core &core)
+        : ES::Engine::APlugin(core){
+              // empty
+          };
     ~PluginTestA() = default;
 
     void Build() final
