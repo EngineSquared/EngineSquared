@@ -10,9 +10,7 @@ namespace ES::Engine::Scheduler {
  */
 class Shutdown : public AScheduler {
   public:
-    explicit Shutdown(Core &registry, std::function<void()> callback) : AScheduler(registry), _callback(callback)
-    {
-    }
+    explicit Shutdown(Core &registry, std::function<void()> callback) : AScheduler(registry), _callback(callback) {}
     void RunSystems(USystemList &systems) override;
 
   private:

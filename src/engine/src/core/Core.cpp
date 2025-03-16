@@ -22,7 +22,8 @@ bool ES::Engine::Core::IsRunning() { return _running; }
 
 void ES::Engine::Core::Stop()
 {
-    if (!_running) {
+    if (!_running)
+    {
         ES::Utils::Log::Warn("The core is already shutted down");
         return;
     }

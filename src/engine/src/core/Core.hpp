@@ -10,9 +10,9 @@
 #include "FixedTimeUpdate.hpp"
 #include "IScheduler.hpp"
 #include "RelativeTimeUpdate.hpp"
+#include "Shutdown.hpp"
 #include "Startup.hpp"
 #include "Update.hpp"
-#include "Shutdown.hpp"
 
 namespace ES::Engine {
 /**
