@@ -142,8 +142,7 @@ class Core {
      * 
      * @tparam TPlugins Variadic template parameter pack representing the types of the plugins to be added.
      */
-    template <typename... TPlugins>
-    void AddPlugins();
+    template <typename... TPlugins> void AddPlugins();
 
     /**
      * @brief Checks if a plugin of the specified type is present.
