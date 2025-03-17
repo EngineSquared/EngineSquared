@@ -132,7 +132,10 @@ void ES::Plugin::OpenGL::System::MouseDragging(ES::Engine::Core &core)
     lastMousePos.y = currentMousePos.y;
 }
 
-void ES::Plugin::OpenGL::System::SwapBuffers(ES::Engine::Core &core) { glfwSwapBuffers(core.GetResource<Resource::GLFWWindow>().window); }
+void ES::Plugin::OpenGL::System::SwapBuffers(ES::Engine::Core &core)
+{
+    glfwSwapBuffers(core.GetResource<Resource::GLFWWindow>().window);
+}
 
 void ES::Plugin::OpenGL::System::PollEvents(ES::Engine::Core &core) { glfwPollEvents(); }
 
@@ -267,4 +270,4 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             model.mesh.draw();
             shader.disable();
         });
-    }
+}

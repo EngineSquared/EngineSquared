@@ -15,6 +15,7 @@ namespace ES::Engine
             _core.RegisterSystem<TScheduler>(systems...);
         }
 
+
     template <typename TResource> TResource &RegisterResource(TResource &&resource)
     {
         return _core.RegisterResource(std::forward<TResource>(resource));
