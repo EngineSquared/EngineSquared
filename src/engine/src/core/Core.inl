@@ -1,4 +1,6 @@
 #include "Core.hpp"
+#include "Logger.hpp"
+#include "APlugin.hpp" // Include APlugin.hpp
 
 namespace ES::Engine {
 
@@ -39,8 +41,24 @@ inline void Core::RegisterSystem(Systems... systems)
 template <typename... TPlugins>
 void Core::AddPlugins()
 {
-    (TPlugins(*this).Build(), ...);
+    (AddPlugin<TPlugins>(), ...);
 }
 
-} // namespace ES::Engine
+template <typename TPlugin>
+void Core::AddPlugin()
+{
+    #ifdef DEBUG
+    if (this->_plugins.contains(std::type_index(typeid(TPlugin)))) {
+        ES::Utils::Log::Warn(fmt::format("Plugin {} already added", typeid(TPlugin).name()));
+    }
+    #endif
+    this->_plugins.emplace(std::type_index(typeid(TPlugin)), std::make_unique<TPlugin>(*this));
+    this->_plugins.at(std::type_index(typeid(TPlugin)))->Build();
+}
 
+template <typename TPlugin>
+bool Core::HasPlugin() const
+{
+    return this->_plugins.contains(std::type_index(typeid(TPlugin)));
+}
+} // namespace ES::Engine
