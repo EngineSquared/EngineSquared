@@ -36,7 +36,7 @@ void SetupGLFWHints(const ES::Engine::Core &core);
 void CreateGLFWWindow(ES::Engine::Core &core);
 void LinkGLFWContextToGL(ES::Engine::Core &core);
 
-void InitGLEW(ES::Engine::Core &core);
+void InitGLEW(const ES::Engine::Core &core);
 
 void CheckGLEWVersion(const ES::Engine::Core &core);
 

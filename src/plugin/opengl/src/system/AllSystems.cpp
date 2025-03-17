@@ -71,7 +71,7 @@ void ES::Plugin::OpenGL::System::LinkGLFWContextToGL(ES::Engine::Core &core)
     glfwMakeContextCurrent(core.GetResource<Resource::GLFWWindow>().window);
 }
 
-void ES::Plugin::OpenGL::System::InitGLEW(ES::Engine::Core &core)
+void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 {
     if (GLenum err = glewInit(); GLEW_OK != err)
     {
@@ -198,11 +198,11 @@ void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
 {
     auto &shader = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
 
-    std::array<Light, 5> light = {Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.8f)),
-                                  Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.0f, 0.8f)),
-                                  Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.0f, 0.0f)),
-                                  Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.0f)),
-                                  Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.8f, 0.8f))};
+    std::array<Light, 5> light = {Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.8f)},
+                                  Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.0f, 0.8f)},
+                                  Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.0f, 0.0f)},
+                                  Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.0f)},
+                                  Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.8f, 0.8f)}};
 
     float nbr_lights = 5.f;
     float scale = 2.f * glm::pi<float>() / nbr_lights;
