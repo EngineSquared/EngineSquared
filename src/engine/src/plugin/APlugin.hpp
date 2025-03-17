@@ -6,7 +6,7 @@ namespace ES::Engine
 {
     class APlugin {
     public:
-        APlugin(Core &core) : _core(core) {};
+        explicit APlugin(Core &core) : _core(core) {};
         virtual void Build(void) = 0;
         
         // AddSystem

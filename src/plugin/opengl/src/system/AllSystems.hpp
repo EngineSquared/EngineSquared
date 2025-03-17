@@ -29,16 +29,16 @@ void UpdateButton(ES::Engine::Core &core);
 
 void SaveLastMousePos(ES::Engine::Core &core);
 
-void InitGLFW(ES::Engine::Core &core);
+void InitGLFW(const ES::Engine::Core &core);
 
-void SetupGLFWHints(ES::Engine::Core &core);
+void SetupGLFWHints(const ES::Engine::Core &core);
 
 void CreateGLFWWindow(ES::Engine::Core &core);
 void LinkGLFWContextToGL(ES::Engine::Core &core);
 
 void InitGLEW(ES::Engine::Core &core);
 
-void CheckGLEWVersion(ES::Engine::Core &core);
+void CheckGLEWVersion(const ES::Engine::Core &core);
 
 void GLFWEnableVSync(ES::Engine::Core &core);
 
@@ -57,10 +57,10 @@ void CreateCamera(ES::Engine::Core &core);
 
 void UpdateMatrices(ES::Engine::Core &core);
 
-void GLClearColor(ES::Engine::Core &core);
-void GLClearDepth(ES::Engine::Core &core);
-void GLEnableDepth(ES::Engine::Core &core);
-void GLEnableCullFace(ES::Engine::Core &core);
+void GLClearColor(const ES::Engine::Core &core);
+void GLClearDepth(const ES::Engine::Core &core);
+void GLEnableDepth(const ES::Engine::Core &core);
+void GLEnableCullFace(const ES::Engine::Core &core);
 
 void SetupLights(ES::Engine::Core &core);
 void SetupCamera(ES::Engine::Core &core);

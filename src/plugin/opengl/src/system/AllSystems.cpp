@@ -13,11 +13,11 @@ void ES::Plugin::OpenGL::System::UpdateButton(ES::Engine::Core &core)
 {
     GLFWwindow *window = core.GetResource<Resource::GLFWWindow>().window;
     auto &mouseButtons = core.GetResource<OpenGL::Resource::Buttons>().mouse;
-    for (auto &button : mouseButtons)
+    for (auto &[key, button] : mouseButtons)
     {
-        bool pressed = glfwGetMouseButton(window, button.first) == GLFW_PRESS;
-        button.second.updated = button.second.pressed != pressed;
-        button.second.pressed = pressed;
+        bool pressed = glfwGetMouseButton(window, key) == GLFW_PRESS;
+        button.pressed = pressed;
+        button.updated = button.pressed != pressed;
     }
 }
 
@@ -30,14 +30,15 @@ void ES::Plugin::OpenGL::System::SaveLastMousePos(ES::Engine::Core &core)
     if (mouseButtons[GLFW_MOUSE_BUTTON_LEFT].updated || mouseButtons[GLFW_MOUSE_BUTTON_MIDDLE].updated ||
         mouseButtons[GLFW_MOUSE_BUTTON_RIGHT].updated)
     {
-        double xpos, ypos;
+        double xpos = 0;
+        double ypos = 0;
         glfwGetCursorPos(window, &xpos, &ypos);
         lastMousePos.x = xpos;
         lastMousePos.y = ypos;
     }
 }
 
-void ES::Plugin::OpenGL::System::InitGLFW(ES::Engine::Core &core)
+void ES::Plugin::OpenGL::System::InitGLFW(const ES::Engine::Core &)
 {
     if (!glfwInit())
     {
@@ -46,7 +47,7 @@ void ES::Plugin::OpenGL::System::InitGLFW(ES::Engine::Core &core)
     }
 }
 
-void ES::Plugin::OpenGL::System::SetupGLFWHints(ES::Engine::Core &core)
+void ES::Plugin::OpenGL::System::SetupGLFWHints(const ES::Engine::Core &)
 {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -72,16 +73,14 @@ void ES::Plugin::OpenGL::System::LinkGLFWContextToGL(ES::Engine::Core &core)
 
 void ES::Plugin::OpenGL::System::InitGLEW(ES::Engine::Core &core)
 {
-    GLenum err = glewInit();
-    if (GLEW_OK != err)
+    if (GLenum err = glewInit(); GLEW_OK != err)
     {
-        /* Problem: glewInit failed, something is seriously wrong. */
         std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
     }
     std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
 }
 
-void ES::Plugin::OpenGL::System::CheckGLEWVersion(ES::Engine::Core &core)
+void ES::Plugin::OpenGL::System::CheckGLEWVersion(const ES::Engine::Core &)
 {
     if (!glewIsSupported("GL_VERSION_4_2"))
     {
@@ -110,23 +109,23 @@ void ES::Plugin::OpenGL::System::MouseDragging(ES::Engine::Core &core)
     if (mouseButtons[GLFW_MOUSE_BUTTON_LEFT].pressed)
     {
         float fractionChangeX =
-            static_cast<float>(currentMousePos.x - lastMousePos.x) / static_cast<float>(camera.size.x);
+            static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
         float fractionChangeY =
-            static_cast<float>(lastMousePos.y - currentMousePos.y) / static_cast<float>(camera.size.y);
+            static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
         camera.viewer.rotate(fractionChangeX, fractionChangeY);
     }
     else if (mouseButtons[GLFW_MOUSE_BUTTON_MIDDLE].pressed)
     {
         float fractionChangeY =
-            static_cast<float>(lastMousePos.y - currentMousePos.y) / static_cast<float>(camera.size.y);
+            static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
         camera.viewer.zoom(fractionChangeY);
     }
     else if (mouseButtons[GLFW_MOUSE_BUTTON_RIGHT].pressed)
     {
         float fractionChangeX =
-            static_cast<float>(currentMousePos.x - lastMousePos.x) / static_cast<float>(camera.size.x);
+            static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
         float fractionChangeY =
-            static_cast<float>(lastMousePos.y - currentMousePos.y) / static_cast<float>(camera.size.y);
+            static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
         camera.viewer.translate(-fractionChangeX, -fractionChangeY, true);
     }
     lastMousePos.x = currentMousePos.x;
@@ -156,8 +155,8 @@ void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
 
     for (int i = 0; i < 5; i++)
     {
-        m_shaderProgram.addUniform("Light[" + std::to_string(i) + "].Position");
-        m_shaderProgram.addUniform("Light[" + std::to_string(i) + "].Intensity");
+        m_shaderProgram.addUniform(fmt::format("Light[{}].Position", i));
+        m_shaderProgram.addUniform(fmt::format("Light[{}].Intensity", i));
     }
     m_shaderProgram.addUniform("Material.Ka");
     m_shaderProgram.addUniform("Material.Kd");
@@ -175,7 +174,7 @@ void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
 
 void ES::Plugin::OpenGL::System::CreateCamera(ES::Engine::Core &core)
 {
-    auto &camera = core.RegisterResource<Resource::Camera>(Resource::Camera(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+    core.RegisterResource<Resource::Camera>(Resource::Camera(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 }
 
 void ES::Plugin::OpenGL::System::UpdateMatrices(ES::Engine::Core &core)
@@ -185,13 +184,13 @@ void ES::Plugin::OpenGL::System::UpdateMatrices(ES::Engine::Core &core)
     cam.projection = glm::perspective(glm::radians(45.0f), cam.size.x / cam.size.y, 0.1f, 100.0f);
 }
 
-void ES::Plugin::OpenGL::System::GLClearColor(ES::Engine::Core &core) { glClear(GL_COLOR_BUFFER_BIT); }
+void ES::Plugin::OpenGL::System::GLClearColor(const ES::Engine::Core &) { glClear(GL_COLOR_BUFFER_BIT); }
 
-void ES::Plugin::OpenGL::System::GLClearDepth(ES::Engine::Core &core) { glClear(GL_DEPTH_BUFFER_BIT); }
+void ES::Plugin::OpenGL::System::GLClearDepth(const ES::Engine::Core &) { glClear(GL_DEPTH_BUFFER_BIT); }
 
-void ES::Plugin::OpenGL::System::GLEnableDepth(ES::Engine::Core &core) { glEnable(GL_DEPTH_TEST); }
+void ES::Plugin::OpenGL::System::GLEnableDepth(const ES::Engine::Core &) { glEnable(GL_DEPTH_TEST); }
 
-void ES::Plugin::OpenGL::System::GLEnableCullFace(ES::Engine::Core &core)
+void ES::Plugin::OpenGL::System::GLEnableCullFace(const ES::Engine::Core &)
 {
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
@@ -201,12 +200,12 @@ void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
 {
     auto &shader = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
 
-    Light light[] = {
-        {glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.8f)},
-        {glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.0f, 0.8f)},
-        {glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.0f, 0.0f)},
-        {glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.0f)},
-        {glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.8f, 0.8f)}
+    std::array<Light, 5> light = {
+        Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.8f)),
+        Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.0f, 0.8f)),
+        Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.0f, 0.0f)),
+        Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.0f)),
+        Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.8f, 0.8f))
     };
 
     float nbr_lights = 5.f;
@@ -221,8 +220,8 @@ void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
     shader.use();
     for (int i = 0; i < 5; i++)
     {
-        glUniform4fv(shader.uniform("Light[" + std::to_string(i) + "].Position"), 1, glm::value_ptr(light[i].Position));
-        glUniform3fv(shader.uniform("Light[" + std::to_string(i) + "].Intensity"), 1,
+        glUniform4fv(shader.uniform(fmt::format("Light[{}].Position", i).c_str()), 1, glm::value_ptr(light[i].Position));
+        glUniform3fv(shader.uniform(fmt::format("Light[{}].Intensity", i).c_str()), 1,
                      glm::value_ptr(light[i].Intensity));
     }
     shader.disable();
@@ -237,6 +236,14 @@ void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
     shaderProgram.disable();
 }
 
+static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader, const ES::Plugin::OpenGL::Utils::Material &material)
+{
+    glUniform3fv(shader.uniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
+    glUniform3fv(shader.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
+    glUniform3fv(shader.uniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
+    glUniform1fv(shader.uniform("Material.Shiness"), 1, &material.Shiness);
+}
+
 void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 {
     auto &view = core.GetResource<Resource::Camera>().view;
@@ -248,15 +255,12 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             const auto material =
                 core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
             shader.use();
-            glUniform3fv(shader.uniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
-            glUniform3fv(shader.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
-            glUniform3fv(shader.uniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
-            glUniform1fv(shader.uniform("Material.Shiness"), 1, &material.Shiness);
+            LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
             glm::mat4 mview = view * modelmat;
             glm::mat4 mvp = projection * view * modelmat;
             glm::mat4 imvp = glm::inverse(modelmat);
-            glm::mat3 nmat = glm::mat3(glm::transpose(imvp)); // normal matrix
+            auto nmat = glm::mat3(glm::transpose(imvp)); // normal matrix
             glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
             glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
