@@ -47,7 +47,7 @@ void Core::AddPlugins()
 template <typename TPlugin>
 void Core::AddPlugin()
 {
-    #ifdef DEBUG
+    #ifdef ES_DEBUG
     if (this->_plugins.contains(std::type_index(typeid(TPlugin)))) {
         ES::Utils::Log::Warn(fmt::format("Plugin {} already added", typeid(TPlugin).name()));
     }
