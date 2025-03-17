@@ -25,12 +25,12 @@ class PluginTestA : public ES::Engine::APlugin {
     }
 };
 
-class PluginTestB : public ES::Engine::APlugin
-{
-public:
-    explicit PluginTestB(ES::Engine::Core &core): ES::Engine::APlugin(core) {
-        // empty
-    };
+class PluginTestB : public ES::Engine::APlugin {
+  public:
+    explicit PluginTestB(ES::Engine::Core &core)
+        : ES::Engine::APlugin(core){
+              // empty
+          };
     ~PluginTestB() = default;
 
     void Build() final
