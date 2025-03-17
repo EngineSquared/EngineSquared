@@ -108,24 +108,19 @@ void ES::Plugin::OpenGL::System::MouseDragging(ES::Engine::Core &core)
     auto &camera = core.GetResource<Resource::Camera>();
     if (mouseButtons[GLFW_MOUSE_BUTTON_LEFT].pressed)
     {
-        float fractionChangeX =
-            static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
-        float fractionChangeY =
-            static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
+        float fractionChangeX = static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
+        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
         camera.viewer.rotate(fractionChangeX, fractionChangeY);
     }
     else if (mouseButtons[GLFW_MOUSE_BUTTON_MIDDLE].pressed)
     {
-        float fractionChangeY =
-            static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
+        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
         camera.viewer.zoom(fractionChangeY);
     }
     else if (mouseButtons[GLFW_MOUSE_BUTTON_RIGHT].pressed)
     {
-        float fractionChangeX =
-            static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
-        float fractionChangeY =
-            static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
+        float fractionChangeX = static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
+        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
         camera.viewer.translate(-fractionChangeX, -fractionChangeY, true);
     }
     lastMousePos.x = currentMousePos.x;
@@ -203,13 +198,11 @@ void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
 {
     auto &shader = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
 
-    std::array<Light, 5> light = {
-        Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.8f)),
-        Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.0f, 0.8f)),
-        Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.0f, 0.0f)),
-        Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.0f)),
-        Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.8f, 0.8f))
-    };
+    std::array<Light, 5> light = {Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.8f)),
+                                  Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.0f, 0.8f)),
+                                  Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.0f, 0.0f)),
+                                  Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.0f)),
+                                  Light(glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.8f, 0.8f))};
 
     float nbr_lights = 5.f;
     float scale = 2.f * glm::pi<float>() / nbr_lights;
@@ -223,7 +216,8 @@ void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
     shader.use();
     for (int i = 0; i < 5; i++)
     {
-        glUniform4fv(shader.uniform(fmt::format("Light[{}].Position", i).c_str()), 1, glm::value_ptr(light[i].Position));
+        glUniform4fv(shader.uniform(fmt::format("Light[{}].Position", i).c_str()), 1,
+                     glm::value_ptr(light[i].Position));
         glUniform3fv(shader.uniform(fmt::format("Light[{}].Intensity", i).c_str()), 1,
                      glm::value_ptr(light[i].Intensity));
     }
@@ -239,7 +233,8 @@ void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
     shaderProgram.disable();
 }
 
-static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader, const ES::Plugin::OpenGL::Utils::Material &material)
+static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader,
+                         const ES::Plugin::OpenGL::Utils::Material &material)
 {
     glUniform3fv(shader.uniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
     glUniform3fv(shader.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
