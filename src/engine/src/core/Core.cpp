@@ -58,7 +58,4 @@ bool ES::Engine::Core::IsEntityValid(entt::entity entity) { return GetRegistry()
 
 void ES::Engine::Core::ClearEntities() { this->_registry->clear(); }
 
-bool ES::Engine::Core::HasPlugin(std::type_index type) const
-{
-    return this->_plugins.contains(type);
-}
+bool ES::Engine::Core::HasPlugin(std::type_index type) const { return this->_plugins.contains(type); }

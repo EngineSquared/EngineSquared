@@ -15,27 +15,22 @@ namespace ES::Engine
             _core.RegisterSystem<TScheduler>(systems...);
         }
 
-        template <typename TResource>
-        TResource &RegisterResource(TResource &&resource)
+    template <typename TResource> TResource &RegisterResource(TResource &&resource)
+    {
+        return _core.RegisterResource(std::forward<TResource>(resource));
+    }
+
+    template <typename... TPlugins> void RequirePlugins() { (RequirePlugin<TPlugins>(), ...); }
+
+  private:
+    template <typename TPlugin> void RequirePlugin()
+    {
+        if (!_core.HasPlugin<TPlugin>())
         {
-            return _core.RegisterResource(std::forward<TResource>(resource));
+            _core.AddPlugins<TPlugin>();
         }
+    }
 
-        template <typename... TPlugins>
-        void RequirePlugins()
-        {
-            (RequirePlugin<TPlugins>(), ...);
-        }
-
-    private:
-        template <typename TPlugin>
-        void RequirePlugin()
-        {
-            if (!_core.HasPlugin<TPlugin>()) {
-                _core.AddPlugins<TPlugin>();
-            }
-        } 
-
-        Core &_core;
+    Core &_core;
 };
 } // namespace ES::Engine
