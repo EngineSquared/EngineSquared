@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/vec3.hpp>
+#include <GL/glew.h>
 
 namespace ES::Plugin::OpenGL::Utils {
 class Material {

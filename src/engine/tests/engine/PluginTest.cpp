@@ -18,7 +18,7 @@ class PluginTestA : public ES::Engine::APlugin {
     void Build() final
     {
         RegisterResource<ResourceTest>({});
-        AddSystems<ES::Engine::Scheduler::Update>([this](ES::Engine::Core &core) {
+        RegisterSystems<ES::Engine::Scheduler::Update>([this](ES::Engine::Core &core) {
             auto &resource = core.GetResource<ResourceTest>();
             resource.data.push_back("PluginTestA::Build");
         });
@@ -36,7 +36,7 @@ public:
     void Build() final
     {
         RequirePlugins<PluginTestA>();
-        AddSystems<ES::Engine::Scheduler::Update>([this](ES::Engine::Core &core) {
+        RegisterSystems<ES::Engine::Scheduler::Update>([this](ES::Engine::Core &core) {
             auto &resource = core.GetResource<ResourceTest>();
             resource.data.push_back("PluginTestB::Build");
         });
