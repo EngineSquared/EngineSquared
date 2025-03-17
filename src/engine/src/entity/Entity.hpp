@@ -42,7 +42,7 @@ class Entity {
     static Entity Create(Core &registry)
     {
         Entity entity = registry.CreateEntity();
-#ifdef DEBUG
+#ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] Create Entity", entity_id_type(entity)));
 #endif
         return entity;
@@ -56,7 +56,7 @@ class Entity {
      */
     void Destroy(Core &registry)
     {
-#ifdef DEBUG
+#ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] Destroy Entity", _entity));
 #endif
         registry.KillEntity(*this);
@@ -89,7 +89,7 @@ class Entity {
 
     template <typename TComponent> inline decltype(auto) AddComponent(Core &registry, TComponent &&component)
     {
-#ifdef DEBUG
+#ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
 #endif
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity),
@@ -108,7 +108,7 @@ class Entity {
     template <typename TComponent, typename... TArgs>
     inline decltype(auto) AddComponent(Core &registry, TArgs &&...args)
     {
-#ifdef DEBUG
+#ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
 #endif
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
@@ -150,7 +150,7 @@ class Entity {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
             temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Core &reg) {
-#ifdef DEBUG
+#ifdef ES_DEBUG
                 ES::Utils::Log::Info(fmt::format("RemoveTemporaryComponent: {}", typeid(TTempComponent).name()));
 #endif
                 reg.GetRegistry().clear<TTempComponent>();
@@ -188,7 +188,7 @@ class Entity {
      */
     template <typename TComponent> inline void RemoveComponent(Core &registry)
     {
-#ifdef DEBUG
+#ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] RemoveComponent: {}", _entity, typeid(TComponent).name()));
 #endif
         registry.GetRegistry().remove<TComponent>(ToEnttEntity(this->_entity));

@@ -7,7 +7,7 @@
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
-#ifdef DEBUG
+#ifdef ES_DEBUG
     ES::Utils::Log::Info("Create Core");
 #endif
     this->_registry = std::make_unique<entt::registry>();
@@ -21,7 +21,7 @@ ES::Engine::Core::Core() : _registry(nullptr)
 
 ES::Engine::Core::~Core()
 {
-#ifdef DEBUG
+#ifdef ES_DEBUG
     ES::Utils::Log::Info("Destroy Core");
 #endif
 }
