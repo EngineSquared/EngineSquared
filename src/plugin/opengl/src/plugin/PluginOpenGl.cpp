@@ -1,5 +1,5 @@
-#include "Startup.hpp"
 #include "PluginOpenGl.hpp"
+#include "Startup.hpp"
 #include "resource/Buttons/Buttons.hpp"
 #include "system/AllSystems.hpp"
 

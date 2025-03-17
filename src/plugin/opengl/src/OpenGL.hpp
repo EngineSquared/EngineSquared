@@ -1,7 +1,7 @@
 #pragma once
 
-#include "plugin/PluginOpenGl.hpp"
 #include "component/Model/Model.hpp"
+#include "plugin/PluginOpenGl.hpp"
 #include "resource/Buttons/Buttons.hpp"
 #include "resource/Camera/Camera.hpp"
 #include "resource/GLFWWindow/GLFWWindow.hpp"

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
 #include "Entity.hpp"
 #include "GLFWWindow.hpp"
 #include "MaterialCache.hpp"
@@ -13,6 +10,9 @@
 #include "entt/entt.hpp"
 #include "resource/Buttons/Buttons.hpp"
 #include "resource/Camera/Camera.hpp"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <iostream>
 
 namespace ES::Plugin::OpenGL::System {
 const int DEFAULT_WIDTH = 800;
