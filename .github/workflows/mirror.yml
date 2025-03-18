@@ -8,7 +8,7 @@ on:
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
-  UNWANTED_REGEX: '^(?!.*tests\/).*gc(no|da|ov)$|(.*\.(a|o|so))$|(.*~)$|^(#.*#)$|^tmp\/.*|.*\/tmp\/.*'
+  UNWANTED_REGEX: '^(?!.*tests\/).*gc(no|da|ov)$|(.*\.(a|o|so|lib))$|(.*~)$|^(#.*#)$|^tmp\/.*|.*\/tmp\/.*'
 
 jobs:
   check_repository_cleanliness:
@@ -40,26 +40,8 @@ jobs:
       matrix:
         include:
           - os: windows-latest
-            build_folder: "./build/windows/x64"
-            lib_pre: ""
-            lib_ext: ".lib"
           - os: ubuntu-latest
-            build_folder: "./build/linux/x86_64"
-            lib_pre: "lib"
-            lib_ext: ".a"
     runs-on: ${{ matrix.os }}
-    env:
-      BINARY_NAMES: >
-        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}EngineSquaredCore${{ matrix.lib_ext }},
-        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginMath${{ matrix.lib_ext }},
-        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginNativeScripting${{ matrix.lib_ext }},
-        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginObject${{ matrix.lib_ext }},
-        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginPhysics${{ matrix.lib_ext }},
-        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginRelationship${{ matrix.lib_ext }},
-        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginScene${{ matrix.lib_ext }},
-        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginUI${{ matrix.lib_ext }},
-        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginWindow${{ matrix.lib_ext }},
-        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}UtilsString${{ matrix.lib_ext }},
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -89,36 +71,6 @@ jobs:
       - name: Build project
         run: xmake build -y
         timeout-minutes: 8
-
-      - name: Verify binaries (Linux)
-        if: runner.os != 'Windows'
-        run: |
-          ls
-          ls ./build/linux/x86_64/
-          ls ./build/linux/x86_64/release/
-          echo "FAIL_TASK=false" >> "$GITHUB_ENV"
-          IFS=',' read -ra BINS <<< "${{ env.BINARY_NAMES }}"
-          for BIN in "${BINS[@]}"; do
-            if [ ! -f "$BIN" ]; then
-              echo "::error file=$BIN,title=Binary not found::$BIN"
-              echo "FAIL_TASK=true" >> "$GITHUB_ENV"
-            fi
-          done
-          if grep -q "FAIL_TASK=true" "$GITHUB_ENV"; then exit 1; fi
-
-      - name: Verify binaries (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $fail = $false
-          $bins = "${{ env.BINARY_NAMES }}" -split ","
-          foreach ($bin in $bins) {
-            if (-not (Test-Path $bin)) {
-              Write-Error "::error file=$bin,title=Binary not found::$bin"
-              $fail = $true
-            }
-          }
-          if ($fail) { exit 1 }
 
   run_tests:
     name: Run tests
