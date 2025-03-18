@@ -1,8 +1,8 @@
 #include "Shutdown.hpp"
 
-void ES::Engine::Scheduler::Shutdown::RunSystems(USystemList &systems)
+void ES::Engine::Scheduler::Shutdown::RunSystems()
 {
-    for (auto &system : systems)
+    for (auto const &system : this->_systemsList.GetSystems())
     {
         (*system)(_registry);
     }
