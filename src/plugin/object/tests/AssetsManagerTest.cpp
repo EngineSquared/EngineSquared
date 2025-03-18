@@ -6,6 +6,8 @@ using namespace ES::Plugin::Object::Resource;
 
 TEST(Core, CreateEntity)
 {
+    EXPECT_EQ(1, 2);
+    
     struct TestAssets {
         int value;
     };
