@@ -40,7 +40,7 @@ jobs:
       matrix:
         include:
           - os: windows-latest
-            build_folder: "./build/windows/x86_64"
+            build_folder: "./build/windows/x64"
           - os: ubuntu-latest
             build_folder: "./build/linux/x86_64"
     runs-on: ${{ matrix.os }}
