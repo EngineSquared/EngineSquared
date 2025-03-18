@@ -1,4 +1,4 @@
-#include "PluginOpenGl.hpp"
+#include "PluginOpenGL.hpp"
 #include "Startup.hpp"
 #include "resource/Buttons/Buttons.hpp"
 #include "system/AllSystems.hpp"
