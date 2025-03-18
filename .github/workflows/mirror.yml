@@ -41,10 +41,6 @@ jobs:
         include:
           - os: windows-latest
             build_folder: "./build/windows/x86_64"
-          - os: ubuntu-20.04
-            build_folder: "./build/linux/x86_64"
-          - os: ubuntu-22.04
-            build_folder: "./build/linux/x86_64"
           - os: ubuntu-latest
             build_folder: "./build/linux/x86_64"
     runs-on: ${{ matrix.os }}
@@ -115,8 +111,6 @@ jobs:
       matrix:
         include:
           - os: windows-latest
-          - os: ubuntu-20.04
-          - os: ubuntu-22.04
           - os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:
