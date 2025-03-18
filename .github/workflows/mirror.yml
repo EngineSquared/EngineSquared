@@ -49,8 +49,17 @@ jobs:
             lib_ext: ".a"
     runs-on: ${{ matrix.os }}
     env:
-      # List all expected binary files using the proper build folder.
-      BINARY_NAMES: ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}EngineSquared${{ matrix.lib_ext }},${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}EngineSquaredCore${{ matrix.lib_ext }},${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginCamera${{ matrix.lib_ext }},${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginInput${{ matrix.lib_ext }},${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginPhysics${{ matrix.lib_ext }},${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginWindow${{ matrix.lib_ext }}
+      BINARY_NAMES: >
+        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}EngineSquaredCore${{ matrix.lib_ext }},
+        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginMath${{ matrix.lib_ext }},
+        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginNativeScripting${{ matrix.lib_ext }},
+        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginObject${{ matrix.lib_ext }},
+        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginPhysics${{ matrix.lib_ext }},
+        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginRelationship${{ matrix.lib_ext }},
+        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginScene${{ matrix.lib_ext }},
+        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginUI${{ matrix.lib_ext }},
+        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginWindow${{ matrix.lib_ext }},
+        ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}UtilsString${{ matrix.lib_ext }},
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -98,10 +107,6 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          dir .\build\windows\
-          dir .\build\windows\x64\
-          dir .\build\windows\x64\release\
-
           $fail = $false
           $bins = "${{ env.BINARY_NAMES }}" -split ","
           foreach ($bin in $bins) {
