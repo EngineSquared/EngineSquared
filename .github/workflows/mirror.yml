@@ -94,6 +94,8 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           ls
+          ls ./build/linux/x86_64/
+          ls ./build/linux/x86_64/release/
           echo "FAIL_TASK=false" >> "$GITHUB_ENV"
           IFS=',' read -ra BINS <<< "${{ env.BINARY_NAMES }}"
           for BIN in "${BINS[@]}"; do
