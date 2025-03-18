@@ -11,6 +11,6 @@ class Plugin : public ES::Engine::APlugin {
           };
     ~Plugin() = default;
 
-    void Build() final;
+    void Bind() final;
 };
 } // namespace ES::Plugin::OpenGL

@@ -3,7 +3,7 @@
 #include "resource/Buttons/Buttons.hpp"
 #include "system/AllSystems.hpp"
 
-void ES::Plugin::OpenGL::Plugin::Build()
+void ES::Plugin::OpenGL::Plugin::Bind()
 {
     RegisterResource<ES::Plugin::OpenGL::Resource::Buttons>({});
 

@@ -53,7 +53,7 @@ void Core::AddPlugin()
     }
     #endif
     this->_plugins.emplace(std::type_index(typeid(TPlugin)), std::make_unique<TPlugin>(*this));
-    this->_plugins.at(std::type_index(typeid(TPlugin)))->Build();
+    this->_plugins.at(std::type_index(typeid(TPlugin)))->Bind();
 }
 
 template <typename TPlugin>

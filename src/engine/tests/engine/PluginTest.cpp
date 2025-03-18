@@ -15,12 +15,12 @@ class PluginTestA : public ES::Engine::APlugin {
           };
     ~PluginTestA() = default;
 
-    void Build() final
+    void Bind() final
     {
         RegisterResource<ResourceTest>({});
         RegisterSystems<ES::Engine::Scheduler::Update>([this](ES::Engine::Core &core) {
             auto &resource = core.GetResource<ResourceTest>();
-            resource.data.emplace_back("PluginTestA::Build");
+            resource.data.emplace_back("PluginTestA::Bind");
         });
     }
 };
@@ -33,12 +33,12 @@ class PluginTestB : public ES::Engine::APlugin {
           };
     ~PluginTestB() = default;
 
-    void Build() final
+    void Bind() final
     {
         RequirePlugins<PluginTestA>();
         RegisterSystems<ES::Engine::Scheduler::Update>([this](ES::Engine::Core &core) {
             auto &resource = core.GetResource<ResourceTest>();
-            resource.data.emplace_back("PluginTestB::Build");
+            resource.data.emplace_back("PluginTestB::Bind");
         });
     }
 };
@@ -51,6 +51,6 @@ TEST(Plugin, CasualUse)
 
     auto &resource = core.GetResource<ResourceTest>();
     ASSERT_EQ(resource.data.size(), 2);
-    ASSERT_EQ(resource.data[0], "PluginTestA::Build");
-    ASSERT_EQ(resource.data[1], "PluginTestB::Build");
+    ASSERT_EQ(resource.data[0], "PluginTestA::Bind");
+    ASSERT_EQ(resource.data[1], "PluginTestB::Bind");
 }
