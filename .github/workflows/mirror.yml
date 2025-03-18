@@ -96,6 +96,7 @@ jobs:
         run: |
           dir .\build\windows\
           dir .\build\windows\x64\
+          dir .\build\windows\x64\release\
 
           $fail = $false
           $bins = "${{ env.BINARY_NAMES }}" -split ","
