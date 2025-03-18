@@ -1,6 +1,6 @@
 #include "Core.hpp"
 #include "Logger.hpp"
-#include "APlugin.hpp" // Include APlugin.hpp
+#include "APlugin.hpp"
 
 namespace ES::Engine {
 
