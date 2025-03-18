@@ -3,75 +3,64 @@ name: mirror
 on:
   push:
     branches-ignore:
-     - 'ga-ignore-**'
-     - 'gh-pages'
+      - 'ga-ignore-**'
+      - 'gh-pages'
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
+  UNWANTED_REGEX: '^(?!.*tests\/).*gc(no|da|ov)$|(.*\.(a|o|so))$|(.*~)$|^(#.*#)$|^tmp\/.*|.*\/tmp\/.*'
 
 jobs:
   check_repository_cleanliness:
     name: Checks if the repository is clean and void of any unwanted files (temp files, binary files, etc.)
     runs-on: ubuntu-latest
-    env:
-      UNWANTED_REGEX: ^(?!.*tests\/).*gc(no|da|ov)$|(.*\.(a|o|so))$|(.*~)$|^(#.*#)$|^tmp\/.*|.*\/tmp\/.*
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Find temp files in all directories
+      - name: Find unwanted files
         run: |
-          UNWANTED_FILES=$(find . -type f -printf '%P\n' | { grep -P "${{ env.UNWANTED_REGEX }}" || true; })
-          if [ "$UNWANTED_FILES" != "" ]; then
-              IFS=$'\n'$'\r'
-              for LINE in $UNWANTED_FILES; do
-                  echo "::error file=${LINE},line=1,col=1,title=Unwanted file detected::${LINE}"
-              done
-              echo "FAIL_TASK=true" >> "$GITHUB_ENV"
+          UNWANTED_FILES=$(find . -type f -printf '%P\n' | grep -P "${{ env.UNWANTED_REGEX }}" || true)
+          if [ -n "$UNWANTED_FILES" ]; then
+            while IFS= read -r LINE; do
+              echo "::error file=${LINE},line=1,col=1,title=Unwanted file detected::${LINE}"
+            done <<< "$UNWANTED_FILES"
+            echo "FAIL_TASK=true" >> "$GITHUB_ENV"
+            exit 1
           else
-              echo "FAIL_TASK=false" >> "$GITHUB_ENV"
+            echo "FAIL_TASK=false" >> "$GITHUB_ENV"
           fi
 
-      - name: Fail if needed
-        if: env.FAIL_TASK == 'true'
-        run: exit 1
-
   check_program_compilation:
+    name: Build and verify binaries
+    needs: check_repository_cleanliness
     strategy:
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04, ubuntu-latest, windows-latest]
-        build_folder:
-          - "./build/linux/x86_64/"
-          - "./build/windows/x86_64/"
         include:
           - os: windows-latest
-            build_folder: "./build/windows/x86_64/"
+            build_folder: "./build/windows/x86_64"
           - os: ubuntu-20.04
-            build_folder: "./build/linux/x86_64/"
+            build_folder: "./build/linux/x86_64"
           - os: ubuntu-22.04
-            build_folder: "./build/linux/x86_64/"
+            build_folder: "./build/linux/x86_64"
           - os: ubuntu-latest
-            build_folder: "./build/linux/x86_64/"
-
-    name: Checks if the library compiles correctly and binary files got created
+            build_folder: "./build/linux/x86_64"
     runs-on: ${{ matrix.os }}
-    needs: [check_repository_cleanliness]
     env:
-      BINARY_NAMES: "${{ matrix.build_folder }}/release/libEngineSquared.a,${{ matrix.build_folder }}/release/libEngineSquaredCore.a,${{ matrix.build_folder }}/release/libPluginCamera.a,${{ matrix.build_folder }}/release/libPluginInput.a,${{ matrix.build_folder }}/release/libPluginPhysics.a,${{ matrix.build_folder }}/release/libPluginWindow.a"
+      # List all expected binary files using the proper build folder.
+      BINARY_NAMES: ${{ matrix.build_folder }}/release/libEngineSquared.a,${{ matrix.build_folder }}/release/libEngineSquaredCore.a,${{ matrix.build_folder }}/release/libPluginCamera.a,${{ matrix.build_folder }}/release/libPluginInput.a,${{ matrix.build_folder }}/release/libPluginPhysics.a,${{ matrix.build_folder }}/release/libPluginWindow.a
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Update apt-get
+      - name: Setup Linux dependencies
+        if: runner.os != 'Windows'
         run: |
           sudo apt-get update
-
-      - name: Install OpenGL
-        run: |
           sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
 
       - name: Install xmake
@@ -84,58 +73,60 @@ jobs:
           package-cache-key: '${{ runner.os }}-xmake-entt-vulkan-glm'
           project-path: '.'
 
-      - name: (Try to) build the project
+      - name: Build project
         run: xmake build -y
         timeout-minutes: 8
 
-      - name: Verifies that files are present and executable
+      - name: Verify binaries (Linux)
+        if: runner.os != 'Windows'
         run: |
           echo "FAIL_TASK=false" >> "$GITHUB_ENV"
-          SEARCH_BINARIES="${{ env.BINARY_NAMES }}"
-          IFS=$','
-          for BIN in $SEARCH_BINARIES; do
-            if [ ! -f "${BIN}" ]; then
-              echo "::error file=${BIN},title=Binary not found::${BIN}"
+          IFS=',' read -ra BINS <<< "${{ env.BINARY_NAMES }}"
+          for BIN in "${BINS[@]}"; do
+            if [ ! -f "$BIN" ]; then
+              echo "::error file=$BIN,title=Binary not found::$BIN"
               echo "FAIL_TASK=true" >> "$GITHUB_ENV"
             fi
           done
+          if grep -q "FAIL_TASK=true" "$GITHUB_ENV"; then exit 1; fi
 
-      - name: Fail if needed
-        if: env.FAIL_TASK == 'true'
-        run: exit 1
+      - name: Verify binaries (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $fail = $false
+          $bins = "${{ env.BINARY_NAMES }}" -split ","
+          foreach ($bin in $bins) {
+            if (-not (Test-Path $bin)) {
+              Write-Error "::error file=$bin,title=Binary not found::$bin"
+              $fail = $true
+            }
+          }
+          if ($fail) { exit 1 }
 
   run_tests:
-    name: Run the program tests
+    name: Run tests
+    needs: check_repository_cleanliness
     strategy:
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04, ubuntu-latest, windows-latest]
+        include:
+          - os: windows-latest
+          - os: ubuntu-20.04
+          - os: ubuntu-22.04
+          - os: ubuntu-latest
     runs-on: ${{ matrix.os }}
-    needs: [check_repository_cleanliness]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Update apt-get
-        if: contains(matrix.os, 'ubuntu')
+      - name: Setup Linux test dependencies
+        if: runner.os != 'Windows'
         run: |
           sudo apt-get update
-
-      - name: Install OpenGL
-        if: contains(matrix.os, 'ubuntu')
-        run: |
           sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
-
-      - name: Install python3 and pip
-        if: contains(matrix.os, 'ubuntu')
-        run: |
-          sudo apt-get update
           sudo apt-get install -y python3 python3-pip
-
-      - name: Install gcovr
-        if: contains(matrix.os, 'ubuntu')
-        run: |
           pip3 install gcovr
 
       - name: Install xmake
@@ -148,7 +139,8 @@ jobs:
           package-cache-key: '${{ runner.os }}-xmake-entt-vulkan-glm'
           project-path: '.'
 
-      - name: Starts tests
+      - name: Run tests (Linux)
+        if: runner.os != 'Windows'
         run: |
           xmake test -y -D || {
             find build/.gens/ -type f -name "*.stdout.log" | while read -r file; do
@@ -161,14 +153,30 @@ jobs:
           }
         timeout-minutes: 8
 
-      - name: Check tests coverage
+      - name: Run tests (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (-not (xmake test -y -D)) {
+            Get-ChildItem -Path build\.gens\ -Filter "*.stdout.log" -Recurse | ForEach-Object {
+              if (Select-String -Path $_.FullName -Pattern "FAILED") {
+                Write-Host "File: $($_.FullName)"
+                Get-Content $_.FullName
+              }
+            }
+            exit 1
+          }
+        timeout-minutes: 8
+
+      - name: Check test coverage (Linux)
+        if: runner.os != 'Windows'
         uses: threeal/gcovr-action@v1.1.0
 
   push_to_mirror:
-    name: Pushes the current repository files to a given mirror repository
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
+    name: Push to mirror repository
+    if: github.event_name == 'push'
     needs: [check_program_compilation, run_tests]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -178,7 +186,5 @@ jobs:
       - name: Push mirror repository
         uses: pixta-dev/repository-mirroring-action@v1
         with:
-          target_repo_url:
-            ${{ env.MIRROR_URL }}
-          ssh_private_key:
-            ${{ secrets.GIT_SSH_PRIVATE_KEY }}
+          target_repo_url: ${{ env.MIRROR_URL }}
+          ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
