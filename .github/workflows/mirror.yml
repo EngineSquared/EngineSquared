@@ -50,7 +50,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       # List all expected binary files using the proper build folder.
-      BINARY_NAMES: ${{ matrix.build_folder }}/release/${{ lib_pre }}EngineSquared${{ lib_ext }},${{ matrix.build_folder }}/release/${{ lib_pre }}EngineSquaredCore${{ lib_ext }},${{ matrix.build_folder }}/release/${{ lib_pre }}PluginCamera${{ lib_ext }},${{ matrix.build_folder }}/release/${{ lib_pre }}PluginInput${{ lib_ext }},${{ matrix.build_folder }}/release/${{ lib_pre }}PluginPhysics${{ lib_ext }},${{ matrix.build_folder }}/release/${{ lib_pre }}PluginWindow${{ lib_ext }}
+      BINARY_NAMES: ${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}EngineSquared${{ matrix.lib_ext }},${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}EngineSquaredCore${{ matrix.lib_ext }},${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginCamera${{ matrix.lib_ext }},${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginInput${{ matrix.lib_ext }},${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginPhysics${{ matrix.lib_ext }},${{ matrix.build_folder }}/release/${{ matrix.lib_pre }}PluginWindow${{ matrix.lib_ext }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
