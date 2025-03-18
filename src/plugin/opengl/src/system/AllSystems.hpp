@@ -95,7 +95,7 @@ void InitGLEW(ES::Engine::Core &core)
         /* Problem: glewInit failed, something is seriously wrong. */
         ES::Utils::Log::Error(glewGetErrorString(err));
     }
-    ES::Utils::Log::Info(fmt::format("Using GLEW {}", glewGetString(GLEW_VERSION)));
+    ES::Utils::Log::Info(fmt::format("Using GLEW {}", reinterpret_cast<const char *>(glewGetString(GLEW_VERSION))));
 }
 
 void CheckGLEWVersion(ES::Engine::Core &core)
