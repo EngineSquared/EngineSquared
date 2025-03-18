@@ -39,11 +39,27 @@ jobs:
         run: exit 1
 
   check_program_compilation:
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, ubuntu-22.04, ubuntu-latest, windows-latest]
+        build_folder:
+          - "./build/linux/x86_64/"
+          - "./build/windows/x86_64/"
+        include:
+          - os: windows-latest
+            build_folder: "./build/windows/x86_64/"
+          - os: ubuntu-20.04
+            build_folder: "./build/linux/x86_64/"
+          - os: ubuntu-22.04
+            build_folder: "./build/linux/x86_64/"
+          - os: ubuntu-latest
+            build_folder: "./build/linux/x86_64/"
+
     name: Checks if the library compiles correctly and binary files got created
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     needs: [check_repository_cleanliness]
     env:
-      BINARY_NAMES: "./build/linux/x86_64/release/libEngineSquared.a,./build/linux/x86_64/release/libEngineSquaredCore.a,./build/linux/x86_64/release/libPluginCamera.a,./build/linux/x86_64/release/libPluginInput.a,./build/linux/x86_64/release/libPluginPhysics.a,./build/linux/x86_64/release/libPluginWindow.a"
+      BINARY_NAMES: "${{ matrix.build_folder }}/release/libEngineSquared.a,${{ matrix.build_folder }}/release/libEngineSquaredCore.a,${{ matrix.build_folder }}/release/libPluginCamera.a,${{ matrix.build_folder }}/release/libPluginInput.a,${{ matrix.build_folder }}/release/libPluginPhysics.a,${{ matrix.build_folder }}/release/libPluginWindow.a"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -90,7 +106,10 @@ jobs:
 
   run_tests:
     name: Run the program tests
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, ubuntu-22.04, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     needs: [check_repository_cleanliness]
     steps:
       - name: Checkout repository
