@@ -93,6 +93,7 @@ jobs:
       - name: Verify binaries (Linux)
         if: runner.os != 'Windows'
         run: |
+          ls
           echo "FAIL_TASK=false" >> "$GITHUB_ENV"
           IFS=',' read -ra BINS <<< "${{ env.BINARY_NAMES }}"
           for BIN in "${BINS[@]}"; do
