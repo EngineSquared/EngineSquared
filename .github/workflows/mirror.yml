@@ -41,12 +41,16 @@ jobs:
         include:
           - os: windows-latest
             build_folder: "./build/windows/x64"
+            lib_pre: ""
+            lib_ext: ".lib"
           - os: ubuntu-latest
             build_folder: "./build/linux/x86_64"
+            lib_pre: "lib"
+            lib_ext: ".a"
     runs-on: ${{ matrix.os }}
     env:
       # List all expected binary files using the proper build folder.
-      BINARY_NAMES: ${{ matrix.build_folder }}/release/libEngineSquared.a,${{ matrix.build_folder }}/release/libEngineSquaredCore.a,${{ matrix.build_folder }}/release/libPluginCamera.a,${{ matrix.build_folder }}/release/libPluginInput.a,${{ matrix.build_folder }}/release/libPluginPhysics.a,${{ matrix.build_folder }}/release/libPluginWindow.a
+      BINARY_NAMES: ${{ matrix.build_folder }}/release/${{ lib_pre }}EngineSquared${{ lib_ext }},${{ matrix.build_folder }}/release/${{ lib_pre }}EngineSquaredCore${{ lib_ext }},${{ matrix.build_folder }}/release/${{ lib_pre }}PluginCamera${{ lib_ext }},${{ matrix.build_folder }}/release/${{ lib_pre }}PluginInput${{ lib_ext }},${{ matrix.build_folder }}/release/${{ lib_pre }}PluginPhysics${{ lib_ext }},${{ matrix.build_folder }}/release/${{ lib_pre }}PluginWindow${{ lib_ext }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
