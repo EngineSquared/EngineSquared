@@ -58,13 +58,13 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Linux dependencies
-        if: runner.os != 'Windows'
+        if: contains(runner.os, 'windows') == false
         run: |
           sudo apt-get update
           sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
 
       - name: Setup Windows dependencies
-        if: runner.os == 'Windows'
+        if: contains(runner.os, 'windows')
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Install xmake
@@ -126,7 +126,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Linux test dependencies
-        if: runner.os != 'Windows'
+        if: contains(runner.os, 'windows') == false
         run: |
           sudo apt-get update
           sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
@@ -134,7 +134,7 @@ jobs:
           pip3 install gcovr
 
       - name: Setup Windows dependencies
-        if: runner.os == 'Windows'
+        if: contains(runner.os, 'windows')
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Install xmake
