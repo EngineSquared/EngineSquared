@@ -94,6 +94,9 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
+          dir .\build\windows\
+          dir .\build\windows\x64\
+
           $fail = $false
           $bins = "${{ env.BINARY_NAMES }}" -split ","
           foreach ($bin in $bins) {
