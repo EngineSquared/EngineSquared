@@ -47,8 +47,6 @@ TEST(NativeScripting, speedManagerScript)
     ES::Engine::Core core;
 
     core.RegisterSystem<ES::Engine::Scheduler::Startup>(InitPlayer);
-    core.RunSystems();
-
     core.RegisterSystem<ES::Engine::Scheduler::Update>(ES::Plugin::NativeScripting::System::UpdateScripts);
     testing::internal::CaptureStdout();
 
