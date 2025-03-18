@@ -1,8 +1,8 @@
 #include "Startup.hpp"
 
-void ES::Engine::Scheduler::Startup::RunSystems(USystemList &systems)
+void ES::Engine::Scheduler::Startup::RunSystems()
 {
-    for (auto const &system : systems)
+    for (auto const &system : this->_systemsList.GetSystems())
     {
         (*system)(_registry);
     }

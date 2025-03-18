@@ -1,6 +1,9 @@
 #include "Core.hpp"
 #include "Entity.hpp"
+#include "FixedTimeUpdate.hpp"
 #include "Logger.hpp"
+#include "RelativeTimeUpdate.hpp"
+#include "Startup.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
@@ -42,16 +45,14 @@ void ES::Engine::Core::RunCore()
 
 void ES::Engine::Core::RunSystems()
 {
-
-    for (const auto &[schedulerIndex, scheduler] : this->_schedulers)
+    for (const auto &scheduler : this->_schedulers.GetSchedulers())
     {
-        scheduler->RunSystems(this->_systems[schedulerIndex].GetSystems());
+        scheduler->RunSystems();
     }
 
     for (const auto &scheduler : this->_schedulersToDelete)
     {
-        this->_schedulers.erase(scheduler);
-        this->_systems.erase(scheduler);
+        this->_schedulers.DeleteScheduler(scheduler);
     }
 
     this->_schedulersToDelete.clear();

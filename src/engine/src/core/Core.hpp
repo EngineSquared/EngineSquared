@@ -7,10 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "FixedTimeUpdate.hpp"
-#include "IScheduler.hpp"
-#include "RelativeTimeUpdate.hpp"
-#include "Startup.hpp"
+#include "SchedulerContainer.hpp"
 #include "Update.hpp"
 #include "Shutdown.hpp"
 
@@ -144,9 +141,8 @@ class Core {
 
   private:
     std::unique_ptr<entt::registry> _registry;
-    std::map<std::type_index, std::unique_ptr<Scheduler::IScheduler>> _schedulers;
+    ES::Engine::SchedulerContainer _schedulers;
     std::vector<std::type_index> _schedulersToDelete;
-    std::unordered_map<std::type_index, SystemContainer> _systems;
     bool _running = false;
 };
 } // namespace ES::Engine

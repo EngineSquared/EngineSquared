@@ -33,7 +33,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
         set_default(false)
         set_languages("cxx20")
-        add_packages("entt", "gtest", "spdlog")
+        add_packages("entt", "gtest", "spdlog", "fmt")
         add_links("gtest")
         add_tests("default")
 
