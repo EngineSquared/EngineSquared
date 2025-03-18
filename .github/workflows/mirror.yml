@@ -112,30 +112,14 @@ jobs:
       - name: Run tests (Linux)
         if: runner.os != 'Windows'
         run: |
-          xmake test -y -D || {
-            find build/.gens/ -type f -name "*.stdout.log" | while read -r file; do
-              if grep -q "FAILED" "$file"; then
-                echo "File: $file"
-                cat "$file"
-              fi
-            done
-            exit 1
-          }
+          xmake test -y -D
         timeout-minutes: 8
 
       - name: Run tests (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          if (-not (xmake test -y -D)) {
-            Get-ChildItem -Path build\.gens\ -Filter "*.stdout.log" -Recurse | ForEach-Object {
-              if (Select-String -Path $_.FullName -Pattern "FAILED") {
-                Write-Host "File: $($_.FullName)"
-                Get-Content $_.FullName
-              }
-            }
-            exit 1
-          }
+          xmake test -y -D
         timeout-minutes: 8
 
       - name: Check test coverage (Linux)
