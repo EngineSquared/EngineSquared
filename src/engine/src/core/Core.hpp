@@ -182,7 +182,7 @@ class Core {
     std::unique_ptr<entt::registry> _registry;
     ES::Engine::SchedulerContainer _schedulers;
     std::vector<std::type_index> _schedulersToDelete;
-    std::map<std::type_index, std::unique_ptr<APlugin>> _plugins;
+    std::unordered_map<std::type_index, std::unique_ptr<APlugin>> _plugins;
     bool _running = false;
 };
 } // namespace ES::Engine
