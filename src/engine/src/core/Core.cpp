@@ -3,8 +3,8 @@
 #include "FixedTimeUpdate.hpp"
 #include "Logger.hpp"
 #include "RelativeTimeUpdate.hpp"
-#include "Startup.hpp"
 #include "Shutdown.hpp"
+#include "Startup.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
