@@ -4,6 +4,7 @@
 #include "Logger.hpp"
 #include "RelativeTimeUpdate.hpp"
 #include "Startup.hpp"
+#include "Shutdown.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
@@ -14,6 +15,7 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->RegisterScheduler<ES::Engine::Scheduler::Update>();
     this->RegisterScheduler<ES::Engine::Scheduler::FixedTimeUpdate>();
     this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
+    this->RegisterScheduler<ES::Engine::Scheduler::Shutdown>();
 }
 
 ES::Engine::Entity ES::Engine::Core::CreateEntity()
@@ -31,8 +33,6 @@ void ES::Engine::Core::Stop()
         return;
     }
     _running = false;
-    this->RegisterScheduler<ES::Engine::Scheduler::Shutdown>(
-        [this]() { this->DeleteScheduler<ES::Engine::Scheduler::Shutdown>(); });
 }
 
 void ES::Engine::Core::RunCore()
