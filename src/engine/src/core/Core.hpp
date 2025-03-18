@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "SchedulerContainer.hpp"
-#include "Update.hpp"
 #include "Shutdown.hpp"
+#include "Update.hpp"
 
 namespace ES::Engine {
 /**
