@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Logger.hpp"
 #include "SchedulerContainer.hpp"
 #include "Update.hpp"
 
@@ -32,7 +33,7 @@ class Core {
 
   public:
     Core();
-    ~Core() = default;
+    ~Core();
 
     /**
      * Get the entt::registry that contains all components.
@@ -47,6 +48,13 @@ class Core {
      * @return  The entity created.
      */
     ES::Engine::Entity CreateEntity();
+
+    /**
+     * Kill an entity. It will remove all components from the entity.
+     *
+     * @param   entity  The entity to kill.
+     */
+    void KillEntity(ES::Engine::Entity &entity);
 
     /**
      * Store a resource instance.
