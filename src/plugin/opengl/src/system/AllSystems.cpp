@@ -318,8 +318,10 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 {
     auto &view = core.GetResource<Resource::Camera>().view;
     auto &projection = core.GetResource<Resource::Camera>().projection;
-    core.GetRegistry().view<Component::Mesh, Component::Shader, Component::Material, ES::Plugin::Object::Component::Transform>().each(
-        [&](auto entity, Component::Mesh &mesh, Component::Shader &shader, Component::Material &material, ES::Plugin::Object::Component::Transform &transform) {
+    core.GetRegistry()
+        .view<Component::Mesh, Component::Shader, Component::Material, ES::Plugin::Object::Component::Transform>()
+        .each([&](auto entity, Component::Mesh &mesh, Component::Shader &shader, Component::Material &material,
+                  ES::Plugin::Object::Component::Transform &transform) {
             auto &shaderProgram =
                 core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{shader.name.c_str()});
             const auto materialData =

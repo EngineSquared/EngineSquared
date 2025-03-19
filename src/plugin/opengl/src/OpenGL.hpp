@@ -1,7 +1,7 @@
 #pragma once
 
-#include "component/Shader/Shader.hpp"
 #include "component/Material/Material.hpp"
+#include "component/Shader/Shader.hpp"
 
 #include "plugin/PluginOpenGL.hpp"
 

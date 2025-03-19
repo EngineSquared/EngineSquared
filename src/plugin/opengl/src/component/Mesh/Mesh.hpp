@@ -70,4 +70,4 @@ class Mesh {
     GLuint VBO_normal;
     GLuint IBO;
 };
-} // namespace ES::Plugin::OpenGL::Utils
+} // namespace ES::Plugin::OpenGL::Component
