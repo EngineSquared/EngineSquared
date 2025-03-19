@@ -40,6 +40,7 @@ void SwapBuffers(ES::Engine::Core &core);
 void PollEvents(ES::Engine::Core &core);
 
 void LoadShaderManager(ES::Engine::Core &core);
+void LoadDefaultShader(ES::Engine::Core &core);
 
 void SetupShaderUniforms(ES::Engine::Core &core);
 void LoadMaterialCache(ES::Engine::Core &core);
