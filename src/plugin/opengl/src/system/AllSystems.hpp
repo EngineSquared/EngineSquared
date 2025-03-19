@@ -2,8 +2,10 @@
 
 #include "Entity.hpp"
 #include "GLFWWindow.hpp"
+#include "Material.hpp"
 #include "MaterialCache.hpp"
-#include "Model.hpp"
+#include "Mesh.hpp"
+#include "Shader.hpp"
 #include "ShaderManager.hpp"
 #include "resource/Buttons/Buttons.hpp"
 #include "resource/Camera/Camera.hpp"
