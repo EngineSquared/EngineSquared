@@ -4,15 +4,10 @@
 #include "GLFWWindow.hpp"
 #include "MaterialCache.hpp"
 #include "Model.hpp"
-#include "Object.hpp"
 #include "ShaderManager.hpp"
-#include "core/Core.hpp"
-#include "entt/entt.hpp"
 #include "resource/Buttons/Buttons.hpp"
 #include "resource/Camera/Camera.hpp"
 #include "utils/Light/Light.hpp"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
 
 namespace ES::Plugin::OpenGL::System {

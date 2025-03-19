@@ -11,10 +11,8 @@ void ES::Plugin::OpenGL::Plugin::Bind()
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::SetupGLFWHints);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::CreateGLFWWindow);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LinkGLFWContextToGL);
-    RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::InitGLEW);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::CheckGLEWVersion);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::GLFWEnableVSync);
-    RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::SetupGLFWHints);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadMaterialCache);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadShaderManager);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::CreateCamera);

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "AllSystems.hpp"
 
 void ES::Plugin::OpenGL::System::UpdateKey(ES::Engine::Core &core)
