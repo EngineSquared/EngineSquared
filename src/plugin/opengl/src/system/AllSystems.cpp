@@ -237,7 +237,7 @@ void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
 {
     auto &materialCache = core.RegisterResource<Resource::MaterialCache>({});
-    materialCache.Add(entt::hashed_string("default"), std::move(Utils::Material()));
+    materialCache.Add(entt::hashed_string("default"), std::move(Utils::MaterialData()));
 }
 
 void ES::Plugin::OpenGL::System::CreateCamera(ES::Engine::Core &core)
@@ -305,36 +305,36 @@ void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
     shaderProgram.disable();
 }
 
-static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader,
-                         const ES::Plugin::OpenGL::Utils::Material &material)
+static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shaderProgram,
+                         const ES::Plugin::OpenGL::Utils::MaterialData &material)
 {
-    glUniform3fv(shader.uniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
-    glUniform3fv(shader.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
-    glUniform3fv(shader.uniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
-    glUniform1fv(shader.uniform("Material.Shiness"), 1, &material.Shiness);
+    glUniform3fv(shaderProgram.uniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
+    glUniform3fv(shaderProgram.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
+    glUniform3fv(shaderProgram.uniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
+    glUniform1fv(shaderProgram.uniform("Material.Shiness"), 1, &material.Shiness);
 }
 
 void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 {
     auto &view = core.GetResource<Resource::Camera>().view;
     auto &projection = core.GetResource<Resource::Camera>().projection;
-    core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Transform>().each(
-        [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform) {
-            auto &shader =
-                core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{model.shaderName.c_str()});
-            const auto material =
-                core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
-            shader.use();
-            LoadMaterial(shader, material);
+    core.GetRegistry().view<Component::Mesh, Component::Shader, Component::Material, ES::Plugin::Object::Component::Transform>().each(
+        [&](auto entity, Component::Mesh &mesh, Component::Shader &shader, Component::Material &material, ES::Plugin::Object::Component::Transform &transform) {
+            auto &shaderProgram =
+                core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{shader.name.c_str()});
+            const auto materialData =
+                core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{material.name.c_str()});
+            shaderProgram.use();
+            LoadMaterial(shaderProgram, materialData);
             glm::mat4 modelmat = transform.getTransformationMatrix();
             glm::mat4 mview = view * modelmat;
             glm::mat4 mvp = projection * view * modelmat;
             glm::mat4 imvp = glm::inverse(modelmat);
             auto nmat = glm::mat3(glm::transpose(imvp)); // normal matrix
-            glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
-            glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
-            glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
-            model.mesh.draw();
-            shader.disable();
+            glUniformMatrix3fv(shaderProgram.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
+            glUniformMatrix4fv(shaderProgram.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
+            glUniformMatrix4fv(shaderProgram.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
+            mesh.draw();
+            shaderProgram.disable();
         });
 }

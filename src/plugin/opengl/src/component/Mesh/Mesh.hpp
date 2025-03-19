@@ -9,9 +9,9 @@
 #include <vector>
 
 #include "Loader.hpp"
-#include "Material.hpp"
+#include "MaterialData.hpp"
 
-namespace ES::Plugin::OpenGL::Utils {
+namespace ES::Plugin::OpenGL::Component {
 class Mesh {
   public:
     Mesh() = default;
