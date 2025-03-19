@@ -25,6 +25,8 @@ namespace ES::Engine {
  */
 class Entity;
 
+class APlugin;
+
 class Core {
   private:
     using USystem = std::function<void(Core &)>;
@@ -142,14 +144,53 @@ class Core {
     bool IsEntityValid(entt::entity entity);
 
     /**
+     * @brief Adds multiple plugins to the core engine.
+     *
+     * This function template allows the addition of multiple plugins to the core engine.
+     *
+     * @tparam TPlugins Variadic template parameter pack representing the types of the plugins to be added.
+     */
+    template <typename... TPlugins> void AddPlugins();
+
+    /**
+     * @brief Checks if a plugin of the specified type is present.
+     *
+     * @tparam TPlugin The type of the plugin to check for.
+     * @return true if the plugin is present, false otherwise.
+     */
+    template <typename TPlugin> bool HasPlugin() const;
+
+    /**
+     * @brief Checks if a plugin of the specified type is present.
+     *
+     * @warning If you know the type of the plugin at compile time, prefer the template version of this function.
+     *
+     * @param type The type of the plugin to check for.
+     * @return true if the plugin is present, false otherwise.
+     */
+    bool HasPlugin(std::type_index type) const;
+
+    /**
      * Clear all entities and components from the registry.
      */
     void ClearEntities();
 
   private:
+    /**
+     * @brief Adds a plugin of type TPlugin to the engine.
+     *
+     * This function template allows the addition of a plugin to the engine. The plugin
+     * type is specified as a template parameter.
+     *
+     * @tparam TPlugin The type of the plugin to be added.
+     */
+    template <typename TPlugin> void AddPlugin();
+
+  private:
     std::unique_ptr<entt::registry> _registry;
     ES::Engine::SchedulerContainer _schedulers;
     std::vector<std::type_index> _schedulersToDelete;
+    std::unordered_map<std::type_index, std::unique_ptr<APlugin>> _plugins;
     bool _running = false;
 };
 } // namespace ES::Engine
