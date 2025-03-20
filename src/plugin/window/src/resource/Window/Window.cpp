@@ -1,11 +1,16 @@
 #include "Window.hpp"
+#include "Logger.hpp"
 
 namespace ES::Plugin::Window::Resource {
 
 Window::Window(uint32_t width, uint32_t height, const std::string &title, GLFWmonitor *monitor, GLFWwindow *share)
     : _width(width), _height(height), _title(title), _window(nullptr), _monitor(monitor), _share(share)
 {
-    Create();
+    _window = glfwCreateWindow(_width, _height, _title.c_str(), _monitor, _share);
+    #ifdef ES_DEBUG
+    if (!_window)
+        ES::Utils::Error("Failed to create window");
+    #endif
 }
 
 void Window::Destroy()
@@ -15,29 +20,6 @@ void Window::Destroy()
 
     /* To use in a shutdown scheduler */
     glfwDestroyWindow(_window);
-    glfwTerminate();
-}
-
-void Window::InitGLFW()
-{
-    if (!glfwInit())
-        throw ES::Plugin::Window::Exception::WindowError("Failed to initialize GLFW");
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-}
-
-void Window::Create()
-{
-    InitGLFW();
-
-    _window = glfwCreateWindow(_width, _height, _title.c_str(), _monitor, _share);
-
-    if (!_window)
-    {
-        glfwTerminate();
-        throw ES::Plugin::Window::Exception::WindowError("Failed to create GLFW window");
-    }
-
-    glfwMakeContextCurrent(_window);
 }
 
 void Window::GetWindowSize(int &width, int &height)

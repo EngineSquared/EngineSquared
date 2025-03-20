@@ -27,7 +27,6 @@
 
 #include "Button/Buttons.hpp"
 #include "Engine.hpp"
-#include "GLFWWindow/GLFWWindow.hpp"
 #include "Window/Window.hpp"
 
 #include <iostream>
@@ -144,6 +143,15 @@ void SwapBuffers(ES::Engine::Core &core);
  * @param core  The Engine² Core.
  */
 void StopSystems(ES::Engine::Core &core);
+
+/**
+ * @brief Load the buttons resource
+ *
+ * This function create the buttons resource that will manage buttons (mouse and keyboard).
+ *
+ * @param core  The Engine² Core.
+ */
+void LoadButtons(ES::Engine::Core &core);
 
 } // namespace ES::Plugin::Window::System
 

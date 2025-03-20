@@ -5,15 +5,7 @@ namespace ES::Plugin::Window::System {
 
 void CreateWindowSystem(ES::Engine::Core &core)
 {
-    try
-    {
-        core.RegisterResource<Resource::Window>(
-            Resource::Window(DEFAULT_WIDTH, DEFAULT_HEIGHT, "EngineSquared", nullptr, nullptr));
-    }
-    catch (const Exception::WindowError &e)
-    {
-        ES::Utils::Log::Error(e.what());
-    }
+    core.RegisterResource<Resource::Window>(Resource::Window(DEFAULT_WIDTH, DEFAULT_HEIGHT, "EngineSquared", nullptr, nullptr));
 }
 
 void EnableVSync(ES::Engine::Core &) { glfwSwapInterval(1); }
@@ -92,5 +84,7 @@ void StopSystems(ES::Engine::Core &core)
         core.Stop();
     }
 }
+
+void LoadButtons(ES::Engine::Core &core) { core.RegisterResource<Resource::Buttons>(Resource::Buttons()); }
 
 } // namespace ES::Plugin::Window::System
