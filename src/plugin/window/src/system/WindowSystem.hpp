@@ -28,6 +28,7 @@
 #include "Button/Buttons.hpp"
 #include "Engine.hpp"
 #include "Window/Window.hpp"
+#include "GLFWWindow/GLFWWindow.hpp"
 
 #include <iostream>
 

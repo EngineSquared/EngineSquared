@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Window.hpp"
-
 namespace ES::Plugin::Window::Resource {
-struct ESQWindow {
+struct GLFWWindow {
     Window *window;
 };
 } // namespace ES::Plugin::Window::Resource

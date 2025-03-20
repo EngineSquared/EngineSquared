@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Entity.hpp"
-#include "GLFWWindow.hpp"
 #include "MaterialCache.hpp"
 #include "Model.hpp"
 #include "ShaderManager.hpp"
