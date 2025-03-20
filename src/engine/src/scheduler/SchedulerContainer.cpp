@@ -4,7 +4,7 @@ void ES::Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
 {
     if (_idToIndex.contains(id))
     {
-#ifdef DEBUG
+#ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("Deleting scheduler: {}", id.name()));
 #endif
         _orderedSchedulers.erase(_orderedSchedulers.begin() + _idToIndex[id]);

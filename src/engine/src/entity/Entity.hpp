@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.hpp"
+#include "Logger.hpp"
 #include <entt/entt.hpp>
 #include <typeindex>
 
@@ -28,9 +29,38 @@ class Entity {
      *
      * @param   entt    index value in the registry
      */
-    explicit(false) Entity(entt::entity entity) : _entity(FromEnttEntity(entity)) {}
+    explicit(false) Entity(entt::entity entity) : Entity(FromEnttEntity(entity)) {}
 
     ~Entity() = default;
+
+    /**
+     * Create a new entity in the registry.
+     *
+     * @param   registry    registry used to store the entity
+     * @return  new entity
+     */
+    static Entity Create(Core &registry)
+    {
+        Entity entity = registry.CreateEntity();
+#ifdef ES_DEBUG
+        ES::Utils::Log::Info(fmt::format("[EntityID:{}] Create Entity", entity_id_type(entity)));
+#endif
+        return entity;
+    }
+
+    /**
+     * Destroy an entity in the registry.
+     *
+     * @param   registry    registry used to store the entity
+     * @return  void
+     */
+    void Destroy(Core &registry)
+    {
+#ifdef ES_DEBUG
+        ES::Utils::Log::Info(fmt::format("[EntityID:{}] Destroy Entity", _entity));
+#endif
+        registry.KillEntity(*this);
+    }
 
     /**
      * Implicit cast into entt::entity.
@@ -59,6 +89,9 @@ class Entity {
 
     template <typename TComponent> inline decltype(auto) AddComponent(Core &registry, TComponent &&component)
     {
+#ifdef ES_DEBUG
+        ES::Utils::Log::Info(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
+#endif
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity),
                                                           std::forward<TComponent>(component));
     }
@@ -75,6 +108,9 @@ class Entity {
     template <typename TComponent, typename... TArgs>
     inline decltype(auto) AddComponent(Core &registry, TArgs &&...args)
     {
+#ifdef ES_DEBUG
+        ES::Utils::Log::Info(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
+#endif
         return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
     }
 
@@ -114,6 +150,9 @@ class Entity {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
             temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Core &reg) {
+#ifdef ES_DEBUG
+                ES::Utils::Log::Info(fmt::format("RemoveTemporaryComponent: {}", typeid(TTempComponent).name()));
+#endif
                 reg.GetRegistry().clear<TTempComponent>();
             };
         }
@@ -149,6 +188,9 @@ class Entity {
      */
     template <typename TComponent> inline void RemoveComponent(Core &registry)
     {
+#ifdef ES_DEBUG
+        ES::Utils::Log::Info(fmt::format("[EntityID:{}] RemoveComponent: {}", _entity, typeid(TComponent).name()));
+#endif
         registry.GetRegistry().remove<TComponent>(ToEnttEntity(this->_entity));
     }
 

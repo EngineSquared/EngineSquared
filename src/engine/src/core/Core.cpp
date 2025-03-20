@@ -7,6 +7,9 @@
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
+#ifdef ES_DEBUG
+    ES::Utils::Log::Info("Create Core");
+#endif
     this->_registry = std::make_unique<entt::registry>();
 
     this->RegisterScheduler<ES::Engine::Scheduler::Startup>(
@@ -16,9 +19,21 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
 }
 
+ES::Engine::Core::~Core()
+{
+#ifdef ES_DEBUG
+    ES::Utils::Log::Info("Destroy Core");
+#endif
+}
+
 ES::Engine::Entity ES::Engine::Core::CreateEntity()
 {
     return static_cast<ES::Engine::Entity>(this->_registry->create());
+}
+
+void ES::Engine::Core::KillEntity(ES::Engine::Entity &entity)
+{
+    this->_registry->destroy(static_cast<entt::entity>(entity));
 }
 
 bool ES::Engine::Core::IsRunning() { return _running; }
@@ -57,3 +72,5 @@ void ES::Engine::Core::RunSystems()
 bool ES::Engine::Core::IsEntityValid(entt::entity entity) { return GetRegistry().valid(entity); }
 
 void ES::Engine::Core::ClearEntities() { this->_registry->clear(); }
+
+bool ES::Engine::Core::HasPlugin(std::type_index type) const { return this->_plugins.contains(type); }
