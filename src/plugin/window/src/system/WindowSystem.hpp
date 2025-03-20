@@ -25,10 +25,10 @@
 #ifndef WINDOWSYSTEM_HPP_
 #define WINDOWSYSTEM_HPP_
 
-#include "Engine.hpp"
-#include "Window/Window.hpp"
 #include "Button/Buttons.hpp"
 #include "Camera/Camera.hpp"
+#include "Engine.hpp"
+#include "Window/Window.hpp"
 
 #include <iostream>
 
