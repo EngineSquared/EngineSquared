@@ -12,7 +12,7 @@ class Update : public AScheduler {
   public:
     using AScheduler::AScheduler;
     void RunSystems() override;
-  
+
     /**
      * @brief Get the current delta time
      * The delta time is the time between the last system run and the current system run.
@@ -24,6 +24,5 @@ class Update : public AScheduler {
   private:
     float _elapsedTime = 0.0f;
     std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime = std::chrono::high_resolution_clock::now();
-
 };
 } // namespace ES::Engine::Scheduler
