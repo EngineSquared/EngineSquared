@@ -93,7 +93,8 @@ void ES::Plugin::OpenGL::System::CheckGLEWVersion(const ES::Engine::Core &)
 // void ES::Plugin::OpenGL::System::UpdatePosCursor(ES::Engine::Core &core)
 // {
 //     auto &currentMousePos = core.GetResource<Resource::Buttons>().currentMousePos;
-//     glfwGetCursorPos(core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow(), &currentMousePos.x, &currentMousePos.y);
+//     glfwGetCursorPos(core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow(), &currentMousePos.x,
+//     &currentMousePos.y);
 // }
 
 // Function to handle mouse dragging interactions

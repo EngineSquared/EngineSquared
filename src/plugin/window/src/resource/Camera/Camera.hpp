@@ -15,4 +15,4 @@ class Camera {
     glm::mat4 view;
     glm::mat4 projection;
 };
-} // namespace ES::Plugin::OpenGL::Resource
+} // namespace ES::Plugin::Window::Resource

@@ -111,10 +111,7 @@ void MouseDragging(ES::Engine::Core &core)
     lastMousePos.y = currentMousePos.y;
 }
 
-void SwapBuffers(ES::Engine::Core &core)
-{
-    glfwSwapBuffers(core.GetResource<Resource::Window>().GetGLFWWindow());
-}
+void SwapBuffers(ES::Engine::Core &core) { glfwSwapBuffers(core.GetResource<Resource::Window>().GetGLFWWindow()); }
 
 void StopSystems(ES::Engine::Core &core)
 {
@@ -124,4 +121,4 @@ void StopSystems(ES::Engine::Core &core)
     }
 }
 
-} // namespace System
+} // namespace ES::Plugin::Window::System
