@@ -26,8 +26,9 @@
 #define WINDOWSYSTEM_HPP_
 
 #include "Engine.hpp"
-
-#include "Window.hpp"
+#include "Window/Window.hpp"
+#include "Button/Buttons.hpp"
+#include "Camera/Camera.hpp"
 
 #include <iostream>
 
@@ -71,6 +72,24 @@ void PollEvents(ES::Engine::Core &core);
  * @param core  The Engine² Core.
  */
 void UpdateKey(ES::Engine::Core &core);
+
+void UpdateButton(ES::Engine::Core &core);
+
+void SaveLastMousePos(ES::Engine::Core &core);
+
+void InitGLFW(const ES::Engine::Core &core);
+
+void SetupGLFWHints(const ES::Engine::Core &core);
+
+void LinkGLFWContextToGL(ES::Engine::Core &core);
+
+void UpdatePosCursor(ES::Engine::Core &core);
+
+void MouseDragging(ES::Engine::Core &core);
+
+void SwapBuffers(ES::Engine::Core &core);
+
+void StopSystems(ES::Engine::Core &core);
 
 } // namespace ES::Plugin::Window::System
 

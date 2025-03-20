@@ -13,16 +13,21 @@ void Window::Destroy()
     if (!_window)
         throw ES::Plugin::Window::Exception::WindowError("Window is not created");
 
+    /* To use in a shutdown scheduler */
     glfwDestroyWindow(_window);
     glfwTerminate();
 }
 
-void Window::Create()
+void Window::InitGLFW()
 {
     if (!glfwInit())
         throw ES::Plugin::Window::Exception::WindowError("Failed to initialize GLFW");
-
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+}
+
+void Window::Create()
+{
+    InitGLFW();
 
     _window = glfwCreateWindow(_width, _height, _title.c_str(), _monitor, _share);
 

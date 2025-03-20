@@ -1,73 +1,73 @@
 #include "AllSystems.hpp"
 
-void ES::Plugin::OpenGL::System::UpdateKey(ES::Engine::Core &core)
-{
-    GLFWwindow *window = core.GetResource<Resource::GLFWWindow>().window;
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
+// void ES::Plugin::OpenGL::System::UpdateKey(ES::Engine::Core &core)
+// {
+//     GLFWwindow *window = core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow();
+//     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+//         glfwSetWindowShouldClose(window, GLFW_TRUE);
+// }
 
-void ES::Plugin::OpenGL::System::UpdateButton(ES::Engine::Core &core)
-{
-    GLFWwindow *window = core.GetResource<Resource::GLFWWindow>().window;
-    auto &mouseButtons = core.GetResource<OpenGL::Resource::Buttons>().mouse;
-    for (auto &[key, button] : mouseButtons)
-    {
-        bool pressed = glfwGetMouseButton(window, key) == GLFW_PRESS;
-        button.pressed = pressed;
-        button.updated = button.pressed != pressed;
-    }
-}
+// void ES::Plugin::OpenGL::System::UpdateButton(ES::Engine::Core &core)
+// {
+//     GLFWwindow *window = core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow();
+// auto &mouseButtons = core.GetResource<OpenGL::Resource::Buttons>().mouse;
+//     for (auto &[key, button] : mouseButtons)
+//     {
+//         bool pressed = glfwGetMouseButton(window, key) == GLFW_PRESS;
+//         button.pressed = pressed;
+//         button.updated = button.pressed != pressed;
+//     }
+// }
 
-void ES::Plugin::OpenGL::System::SaveLastMousePos(ES::Engine::Core &core)
-{
-    auto &buttons = core.GetResource<Resource::Buttons>();
-    auto &lastMousePos = buttons.lastMousePos;
-    auto &mouseButtons = buttons.mouse;
-    auto window = core.GetResource<Resource::GLFWWindow>().window;
-    if (mouseButtons[GLFW_MOUSE_BUTTON_LEFT].updated || mouseButtons[GLFW_MOUSE_BUTTON_MIDDLE].updated ||
-        mouseButtons[GLFW_MOUSE_BUTTON_RIGHT].updated)
-    {
-        double xpos = 0;
-        double ypos = 0;
-        glfwGetCursorPos(window, &xpos, &ypos);
-        lastMousePos.x = xpos;
-        lastMousePos.y = ypos;
-    }
-}
+// void ES::Plugin::OpenGL::System::SaveLastMousePos(ES::Engine::Core &core)
+// {
+//     auto &buttons = core.GetResource<Resource::Buttons>();
+//     auto &lastMousePos = buttons.lastMousePos;
+//     auto &mouseButtons = buttons.mouse;
+//     auto window = core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow();
+//     if (mouseButtons[GLFW_MOUSE_BUTTON_LEFT].updated || mouseButtons[GLFW_MOUSE_BUTTON_MIDDLE].updated ||
+//         mouseButtons[GLFW_MOUSE_BUTTON_RIGHT].updated)
+//     {
+//         double xpos = 0;
+//         double ypos = 0;
+//         glfwGetCursorPos(window, &xpos, &ypos);
+//         lastMousePos.x = xpos;
+//         lastMousePos.y = ypos;
+//     }
+// }
 
-void ES::Plugin::OpenGL::System::InitGLFW(const ES::Engine::Core &)
-{
-    if (!glfwInit())
-    {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
-        return;
-    }
-}
+// void ES::Plugin::OpenGL::System::InitGLFW(const ES::Engine::Core &)
+// {
+//     if (!glfwInit())
+//     {
+//         std::cerr << "Failed to initialize GLFW" << std::endl;
+//         return;
+//     }
+// }
 
-void ES::Plugin::OpenGL::System::SetupGLFWHints(const ES::Engine::Core &)
-{
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-}
+// void ES::Plugin::OpenGL::System::SetupGLFWHints(const ES::Engine::Core &)
+// {
+//     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+//     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+//     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+// }
 
-void ES::Plugin::OpenGL::System::CreateGLFWWindow(ES::Engine::Core &core)
-{
-    if (!core.RegisterResource<Resource::GLFWWindow>(
-                 {glfwCreateWindow(DEFAULT_WIDTH, DEFAULT_HEIGHT, "OpenGL Framework", nullptr, nullptr)})
-             .window)
-    {
-        glfwTerminate();
-        std::cerr << "Failed to create GLFW window" << std::endl;
-        return;
-    }
-}
+// void ES::Plugin::OpenGL::System::CreateGLFWWindow(ES::Engine::Core &core)
+// {
+//     if (!core.RegisterResource<ES::Plugin::Window::Resource::Window>(
+//                  {glfwCreateWindow(DEFAULT_WIDTH, DEFAULT_HEIGHT, "OpenGL Framework", nullptr, nullptr)})
+//              .window)
+//     {
+//         glfwTerminate();
+//         std::cerr << "Failed to create GLFW window" << std::endl;
+//         return;
+//     }
+// }
 
-void ES::Plugin::OpenGL::System::LinkGLFWContextToGL(ES::Engine::Core &core)
-{
-    glfwMakeContextCurrent(core.GetResource<Resource::GLFWWindow>().window);
-}
+// void ES::Plugin::OpenGL::System::LinkGLFWContextToGL(ES::Engine::Core &core)
+// {
+//     glfwMakeContextCurrent(core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow());
+// }
 
 void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 {
@@ -88,49 +88,49 @@ void ES::Plugin::OpenGL::System::CheckGLEWVersion(const ES::Engine::Core &)
     std::cout << "OpenGL 4.2 supported" << std::endl;
 }
 
-void ES::Plugin::OpenGL::System::GLFWEnableVSync(ES::Engine::Core &core) { glfwSwapInterval(1); }
+// void ES::Plugin::OpenGL::System::GLFWEnableVSync(ES::Engine::Core &core) { glfwSwapInterval(1); }
 
-void ES::Plugin::OpenGL::System::UpdatePosCursor(ES::Engine::Core &core)
-{
-    auto &currentMousePos = core.GetResource<Resource::Buttons>().currentMousePos;
-    glfwGetCursorPos(core.GetResource<Resource::GLFWWindow>().window, &currentMousePos.x, &currentMousePos.y);
-}
+// void ES::Plugin::OpenGL::System::UpdatePosCursor(ES::Engine::Core &core)
+// {
+//     auto &currentMousePos = core.GetResource<Resource::Buttons>().currentMousePos;
+//     glfwGetCursorPos(core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow(), &currentMousePos.x, &currentMousePos.y);
+// }
 
 // Function to handle mouse dragging interactions
-void ES::Plugin::OpenGL::System::MouseDragging(ES::Engine::Core &core)
-{
-    auto &buttons = core.GetResource<Resource::Buttons>();
-    auto &lastMousePos = buttons.lastMousePos;
-    auto &currentMousePos = buttons.currentMousePos;
-    auto &mouseButtons = buttons.mouse;
-    auto &camera = core.GetResource<Resource::Camera>();
-    if (mouseButtons[GLFW_MOUSE_BUTTON_LEFT].pressed)
-    {
-        float fractionChangeX = static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
-        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
-        camera.viewer.rotate(fractionChangeX, fractionChangeY);
-    }
-    else if (mouseButtons[GLFW_MOUSE_BUTTON_MIDDLE].pressed)
-    {
-        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
-        camera.viewer.zoom(fractionChangeY);
-    }
-    else if (mouseButtons[GLFW_MOUSE_BUTTON_RIGHT].pressed)
-    {
-        float fractionChangeX = static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
-        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
-        camera.viewer.translate(-fractionChangeX, -fractionChangeY, true);
-    }
-    lastMousePos.x = currentMousePos.x;
-    lastMousePos.y = currentMousePos.y;
-}
+// void ES::Plugin::OpenGL::System::MouseDragging(ES::Engine::Core &core)
+// {
+//     auto &buttons = core.GetResource<Resource::Buttons>();
+//     auto &lastMousePos = buttons.lastMousePos;
+//     auto &currentMousePos = buttons.currentMousePos;
+//     auto &mouseButtons = buttons.mouse;
+//     auto &camera = core.GetResource<Resource::Camera>();
+//     if (mouseButtons[GLFW_MOUSE_BUTTON_LEFT].pressed)
+//     {
+//         float fractionChangeX = static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
+//         float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
+//         camera.viewer.rotate(fractionChangeX, fractionChangeY);
+//     }
+//     else if (mouseButtons[GLFW_MOUSE_BUTTON_MIDDLE].pressed)
+//     {
+//         float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
+//         camera.viewer.zoom(fractionChangeY);
+//     }
+//     else if (mouseButtons[GLFW_MOUSE_BUTTON_RIGHT].pressed)
+//     {
+//         float fractionChangeX = static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
+//         float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
+//         camera.viewer.translate(-fractionChangeX, -fractionChangeY, true);
+//     }
+//     lastMousePos.x = currentMousePos.x;
+//     lastMousePos.y = currentMousePos.y;
+// }
 
-void ES::Plugin::OpenGL::System::SwapBuffers(ES::Engine::Core &core)
-{
-    glfwSwapBuffers(core.GetResource<Resource::GLFWWindow>().window);
-}
+// void ES::Plugin::OpenGL::System::SwapBuffers(ES::Engine::Core &core)
+// {
+//     glfwSwapBuffers(core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow());
+// }
 
-void ES::Plugin::OpenGL::System::PollEvents(ES::Engine::Core &core) { glfwPollEvents(); }
+// void ES::Plugin::OpenGL::System::PollEvents(ES::Engine::Core &core) { glfwPollEvents(); }
 
 void ES::Plugin::OpenGL::System::LoadShaderManager(ES::Engine::Core &core)
 {

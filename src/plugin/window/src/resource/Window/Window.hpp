@@ -43,6 +43,8 @@ class Window {
      */
     void Create();
 
+    void InitGLFW();
+
     /**
      * @brief Destroy the window.
      */

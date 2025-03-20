@@ -2,6 +2,7 @@ add_requires("entt", "gtest", "glm", "spdlog", "fmt", "glfw >=3.4", "glew")
 
 includes("../../engine/xmake.lua")
 includes("../object/xmake.lua")
+includes("../window/xmake.lua")
 
 target("PluginOpenGL")
     set_kind("static")
@@ -15,6 +16,7 @@ target("PluginOpenGL")
 
     add_deps("EngineSquaredCore")
     add_deps("PluginObject")
+    add_deps("PluginWindow")
 
     add_files("src/**.cpp")
 
@@ -30,7 +32,6 @@ target("PluginOpenGL")
     add_includedirs("src/resource/GLFWWindow/", {public = true})
     add_includedirs("src/resource/MaterialCache/", {public = true})
     add_includedirs("src/resource/Camera/", {public = true})
-    add_includedirs("src/resource/Buttons/", {public = true})
     add_includedirs("src/system/", {public = true})
     add_includedirs("src/plugin/", {public = true})
     add_headerfiles("src/**.hpp")
