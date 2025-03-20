@@ -75,7 +75,8 @@ void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
     {
         ES::Utils::Log::Error(fmt::format("Error: {}", reinterpret_cast<const char *>(glewGetErrorString(err))));
     }
-    ES::Utils::Log::Info(fmt::format("Status: Using GLEW {}", reinterpret_cast<const char *>(glewGetString(GLEW_VERSION))));
+    ES::Utils::Log::Info(
+        fmt::format("Status: Using GLEW {}", reinterpret_cast<const char *>(glewGetString(GLEW_VERSION))));
 }
 
 void ES::Plugin::OpenGL::System::CheckGLEWVersion(const ES::Engine::Core &)
