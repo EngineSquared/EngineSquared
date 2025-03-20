@@ -2,6 +2,7 @@
 
 #include "Entity.hpp"
 #include "GLFWWindow.hpp"
+#include "Logger.hpp"
 #include "MaterialCache.hpp"
 #include "Model.hpp"
 #include "ShaderManager.hpp"

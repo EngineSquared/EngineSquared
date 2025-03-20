@@ -45,7 +45,7 @@ class SceneManager {
                       "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
         if (_scenes.contains(name))
         {
-            ES::Utils::Log::Warn("Scene " + name + " already exists");
+            ES::Utils::Log::Warn(fmt::format("Scene {} already exists", name));
         }
         std::shared_ptr<TScene> new_scene = std::make_shared<TScene>();
         _scenes[name] = new_scene;

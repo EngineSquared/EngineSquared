@@ -1,6 +1,7 @@
 // Original author: mankyu sung
 
 #include "Viewer.hpp"
+#include "Logger.hpp"
 #include <glm/gtc/quaternion.hpp>
 #include <iostream>
 
@@ -82,8 +83,7 @@ void makeOrthogonalTo(glm::vec3 &vec1, const glm::vec3 &vec2)
 
     if (length == 0)
     {
-        std::cout << "Warning: called MathVec3D::makeOrthogonalTo with zero vector as the argument.  Doing nothing."
-                  << std::endl;
+        ES::Utils::Log::Warn("Called MathVec3D::makeOrthogonalTo with zero vector as the argument. Doing nothing.");
     }
     else
     {
