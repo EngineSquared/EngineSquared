@@ -29,4 +29,4 @@ class ANativeScripting {
 
     virtual void _onDestroy(ES::Engine::Core &registry) = 0;
 };
-} // namespace ES::Plugin::Window::Utils
+} // namespace ES::Plugin::NativeScripting::Utils
