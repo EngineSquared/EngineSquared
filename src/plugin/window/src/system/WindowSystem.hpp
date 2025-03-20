@@ -26,7 +26,6 @@
 #define WINDOWSYSTEM_HPP_
 
 #include "Button/Buttons.hpp"
-#include "Camera/Camera.hpp"
 #include "Engine.hpp"
 #include "Window/Window.hpp"
 
@@ -126,15 +125,6 @@ void LinkGLFWContextToGL(ES::Engine::Core &core);
  * @param core  The Engine² Core.
  */
 void UpdatePosCursor(ES::Engine::Core &core);
-
-/**
- * @brief Handle the mouse dragging event
- *
- * This function handles the mouse dragging event.
- *
- * @param core  The Engine² Core.
- */
-void MouseDragging(ES::Engine::Core &core);
 
 /**
  * @brief Swap the buffers

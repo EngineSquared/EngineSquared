@@ -16,9 +16,9 @@ void CreateWindowSystem(ES::Engine::Core &core)
     }
 }
 
-void EnableVSync(ES::Engine::Core &core) { glfwSwapInterval(1); }
+void EnableVSync(ES::Engine::Core &) { glfwSwapInterval(1); }
 
-void PollEvents(ES::Engine::Core &core) { glfwPollEvents(); }
+void PollEvents(ES::Engine::Core &) { glfwPollEvents(); }
 
 void UpdateKey(ES::Engine::Core &core)
 {
@@ -81,34 +81,6 @@ void UpdatePosCursor(ES::Engine::Core &core)
 {
     auto &currentMousePos = core.GetResource<Resource::Buttons>().currentMousePos;
     glfwGetCursorPos(core.GetResource<Resource::Window>().GetGLFWWindow(), &currentMousePos.x, &currentMousePos.y);
-}
-
-void MouseDragging(ES::Engine::Core &core)
-{
-    auto &buttons = core.GetResource<Resource::Buttons>();
-    auto &lastMousePos = buttons.lastMousePos;
-    auto &currentMousePos = buttons.currentMousePos;
-    auto &mouseButtons = buttons.mouse;
-    auto &camera = core.GetResource<Resource::Camera>();
-    if (mouseButtons[GLFW_MOUSE_BUTTON_LEFT].pressed)
-    {
-        float fractionChangeX = static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
-        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
-        camera.viewer.rotate(fractionChangeX, fractionChangeY);
-    }
-    else if (mouseButtons[GLFW_MOUSE_BUTTON_MIDDLE].pressed)
-    {
-        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
-        camera.viewer.zoom(fractionChangeY);
-    }
-    else if (mouseButtons[GLFW_MOUSE_BUTTON_RIGHT].pressed)
-    {
-        float fractionChangeX = static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
-        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
-        camera.viewer.translate(-fractionChangeX, -fractionChangeY, true);
-    }
-    lastMousePos.x = currentMousePos.x;
-    lastMousePos.y = currentMousePos.y;
 }
 
 void SwapBuffers(ES::Engine::Core &core) { glfwSwapBuffers(core.GetResource<Resource::Window>().GetGLFWWindow()); }
