@@ -5,7 +5,8 @@ namespace ES::Plugin::Window::System {
 
 void CreateWindowSystem(ES::Engine::Core &core)
 {
-    core.RegisterResource<Resource::Window>(Resource::Window(DEFAULT_WIDTH, DEFAULT_HEIGHT, "EngineSquared", nullptr, nullptr));
+    core.RegisterResource<Resource::Window>(
+        Resource::Window(DEFAULT_WIDTH, DEFAULT_HEIGHT, "EngineSquared", nullptr, nullptr));
 }
 
 void EnableVSync(ES::Engine::Core &) { glfwSwapInterval(1); }
