@@ -26,8 +26,8 @@ struct NativeScripting {
         OnCreate = [&core](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
             static_cast<T *>(instance)->OnCreate(core);
         };
-        OnDestroy = [](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
-            static_cast<T *>(instance)->OnDestroy();
+        OnDestroy = [&core](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
+            static_cast<T *>(instance)->OnDestroy(core);
         };
         OnUpdate = [&core](ES::Plugin::NativeScripting::Utils::ScriptableEntity *instance) {
             static_cast<T *>(instance)->OnUpdate(core);
