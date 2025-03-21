@@ -50,11 +50,13 @@ class OBJLoader {
      *
      * @param path path to the .obj file
      * @param vertices vector to store the vertices
+     * @param normals vector to store the normals
+     * @param texCoords vector to store the texture coordinates
      * @param indices vector to store the indices
      * @return true if the model was loaded successfully, false otherwise
      */
-    static bool loadModel(const std::string &path, std::vector<Component::Vertex> &vertices,
-                          std::vector<uint32_t> &indices);
+    static bool loadModel(const std::string &path, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals,
+                          std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices);
 };
 
 } // namespace ES::Plugin::Object::Resource

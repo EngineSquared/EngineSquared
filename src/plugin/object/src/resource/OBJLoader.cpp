@@ -7,8 +7,8 @@
 
 namespace ES::Plugin::Object::Resource {
 
-bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex> &vertices,
-                          std::vector<uint32_t> &indices)
+bool OBJLoader::loadModel(const std::string &path, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals,
+                            std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices)
 {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
@@ -35,6 +35,8 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex
     }
 
     vertices.reserve(attrib.vertices.size() / 3);
+    normals.reserve(attrib.normals.size() / 3);
+    texCoords.reserve(attrib.texcoords.size() / 2);
     indices.reserve(attrib.vertices.size());
 
     std::unordered_map<Component::Vertex, uint32_t> uniqueVertices{};
@@ -63,7 +65,9 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex
             if (uniqueVertices.count(vertex) == 0)
             {
                 uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
-                vertices.emplace_back(vertex);
+                vertices.emplace_back(vertex.pos);
+                normals.emplace_back(vertex.normal);
+                texCoords.emplace_back(vertex.texCoord);
             }
 
             indices.emplace_back(uniqueVertices[vertex]);

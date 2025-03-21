@@ -36,16 +36,19 @@ namespace ES::Plugin::Object::Component {
  * It contains the vertices and indices of the mesh.
  */
 struct Mesh {
-    std::vector<Component::Vertex> vertices;
-    std::vector<uint32_t> indices;
+    std::vector<glm::vec3> vertices{};
+    std::vector<glm::vec3> normals{};
+    std::vector<glm::vec2> texCoords{};
+    std::vector<uint32_t> indices{};
 
     explicit Mesh() = default;
-    explicit Mesh(const std::string &file) { Resource::OBJLoader::loadModel(file, vertices, indices); }
+    explicit Mesh(const std::string &file) { Resource::OBJLoader::loadModel(file, vertices, normals, texCoords, indices); }
     explicit Mesh(const Mesh &mesh) = default;
     ~Mesh() = default;
 
     // Move constructor
-    Mesh(Mesh &&other) noexcept : vertices(std::move(other.vertices)), indices(std::move(other.indices)) {}
+    Mesh(Mesh &&other) noexcept : vertices(std::move(other.vertices)), normals(std::move(other.normals)),
+                                  texCoords(std::move(other.texCoords)), indices(std::move(other.indices)) {}
 
     // Move assignment operator
     Mesh &operator=(Mesh &&other) noexcept
@@ -53,39 +56,11 @@ struct Mesh {
         if (this != &other)
         {
             vertices = std::move(other.vertices);
+            normals = std::move(other.normals);
+            texCoords = std::move(other.texCoords);
             indices = std::move(other.indices);
         }
         return *this;
-    }
-
-    std::vector<glm::vec3> getVertices() const
-    {
-        std::vector<glm::vec3> result(vertices.size());
-
-        for (const auto &vertex : vertices)
-            result.emplace_back(vertex.pos);
-
-        return result;
-    }
-
-    std::vector<glm::vec3> getNormals() const
-    {
-        std::vector<glm::vec3> result(vertices.size());
-
-        for (const auto &vertex : vertices)
-            result.emplace_back(vertex.normal);
-
-        return result;
-    }
-
-    std::vector<glm::vec2> getTexCoords() const
-    {
-        std::vector<glm::vec2> result(vertices.size());
-
-        for (const auto &vertex : vertices)
-            result.emplace_back(vertex.texCoord);
-
-        return result;
     }
 };
 
