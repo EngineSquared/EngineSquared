@@ -20,8 +20,8 @@
  * @date 2024-12-06
  **************************************************************************/
 
-#ifndef MESH_HPP_
-#define MESH_HPP_
+#ifndef COMPONENT_MESH_HPP_
+#define COMPONENT_MESH_HPP_
 
 #include "OBJLoader.hpp"
 
@@ -38,11 +38,40 @@ namespace ES::Plugin::Object::Component {
 struct Mesh {
     std::vector<Component::Vertex> vertices;
     std::vector<uint32_t> indices;
-    std::vector<uint32_t> textures;
 
     explicit Mesh(const std::string &file) { Resource::OBJLoader::loadModel(file, vertices, indices); }
     explicit Mesh(const Mesh &model) = default;
     ~Mesh() = default;
+
+    std::vector<glm::vec3> getVertices() const
+    {
+        std::vector<glm::vec3> result(vertices.size());
+
+        for (const auto &vertex : vertices)
+            result.emplace_back(vertex.pos);
+
+        return result;
+    }
+
+    std::vector<glm::vec3> getNormals() const
+    {
+        std::vector<glm::vec3> result(vertices.size());
+
+        for (const auto &vertex : vertices)
+            result.emplace_back(vertex.normal);
+
+        return result;
+    }
+
+    std::vector<glm::vec2> getTexCoords() const
+    {
+        std::vector<glm::vec2> result(vertices.size());
+
+        for (const auto &vertex : vertices)
+            result.emplace_back(vertex.texCoord);
+
+        return result;
+    }
 };
 
 /**
@@ -60,4 +89,4 @@ struct MeshLoader final {
 
 } // namespace ES::Plugin::Object::Component
 
-#endif /* !MESH_HPP_ */
+#endif /* !COMPONENT_MESH_HPP_ */
