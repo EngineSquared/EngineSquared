@@ -1,6 +1,6 @@
 #include "PluginNativeScripting.hpp"
-#include "system/ScriptingSystem.hpp"
 #include "Startup.hpp"
+#include "system/ScriptingSystem.hpp"
 
 void ES::Plugin::NativeScripting::Plugin::Bind()
 {

@@ -13,4 +13,4 @@ class Plugin : public ES::Engine::APlugin {
 
     void Bind() final;
 };
-} // namespace ES::Plugin::OpenGL
+} // namespace ES::Plugin::NativeScripting

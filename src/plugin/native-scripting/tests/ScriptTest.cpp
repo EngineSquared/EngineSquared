@@ -2,30 +2,21 @@
 
 #include "Core.hpp"
 #include "Entity.hpp"
+#include "NativeScripting.hpp"
 #include "PluginNativeScripting.hpp"
 #include "ScriptableEntity.hpp"
-#include "NativeScripting.hpp"
 
-struct ActionHistory
-{
+struct ActionHistory {
     std::vector<std::string> actions;
 };
 
 class TestScript : public ES::Plugin::NativeScripting::Utils::ScriptableEntity {
   public:
-    void OnCreate(ES::Engine::Core &core) {
-        core.GetResource<ActionHistory>().actions.emplace_back("OnCreate");
-    }
+    void OnCreate(ES::Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnCreate"); }
 
-    void OnUpdate(ES::Engine::Core &core)
-    {
-        core.GetResource<ActionHistory>().actions.emplace_back("OnUpdate");
-    }
+    void OnUpdate(ES::Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnUpdate"); }
 
-    void OnDestroy(ES::Engine::Core &core)
-    {
-        core.GetResource<ActionHistory>().actions.emplace_back("OnDestroy");
-    }
+    void OnDestroy(ES::Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnDestroy"); }
 };
 
 TEST(NativeScripting, CasualUse)
