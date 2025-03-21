@@ -50,24 +50,10 @@ struct Mesh {
     ~Mesh() = default;
 
     // Move constructor
-    Mesh(Mesh &&other) noexcept
-        : vertices(std::move(other.vertices)), normals(std::move(other.normals)), texCoords(std::move(other.texCoords)),
-          indices(std::move(other.indices))
-    {
-    }
+    Mesh(Mesh &&other) = default;
 
     // Move assignment operator
-    Mesh &operator=(Mesh &&other) noexcept
-    {
-        if (this != &other)
-        {
-            vertices = std::move(other.vertices);
-            normals = std::move(other.normals);
-            texCoords = std::move(other.texCoords);
-            indices = std::move(other.indices);
-        }
-        return *this;
-    }
+    Mesh &operator=(Mesh &&other) = default;
 };
 
 /**
