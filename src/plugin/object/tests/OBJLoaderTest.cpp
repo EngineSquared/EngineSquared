@@ -38,7 +38,8 @@ TEST(OBJLoaderTest, loadModel_not_obj_file)
     std::vector<glm::vec2> texCoords;
     std::vector<uint32_t> indices;
 
-    EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "not_obj.txt", vertices, normals, texCoords, indices), false);
+    EXPECT_EQ(Resource::OBJLoader::loadModel(OBJ_FILE_PATH "not_obj.txt", vertices, normals, texCoords, indices),
+              false);
 }
 
 TEST(OBJLoaderTest, loadModel_wrong_path)

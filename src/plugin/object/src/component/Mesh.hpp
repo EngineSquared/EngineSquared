@@ -42,13 +42,19 @@ struct Mesh {
     std::vector<uint32_t> indices{};
 
     explicit Mesh() = default;
-    explicit Mesh(const std::string &file) { Resource::OBJLoader::loadModel(file, vertices, normals, texCoords, indices); }
+    explicit Mesh(const std::string &file)
+    {
+        Resource::OBJLoader::loadModel(file, vertices, normals, texCoords, indices);
+    }
     explicit Mesh(const Mesh &mesh) = default;
     ~Mesh() = default;
 
     // Move constructor
-    Mesh(Mesh &&other) noexcept : vertices(std::move(other.vertices)), normals(std::move(other.normals)),
-                                  texCoords(std::move(other.texCoords)), indices(std::move(other.indices)) {}
+    Mesh(Mesh &&other) noexcept
+        : vertices(std::move(other.vertices)), normals(std::move(other.normals)), texCoords(std::move(other.texCoords)),
+          indices(std::move(other.indices))
+    {
+    }
 
     // Move assignment operator
     Mesh &operator=(Mesh &&other) noexcept

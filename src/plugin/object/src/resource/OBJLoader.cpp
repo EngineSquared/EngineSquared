@@ -8,7 +8,7 @@
 namespace ES::Plugin::Object::Resource {
 
 bool OBJLoader::loadModel(const std::string &path, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals,
-                            std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices)
+                          std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices)
 {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
