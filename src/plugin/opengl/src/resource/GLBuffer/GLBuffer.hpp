@@ -22,14 +22,8 @@
 #ifndef GLBUFFER_HPP_
 #define GLBUFFER_HPP_
 
-#ifndef __glew_h__
-#    include <GL/glew.h>
-#endif
-#include <GLFW/glfw3.h>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/mat4x4.hpp>
+#include <GL/glew.h>
 
-#include <array>
 #include <vector>
 
 #include "Loader.hpp"
