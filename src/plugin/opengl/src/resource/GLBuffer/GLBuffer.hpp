@@ -83,6 +83,25 @@ class GLBuffer {
         glBindVertexArray(0);
     }
 
+    void update(const Object::Component::Mesh &mesh)
+    {
+        glBindVertexArray(VAO);
+
+        // Vertex positions VBO
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_position);
+        glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(glm::vec3), mesh.vertices.data(), GL_STATIC_DRAW);
+
+        // Vertex Normal VBO
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_normal);
+        glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(glm::vec3), mesh.getNormals().data(), GL_STATIC_DRAW);
+
+        // Element indices buffer
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(uint32_t), mesh.indices.data(), GL_STATIC_DRAW);
+
+        glBindVertexArray(0);
+    }
+
     GLuint VAO;
     GLuint VBO_position;
     GLuint VBO_normal;

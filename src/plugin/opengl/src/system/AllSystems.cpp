@@ -236,11 +236,16 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
     auto &view = core.GetResource<Resource::Camera>().view;
     auto &projection = core.GetResource<Resource::Camera>().projection;
     core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Transform>().each(
-        [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform) {
+        [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform,
+            ES::Plugin::Object::Component::Mesh &mesh) {
             auto &shader =
                 core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{model.shaderName.c_str()});
             const auto material =
                 core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
+            const auto &glbuffer =
+                core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.glbufferName.c_str()});
+
+            glbuffer.update(mesh);
             shader.use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
@@ -251,7 +256,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
             glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
-            model.mesh.draw();
+            glbuffer.draw();
             shader.disable();
         });
 }
