@@ -51,13 +51,13 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex
             if (attrib.normals.size() > 0)
             {
                 vertex.normal = {attrib.normals[3 * index.normal_index + 0], attrib.normals[3 * index.normal_index + 1],
-                                    attrib.normals[3 * index.normal_index + 2]};
+                                 attrib.normals[3 * index.normal_index + 2]};
             }
 
             if (attrib.texcoords.size() > 0)
             {
                 vertex.texCoord = {attrib.texcoords[2 * index.texcoord_index + 0],
-                                    VK_REVERSE_Y_TEX attrib.texcoords[2 * index.texcoord_index + 1]};
+                                   VK_REVERSE_Y_TEX attrib.texcoords[2 * index.texcoord_index + 1]};
             }
 
             if (uniqueVertices.count(vertex) == 0)
