@@ -36,7 +36,12 @@ namespace ES::Plugin::OpenGL::Resource {
 class GLBuffer {
   public:
     GLBuffer() = default;
+    GLBuffer(const GLBuffer &) = default;
+    GLBuffer(GLBuffer &&) = default;
     ~GLBuffer() = default;
+
+    GLBuffer &operator=(const GLBuffer &) = default;
+    GLBuffer &operator=(GLBuffer &&) = default;
 
     void draw(const Object::Component::Mesh &mesh) const
     {

@@ -159,6 +159,7 @@ void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
 
 void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
 {
+    core.RegisterResource<Resource::GLBufferManager>(Resource::GLBufferManager());
     core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Mesh>().each(
         [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Mesh &mesh) {
             Resource::GLBuffer buffer;
