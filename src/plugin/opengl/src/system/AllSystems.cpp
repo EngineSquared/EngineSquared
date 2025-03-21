@@ -157,6 +157,18 @@ void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
     materialCache.Add(entt::hashed_string("default"), std::move(Utils::Material()));
 }
 
+void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
+{
+    core.RegisterResource<Resource::GLBufferManager>(Resource::GLBufferManager());
+    core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Mesh>().each(
+        [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Mesh &mesh) {
+            Resource::GLBuffer buffer;
+            buffer.generateGlBuffers(mesh);
+            core.GetResource<Resource::GLBufferManager>().Add(entt::hashed_string(model.meshName.c_str()),
+                                                              std::move(buffer));
+        });
+}
+
 void ES::Plugin::OpenGL::System::CreateCamera(ES::Engine::Core &core)
 {
     core.RegisterResource<Resource::Camera>(Resource::Camera(DEFAULT_WIDTH, DEFAULT_HEIGHT));
@@ -235,23 +247,27 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 {
     auto &view = core.GetResource<Resource::Camera>().view;
     auto &projection = core.GetResource<Resource::Camera>().projection;
-    core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Transform>().each(
-        [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform) {
+    core.GetRegistry()
+        .view<Component::Model, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh>()
+        .each([&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform,
+                  ES::Plugin::Object::Component::Mesh &mesh) {
             auto &shader =
                 core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{model.shaderName.c_str()});
             const auto material =
                 core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
+            auto &glbuffer =
+                core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.meshName.c_str()});
+            glbuffer.update(mesh);
             shader.use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
             glm::mat4 mview = view * modelmat;
             glm::mat4 mvp = projection * view * modelmat;
-            glm::mat4 imvp = glm::inverse(modelmat);
-            auto nmat = glm::mat3(glm::transpose(imvp)); // normal matrix
+            auto nmat = glm::mat3(glm::transpose(glm::inverse(modelmat))); // normal matrix
             glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
             glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
-            model.mesh.draw();
+            glbuffer.draw(mesh);
             shader.disable();
         });
 }

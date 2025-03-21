@@ -7,8 +7,8 @@
 
 namespace ES::Plugin::Object::Resource {
 
-bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex> &vertices,
-                          std::vector<uint32_t> &indices)
+bool OBJLoader::loadModel(const std::string &path, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals,
+                          std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices)
 {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
@@ -35,6 +35,8 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex
     }
 
     vertices.reserve(attrib.vertices.size() / 3);
+    normals.reserve(attrib.normals.size() / 3);
+    texCoords.reserve(attrib.texcoords.size() / 2);
     indices.reserve(attrib.vertices.size());
 
     std::unordered_map<Component::Vertex, uint32_t> uniqueVertices{};
@@ -48,15 +50,24 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Component::Vertex
             vertex.pos = {attrib.vertices[3 * index.vertex_index + 0], attrib.vertices[3 * index.vertex_index + 1],
                           attrib.vertices[3 * index.vertex_index + 2]};
 
-            vertex.texCoord = {attrib.texcoords[2 * index.texcoord_index + 0],
-                               1.0f - attrib.texcoords[2 * index.texcoord_index + 1]};
+            if (attrib.normals.size() > 0)
+            {
+                vertex.normal = {attrib.normals[3 * index.normal_index + 0], attrib.normals[3 * index.normal_index + 1],
+                                 attrib.normals[3 * index.normal_index + 2]};
+            }
 
-            vertex.color = {1.0f, 1.0f, 1.0f};
+            if (attrib.texcoords.size() > 0)
+            {
+                vertex.texCoord = {attrib.texcoords[2 * index.texcoord_index + 0],
+                                   VK_REVERSE_Y_TEX attrib.texcoords[2 * index.texcoord_index + 1]};
+            }
 
             if (uniqueVertices.count(vertex) == 0)
             {
                 uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
-                vertices.emplace_back(vertex);
+                vertices.emplace_back(vertex.pos);
+                normals.emplace_back(vertex.normal);
+                texCoords.emplace_back(vertex.texCoord);
             }
 
             indices.emplace_back(uniqueVertices[vertex]);
