@@ -67,7 +67,8 @@ class GLBuffer {
         // Vertex positions VBO
         glGenBuffers(1, &VBO_position);
         glBindBuffer(GL_ARRAY_BUFFER, VBO_position);
-        glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(glm::vec3), mesh.vertices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(glm::vec3), mesh.getVertices().data(),
+                     GL_STATIC_DRAW);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
         glEnableVertexAttribArray(0);
 
@@ -88,13 +89,14 @@ class GLBuffer {
         glBindVertexArray(0);
     }
 
-    void update(const Object::Component::Mesh &mesh)
+    void update(const Object::Component::Mesh &mesh) const
     {
         glBindVertexArray(VAO);
 
         // Vertex positions VBO
         glBindBuffer(GL_ARRAY_BUFFER, VBO_position);
-        glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(glm::vec3), mesh.vertices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(glm::vec3), mesh.getVertices().data(),
+                     GL_STATIC_DRAW);
 
         // Vertex Normal VBO
         glBindBuffer(GL_ARRAY_BUFFER, VBO_normal);

@@ -31,7 +31,7 @@
 #include "component/Vertex.hpp"
 
 #if defined(VULKAN)
-#    define VK_REVERSE_Y_TEX 1.0f -
+#    define VK_REVERSE_Y_TEX 1.0f - // NOSONAR
 #else
 #    define VK_REVERSE_Y_TEX
 #endif
