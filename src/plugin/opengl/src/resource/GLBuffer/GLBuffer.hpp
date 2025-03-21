@@ -75,7 +75,8 @@ class GLBuffer {
         // Vertex Normal VBO
         glGenBuffers(1, &VBO_normal);
         glBindBuffer(GL_ARRAY_BUFFER, VBO_normal);
-        glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(glm::vec3), mesh.getNormals().data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(glm::vec3), mesh.getNormals().data(),
+                     GL_STATIC_DRAW);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
         glEnableVertexAttribArray(1);
 
