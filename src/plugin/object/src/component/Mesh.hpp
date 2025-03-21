@@ -51,9 +51,6 @@ struct Mesh {
 
     // Move constructor
     Mesh(Mesh &&other) = default;
-
-    // Move assignment operator
-    Mesh &operator=(Mesh &&other) = default;
 };
 
 /**
