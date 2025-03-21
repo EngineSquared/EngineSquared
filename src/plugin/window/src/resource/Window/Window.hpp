@@ -37,13 +37,6 @@ class Window {
     Window &operator=(const Window &) = delete;
 
     /**
-     * @brief Create and initialize the window.
-     *
-     * @throws ES::Plugin::Window::Exception::WindowError if the window could not be created.
-     */
-    void Create();
-
-    /**
      * @brief Destroy the window.
      */
     void Destroy();

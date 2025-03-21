@@ -1,9 +1,8 @@
 #pragma once
 
 #include "component/Model/Model.hpp"
-#include "resource/Buttons/Buttons.hpp"
+#include "plugin/PluginOpenGL.hpp"
 #include "resource/Camera/Camera.hpp"
-#include "resource/GLFWWindow/GLFWWindow.hpp"
 #include "resource/MaterialCache/MaterialCache.hpp"
 #include "resource/ShaderManager/ShaderManager.hpp"
 #include "system/AllSystems.hpp"

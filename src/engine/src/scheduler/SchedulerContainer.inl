@@ -7,7 +7,7 @@ template <typename TScheduler, typename... Args> void ES::Engine::SchedulerConta
         ES::Utils::Log::Warn(fmt::format("Scheduler already exists: {}", typeid(TScheduler).name()));
         return;
     }
-#ifdef DEBUG
+#ifdef ES_DEBUG
     ES::Utils::Log::Info(fmt::format("Adding scheduler: {}", typeid(TScheduler).name()));
 #endif
     std::size_t index = _orderedSchedulers.size();
