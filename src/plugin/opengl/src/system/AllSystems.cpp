@@ -257,15 +257,13 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
                 core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
             auto &glbuffer =
                 core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.meshName.c_str()});
-
             glbuffer.update(mesh);
             shader.use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
             glm::mat4 mview = view * modelmat;
             glm::mat4 mvp = projection * view * modelmat;
-            glm::mat4 imvp = glm::inverse(modelmat);
-            auto nmat = glm::mat3(glm::transpose(imvp)); // normal matrix
+            auto nmat = glm::mat3(glm::transpose(glm::inverse(modelmat))); // normal matrix
             glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
             glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
