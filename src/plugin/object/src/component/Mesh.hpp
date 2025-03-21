@@ -40,7 +40,7 @@ struct Mesh {
     std::vector<uint32_t> indices;
 
     explicit Mesh(const std::string &file) { Resource::OBJLoader::loadModel(file, vertices, indices); }
-    explicit Mesh(const Mesh &model) = default;
+    explicit Mesh(const Mesh &mesh) = default;
     ~Mesh() = default;
 
     std::vector<glm::vec3> getVertices() const
@@ -84,7 +84,7 @@ struct MeshLoader final {
     using result_type = std::shared_ptr<Mesh>;
 
     result_type operator()(const std::string &file) const { return std::make_shared<Mesh>(file); }
-    result_type operator()(const Mesh &model) const { return std::make_shared<Mesh>(model); }
+    result_type operator()(const Mesh &mesh) const { return std::make_shared<Mesh>(mesh); }
 };
 
 } // namespace ES::Plugin::Object::Component
