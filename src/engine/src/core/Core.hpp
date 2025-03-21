@@ -9,6 +9,7 @@
 
 #include "Logger.hpp"
 #include "SchedulerContainer.hpp"
+#include "Shutdown.hpp"
 #include "Update.hpp"
 
 namespace ES::Engine {
