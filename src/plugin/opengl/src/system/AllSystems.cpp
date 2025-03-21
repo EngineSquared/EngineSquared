@@ -163,7 +163,8 @@ void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
         [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Mesh &mesh) {
             Resource::GLBuffer buffer;
             buffer.generateGlBuffers(mesh);
-            core.GetResource<Resource::GLBufferManager>().Add(entt::hashed_string(model.meshName.c_str()), std::move(buffer));
+            core.GetResource<Resource::GLBufferManager>().Add(entt::hashed_string(model.meshName.c_str()),
+                                                              std::move(buffer));
         });
 }
 
