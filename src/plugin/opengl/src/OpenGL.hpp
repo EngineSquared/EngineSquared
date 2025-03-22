@@ -7,7 +7,7 @@
 #include "resource/MaterialCache/MaterialCache.hpp"
 #include "resource/ShaderManager/ShaderManager.hpp"
 #include "system/AllSystems.hpp"
+#include "utils/GLBuffer/GLBuffer.hpp"
 #include "utils/Loader/Loader.hpp"
 #include "utils/Material/Material.hpp"
 #include "utils/Viewer/Viewer.hpp"
-#include "utils/GLBuffer/GLBuffer.hpp"
