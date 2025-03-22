@@ -44,11 +44,11 @@ class GLBuffer {
 
     void draw(const Object::Component::Mesh &mesh) const noexcept;
 
-    void destroyGlBuffers() noexcept;
+    void destroyGlBuffers() const noexcept;
 
     void generateGlBuffers(const Object::Component::Mesh &mesh) noexcept;
 
-    void update(const Object::Component::Mesh &mesh) noexcept;
+    void update(const Object::Component::Mesh &mesh) const noexcept;
 
     GLuint VAO = 0;
     GLuint VBO_position = 0;

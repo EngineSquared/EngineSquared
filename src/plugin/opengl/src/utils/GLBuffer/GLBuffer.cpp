@@ -9,7 +9,7 @@ void GLBuffer::draw(const Object::Component::Mesh &mesh) const noexcept
     glBindVertexArray(0);
 }
 
-void GLBuffer::destroyGlBuffers() noexcept
+void GLBuffer::destroyGlBuffers() const noexcept
 {
     glDeleteBuffers(1, &VBO_position);
     glDeleteBuffers(1, &VBO_normal);
@@ -45,7 +45,7 @@ void GLBuffer::generateGlBuffers(const Object::Component::Mesh &mesh) noexcept
     glBindVertexArray(0);
 }
 
-void GLBuffer::update(const Object::Component::Mesh &mesh) noexcept
+void GLBuffer::update(const Object::Component::Mesh &mesh) const noexcept
 {
     glBindVertexArray(VAO);
 
