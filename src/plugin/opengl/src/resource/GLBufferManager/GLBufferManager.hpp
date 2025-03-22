@@ -24,7 +24,7 @@
 
 namespace ES::Plugin::OpenGL::Resource {
 
-using GLBufferManager = Object::Resource::AssetsManager<GLBuffer>;
+using GLBufferManager = Object::Resource::AssetsManager<Utils::GLBuffer>;
 
 } // namespace ES::Plugin::OpenGL::Resource
 
