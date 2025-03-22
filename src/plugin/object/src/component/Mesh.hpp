@@ -20,8 +20,7 @@
  * @date 2024-12-06
  **************************************************************************/
 
-#ifndef COMPONENT_MESH_HPP_
-#define COMPONENT_MESH_HPP_
+#pragma once
 
 #include "OBJLoader.hpp"
 
@@ -67,5 +66,3 @@ struct MeshLoader final {
 };
 
 } // namespace ES::Plugin::Object::Component
-
-#endif /* !COMPONENT_MESH_HPP_ */
