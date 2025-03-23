@@ -16,7 +16,7 @@ struct Shader {
     entt::hashed_string id;
 
     Shader() = default;
-    Shader(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
+    explicit Shader(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
 
     Shader(const Shader &) = default;
     Shader(Shader &&) = default;

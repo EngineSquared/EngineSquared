@@ -11,7 +11,7 @@ struct Model {
     entt::hashed_string id;
 
     Model() = default;
-    Model(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
+    explicit Model(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
 
     Model(const Model &) = default;
     Model(Model &&) = default;

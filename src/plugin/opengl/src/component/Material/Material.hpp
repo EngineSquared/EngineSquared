@@ -16,7 +16,7 @@ struct Material {
     entt::hashed_string id;
 
     Material() = default;
-    Material(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
+    explicit Material(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
 
     Material(const Material &) = default;
     Material(Material &&) = default;
