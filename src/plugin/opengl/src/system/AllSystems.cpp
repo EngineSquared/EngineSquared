@@ -1,19 +1,19 @@
 #include "AllSystems.hpp"
 
+#include "Buttons.hpp"
+#include "Camera.hpp"
 #include "Entity.hpp"
 #include "GLBufferManager.hpp"
+#include "Light.hpp"
 #include "Material.hpp"
 #include "MaterialCache.hpp"
 #include "Mesh.hpp"
 #include "Model.hpp"
 #include "Shader.hpp"
 #include "ShaderManager.hpp"
-#include "Camera.hpp"
-#include "Light.hpp"
-#include "Buttons.hpp"
 
-#include <iostream>
 #include <glm/gtc/type_ptr.hpp>
+#include <iostream>
 
 void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 {
@@ -272,7 +272,8 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
     auto &view = core.GetResource<Resource::Camera>().view;
     auto &projection = core.GetResource<Resource::Camera>().projection;
     core.GetRegistry()
-        .view<Component::Model, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh, Component::Shader, Component::Material>()
+        .view<Component::Model, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh,
+              Component::Shader, Component::Material>()
         .each([&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform,
                   ES::Plugin::Object::Component::Mesh &mesh, Component::Shader &shader, Component::Material &material) {
             auto &shaderProgram =
@@ -281,7 +282,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
                 core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{material.name.c_str()});
             const auto &glBuffer =
                 core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.name.c_str()});
-                shaderProgram.use();
+            shaderProgram.use();
             LoadMaterial(shaderProgram, materialData);
             glm::mat4 modelmat = transform.getTransformationMatrix();
             glm::mat4 mview = view * modelmat;
