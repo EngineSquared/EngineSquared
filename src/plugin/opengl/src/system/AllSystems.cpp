@@ -184,11 +184,11 @@ void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
         [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Mesh &mesh) {
             if (glBufferManager.Contains(entt::hashed_string(model.name.c_str())))
             {
-                glBufferManager.Get(entt::hashed_string{model.name.c_str()}).update(mesh);
+                glBufferManager.Get(entt::hashed_string{model.name.c_str()}).Update(mesh);
                 return;
             }
             Utils::GLBuffer buffer;
-            buffer.generateGlBuffers(mesh);
+            buffer.GenerateGLBuffers(mesh);
             glBufferManager.Add(entt::hashed_string(model.name.c_str()), std::move(buffer));
         });
 }
@@ -291,7 +291,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             glUniformMatrix3fv(shaderProgram.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
             glUniformMatrix4fv(shaderProgram.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shaderProgram.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
-            glBuffer.draw(mesh);
+            glBuffer.Draw(mesh);
             shaderProgram.disable();
         });
 }

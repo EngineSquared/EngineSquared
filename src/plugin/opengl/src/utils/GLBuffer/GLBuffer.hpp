@@ -42,13 +42,13 @@ class GLBuffer {
     GLBuffer &operator=(const GLBuffer &) = default;
     GLBuffer &operator=(GLBuffer &&) = default;
 
-    void draw(const Object::Component::Mesh &mesh) const noexcept;
+    void Draw(const Object::Component::Mesh &mesh) const noexcept;
 
-    void destroyGlBuffers() const noexcept;
+    void DestroyGLBuffers() const noexcept;
 
-    void generateGlBuffers(const Object::Component::Mesh &mesh) noexcept;
+    void GenerateGLBuffers(const Object::Component::Mesh &mesh) noexcept;
 
-    void update(const Object::Component::Mesh &mesh) const noexcept;
+    void Update(const Object::Component::Mesh &mesh) const noexcept;
 
     GLuint VAO = 0;
     GLuint VBO_position = 0;
