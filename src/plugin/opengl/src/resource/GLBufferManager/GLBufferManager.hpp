@@ -16,7 +16,7 @@
  * @date 2025-03-21
  **************************************************************************/
 
- #pragma once
+#pragma once
 
 #include "GLBuffer.hpp"
 #include "Object.hpp"
