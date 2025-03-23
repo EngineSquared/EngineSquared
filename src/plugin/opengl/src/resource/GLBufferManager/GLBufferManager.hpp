@@ -16,8 +16,7 @@
  * @date 2025-03-21
  **************************************************************************/
 
-#ifndef GLBUFFERMANAGER_HPP_
-#define GLBUFFERMANAGER_HPP_
+ #pragma once
 
 #include "GLBuffer.hpp"
 #include "Object.hpp"
@@ -27,5 +26,3 @@ namespace ES::Plugin::OpenGL::Resource {
 using GLBufferManager = Object::Resource::AssetsManager<Utils::GLBuffer>;
 
 } // namespace ES::Plugin::OpenGL::Resource
-
-#endif /* !GLBUFFERMANAGER_HPP_ */
