@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include <entt/entt.hpp>
+
 namespace ES::Plugin::OpenGL::Component {
 /**
  * Shader component
@@ -10,5 +12,13 @@ namespace ES::Plugin::OpenGL::Component {
  */
 struct Shader {
     std::string name;
+
+    entt::hashed_string id;
+
+    Shader() = default;
+    Shader(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
+
+    Shader(const Shader &) = default;
+    Shader(Shader &&) = default;
 };
 } // namespace ES::Plugin::OpenGL::Component
