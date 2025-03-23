@@ -276,12 +276,9 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
               Component::Shader, Component::Material>()
         .each([&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform,
                   ES::Plugin::Object::Component::Mesh &mesh, Component::Shader &shader, Component::Material &material) {
-            auto &shaderProgram =
-                core.GetResource<Resource::ShaderManager>().Get(shader.id);
-            const auto &materialData =
-                core.GetResource<Resource::MaterialCache>().Get(material.id);
-            const auto &glBuffer =
-                core.GetResource<Resource::GLBufferManager>().Get(model.id);
+            auto &shaderProgram = core.GetResource<Resource::ShaderManager>().Get(shader.id);
+            const auto &materialData = core.GetResource<Resource::MaterialCache>().Get(material.id);
+            const auto &glBuffer = core.GetResource<Resource::GLBufferManager>().Get(model.id);
             shaderProgram.use();
             LoadMaterial(shaderProgram, materialData);
             glm::mat4 modelmat = transform.getTransformationMatrix();
