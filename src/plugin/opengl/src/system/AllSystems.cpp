@@ -157,15 +157,25 @@ void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
     materialCache.Add(entt::hashed_string("default"), std::move(Utils::Material()));
 }
 
-void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
+void ES::Plugin::OpenGL::System::LoadGLBufferManager(ES::Engine::Core &core)
 {
     core.RegisterResource<Resource::GLBufferManager>(Resource::GLBufferManager());
+}
+
+void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
+{
+    auto &glBufferManager = core.GetResource<Resource::GLBufferManager>();
+
     core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Mesh>().each(
         [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Mesh &mesh) {
+            if (glBufferManager.Contains(entt::hashed_string(model.meshName.c_str())))
+            {
+                glBufferManager.Get(entt::hashed_string{model.meshName.c_str()}).update(mesh);
+                return;
+            }
             Utils::GLBuffer buffer;
             buffer.generateGlBuffers(mesh);
-            core.GetResource<Resource::GLBufferManager>().Add(entt::hashed_string(model.meshName.c_str()),
-                                                              std::move(buffer));
+            glBufferManager.Add(entt::hashed_string(model.meshName.c_str()), std::move(buffer));
         });
 }
 
@@ -255,9 +265,8 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
                 core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{model.shaderName.c_str()});
             const auto material =
                 core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
-            auto &glbuffer =
+            const auto &glbuffer =
                 core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.meshName.c_str()});
-            glbuffer.update(mesh);
             shader.use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
