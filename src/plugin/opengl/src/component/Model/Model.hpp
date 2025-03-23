@@ -15,5 +15,6 @@ struct Model {
     std::string shaderName;
     std::string materialName;
     std::string meshName;
+    std::string modelName;
 };
 } // namespace ES::Plugin::OpenGL::Component

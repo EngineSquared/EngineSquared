@@ -168,14 +168,14 @@ void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
 
     core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Mesh>().each(
         [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Mesh &mesh) {
-            if (glBufferManager.Contains(entt::hashed_string(model.meshName.c_str())))
+            if (glBufferManager.Contains(entt::hashed_string(model.modelName.c_str())))
             {
-                glBufferManager.Get(entt::hashed_string{model.meshName.c_str()}).update(mesh);
+                glBufferManager.Get(entt::hashed_string{model.modelName.c_str()}).update(mesh);
                 return;
             }
             Utils::GLBuffer buffer;
             buffer.generateGlBuffers(mesh);
-            glBufferManager.Add(entt::hashed_string(model.meshName.c_str()), std::move(buffer));
+            glBufferManager.Add(entt::hashed_string(model.modelName.c_str()), std::move(buffer));
         });
 }
 
@@ -266,7 +266,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             const auto material =
                 core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
             const auto &glbuffer =
-                core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.meshName.c_str()});
+                core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.modelName.c_str()});
             shader.use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
