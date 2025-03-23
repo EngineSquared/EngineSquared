@@ -2,8 +2,8 @@
 
 #include "Entity.hpp"
 
-#include "Material.hpp"
 #include "GLBufferManager.hpp"
+#include "Material.hpp"
 #include "MaterialCache.hpp"
 #include "Mesh.hpp"
 #include "Shader.hpp"

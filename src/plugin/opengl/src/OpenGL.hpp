@@ -13,8 +13,7 @@
 
 #include "system/AllSystems.hpp"
 
-#include "utils/Loader/Loader.hpp"
-#include "utils/MaterialData/MaterialData.hpp"
 #include "utils/GLBuffer/GLBuffer.hpp"
 #include "utils/Loader/Loader.hpp"
+#include "utils/MaterialData/MaterialData.hpp"
 #include "utils/Viewer/Viewer.hpp"
