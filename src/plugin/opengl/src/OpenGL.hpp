@@ -1,12 +1,11 @@
 #pragma once
 
 #include "component/Material/Material.hpp"
+#include "component/Model/Model.hpp"
 #include "component/Shader/Shader.hpp"
 
 #include "plugin/PluginOpenGL.hpp"
 
-#include "resource/Buttons/Buttons.hpp"
-#include "resource/Camera/Camera.hpp"
 #include "resource/GLBufferManager/GLBufferManager.hpp"
 #include "resource/MaterialCache/MaterialCache.hpp"
 #include "resource/ShaderManager/ShaderManager.hpp"

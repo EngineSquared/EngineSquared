@@ -1,20 +1,9 @@
 #pragma once
 
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/mat4x4.hpp>
-
-#include <array>
-#include <vector>
-
-#include "GLBuffer.hpp"
-#include "Loader.hpp"
-#include "Material.hpp"
+#include <string>
 
 namespace ES::Plugin::OpenGL::Component {
 struct Model {
-    std::string shaderName;
-    std::string materialName;
-    std::string meshName;
-    std::string modelName;
+    std::string name;
 };
 } // namespace ES::Plugin::OpenGL::Component

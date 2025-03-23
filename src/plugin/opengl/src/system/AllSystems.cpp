@@ -1,5 +1,19 @@
 #include "AllSystems.hpp"
-#include "Button/Buttons.hpp"
+
+#include "Entity.hpp"
+#include "GLBufferManager.hpp"
+#include "Material.hpp"
+#include "MaterialCache.hpp"
+#include "Mesh.hpp"
+#include "Model.hpp"
+#include "Shader.hpp"
+#include "ShaderManager.hpp"
+#include "Camera.hpp"
+#include "Light.hpp"
+#include "Buttons.hpp"
+
+#include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 
 void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 {
@@ -168,14 +182,14 @@ void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
 
     core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Mesh>().each(
         [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Mesh &mesh) {
-            if (glBufferManager.Contains(entt::hashed_string(model.modelName.c_str())))
+            if (glBufferManager.Contains(entt::hashed_string(model.name.c_str())))
             {
-                glBufferManager.Get(entt::hashed_string{model.modelName.c_str()}).update(mesh);
+                glBufferManager.Get(entt::hashed_string{model.name.c_str()}).update(mesh);
                 return;
             }
             Utils::GLBuffer buffer;
             buffer.generateGlBuffers(mesh);
-            glBufferManager.Add(entt::hashed_string(model.modelName.c_str()), std::move(buffer));
+            glBufferManager.Add(entt::hashed_string(model.name.c_str()), std::move(buffer));
         });
 }
 
@@ -258,25 +272,25 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
     auto &view = core.GetResource<Resource::Camera>().view;
     auto &projection = core.GetResource<Resource::Camera>().projection;
     core.GetRegistry()
-        .view<Component::Model, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh>()
+        .view<Component::Model, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh, Component::Shader, Component::Material>()
         .each([&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform,
-                  ES::Plugin::Object::Component::Mesh &mesh) {
-            auto &shader =
-                core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{model.shaderName.c_str()});
-            const auto material =
-                core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
-            const auto &glbuffer =
-                core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.modelName.c_str()});
-            shader.use();
-            LoadMaterial(shader, material);
+                  ES::Plugin::Object::Component::Mesh &mesh, Component::Shader &shader, Component::Material &material) {
+            auto &shaderProgram =
+                core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{shader.name.c_str()});
+            const auto &materialData =
+                core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{material.name.c_str()});
+            const auto &glBuffer =
+                core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.name.c_str()});
+                shaderProgram.use();
+            LoadMaterial(shaderProgram, materialData);
             glm::mat4 modelmat = transform.getTransformationMatrix();
             glm::mat4 mview = view * modelmat;
             glm::mat4 mvp = projection * view * modelmat;
             auto nmat = glm::mat3(glm::transpose(glm::inverse(modelmat))); // normal matrix
-            glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
-            glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
-            glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
-            glbuffer.draw(mesh);
-            shader.disable();
+            glUniformMatrix3fv(shaderProgram.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
+            glUniformMatrix4fv(shaderProgram.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
+            glUniformMatrix4fv(shaderProgram.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
+            glBuffer.draw(mesh);
+            shaderProgram.disable();
         });
 }

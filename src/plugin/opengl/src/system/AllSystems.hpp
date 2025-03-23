@@ -1,16 +1,6 @@
 #pragma once
 
-#include "Entity.hpp"
-
-#include "GLBufferManager.hpp"
-#include "Material.hpp"
-#include "MaterialCache.hpp"
-#include "Mesh.hpp"
-#include "Shader.hpp"
-#include "ShaderManager.hpp"
-#include "resource/Camera/Camera.hpp"
-#include "utils/Light/Light.hpp"
-#include <iostream>
+#include "Core.hpp"
 
 namespace ES::Plugin::OpenGL::System {
 const int DEFAULT_WIDTH = 800;
