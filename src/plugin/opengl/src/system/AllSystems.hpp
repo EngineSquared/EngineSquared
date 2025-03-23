@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.hpp"
+#include "GLBufferManager.hpp"
 #include "MaterialCache.hpp"
 #include "Model.hpp"
 #include "ShaderManager.hpp"
@@ -23,6 +24,9 @@ void LoadDefaultShader(ES::Engine::Core &core);
 
 void SetupShaderUniforms(ES::Engine::Core &core);
 void LoadMaterialCache(ES::Engine::Core &core);
+
+void LoadGLBufferManager(ES::Engine::Core &core);
+void LoadGLBuffer(ES::Engine::Core &core);
 
 void CreateCamera(ES::Engine::Core &core);
 
