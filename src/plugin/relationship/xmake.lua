@@ -15,7 +15,6 @@ target("PluginRelationship")
 
     add_headerfiles("src/**.hpp", { public = true })
     add_includedirs("src/", {public = true})
-    add_includedirs("src/component", {public = true})
     add_includedirs("src/utils", {public = true})
 
     add_files("src/**.cpp")

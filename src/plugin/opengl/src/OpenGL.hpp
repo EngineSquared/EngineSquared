@@ -7,7 +7,7 @@
 
 #include "resource/Buttons/Buttons.hpp"
 #include "resource/Camera/Camera.hpp"
-#include "resource/GLFWWindow/GLFWWindow.hpp"
+#include "resource/GLBufferManager/GLBufferManager.hpp"
 #include "resource/MaterialCache/MaterialCache.hpp"
 #include "resource/ShaderManager/ShaderManager.hpp"
 
@@ -15,4 +15,6 @@
 
 #include "utils/Loader/Loader.hpp"
 #include "utils/MaterialData/MaterialData.hpp"
+#include "utils/GLBuffer/GLBuffer.hpp"
+#include "utils/Loader/Loader.hpp"
 #include "utils/Viewer/Viewer.hpp"

@@ -3,58 +3,43 @@
 #include "Core.hpp"
 #include "Entity.hpp"
 #include "NativeScripting.hpp"
-#include "ScriptingSystem.hpp"
+#include "PluginNativeScripting.hpp"
+#include "ScriptableEntity.hpp"
 
-class speedManager : public ES::Plugin::NativeScripting::Utils::ScriptableEntity {
-  public:
-    void OnCreate([[maybe_unused]] const ES::Engine::Core &core) { std::cout << "OnCreate called" << std::endl; }
-
-    void OnUpdate(ES::Engine::Core &core)
-    {
-        auto view = core.GetRegistry().view<float>();
-
-        for (auto entity : view)
-        {
-            auto &speed = view.get<float>(entity);
-            speed = 3.0f;
-        }
-    }
-
-    void OnDestroy()
-    {
-        // Left empty as OnDestroy does not perform anything here
-    }
+struct ActionHistory {
+    std::vector<std::string> actions;
 };
 
-static void InitPlayer(ES::Engine::Core &core)
-{
-    float speed = 1.0f;
+class TestScript : public ES::Plugin::NativeScripting::Utils::ScriptableEntity {
+  public:
+    void OnCreate(ES::Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnCreate"); }
 
-    ES::Engine::Entity playerEntity = core.CreateEntity();
-    auto &scriptComponent = playerEntity.AddComponent<ES::Plugin::NativeScripting::Component::NativeScripting>(core);
+    void OnUpdate(ES::Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnUpdate"); }
 
-    scriptComponent.Bind<speedManager>(core);
+    void OnDestroy(ES::Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnDestroy"); }
+};
 
-    core.GetRegistry().emplace<float>(playerEntity, speed);
-}
-
-TEST(NativeScripting, speedManagerScript)
+TEST(NativeScripting, CasualUse)
 {
     ES::Engine::Core core;
 
-    core.RegisterSystem<ES::Engine::Scheduler::Startup>(InitPlayer);
-    core.RegisterSystem<ES::Engine::Scheduler::Update>(ES::Plugin::NativeScripting::System::UpdateScripts);
-    testing::internal::CaptureStdout();
+    core.RegisterResource<ActionHistory>({});
+    core.AddPlugins<ES::Plugin::NativeScripting::Plugin>();
+
+    auto e = core.CreateEntity();
+
+    e.AddComponent<ES::Plugin::NativeScripting::Component::NativeScripting>(core).Bind<TestScript>(core);
 
     core.RunSystems();
 
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "OnCreate called\n");
+    auto &actions = core.GetResource<ActionHistory>().actions;
 
-    auto view = core.GetRegistry().view<float>();
-    for (auto entity : view)
-    {
-        auto speed = view.get<float>(entity);
-        EXPECT_FLOAT_EQ(speed, 3.0f) << "Speed should be 3.0f after OnUpdate()";
-    }
+    ASSERT_EQ(actions.size(), 2);
+    ASSERT_EQ(actions[0], "OnCreate");
+    ASSERT_EQ(actions[1], "OnUpdate");
+
+    core.KillEntity(e);
+
+    ASSERT_EQ(actions.size(), 3);
+    ASSERT_EQ(actions[2], "OnDestroy");
 }

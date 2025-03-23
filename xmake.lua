@@ -37,6 +37,7 @@ target("EngineSquared")
     add_deps("PluginUtils")
     add_deps("PluginOpenGL")
     add_deps("PluginWindow")
+    add_deps("PluginRelationship")
     add_deps("PluginNativeScripting")
     add_deps("UtilsLog")
 
