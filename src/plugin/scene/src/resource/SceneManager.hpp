@@ -28,9 +28,9 @@ class SceneManager {
     /**
      * @brief Unload the current scene and load the next scene.
      *
-     * @param registry  registry that contains all components
+     * @param core  the core containing all components
      */
-    void Update(ES::Engine::Core &registry);
+    void Update(ES::Engine::Core &core);
 
     /**
      * @brief Register a scene using a name as a key.
@@ -53,9 +53,9 @@ class SceneManager {
     }
 
   private:
-    void _loadScene(ES::Engine::Core &registry, const std::string &name);
+    void _loadScene(ES::Engine::Core &core, const std::string &name);
 
-    void _unloadScene(ES::Engine::Core &registry, const std::string &name);
+    void _unloadScene(ES::Engine::Core &core, const std::string &name);
 
     [[nodiscard]] std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> _getScene(const std::string &name);
 

@@ -21,7 +21,7 @@ TEST(Core, RelativeTimeUpdateBasic)
 
     // Relative time update uses the highest precision available given how often it is called
     // it only uses multiple updates if the time difference is greater than the target tick rate
-    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&](const Core &registry) {
+    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&](const Core &core) {
         if (deltaTime1 == 0.0f)
         {
             deltaTime1 = reg.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
@@ -50,12 +50,12 @@ TEST(Core, RelativeTimeUpdateSubsteps)
     std::array<float, 5> deltaTimes = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
     // If called with a delta time > target tick rate, it should run multiple times, with the remainder
-    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&deltaTimes](Core &registry) {
+    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&deltaTimes](Core &core) {
         for (int i = 0; i < 5; i++)
         {
             if (deltaTimes[i] == 0.0f)
             {
-                deltaTimes[i] = registry.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
+                deltaTimes[i] = core.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
                 break;
             }
         }

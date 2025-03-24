@@ -10,7 +10,7 @@ namespace ES::Engine::Scheduler {
  */
 class Startup : public AScheduler {
   public:
-    explicit Startup(Core &registry, const std::function<void()> &callback) : AScheduler(registry), _callback(callback)
+    explicit Startup(Core &core, const std::function<void()> &callback) : AScheduler(core), _callback(callback)
     {
     }
     void RunSystems() override;

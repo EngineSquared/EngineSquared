@@ -10,12 +10,12 @@ namespace ES::Plugin::Physics::System {
  *
  * @param	registry	registry used to get entities to check
  */
-void DetectABABCollisions(ES::Engine::Core &registry);
+void DetectABABCollisions(ES::Engine::Core &core);
 
 /**
  * Remove all ABAB collisions from the registry
  *
  * @param	registry	registry used to get entities to check
  */
-void RemoveABABCollisions(ES::Engine::Core &registry);
+void RemoveABABCollisions(ES::Engine::Core &core);
 } // namespace ES::Plugin::Physics::System

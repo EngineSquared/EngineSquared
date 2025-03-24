@@ -36,12 +36,12 @@ class Entity {
     /**
      * Create a new entity in the registry.
      *
-     * @param   registry    registry used to store the entity
+     * @param   core    registry used to store the entity
      * @return  new entity
      */
-    static Entity Create(Core &registry)
+    static Entity Create(Core &core)
     {
-        Entity entity = registry.CreateEntity();
+        Entity entity = core.CreateEntity();
 #ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] Create Entity", entity_id_type(entity)));
 #endif
@@ -51,15 +51,15 @@ class Entity {
     /**
      * Destroy an entity in the registry.
      *
-     * @param   registry    registry used to store the entity
+     * @param   core    registry used to store the entity
      * @return  void
      */
-    void Destroy(Core &registry)
+    void Destroy(Core &core)
     {
 #ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] Destroy Entity", _entity));
 #endif
-        registry.KillEntity(*this);
+        core.KillEntity(*this);
     }
 
     /**
@@ -82,17 +82,17 @@ class Entity {
      * Utility method to add a component to an entity.
      *
      * @tparam  TComponent  type to add to registry
-     * @param   registry    registry used to store the component
+     * @param   core        registry used to store the component
      * @param   component   rvalue to add to registry
      * @return  reference of the added component
      */
 
-    template <typename TComponent> inline decltype(auto) AddComponent(Core &registry, TComponent &&component)
+    template <typename TComponent> inline decltype(auto) AddComponent(Core &core, TComponent &&component)
     {
 #ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
 #endif
-        return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity),
+        return core.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity),
                                                           std::forward<TComponent>(component));
     }
 
@@ -101,17 +101,17 @@ class Entity {
      *
      * @tparam  TComponent  type to add to registry
      * @tparam  TArgs       type used to create the component
-     * @param   registry    registry used to store the component
+     * @param   core        registry used to store the component
      * @param   args        parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      */
     template <typename TComponent, typename... TArgs>
-    inline decltype(auto) AddComponent(Core &registry, TArgs &&...args)
+    inline decltype(auto) AddComponent(Core &core, TArgs &&...args)
     {
 #ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
 #endif
-        return registry.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
+        return core.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
     }
 
     /**
@@ -119,18 +119,18 @@ class Entity {
      *
      * @tparam  TComponent  type to add to registry
      * @tparam  TArgs       type used to create the component
-     * @param   registry    registry used to store the component
+     * @param   core        registry used to store the component
      * @param   args        parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      */
     template <typename TComponent, typename... TArgs>
-    inline decltype(auto) AddComponentIfNotExists(Core &registry, TArgs &&...args)
+    inline decltype(auto) AddComponentIfNotExists(Core &core, TArgs &&...args)
     {
-        if (this->HasComponents<TComponent>(registry))
+        if (this->HasComponents<TComponent>(core))
         {
-            return this->GetComponents<TComponent>(registry);
+            return this->GetComponents<TComponent>(core);
         }
-        return this->AddComponent<TComponent>(registry, std::forward<TArgs>(args)...);
+        return this->AddComponent<TComponent>(core, std::forward<TArgs>(args)...);
     }
 
     /**
@@ -139,35 +139,35 @@ class Entity {
      *
      * @tparam  TTempComponent  type to add to registry
      * @tparam  TArgs           type used to create the component
-     * @param   registry        registry used to store the component
+     * @param   core            registry used to store the component
      * @param   args            parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      * @see     RemoveTemporaryComponents
      */
     template <typename TTempComponent, typename... TArgs>
-    inline decltype(auto) AddTemporaryComponent(Core &registry, TArgs &&...args)
+    inline decltype(auto) AddTemporaryComponent(Core &core, TArgs &&...args)
     {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
-            temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Core &reg) {
+            temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Core &core) {
 #ifdef ES_DEBUG
                 ES::Utils::Log::Info(fmt::format("RemoveTemporaryComponent: {}", typeid(TTempComponent).name()));
 #endif
-                reg.GetRegistry().clear<TTempComponent>();
+                core.GetRegistry().clear<TTempComponent>();
             };
         }
 
-        return this->AddComponent<TTempComponent>(registry, std::forward<TArgs>(args)...);
+        return this->AddComponent<TTempComponent>(core, std::forward<TArgs>(args)...);
     }
 
     /**
      * System to remove all temporary component from the registry.
      *
-     * @param   registry    registry used to store the component
+     * @param   core    registry used to store the component
      * @return  void
      * @see     AddTemporaryComponent
      */
-    static void RemoveTemporaryComponents(Core &registry)
+    static void RemoveTemporaryComponents(Core &core)
     {
         if (temporaryComponent.empty())
         {
@@ -175,7 +175,7 @@ class Entity {
         }
         for (const auto &[typeIndex, func] : temporaryComponent)
         {
-            func(registry);
+            func(core);
         }
         temporaryComponent.clear();
     }
@@ -184,14 +184,14 @@ class Entity {
      * Utility method to remove a component from an entity.
      *
      * @tparam  TComponent  type to remove from registry
-     * @param   registry    registry used to store the component
+     * @param   core        registry used to store the component
      */
-    template <typename TComponent> inline void RemoveComponent(Core &registry)
+    template <typename TComponent> inline void RemoveComponent(Core &core)
     {
 #ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] RemoveComponent: {}", _entity, typeid(TComponent).name()));
 #endif
-        registry.GetRegistry().remove<TComponent>(ToEnttEntity(this->_entity));
+        core.GetRegistry().remove<TComponent>(ToEnttEntity(this->_entity));
     }
 
     /**
@@ -200,9 +200,9 @@ class Entity {
      * @tparam  TComponent  components to check
      * @return  true if entity have all requested component
      */
-    template <typename... TComponent> inline bool HasComponents(Core &registry)
+    template <typename... TComponent> inline bool HasComponents(Core &core)
     {
-        return registry.GetRegistry().all_of<TComponent...>(ToEnttEntity(this->_entity));
+        return core.GetRegistry().all_of<TComponent...>(ToEnttEntity(this->_entity));
     }
 
     /**
@@ -211,9 +211,9 @@ class Entity {
      * @tparam  TComponent  components to get
      * @return  components of type TComponent from the entity
      */
-    template <typename... TComponent> inline decltype(auto) GetComponents(Core &registry)
+    template <typename... TComponent> inline decltype(auto) GetComponents(Core &core)
     {
-        return registry.GetRegistry().get<TComponent...>(ToEnttEntity(this->_entity));
+        return core.GetRegistry().get<TComponent...>(ToEnttEntity(this->_entity));
     }
 
     /**
@@ -222,9 +222,9 @@ class Entity {
      * @tparam  TComponent  components to get
      * @return  components of type TComponent from the entity
      */
-    template <typename TComponent> inline decltype(auto) TryGetComponent(Core &registry)
+    template <typename TComponent> inline decltype(auto) TryGetComponent(Core &core)
     {
-        return registry.GetRegistry().try_get<TComponent>(ToEnttEntity(this->_entity));
+        return core.GetRegistry().try_get<TComponent>(ToEnttEntity(this->_entity));
     }
 
     inline static entity_id_type FromEnttEntity(entt::entity e) { return static_cast<entity_id_type>(e); }

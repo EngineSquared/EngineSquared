@@ -39,7 +39,7 @@ TEST(Core, Resources)
 
     reg.RegisterResource<Res>({42});
 
-    reg.RegisterSystem([](Core &registry) { registry.GetResource<Res>().x = 69; });
+    reg.RegisterSystem([](Core &core) { core.GetResource<Res>().x = 69; });
 
     ASSERT_EQ(reg.GetResource<Res>().x, 42);
 
