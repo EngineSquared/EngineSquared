@@ -19,19 +19,20 @@ void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 {
     if (GLenum err = glewInit(); GLEW_OK != err)
     {
-        std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
+        ES::Utils::Log::Error(fmt::format("Error: {}", reinterpret_cast<const char *>(glewGetErrorString(err))));
     }
-    std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
+    ES::Utils::Log::Info(
+        fmt::format("Status: Using GLEW {}", reinterpret_cast<const char *>(glewGetString(GLEW_VERSION))));
 }
 
 void ES::Plugin::OpenGL::System::CheckGLEWVersion(const ES::Engine::Core &)
 {
     if (!glewIsSupported("GL_VERSION_4_2"))
     {
-        std::cerr << "OpenGL 4.2 not supported" << std::endl;
+        ES::Utils::Log::Error("OpenGL 4.2 not supported");
         return;
     }
-    std::cout << "OpenGL 4.2 supported" << std::endl;
+    ES::Utils::Log::Info("OpenGL 4.2 supported");
 }
 
 // Function to handle mouse dragging interactions
