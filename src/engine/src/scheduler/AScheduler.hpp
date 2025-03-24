@@ -8,7 +8,7 @@ namespace ES::Engine::Scheduler {
  */
 class AScheduler : public IScheduler {
   public:
-    explicit AScheduler(Core &registry) : _registry(registry) {}
+    explicit AScheduler(Core &core) : _registry(core) {}
 
     template <typename... Systems> void AddSystems(Systems... systems) { _systemsList.AddSystems(systems...); }
 

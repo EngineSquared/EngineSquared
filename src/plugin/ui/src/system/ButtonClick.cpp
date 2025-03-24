@@ -3,9 +3,9 @@
 #include "Button.hpp"
 #include "HasChanged.hpp"
 
-void ES::Plugin::UI::System::ButtonClick(ES::Engine::Core &r)
+void ES::Plugin::UI::System::ButtonClick(ES::Engine::Core &core)
 {
-    auto view = r.GetRegistry()
+    auto view = core.GetRegistry()
                     .view<ES::Plugin::UI::Component::Button,
                           ES::Plugin::Tools::HasChanged<ES::Plugin::UI::Component::Button>>();
     for (auto entity : view)
@@ -14,7 +14,7 @@ void ES::Plugin::UI::System::ButtonClick(ES::Engine::Core &r)
         if (button.lastState == ES::Plugin::UI::Component::Button::State::Pressed &&
             button.state == ES::Plugin::UI::Component::Button::State::Hover)
         {
-            button.onClick(r);
+            button.onClick(core);
         }
     }
 }

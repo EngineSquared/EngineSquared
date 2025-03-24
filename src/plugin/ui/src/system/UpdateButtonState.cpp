@@ -9,12 +9,12 @@
 
 #include "Button.hpp"
 
-void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Core &r)
+void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Core &core)
 {
-    auto &inputManager = r.GetResource<ES::Plugin::Input::Resource::InputManager>();
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
     const bool &isMouseLeftPressed = inputManager.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
     const glm::vec2 &mousePos = inputManager.GetMousePosition();
-    auto view = r.GetRegistry()
+    auto view = core.GetRegistry()
                     .view<ES::Plugin::UI::Component::Button, ES::Plugin::Physics::Component::BoxCollider2D,
                           ES::Plugin::Object::Component::Transform>();
     for (auto entity : view)
@@ -44,10 +44,10 @@ void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Core &r)
         }
         if (button.lastState != button.state &&
             !ES::Engine::Entity(entity).HasComponents<ES::Plugin::Tools::HasChanged<ES::Plugin::UI::Component::Button>>(
-                r))
+                core))
         {
             ES::Engine::Entity(entity)
-                .AddTemporaryComponent<ES::Plugin::Tools::HasChanged<ES::Plugin::UI::Component::Button>>(r);
+                .AddTemporaryComponent<ES::Plugin::Tools::HasChanged<ES::Plugin::UI::Component::Button>>(core);
         }
     }
 }

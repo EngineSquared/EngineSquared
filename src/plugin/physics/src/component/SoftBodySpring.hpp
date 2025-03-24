@@ -44,12 +44,12 @@ struct SoftBodySpring {
     /**
      * Apply a force to the spring.
      */
-    void ApplyForce(ES::Engine::Core &registry)
+    void ApplyForce(ES::Engine::Core &core)
     {
-        auto &nodeA = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->entityNodeA);
-        auto &nodeB = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->entityNodeB);
-        auto &transformA = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(this->entityNodeA);
-        auto &transformB = registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(this->entityNodeB);
+        auto &nodeA = core.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->entityNodeA);
+        auto &nodeB = core.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(this->entityNodeB);
+        auto &transformA = core.GetRegistry().get<ES::Plugin::Object::Component::Transform>(this->entityNodeA);
+        auto &transformB = core.GetRegistry().get<ES::Plugin::Object::Component::Transform>(this->entityNodeB);
 
         auto direction = transformB.position - transformA.position;
         float currentLength = glm::length(direction);

@@ -19,7 +19,7 @@ class FixedTimeUpdate : public AScheduler {
     inline static constexpr float DEFAULT_TICK_RATE = 1.0f / 50.0f;
 
   public:
-    FixedTimeUpdate(Core &registry, float tickRate = DEFAULT_TICK_RATE) : AScheduler(registry), _tickRate(tickRate) {}
+    FixedTimeUpdate(Core &core, float tickRate = DEFAULT_TICK_RATE) : AScheduler(core), _tickRate(tickRate) {}
     void RunSystems() override;
 
     /**

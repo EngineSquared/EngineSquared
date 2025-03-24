@@ -8,9 +8,9 @@
 namespace ES::Plugin::Physics::System {
 constexpr float GRAVITY = 9.81f;
 
-static void ApplyGravity(ES::Engine::Core &registry)
+static void ApplyGravity(ES::Engine::Core &core)
 {
-    auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::SoftBodyNode>();
+    auto nodeView = core.GetRegistry().view<ES::Plugin::Physics::Component::SoftBodyNode>();
 
     for (auto entity : nodeView)
     {
@@ -19,24 +19,24 @@ static void ApplyGravity(ES::Engine::Core &registry)
     }
 }
 
-static void ApplySpringForces(ES::Engine::Core &registry)
+static void ApplySpringForces(ES::Engine::Core &core)
 {
-    auto springView = registry.GetRegistry().view<ES::Plugin::Physics::Component::SoftBodySpring>();
+    auto springView = core.GetRegistry().view<ES::Plugin::Physics::Component::SoftBodySpring>();
 
     for (auto entity : springView)
     {
         auto &spring = springView.get<ES::Plugin::Physics::Component::SoftBodySpring>(entity);
 
-        spring.ApplyForce(registry);
+        spring.ApplyForce(core);
     }
 }
 
-static void IntegrateVelocities(ES::Engine::Core &registry)
+static void IntegrateVelocities(ES::Engine::Core &core)
 {
-    auto nodeView = registry.GetRegistry()
+    auto nodeView = core.GetRegistry()
                         .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
 
-    float dt = registry.GetScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
+    float dt = core.GetScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
 
     for (auto entity : nodeView)
     {
@@ -56,10 +56,10 @@ static void IntegrateVelocities(ES::Engine::Core &registry)
     }
 }
 
-void VelocityIntegration(ES::Engine::Core &registry)
+void VelocityIntegration(ES::Engine::Core &core)
 {
-    ApplyGravity(registry);
-    ApplySpringForces(registry);
-    IntegrateVelocities(registry);
+    ApplyGravity(core);
+    ApplySpringForces(core);
+    IntegrateVelocities(core);
 }
 } // namespace ES::Plugin::Physics::System

@@ -32,12 +32,12 @@ static bool IsNodeInsideBox(const ES::Plugin::Object::Component::Transform &node
            nodeTransform.position.z <= boxTransform.position.z + boxCollider.size.z / 2;
 }
 
-void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Core &registry)
+void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Core &core)
 {
     auto boxColliderView =
-        registry.GetRegistry()
+        core.GetRegistry()
             .view<ES::Plugin::Physics::Component::BoxCollider3D, ES::Plugin::Object::Component::Transform>();
-    auto nodeView = registry.GetRegistry()
+    auto nodeView = core.GetRegistry()
                         .view<ES::Plugin::Physics::Component::SoftBodyNode, ES::Plugin::Object::Component::Transform>();
 
     for (auto boxEntity : boxColliderView)
@@ -62,25 +62,25 @@ void ES::Plugin::Physics::System::DetectSoftBodyCollisions(ES::Engine::Core &reg
 
                 float depth = std::abs(distances[closestAxis]);
 
-                ES::Engine::Entity collision = registry.CreateEntity();
+                ES::Engine::Entity collision = core.CreateEntity();
                 collision.AddComponent<ES::Plugin::Physics::Component::ParticleBoxCollision>(
-                    registry, nodeEntity, boxEntity, boxNormal, depth);
+                    core, nodeEntity, boxEntity, boxNormal, depth);
             }
         }
     }
 }
 
-void ES::Plugin::Physics::System::ApplySoftBodyCollisions(ES::Engine::Core &registry)
+void ES::Plugin::Physics::System::ApplySoftBodyCollisions(ES::Engine::Core &core)
 {
-    auto dt = registry.GetScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
-    auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::ParticleBoxCollision>();
+    auto dt = core.GetScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
+    auto nodeView = core.GetRegistry().view<ES::Plugin::Physics::Component::ParticleBoxCollision>();
 
     for (auto entity : nodeView)
     {
         auto const &collision = nodeView.get<ES::Plugin::Physics::Component::ParticleBoxCollision>(entity);
-        auto &node = registry.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(collision.particleEntity);
+        auto &node = core.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(collision.particleEntity);
         auto &nodeTransform =
-            registry.GetRegistry().get<ES::Plugin::Object::Component::Transform>(collision.particleEntity);
+            core.GetRegistry().get<ES::Plugin::Object::Component::Transform>(collision.particleEntity);
 
         nodeTransform.position += collision.penetrationDepth * collision.normal;
 
@@ -92,16 +92,16 @@ void ES::Plugin::Physics::System::ApplySoftBodyCollisions(ES::Engine::Core &regi
 
         node.velocity = vn + vt;
 
-        registry.GetRegistry().destroy(entity);
+        core.GetRegistry().destroy(entity);
     }
 }
 
-void ES::Plugin::Physics::System::DeleteSoftBodyCollisions(ES::Engine::Core &registry)
+void ES::Plugin::Physics::System::DeleteSoftBodyCollisions(ES::Engine::Core &core)
 {
-    auto nodeView = registry.GetRegistry().view<ES::Plugin::Physics::Component::ParticleBoxCollision>();
+    auto nodeView = core.GetRegistry().view<ES::Plugin::Physics::Component::ParticleBoxCollision>();
 
     for (auto entity : nodeView)
     {
-        registry.GetRegistry().destroy(entity);
+        core.GetRegistry().destroy(entity);
     }
 }
