@@ -5,8 +5,8 @@
 #include "Entity.hpp"
 #include "GLBufferManager.hpp"
 #include "Light.hpp"
-#include "MaterialHandle.hpp"
 #include "MaterialCache.hpp"
+#include "MaterialHandle.hpp"
 #include "Mesh.hpp"
 #include "ModelHandle.hpp"
 #include "ShaderHandle.hpp"
@@ -275,7 +275,8 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
         .view<Component::ModelHandle, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh,
               Component::ShaderHandle, Component::MaterialHandle>()
         .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Transform &transform,
-                  ES::Plugin::Object::Component::Mesh &mesh, Component::ShaderHandle &shaderHandle, Component::MaterialHandle &materialHandle) {
+                  ES::Plugin::Object::Component::Mesh &mesh, Component::ShaderHandle &shaderHandle,
+                  Component::MaterialHandle &materialHandle) {
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
             const auto &glBuffer = core.GetResource<Resource::GLBufferManager>().Get(modelHandle.id);
