@@ -9,6 +9,7 @@
 #include <map>
 #include <sstream>
 
+#include "Logger.hpp"
 #include "OpenGLError.hpp"
 
 #include <GL/glew.h>
@@ -80,14 +81,14 @@ class ShaderProgram {
         glGetShaderiv(shaderId, GL_COMPILE_STATUS, &shaderStatus);
         if (shaderStatus == GL_FALSE)
         {
-            std::cout << shaderTypeString << " compilation failed: " << getInfoLog(ObjectType::SHADER, shaderId)
-                      << std::endl;
+            ES::Utils::Log::Error(
+                fmt::format("{} compilation failed: {}", shaderTypeString, getInfoLog(ObjectType::SHADER, shaderId)));
         }
         else
         {
             if (DEBUG_SHADER)
             {
-                std::cout << shaderTypeString << " shader compilation successful." << std::endl;
+                ES::Utils::Log::Info(fmt::format("{} shader compilation successful.", shaderTypeString));
             }
         }
 
@@ -123,12 +124,13 @@ class ShaderProgram {
         {
             if (DEBUG_SHADER)
             {
-                std::cout << "Shader program link successful." << std::endl;
+                ES::Utils::Log::Info("Shader program link successful.");
             }
         }
         else
         {
-            std::cout << "Shader program link failed: " << getInfoLog(ObjectType::PROGRAM, programId) << std::endl;
+            ES::Utils::Log::Error(
+                fmt::format("Shader program link failed: {}", getInfoLog(ObjectType::PROGRAM, programId)));
         }
 
         // Validate the shader program
@@ -141,13 +143,13 @@ class ShaderProgram {
         {
             if (DEBUG_SHADER)
             {
-                std::cout << "Shader program validation successful." << std::endl;
+                ES::Utils::Log::Info("Shader program validation successful.");
             }
         }
         else
         {
-            std::cout << "Shader program validation failed: " << getInfoLog(ObjectType::PROGRAM, programId)
-                      << std::endl;
+            ES::Utils::Log::Error(
+                fmt::format("Shader program validation failed: {}", getInfoLog(ObjectType::PROGRAM, programId)));
         }
 
         // Finally, the shader program is initialised
@@ -163,7 +165,7 @@ class ShaderProgram {
         // If we couldn't open the file we'll bail out
         if (!file.good())
         {
-            std::cout << "Failed to open file: " << filename << std::endl;
+            ES::Utils::Log::Error(fmt::format("Failed to open file: {}", filename));
         }
 
         // Otherwise, create a string stream...
@@ -219,7 +221,7 @@ class ShaderProgram {
         programId = glCreateProgram();
         if (programId == 0)
         {
-            std::cout << "Failed to generate shader program Id." << std::endl;
+            ES::Utils::Log::Error("Failed to generate shader program Id.");
         }
         glUseProgram(programId);
     }
@@ -228,7 +230,7 @@ class ShaderProgram {
     {
         if (programId == 0)
         {
-            std::cout << "No shader program Id to delete." << std::endl;
+            ES::Utils::Log::Warn("No shader program Id to delete.");
         }
         else
         {
@@ -293,7 +295,7 @@ class ShaderProgram {
         // Not found? Bail.
         if (attributeIter == attributeMap.end())
         {
-            std::cout << "Could not find attribute in shader program: " << attributeName;
+            ES::Utils::Log::Error(fmt::format("Could not find attribute in shader program: {}", attributeName));
         }
 
         // Otherwise return the attribute location from the attribute map
@@ -319,7 +321,7 @@ class ShaderProgram {
         // Found it? Great - pass it back! Didn't find it? Alert user and halt.
         if (uniformIter == uniformMap.end())
         {
-            std::cout << "Could not find uniform in shader program: " << uniformName << std::endl;
+            ES::Utils::Log::Error(fmt::format("Could not find uniform in shader program: {}", uniformName));
         }
 
         // Otherwise return the attribute location from the uniform map
@@ -335,14 +337,14 @@ class ShaderProgram {
         // Check to ensure that the shader contains an attribute with this name
         if (attributeMap[attributeName] == -1)
         {
-            std::cout << "Could not add attribute: " << attributeName << " - location returned -1." << std::endl;
+            ES::Utils::Log::Error(fmt::format("Could not add attribute: {} - location returned -1.", attributeName));
         }
         else // Valid attribute location? Inform user if we're in debug mode.
         {
             if (DEBUG_SHADER)
             {
-                std::cout << "Attribute " << attributeName << " bound to location: " << attributeMap[attributeName]
-                          << std::endl;
+                ES::Utils::Log::Info(
+                    fmt::format("Attribute {} bound to location: {}", attributeName, attributeMap[attributeName]));
             }
         }
 
@@ -359,14 +361,14 @@ class ShaderProgram {
         // Check to ensure that the shader contains a uniform with this name
         if (uniformMap[uniformName] == -1)
         {
-            std::cout << "Could not add uniform: " << uniformName << " - location returned -1." << std::endl;
+            ES::Utils::Log::Error(fmt::format("Could not add uniform: {} - location returned -1.", uniformName));
         }
         else // Valid uniform location? Inform user if we're in debug mode.
         {
             if (DEBUG_SHADER)
             {
-                std::cout << "Uniform " << uniformName << " bound to location: " << uniformMap[uniformName]
-                          << std::endl;
+                ES::Utils::Log::Info(
+                    fmt::format("Uniform {} bound to location: {}", uniformName, uniformMap[uniformName]));
             }
         }
 
