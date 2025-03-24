@@ -92,8 +92,7 @@ class Entity {
 #ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
 #endif
-        return core.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity),
-                                                          std::forward<TComponent>(component));
+        return core.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TComponent>(component));
     }
 
     /**
@@ -105,8 +104,7 @@ class Entity {
      * @param   args        parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      */
-    template <typename TComponent, typename... TArgs>
-    inline decltype(auto) AddComponent(Core &core, TArgs &&...args)
+    template <typename TComponent, typename... TArgs> inline decltype(auto) AddComponent(Core &core, TArgs &&...args)
     {
 #ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
