@@ -4,16 +4,16 @@
 #include <glm/vec3.hpp>
 
 namespace ES::Plugin::OpenGL::Utils {
-class MaterialData {
+class Material {
   public:
-    MaterialData() = default;
-    ~MaterialData() = default;
+    Material() = default;
+    ~Material() = default;
 
-    MaterialData(const MaterialData &) = default;
-    MaterialData(MaterialData &&) = default;
+    Material(const Material &) = default;
+    Material(Material &&) = default;
 
-    MaterialData &operator=(const MaterialData &) = default;
-    MaterialData &operator=(MaterialData &&) = default;
+    Material &operator=(const Material &) = default;
+    Material &operator=(Material &&) = default;
 
     GLfloat Shiness = 180;
     glm::vec3 Ka = glm::vec3(0.2, 0.2, 0.2);

@@ -6,19 +6,19 @@
 
 namespace ES::Plugin::OpenGL::Component {
 /**
- * Shader component
+ * ShaderHandle component
  * This is only a reference to the shader program used by the entity,
  * handling of the shader program is done via the ShaderManager resource.
  */
-struct Shader {
+struct ShaderHandle {
     std::string name;
 
     entt::hashed_string id;
 
-    Shader() = default;
-    explicit Shader(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
+    ShaderHandle() = default;
+    explicit ShaderHandle(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
 
-    Shader(const Shader &) = default;
-    Shader(Shader &&) = default;
+    ShaderHandle(const ShaderHandle &) = default;
+    ShaderHandle(ShaderHandle &&) = default;
 };
 } // namespace ES::Plugin::OpenGL::Component

@@ -6,19 +6,19 @@
 
 namespace ES::Plugin::OpenGL::Component {
 /**
- * Material component
+ * MaterialHandle component
  * This is only a reference to the material used by the entity,
  * handling of the material is done via the MaterialCache resource.
  */
-struct Material {
+struct MaterialHandle {
     std::string name;
 
     entt::hashed_string id;
 
-    Material() = default;
-    explicit Material(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
+    MaterialHandle() = default;
+    explicit MaterialHandle(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
 
-    Material(const Material &) = default;
-    Material(Material &&) = default;
+    MaterialHandle(const MaterialHandle &) = default;
+    MaterialHandle(MaterialHandle &&) = default;
 };
 } // namespace ES::Plugin::OpenGL::Component

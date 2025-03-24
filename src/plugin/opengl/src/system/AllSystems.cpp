@@ -5,11 +5,11 @@
 #include "Entity.hpp"
 #include "GLBufferManager.hpp"
 #include "Light.hpp"
-#include "Material.hpp"
+#include "MaterialHandle.hpp"
 #include "MaterialCache.hpp"
 #include "Mesh.hpp"
-#include "Model.hpp"
-#include "Shader.hpp"
+#include "ModelHandle.hpp"
+#include "ShaderHandle.hpp"
 #include "ShaderManager.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
@@ -168,7 +168,7 @@ void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
 {
     auto &materialCache = core.RegisterResource<Resource::MaterialCache>({});
-    materialCache.Add(entt::hashed_string("default"), std::move(Utils::MaterialData()));
+    materialCache.Add(entt::hashed_string("default"), std::move(Utils::Material()));
 }
 
 void ES::Plugin::OpenGL::System::LoadGLBufferManager(ES::Engine::Core &core)
@@ -180,8 +180,8 @@ void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
 {
     auto &glBufferManager = core.GetResource<Resource::GLBufferManager>();
 
-    core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Mesh>().each(
-        [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Mesh &mesh) {
+    core.GetRegistry().view<Component::ModelHandle, ES::Plugin::Object::Component::Mesh>().each(
+        [&](auto entity, Component::ModelHandle &model, ES::Plugin::Object::Component::Mesh &mesh) {
             if (glBufferManager.Contains(model.id))
             {
                 glBufferManager.Get(model.id).Update(mesh);
@@ -258,13 +258,13 @@ void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
     shaderProgram.disable();
 }
 
-static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shaderProgram,
-                         const ES::Plugin::OpenGL::Utils::MaterialData &material)
+static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader,
+                         const ES::Plugin::OpenGL::Utils::Material &material)
 {
-    glUniform3fv(shaderProgram.uniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
-    glUniform3fv(shaderProgram.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
-    glUniform3fv(shaderProgram.uniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
-    glUniform1fv(shaderProgram.uniform("Material.Shiness"), 1, &material.Shiness);
+    glUniform3fv(shader.uniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
+    glUniform3fv(shader.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
+    glUniform3fv(shader.uniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
+    glUniform1fv(shader.uniform("Material.Shiness"), 1, &material.Shiness);
 }
 
 void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
@@ -272,23 +272,23 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
     auto &view = core.GetResource<Resource::Camera>().view;
     auto &projection = core.GetResource<Resource::Camera>().projection;
     core.GetRegistry()
-        .view<Component::Model, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh,
-              Component::Shader, Component::Material>()
-        .each([&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform,
-                  ES::Plugin::Object::Component::Mesh &mesh, Component::Shader &shader, Component::Material &material) {
-            auto &shaderProgram = core.GetResource<Resource::ShaderManager>().Get(shader.id);
-            const auto &materialData = core.GetResource<Resource::MaterialCache>().Get(material.id);
-            const auto &glBuffer = core.GetResource<Resource::GLBufferManager>().Get(model.id);
-            shaderProgram.use();
-            LoadMaterial(shaderProgram, materialData);
+        .view<Component::ModelHandle, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh,
+              Component::ShaderHandle, Component::MaterialHandle>()
+        .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Transform &transform,
+                  ES::Plugin::Object::Component::Mesh &mesh, Component::ShaderHandle &shaderHandle, Component::MaterialHandle &materialHandle) {
+            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
+            const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
+            const auto &glBuffer = core.GetResource<Resource::GLBufferManager>().Get(modelHandle.id);
+            shader.use();
+            LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
             glm::mat4 mview = view * modelmat;
             glm::mat4 mvp = projection * view * modelmat;
             auto nmat = glm::mat3(glm::transpose(glm::inverse(modelmat))); // normal matrix
-            glUniformMatrix3fv(shaderProgram.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
-            glUniformMatrix4fv(shaderProgram.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
-            glUniformMatrix4fv(shaderProgram.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
+            glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
+            glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
+            glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
             glBuffer.Draw(mesh);
-            shaderProgram.disable();
+            shader.disable();
         });
 }

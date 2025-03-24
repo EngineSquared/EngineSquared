@@ -1,8 +1,8 @@
 #pragma once
 
-#include "component/Material/Material.hpp"
-#include "component/Model/Model.hpp"
-#include "component/Shader/Shader.hpp"
+#include "component/MaterialHandle/MaterialHandle.hpp"
+#include "component/ModelHandle/ModelHandle.hpp"
+#include "component/ShaderHandle/ShaderHandle.hpp"
 
 #include "plugin/PluginOpenGL.hpp"
 
@@ -14,5 +14,5 @@
 
 #include "utils/GLBuffer/GLBuffer.hpp"
 #include "utils/Loader/Loader.hpp"
-#include "utils/MaterialData/MaterialData.hpp"
+#include "utils/Material/Material.hpp"
 #include "utils/Viewer/Viewer.hpp"

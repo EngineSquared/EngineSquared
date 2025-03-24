@@ -26,7 +26,6 @@
 #include <vector>
 
 #include "Loader.hpp"
-#include "Material.hpp"
 
 #include "Mesh.hpp"
 
