@@ -10,7 +10,7 @@ namespace ES::Engine::Scheduler {
  */
 class Shutdown : public AScheduler {
   public:
-    explicit Shutdown(Core &registry) : AScheduler(registry) {}
+    explicit Shutdown(Core &core) : AScheduler(core) {}
     void RunSystems() override;
 };
 } // namespace ES::Engine::Scheduler

@@ -8,21 +8,21 @@ namespace ES::Plugin::Physics::System {
 /**
  * @brief Detects collision between soft bodies particles and box colliders.
  *
- * @param registry  registry used to get all soft body nodes
+ * @param core  registry used to get all soft body nodes
  */
-void DetectSoftBodyCollisions(ES::Engine::Core &registry);
+void DetectSoftBodyCollisions(ES::Engine::Core &core);
 
 /**
  * @brief Applies collisions between soft bodies particles and box colliders.
  *
- * @param registry  registry used to get all soft body nodes
+ * @param core  registry used to get all soft body nodes
  */
-void ApplySoftBodyCollisions(ES::Engine::Core &registry);
+void ApplySoftBodyCollisions(ES::Engine::Core &core);
 
 /**
  * @brief Deletes all collision entities.
  *
- * @param registry  registry used to get all collision entities
+ * @param core  registry used to get all collision entities
  */
-void DeleteSoftBodyCollisions(ES::Engine::Core &registry);
+void DeleteSoftBodyCollisions(ES::Engine::Core &core);
 } // namespace ES::Plugin::Physics::System

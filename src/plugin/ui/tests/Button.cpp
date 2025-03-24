@@ -24,7 +24,7 @@ TEST(Button, ButtonClick)
     buttonComponent.lastState = Component::Button::State::Pressed;
     buttonComponent.state = Component::Button::State::Hover;
 
-    buttonComponent.onClick = [](ES::Engine::Core &reg) { reg.GetResource<onClickCalled>().clicked = true; };
+    buttonComponent.onClick = [](ES::Engine::Core &c) { c.GetResource<onClickCalled>().clicked = true; };
 
     EXPECT_FALSE(core.GetResource<onClickCalled>().clicked);
 

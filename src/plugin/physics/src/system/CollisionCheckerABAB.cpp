@@ -8,9 +8,9 @@
 #include "CollisionCheckerABAB.hpp"
 #include "CollisionUtils3D.hpp"
 
-void ES::Plugin::Physics::System::DetectABABCollisions(ES::Engine::Core &registry)
+void ES::Plugin::Physics::System::DetectABABCollisions(ES::Engine::Core &core)
 {
-    auto view = registry.GetRegistry()
+    auto view = core.GetRegistry()
                     .view<const ES::Plugin::Object::Component::Transform,
                           const ES::Plugin::Physics::Component::BoxCollider3D>();
 
@@ -29,19 +29,19 @@ void ES::Plugin::Physics::System::DetectABABCollisions(ES::Engine::Core &registr
             if (ES::Plugin::Physics::Utils::Box3DCollidesBox3D(transformA.position, boxColliderA, transformB.position,
                                                                boxColliderB))
             {
-                ES::Engine::Entity collision = registry.CreateEntity();
-                collision.AddComponent<ES::Plugin::Physics::Component::ABABCollision3D>(registry, entityA, entityB);
+                ES::Engine::Entity collision = core.CreateEntity();
+                collision.AddComponent<ES::Plugin::Physics::Component::ABABCollision3D>(core, entityA, entityB);
             }
         }
     }
 }
 
-void ES::Plugin::Physics::System::RemoveABABCollisions(ES::Engine::Core &registry)
+void ES::Plugin::Physics::System::RemoveABABCollisions(ES::Engine::Core &core)
 {
-    auto view = registry.GetRegistry().view<ES::Plugin::Physics::Component::ABABCollision3D>();
+    auto view = core.GetRegistry().view<ES::Plugin::Physics::Component::ABABCollision3D>();
 
     for (auto entity : view)
     {
-        registry.GetRegistry().destroy(entity);
+        core.GetRegistry().destroy(entity);
     }
 }

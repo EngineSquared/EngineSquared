@@ -17,10 +17,7 @@ class RelativeTimeUpdate : public AScheduler {
     inline static constexpr float REMAINDER_THRESHOLD = 0.0001f;
 
   public:
-    RelativeTimeUpdate(Core &registry, float tickRate = DEFAULT_TARGET_TICK_RATE)
-        : AScheduler(registry), _tickRate(tickRate)
-    {
-    }
+    RelativeTimeUpdate(Core &core, float tickRate = DEFAULT_TARGET_TICK_RATE) : AScheduler(core), _tickRate(tickRate) {}
 
     void RunSystems() override;
 
