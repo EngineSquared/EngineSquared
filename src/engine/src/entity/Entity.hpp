@@ -147,11 +147,11 @@ class Entity {
     {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
-            temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Core &core) {
+            temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Core &c) {
 #ifdef ES_DEBUG
                 ES::Utils::Log::Info(fmt::format("RemoveTemporaryComponent: {}", typeid(TTempComponent).name()));
 #endif
-                core.GetRegistry().clear<TTempComponent>();
+                c.GetRegistry().clear<TTempComponent>();
             };
         }
 
