@@ -1,73 +1,5 @@
 #include "AllSystems.hpp"
-
-void ES::Plugin::OpenGL::System::UpdateKey(ES::Engine::Core &core)
-{
-    GLFWwindow *window = core.GetResource<Resource::GLFWWindow>().window;
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
-
-void ES::Plugin::OpenGL::System::UpdateButton(ES::Engine::Core &core)
-{
-    GLFWwindow *window = core.GetResource<Resource::GLFWWindow>().window;
-    auto &mouseButtons = core.GetResource<OpenGL::Resource::Buttons>().mouse;
-    for (auto &[key, button] : mouseButtons)
-    {
-        bool pressed = glfwGetMouseButton(window, key) == GLFW_PRESS;
-        button.pressed = pressed;
-        button.updated = button.pressed != pressed;
-    }
-}
-
-void ES::Plugin::OpenGL::System::SaveLastMousePos(ES::Engine::Core &core)
-{
-    auto &buttons = core.GetResource<Resource::Buttons>();
-    auto &lastMousePos = buttons.lastMousePos;
-    auto &mouseButtons = buttons.mouse;
-    auto window = core.GetResource<Resource::GLFWWindow>().window;
-    if (mouseButtons[GLFW_MOUSE_BUTTON_LEFT].updated || mouseButtons[GLFW_MOUSE_BUTTON_MIDDLE].updated ||
-        mouseButtons[GLFW_MOUSE_BUTTON_RIGHT].updated)
-    {
-        double xpos = 0;
-        double ypos = 0;
-        glfwGetCursorPos(window, &xpos, &ypos);
-        lastMousePos.x = xpos;
-        lastMousePos.y = ypos;
-    }
-}
-
-void ES::Plugin::OpenGL::System::InitGLFW(const ES::Engine::Core &)
-{
-    if (!glfwInit())
-    {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
-        return;
-    }
-}
-
-void ES::Plugin::OpenGL::System::SetupGLFWHints(const ES::Engine::Core &)
-{
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-}
-
-void ES::Plugin::OpenGL::System::CreateGLFWWindow(ES::Engine::Core &core)
-{
-    if (!core.RegisterResource<Resource::GLFWWindow>(
-                 {glfwCreateWindow(DEFAULT_WIDTH, DEFAULT_HEIGHT, "OpenGL Framework", nullptr, nullptr)})
-             .window)
-    {
-        glfwTerminate();
-        std::cerr << "Failed to create GLFW window" << std::endl;
-        return;
-    }
-}
-
-void ES::Plugin::OpenGL::System::LinkGLFWContextToGL(ES::Engine::Core &core)
-{
-    glfwMakeContextCurrent(core.GetResource<Resource::GLFWWindow>().window);
-}
+#include "Button/Buttons.hpp"
 
 void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 {
@@ -89,18 +21,10 @@ void ES::Plugin::OpenGL::System::CheckGLEWVersion(const ES::Engine::Core &)
     ES::Utils::Log::Info("OpenGL 4.2 supported");
 }
 
-void ES::Plugin::OpenGL::System::GLFWEnableVSync(ES::Engine::Core &core) { glfwSwapInterval(1); }
-
-void ES::Plugin::OpenGL::System::UpdatePosCursor(ES::Engine::Core &core)
-{
-    auto &currentMousePos = core.GetResource<Resource::Buttons>().currentMousePos;
-    glfwGetCursorPos(core.GetResource<Resource::GLFWWindow>().window, &currentMousePos.x, &currentMousePos.y);
-}
-
 // Function to handle mouse dragging interactions
 void ES::Plugin::OpenGL::System::MouseDragging(ES::Engine::Core &core)
 {
-    auto &buttons = core.GetResource<Resource::Buttons>();
+    auto &buttons = core.GetResource<Window::Resource::Buttons>();
     auto &lastMousePos = buttons.lastMousePos;
     auto &currentMousePos = buttons.currentMousePos;
     auto &mouseButtons = buttons.mouse;
@@ -125,13 +49,6 @@ void ES::Plugin::OpenGL::System::MouseDragging(ES::Engine::Core &core)
     lastMousePos.x = currentMousePos.x;
     lastMousePos.y = currentMousePos.y;
 }
-
-void ES::Plugin::OpenGL::System::SwapBuffers(ES::Engine::Core &core)
-{
-    glfwSwapBuffers(core.GetResource<Resource::GLFWWindow>().window);
-}
-
-void ES::Plugin::OpenGL::System::PollEvents(ES::Engine::Core &core) { glfwPollEvents(); }
 
 void ES::Plugin::OpenGL::System::LoadShaderManager(ES::Engine::Core &core)
 {
@@ -241,6 +158,28 @@ void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
     materialCache.Add(entt::hashed_string("default"), std::move(Utils::Material()));
 }
 
+void ES::Plugin::OpenGL::System::LoadGLBufferManager(ES::Engine::Core &core)
+{
+    core.RegisterResource<Resource::GLBufferManager>(Resource::GLBufferManager());
+}
+
+void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
+{
+    auto &glBufferManager = core.GetResource<Resource::GLBufferManager>();
+
+    core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Mesh>().each(
+        [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Mesh &mesh) {
+            if (glBufferManager.Contains(entt::hashed_string(model.modelName.c_str())))
+            {
+                glBufferManager.Get(entt::hashed_string{model.modelName.c_str()}).update(mesh);
+                return;
+            }
+            Utils::GLBuffer buffer;
+            buffer.generateGlBuffers(mesh);
+            glBufferManager.Add(entt::hashed_string(model.modelName.c_str()), std::move(buffer));
+        });
+}
+
 void ES::Plugin::OpenGL::System::CreateCamera(ES::Engine::Core &core)
 {
     core.RegisterResource<Resource::Camera>(Resource::Camera(DEFAULT_WIDTH, DEFAULT_HEIGHT));
@@ -319,23 +258,26 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 {
     auto &view = core.GetResource<Resource::Camera>().view;
     auto &projection = core.GetResource<Resource::Camera>().projection;
-    core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Transform>().each(
-        [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform) {
+    core.GetRegistry()
+        .view<Component::Model, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh>()
+        .each([&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform,
+                  ES::Plugin::Object::Component::Mesh &mesh) {
             auto &shader =
                 core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{model.shaderName.c_str()});
             const auto material =
                 core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
+            const auto &glbuffer =
+                core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.modelName.c_str()});
             shader.use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
             glm::mat4 mview = view * modelmat;
             glm::mat4 mvp = projection * view * modelmat;
-            glm::mat4 imvp = glm::inverse(modelmat);
-            auto nmat = glm::mat3(glm::transpose(imvp)); // normal matrix
+            auto nmat = glm::mat3(glm::transpose(glm::inverse(modelmat))); // normal matrix
             glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
             glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
-            model.mesh.draw();
+            glbuffer.draw(mesh);
             shader.disable();
         });
 }

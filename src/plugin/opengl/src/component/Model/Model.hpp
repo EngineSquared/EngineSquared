@@ -6,14 +6,15 @@
 #include <array>
 #include <vector>
 
+#include "GLBuffer.hpp"
 #include "Loader.hpp"
 #include "Material.hpp"
-#include "utils/Mesh/Mesh.hpp"
 
 namespace ES::Plugin::OpenGL::Component {
 struct Model {
     std::string shaderName;
     std::string materialName;
-    Utils::Mesh mesh;
+    std::string meshName;
+    std::string modelName;
 };
 } // namespace ES::Plugin::OpenGL::Component

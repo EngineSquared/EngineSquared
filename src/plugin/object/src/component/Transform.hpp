@@ -38,6 +38,12 @@ struct Transform {
     {
     }
 
+    Transform(const Transform &) = default;
+    Transform(Transform &&) = default;
+
+    Transform &operator=(const Transform &) = default;
+    Transform &operator=(Transform &&) = default;
+
     // Getters
     inline const glm::vec3 &getPosition() const { return position; }
     inline const glm::vec3 &getScale() const { return scale; }

@@ -3,6 +3,7 @@
 #include "FixedTimeUpdate.hpp"
 #include "Logger.hpp"
 #include "RelativeTimeUpdate.hpp"
+#include "Shutdown.hpp"
 #include "Startup.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
@@ -17,6 +18,7 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->RegisterScheduler<ES::Engine::Scheduler::Update>();
     this->RegisterScheduler<ES::Engine::Scheduler::FixedTimeUpdate>();
     this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
+    this->RegisterScheduler<ES::Engine::Scheduler::Shutdown>();
 }
 
 ES::Engine::Core::~Core()
@@ -41,7 +43,10 @@ bool ES::Engine::Core::IsRunning() { return _running; }
 void ES::Engine::Core::Stop()
 {
     if (!_running)
+    {
         ES::Utils::Log::Warn("The core is already shutted down");
+        return;
+    }
     _running = false;
 }
 

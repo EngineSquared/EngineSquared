@@ -20,8 +20,7 @@
  * @date 2024-12-06
  **************************************************************************/
 
-#ifndef MESH_HPP_
-#define MESH_HPP_
+#pragma once
 
 #include "OBJLoader.hpp"
 
@@ -36,13 +35,21 @@ namespace ES::Plugin::Object::Component {
  * It contains the vertices and indices of the mesh.
  */
 struct Mesh {
-    std::vector<Component::Vertex> vertices;
-    std::vector<uint32_t> indices;
-    std::vector<uint32_t> textures;
+    std::vector<glm::vec3> vertices{};
+    std::vector<glm::vec3> normals{};
+    std::vector<glm::vec2> texCoords{};
+    std::vector<uint32_t> indices{};
 
-    explicit Mesh(const std::string &file) { Resource::OBJLoader::loadModel(file, vertices, indices); }
-    explicit Mesh(const Mesh &model) = default;
+    explicit Mesh() = default;
+    explicit Mesh(const std::string &file)
+    {
+        Resource::OBJLoader::loadModel(file, vertices, normals, texCoords, indices);
+    }
+    explicit Mesh(const Mesh &mesh) = default;
     ~Mesh() = default;
+
+    // Move constructor
+    Mesh(Mesh &&other) = default;
 };
 
 /**
@@ -55,9 +62,7 @@ struct MeshLoader final {
     using result_type = std::shared_ptr<Mesh>;
 
     result_type operator()(const std::string &file) const { return std::make_shared<Mesh>(file); }
-    result_type operator()(const Mesh &model) const { return std::make_shared<Mesh>(model); }
+    result_type operator()(const Mesh &mesh) const { return std::make_shared<Mesh>(mesh); }
 };
 
 } // namespace ES::Plugin::Object::Component
-
-#endif /* !MESH_HPP_ */
