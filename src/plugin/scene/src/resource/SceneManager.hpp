@@ -28,7 +28,7 @@ class SceneManager {
     /**
      * @brief Unload the current scene and load the next scene.
      *
-     * @param core  the core containing all components
+     * @param core  registry that contains all components
      */
     void Update(ES::Engine::Core &core);
 
