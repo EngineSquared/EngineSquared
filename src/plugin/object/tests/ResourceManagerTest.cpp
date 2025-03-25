@@ -4,7 +4,7 @@
 
 using namespace ES::Plugin::Object::Resource;
 
-TEST(ResourceManagerTest, AddGetRemove)
+TEST(ResourceManagerTest, AddGetSetRemove)
 {
     struct TestResource {
         int value;
@@ -13,12 +13,17 @@ TEST(ResourceManagerTest, AddGetRemove)
     ResourceManager<TestResource> resource_manager;
     TestResource asset{42};
 
-    resource_manager.Add("ok", asset);
+    entt::hashed_string id = "ok";
 
-    EXPECT_EQ(resource_manager.Get("ok")->value, 42);
-    EXPECT_EQ(resource_manager.Contains("ok"), true);
+    resource_manager.Add(id, asset);
 
-    resource_manager.Remove("ok");
+    EXPECT_EQ(resource_manager.Get(id).value, 42);
+    EXPECT_EQ(resource_manager.Contains(id), true);
 
-    EXPECT_EQ(resource_manager.Contains("ok"), false);
+    resource_manager.Get(id).value = 43;
+    EXPECT_EQ(resource_manager.Get(id).value, 43);
+
+    resource_manager.Remove(id);
+
+    EXPECT_EQ(resource_manager.Contains(id), false);
 }

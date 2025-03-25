@@ -45,20 +45,7 @@ template <typename ResourceType> class ResourceManager {
      * @param args  arguments to create the resource
      * @return the added resource
      */
-    template <typename... Args> ResourceType Add(const std::string &id, Args &&...args)
-    {
-        auto ret = cache.load(entt::hashed_string{id.c_str()}, std::forward<Args>(args)...);
-
-        if (!ret.second)
-        {
-            ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id));
-            ret = cache.force_load(entt::hashed_string{id.c_str()}, std::forward<Args>(args)...);
-        }
-
-        return *ret.first->second;
-    }
-
-    template <typename... Args> ResourceType Add(const entt::hashed_string &id, Args &&...args)
+    template <typename... Args> ResourceType &Add(const entt::hashed_string &id, Args &&...args)
     {
         auto ret = cache.load(id, std::forward<Args>(args)...);
 
@@ -80,19 +67,6 @@ template <typename ResourceType> class ResourceManager {
      * @param resource  resource to add
      * @return  the added resource
      */
-    ResourceType Add(const std::string &id, const ResourceType &resource)
-    {
-        auto ret = cache.load(entt::hashed_string{id.c_str()}, resource);
-
-        if (!ret.second)
-        {
-            ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id));
-            ret = cache.force_load(entt::hashed_string{id.c_str()}, resource);
-        }
-
-        return *(ret.first->second);
-    }
-
     ResourceType Add(const entt::hashed_string &id, const ResourceType &resource)
     {
         auto ret = cache.load(id, resource);
@@ -114,24 +88,7 @@ template <typename ResourceType> class ResourceManager {
      * @param id   id of the resource to get
      * @return the wanted resource
      */
-    [[nodiscard]] ResourceType Get(const std::string &id)
-    {
-        auto resource = cache[entt::hashed_string{id.c_str()}];
-        if (!resource)
-            throw ResourceManagerError(fmt::format("Resource with id {} not found.", id));
-
-        return *resource;
-    }
-
-    /**
-     * @brief Get the reference to a stored resource.
-     *
-     * @exception ResourceManagerError if the resource with given id doesn't exist.
-     *
-     * @param id   id of the resource to get
-     * @return the wanted resource
-     */
-    [[nodiscard]] ResourceType Get(const entt::hashed_string &id)
+    [[nodiscard]] ResourceType &Get(const entt::hashed_string &id)
     {
         auto resource = cache[id];
         if (!resource)
@@ -148,24 +105,7 @@ template <typename ResourceType> class ResourceManager {
      * @param id   id of the resource to get
      * @return the wanted resource
      */
-    [[nodiscard]] const entt::resource<ResourceType> Get(const std::string &id) const
-    {
-        auto resource = cache[entt::hashed_string{id.c_str()}];
-        if (!resource)
-            throw ResourceManagerError(fmt::format("Resource with id {} not found.", id));
-
-        return *resource;
-    }
-
-    /**
-     * @brief Get the reference to a stored resource.
-     *
-     * @exception ResourceManagerError if the resource with given id doesn't exist.
-     *
-     * @param id   id of the resource to get
-     * @return the wanted resource
-     */
-    [[nodiscard]] const entt::resource<ResourceType> Get(const entt::hashed_string &id) const
+    [[nodiscard]] const ResourceType &Get(const entt::hashed_string &id) const
     {
         auto resource = cache[id];
         if (!resource)
@@ -179,7 +119,6 @@ template <typename ResourceType> class ResourceManager {
      *
      * @param id  id of the resource to delete
      */
-    void Remove(const std::string &id) { cache.erase(entt::hashed_string{id.c_str()}); }
     void Remove(const entt::hashed_string &id) { cache.erase(id); }
 
     /**
@@ -188,7 +127,6 @@ template <typename ResourceType> class ResourceManager {
      * @param id  id of the resource
      * @return true if the resource exists, false otherwise.
      */
-    [[nodiscard]] bool Contains(const std::string &id) { return cache.contains(entt::hashed_string{id.c_str()}); }
     [[nodiscard]] bool Contains(const entt::hashed_string &id) { return cache.contains(id); }
 
   private:
