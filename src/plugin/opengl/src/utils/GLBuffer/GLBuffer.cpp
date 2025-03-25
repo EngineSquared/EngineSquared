@@ -2,14 +2,14 @@
 
 namespace ES::Plugin::OpenGL::Utils {
 
-void GLBuffer::draw(const Object::Component::Mesh &mesh) const noexcept
+void GLBuffer::Draw(const Object::Component::Mesh &mesh) const noexcept
 {
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, mesh.indices.size() * sizeof(uint32_t), GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
 }
 
-void GLBuffer::destroyGlBuffers() const noexcept
+void GLBuffer::DestroyGLBuffers() const noexcept
 {
     glDeleteBuffers(1, &VBO_position);
     glDeleteBuffers(1, &VBO_normal);
@@ -17,7 +17,7 @@ void GLBuffer::destroyGlBuffers() const noexcept
     glDeleteVertexArrays(1, &VAO);
 }
 
-void GLBuffer::generateGlBuffers(const Object::Component::Mesh &mesh) noexcept
+void GLBuffer::GenerateGLBuffers(const Object::Component::Mesh &mesh) noexcept
 {
     // create vao, vbo and ibo here... (We didn't use std::vector here...)
     glGenVertexArrays(1, &VAO);
@@ -45,7 +45,7 @@ void GLBuffer::generateGlBuffers(const Object::Component::Mesh &mesh) noexcept
     glBindVertexArray(0);
 }
 
-void GLBuffer::update(const Object::Component::Mesh &mesh) const noexcept
+void GLBuffer::Update(const Object::Component::Mesh &mesh) const noexcept
 {
     glBindVertexArray(VAO);
 

@@ -1,5 +1,19 @@
 #include "AllSystems.hpp"
-#include "Button/Buttons.hpp"
+
+#include "Buttons.hpp"
+#include "Camera.hpp"
+#include "Entity.hpp"
+#include "GLBufferManager.hpp"
+#include "Light.hpp"
+#include "MaterialCache.hpp"
+#include "MaterialHandle.hpp"
+#include "Mesh.hpp"
+#include "ModelHandle.hpp"
+#include "ShaderHandle.hpp"
+#include "ShaderManager.hpp"
+
+#include <glm/gtc/type_ptr.hpp>
+#include <iostream>
 
 void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 {
@@ -167,16 +181,16 @@ void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
 {
     auto &glBufferManager = core.GetResource<Resource::GLBufferManager>();
 
-    core.GetRegistry().view<Component::Model, ES::Plugin::Object::Component::Mesh>().each(
-        [&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Mesh &mesh) {
-            if (glBufferManager.Contains(entt::hashed_string(model.modelName.c_str())))
+    core.GetRegistry().view<Component::ModelHandle, ES::Plugin::Object::Component::Mesh>().each(
+        [&](auto entity, Component::ModelHandle &model, ES::Plugin::Object::Component::Mesh &mesh) {
+            if (glBufferManager.Contains(model.id))
             {
-                glBufferManager.Get(entt::hashed_string{model.modelName.c_str()}).update(mesh);
+                glBufferManager.Get(model.id).Update(mesh);
                 return;
             }
             Utils::GLBuffer buffer;
-            buffer.generateGlBuffers(mesh);
-            glBufferManager.Add(entt::hashed_string(model.modelName.c_str()), std::move(buffer));
+            buffer.GenerateGLBuffers(mesh);
+            glBufferManager.Add(model.id, std::move(buffer));
         });
 }
 
@@ -259,15 +273,14 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
     auto &view = core.GetResource<Resource::Camera>().view;
     auto &projection = core.GetResource<Resource::Camera>().projection;
     core.GetRegistry()
-        .view<Component::Model, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh>()
-        .each([&](auto entity, Component::Model &model, ES::Plugin::Object::Component::Transform &transform,
-                  ES::Plugin::Object::Component::Mesh &mesh) {
-            auto &shader =
-                core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{model.shaderName.c_str()});
-            const auto material =
-                core.GetResource<Resource::MaterialCache>().Get(entt::hashed_string{model.materialName.c_str()});
-            const auto &glbuffer =
-                core.GetResource<Resource::GLBufferManager>().Get(entt::hashed_string{model.modelName.c_str()});
+        .view<Component::ModelHandle, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh,
+              Component::ShaderHandle, Component::MaterialHandle>()
+        .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Transform &transform,
+                  ES::Plugin::Object::Component::Mesh &mesh, Component::ShaderHandle &shaderHandle,
+                  Component::MaterialHandle &materialHandle) {
+            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
+            const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
+            const auto &glBuffer = core.GetResource<Resource::GLBufferManager>().Get(modelHandle.id);
             shader.use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
@@ -277,7 +290,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
             glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
-            glbuffer.draw(mesh);
+            glBuffer.Draw(mesh);
             shader.disable();
         });
 }
