@@ -1,9 +1,9 @@
 #pragma once
 
-#include <glm/vec2.hpp>
-#include <entt/entt.hpp>
 #include "Color.hpp"
 #include "Math.hpp"
+#include <entt/entt.hpp>
+#include <glm/vec2.hpp>
 
 namespace ES::Plugin::UI::Component {
 /**

@@ -7,8 +7,8 @@
 
 #include "Engine.hpp"
 
-#include <entt/entt.hpp>
 #include "Color.hpp"
+#include <entt/entt.hpp>
 
 namespace ES::Plugin::UI::Component {
 /**
