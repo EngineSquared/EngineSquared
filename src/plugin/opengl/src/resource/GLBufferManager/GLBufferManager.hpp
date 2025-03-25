@@ -9,7 +9,7 @@
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
  * @file GLBufferManager.hpp
- * @brief GLBufferManager class declaration using Object::Resource::AssetsManager.
+ * @brief GLBufferManager class declaration using Object::Resource::ResourceManager.
  *
  * @author @EngineSquared Team
  * @version 0.0.0
@@ -23,6 +23,6 @@
 
 namespace ES::Plugin::OpenGL::Resource {
 
-using GLBufferManager = Object::Resource::AssetsManager<Utils::GLBuffer>;
+using GLBufferManager = Object::Resource::ResourceManager<Utils::GLBuffer>;
 
 } // namespace ES::Plugin::OpenGL::Resource

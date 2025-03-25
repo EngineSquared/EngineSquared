@@ -17,7 +17,7 @@ target("PluginObject")
     add_includedirs("src/", {public = true})
     add_includedirs("src/component", {public = true})
     add_includedirs("src/resource", {public = true})
-    add_includedirs("src/utils", {public = true})
+    add_includedirs("src/exception", {public = true})
 
     add_files("src/**.cpp")
 

@@ -5,5 +5,5 @@
 #include <string>
 
 namespace ES::Plugin::OpenGL::Resource {
-using MaterialCache = ES::Plugin::Object::Resource::AssetsManager<Utils::Material>;
+using MaterialCache = ES::Plugin::Object::Resource::ResourceManager<Utils::Material>;
 }

@@ -47,8 +47,7 @@ TEST(Button, UpdateButtonTexture)
 
     auto &buttonComponent = button.GetComponents<Component::Button>(core);
     buttonComponent.displayType =
-        Component::DisplayType::TintColor{.imageID = ES::Plugin::Object::Utils::NULL_ASSET_ID,
-                                          .normalColor = ES::Plugin::Colors::Utils::WHITE_COLOR,
+        Component::DisplayType::TintColor{.normalColor = ES::Plugin::Colors::Utils::WHITE_COLOR,
                                           .hoverColor = ES::Plugin::Colors::Utils::GRAY_COLOR,
                                           .pressedColor = ES::Plugin::Colors::Utils::DARKGRAY_COLOR};
 

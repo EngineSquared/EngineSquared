@@ -139,7 +139,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
     )";
 
     auto &shaderManager = core.GetResource<Resource::ShaderManager>();
-    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"default"}, std::move(Utils::ShaderProgram()));
+    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"default"});
     sp.Create();
     sp.initFromStrings(vertexShader, fragmentShader);
 }
@@ -190,7 +190,7 @@ void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
             }
             Utils::GLBuffer buffer;
             buffer.GenerateGLBuffers(mesh);
-            glBufferManager.Add(model.id, std::move(buffer));
+            glBufferManager.Add(model.id, buffer);
         });
 }
 
