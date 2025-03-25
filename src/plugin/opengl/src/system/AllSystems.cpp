@@ -7,6 +7,7 @@
 #include "FontHandle.hpp"
 #include "FontManager.hpp"
 #include "GLMeshBufferManager.hpp"
+#include "GLTextBufferManager.hpp"
 #include "Light.hpp"
 #include "MaterialCache.hpp"
 #include "MaterialHandle.hpp"
@@ -15,6 +16,7 @@
 #include "ShaderHandle.hpp"
 #include "ShaderManager.hpp"
 #include "Text.hpp"
+#include "TextHandle.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
@@ -181,7 +183,6 @@ void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
             vec4 sampled = vec4(1.0, 1.0, 1.0, texture(Text, TexCoords).r);
             FragColor = vec4(TextColor, 1.0) * sampled;
         }
-        
     )";
 
     auto &shaderManager = core.GetResource<Resource::ShaderManager>();
@@ -232,6 +233,11 @@ void ES::Plugin::OpenGL::System::LoadGLMeshBufferManager(ES::Engine::Core &core)
     core.RegisterResource<Resource::GLMeshBufferManager>(Resource::GLMeshBufferManager());
 }
 
+void ES::Plugin::OpenGL::System::LoadGLTextBufferManager(ES::Engine::Core &core)
+{
+    core.RegisterResource<Resource::GLTextBufferManager>(Resource::GLTextBufferManager());
+}
+
 void ES::Plugin::OpenGL::System::LoadGLMeshBuffer(ES::Engine::Core &core)
 {
     auto &glBufferManager = core.GetResource<Resource::GLMeshBufferManager>();
@@ -246,6 +252,23 @@ void ES::Plugin::OpenGL::System::LoadGLMeshBuffer(ES::Engine::Core &core)
             Utils::GLMeshBuffer buffer;
             buffer.GenerateGLMeshBuffers(mesh);
             glBufferManager.Add(model.id, std::move(buffer));
+        });
+}
+
+void ES::Plugin::OpenGL::System::LoadGLTextBuffer(ES::Engine::Core &core)
+{
+    auto &glBufferManager = core.GetResource<Resource::GLTextBufferManager>();
+
+    core.GetRegistry().view<Component::TextHandle, ES::Plugin::UI::Component::Text>().each(
+        [&](auto entity, Component::TextHandle &textHandle, ES::Plugin::UI::Component::Text &text) {
+            if (glBufferManager.Contains(textHandle.id))
+            {
+                glBufferManager.Get(textHandle.id).Update(text);
+                return;
+            }
+            Utils::GLTextBuffer buffer;
+            buffer.GenerateGLTextBuffers(text);
+            glBufferManager.Add(textHandle.id, std::move(buffer));
         });
 }
 
@@ -359,9 +382,9 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
 
-    core.GetRegistry().view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle>().each(
+    core.GetRegistry().view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle, Component::TextHandle>().each(
         [&](auto entity, ES::Plugin::UI::Component::Text &text, Component::FontHandle &fontHandle,
-            Component::ShaderHandle &shaderHandle) {
+            Component::ShaderHandle &shaderHandle, Component::TextHandle &textHandle) {
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &font = core.GetResource<Resource::FontManager>().Get(fontHandle.id);
 
@@ -371,26 +394,9 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
             glUniform1i(shader.uniform("Text"), 0);
             glUniform3f(shader.uniform("TextColor"), text.color.x, text.color.y, text.color.z);
 
-            // Create VAO & VBO
-            GLuint VAO, VBO;
-            glGenVertexArrays(1, &VAO);
-            glGenBuffers(1, &VBO);
+            auto &textBuffer = core.GetResource<Resource::GLTextBufferManager>().Get(textHandle.id);
 
-            glBindVertexArray(VAO);
-            glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
-
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
-
-            // Render Text
-            font.RenderText(text.text, text.position.x, text.position.y, text.scale, text.color, VAO, VBO);
-
-            // Cleanup
-            glDeleteVertexArrays(1, &VAO);
-            glDeleteBuffers(1, &VBO);
+            font.RenderText(text.text, text.position.x, text.position.y, text.scale, text.color, textBuffer.VAO, textBuffer.VBO);
 
             shader.disable();
         });

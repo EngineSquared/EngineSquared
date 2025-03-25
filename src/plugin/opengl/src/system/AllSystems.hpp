@@ -26,6 +26,9 @@ void LoadMaterialCache(ES::Engine::Core &core);
 void LoadGLMeshBufferManager(ES::Engine::Core &core);
 void LoadGLMeshBuffer(ES::Engine::Core &core);
 
+void LoadGLTextBufferManager(ES::Engine::Core &core);
+void LoadGLTextBuffer(ES::Engine::Core &core);
+
 void CreateCamera(ES::Engine::Core &core);
 
 void UpdateMatrices(ES::Engine::Core &core);
