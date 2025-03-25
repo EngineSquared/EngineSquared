@@ -8,14 +8,14 @@
 #include "plugin/PluginOpenGL.hpp"
 
 #include "resource/FontManager/FontManager.hpp"
-#include "resource/GLBufferManager/GLBufferManager.hpp"
+#include "resource/GLMeshBufferManager/GLMeshBufferManager.hpp"
 #include "resource/MaterialCache/MaterialCache.hpp"
 #include "resource/ShaderManager/ShaderManager.hpp"
 
 #include "system/AllSystems.hpp"
 
 #include "utils/Font/Font.hpp"
-#include "utils/GLBuffer/GLBuffer.hpp"
+#include "utils/GLMeshBuffer/GLMeshBuffer.hpp"
 #include "utils/Loader/Loader.hpp"
 #include "utils/Material/Material.hpp"
 #include "utils/Viewer/Viewer.hpp"

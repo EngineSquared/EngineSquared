@@ -8,8 +8,8 @@
  * it under the terms of the GPL-3.0 License as published by the
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
- * @file GLBufferManager.hpp
- * @brief GLBufferManager class declaration using Object::Resource::AssetsManager.
+ * @file GLMeshBufferManager.hpp
+ * @brief GLMeshBufferManager class declaration using Object::Resource::AssetsManager.
  *
  * @author @EngineSquared Team
  * @version 0.0.0
@@ -18,11 +18,11 @@
 
 #pragma once
 
-#include "GLBuffer.hpp"
+#include "GLMeshBuffer.hpp"
 #include "Object.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {
 
-using GLBufferManager = Object::Resource::AssetsManager<Utils::GLBuffer>;
+using GLMeshBufferManager = Object::Resource::AssetsManager<Utils::GLMeshBuffer>;
 
 } // namespace ES::Plugin::OpenGL::Resource

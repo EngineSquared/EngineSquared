@@ -23,8 +23,8 @@ void SetupShaderUniforms(ES::Engine::Core &core);
 void SetupTextShaderUniforms(ES::Engine::Core &core);
 void LoadMaterialCache(ES::Engine::Core &core);
 
-void LoadGLBufferManager(ES::Engine::Core &core);
-void LoadGLBuffer(ES::Engine::Core &core);
+void LoadGLMeshBufferManager(ES::Engine::Core &core);
+void LoadGLMeshBuffer(ES::Engine::Core &core);
 
 void CreateCamera(ES::Engine::Core &core);
 

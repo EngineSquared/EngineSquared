@@ -6,7 +6,7 @@
 #include "Font.hpp"
 #include "FontHandle.hpp"
 #include "FontManager.hpp"
-#include "GLBufferManager.hpp"
+#include "GLMeshBufferManager.hpp"
 #include "Light.hpp"
 #include "MaterialCache.hpp"
 #include "MaterialHandle.hpp"
@@ -227,14 +227,14 @@ void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
     materialCache.Add(entt::hashed_string("default"), std::move(Utils::Material()));
 }
 
-void ES::Plugin::OpenGL::System::LoadGLBufferManager(ES::Engine::Core &core)
+void ES::Plugin::OpenGL::System::LoadGLMeshBufferManager(ES::Engine::Core &core)
 {
-    core.RegisterResource<Resource::GLBufferManager>(Resource::GLBufferManager());
+    core.RegisterResource<Resource::GLMeshBufferManager>(Resource::GLMeshBufferManager());
 }
 
-void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
+void ES::Plugin::OpenGL::System::LoadGLMeshBuffer(ES::Engine::Core &core)
 {
-    auto &glBufferManager = core.GetResource<Resource::GLBufferManager>();
+    auto &glBufferManager = core.GetResource<Resource::GLMeshBufferManager>();
 
     core.GetRegistry().view<Component::ModelHandle, ES::Plugin::Object::Component::Mesh>().each(
         [&](auto entity, Component::ModelHandle &model, ES::Plugin::Object::Component::Mesh &mesh) {
@@ -243,8 +243,8 @@ void ES::Plugin::OpenGL::System::LoadGLBuffer(ES::Engine::Core &core)
                 glBufferManager.Get(model.id).Update(mesh);
                 return;
             }
-            Utils::GLBuffer buffer;
-            buffer.GenerateGLBuffers(mesh);
+            Utils::GLMeshBuffer buffer;
+            buffer.GenerateGLMeshBuffers(mesh);
             glBufferManager.Add(model.id, std::move(buffer));
         });
 }
@@ -336,7 +336,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
                   Component::MaterialHandle &materialHandle) {
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
-            const auto &glBuffer = core.GetResource<Resource::GLBufferManager>().Get(modelHandle.id);
+            const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
             shader.use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();

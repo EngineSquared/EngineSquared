@@ -8,8 +8,8 @@
  * it under the terms of the GPL-3.0 License as published by the
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
- * @file GLBuffer.hpp
- * @brief GLBuffer class declaration.
+ * @file GLMeshBuffer.hpp
+ * @brief GLMeshBuffer class declaration.
  *
  * This class is used to manage OpenGL buffers. It is used to store the VAO,
  * VBOs and IBOs. It also provides methods to draw and destroy the buffers.
@@ -31,21 +31,21 @@
 
 namespace ES::Plugin::OpenGL::Utils {
 
-class GLBuffer {
+class GLMeshBuffer {
   public:
-    GLBuffer() = default;
-    GLBuffer(const GLBuffer &) = default;
-    GLBuffer(GLBuffer &&) = default;
-    ~GLBuffer() = default;
+    GLMeshBuffer() = default;
+    GLMeshBuffer(const GLMeshBuffer &) = default;
+    GLMeshBuffer(GLMeshBuffer &&) = default;
+    ~GLMeshBuffer() = default;
 
-    GLBuffer &operator=(const GLBuffer &) = default;
-    GLBuffer &operator=(GLBuffer &&) = default;
+    GLMeshBuffer &operator=(const GLMeshBuffer &) = default;
+    GLMeshBuffer &operator=(GLMeshBuffer &&) = default;
 
     void Draw(const Object::Component::Mesh &mesh) const noexcept;
 
-    void DestroyGLBuffers() const noexcept;
+    void DestroyGLMeshBuffers() const noexcept;
 
-    void GenerateGLBuffers(const Object::Component::Mesh &mesh) noexcept;
+    void GenerateGLMeshBuffers(const Object::Component::Mesh &mesh) noexcept;
 
     void Update(const Object::Component::Mesh &mesh) const noexcept;
 
