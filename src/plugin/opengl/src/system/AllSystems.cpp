@@ -161,10 +161,10 @@ void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
 
         out vec2 TexCoords;
 
-        uniform mat4 projection;
+        uniform mat4 Projection;
 
         void main() {
-            gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);
+            gl_Position = Projection * vec4(vertex.xy, 0.0, 1.0);
             TexCoords = vertex.zw;
         }
     )";
@@ -174,12 +174,12 @@ void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
         in vec2 TexCoords;
         out vec4 FragColor;
 
-        uniform sampler2D text;
-        uniform vec3 textColor;
+        uniform sampler2D Text;
+        uniform vec3 TextColor;
 
         void main() {
-            vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
-            FragColor = vec4(textColor, 1.0) * sampled;
+            vec4 sampled = vec4(1.0, 1.0, 1.0, texture(Text, TexCoords).r);
+            FragColor = vec4(TextColor, 1.0) * sampled;
         }
         
     )";
@@ -216,9 +216,9 @@ void ES::Plugin::OpenGL::System::SetupTextShaderUniforms(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"textDefault"});
 
-    m_shaderProgram.addUniform("projection");
-    m_shaderProgram.addUniform("text");
-    m_shaderProgram.addUniform("textColor");
+    m_shaderProgram.addUniform("Projection");
+    m_shaderProgram.addUniform("Text");
+    m_shaderProgram.addUniform("TextColor");
 }
 
 void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
@@ -367,9 +367,9 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
             shader.use();
 
-            glUniformMatrix4fv(shader.uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
-            glUniform1i(shader.uniform("text"), 0);
-            glUniform3f(shader.uniform("textColor"), text.color.x, text.color.y, text.color.z);
+            glUniformMatrix4fv(shader.uniform("Projection"), 1, GL_FALSE, glm::value_ptr(projection));
+            glUniform1i(shader.uniform("Text"), 0);
+            glUniform3f(shader.uniform("TextColor"), text.color.x, text.color.y, text.color.z);
 
             // Create VAO & VBO
             GLuint VAO, VBO;
