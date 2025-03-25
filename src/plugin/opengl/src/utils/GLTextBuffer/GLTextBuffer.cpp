@@ -2,10 +2,7 @@
 
 namespace ES::Plugin::OpenGL::Utils {
 
-void GLTextBuffer::Draw(const ES::Plugin::UI::Component::Text &text) const noexcept
-{
-    
-}
+void GLTextBuffer::Draw(const ES::Plugin::UI::Component::Text &text) const noexcept {}
 
 void GLTextBuffer::DestroyGLTextBuffers() const noexcept
 {
@@ -28,9 +25,6 @@ void GLTextBuffer::GenerateGLTextBuffers(const ES::Plugin::UI::Component::Text &
     glBindVertexArray(0);
 }
 
-void GLTextBuffer::Update(const ES::Plugin::UI::Component::Text &text) const noexcept
-{
-    
-}
+void GLTextBuffer::Update(const ES::Plugin::UI::Component::Text &text) const noexcept {}
 
 } // namespace ES::Plugin::OpenGL::Utils

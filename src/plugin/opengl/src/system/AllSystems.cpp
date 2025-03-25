@@ -382,9 +382,10 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
 
-    core.GetRegistry().view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle, Component::TextHandle>().each(
-        [&](auto entity, ES::Plugin::UI::Component::Text &text, Component::FontHandle &fontHandle,
-            Component::ShaderHandle &shaderHandle, Component::TextHandle &textHandle) {
+    core.GetRegistry()
+        .view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle, Component::TextHandle>()
+        .each([&](auto entity, ES::Plugin::UI::Component::Text &text, Component::FontHandle &fontHandle,
+                  Component::ShaderHandle &shaderHandle, Component::TextHandle &textHandle) {
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &font = core.GetResource<Resource::FontManager>().Get(fontHandle.id);
 
@@ -396,7 +397,8 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
             auto &textBuffer = core.GetResource<Resource::GLTextBufferManager>().Get(textHandle.id);
 
-            font.RenderText(text.text, text.position.x, text.position.y, text.scale, text.color, textBuffer.VAO, textBuffer.VBO);
+            font.RenderText(text.text, text.position.x, text.position.y, text.scale, text.color, textBuffer.VAO,
+                            textBuffer.VBO);
 
             shader.disable();
         });
