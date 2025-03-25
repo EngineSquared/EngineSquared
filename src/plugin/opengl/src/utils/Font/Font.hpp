@@ -1,9 +1,9 @@
 #pragma once
 
+#include <GL/glew.h>
+#include <glm/glm.hpp>
 #include <string>
 #include <unordered_map>
-#include <glm/glm.hpp>
-#include <GL/glew.h>
 
 #include <stb_truetype.h>
 
@@ -17,13 +17,14 @@ struct Character {
 };
 
 class Font {
-public:
+  public:
     explicit Font(const std::string &fontPath, int fontSize);
     ~Font();
 
-    const void RenderText(const std::string &text, float x, float y, float scale, const glm::vec3 &color, GLuint VAO, GLuint VBO) const;
+    const void RenderText(const std::string &text, float x, float y, float scale, const glm::vec3 &color, GLuint VAO,
+                          GLuint VBO) const;
 
-private:
+  private:
     std::unordered_map<char, Character> characters;
     stbtt_fontinfo fontInfo;
     unsigned char *fontBuffer;

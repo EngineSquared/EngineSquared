@@ -153,7 +153,6 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
     sp.initFromStrings(vertexShader, fragmentShader);
 }
 
-
 void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
 {
     const char *vertexShader = R"(
@@ -355,15 +354,14 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 {
     auto &view = core.GetResource<Resource::Camera>().view;
-    
+
     auto &size = core.GetResource<Resource::Camera>().size;
 
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
 
-
-    core.GetRegistry()
-        .view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle>()
-        .each([&](auto entity, ES::Plugin::UI::Component::Text &text, Component::FontHandle &fontHandle, Component::ShaderHandle &shaderHandle) {
+    core.GetRegistry().view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle>().each(
+        [&](auto entity, ES::Plugin::UI::Component::Text &text, Component::FontHandle &fontHandle,
+            Component::ShaderHandle &shaderHandle) {
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &font = core.GetResource<Resource::FontManager>().Get(fontHandle.id);
 

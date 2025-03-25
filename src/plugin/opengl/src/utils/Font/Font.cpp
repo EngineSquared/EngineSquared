@@ -1,25 +1,23 @@
 #include "Font.hpp"
 #include "Logger.hpp"
+#include <fmt/format.h>
 #include <fstream>
 #include <iostream>
-#include <fmt/format.h>
 
 #define STB_TRUETYPE_IMPLEMENTATION
 #include <stb_truetype.h>
 
 namespace ES::Plugin::OpenGL::Utils {
 
-Font::Font(const std::string &fontPath, int fontSize) {
-    LoadFont(fontPath, fontSize);
-}
+Font::Font(const std::string &fontPath, int fontSize) { LoadFont(fontPath, fontSize); }
 
-Font::~Font() {
-    delete[] fontBuffer;
-}
+Font::~Font() { delete[] fontBuffer; }
 
-void Font::LoadFont(const std::string &fontPath, int fontSize) {
+void Font::LoadFont(const std::string &fontPath, int fontSize)
+{
     std::ifstream file(fontPath, std::ios::binary | std::ios::ate);
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         ES::Utils::Log::Error(fmt::format("Failed to open font file: {}", fontPath));
         return;
     }
@@ -30,7 +28,8 @@ void Font::LoadFont(const std::string &fontPath, int fontSize) {
     file.read(reinterpret_cast<char *>(fontBuffer), size);
     file.close();
 
-    if (stbtt_InitFont(&fontInfo, fontBuffer, stbtt_GetFontOffsetForIndex(fontBuffer, 0)) == 0) {
+    if (stbtt_InitFont(&fontInfo, fontBuffer, stbtt_GetFontOffsetForIndex(fontBuffer, 0)) == 0)
+    {
         ES::Utils::Log::Error("Failed to initialize font");
         return;
     }
@@ -41,7 +40,8 @@ void Font::LoadFont(const std::string &fontPath, int fontSize) {
     ascent = static_cast<int>(ascent * scale);
     descent = static_cast<int>(descent * scale);
 
-    for (unsigned char c = 32; c < 128; c++) {
+    for (unsigned char c = 32; c < 128; c++)
+    {
         int width, height, xOffset, yOffset;
         bitmap = stbtt_GetCodepointBitmap(&fontInfo, 0, scale, c, &width, &height, &xOffset, &yOffset);
 
@@ -63,9 +63,9 @@ void Font::LoadFont(const std::string &fontPath, int fontSize) {
 
         Character character;
         character.textureID = texture;
-        character.size      = { (float)width, (float)height };
-        character.bearing   = { (float)xOffset, (float)yOffset };
-        character.advance   = scaledAdvance;
+        character.size = {(float) width, (float) height};
+        character.bearing = {(float) xOffset, (float) yOffset};
+        character.advance = scaledAdvance;
 
         characters[c] = character;
 
@@ -75,16 +75,19 @@ void Font::LoadFont(const std::string &fontPath, int fontSize) {
     ES::Utils::Log::Info(fmt::format("Font loaded: {}", fontPath));
 }
 
-
-const void Font::RenderText(const std::string &text, float x, float y, float scale, const glm::vec3 &color, GLuint VAO, GLuint VBO) const {
+const void Font::RenderText(const std::string &text, float x, float y, float scale, const glm::vec3 &color, GLuint VAO,
+                            GLuint VBO) const
+{
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
 
-    for (const char &c : text) {
-        if (characters.find(c) == characters.end()) {
+    for (const char &c : text)
+    {
+        if (characters.find(c) == characters.end())
+        {
 #ifdef ES_DEBUG
             ES::Utils::Log::Warn(fmt::format("Character not found: 0x{:02X}", static_cast<unsigned char>(c)));
 #endif
@@ -100,12 +103,12 @@ const void Font::RenderText(const std::string &text, float x, float y, float sca
         float h = ch.size.y * scale;
 
         float vertices[6][4] = {
-            {xpos, ypos + h, 0.0, 0.0},
-            {xpos, ypos, 0.0, 1.0},
-            {xpos + w, ypos, 1.0, 1.0},
+            {xpos,     ypos + h, 0.0, 0.0},
+            {xpos,     ypos,     0.0, 1.0},
+            {xpos + w, ypos,     1.0, 1.0},
 
-            {xpos, ypos + h, 0.0, 0.0},
-            {xpos + w, ypos, 1.0, 1.0},
+            {xpos,     ypos + h, 0.0, 0.0},
+            {xpos + w, ypos,     1.0, 1.0},
             {xpos + w, ypos + h, 1.0, 0.0}
         };
 
