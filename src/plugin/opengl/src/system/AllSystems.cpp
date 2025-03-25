@@ -3,6 +3,9 @@
 #include "Buttons.hpp"
 #include "Camera.hpp"
 #include "Entity.hpp"
+#include "Font.hpp"
+#include "FontHandle.hpp"
+#include "FontManager.hpp"
 #include "GLBufferManager.hpp"
 #include "Light.hpp"
 #include "MaterialCache.hpp"
@@ -11,6 +14,7 @@
 #include "ModelHandle.hpp"
 #include "ShaderHandle.hpp"
 #include "ShaderManager.hpp"
+#include "Text.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
@@ -67,6 +71,11 @@ void ES::Plugin::OpenGL::System::MouseDragging(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::LoadShaderManager(ES::Engine::Core &core)
 {
     core.RegisterResource<Resource::ShaderManager>(Resource::ShaderManager());
+}
+
+void ES::Plugin::OpenGL::System::LoadFontManager(ES::Engine::Core &core)
+{
+    core.RegisterResource<Resource::FontManager>(Resource::FontManager());
 }
 
 void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
@@ -144,6 +153,44 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
     sp.initFromStrings(vertexShader, fragmentShader);
 }
 
+
+void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
+{
+    const char *vertexShader = R"(
+        #version 440
+        layout (location = 0) in vec4 vertex;
+
+        out vec2 TexCoords;
+
+        uniform mat4 projection;
+
+        void main() {
+            gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);
+            TexCoords = vertex.zw;
+        }
+    )";
+
+    const char *fragmentShader = R"(
+        #version 440 core
+        in vec2 TexCoords;
+        out vec4 FragColor;
+
+        uniform sampler2D text;
+        uniform vec3 textColor;
+
+        void main() {
+            vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
+            FragColor = vec4(textColor, 1.0) * sampled;
+        }
+        
+    )";
+
+    auto &shaderManager = core.GetResource<Resource::ShaderManager>();
+    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"textDefault"}, std::move(Utils::ShaderProgram()));
+    sp.Create();
+    sp.initFromStrings(vertexShader, fragmentShader);
+}
+
 void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
@@ -164,6 +211,15 @@ void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
     m_shaderProgram.addUniform("Material.Shiness");
 
     m_shaderProgram.addUniform("CamPos");
+}
+
+void ES::Plugin::OpenGL::System::SetupTextShaderUniforms(ES::Engine::Core &core)
+{
+    auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"textDefault"});
+
+    m_shaderProgram.addUniform("projection");
+    m_shaderProgram.addUniform("text");
+    m_shaderProgram.addUniform("textColor");
 }
 
 void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
@@ -272,6 +328,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 {
     auto &view = core.GetResource<Resource::Camera>().view;
     auto &projection = core.GetResource<Resource::Camera>().projection;
+
     core.GetRegistry()
         .view<Component::ModelHandle, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh,
               Component::ShaderHandle, Component::MaterialHandle>()
@@ -291,6 +348,52 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
             glBuffer.Draw(mesh);
+            shader.disable();
+        });
+}
+
+void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
+{
+    auto &view = core.GetResource<Resource::Camera>().view;
+    
+    auto &size = core.GetResource<Resource::Camera>().size;
+
+    glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
+
+
+    core.GetRegistry()
+        .view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle>()
+        .each([&](auto entity, ES::Plugin::UI::Component::Text &text, Component::FontHandle &fontHandle, Component::ShaderHandle &shaderHandle) {
+            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
+            const auto &font = core.GetResource<Resource::FontManager>().Get(fontHandle.id);
+
+            shader.use();
+
+            glUniformMatrix4fv(shader.uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+            glUniform1i(shader.uniform("text"), 0);
+            glUniform3f(shader.uniform("textColor"), text.color.x, text.color.y, text.color.z);
+
+            // Create VAO & VBO
+            GLuint VAO, VBO;
+            glGenVertexArrays(1, &VAO);
+            glGenBuffers(1, &VBO);
+
+            glBindVertexArray(VAO);
+            glBindBuffer(GL_ARRAY_BUFFER, VBO);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
+
+            glEnableVertexAttribArray(0);
+            glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glBindVertexArray(0);
+
+            // Render Text
+            font.RenderText(text.text, text.position.x, text.position.y, text.scale, text.color, VAO, VBO);
+
+            // Cleanup
+            glDeleteVertexArrays(1, &VAO);
+            glDeleteBuffers(1, &VBO);
+
             shader.disable();
         });
 }
