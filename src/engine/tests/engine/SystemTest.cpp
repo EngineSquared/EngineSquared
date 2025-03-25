@@ -42,7 +42,7 @@ TEST(Systems, Casual)
 
     // Test for lambda Systems
     core.RegisterSystem([](Core &core) { core.GetResource<C>().value++; },
-                       [](Core &core) { core.GetResource<C>().value++; });
+                        [](Core &core) { core.GetResource<C>().value++; });
     core.RegisterSystem([](Core &core) { core.GetResource<C>().value++; });
 
     core.RunSystems();
