@@ -11,7 +11,7 @@ void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems()
     {
         for (auto const &system : this->_systemsList.GetSystems())
         {
-            (*system)(_registry);
+            (*system)(_core);
         }
     }
 

@@ -42,20 +42,20 @@ void TestOtherSystem(const Core &)
 
 TEST(Core, SystemSet)
 {
-    Core reg;
+    Core core;
 
-    reg.RegisterSystem(TestSystemSetFirst, TestSystemSetSecond);
+    core.RegisterSystem(TestSystemSetFirst, TestSystemSetSecond);
 
-    reg.RegisterSystem(TestOtherSystem);
+    core.RegisterSystem(TestOtherSystem);
 
-    reg.RunSystems();
+    core.RunSystems();
 
     ASSERT_TRUE(second_did_run);
 
     first_did_run = false;
     second_did_run = false;
 
-    reg.RunSystems();
+    core.RunSystems();
 
     ASSERT_TRUE(second_did_run);
 }
