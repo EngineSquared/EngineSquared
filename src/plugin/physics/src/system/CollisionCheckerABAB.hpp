@@ -8,14 +8,14 @@ namespace ES::Plugin::Physics::System {
  *
  * @see ES::Plugin::Physics::Component::BoxCollider3D
  *
- * @param	registry	registry used to get entities to check
+ * @param	core	core used to get entities to check
  */
 void DetectABABCollisions(ES::Engine::Core &core);
 
 /**
- * Remove all ABAB collisions from the registry
+ * Remove all ABAB collisions from the core
  *
- * @param	registry	registry used to get entities to check
+ * @param	core	core used to get entities to check
  */
 void RemoveABABCollisions(ES::Engine::Core &core);
 } // namespace ES::Plugin::Physics::System

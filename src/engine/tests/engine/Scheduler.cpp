@@ -14,7 +14,7 @@ class SchedulerTest1 : public ES::Engine::Scheduler::AScheduler {
     explicit SchedulerTest1(Core &core) : AScheduler(core){};
     ~SchedulerTest1() final = default;
 
-    void RunSystems() override { _registry.GetResource<ResourceTest>().data.push_back(1); }
+    void RunSystems() override { _core.GetResource<ResourceTest>().data.push_back(1); }
 };
 
 class SchedulerTest2 : public ES::Engine::Scheduler::AScheduler {
@@ -22,29 +22,29 @@ class SchedulerTest2 : public ES::Engine::Scheduler::AScheduler {
     explicit SchedulerTest2(Core &core) : AScheduler(core){};
     ~SchedulerTest2() final = default;
 
-    void RunSystems() override { _registry.GetResource<ResourceTest>().data.push_back(2); }
+    void RunSystems() override { _core.GetResource<ResourceTest>().data.push_back(2); }
 };
 
 TEST(SchedulerContainer, CasualUse)
 {
     {
-        Core reg;
-        reg.RegisterResource<ResourceTest>(ResourceTest());
-        reg.RegisterScheduler<SchedulerTest1>();
-        reg.RegisterScheduler<SchedulerTest2>();
-        reg.RunSystems();
-        auto &data = reg.GetResource<ResourceTest>().data;
+        Core core;
+        core.RegisterResource<ResourceTest>(ResourceTest());
+        core.RegisterScheduler<SchedulerTest1>();
+        core.RegisterScheduler<SchedulerTest2>();
+        core.RunSystems();
+        auto &data = core.GetResource<ResourceTest>().data;
         ASSERT_EQ(data.size(), 2);
         ASSERT_EQ(data[0], 1);
         ASSERT_EQ(data[1], 2);
     }
     {
-        Core reg;
-        reg.RegisterResource<ResourceTest>(ResourceTest());
-        reg.RegisterScheduler<SchedulerTest2>();
-        reg.RegisterScheduler<SchedulerTest1>();
-        reg.RunSystems();
-        auto &data = reg.GetResource<ResourceTest>().data;
+        Core core;
+        core.RegisterResource<ResourceTest>(ResourceTest());
+        core.RegisterScheduler<SchedulerTest2>();
+        core.RegisterScheduler<SchedulerTest1>();
+        core.RunSystems();
+        auto &data = core.GetResource<ResourceTest>().data;
         ASSERT_EQ(data.size(), 2);
         ASSERT_EQ(data[0], 2);
         ASSERT_EQ(data[1], 1);

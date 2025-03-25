@@ -8,12 +8,12 @@ namespace ES::Engine::Scheduler {
  */
 class AScheduler : public IScheduler {
   public:
-    explicit AScheduler(Core &core) : _registry(core) {}
+    explicit AScheduler(Core &core) : _core(core) {}
 
     template <typename... Systems> void AddSystems(Systems... systems) { _systemsList.AddSystems(systems...); }
 
   protected:
-    Core &_registry;
+    Core &_core;
     SystemContainer _systemsList;
 };
 } // namespace ES::Engine::Scheduler

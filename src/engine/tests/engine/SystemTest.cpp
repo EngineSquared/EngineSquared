@@ -26,28 +26,28 @@ void TestSystemFunction(Core &core) { core.GetResource<B>().value++; }
 
 TEST(Systems, Casual)
 {
-    Core reg;
+    Core core;
 
-    reg.RegisterResource<A>({});
-    reg.RegisterResource<B>({});
-    reg.RegisterResource<C>({});
+    core.RegisterResource<A>({});
+    core.RegisterResource<B>({});
+    core.RegisterResource<C>({});
 
     // Test for class Systems
-    reg.RegisterSystem(TestSystemClass(), TestSystemClass());
-    reg.RegisterSystem(TestSystemClass());
+    core.RegisterSystem(TestSystemClass(), TestSystemClass());
+    core.RegisterSystem(TestSystemClass());
 
     // Test for function Systems
-    reg.RegisterSystem(TestSystemFunction, TestSystemFunction);
-    reg.RegisterSystem(TestSystemFunction);
+    core.RegisterSystem(TestSystemFunction, TestSystemFunction);
+    core.RegisterSystem(TestSystemFunction);
 
     // Test for lambda Systems
-    reg.RegisterSystem([](Core &core) { core.GetResource<C>().value++; },
+    core.RegisterSystem([](Core &core) { core.GetResource<C>().value++; },
                        [](Core &core) { core.GetResource<C>().value++; });
-    reg.RegisterSystem([](Core &core) { core.GetResource<C>().value++; });
+    core.RegisterSystem([](Core &core) { core.GetResource<C>().value++; });
 
-    reg.RunSystems();
+    core.RunSystems();
 
-    ASSERT_EQ(reg.GetResource<A>().value, 1);
-    ASSERT_EQ(reg.GetResource<B>().value, 1);
-    ASSERT_EQ(reg.GetResource<C>().value, 3);
+    ASSERT_EQ(core.GetResource<A>().value, 1);
+    ASSERT_EQ(core.GetResource<B>().value, 1);
+    ASSERT_EQ(core.GetResource<C>().value, 3);
 }

@@ -3,12 +3,12 @@
 
 void ES::Engine::Scheduler::Shutdown::RunSystems()
 {
-    if (_registry.IsRunning())
+    if (_core.IsRunning())
     {
         return;
     }
     for (auto const &system : this->_systemsList.GetSystems())
     {
-        (*system)(_registry);
+        (*system)(_core);
     }
 }

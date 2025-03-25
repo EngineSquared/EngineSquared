@@ -12,7 +12,7 @@ using namespace std::chrono_literals;
 
 TEST(Core, RelativeTimeUpdateBasic)
 {
-    Core reg;
+    Core core;
 
     int update_count = 0;
 
@@ -21,50 +21,50 @@ TEST(Core, RelativeTimeUpdateBasic)
 
     // Relative time update uses the highest precision available given how often it is called
     // it only uses multiple updates if the time difference is greater than the target tick rate
-    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&](const Core &core) {
+    core.RegisterSystem<Scheduler::RelativeTimeUpdate>([&deltaTime1, &deltaTime2](Core &core_) {
         if (deltaTime1 == 0.0f)
         {
-            deltaTime1 = reg.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
+            deltaTime1 = core_.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
         }
         else
         {
-            deltaTime2 = reg.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
+            deltaTime2 = core_.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
         }
     });
-    reg.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
+    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
 
-    reg.RunSystems();
+    core.RunSystems();
     std::this_thread::sleep_for(0.05s);
-    reg.RunSystems();
+    core.RunSystems();
     std::this_thread::sleep_for(0.1s);
-    reg.RunSystems();
+    core.RunSystems();
     ASSERT_GT(deltaTime2, deltaTime1);
 }
 
 TEST(Core, RelativeTimeUpdateSubsteps)
 {
-    Core reg;
+    Core core;
 
     int update_count = 0;
 
     std::array<float, 5> deltaTimes = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
     // If called with a delta time > target tick rate, it should run multiple times, with the remainder
-    reg.RegisterSystem<Scheduler::RelativeTimeUpdate>([&deltaTimes](Core &core) {
+    core.RegisterSystem<Scheduler::RelativeTimeUpdate>([&deltaTimes](Core &core_) {
         for (int i = 0; i < 5; i++)
         {
             if (deltaTimes[i] == 0.0f)
             {
-                deltaTimes[i] = core.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
+                deltaTimes[i] = core_.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
                 break;
             }
         }
     });
-    reg.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
+    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
 
-    reg.RunSystems();
+    core.RunSystems();
     std::this_thread::sleep_for(0.5s);
-    reg.RunSystems();
+    core.RunSystems();
     ASSERT_EQ(deltaTimes[0], 0.2f);
     ASSERT_EQ(deltaTimes[1], 0.2f);
     ASSERT_GT(deltaTimes[2], 0.0f);

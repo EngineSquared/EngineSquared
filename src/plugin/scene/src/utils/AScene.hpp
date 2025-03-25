@@ -13,14 +13,14 @@ class AScene {
     /**
      * @brief Method used to instantiate new entities with their components
      *
-     * @param core   The registry where the entities will be created
+     * @param core   The core where the entities will be created
      */
     virtual void Load(ES::Engine::Core &core) final { _onCreate(core); }
 
     /**
      * @brief Method used to destroy all entities and their components
      *
-     * @param core The registry where the entities will be destroyed
+     * @param core The core where the entities will be destroyed
      */
     virtual void Unload(ES::Engine::Core &core) final { _onDestroy(core); }
 

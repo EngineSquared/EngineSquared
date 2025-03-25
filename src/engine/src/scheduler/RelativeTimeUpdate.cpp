@@ -12,7 +12,7 @@ void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems()
         _deltaTime = _tickRate;
         for (auto const &system : this->_systemsList.GetSystems())
         {
-            (*system)(_registry);
+            (*system)(_core);
         }
     }
 
@@ -21,7 +21,7 @@ void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems()
         _deltaTime = remainder;
         for (auto const &system : this->_systemsList.GetSystems())
         {
-            (*system)(_registry);
+            (*system)(_core);
         }
     }
 

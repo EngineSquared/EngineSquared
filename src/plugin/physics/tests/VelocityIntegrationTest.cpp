@@ -24,7 +24,7 @@ TEST(VelocityIntegration, BasicGravityIntegration)
     auto const &node = core.GetRegistry().get<ES::Plugin::Physics::Component::SoftBodyNode>(entity);
     auto const &transform = core.GetRegistry().get<ES::Plugin::Object::Component::Transform>(entity);
 
-    // registry uses a real time provider to get the elapsed time, so we should sleep a bit
+    // core uses a real time provider to get the elapsed time, so we should sleep a bit
     SleepFor(10);
     core.RunSystems();
     // gravity is applied to the node, so the position should be negative

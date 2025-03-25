@@ -8,13 +8,13 @@ using namespace ES::Engine;
 
 TEST(Core, StartupScheduler)
 {
-    Core reg;
+    Core core;
 
     int update_count = 0;
-    reg.RegisterSystem<Scheduler::Startup>([&update_count](const Core &) { update_count++; });
+    core.RegisterSystem<Scheduler::Startup>([&update_count](const Core &) { update_count++; });
 
-    reg.RunSystems();
-    reg.RunSystems();
-    reg.RunSystems();
+    core.RunSystems();
+    core.RunSystems();
+    core.RunSystems();
     ASSERT_EQ(update_count, 1);
 }
