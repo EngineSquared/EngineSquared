@@ -12,7 +12,7 @@
  * @brief GLTextBuffer class declaration.
  *
  * This class is used to manage OpenGL buffers. It is used to store the VAO,
- * VBOs and IBOs. It also provides methods to draw and destroy the buffers.
+ * and VBO. It also provides methods to draw and destroy the buffers.
  *
  * @author @EngineSquared Team
  * @version 0.0.0
