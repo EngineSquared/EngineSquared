@@ -3,6 +3,8 @@
 #include <fmt/format.h>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <array>
 
 #define STB_TRUETYPE_IMPLEMENTATION
 #include <stb_truetype.h>
@@ -89,7 +91,7 @@ const void Font::RenderText(const std::string &text, float x, float y, float sca
 
     for (const char &c : text)
     {
-        if (characters.find(c) == characters.end())
+        if (!characters.contains(c))
         {
 #ifdef ES_DEBUG
             ES::Utils::Log::Warn(fmt::format("Character not found: 0x{:02X}", static_cast<unsigned char>(c)));
@@ -105,19 +107,19 @@ const void Font::RenderText(const std::string &text, float x, float y, float sca
         float w = ch.size.x * scale;
         float h = ch.size.y * scale;
 
-        float vertices[6][4] = {
-            {xpos,     ypos + h, 0.0, 0.0},
-            {xpos,     ypos,     0.0, 1.0},
-            {xpos + w, ypos,     1.0, 1.0},
+        std::array<std::array<float, 4>, 6> vertices = {{
+            {xpos,     ypos + h, 0.0f, 0.0f},
+            {xpos,     ypos,     0.0f, 1.0f},
+            {xpos + w, ypos,     1.0f, 1.0f},
 
-            {xpos,     ypos + h, 0.0, 0.0},
-            {xpos + w, ypos,     1.0, 1.0},
-            {xpos + w, ypos + h, 1.0, 0.0}
-        };
+            {xpos,     ypos + h, 0.0f, 0.0f},
+            {xpos + w, ypos,     1.0f, 1.0f},
+            {xpos + w, ypos + h, 1.0f, 0.0f}
+        }};
 
         glBindTexture(GL_TEXTURE_2D, ch.textureID);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
         x += ch.advance * scale;
