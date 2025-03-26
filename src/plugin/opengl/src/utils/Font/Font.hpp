@@ -21,7 +21,7 @@ class Font {
     explicit Font(const std::string &fontPath, int fontSize);
     ~Font() = default;
 
-    const void RenderText(const std::string &text, float x, float y, float scale, GLuint VAO, GLuint VBO) const;
+    void RenderText(const std::string &text, float x, float y, float scale, GLuint VAO, GLuint VBO) const;
 
   private:
     std::unordered_map<char, Character> characters;
