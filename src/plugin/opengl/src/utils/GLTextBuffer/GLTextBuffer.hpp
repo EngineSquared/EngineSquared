@@ -25,9 +25,9 @@
 
 #include <vector>
 
+#include "Font.hpp"
 #include "Loader.hpp"
 #include "Text.hpp"
-#include "Font.hpp"
 
 namespace ES::Plugin::OpenGL::Utils {
 

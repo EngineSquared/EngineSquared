@@ -23,7 +23,8 @@ void GLTextBuffer::GenerateGLTextBuffers() noexcept
     glBindVertexArray(0);
 }
 
-void GLTextBuffer::RenderText(const ES::Plugin::UI::Component::Text &text, const ES::Plugin::OpenGL::Utils::Font &font) const
+void GLTextBuffer::RenderText(const ES::Plugin::UI::Component::Text &text,
+                              const ES::Plugin::OpenGL::Utils::Font &font) const
 {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
