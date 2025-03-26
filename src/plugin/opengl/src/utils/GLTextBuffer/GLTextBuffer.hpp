@@ -41,13 +41,9 @@ class GLTextBuffer {
     GLTextBuffer &operator=(const GLTextBuffer &) = default;
     GLTextBuffer &operator=(GLTextBuffer &&) = default;
 
-    void Draw(const ES::Plugin::UI::Component::Text &mesh) const noexcept;
-
     void DestroyGLTextBuffers() const noexcept;
 
-    void GenerateGLTextBuffers(const ES::Plugin::UI::Component::Text &mesh) noexcept;
-
-    void Update(const ES::Plugin::UI::Component::Text &mesh) const noexcept;
+    void GenerateGLTextBuffers() noexcept;
 
     GLuint VAO = 0;
     GLuint VBO = 0;

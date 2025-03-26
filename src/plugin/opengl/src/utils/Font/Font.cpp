@@ -35,14 +35,19 @@ void Font::LoadFont(const std::string &fontPath, int fontSize)
     }
 
     float scale = stbtt_ScaleForPixelHeight(&fontInfo, fontSize);
-    int ascent, descent, lineGap;
+    int ascent;
+    int descent;
+    int lineGap;
     stbtt_GetFontVMetrics(&fontInfo, &ascent, &descent, &lineGap);
     ascent = static_cast<int>(ascent * scale);
     descent = static_cast<int>(descent * scale);
 
     for (unsigned char c = 32; c < 128; c++)
     {
-        int width, height, xOffset, yOffset;
+        int width;
+        int height;
+        int xOffset;
+        int yOffset;
         bitmap = stbtt_GetCodepointBitmap(&fontInfo, 0, scale, c, &width, &height, &xOffset, &yOffset);
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -57,7 +62,8 @@ void Font::LoadFont(const std::string &fontPath, int fontSize)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-        int advance, lsb;
+        int advance;
+        int lsb;
         stbtt_GetCodepointHMetrics(&fontInfo, c, &advance, &lsb);
         float scaledAdvance = (advance * scale);
 

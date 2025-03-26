@@ -263,11 +263,10 @@ void ES::Plugin::OpenGL::System::LoadGLTextBuffer(ES::Engine::Core &core)
         [&](auto entity, Component::TextHandle &textHandle, ES::Plugin::UI::Component::Text &text) {
             if (glBufferManager.Contains(textHandle.id))
             {
-                glBufferManager.Get(textHandle.id).Update(text);
                 return;
             }
             Utils::GLTextBuffer buffer;
-            buffer.GenerateGLTextBuffers(text);
+            buffer.GenerateGLTextBuffers();
             glBufferManager.Add(textHandle.id, std::move(buffer));
         });
 }
