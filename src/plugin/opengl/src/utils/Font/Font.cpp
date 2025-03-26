@@ -92,8 +92,6 @@ void Font::RenderText(const std::string &text, float x, float y, float scale, GL
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
 
-    std::size_t i = 0;
-
     for (const char &c : text)
     {
         if (!characters.contains(c))
@@ -128,13 +126,6 @@ void Font::RenderText(const std::string &text, float x, float y, float scale, GL
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
         x += ch.advance * scale;
-
-        if (i + 1 < text.size())
-        {
-            x += scale * stbtt_GetCodepointKernAdvance(fontInfo.get(), c, text[i + 1]);
-        }
-
-        i++;
     }
 
     glBindVertexArray(0);
