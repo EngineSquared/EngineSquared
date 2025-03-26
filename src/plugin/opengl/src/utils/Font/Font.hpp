@@ -19,7 +19,7 @@ struct Character {
 class Font {
   public:
     explicit Font(const std::string &fontPath, int fontSize);
-    ~Font();
+    ~Font() = default;
 
     const void RenderText(const std::string &text, float x, float y, float scale, GLuint VAO, GLuint VBO) const;
 
