@@ -3,7 +3,6 @@
 #include "Core.hpp"
 #include "RigidBody3D.hpp"
 
-
 namespace ES::Plugin::Physics::System {
 /**
  * @brief Applies every update of the physics system.

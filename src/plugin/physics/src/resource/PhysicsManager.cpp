@@ -22,8 +22,8 @@ void PhysicsManager::Init()
 {
     // Default values from Jolt Physics samples
     _physicsSystem->Init(10240, 0, 65536, 20480, *_broadPhaseLayerInterface, *_objectVsBroadPhaseLayerFilter,
-        *_objectLayerPairFilter);
+                         *_objectLayerPairFilter);
 }
 
-PhysicsManager::~PhysicsManager() { }
+PhysicsManager::~PhysicsManager() {}
 } // namespace ES::Plugin::Physics::Resource
