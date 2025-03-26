@@ -1,10 +1,10 @@
 #include "PluginPhysics.hpp"
-#include "PhysicsManager.hpp"
-#include "PhysicsUpdate.hpp"
-#include "Startup.hpp"
 #include "InitJoltPhysics.hpp"
 #include "InitPhysicsManager.hpp"
+#include "PhysicsManager.hpp"
+#include "PhysicsUpdate.hpp"
 #include "ShutdownJoltPhysics.hpp"
+#include "Startup.hpp"
 
 void ES::Plugin::Physics::Plugin::Bind()
 {
