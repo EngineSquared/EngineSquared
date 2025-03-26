@@ -71,7 +71,7 @@ void ES::Plugin::Physics::System::UnlinkRigidBodiesToPhysicsSystem(entt::registr
     rigidBody.body = nullptr;
 }
 
-void ES::Plugin::Physics::System::OnConstructLinkRigidBodieToPhysicsSystem(ES::Engine::Core &core)
+void ES::Plugin::Physics::System::OnConstructLinkRigidBodiesToPhysicsSystem(ES::Engine::Core &core)
 {
     core.GetRegistry()
         .on_construct<ES::Plugin::Physics::Component::RigidBody3D>()

@@ -9,6 +9,9 @@
 #include "resource/PhysicsManager.hpp"
 
 #include "system/PhysicsUpdate.hpp"
+#include "system/InitJoltPhysics.hpp"
+#include "system/InitPhysicsManager.hpp"
+#include "system/ShutdownJoltPhysics.hpp"
 
 #include "utils/BroadPhaseLayerImpl.hpp"
 #include "utils/BroadPhaseLayers.hpp"
