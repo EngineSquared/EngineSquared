@@ -23,4 +23,56 @@ void GLTextBuffer::GenerateGLTextBuffers() noexcept
     glBindVertexArray(0);
 }
 
+void GLTextBuffer::RenderText(const ES::Plugin::UI::Component::Text &text, const ES::Plugin::OpenGL::Utils::Font &font) const
+{
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindVertexArray(VAO);
+
+    float x = text.position.x;
+    float y = text.position.y;
+
+    for (const char &c : text.text)
+    {
+        if (!font.HasCharacter(c))
+        {
+#ifdef ES_DEBUG
+            ES::Utils::Log::Warn(fmt::format("Character not found: 0x{:02X}", static_cast<unsigned char>(c)));
+#endif
+            continue;
+        }
+
+        const auto &ch = font.GetCharacter(c);
+
+        float xpos = x + ch.bearing.x * text.scale;
+        float ypos = y - ch.size.y * text.scale - ch.bearing.y * text.scale;
+
+        float w = ch.size.x * text.scale;
+        float h = ch.size.y * text.scale;
+
+        std::array<std::array<float, 4>, 6> vertices = {
+            {{xpos, ypos + h, 0.0f, 0.0f},
+             {xpos, ypos, 0.0f, 1.0f},
+             {xpos + w, ypos, 1.0f, 1.0f},
+
+             {xpos, ypos + h, 0.0f, 0.0f},
+             {xpos + w, ypos, 1.0f, 1.0f},
+             {xpos + w, ypos + h, 1.0f, 0.0f}}
+        };
+
+        glBindTexture(GL_TEXTURE_2D, ch.textureID);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_DYNAMIC_DRAW);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        x += ch.advance * text.scale;
+    }
+
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_BLEND);
+}
+
 } // namespace ES::Plugin::OpenGL::Utils

@@ -26,8 +26,8 @@
 #include <vector>
 
 #include "Loader.hpp"
-
 #include "Text.hpp"
+#include "Font.hpp"
 
 namespace ES::Plugin::OpenGL::Utils {
 
@@ -44,6 +44,8 @@ class GLTextBuffer {
     void DestroyGLTextBuffers() const noexcept;
 
     void GenerateGLTextBuffers() noexcept;
+
+    void RenderText(const ES::Plugin::UI::Component::Text &text, const ES::Plugin::OpenGL::Utils::Font &font) const;
 
     GLuint VAO = 0;
     GLuint VBO = 0;
