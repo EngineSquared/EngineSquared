@@ -50,7 +50,8 @@ void Font::LoadFont(const std::string &fontPath, int fontSize)
         int height;
         int xOffset;
         int yOffset;
-        unsigned char *bitmap = stbtt_GetCodepointBitmap(fontInfo.get(), 0, scale, c, &width, &height, &xOffset, &yOffset);
+        unsigned char *bitmap =
+            stbtt_GetCodepointBitmap(fontInfo.get(), 0, scale, c, &width, &height, &xOffset, &yOffset);
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 

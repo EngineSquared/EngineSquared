@@ -5,9 +5,9 @@
 #include <string>
 #include <unordered_map>
 
+#include <memory>
 #include <stb_truetype.h>
 #include <vector>
-#include <memory>
 
 namespace ES::Plugin::OpenGL::Utils {
 
