@@ -11,7 +11,7 @@ namespace ES::Plugin::OpenGL::Utils {
 
 Font::Font(const std::string &fontPath, int fontSize) { LoadFont(fontPath, fontSize); }
 
-Font::~Font() {  }
+Font::~Font() {}
 
 void Font::LoadFont(const std::string &fontPath, int fontSize)
 {
