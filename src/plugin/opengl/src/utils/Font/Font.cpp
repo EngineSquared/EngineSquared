@@ -11,7 +11,7 @@ namespace ES::Plugin::OpenGL::Utils {
 
 Font::Font(const std::string &fontPath, int fontSize) { LoadFont(fontPath, fontSize); }
 
-Font::~Font() { delete[] fontBuffer; }
+Font::~Font() {  }
 
 void Font::LoadFont(const std::string &fontPath, int fontSize)
 {
@@ -24,11 +24,11 @@ void Font::LoadFont(const std::string &fontPath, int fontSize)
 
     std::streamsize size = file.tellg();
     file.seekg(0, std::ios::beg);
-    fontBuffer = new unsigned char[size];
-    file.read(reinterpret_cast<char *>(fontBuffer), size);
+    std::vector<unsigned char> fontBuffer(size);
+    file.read(reinterpret_cast<char *>(fontBuffer.data()), size);
     file.close();
 
-    if (stbtt_InitFont(&fontInfo, fontBuffer, stbtt_GetFontOffsetForIndex(fontBuffer, 0)) == 0)
+    if (stbtt_InitFont(&fontInfo, fontBuffer.data(), stbtt_GetFontOffsetForIndex(fontBuffer.data(), 0)) == 0)
     {
         ES::Utils::Log::Error("Failed to initialize font");
         return;
@@ -48,7 +48,7 @@ void Font::LoadFont(const std::string &fontPath, int fontSize)
         int height;
         int xOffset;
         int yOffset;
-        bitmap = stbtt_GetCodepointBitmap(&fontInfo, 0, scale, c, &width, &height, &xOffset, &yOffset);
+        unsigned char *bitmap = stbtt_GetCodepointBitmap(&fontInfo, 0, scale, c, &width, &height, &xOffset, &yOffset);
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 

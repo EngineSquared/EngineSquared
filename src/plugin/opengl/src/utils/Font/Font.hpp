@@ -27,8 +27,6 @@ class Font {
   private:
     std::unordered_map<char, Character> characters;
     stbtt_fontinfo fontInfo;
-    unsigned char *fontBuffer;
-    unsigned char *bitmap;
 
     void LoadFont(const std::string &fontPath, int fontSize);
 };
