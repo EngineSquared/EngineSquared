@@ -396,8 +396,7 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
             auto &textBuffer = core.GetResource<Resource::GLTextBufferManager>().Get(textHandle.id);
 
-            font.RenderText(text.text, text.position.x, text.position.y, text.scale, text.color, textBuffer.VAO,
-                            textBuffer.VBO);
+            font.RenderText(text.text, text.position.x, text.position.y, text.scale, textBuffer.VAO, textBuffer.VBO);
 
             shader.disable();
         });

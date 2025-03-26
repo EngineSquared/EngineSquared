@@ -81,8 +81,7 @@ void Font::LoadFont(const std::string &fontPath, int fontSize)
     ES::Utils::Log::Info(fmt::format("Font loaded: {}", fontPath));
 }
 
-const void Font::RenderText(const std::string &text, float x, float y, float scale, const glm::vec3 &color, GLuint VAO,
-                            GLuint VBO) const
+const void Font::RenderText(const std::string &text, float x, float y, float scale, GLuint VAO, GLuint VBO) const
 {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
