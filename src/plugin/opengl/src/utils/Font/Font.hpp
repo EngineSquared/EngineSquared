@@ -6,6 +6,8 @@
 #include <unordered_map>
 
 #include <stb_truetype.h>
+#include <vector>
+#include <memory>
 
 namespace ES::Plugin::OpenGL::Utils {
 
@@ -25,7 +27,8 @@ class Font {
 
   private:
     std::unordered_map<char, Character> characters;
-    stbtt_fontinfo fontInfo;
+    std::shared_ptr<stbtt_fontinfo> fontInfo;
+    std::shared_ptr<std::vector<unsigned char>> fontBuffer;
 
     void LoadFont(const std::string &fontPath, int fontSize);
 };

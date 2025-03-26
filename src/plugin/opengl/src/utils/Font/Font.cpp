@@ -4,7 +4,6 @@
 #include <fmt/format.h>
 #include <fstream>
 #include <iostream>
-#include <vector>
 
 #define STB_TRUETYPE_IMPLEMENTATION
 #include <stb_truetype.h>
@@ -15,6 +14,9 @@ Font::Font(const std::string &fontPath, int fontSize) { LoadFont(fontPath, fontS
 
 void Font::LoadFont(const std::string &fontPath, int fontSize)
 {
+    fontBuffer = std::make_shared<std::vector<unsigned char>>();
+    fontInfo = std::make_shared<stbtt_fontinfo>();
+
     std::ifstream file(fontPath, std::ios::binary | std::ios::ate);
     if (!file.is_open())
     {
@@ -24,21 +26,21 @@ void Font::LoadFont(const std::string &fontPath, int fontSize)
 
     std::streamsize size = file.tellg();
     file.seekg(0, std::ios::beg);
-    std::vector<unsigned char> fontBuffer(size);
-    file.read(reinterpret_cast<char *>(fontBuffer.data()), size);
+    fontBuffer->resize(size);
+    file.read(reinterpret_cast<char *>(fontBuffer->data()), size);
     file.close();
 
-    if (stbtt_InitFont(&fontInfo, fontBuffer.data(), stbtt_GetFontOffsetForIndex(fontBuffer.data(), 0)) == 0)
+    if (stbtt_InitFont(fontInfo.get(), fontBuffer->data(), stbtt_GetFontOffsetForIndex(fontBuffer->data(), 0)) == 0)
     {
         ES::Utils::Log::Error("Failed to initialize font");
         return;
     }
 
-    float scale = stbtt_ScaleForPixelHeight(&fontInfo, fontSize);
+    float scale = stbtt_ScaleForPixelHeight(fontInfo.get(), fontSize);
     int ascent;
     int descent;
     int lineGap;
-    stbtt_GetFontVMetrics(&fontInfo, &ascent, &descent, &lineGap);
+    stbtt_GetFontVMetrics(fontInfo.get(), &ascent, &descent, &lineGap);
     ascent = static_cast<int>(ascent * scale);
     descent = static_cast<int>(descent * scale);
 
@@ -48,7 +50,7 @@ void Font::LoadFont(const std::string &fontPath, int fontSize)
         int height;
         int xOffset;
         int yOffset;
-        unsigned char *bitmap = stbtt_GetCodepointBitmap(&fontInfo, 0, scale, c, &width, &height, &xOffset, &yOffset);
+        unsigned char *bitmap = stbtt_GetCodepointBitmap(fontInfo.get(), 0, scale, c, &width, &height, &xOffset, &yOffset);
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -64,7 +66,7 @@ void Font::LoadFont(const std::string &fontPath, int fontSize)
 
         int advance;
         int lsb;
-        stbtt_GetCodepointHMetrics(&fontInfo, c, &advance, &lsb);
+        stbtt_GetCodepointHMetrics(fontInfo.get(), c, &advance, &lsb);
         float scaledAdvance = (advance * scale);
 
         Character character;
@@ -128,7 +130,7 @@ void Font::RenderText(const std::string &text, float x, float y, float scale, GL
 
         if (i + 1 < text.size())
         {
-            x += scale * stbtt_GetCodepointKernAdvance(&fontInfo, c, text[i + 1]);
+            x += scale * stbtt_GetCodepointKernAdvance(fontInfo.get(), c, text[i + 1]);
         }
 
         i++;
