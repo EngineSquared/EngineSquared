@@ -66,21 +66,21 @@ class PhysicsManager {
 
     /**
      * @brief Get the number of collision steps.
-     * 
+     *
      * @return int
      */
     inline int GetCollisionSteps() { return _collisionSteps; }
 
     /**
      * @brief Set the number of collision steps.
-     * 
+     *
      * @param steps
      * @note This will be used to set the number of steps in the physics system.
-     * 
+     *
      * @return void
      */
     inline void SetCollisionSteps(int steps) { _collisionSteps = steps; }
-    
+
   private:
     std::shared_ptr<JPH::Factory> _factory;
     std::shared_ptr<JPH::PhysicsSystem> _physicsSystem;

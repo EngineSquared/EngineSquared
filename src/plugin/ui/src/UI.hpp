@@ -1,8 +1,8 @@
 #pragma once
 
 // Components
-#include "Button.hpp"
 #include "BoxCollider2D.hpp"
+#include "Button.hpp"
 #include "Sprite2D.hpp"
 #include "Text.hpp"
 
