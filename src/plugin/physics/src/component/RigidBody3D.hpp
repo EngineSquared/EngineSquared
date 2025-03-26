@@ -21,6 +21,7 @@ struct RigidBody3D {
 
     /// @brief A reference to the rigid body itself used by Jolt.
     /// @note This should not be constructed manually, this is handled by the systems.
+    /// @note Memory management is handled by the physics system.
     JPH::Body *body;
 
     /// @brief Motion type of the rigid body.
