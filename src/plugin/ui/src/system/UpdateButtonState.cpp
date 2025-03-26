@@ -15,19 +15,19 @@ void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Core &core)
     const bool &isMouseLeftPressed = inputManager.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
     const glm::vec2 &mousePos = inputManager.GetMousePosition();
     auto view = core.GetRegistry()
-                    .view<ES::Plugin::UI::Component::Button, ES::Plugin::Physics::Component::BoxCollider2D,
+                    .view<ES::Plugin::UI::Component::Button, ES::Plugin::UI::Component::BoxCollider2D,
                           ES::Plugin::Object::Component::Transform>();
     for (auto entity : view)
     {
         auto &button = view.get<ES::Plugin::UI::Component::Button>(entity);
-        auto const &collider = view.get<ES::Plugin::Physics::Component::BoxCollider2D>(entity);
+        auto const &collider = view.get<ES::Plugin::UI::Component::BoxCollider2D>(entity);
         auto const &transform = view.get<ES::Plugin::Object::Component::Transform>(entity);
         const ES::Plugin::Math::Rect &rect = {
             {transform.position.x,                     transform.position.y                    },
             {collider.size.x * transform.getScale().x, collider.size.y * transform.getScale().y}
         };
         button.lastState = button.state;
-        if (ES::Plugin::Physics::Utils::Point2DCollidesRect2D(rect, mousePos))
+        if (ES::Plugin::UI::Utils::Point2DCollidesRect2D(rect, mousePos))
         {
             if (isMouseLeftPressed)
             {

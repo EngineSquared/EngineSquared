@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace ES::Plugin::Physics::Component {
+namespace ES::Plugin::UI::Component {
 
 /**
  * Basic collider used to check collisions through CollisionChecker system
