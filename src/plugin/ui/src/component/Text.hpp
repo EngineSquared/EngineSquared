@@ -6,7 +6,6 @@
 namespace ES::Plugin::UI::Component {
 
 struct Text {
-    // TODO: too much info for one component, should be split
     std::string text;
     glm::vec2 position;
     float scale;
