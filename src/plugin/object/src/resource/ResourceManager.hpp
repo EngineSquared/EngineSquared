@@ -37,7 +37,7 @@ template <typename ResourceType> class ResourceManager {
     ~ResourceManager() = default;
 
     /**
-     * @brief Adds an resource to the manager.
+     * @brief Adds a resource to the manager.
      *
      * @note If the resource already exists, it will be overwritten.
      *
@@ -49,33 +49,37 @@ template <typename ResourceType> class ResourceManager {
     {
         auto ret = cache.load(id, std::forward<Args>(args)...);
 
+#ifdef ES_DEBUG
         if (!ret.second)
         {
             ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, std::forward<Args>(args)...);
         }
+#endif
 
         return *ret.first->second;
     }
 
     /**
-     * @brief Adds an resource to the manager.
+     * @brief Adds a resource to the manager.
      *
      * @note If the resource already exists, it will be overwritten.
      *
      * @param id  id of the resource
      * @param resource  resource to add
-     * @return  the added resource
+     * @return the added resource
      */
     ResourceType Add(const entt::hashed_string &id, const ResourceType &resource)
     {
         auto ret = cache.load(id, resource);
 
+#ifdef ES_DEBUG
         if (!ret.second)
         {
             ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, resource);
         }
+#endif
 
         return *(ret.first->second);
     }
@@ -91,8 +95,11 @@ template <typename ResourceType> class ResourceManager {
     [[nodiscard]] ResourceType &Get(const entt::hashed_string &id)
     {
         auto resource = cache[id];
+
+#ifdef ES_DEBUG
         if (!resource)
             throw ResourceManagerError(fmt::format("Resource with id {} not found.", id.data()));
+#endif
 
         return *resource;
     }
