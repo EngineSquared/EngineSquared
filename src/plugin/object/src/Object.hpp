@@ -7,3 +7,4 @@
 #include "OBJLoader.hpp"
 #include "Transform.hpp"
 #include "Vertex.hpp"
+#include "AssetsHandle.hpp"
