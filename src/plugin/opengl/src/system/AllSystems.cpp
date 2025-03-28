@@ -244,9 +244,9 @@ void ES::Plugin::OpenGL::System::LoadGLMeshBuffer(ES::Engine::Core &core)
 
     core.GetRegistry().view<Component::ModelHandle, ES::Plugin::Object::Component::Mesh>().each(
         [&](auto entity, Component::ModelHandle &model, ES::Plugin::Object::Component::Mesh &mesh) {
-            if (glBufferManager.Contains(model.id))
+            if (model.Exists(core))
             {
-                glBufferManager.Get(model.id).Update(mesh);
+                model.Get(core).Update(mesh);
                 return;
             }
             Utils::GLMeshBuffer buffer;
@@ -356,9 +356,9 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
         .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Transform &transform,
                   ES::Plugin::Object::Component::Mesh &mesh, Component::ShaderHandle &shaderHandle,
                   Component::MaterialHandle &materialHandle) {
-            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
-            const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
-            const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
+            auto &shader = shaderHandle.Get(core);
+            const auto &material = materialHandle.Get(core);
+            const auto &glBuffer = modelHandle.Get(core);
             shader.use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
@@ -385,8 +385,8 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
         .view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle, Component::TextHandle>()
         .each([&](auto entity, ES::Plugin::UI::Component::Text &text, Component::FontHandle &fontHandle,
                   Component::ShaderHandle &shaderHandle, Component::TextHandle &textHandle) {
-            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
-            const auto &font = core.GetResource<Resource::FontManager>().Get(fontHandle.id);
+            auto &shader = shaderHandle.Get(core);
+            const auto &font = fontHandle.Get(core);
 
             shader.use();
 
@@ -394,7 +394,7 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
             glUniform1i(shader.uniform("Text"), 0);
             glUniform3f(shader.uniform("TextColor"), text.color.x, text.color.y, text.color.z);
 
-            auto &textBuffer = core.GetResource<Resource::GLTextBufferManager>().Get(textHandle.id);
+            auto &textBuffer = textHandle.Get(core);
 
             textBuffer.RenderText(text, font);
 

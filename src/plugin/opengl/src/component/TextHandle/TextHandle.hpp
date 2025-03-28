@@ -3,17 +3,9 @@
 #include <string>
 
 #include <entt/entt.hpp>
+#include "AssetsHandle.hpp"
+#include "GLTextBuffer.hpp"
 
 namespace ES::Plugin::OpenGL::Component {
-struct TextHandle {
-    std::string name;
-
-    entt::hashed_string id;
-
-    TextHandle() = default;
-    explicit TextHandle(const std::string &name) : name(name), id(entt::hashed_string(name.c_str())) {}
-
-    TextHandle(const TextHandle &) = default;
-    TextHandle(TextHandle &&) = default;
-};
+using TextHandle = ES::Plugin::Object::Component::AssetsHandle<Utils::GLTextBuffer>;
 } // namespace ES::Plugin::OpenGL::Component
