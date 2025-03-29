@@ -7,8 +7,8 @@
 
 #include "Engine.hpp"
 
+#include "AssetID.hpp"
 #include "Color.hpp"
-#include <entt/entt.hpp>
 
 namespace ES::Plugin::UI::Component {
 /**
@@ -24,7 +24,7 @@ namespace DisplayType {
  * @param   pressedColor    The color to use when the button is in the pressed state
  */
 struct TintColor {
-    entt::hashed_string imageID;
+    ES::Plugin::Object::Utils::AssetID imageID;
     ES::Plugin::Colors::Utils::Color normalColor;
     ES::Plugin::Colors::Utils::Color hoverColor;
     ES::Plugin::Colors::Utils::Color pressedColor;
@@ -38,9 +38,9 @@ struct TintColor {
  * @param   pressedImageID  The ID of the image to use when the button is in the pressed state
  */
 struct Image {
-    entt::hashed_string normalImageID;
-    entt::hashed_string hoverImageID;
-    entt::hashed_string pressedImageID;
+    ES::Plugin::Object::Utils::AssetID normalImageID;
+    ES::Plugin::Object::Utils::AssetID hoverImageID;
+    ES::Plugin::Object::Utils::AssetID pressedImageID;
 };
 
 /**

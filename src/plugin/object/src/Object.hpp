@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AssetID.hpp"
 #include "Mesh.hpp"
 #include "MeshID.hpp"
 #include "OBJLoader.hpp"
