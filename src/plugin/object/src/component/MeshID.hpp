@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt/entt.hpp>
+#include "AssetID.hpp"
 
 namespace ES::Plugin::Object::Component {
 /**
@@ -11,6 +11,6 @@ struct MeshID {
     /**
      * Id refering to a mesh.
      */
-    entt::hashed_string meshID;
+    ES::Plugin::Object::Utils::AssetID meshID;
 };
 } // namespace ES::Plugin::Object::Component
