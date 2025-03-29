@@ -24,7 +24,10 @@ template <typename ResourceType> class ResourceManager {
         using result_type = std::shared_ptr<ResourceType>;
 
         result_type operator()(const ResourceType &resource) const { return std::make_shared<ResourceType>(resource); }
-        result_type operator()(ResourceType &&resource) const { return std::make_shared<ResourceType>(std::move(resource)); }
+        result_type operator()(ResourceType &&resource) const
+        {
+            return std::make_shared<ResourceType>(std::move(resource));
+        }
 
         template <typename... Args> result_type operator()(Args &&...args) const
         {
