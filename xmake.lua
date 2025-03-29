@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "gtest", "spdlog", "tinyobjloader", "glm >=1.0.1", "glfw >=3.4", "glew", "fmt", "stb")
+add_requires("entt", "gtest", "spdlog", "tinyobjloader", "glm >=1.0.1", "glfw >=3.4", "glew", "fmt", "stb", "joltphysics")
 
 includes("src/plugin/camera/xmake.lua")
 includes("src/plugin/colors/xmake.lua")
@@ -43,7 +43,7 @@ target("EngineSquared")
 
     set_policy("build.warning", true)
 
-    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "glew", "fmt", "stb")
+    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "glew", "fmt", "stb", "joltphysics")
 
     if is_mode("debug") then
         add_defines("DEBUG")
