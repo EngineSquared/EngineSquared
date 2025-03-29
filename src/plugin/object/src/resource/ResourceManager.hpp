@@ -24,6 +24,7 @@ template <typename ResourceType> class ResourceManager {
         using result_type = std::shared_ptr<ResourceType>;
 
         result_type operator()(const ResourceType &resource) const { return std::make_shared<ResourceType>(resource); }
+        result_type operator()(ResourceType &&resource) const { return std::make_shared<ResourceType>(std::move(resource)); }
 
         template <typename... Args> result_type operator()(Args &&...args) const
         {
@@ -78,6 +79,30 @@ template <typename ResourceType> class ResourceManager {
         {
             ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, resource);
+        }
+#endif
+
+        return *(ret.first->second);
+    }
+
+    /**
+     * @brief Adds a resource to the manager.
+     *
+     * @note If the resource already exists, it will be overwritten.
+     *
+     * @param id  id of the resource
+     * @param resource  resource to add
+     * @return the added resource
+     */
+    ResourceType Add(const entt::hashed_string &id, ResourceType &&resource)
+    {
+        auto ret = cache.load(id, std::move(resource));
+
+#ifdef ES_DEBUG
+        if (!ret.second)
+        {
+            ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
+            ret = cache.force_load(id, std::move(resource));
         }
 #endif
 
