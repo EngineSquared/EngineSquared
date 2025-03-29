@@ -2,6 +2,9 @@ name: Linter GitHub Action
 
 on:
   push:
+    branches-ignore:
+      - 'ga-ignore-**'
+      - 'gh-pages'
 
 jobs:
   lint_code:

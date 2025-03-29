@@ -1,10 +1,11 @@
 name: mirror
 
 on:
-  push:
-    branches-ignore:
-      - 'ga-ignore-**'
-      - 'gh-pages'
+  workflow_run:
+    workflows:
+      - 'Linter GitHub Action'
+    types:
+      - completed
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
