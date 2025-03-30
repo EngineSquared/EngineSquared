@@ -30,7 +30,7 @@ class PhysicsManager {
     /**
      * Destructor.
      */
-    ~PhysicsManager();
+    ~PhysicsManager() = default;
 
     /**
      * @brief Initialize the physics system.

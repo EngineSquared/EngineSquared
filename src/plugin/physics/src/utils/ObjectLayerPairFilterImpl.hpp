@@ -11,7 +11,7 @@
 namespace ES::Plugin::Physics::Utils {
 class ObjectLayerPairFilterImpl : public JPH::ObjectLayerPairFilter {
   public:
-    virtual bool ShouldCollide(JPH::ObjectLayer inObject1, JPH::ObjectLayer inObject2) const override
+    bool ShouldCollide(JPH::ObjectLayer inObject1, JPH::ObjectLayer inObject2) const override
     {
         switch (inObject1)
         {

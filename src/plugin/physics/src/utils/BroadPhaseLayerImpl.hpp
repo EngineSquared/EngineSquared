@@ -3,6 +3,8 @@
 #include "BroadPhaseLayers.hpp"
 #include "Layers.hpp"
 
+#include <array>
+
 // clang-format off
 #include <Jolt/Jolt.h>
 // clang-format on
@@ -30,7 +32,7 @@ class BPLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface {
         return _objectToBroadPhase[inLayer];
     }
 
-    virtual const char *GetBroadPhaseLayerName(JPH::BroadPhaseLayer inLayer) const override
+    const char *GetBroadPhaseLayerName(JPH::BroadPhaseLayer inLayer) const override
     {
         switch ((JPH::BroadPhaseLayer::Type) inLayer)
         {
@@ -41,6 +43,6 @@ class BPLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface {
     }
 
   private:
-    JPH::BroadPhaseLayer _objectToBroadPhase[Layers::NUM_LAYERS];
-};
+    std::array<JPH::BroadPhaseLayer, Layers::NUM_LAYERS> _objectToBroadPhase;
+};;
 } // namespace ES::Plugin::Physics::Utils

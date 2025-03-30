@@ -23,7 +23,6 @@ void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry 
     }
     auto &transform = registry.get<ES::Plugin::Object::Component::Transform>(entity);
 
-    // auto &physicsManager = core.GetResource<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsSystem = physicsManager.GetPhysicsSystem();
 
@@ -52,7 +51,7 @@ void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry 
     }
 
     physicsSystem.GetBodyInterface().AddBody(
-        rigidBody.body->GetID(), JPH::EActivation::Activate); // TODO: Not all of them should be activated by default
+        rigidBody.body->GetID(), JPH::EActivation::Activate);
 }
 
 void ES::Plugin::Physics::System::UnlinkRigidBodiesToPhysicsSystem(entt::registry &registry, entt::entity entity)
@@ -63,7 +62,6 @@ void ES::Plugin::Physics::System::UnlinkRigidBodiesToPhysicsSystem(entt::registr
         return;
     }
 
-    // auto &physicsManager = core.GetResource<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsSystem = physicsManager.GetPhysicsSystem();
 
@@ -85,7 +83,7 @@ void ES::Plugin::Physics::System::SyncTransformsToRigidBodies(ES::Engine::Core &
 {
     core.GetRegistry()
         .view<ES::Plugin::Physics::Component::RigidBody3D, ES::Plugin::Object::Component::Transform>()
-        .each([&](auto &rigidBody, auto &transform) {
+        .each([](auto &rigidBody, auto &transform) {
             if (rigidBody.body != nullptr)
             {
                 auto position = rigidBody.body->GetPosition();
@@ -117,7 +115,7 @@ void ES::Plugin::Physics::System::SyncRigidBodiesToTransforms(ES::Engine::Core &
                     rigidBody.body->GetID(),
                     JPH::RVec3(transform.position.x, transform.position.y, transform.position.z),
                     JPH::Quat(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w),
-                    JPH::EActivation::Activate // TODO: Not all of them should be activated by default
+                    JPH::EActivation::Activate
                 );
             }
         });

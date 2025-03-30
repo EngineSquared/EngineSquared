@@ -24,6 +24,4 @@ void PhysicsManager::Init()
     _physicsSystem->Init(10240, 0, 65536, 20480, *_broadPhaseLayerInterface, *_objectVsBroadPhaseLayerFilter,
                          *_objectLayerPairFilter);
 }
-
-PhysicsManager::~PhysicsManager() {}
 } // namespace ES::Plugin::Physics::Resource
