@@ -8,6 +8,7 @@
 
 #include <fmt/format.h>
 
+// TODO: find a way to have custom signal (so that we can send Core rather than entt::registry)
 void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry &registry, entt::entity entity)
 {
     auto &rigidBody = registry.get<ES::Plugin::Physics::Component::RigidBody3D>(entity);
@@ -15,6 +16,7 @@ void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry 
     {
         return;
     }
+    // TODO: have a RequireComponent function that does this
     if (!registry.all_of<ES::Plugin::Object::Component::Transform>(entity))
     {
         registry.emplace<ES::Plugin::Object::Component::Transform>(entity);
