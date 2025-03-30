@@ -44,5 +44,6 @@ class BPLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface {
 
   private:
     std::array<JPH::BroadPhaseLayer, Layers::NUM_LAYERS> _objectToBroadPhase;
-};;
+};
+;
 } // namespace ES::Plugin::Physics::Utils

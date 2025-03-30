@@ -50,8 +50,7 @@ void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry 
         return;
     }
 
-    physicsSystem.GetBodyInterface().AddBody(
-        rigidBody.body->GetID(), JPH::EActivation::Activate);
+    physicsSystem.GetBodyInterface().AddBody(rigidBody.body->GetID(), JPH::EActivation::Activate);
 }
 
 void ES::Plugin::Physics::System::UnlinkRigidBodiesToPhysicsSystem(entt::registry &registry, entt::entity entity)
@@ -115,8 +114,7 @@ void ES::Plugin::Physics::System::SyncRigidBodiesToTransforms(ES::Engine::Core &
                     rigidBody.body->GetID(),
                     JPH::RVec3(transform.position.x, transform.position.y, transform.position.z),
                     JPH::Quat(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w),
-                    JPH::EActivation::Activate
-                );
+                    JPH::EActivation::Activate);
             }
         });
 }
