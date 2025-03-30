@@ -8,8 +8,6 @@
 
 namespace ES::Plugin::Physics::Resource {
 PhysicsManager::PhysicsManager()
-    : _tempAllocator(nullptr), _jobSystem(nullptr), _broadPhaseLayerInterface(nullptr), _objectLayerPairFilter(nullptr),
-      _objectVsBroadPhaseLayerFilter(nullptr), _physicsSystem(nullptr), _collisionSteps(1)
 {
     _tempAllocator = std::make_shared<JPH::TempAllocatorMalloc>();
     _jobSystem = std::make_shared<JPH::JobSystemThreadPool>(JPH::cMaxPhysicsJobs, JPH::cMaxPhysicsBarriers);

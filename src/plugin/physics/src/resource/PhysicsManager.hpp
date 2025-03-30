@@ -91,6 +91,6 @@ class PhysicsManager {
     std::shared_ptr<JPH::TempAllocator> _tempAllocator;
     std::shared_ptr<JPH::JobSystem> _jobSystem;
 
-    int _collisionSteps;
+    int _collisionSteps = 1;
 };
 } // namespace ES::Plugin::Physics::Resource
