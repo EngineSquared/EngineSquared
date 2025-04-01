@@ -1,9 +1,9 @@
 #include "PhysicsUpdate.hpp"
 
+#include "FixedTimeUpdate.hpp"
 #include "Logger.hpp"
 #include "Mesh.hpp"
 #include "PhysicsManager.hpp"
-#include "FixedTimeUpdate.hpp"
 #include "RigidBody3D.hpp"
 #include "SoftBody3D.hpp"
 #include "Transform.hpp"

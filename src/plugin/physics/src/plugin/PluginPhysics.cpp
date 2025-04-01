@@ -1,9 +1,9 @@
 #include "PluginPhysics.hpp"
+#include "FixedTimeUpdate.hpp"
 #include "InitJoltPhysics.hpp"
 #include "InitPhysicsManager.hpp"
 #include "PhysicsManager.hpp"
 #include "PhysicsUpdate.hpp"
-#include "FixedTimeUpdate.hpp"
 #include "ShutdownJoltPhysics.hpp"
 #include "Startup.hpp"
 
