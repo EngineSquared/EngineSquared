@@ -3,7 +3,7 @@
 #include "Logger.hpp"
 #include "Mesh.hpp"
 #include "PhysicsManager.hpp"
-#include "RelativeTimeUpdate.hpp"
+#include "FixedTimeUpdate.hpp"
 #include "RigidBody3D.hpp"
 #include "SoftBody3D.hpp"
 #include "Transform.hpp"
@@ -323,7 +323,7 @@ void ES::Plugin::Physics::System::SyncSoftBodiesData(ES::Engine::Core &core)
 
 void ES::Plugin::Physics::System::PhysicsUpdate(ES::Engine::Core &core)
 {
-    auto dt = core.GetScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
+    auto dt = core.GetScheduler<ES::Engine::Scheduler::FixedTimeUpdate>().GetTickRate();
     auto &physicsManager = core.GetResource<ES::Plugin::Physics::Resource::PhysicsManager>();
 
     physicsManager.GetPhysicsSystem().Update(dt, physicsManager.GetCollisionSteps(), physicsManager.GetTempAllocator(),
