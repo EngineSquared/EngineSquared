@@ -5,6 +5,7 @@
 // clang-format on
 
 #include "component/RigidBody3D.hpp"
+#include "component/SoftBody3D.hpp"
 
 #include "resource/PhysicsManager.hpp"
 
@@ -18,5 +19,6 @@
 #include "utils/Layers.hpp"
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
+#include "utils/SoftBodyVertexSettings.hpp"
 
 #include "plugin/PluginPhysics.hpp"

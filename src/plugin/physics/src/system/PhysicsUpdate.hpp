@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core.hpp"
-#include "RigidBody3D.hpp"
 
 namespace ES::Plugin::Physics::System {
 /**
@@ -12,10 +11,14 @@ namespace ES::Plugin::Physics::System {
  */
 void PhysicsUpdate(ES::Engine::Core &core);
 void OnConstructLinkRigidBodiesToPhysicsSystem(ES::Engine::Core &core);
+void OnConstructLinkSoftBodiesToPhysicsSystem(ES::Engine::Core &core);
 void SyncTransformsToRigidBodies(ES::Engine::Core &core);
 void SyncRigidBodiesToTransforms(ES::Engine::Core &core);
+void SyncSoftBodiesData(ES::Engine::Core &core);
 
 // IMPORTANT: This function should only be used by OnConstructLinkRigidBodieToPhysicsSystem system.
 void LinkRigidBodiesToPhysicsSystem(entt::registry &registry, entt::entity entity);
+void LinkSoftBodiesToPhysicsSystem(entt::registry &registry, entt::entity entity);
 void UnlinkRigidBodiesToPhysicsSystem(entt::registry &registry, entt::entity entity);
+void UnlinkSoftBodiesToPhysicsSystem(entt::registry &registry, entt::entity entity);
 } // namespace ES::Plugin::Physics::System
