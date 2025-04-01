@@ -3,5 +3,5 @@
 #include "Object.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {
-using ShaderManager = ES::Plugin::Object::Resource::AssetsManager<Utils::ShaderProgram>;
+using ShaderManager = ES::Plugin::Object::Resource::ResourceManager<Utils::ShaderProgram>;
 }
