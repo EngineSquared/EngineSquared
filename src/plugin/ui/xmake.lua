@@ -27,6 +27,7 @@ target("PluginUI")
     add_includedirs("src/", {public = true})
     add_includedirs("src/system", {public = true})
     add_includedirs("src/component", {public = true})
+    add_includedirs("src/utils", {public = true})
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
