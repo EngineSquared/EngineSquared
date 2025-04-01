@@ -237,8 +237,8 @@ void ES::Plugin::Physics::System::SyncRigidBodiesToTransforms(ES::Engine::Core &
 }
 
 static void UpdateSoftBodyEntity(ES::Engine::Core &core, ES::Plugin::Physics::Component::SoftBody3D &softBody,
-                                    ES::Plugin::Object::Component::Transform &transform,
-                                    ES::Plugin::Object::Component::Mesh &mesh)
+                                 ES::Plugin::Object::Component::Transform &transform,
+                                 ES::Plugin::Object::Component::Mesh &mesh)
 {
     auto &registry = core.GetRegistry();
 
