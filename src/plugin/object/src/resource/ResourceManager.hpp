@@ -122,7 +122,7 @@ template <typename ResourceType> class ResourceManager {
      */
     [[nodiscard]] ResourceType &Get(const entt::hashed_string &id)
     {
-        auto resource = cache[id];
+        auto &resource = cache[id];
 
 #ifdef ES_DEBUG
         if (!resource)
@@ -142,9 +142,12 @@ template <typename ResourceType> class ResourceManager {
      */
     [[nodiscard]] const ResourceType &Get(const entt::hashed_string &id) const
     {
-        auto resource = cache[id];
+        auto &resource = cache[id];
+
+#ifdef ES_DEBUG
         if (!resource)
             throw ResourceManagerError(fmt::format("Resource with id {} not found.", id));
+#endif
 
         return *resource;
     }
