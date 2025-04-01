@@ -236,7 +236,7 @@ void ES::Plugin::Physics::System::SyncRigidBodiesToTransforms(ES::Engine::Core &
         });
 }
 
-static void CreateSoftBodyForEntity(ES::Engine::Core &core, ES::Plugin::Physics::Component::SoftBody3D &softBody,
+static void UpdateSoftBodyEntity(ES::Engine::Core &core, ES::Plugin::Physics::Component::SoftBody3D &softBody,
                                     ES::Plugin::Object::Component::Transform &transform,
                                     ES::Plugin::Object::Component::Mesh &mesh)
 {
@@ -317,7 +317,7 @@ void ES::Plugin::Physics::System::SyncSoftBodiesData(ES::Engine::Core &core)
         .view<ES::Plugin::Physics::Component::SoftBody3D, ES::Plugin::Object::Component::Transform,
               ES::Plugin::Object::Component::Mesh>()
         .each([&](auto &softBody, auto &transform, auto &mesh) {
-            CreateSoftBodyForEntity(core, softBody, transform, mesh);
+            UpdateSoftBodyEntity(core, softBody, transform, mesh);
         });
 }
 
