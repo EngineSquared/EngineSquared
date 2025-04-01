@@ -49,7 +49,7 @@ jobs:
       - name: Run clang-format
         run: |
           git ls-files -z "*.cpp" "*.hpp" "*.inl" | while IFS= read -rd '' f; do tail -c1 < "$f" | read -r _ || echo >> "$f"; done
-          find . -iname '*.hpp' -o -iname '*.cpp' -iname '*.inl' | xargs clang-format -i
+          find . -iname '*.hpp' -o -iname '*.cpp' -o -iname '*.inl' | xargs clang-format -i
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
