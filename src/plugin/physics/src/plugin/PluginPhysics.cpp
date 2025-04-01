@@ -18,11 +18,8 @@ void ES::Plugin::Physics::Plugin::Bind()
         ES::Plugin::Physics::System::OnConstructLinkSoftBodiesToPhysicsSystem);
 
     RegisterSystems<ES::Engine::Scheduler::RelativeTimeUpdate>(
-        ES::Plugin::Physics::System::SyncRigidBodiesToTransforms,
-        ES::Plugin::Physics::System::PhysicsUpdate,
-        ES::Plugin::Physics::System::SyncTransformsToRigidBodies,
-        ES::Plugin::Physics::System::SyncSoftBodiesData
-    );
+        ES::Plugin::Physics::System::SyncRigidBodiesToTransforms, ES::Plugin::Physics::System::PhysicsUpdate,
+        ES::Plugin::Physics::System::SyncTransformsToRigidBodies, ES::Plugin::Physics::System::SyncSoftBodiesData);
 
     RegisterSystems<ES::Engine::Scheduler::Shutdown>(ES::Plugin::Physics::System::ShutdownJoltPhysics);
 }
