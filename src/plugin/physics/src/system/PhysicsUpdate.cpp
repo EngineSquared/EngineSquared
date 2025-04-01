@@ -256,13 +256,11 @@ static void CreateSoftBodyForEntity(ES::Engine::Core &core, ES::Plugin::Physics:
     transform.position.y = updTransform.GetTranslation().GetY();
     transform.position.z = updTransform.GetTranslation().GetZ();
 
-    // transform.position = {0, 0, 0};
-
-    // transform.rotation.w = updTransform.GetRotation().GetW();
-    // transform.rotation.x = updTransform.GetRotation().GetX();
-    // transform.rotation.y = updTransform.GetRotation().GetY();
-    // transform.rotation.z = updTransform.GetRotation().GetZ();
-
+    transform.rotation.w = updTransform.GetRotation().GetQuaternion().GetW();
+    transform.rotation.x = updTransform.GetRotation().GetQuaternion().GetX();
+    transform.rotation.y = updTransform.GetRotation().GetQuaternion().GetY();
+    transform.rotation.z = updTransform.GetRotation().GetQuaternion().GetZ();
+    
     // Set the mesh vertices from the transformed shape
     // TODO: may be best to update existing vertices instead
     mesh.vertices.clear();
@@ -270,7 +268,7 @@ static void CreateSoftBodyForEntity(ES::Engine::Core &core, ES::Plugin::Physics:
     mesh.indices.clear();
 
     JPH::TransformedShape::GetTrianglesContext context;
-    transformedShape.GetTrianglesStart(context, JPH::AABox::sBiggest(), JPH::RVec3());
+    transformedShape.GetTrianglesStart(context, JPH::AABox::sBiggest(), JPH::RVec3(transform.position.x, transform.position.y, transform.position.z));
 
     std::array<JPH::Float3, JPH::Shape::cGetTrianglesMinTrianglesRequested * 3> vertices;
 
