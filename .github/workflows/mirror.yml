@@ -1,11 +1,14 @@
 name: mirror
 
 on:
-  workflow_run:
-    workflows:
-      - 'Linter GitHub Action'
-    types:
-      - completed
+  push:
+    branches-ignore:
+      - 'ga-ignore-**'
+      - 'gh-pages'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.actor == 'github-actions[bot]' }}
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/G-EIP-700-NAN-7-1-eip-lucas.hauszler.git"
@@ -20,8 +23,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          repository: '${{ github.event.workflow_run.head_repository.full_name }}'
-          ref: ${{ github.event.workflow_run.head_branch }}
 
       - name: Find unwanted files
         run: |
@@ -36,9 +37,39 @@ jobs:
             echo "FAIL_TASK=false" >> "$GITHUB_ENV"
           fi
 
+  lint_code:
+    name: Lint with clang-format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: sudo apt-get install -y clang-format
+
+      - name: Run clang-format
+        run: |
+          git ls-files -z "*.cpp" "*.hpp" "*.inl" | while IFS= read -rd '' f; do tail -c1 < "$f" | read -r _ || echo >> "$f"; done
+          find . -iname '*.hpp' -o -iname '*.cpp' -iname '*.inl' | xargs clang-format -i
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Push changes
+        run: |
+          git add .
+          git commit -m "style: apply linter" || true
+          git push || true
+
   check_program_compilation:
     name: Build and verify binaries
-    needs: check_repository_cleanliness
+    needs: [check_repository_cleanliness, lint_code]
     strategy:
       matrix:
         include:
@@ -50,8 +81,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          repository: '${{ github.event.workflow_run.head_repository.full_name }}'
-          ref: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Pull latest changes
+        run: git pull origin ${{ github.ref_name }}
 
       - name: Setup Linux dependencies
         if: contains(runner.os, 'windows') == false
@@ -79,7 +111,7 @@ jobs:
 
   run_tests:
     name: Run tests
-    needs: check_repository_cleanliness
+    needs: [check_repository_cleanliness, lint_code]
     strategy:
       matrix:
         include:
@@ -91,8 +123,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          repository: '${{ github.event.workflow_run.head_repository.full_name }}'
-          ref: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Pull latest changes
+        run: git pull origin ${{ github.ref_name }}
 
       - name: Setup Linux test dependencies
         if: contains(runner.os, 'windows') == false
@@ -143,8 +176,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          repository: '${{ github.event.workflow_run.head_repository.full_name }}'
-          ref: ${{ github.event.workflow_run.head_branch }}
 
       - name: Push mirror repository
         uses: pixta-dev/repository-mirroring-action@v1
