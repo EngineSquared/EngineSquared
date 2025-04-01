@@ -9,7 +9,7 @@
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
  * @file FontManager.hpp
- * @brief FontManager class declaration using Object::Resource::AssetsManager.
+ * @brief FontManager class declaration using Object::Resource::ResourceManager.
  *
  * @author @EngineSquared Team
  * @version 0.0.0
@@ -21,5 +21,5 @@
 #include "Object.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {
-using FontManager = Object::Resource::AssetsManager<Utils::Font>;
+using FontManager = Object::Resource::ResourceManager<Utils::Font>;
 } // namespace ES::Plugin::OpenGL::Resource

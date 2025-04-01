@@ -191,42 +191,6 @@ void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
     sp.initFromStrings(vertexShader, fragmentShader);
 }
 
-void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
-{
-    const char *vertexShader = R"(
-        #version 440
-        layout (location = 0) in vec4 vertex;
-
-        out vec2 TexCoords;
-
-        uniform mat4 Projection;
-
-        void main() {
-            gl_Position = Projection * vec4(vertex.xy, 0.0, 1.0);
-            TexCoords = vertex.zw;
-        }
-    )";
-
-    const char *fragmentShader = R"(
-        #version 440 core
-        in vec2 TexCoords;
-        out vec4 FragColor;
-
-        uniform sampler2D Text;
-        uniform vec3 TextColor;
-
-        void main() {
-            vec4 sampled = vec4(1.0, 1.0, 1.0, texture(Text, TexCoords).r);
-            FragColor = vec4(TextColor, 1.0) * sampled;
-        }
-    )";
-
-    auto &shaderManager = core.GetResource<Resource::ShaderManager>();
-    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"textDefault"}, std::move(Utils::ShaderProgram()));
-    sp.Create();
-    sp.initFromStrings(vertexShader, fragmentShader);
-}
-
 void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
