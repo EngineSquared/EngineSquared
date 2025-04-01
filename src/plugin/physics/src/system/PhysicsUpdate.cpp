@@ -236,11 +236,9 @@ void ES::Plugin::Physics::System::SyncRigidBodiesToTransforms(ES::Engine::Core &
         });
 }
 
-static void CreateSoftBodyForEntity(
-    ES::Engine::Core &core,
-    ES::Plugin::Physics::Component::SoftBody3D &softBody,
-    ES::Plugin::Object::Component::Transform &transform,
-    ES::Plugin::Object::Component::Mesh &mesh)
+static void CreateSoftBodyForEntity(ES::Engine::Core &core, ES::Plugin::Physics::Component::SoftBody3D &softBody,
+                                    ES::Plugin::Object::Component::Transform &transform,
+                                    ES::Plugin::Object::Component::Mesh &mesh)
 {
     auto &registry = core.GetRegistry();
 
@@ -278,8 +276,8 @@ static void CreateSoftBodyForEntity(
 
     int triangleCount = 0;
 
-    while ((triangleCount = transformedShape.GetTrianglesNext(
-                context, JPH::Shape::cGetTrianglesMinTrianglesRequested, vertices.data())) > 0)
+    while ((triangleCount = transformedShape.GetTrianglesNext(context, JPH::Shape::cGetTrianglesMinTrianglesRequested,
+                                                              vertices.data())) > 0)
     {
         for (int i = 0; i < triangleCount * 3; i += 3)
         {
