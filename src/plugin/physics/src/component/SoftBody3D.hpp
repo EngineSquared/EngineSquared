@@ -35,10 +35,10 @@ struct SoftBody3D {
     JPH::ObjectLayer layer;
 
     /// @brief Soft body vertex settings.
-    Utils::SoftBodyVertexSettings vertexSettings;
+    Utils::SoftBodyVertexSettings vertexSettings = Utils::SoftBodyVertexSettings();
 
     /// @brief Soft body creation settings.
-    Utils::SoftBodyCreationSettings creationSettings;
+    Utils::SoftBodyCreationSettings creationSettings = Utils::SoftBodyCreationSettings();
 
     /// @brief Whether to calculate volume constraint volumes.
     bool calculateVolumeConstraintVolumes = true;
@@ -47,8 +47,8 @@ struct SoftBody3D {
     bool calculateSkinnedConstraintNormals = true;
 
     /// @brief Construct a soft body with a shape.
-    SoftBody3D(const JPH::ObjectLayer _layer = Utils::Layers::MOVING)
-        : body(nullptr), settings(nullptr), vertexAttributes(), layer(_layer), vertexSettings(), creationSettings()
+    explicit SoftBody3D(const JPH::ObjectLayer _layer = Utils::Layers::MOVING)
+        : body(nullptr), settings(nullptr), vertexAttributes(), layer(_layer)
     {
     }
 };
