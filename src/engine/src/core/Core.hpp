@@ -60,7 +60,7 @@ class Core {
     /**
      * Store a resource instance.
      * Resources are unique struct or class (like a singleton) that contains global informations.
-     * Example: AssetsManager, TimeProvider, WindowResource, SceneManager, InputManager or NetworkManager.
+     * Example: ResourceManager, TimeProvider, WindowResource, SceneManager, InputManager or NetworkManager.
      *
      * @tparam  TResource   type of the resource to add
      * @param   resource    rvalue of the resource to add
@@ -71,7 +71,7 @@ class Core {
     /**
      * Get a reference's resource.
      * Resources are unique struct or class (like a singleton) that contains global informations.
-     * Example: AssetsManager, TimeProvider, WindowResource, SceneManager, InputManager or NetworkManager.
+     * Example: ResourceManager, TimeProvider, WindowResource, SceneManager, InputManager or NetworkManager.
      *
      * @tparam  TResource   type of the resource to get
      * @return  reference of the resource
