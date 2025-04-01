@@ -236,6 +236,80 @@ void ES::Plugin::Physics::System::SyncRigidBodiesToTransforms(ES::Engine::Core &
         });
 }
 
+static void CreateSoftBodyForEntity(
+    ES::Engine::Core &core,
+    ES::Plugin::Physics::Component::SoftBody3D &softBody,
+    ES::Plugin::Object::Component::Transform &transform,
+    ES::Plugin::Object::Component::Mesh &mesh)
+{
+    auto &registry = core.GetRegistry();
+
+    auto &physicsManager = core.GetResource<ES::Plugin::Physics::Resource::PhysicsManager>();
+    auto &physicsSystem = physicsManager.GetPhysicsSystem();
+    auto &bodyInterface = physicsSystem.GetBodyInterface();
+
+    // Get transformed shape
+    auto transformedShape = bodyInterface.GetTransformedShape(softBody.body->GetID());
+
+    // Set the transform from the transformed shape
+    auto updTransform = transformedShape.GetWorldTransform();
+
+    transform.position.x = updTransform.GetTranslation().GetX();
+    transform.position.y = updTransform.GetTranslation().GetY();
+    transform.position.z = updTransform.GetTranslation().GetZ();
+
+    // transform.position = {0, 0, 0};
+
+    // transform.rotation.w = updTransform.GetRotation().GetW();
+    // transform.rotation.x = updTransform.GetRotation().GetX();
+    // transform.rotation.y = updTransform.GetRotation().GetY();
+    // transform.rotation.z = updTransform.GetRotation().GetZ();
+
+    // Set the mesh vertices from the transformed shape
+    // TODO: may be best to update existing vertices instead
+    mesh.vertices.clear();
+    mesh.normals.clear();
+    mesh.indices.clear();
+
+    JPH::TransformedShape::GetTrianglesContext context;
+    transformedShape.GetTrianglesStart(context, JPH::AABox::sBiggest(), JPH::RVec3());
+
+    std::array<JPH::Float3, JPH::Shape::cGetTrianglesMinTrianglesRequested * 3> vertices;
+
+    int triangleCount = 0;
+
+    while ((triangleCount = transformedShape.GetTrianglesNext(
+                context, JPH::Shape::cGetTrianglesMinTrianglesRequested, vertices.data())) > 0)
+    {
+        for (int i = 0; i < triangleCount * 3; i += 3)
+        {
+            mesh.vertices.push_back({vertices[i].x, vertices[i].y, vertices[i].z});
+            mesh.vertices.push_back({vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z});
+            mesh.vertices.push_back({vertices[i + 2].x, vertices[i + 2].y, vertices[i + 2].z});
+        }
+
+        for (int i = 0; i < triangleCount * 3; i += 3)
+        {
+            JPH::Vec3 v0(vertices[i].x, vertices[i].y, vertices[i].z);
+            JPH::Vec3 v1(vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z);
+            JPH::Vec3 v2(vertices[i + 2].x, vertices[i + 2].y, vertices[i + 2].z);
+
+            JPH::Vec3 normal = (v1 - v0).Cross(v2 - v0).Normalized();
+
+            mesh.normals.push_back({normal.GetX(), normal.GetY(), normal.GetZ()});
+            mesh.normals.push_back({normal.GetX(), normal.GetY(), normal.GetZ()});
+            mesh.normals.push_back({normal.GetX(), normal.GetY(), normal.GetZ()});
+        }
+    }
+
+    for (int i = 0; i < mesh.vertices.size(); i += 3)
+    {
+        mesh.indices.push_back(i);
+        mesh.indices.push_back(i + 1);
+        mesh.indices.push_back(i + 2);
+    }
+}
+
 // Sync transform and deformed mesh
 void ES::Plugin::Physics::System::SyncSoftBodiesData(ES::Engine::Core &core)
 {
@@ -246,71 +320,7 @@ void ES::Plugin::Physics::System::SyncSoftBodiesData(ES::Engine::Core &core)
         .view<ES::Plugin::Physics::Component::SoftBody3D, ES::Plugin::Object::Component::Transform,
               ES::Plugin::Object::Component::Mesh>()
         .each([&](auto &softBody, auto &transform, auto &mesh) {
-            if (softBody.body == nullptr)
-            {
-                return;
-            }
-
-            // Get transformed shape
-            auto transformedShape = bodyInterface.GetTransformedShape(softBody.body->GetID());
-
-            // Set the transform from the transformed shape
-            auto updTransform = transformedShape.GetWorldTransform();
-
-            transform.position.x = updTransform.GetTranslation().GetX();
-            transform.position.y = updTransform.GetTranslation().GetY();
-            transform.position.z = updTransform.GetTranslation().GetZ();
-
-            transform.position = {0, 0, 0};
-
-            // transform.rotation.w = updTransform.GetRotation().GetW();
-            // transform.rotation.x = updTransform.GetRotation().GetX();
-            // transform.rotation.y = updTransform.GetRotation().GetY();
-            // transform.rotation.z = updTransform.GetRotation().GetZ();
-
-            // Set the mesh vertices from the transformed shape
-            // TODO: may be best to update existing vertices instead
-            mesh.vertices.clear();
-            mesh.normals.clear();
-            mesh.indices.clear();
-
-            JPH::TransformedShape::GetTrianglesContext context;
-            transformedShape.GetTrianglesStart(context, JPH::AABox::sBiggest(), JPH::RVec3());
-
-            std::array<JPH::Float3, JPH::Shape::cGetTrianglesMinTrianglesRequested * 3> vertices;
-
-            int triangleCount = 0;
-
-            while ((triangleCount = transformedShape.GetTrianglesNext(
-                        context, JPH::Shape::cGetTrianglesMinTrianglesRequested, vertices.data())) > 0)
-            {
-                for (int i = 0; i < triangleCount * 3; i += 3)
-                {
-                    mesh.vertices.push_back({vertices[i].x, vertices[i].y, vertices[i].z});
-                    mesh.vertices.push_back({vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z});
-                    mesh.vertices.push_back({vertices[i + 2].x, vertices[i + 2].y, vertices[i + 2].z});
-                }
-
-                for (int i = 0; i < triangleCount * 3; i += 3)
-                {
-                    JPH::Vec3 v0(vertices[i].x, vertices[i].y, vertices[i].z);
-                    JPH::Vec3 v1(vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z);
-                    JPH::Vec3 v2(vertices[i + 2].x, vertices[i + 2].y, vertices[i + 2].z);
-
-                    JPH::Vec3 normal = (v1 - v0).Cross(v2 - v0).Normalized();
-
-                    mesh.normals.push_back({normal.GetX(), normal.GetY(), normal.GetZ()});
-                    mesh.normals.push_back({normal.GetX(), normal.GetY(), normal.GetZ()});
-                    mesh.normals.push_back({normal.GetX(), normal.GetY(), normal.GetZ()});
-                }
-            }
-
-            for (int i = 0; i < mesh.vertices.size(); i += 3)
-            {
-                mesh.indices.push_back(i);
-                mesh.indices.push_back(i + 1);
-                mesh.indices.push_back(i + 2);
-            }
+            CreateSoftBodyForEntity(core, softBody, transform, mesh);
         });
 }
 
