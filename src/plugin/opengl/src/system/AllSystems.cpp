@@ -186,7 +186,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
     )";
 
     auto &shaderManager = core.GetResource<Resource::ShaderManager>();
-    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"textDefault"}, std::move(Utils::ShaderProgram()));
+    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"textDefault"});
     sp.Create();
     sp.initFromStrings(vertexShader, fragmentShader);
 }
