@@ -1,10 +1,10 @@
 #include "PhysicsUpdate.hpp"
 
 #include "Logger.hpp"
+#include "Mesh.hpp"
 #include "PhysicsManager.hpp"
 #include "RelativeTimeUpdate.hpp"
 #include "RigidBody3D.hpp"
-#include "Mesh.hpp"
 #include "SoftBody3D.hpp"
 #include "Transform.hpp"
 
@@ -70,12 +70,12 @@ void ES::Plugin::Physics::System::LinkSoftBodiesToPhysicsSystem(entt::registry &
         return;
     }
 
-        if (!registry.all_of<ES::Plugin::Object::Component::Transform>(entity))
+    if (!registry.all_of<ES::Plugin::Object::Component::Transform>(entity))
     {
         registry.emplace<ES::Plugin::Object::Component::Transform>(entity);
 #ifdef ES_DEBUG
-        ES::Utils::Log::Warn(
-            fmt::format("Entity {} does not have a transform component, creating one for soft body", static_cast<uint32_t>(entity)));
+        ES::Utils::Log::Warn(fmt::format("Entity {} does not have a transform component, creating one for soft body",
+                                         static_cast<uint32_t>(entity)));
 #endif
     }
 
@@ -92,7 +92,8 @@ void ES::Plugin::Physics::System::LinkSoftBodiesToPhysicsSystem(entt::registry &
     for (size_t i = 0; i < mesh.vertices.size(); i++)
     {
         JPH::SoftBodySharedSettings::Vertex v(JPH::Float3(mesh.vertices[i].x, mesh.vertices[i].y, mesh.vertices[i].z));
-        v.mVelocity = JPH::Float3(softBody.vertexSettings.initialVelocity.x, softBody.vertexSettings.initialVelocity.y, softBody.vertexSettings.initialVelocity.z);
+        v.mVelocity = JPH::Float3(softBody.vertexSettings.initialVelocity.x, softBody.vertexSettings.initialVelocity.y,
+                                  softBody.vertexSettings.initialVelocity.z);
         v.mInvMass = softBody.vertexSettings.invMass;
         softBody.settings->mVertices[i] = v;
     }
@@ -105,12 +106,15 @@ void ES::Plugin::Physics::System::LinkSoftBodiesToPhysicsSystem(entt::registry &
     }
 
     // Create constraints
-    softBody.settings->CreateConstraints(&softBody.vertexAttributes, 1, JPH::SoftBodySharedSettings::EBendType::Distance);
+    softBody.settings->CreateConstraints(&softBody.vertexAttributes, 1,
+                                         JPH::SoftBodySharedSettings::EBendType::Distance);
 
-    if (softBody.calculateVolumeConstraintVolumes) {
+    if (softBody.calculateVolumeConstraintVolumes)
+    {
         softBody.settings->CalculateVolumeConstraintVolumes();
     }
-    if (softBody.calculateSkinnedConstraintNormals) {
+    if (softBody.calculateSkinnedConstraintNormals)
+    {
         softBody.settings->CalculateSkinnedConstraintNormals();
     }
 
@@ -120,9 +124,12 @@ void ES::Plugin::Physics::System::LinkSoftBodiesToPhysicsSystem(entt::registry &
     auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsSystem = physicsManager.GetPhysicsSystem();
 
-    JPH::SoftBodyCreationSettings creationSettings(softBody.settings.get(), JPH::RVec3(initialTransform.position.x, initialTransform.position.y, initialTransform.position.z),
-                                                   JPH::Quat(initialTransform.rotation.x, initialTransform.rotation.y, initialTransform.rotation.z, initialTransform.rotation.w),
-                                                   softBody.layer);
+    JPH::SoftBodyCreationSettings creationSettings(
+        softBody.settings.get(),
+        JPH::RVec3(initialTransform.position.x, initialTransform.position.y, initialTransform.position.z),
+        JPH::Quat(initialTransform.rotation.x, initialTransform.rotation.y, initialTransform.rotation.z,
+                  initialTransform.rotation.w),
+        softBody.layer);
 
     softBody.creationSettings.TransferTo(creationSettings);
 
@@ -236,7 +243,8 @@ void ES::Plugin::Physics::System::SyncSoftBodiesData(ES::Engine::Core &core)
     auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyInterface();
 
     core.GetRegistry()
-        .view<ES::Plugin::Physics::Component::SoftBody3D, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh>()
+        .view<ES::Plugin::Physics::Component::SoftBody3D, ES::Plugin::Object::Component::Transform,
+              ES::Plugin::Object::Component::Mesh>()
         .each([&](auto &softBody, auto &transform, auto &mesh) {
             if (softBody.body == nullptr)
             {
@@ -255,10 +263,10 @@ void ES::Plugin::Physics::System::SyncSoftBodiesData(ES::Engine::Core &core)
 
             transform.position = {0, 0, 0};
 
-            //transform.rotation.w = updTransform.GetRotation().GetW();
-            //transform.rotation.x = updTransform.GetRotation().GetX();
-            //transform.rotation.y = updTransform.GetRotation().GetY();
-            //transform.rotation.z = updTransform.GetRotation().GetZ();
+            // transform.rotation.w = updTransform.GetRotation().GetW();
+            // transform.rotation.x = updTransform.GetRotation().GetX();
+            // transform.rotation.y = updTransform.GetRotation().GetY();
+            // transform.rotation.z = updTransform.GetRotation().GetZ();
 
             // Set the mesh vertices from the transformed shape
             // TODO: may be best to update existing vertices instead
@@ -273,15 +281,18 @@ void ES::Plugin::Physics::System::SyncSoftBodiesData(ES::Engine::Core &core)
 
             int triangleCount = 0;
 
-            while ((triangleCount = transformedShape.GetTrianglesNext(context, JPH::Shape::cGetTrianglesMinTrianglesRequested, vertices.data())) > 0)
+            while ((triangleCount = transformedShape.GetTrianglesNext(
+                        context, JPH::Shape::cGetTrianglesMinTrianglesRequested, vertices.data())) > 0)
             {
-                for (int i = 0; i < triangleCount * 3; i += 3){
+                for (int i = 0; i < triangleCount * 3; i += 3)
+                {
                     mesh.vertices.push_back({vertices[i].x, vertices[i].y, vertices[i].z});
                     mesh.vertices.push_back({vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z});
                     mesh.vertices.push_back({vertices[i + 2].x, vertices[i + 2].y, vertices[i + 2].z});
                 }
 
-                for (int i = 0; i < triangleCount * 3; i += 3) {
+                for (int i = 0; i < triangleCount * 3; i += 3)
+                {
                     JPH::Vec3 v0(vertices[i].x, vertices[i].y, vertices[i].z);
                     JPH::Vec3 v1(vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z);
                     JPH::Vec3 v2(vertices[i + 2].x, vertices[i + 2].y, vertices[i + 2].z);
@@ -294,7 +305,8 @@ void ES::Plugin::Physics::System::SyncSoftBodiesData(ES::Engine::Core &core)
                 }
             }
 
-            for (int i = 0; i < mesh.vertices.size(); i += 3) {
+            for (int i = 0; i < mesh.vertices.size(); i += 3)
+            {
                 mesh.indices.push_back(i);
                 mesh.indices.push_back(i + 1);
                 mesh.indices.push_back(i + 2);
