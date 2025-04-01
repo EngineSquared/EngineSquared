@@ -122,7 +122,7 @@ template <typename ResourceType> class ResourceManager {
      */
     [[nodiscard]] ResourceType &Get(const entt::hashed_string &id)
     {
-        auto &resource = cache[id];
+        auto resource = cache[id];
 
 #ifdef ES_DEBUG
         if (!resource)
