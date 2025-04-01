@@ -1,12 +1,15 @@
 #pragma once
 
+#include <entt/core/hashed_string.hpp>
+
 namespace ES::Plugin::Object::Utils {
+
 /**
- * AssetID is a simple unsigned 32-bit integer used to identify assets.
+ * AssetID is a type alias for entt::hashed_string, which is used to represent a unique
+ * identifier for assets in the engine. It is a hashed string that provides a
+ * lightweight and efficient way to identify assets without the need for
+ * string comparisons.
  */
-using AssetID = uint32_t;
-/**
- * A constant representing a null asset ID.
- */
-AssetID const NULL_ASSET_ID = 0;
+using AssetID = entt::hashed_string;
+
 } // namespace ES::Plugin::Object::Utils
