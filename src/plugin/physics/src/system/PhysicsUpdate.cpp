@@ -299,6 +299,8 @@ static void UpdateSoftBodyEntity(ES::Engine::Core &core, ES::Plugin::Physics::Co
         }
     }
 
+    mesh.indices.reserve(mesh.vertices.size());
+
     for (int i = 0; i < mesh.vertices.size(); i += 3)
     {
         mesh.indices.push_back(i);
