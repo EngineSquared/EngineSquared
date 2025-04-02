@@ -280,9 +280,9 @@ static void UpdateSoftBodyEntity(ES::Engine::Core &core, ES::Plugin::Physics::Co
     {
         for (int i = 0; i < triangleCount * 3; i += 3)
         {
-            mesh.vertices.push_back({vertices[i].x, vertices[i].y, vertices[i].z});
-            mesh.vertices.push_back({vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z});
-            mesh.vertices.push_back({vertices[i + 2].x, vertices[i + 2].y, vertices[i + 2].z});
+            mesh.vertices.emplace_back(vertices[i].x, vertices[i].y, vertices[i].z);
+            mesh.vertices.emplace_back(vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z);
+            mesh.vertices.emplace_back(vertices[i + 2].x, vertices[i + 2].y, vertices[i + 2].z);
         }
 
         for (int i = 0; i < triangleCount * 3; i += 3)
@@ -293,9 +293,9 @@ static void UpdateSoftBodyEntity(ES::Engine::Core &core, ES::Plugin::Physics::Co
 
             JPH::Vec3 normal = (v1 - v0).Cross(v2 - v0).Normalized();
 
-            mesh.normals.push_back({normal.GetX(), normal.GetY(), normal.GetZ()});
-            mesh.normals.push_back({normal.GetX(), normal.GetY(), normal.GetZ()});
-            mesh.normals.push_back({normal.GetX(), normal.GetY(), normal.GetZ()});
+            mesh.normals.emplace_back(normal.GetX(), normal.GetY(), normal.GetZ());
+            mesh.normals.emplace_back(normal.GetX(), normal.GetY(), normal.GetZ());
+            mesh.normals.emplace_back(normal.GetX(), normal.GetY(), normal.GetZ());
         }
     }
 
