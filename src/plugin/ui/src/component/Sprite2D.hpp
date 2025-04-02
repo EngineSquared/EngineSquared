@@ -1,10 +1,9 @@
 #pragma once
 
-#include <glm/vec2.hpp>
-
 #include "AssetID.hpp"
 #include "Color.hpp"
 #include "Math.hpp"
+#include <glm/vec2.hpp>
 
 namespace ES::Plugin::UI::Component {
 /**
@@ -14,7 +13,7 @@ struct Sprite2D {
     /**
      * @brief The ID of the texture to use
      */
-    ES::Plugin::Object::Utils::AssetID textureID = ES::Plugin::Object::Utils::NULL_ASSET_ID;
+    ES::Plugin::Object::Utils::AssetID textureID;
     /**
      * @brief The source rectangle of the texture
      *

@@ -9,7 +9,7 @@
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
  * @file GLMeshBufferManager.hpp
- * @brief GLMeshBufferManager class declaration using Object::Resource::AssetsManager.
+ * @brief GLMeshBufferManager class declaration using Object::Resource::ResourceManager.
  *
  * @author @EngineSquared Team
  * @version 0.0.0
@@ -23,6 +23,6 @@
 
 namespace ES::Plugin::OpenGL::Resource {
 
-using GLMeshBufferManager = Object::Resource::AssetsManager<Utils::GLMeshBuffer>;
+using GLMeshBufferManager = Object::Resource::ResourceManager<Utils::GLMeshBuffer>;
 
 } // namespace ES::Plugin::OpenGL::Resource
