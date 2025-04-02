@@ -1,6 +1,7 @@
 #include "SchedulerContainer.hpp"
 
-template <typename TScheduler, typename... Args> void ES::Engine::SchedulerContainer::AddScheduler(Core &core, Args &&...args)
+template <typename TScheduler, typename... Args>
+void ES::Engine::SchedulerContainer::AddScheduler(Core &core, Args &&...args)
 {
     if (_idToIndex.contains(std::type_index(typeid(TScheduler))))
     {
@@ -23,6 +24,5 @@ template <typename TScheduler> inline TScheduler &ES::Engine::SchedulerContainer
     {
         throw SchedulerError(fmt::format("Scheduler not found: {}", typeid(TScheduler).name()));
     }
-    return *static_cast<TScheduler *>(
-        _orderedSchedulers[it->second].get());
+    return *static_cast<TScheduler *>(_orderedSchedulers[it->second].get());
 }
