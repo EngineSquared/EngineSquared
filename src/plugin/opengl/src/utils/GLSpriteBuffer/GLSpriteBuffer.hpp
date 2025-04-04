@@ -46,7 +46,7 @@ class GLSpriteBuffer {
 
     void Update(const Component::Sprite &sprite) const noexcept;
 
-    void Draw(const Component::Sprite &sprite) const;
+    void Draw() const;
 
     GLuint VAO = 0;
     GLuint VBO = 0;
