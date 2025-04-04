@@ -493,7 +493,7 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
                                glm::value_ptr(transform.getTransformationMatrix()));
             glUniformMatrix4fv(shader.uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-            glBuffer.Draw(sprite);
+            glBuffer.Draw();
             shader.disable();
         });
 }
