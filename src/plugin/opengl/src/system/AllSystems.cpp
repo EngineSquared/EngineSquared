@@ -7,6 +7,7 @@
 #include "FontHandle.hpp"
 #include "FontManager.hpp"
 #include "GLMeshBufferManager.hpp"
+#include "GLSpriteBufferManager.hpp"
 #include "GLTextBufferManager.hpp"
 #include "Light.hpp"
 #include "MaterialCache.hpp"
@@ -15,6 +16,8 @@
 #include "ModelHandle.hpp"
 #include "ShaderHandle.hpp"
 #include "ShaderManager.hpp"
+#include "Sprite.hpp"
+#include "SpriteHandle.hpp"
 #include "Text.hpp"
 #include "TextHandle.hpp"
 
@@ -191,6 +194,39 @@ void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
     sp.initFromStrings(vertexShader, fragmentShader);
 }
 
+void ES::Plugin::OpenGL::System::LoadDefaultSpriteShader(ES::Engine::Core &core)
+{
+    const char *vertexShader = R"(
+        #version 330 core
+        layout (location = 0) in vec3 aPos;
+
+        uniform mat4 model;
+        uniform mat4 projection;
+
+
+        void main()
+        {
+            // gl_Position = vec4(aPos, 1.0) + vec4(0.5, 0.5, 0.0, 0.0);
+            gl_Position = projection * model * vec4(aPos, 1.0);
+        }
+    )";
+
+    const char *fragmentShader = R"(
+        #version 330 core
+        out vec4 FragColor;
+        uniform vec4 color;
+        void main()
+        {
+            FragColor = color;
+        }
+    )";
+
+    auto &shaderManager = core.GetResource<Resource::ShaderManager>();
+    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"2DDefault"});
+    sp.Create();
+    sp.initFromStrings(vertexShader, fragmentShader);
+}
+
 void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
@@ -222,6 +258,15 @@ void ES::Plugin::OpenGL::System::SetupTextShaderUniforms(ES::Engine::Core &core)
     m_shaderProgram.addUniform("TextColor");
 }
 
+void ES::Plugin::OpenGL::System::SetupSpriteShaderUniforms(ES::Engine::Core &core)
+{
+    auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"2DDefault"});
+
+    m_shaderProgram.addUniform("color");
+    m_shaderProgram.addUniform("model");
+    m_shaderProgram.addUniform("projection");
+}
+
 void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
 {
     auto &materialCache = core.RegisterResource<Resource::MaterialCache>({});
@@ -236,6 +281,11 @@ void ES::Plugin::OpenGL::System::LoadGLMeshBufferManager(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::LoadGLTextBufferManager(ES::Engine::Core &core)
 {
     core.RegisterResource<Resource::GLTextBufferManager>(Resource::GLTextBufferManager());
+}
+
+void ES::Plugin::OpenGL::System::LoadGLSpriteBufferManager(ES::Engine::Core &core)
+{
+    core.RegisterResource<Resource::GLSpriteBufferManager>(Resource::GLSpriteBufferManager());
 }
 
 void ES::Plugin::OpenGL::System::LoadGLMeshBuffer(ES::Engine::Core &core)
@@ -268,6 +318,23 @@ void ES::Plugin::OpenGL::System::LoadGLTextBuffer(ES::Engine::Core &core)
             Utils::GLTextBuffer buffer;
             buffer.GenerateGLTextBuffers();
             glBufferManager.Add(textHandle.id, std::move(buffer));
+        });
+}
+
+void ES::Plugin::OpenGL::System::LoadGLSpriteBuffer(ES::Engine::Core &core)
+{
+    auto &glBufferManager = core.GetResource<Resource::GLSpriteBufferManager>();
+
+    core.GetRegistry().view<Component::SpriteHandle, Component::Sprite>().each(
+        [&](auto entity, Component::SpriteHandle &spriteHandle, Component::Sprite &sprite) {
+            if (glBufferManager.Contains(spriteHandle.id))
+            {
+                glBufferManager.Get(spriteHandle.id).Update(sprite);
+                return;
+            }
+            Utils::GLSpriteBuffer buffer;
+            buffer.GenerateGLSpriteBuffers(sprite);
+            glBufferManager.Add(spriteHandle.id, std::move(buffer));
         });
 }
 
@@ -379,7 +446,7 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
     auto &size = core.GetResource<Resource::Camera>().size;
 
-    glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, size.x, size.y, 0.0f, -1.0f, 1.0f);
 
     core.GetRegistry()
         .view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle, Component::TextHandle>()
@@ -398,6 +465,35 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
             textBuffer.RenderText(text, font);
 
+            shader.disable();
+        });
+}
+
+void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
+{
+    auto &view = core.GetResource<Resource::Camera>().view;
+
+    auto &size = core.GetResource<Resource::Camera>().size;
+
+    glm::mat4 projection = glm::ortho(0.0f, size.x, 0.f, size.y, -1.0f, 1.0f);
+
+    core.GetRegistry()
+        .view<Component::Sprite, ES::Plugin::Object::Component::Transform, Component::ShaderHandle,
+              Component::SpriteHandle>()
+        .each([&](auto e, Component::Sprite &sprite, ES::Plugin::Object::Component::Transform &transform,
+                  Component::ShaderHandle &shaderHandle, Component::SpriteHandle &spriteHandle) {
+            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
+            const auto &glBuffer = core.GetResource<Resource::GLSpriteBufferManager>().Get(spriteHandle.id);
+
+            shader.use();
+
+            glUniform4f(shader.uniform("color"), sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a);
+
+            glUniformMatrix4fv(shader.uniform("model"), 1, GL_FALSE,
+                               glm::value_ptr(transform.getTransformationMatrix()));
+            glUniformMatrix4fv(shader.uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+            glBuffer.Draw(sprite);
             shader.disable();
         });
 }
