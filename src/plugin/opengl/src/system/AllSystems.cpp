@@ -6,10 +6,9 @@
 #include "Font.hpp"
 #include "FontHandle.hpp"
 #include "FontManager.hpp"
-#include "SpriteHandle.hpp"
 #include "GLMeshBufferManager.hpp"
-#include "GLTextBufferManager.hpp"
 #include "GLSpriteBufferManager.hpp"
+#include "GLTextBufferManager.hpp"
 #include "Light.hpp"
 #include "MaterialCache.hpp"
 #include "MaterialHandle.hpp"
@@ -17,9 +16,10 @@
 #include "ModelHandle.hpp"
 #include "ShaderHandle.hpp"
 #include "ShaderManager.hpp"
+#include "Sprite.hpp"
+#include "SpriteHandle.hpp"
 #include "Text.hpp"
 #include "TextHandle.hpp"
-#include "Sprite.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
@@ -478,8 +478,10 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.f, size.y, -1.0f, 1.0f);
 
     core.GetRegistry()
-        .view<Component::Sprite, ES::Plugin::Object::Component::Transform, Component::ShaderHandle, Component::SpriteHandle>()
-        .each([&](auto e, Component::Sprite &sprite, ES::Plugin::Object::Component::Transform &transform, Component::ShaderHandle &shaderHandle, Component::SpriteHandle &spriteHandle) {
+        .view<Component::Sprite, ES::Plugin::Object::Component::Transform, Component::ShaderHandle,
+              Component::SpriteHandle>()
+        .each([&](auto e, Component::Sprite &sprite, ES::Plugin::Object::Component::Transform &transform,
+                  Component::ShaderHandle &shaderHandle, Component::SpriteHandle &spriteHandle) {
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &glBuffer = core.GetResource<Resource::GLSpriteBufferManager>().Get(spriteHandle.id);
 
@@ -487,10 +489,10 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
 
             glUniform4f(shader.uniform("color"), sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a);
 
-        
-            glUniformMatrix4fv(shader.uniform("model"), 1, GL_FALSE, glm::value_ptr(transform.getTransformationMatrix()));
+            glUniformMatrix4fv(shader.uniform("model"), 1, GL_FALSE,
+                               glm::value_ptr(transform.getTransformationMatrix()));
             glUniformMatrix4fv(shader.uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
-            
+
             glBuffer.Draw(sprite);
             shader.disable();
         });

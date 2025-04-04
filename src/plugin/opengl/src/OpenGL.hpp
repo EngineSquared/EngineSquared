@@ -4,9 +4,9 @@
 #include "component/MaterialHandle/MaterialHandle.hpp"
 #include "component/ModelHandle/ModelHandle.hpp"
 #include "component/ShaderHandle/ShaderHandle.hpp"
-#include "component/TextHandle/TextHandle.hpp"
 #include "component/Sprite/Sprite.hpp"
 #include "component/SpriteHandle/SpriteHandle.hpp"
+#include "component/TextHandle/TextHandle.hpp"
 
 #include "plugin/PluginOpenGL.hpp"
 

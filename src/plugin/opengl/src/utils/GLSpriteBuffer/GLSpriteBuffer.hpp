@@ -25,8 +25,8 @@
 
 #include <vector>
 
-#include "Sprite.hpp"
 #include "Loader.hpp"
+#include "Sprite.hpp"
 
 namespace ES::Plugin::OpenGL::Utils {
 
