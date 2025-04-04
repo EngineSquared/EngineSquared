@@ -22,11 +22,17 @@ void ES::Plugin::OpenGL::Plugin::Bind()
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadShaderManager);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadDefaultShader);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadDefaultTextShader);
+    RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadDefaultSpriteShader);
+
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::CreateCamera);
+
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::SetupShaderUniforms);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::SetupTextShaderUniforms);
+    RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::SetupSpriteShaderUniforms);
+
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadGLMeshBufferManager);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadGLTextBufferManager);
+    RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadGLSpriteBufferManager);
 
     RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::Window::System::UpdateKey);
     RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::Window::System::UpdatePosCursor);
@@ -46,6 +52,8 @@ void ES::Plugin::OpenGL::Plugin::Bind()
     RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::OpenGL::System::SetupLights);
     RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::OpenGL::System::LoadGLMeshBuffer);
     RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::OpenGL::System::LoadGLTextBuffer);
+    RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::OpenGL::System::LoadGLSpriteBuffer);
     RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::OpenGL::System::RenderMeshes);
     RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::OpenGL::System::RenderText);
+    RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::OpenGL::System::RenderSprites);
 }
