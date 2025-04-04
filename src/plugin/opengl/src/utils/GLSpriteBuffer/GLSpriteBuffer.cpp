@@ -16,7 +16,7 @@ void GLSpriteBuffer::GenerateGLSpriteBuffers(const Component::Sprite &sprite) no
     glBindVertexArray(VAO);
 
     // Vertex positions VBO
-    std::array<glm::vec3, 4> vertices = {   
+    std::array<glm::vec3, 4> vertices = {
         glm::vec3{0.f,                0.f,                0.f},
         glm::vec3{sprite.rect.size.x, 0.f,                0.f},
         glm::vec3{0.f,                sprite.rect.size.y, 0.f},
