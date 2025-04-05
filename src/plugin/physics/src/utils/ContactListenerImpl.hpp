@@ -11,7 +11,7 @@
 #include <Jolt/Physics/Collision/ContactListener.h>
 
 namespace ES::Plugin::Physics::Resource {
-    class PhysicsManager;
+class PhysicsManager;
 }
 
 namespace ES::Plugin::Physics::Utils {
