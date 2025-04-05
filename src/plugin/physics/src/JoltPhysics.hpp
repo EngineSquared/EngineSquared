@@ -16,6 +16,7 @@
 
 #include "utils/BroadPhaseLayerImpl.hpp"
 #include "utils/BroadPhaseLayers.hpp"
+#include "utils/ContactListenerImpl.hpp"
 #include "utils/Layers.hpp"
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
