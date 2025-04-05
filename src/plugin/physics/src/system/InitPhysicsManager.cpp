@@ -7,6 +7,6 @@ void InitPhysicsManager(ES::Engine::Core &core)
 {
     core.RegisterResource<ES::Plugin::Physics::Resource::PhysicsManager>(
             ES::Plugin::Physics::Resource::PhysicsManager())
-        .Init();
+        .Init(core);
 }
 } // namespace ES::Plugin::Physics::System
