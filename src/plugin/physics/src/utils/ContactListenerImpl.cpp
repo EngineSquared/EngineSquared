@@ -2,9 +2,9 @@
 
 #include "PhysicsManager.hpp"
 
-void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(
-    const JPH::Body &inBody1, const JPH::Body &inBody2, const JPH::ContactManifold &inManifold,
-    JPH::ContactSettings &ioSettings)
+void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Body &inBody2,
+                                                                     const JPH::ContactManifold &inManifold,
+                                                                     JPH::ContactSettings &ioSettings)
 {
     auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData());
     auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData());
@@ -15,9 +15,10 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(
     }
 }
 
-void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(
-    const JPH::Body &inBody1, const JPH::Body &inBody2, const JPH::ContactManifold &inManifold,
-    JPH::ContactSettings &ioSettings)
+void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const JPH::Body &inBody1,
+                                                                         const JPH::Body &inBody2,
+                                                                         const JPH::ContactManifold &inManifold,
+                                                                         JPH::ContactSettings &ioSettings)
 {
     auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData());
     auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData());
@@ -28,8 +29,7 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(
     }
 }
 
-void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(
-    const JPH::SubShapeIDPair &inSubShapePair)
+void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH::SubShapeIDPair &inSubShapePair)
 {
     auto &physicsManager = _core.GetResource<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
