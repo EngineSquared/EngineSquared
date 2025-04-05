@@ -121,7 +121,8 @@ class PhysicsManager {
 #ifdef ES_DEBUG
         else
         {
-            ES::Utils::Log::Error("PhysicsManager: tried to add contact added callback, but contact listener is not initialized.");
+            ES::Utils::Log::Error(
+                "PhysicsManager: tried to add contact added callback, but contact listener is not initialized.");
         }
 #endif
     }
@@ -144,7 +145,8 @@ class PhysicsManager {
 #ifdef ES_DEBUG
         else
         {
-            ES::Utils::Log::Error("PhysicsManager: tried to add contact persisted callback, but contact listener is not initialized.");
+            ES::Utils::Log::Error(
+                "PhysicsManager: tried to add contact persisted callback, but contact listener is not initialized.");
         }
 #endif
     }
@@ -167,7 +169,8 @@ class PhysicsManager {
 #ifdef ES_DEBUG
         else
         {
-            ES::Utils::Log::Error("PhysicsManager: tried to add contact removed callback, but contact listener is not initialized.");
+            ES::Utils::Log::Error(
+                "PhysicsManager: tried to add contact removed callback, but contact listener is not initialized.");
         }
 #endif
     }
