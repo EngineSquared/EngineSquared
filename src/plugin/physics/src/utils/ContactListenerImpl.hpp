@@ -29,7 +29,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
 
     ContactListenerImpl() = delete;
 
-    ContactListenerImpl(ES::Engine::Core &core) : _core(core) {}
+    explicit ContactListenerImpl(ES::Engine::Core &core) : _core(core) {}
     ~ContactListenerImpl() override = default;
 
     JPH::ValidateResult OnContactValidate([[maybe_unused]] const JPH::Body &inBody1,

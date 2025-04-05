@@ -115,7 +115,6 @@ class PhysicsManager {
 
         if (contactListener != nullptr)
         {
-            printf("Added a callback of smth\n");
             contactListener->AddOnContactAddedCallback(std::move(callback));
         }
 #ifdef ES_DEBUG
