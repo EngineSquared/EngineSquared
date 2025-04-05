@@ -6,6 +6,11 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::
                                                                      const JPH::ContactManifold &inManifold,
                                                                      JPH::ContactSettings &ioSettings)
 {
+    if (_onContactAddedCallbacks.empty())
+    {
+        return;
+    }
+
     auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData());
     auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData());
 
@@ -20,6 +25,11 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const J
                                                                          const JPH::ContactManifold &inManifold,
                                                                          JPH::ContactSettings &ioSettings)
 {
+    if (_onContactPersistedCallbacks.empty())
+    {
+        return;
+    }
+
     auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData());
     auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData());
 
@@ -31,6 +41,11 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const J
 
 void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH::SubShapeIDPair &inSubShapePair)
 {
+    if (_onContactRemovedCallbacks.empty())
+    {
+        return;
+    }
+
     auto &physicsManager = _core.GetResource<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
 
