@@ -21,7 +21,7 @@ void Window::Destroy()
     /* To use in a shutdown scheduler */
     glfwDestroyWindow(_window);
 }
-//TODO: rename this to GetSize or Size (and remove parameters)
+// TODO: rename this to GetSize or Size (and remove parameters)
 void Window::GetWindowSize(int &width, int &height)
 {
     if (!_window)
