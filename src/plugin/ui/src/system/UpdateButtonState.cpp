@@ -6,6 +6,7 @@
 #include "InputManager.hpp"
 #include "Math.hpp"
 #include "Transform.hpp"
+#include "Window.hpp"
 
 #include "Button.hpp"
 
@@ -13,7 +14,10 @@ void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Core &core)
 {
     auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
     const bool &isMouseLeftPressed = inputManager.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
-    const glm::vec2 &mousePos = inputManager.GetMousePosition();
+    int width, height;
+    core.GetResource<ES::Plugin::Window::Resource::Window>().GetWindowSize(width, height);
+    glm::vec2 mousePos = inputManager.GetMousePosition();
+    mousePos.y = height - mousePos.y; // Invert Y axis to match the window coordinates
     auto view = core.GetRegistry()
                     .view<ES::Plugin::UI::Component::Button, ES::Plugin::UI::Component::BoxCollider2D,
                           ES::Plugin::Object::Component::Transform>();
