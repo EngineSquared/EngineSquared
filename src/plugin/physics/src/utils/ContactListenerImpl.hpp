@@ -48,16 +48,35 @@ class ContactListenerImpl final : public JPH::ContactListener {
 
     void OnContactRemoved(const JPH::SubShapeIDPair &inSubShapePair) override;
 
+    /**
+     * @brief Add a callback for when a contact between two entities is added.
+     * @param callback The callback to add.
+     * @note The callback will be called with the Core, as well as the two entities that collided.
+     * @note The callback will be called once for each contact added.
+     */
     inline void AddOnContactAddedCallback(OnContactAddedCallback callback)
     {
         _onContactAddedCallbacks.push_back(std::move(callback));
     }
 
+    /**
+     * @brief Add a callback for when a contact between two entities persist.
+     * @param callback The callback to add.
+     * @note The callback will be called with the Core, as well as the two entities that collided.
+     * @note The callback won't be called for the first collision.
+     * @note The callback will be called every frame until the contact is removed.
+     */
     inline void AddOnContactPersistedCallback(OnContactPersistedCallback callback)
     {
         _onContactPersistedCallbacks.push_back(std::move(callback));
     }
 
+    /**
+     * @brief Add a callback for when a contact between two entities is removed.
+     * @param callback The callback to add.
+     * @note The callback will be called with the Core, as well as the two entities that collided.
+     * @note The callback will be called once for each contact removed.
+     */
     inline void AddOnContactRemovedCallback(OnContactRemovedCallback callback)
     {
         _onContactRemovedCallbacks.push_back(std::move(callback));
