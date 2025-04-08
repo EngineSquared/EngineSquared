@@ -217,7 +217,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultSpriteShader(ES::Engine::Core &core)
         uniform vec4 color;
         void main()
         {
-            FragColor = color;
+            FragColor = color / vec4(255.0, 255.0, 255.0, 255.0);
         }
     )";
 
