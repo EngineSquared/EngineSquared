@@ -10,7 +10,6 @@ void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Core &core)
 {
     if (!_nextScene.has_value())
     {
-        ES::Utils::Log::Warn("Unable to load next scene: No next scene provided");
         return;
     }
     if (_currentScene.has_value())
