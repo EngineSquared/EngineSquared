@@ -1,7 +1,7 @@
 #include "PluginScene.hpp"
+#include "SceneManager.hpp"
 #include "Update.hpp"
 #include "UpdateScene.hpp"
-#include "SceneManager.hpp"
 
 void ES::Plugin::Scene::Plugin::Bind()
 {
