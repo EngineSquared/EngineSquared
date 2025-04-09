@@ -6,8 +6,8 @@
 #include "component/ShaderHandle/ShaderHandle.hpp"
 #include "component/Sprite/Sprite.hpp"
 #include "component/SpriteHandle/SpriteHandle.hpp"
-#include "component/TextHandle/TextHandle.hpp"
 #include "component/Text/Text.hpp"
+#include "component/TextHandle/TextHandle.hpp"
 
 #include "plugin/PluginOpenGL.hpp"
 
