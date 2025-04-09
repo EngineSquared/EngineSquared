@@ -7,6 +7,7 @@
 #include "component/Sprite/Sprite.hpp"
 #include "component/SpriteHandle/SpriteHandle.hpp"
 #include "component/TextHandle/TextHandle.hpp"
+#include "component/Text/Text.hpp"
 
 #include "plugin/PluginOpenGL.hpp"
 
