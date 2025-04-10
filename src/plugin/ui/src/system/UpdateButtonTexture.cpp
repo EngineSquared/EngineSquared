@@ -20,7 +20,8 @@ static void UpdateButtonTextureColor(ES::Plugin::UI::Component::Button &button,
     }
 }
 
-static void UpdateButtonTextureImage(const ES::Plugin::UI::Component::Button &, const ES::Plugin::OpenGL::Component::Sprite &)
+static void UpdateButtonTextureImage(const ES::Plugin::UI::Component::Button &,
+                                     const ES::Plugin::OpenGL::Component::Sprite &)
 {
     // TODO: Implement the UpdateButtonTextureImage function to update the sprite texture based on the button state.
     // This function is not implemented yet because we don't currently have textures.
