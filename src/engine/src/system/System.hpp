@@ -86,7 +86,7 @@ class SystemContainer {
     template <typename TSystem> void AddSystem(TSystem callable);
 
     std::unordered_map<entt::id_type, std::size_t> _idToIndex; ///< Map to store unique ids for each system.
-    std::list<std::unique_ptr<SystemBase>> _orderedSystems;  ///< Vector to store systems in order.
+    std::list<std::unique_ptr<SystemBase>> _orderedSystems;    ///< Vector to store systems in order.
 };
 
 } // namespace ES::Engine
