@@ -20,18 +20,10 @@ static void UpdateButtonTextureColor(ES::Plugin::UI::Component::Button &button,
     }
 }
 
-// TODO: Implement the UpdateButtonTextureImage function to update the sprite texture based on the button state.
-// This function is not implemented yet because we don't currently have textures.
-static void UpdateButtonTextureImage(ES::Plugin::UI::Component::Button &, ES::Plugin::OpenGL::Component::Sprite &)
+static void UpdateButtonTextureImage(const ES::Plugin::UI::Component::Button &, const ES::Plugin::OpenGL::Component::Sprite &)
 {
-    // auto const &displayType = std::get<ES::Plugin::UI::Component::DisplayType::Image>(button.displayType);
-    // switch (button.state)
-    // {
-    //     using enum ES::Plugin::UI::Component::Button::State;
-    // case Normal: sprite.textureID = displayType.normalImageID; break;
-    // case Hover: sprite.textureID = displayType.hoverImageID; break;
-    // case Pressed: sprite.textureID = displayType.pressedImageID; break;
-    // }
+    // TODO: Implement the UpdateButtonTextureImage function to update the sprite texture based on the button state.
+    // This function is not implemented yet because we don't currently have textures.
 }
 
 void ES::Plugin::UI::System::UpdateButtonTexture(ES::Engine::Core &core)
