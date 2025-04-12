@@ -15,8 +15,10 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::
 
     // Right now we use 32 bits for entities IDs with EnTT but Jolt stores user data as 64 bits
     // so we have to mask the upper 32 bits
-    auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & entt::entt_traits<entt::entity>::entity_mask);
-    auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & entt::entt_traits<entt::entity>::entity_mask);
+    auto entity1 =
+        static_cast<ES::Engine::Entity>(inBody1.GetUserData() & entt::entt_traits<entt::entity>::entity_mask);
+    auto entity2 =
+        static_cast<ES::Engine::Entity>(inBody2.GetUserData() & entt::entt_traits<entt::entity>::entity_mask);
 
     for (auto &callback : _onContactAddedCallbacks)
     {
@@ -34,8 +36,10 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const J
         return;
     }
 
-    auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & entt::entt_traits<entt::entity>::entity_mask);
-    auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & entt::entt_traits<entt::entity>::entity_mask);
+    auto entity1 =
+        static_cast<ES::Engine::Entity>(inBody1.GetUserData() & entt::entt_traits<entt::entity>::entity_mask);
+    auto entity2 =
+        static_cast<ES::Engine::Entity>(inBody2.GetUserData() & entt::entt_traits<entt::entity>::entity_mask);
 
     for (auto &callback : _onContactPersistedCallbacks)
     {
