@@ -1,6 +1,7 @@
 #include "PhysicsManager.hpp"
 
 #include "BroadPhaseLayerImpl.hpp"
+#include "ContactListenerImpl.hpp"
 #include "ObjectLayerPairFilterImpl.hpp"
 #include "ObjectVsBroadPhaseLayerFilterImpl.hpp"
 
@@ -15,12 +16,15 @@ PhysicsManager::PhysicsManager()
     _objectLayerPairFilter = std::make_shared<Utils::ObjectLayerPairFilterImpl>();
     _objectVsBroadPhaseLayerFilter = std::make_shared<Utils::ObjectVsBroadPhaseLayerFilterImpl>();
     _physicsSystem = std::make_shared<JPH::PhysicsSystem>();
+    _contactListener = nullptr;
 }
 
-void PhysicsManager::Init()
+void PhysicsManager::Init(ES::Engine::Core &core)
 {
     // Default values from Jolt Physics samples
     _physicsSystem->Init(10240, 0, 65536, 20480, *_broadPhaseLayerInterface, *_objectVsBroadPhaseLayerFilter,
                          *_objectLayerPairFilter);
+    _contactListener = std::make_shared<Utils::ContactListenerImpl>(core);
+    _physicsSystem->SetContactListener(_contactListener.get());
 }
 } // namespace ES::Plugin::Physics::Resource
