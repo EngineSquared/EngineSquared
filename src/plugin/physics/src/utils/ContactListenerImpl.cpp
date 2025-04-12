@@ -11,6 +11,8 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::
         return;
     }
 
+    // Right now we use 32 bits for entities IDs with EnTT but Jolt stores user data as 64 bits
+    // so we have to mask the upper 32 bits
     auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & 0xFFFFFFFF);
     auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & 0xFFFFFFFF);
 
