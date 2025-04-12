@@ -110,8 +110,8 @@ class PhysicsManager {
      *
      * @return void
      */
-    template<typename... Components>
-    inline void AddContactAddedCallback(std::unique_ptr<Utils::ContactCallback<Components...>>&& callback)
+    template <typename... Components>
+    inline void AddContactAddedCallback(std::unique_ptr<Utils::ContactCallback<Components...>> &&callback)
     {
         auto contactListener = GetContactListener();
 
@@ -137,7 +137,7 @@ class PhysicsManager {
      * @return void
      * @note This will create a new ContactCallback object and add it to the contact listener.
      */
-    template<typename... Components>
+    template <typename... Components>
     inline void AddContactAddedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
     {
         auto callback = std::make_unique<Utils::ContactCallback<Components...>>(std::move(fn));
@@ -152,8 +152,8 @@ class PhysicsManager {
      *
      * @return void
      */
-    template<typename... Components>
-    inline void AddContactPersistedCallback(std::unique_ptr<Utils::ContactCallback<Components...>>&& callback)
+    template <typename... Components>
+    inline void AddContactPersistedCallback(std::unique_ptr<Utils::ContactCallback<Components...>> &&callback)
     {
         auto contactListener = GetContactListener();
 
@@ -179,7 +179,7 @@ class PhysicsManager {
      * @return void
      * @note This will create a new ContactCallback object and add it to the contact listener.
      */
-    template<typename... Components>
+    template <typename... Components>
     inline void AddContactPersistedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
     {
         auto callback = std::make_unique<Utils::ContactCallback<Components...>>(std::move(fn));
@@ -194,8 +194,8 @@ class PhysicsManager {
      *
      * @return void
      */
-    template<typename... Components>
-    inline void AddContactRemovedCallback(std::unique_ptr<Utils::ContactCallback<Components...>>&& callback)
+    template <typename... Components>
+    inline void AddContactRemovedCallback(std::unique_ptr<Utils::ContactCallback<Components...>> &&callback)
     {
         auto contactListener = GetContactListener();
 
@@ -221,7 +221,7 @@ class PhysicsManager {
      * @return void
      * @note This will create a new ContactCallback object and add it to the contact listener.
      */
-    template<typename... Components>
+    template <typename... Components>
     inline void AddContactRemovedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
     {
         auto callback = std::make_unique<Utils::ContactCallback<Components...>>(std::move(fn));

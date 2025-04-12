@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Core.hpp"
 #include "ContactCallback.hpp"
-#include "IContactCallback.hpp"
+#include "Core.hpp"
 #include "Entity.hpp"
+#include "IContactCallback.hpp"
 
 // clang-format off
 #include <Jolt/Jolt.h>
@@ -49,8 +49,8 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called with the Core, as well as the two entities that collided.
      * @note The callback will be called once for each contact added.
      */
-    template<typename... Components>
-    inline void AddOnContactAddedCallback(std::unique_ptr<IContactCallback>&& callback)
+    template <typename... Components>
+    inline void AddOnContactAddedCallback(std::unique_ptr<IContactCallback> &&callback)
     {
         _onContactAddedCallbacks.push_back(std::move(callback));
     }
@@ -62,8 +62,8 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback won't be called for the first collision.
      * @note The callback will be called every frame until the contact is removed.
      */
-    template<typename... Components>
-    inline void AddOnContactPersistedCallback(std::unique_ptr<IContactCallback>&& callback)
+    template <typename... Components>
+    inline void AddOnContactPersistedCallback(std::unique_ptr<IContactCallback> &&callback)
     {
         _onContactPersistedCallbacks.push_back(std::move(callback));
     }
@@ -74,8 +74,8 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called with the Core, as well as the two entities that collided.
      * @note The callback will be called once for each contact removed.
      */
-    template<typename... Components>
-    inline void AddOnContactRemovedCallback(std::unique_ptr<IContactCallback>&& callback)
+    template <typename... Components>
+    inline void AddOnContactRemovedCallback(std::unique_ptr<IContactCallback> &&callback)
     {
         _onContactRemovedCallbacks.push_back(std::move(callback));
     }
