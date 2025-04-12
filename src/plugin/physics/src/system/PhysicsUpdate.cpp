@@ -52,6 +52,8 @@ void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry 
         return;
     }
 
+    rigidBody.body->SetUserData(entt::to_integral(entity));
+
     physicsSystem.GetBodyInterface().AddBody(rigidBody.body->GetID(), JPH::EActivation::Activate);
 }
 
@@ -141,6 +143,8 @@ void ES::Plugin::Physics::System::LinkSoftBodiesToPhysicsSystem(entt::registry &
             fmt::format("Failed to create soft body for entity {}: returned nullptr", static_cast<uint32_t>(entity)));
         return;
     }
+
+    softBody.body->SetUserData(entt::to_integral(entity));
 
     physicsSystem.GetBodyInterface().AddBody(softBody.body->GetID(), JPH::EActivation::Activate);
 }
