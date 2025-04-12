@@ -8,3 +8,6 @@
 
 // Utils
 #include "AScene.hpp"
+
+// Plugin
+#include "PluginScene.hpp"
