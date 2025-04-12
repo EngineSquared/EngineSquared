@@ -25,9 +25,9 @@ template <typename... Components> class ContactCallback : public IContactCallbac
     using CallbackFunc =
         std::function<void(ES::Engine::Core &, const ES::Engine::Entity &, const ES::Engine::Entity &)>;
 
-    ContactCallback(CallbackFunc cb) : callback(std::move(cb)) {}
+    explicit ContactCallback(CallbackFunc cb) : callback(std::move(cb)) {}
 
-    void Call(ES::Engine::Core &core, const ES::Engine::Entity &a, const ES::Engine::Entity &b) const
+    void Call(ES::Engine::Core &core, const ES::Engine::Entity &a, const ES::Engine::Entity &b) const final
     {
         static_assert(sizeof...(Components) <= 2, "ContactCallback can only have up to 2 components.");
 
