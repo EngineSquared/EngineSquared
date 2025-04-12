@@ -106,10 +106,12 @@ class PhysicsManager {
      * @brief Add a contact added callback to the contact listener.
      *
      * @param callback The callback to add.
+     * @tparam Components The components to check for in the entities involved in the contact.
      *
      * @return void
      */
-    inline void AddContactAddedCallback(Utils::ContactListenerImpl::OnContactAddedCallback callback)
+    template<typename... Components>
+    inline void AddContactAddedCallback(std::unique_ptr<Utils::ContactCallback<Components...>>&& callback)
     {
         auto contactListener = GetContactListener();
 
@@ -127,13 +129,31 @@ class PhysicsManager {
     }
 
     /**
+     * @brief Add a contact added callback to the contact listener.
+     *
+     * @param fn The callback function to add.
+     * @tparam components The components to check for in the entities involved in the contact.
+     *
+     * @return void
+     * @note This will create a new ContactCallback object and add it to the contact listener.
+     */
+    template<typename... Components>
+    inline void AddContactAddedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
+    {
+        auto callback = std::make_unique<Utils::ContactCallback<Components...>>(std::move(fn));
+        AddContactAddedCallback(std::move(callback));
+    }
+
+    /**
      * @brief Add a contact persisted callback to the contact listener.
      *
      * @param callback The callback to add.
+     * @tparam Components The components to check for in the entities involved in the contact.
      *
      * @return void
      */
-    inline void AddContactPersistedCallback(Utils::ContactListenerImpl::OnContactPersistedCallback callback)
+    template<typename... Components>
+    inline void AddContactPersistedCallback(std::unique_ptr<Utils::ContactCallback<Components...>>&& callback)
     {
         auto contactListener = GetContactListener();
 
@@ -151,13 +171,31 @@ class PhysicsManager {
     }
 
     /**
+     * @brief Add a contact persisted callback to the contact listener.
+     *
+     * @param fn The callback function to add.
+     * @tparam components The components to check for in the entities involved in the contact.
+     *
+     * @return void
+     * @note This will create a new ContactCallback object and add it to the contact listener.
+     */
+    template<typename... Components>
+    inline void AddContactPersistedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
+    {
+        auto callback = std::make_unique<Utils::ContactCallback<Components...>>(std::move(fn));
+        AddContactPersistedCallback(std::move(callback));
+    }
+
+    /**
      * @brief Add a contact removed callback to the contact listener.
      *
      * @param callback The callback to add.
+     * @tparam Components The components to check for in the entities involved in the contact.
      *
      * @return void
      */
-    inline void AddContactRemovedCallback(Utils::ContactListenerImpl::OnContactRemovedCallback callback)
+    template<typename... Components>
+    inline void AddContactRemovedCallback(std::unique_ptr<Utils::ContactCallback<Components...>>&& callback)
     {
         auto contactListener = GetContactListener();
 
@@ -172,6 +210,22 @@ class PhysicsManager {
                 "PhysicsManager: tried to add contact removed callback, but contact listener is not initialized.");
         }
 #endif
+    }
+
+    /**
+     * @brief Add a contact removed callback to the contact listener.
+     *
+     * @param fn The callback function to add.
+     * @tparam components The components to check for in the entities involved in the contact.
+     *
+     * @return void
+     * @note This will create a new ContactCallback object and add it to the contact listener.
+     */
+    template<typename... Components>
+    inline void AddContactRemovedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
+    {
+        auto callback = std::make_unique<Utils::ContactCallback<Components...>>(std::move(fn));
+        AddContactRemovedCallback(std::move(callback));
     }
 
   private:
