@@ -52,7 +52,7 @@ void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry 
         return;
     }
 
-    rigidBody.body->SetUserData(static_cast<JPH::uint64>(entity));
+    rigidBody.body->SetUserData(entt::to_integral(entity));
 
     physicsSystem.GetBodyInterface().AddBody(rigidBody.body->GetID(), JPH::EActivation::Activate);
 }
@@ -144,7 +144,7 @@ void ES::Plugin::Physics::System::LinkSoftBodiesToPhysicsSystem(entt::registry &
         return;
     }
 
-    softBody.body->SetUserData(static_cast<JPH::uint64>(entity));
+    softBody.body->SetUserData(entt::to_integral(entity));
 
     physicsSystem.GetBodyInterface().AddBody(softBody.body->GetID(), JPH::EActivation::Activate);
 }
