@@ -19,6 +19,6 @@ class IContactCallback {
      * @param a The first entity.
      * @param b The second entity.
      */
-    virtual void Call(ES::Engine::Core &core, const ES::Engine::Entity &a, const ES::Engine::Entity &b) const = 0;
+    virtual void Call(ES::Engine::Core &core, ES::Engine::Entity &a, ES::Engine::Entity &b) const = 0;
 };
 } // namespace ES::Plugin::Physics::Utils
