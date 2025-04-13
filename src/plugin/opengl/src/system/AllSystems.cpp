@@ -446,7 +446,7 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
     auto &size = core.GetResource<Resource::Camera>().size;
 
-    glm::mat4 projection = glm::ortho(0.0f, size.x, size.y, 0.0f, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
 
     core.GetRegistry()
         .view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle, Component::TextHandle>()
