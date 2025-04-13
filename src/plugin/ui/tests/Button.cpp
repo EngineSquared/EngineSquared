@@ -2,8 +2,8 @@
 
 #include "HasChanged.hpp"
 #include "Object.hpp"
-#include "UI.hpp"
 #include "Sprite.hpp"
+#include "UI.hpp"
 
 using namespace ES::Plugin::UI;
 
@@ -55,15 +55,18 @@ TEST(Button, UpdateButtonTexture)
     buttonComponent.state = Component::Button::State::Hover;
     button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
     core.RunSystems();
-    EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color, ES::Plugin::Colors::Utils::GRAY_COLOR);
+    EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color,
+              ES::Plugin::Colors::Utils::GRAY_COLOR);
 
     buttonComponent.state = Component::Button::State::Pressed;
     button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
     core.RunSystems();
-    EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color, ES::Plugin::Colors::Utils::DARKGRAY_COLOR);
+    EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color,
+              ES::Plugin::Colors::Utils::DARKGRAY_COLOR);
 
     buttonComponent.state = Component::Button::State::Normal;
     button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
     core.RunSystems();
-    EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color, ES::Plugin::Colors::Utils::WHITE_COLOR);
+    EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color,
+              ES::Plugin::Colors::Utils::WHITE_COLOR);
 }
