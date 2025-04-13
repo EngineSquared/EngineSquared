@@ -5,7 +5,7 @@
 #include "Tools.hpp"
 
 #include "Button.hpp"
-#include "Sprite2D.hpp"
+#include "Sprite.hpp"
 
 static void UpdateButtonTextureColor(ES::Plugin::UI::Component::Button &button,
                                      ES::Plugin::OpenGL::Component::Sprite &sprite)

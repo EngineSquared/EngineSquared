@@ -3,7 +3,6 @@
 // Components
 #include "BoxCollider2D.hpp"
 #include "Button.hpp"
-#include "Sprite2D.hpp"
 #include "Text.hpp"
 
 // Systems

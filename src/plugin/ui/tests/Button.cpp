@@ -3,6 +3,7 @@
 #include "HasChanged.hpp"
 #include "Object.hpp"
 #include "UI.hpp"
+#include "Sprite.hpp"
 
 using namespace ES::Plugin::UI;
 
@@ -43,7 +44,7 @@ TEST(Button, UpdateButtonTexture)
 
     auto button = core.CreateEntity();
     button.AddComponent<Component::Button>(core);
-    button.AddComponent<Component::Sprite2D>(core);
+    button.AddComponent<ES::Plugin::OpenGL::Component::Sprite>(core);
 
     auto &buttonComponent = button.GetComponents<Component::Button>(core);
     buttonComponent.displayType =
@@ -54,15 +55,15 @@ TEST(Button, UpdateButtonTexture)
     buttonComponent.state = Component::Button::State::Hover;
     button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
     core.RunSystems();
-    EXPECT_EQ(button.GetComponents<Component::Sprite2D>(core).color, ES::Plugin::Colors::Utils::GRAY_COLOR);
+    EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color, ES::Plugin::Colors::Utils::GRAY_COLOR);
 
     buttonComponent.state = Component::Button::State::Pressed;
     button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
     core.RunSystems();
-    EXPECT_EQ(button.GetComponents<Component::Sprite2D>(core).color, ES::Plugin::Colors::Utils::DARKGRAY_COLOR);
+    EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color, ES::Plugin::Colors::Utils::DARKGRAY_COLOR);
 
     buttonComponent.state = Component::Button::State::Normal;
     button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
     core.RunSystems();
-    EXPECT_EQ(button.GetComponents<Component::Sprite2D>(core).color, ES::Plugin::Colors::Utils::WHITE_COLOR);
+    EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color, ES::Plugin::Colors::Utils::WHITE_COLOR);
 }
