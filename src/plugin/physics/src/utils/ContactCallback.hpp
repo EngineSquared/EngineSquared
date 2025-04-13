@@ -22,12 +22,11 @@ namespace ES::Plugin::Physics::Utils {
  */
 template <typename... Components> class ContactCallback : public IContactCallback {
   public:
-    using CallbackFunc =
-        std::function<void(ES::Engine::Core &, const ES::Engine::Entity &, const ES::Engine::Entity &)>;
+    using CallbackFunc = std::function<void(ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &)>;
 
     explicit ContactCallback(CallbackFunc cb) : callback(std::move(cb)) {}
 
-    void Call(ES::Engine::Core &core, const ES::Engine::Entity &a, const ES::Engine::Entity &b) const final
+    void Call(ES::Engine::Core &core, ES::Engine::Entity &a, ES::Engine::Entity &b) const final
     {
         static_assert(sizeof...(Components) <= 2, "ContactCallback can only have up to 2 components.");
 
@@ -58,7 +57,7 @@ template <typename... Components> class ContactCallback : public IContactCallbac
     }
 
     template <typename C1, typename C2>
-    void callIfComponentMatch(ES::Engine::Core &core, const ES::Engine::Entity &a, const ES::Engine::Entity &b) const
+    void callIfComponentMatch(ES::Engine::Core &core, ES::Engine::Entity &a, ES::Engine::Entity &b) const
     {
         if ((a.HasComponents<C1>(core) && b.HasComponents<C2>(core)))
         {
