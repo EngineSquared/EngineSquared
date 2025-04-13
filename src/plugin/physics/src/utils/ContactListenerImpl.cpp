@@ -11,9 +11,9 @@
  * that increments every time an entity with the same index is destroyed and recreated.
  * When recreating an entity from an integer, we need to make sure that both parts are preserved.
  *
- * With 32 bits the value of ENTITY_MASK will be 0xFFFFFFFF.
+ * With 32 bits the value of ENTITY_ID_MASK will be 0xFFFFFFFF.
  */
-static constexpr inline const uint32_t ENTITY_MASK =
+static constexpr inline const uint32_t ENTITY_ID_MASK =
     entt::entt_traits<ES::Engine::Entity::entity_id_type>::entity_mask
         << (sizeof(ES::Engine::Entity::entity_id_type) * 8 -
             std::popcount(entt::entt_traits<ES::Engine::Entity::entity_id_type>::entity_mask)) |
@@ -30,8 +30,8 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::
 
     // Right now we use 32 bits for entities IDs with EnTT but Jolt stores user data as 64 bits
     // so we have to mask the upper 32 bits
-    auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & ENTITY_MASK);
-    auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & ENTITY_MASK);
+    auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
+    auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
     for (auto &callback : _onContactAddedCallbacks)
     {
@@ -49,8 +49,8 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const J
         return;
     }
 
-    auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & ENTITY_MASK);
-    auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & ENTITY_MASK);
+    auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
+    auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
     for (auto &callback : _onContactPersistedCallbacks)
     {
@@ -78,8 +78,8 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH
         return;
     }
 
-    auto entity1 = static_cast<ES::Engine::Entity>(body1->GetUserData() & ENTITY_MASK);
-    auto entity2 = static_cast<ES::Engine::Entity>(body2->GetUserData() & ENTITY_MASK);
+    auto entity1 = static_cast<ES::Engine::Entity>(body1->GetUserData() & ENTITY_ID_MASK);
+    auto entity2 = static_cast<ES::Engine::Entity>(body2->GetUserData() & ENTITY_ID_MASK);
 
     for (auto &callback : _onContactRemovedCallbacks)
     {
