@@ -198,7 +198,7 @@ class Entity {
      * @tparam  TComponent  components to check
      * @return  true if entity have all requested component
      */
-    template <typename... TComponent> inline bool HasComponents(Core &core)
+    template <typename... TComponent> inline bool HasComponents(Core &core) const
     {
         return core.GetRegistry().all_of<TComponent...>(ToEnttEntity(this->_entity));
     }
