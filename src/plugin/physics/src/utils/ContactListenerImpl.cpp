@@ -5,6 +5,14 @@
 #include <bit>
 #include <entt/entity/entity.hpp>
 
+/**
+ * EnTT divides the entity ID into two parts: the entity index and the version.
+ * The entity index is the index of the entity in the registry, and the version part is a counter
+ * that increments every time an entity with the same index is destroyed and recreated.
+ * When recreating an entity from an integer, we need to make sure that both parts are preserved.
+ *
+ * With 32 bits the value of ENTITY_MASK will be 0xFFFFFFFF.
+ */
 static constexpr inline const uint32_t ENTITY_MASK =
     entt::entt_traits<ES::Engine::Entity::entity_id_type>::entity_mask
         << (sizeof(ES::Engine::Entity::entity_id_type) * 8 -
