@@ -22,7 +22,7 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::
 
     for (auto &callback : _onContactAddedCallbacks)
     {
-        callback(_core, entity1, entity2);
+        callback->Call(_core, entity1, entity2);
     }
 }
 
@@ -43,7 +43,7 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const J
 
     for (auto &callback : _onContactPersistedCallbacks)
     {
-        callback(_core, entity1, entity2);
+        callback->Call(_core, entity1, entity2);
     }
 }
 
@@ -72,6 +72,6 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH
 
     for (auto &callback : _onContactRemovedCallbacks)
     {
-        callback(_core, entity1, entity2);
+        callback->Call(_core, entity1, entity2);
     }
 }
