@@ -22,8 +22,7 @@ namespace ES::Plugin::Physics::Utils {
  */
 template <typename... Components> class ContactCallback : public IContactCallback {
   public:
-    using CallbackFunc =
-        std::function<void(ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &)>;
+    using CallbackFunc = std::function<void(ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &)>;
 
     explicit ContactCallback(CallbackFunc cb) : callback(std::move(cb)) {}
 
