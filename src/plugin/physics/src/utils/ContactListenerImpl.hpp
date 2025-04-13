@@ -1,7 +1,9 @@
 #pragma once
 
+#include "ContactCallback.hpp"
 #include "Core.hpp"
 #include "Entity.hpp"
+#include "IContactCallback.hpp"
 
 // clang-format off
 #include <Jolt/Jolt.h>
@@ -20,13 +22,6 @@ namespace ES::Plugin::Physics::Utils {
 // Callbacks will be called with the Core, as well as the two entities that collided.
 class ContactListenerImpl final : public JPH::ContactListener {
   public:
-    using OnContactAddedCallback =
-        std::function<void(ES::Engine::Core &, const ES::Engine::Entity &, const ES::Engine::Entity &)>;
-    using OnContactPersistedCallback =
-        std::function<void(ES::Engine::Core &, const ES::Engine::Entity &, const ES::Engine::Entity &)>;
-    using OnContactRemovedCallback =
-        std::function<void(ES::Engine::Core &, const ES::Engine::Entity &, const ES::Engine::Entity &)>;
-
     ContactListenerImpl() = delete;
 
     explicit ContactListenerImpl(ES::Engine::Core &core) : _core(core) {}
@@ -54,7 +49,8 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called with the Core, as well as the two entities that collided.
      * @note The callback will be called once for each contact added.
      */
-    inline void AddOnContactAddedCallback(OnContactAddedCallback callback)
+    template <typename... Components>
+    inline void AddOnContactAddedCallback(std::unique_ptr<IContactCallback> &&callback)
     {
         _onContactAddedCallbacks.push_back(std::move(callback));
     }
@@ -66,7 +62,8 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback won't be called for the first collision.
      * @note The callback will be called every frame until the contact is removed.
      */
-    inline void AddOnContactPersistedCallback(OnContactPersistedCallback callback)
+    template <typename... Components>
+    inline void AddOnContactPersistedCallback(std::unique_ptr<IContactCallback> &&callback)
     {
         _onContactPersistedCallbacks.push_back(std::move(callback));
     }
@@ -77,7 +74,8 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called with the Core, as well as the two entities that collided.
      * @note The callback will be called once for each contact removed.
      */
-    inline void AddOnContactRemovedCallback(OnContactRemovedCallback callback)
+    template <typename... Components>
+    inline void AddOnContactRemovedCallback(std::unique_ptr<IContactCallback> &&callback)
     {
         _onContactRemovedCallbacks.push_back(std::move(callback));
     }
@@ -85,8 +83,8 @@ class ContactListenerImpl final : public JPH::ContactListener {
   private:
     ES::Engine::Core &_core;
 
-    std::vector<OnContactAddedCallback> _onContactAddedCallbacks;
-    std::vector<OnContactPersistedCallback> _onContactPersistedCallbacks;
-    std::vector<OnContactRemovedCallback> _onContactRemovedCallbacks;
+    std::vector<std::unique_ptr<IContactCallback>> _onContactAddedCallbacks;
+    std::vector<std::unique_ptr<IContactCallback>> _onContactPersistedCallbacks;
+    std::vector<std::unique_ptr<IContactCallback>> _onContactRemovedCallbacks;
 };
 } // namespace ES::Plugin::Physics::Utils
