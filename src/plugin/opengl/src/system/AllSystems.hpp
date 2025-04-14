@@ -33,6 +33,7 @@ void LoadGLSpriteBuffer(ES::Engine::Core &core);
 
 void LoadGLTextBufferManager(ES::Engine::Core &core);
 void LoadGLTextBuffer(ES::Engine::Core &core);
+void LoadTextureManager(ES::Engine::Core &core);
 void LoadGLSpriteBufferManager(ES::Engine::Core &core);
 
 void CreateCamera(ES::Engine::Core &core);
@@ -47,6 +48,7 @@ void GLEnableCullFace(const ES::Engine::Core &core);
 void SetupLights(ES::Engine::Core &core);
 void SetupCamera(ES::Engine::Core &core);
 
+void BindTexture(ES::Engine::Core &core);
 void RenderMeshes(ES::Engine::Core &core);
 void RenderText(ES::Engine::Core &core);
 void RenderSprites(ES::Engine::Core &core);

@@ -21,6 +21,8 @@
 #include "Text.hpp"
 #include "TextHandle.hpp"
 #include "Window.hpp"
+#include "TextureHandle.hpp"
+#include "TextureManager.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
@@ -296,6 +298,11 @@ void ES::Plugin::OpenGL::System::LoadGLTextBufferManager(ES::Engine::Core &core)
     core.RegisterResource<Resource::GLTextBufferManager>(Resource::GLTextBufferManager());
 }
 
+void ES::Plugin::OpenGL::System::LoadTextureManager(ES::Engine::Core &core)
+{
+    core.RegisterResource<Resource::TextureManager>(Resource::TextureManager());
+}
+
 void ES::Plugin::OpenGL::System::LoadGLSpriteBufferManager(ES::Engine::Core &core)
 {
     core.RegisterResource<Resource::GLSpriteBufferManager>(Resource::GLSpriteBufferManager());
@@ -423,6 +430,13 @@ static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader,
     glUniform3fv(shader.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
     glUniform3fv(shader.uniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
     glUniform1fv(shader.uniform("Material.Shiness"), 1, &material.Shiness);
+}
+
+void ES::Plugin::OpenGL::System::BindTexture(ES::Engine::Core &core)
+{
+    core.GetRegistry().view<Component::TextureHandle>().each([&](auto entity, Component::TextureHandle &textureHandle) {
+        core.GetResource<Resource::TextureManager>().Get(textureHandle.id).Bind();
+    });
 }
 
 void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
