@@ -18,8 +18,8 @@
 
 #pragma once
 
-#include "Texture.hpp"
 #include "Object.hpp"
+#include "Texture.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {
 
