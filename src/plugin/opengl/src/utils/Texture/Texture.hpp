@@ -14,6 +14,9 @@ class Texture {
 
     void Bind() const;
 
+    [[nodiscard]] int GetWidth() const { return _width; }
+    [[nodiscard]] int GetHeight() const { return _height; }
+
   private:
     void LoadTexture(const std::string &texturePath);
 
