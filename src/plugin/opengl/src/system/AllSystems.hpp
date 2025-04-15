@@ -10,6 +10,8 @@ void InitGLEW(const ES::Engine::Core &core);
 
 void CheckGLEWVersion(const ES::Engine::Core &core);
 
+void SetupResizeViewport(ES::Engine::Core &core);
+
 void MouseDragging(ES::Engine::Core &core);
 
 void LoadFontManager(ES::Engine::Core &core);

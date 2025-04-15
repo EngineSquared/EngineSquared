@@ -20,6 +20,7 @@
 #include "SpriteHandle.hpp"
 #include "Text.hpp"
 #include "TextHandle.hpp"
+#include "Window.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
@@ -42,6 +43,18 @@ void ES::Plugin::OpenGL::System::CheckGLEWVersion(const ES::Engine::Core &)
         return;
     }
     ES::Utils::Log::Info("OpenGL 4.2 supported");
+}
+
+void ES::Plugin::OpenGL::System::SetupResizeViewport(ES::Engine::Core &core)
+{
+    core.GetResource<Window::Resource::Window>().SetFramebufferSizeCallback(
+        &core, [](GLFWwindow *window, int width, int height) {
+            auto &c = *static_cast<ES::Engine::Core *>(glfwGetWindowUserPointer(window));
+            c.GetResource<OpenGL::Resource::Camera>().viewer.setAspectRatio(static_cast<float>(width) /
+                                                                            static_cast<float>(height));
+            c.GetResource<Resource::Camera>().size = glm::vec2(width, height);
+            glViewport(0, 0, width, height);
+        });
 }
 
 // Function to handle mouse dragging interactions

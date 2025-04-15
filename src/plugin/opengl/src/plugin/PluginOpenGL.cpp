@@ -17,6 +17,8 @@ void ES::Plugin::OpenGL::Plugin::Bind()
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::Window::System::EnableVSync);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::Window::System::LoadButtons);
 
+    RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::SetupResizeViewport);
+
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadFontManager);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadMaterialCache);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::OpenGL::System::LoadShaderManager);
