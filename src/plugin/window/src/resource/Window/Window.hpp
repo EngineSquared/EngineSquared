@@ -56,6 +56,17 @@ class Window {
     inline GLFWwindow *GetGLFWWindow() const { return _window; }
 
     /**
+     * @brief Set the window title.
+     *
+     * @param title The new title of the window.
+     */
+    inline void SetTitle(std::string_view title)
+    {
+        _title = title;
+        glfwSetWindowTitle(_window, _title.c_str());
+    }
+
+    /**
      * @brief Get the window size.
      *
      * @param[out] width The width of the window.
