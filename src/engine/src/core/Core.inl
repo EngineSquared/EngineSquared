@@ -36,12 +36,13 @@ inline void Core::RegisterSystem(Systems... systems)
 
 template <typename... Systems> inline void Core::RegisterSystem(Systems... systems)
 {
-    #ifdef ES_DEBUG
+#ifdef ES_DEBUG
     if (!this->_schedulers.Contains(_defaultScheduler))
     {
-        ES::Utils::Log::Warn(fmt::format("Trying to register systems with a default scheduler that does not exist: {}", _defaultScheduler.name()));
+        ES::Utils::Log::Warn(fmt::format("Trying to register systems with a default scheduler that does not exist: {}",
+                                         _defaultScheduler.name()));
     }
-    #endif
+#endif
     this->_schedulers.GetScheduler(_defaultScheduler).AddSystems(systems...);
 }
 
