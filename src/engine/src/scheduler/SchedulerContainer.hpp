@@ -112,11 +112,11 @@ class SchedulerContainer {
 
     /**
      * @brief Checks if a scheduler of the specified type exists in the container.
-     * 
+     *
      * This function checks if a scheduler of the specified type TScheduler
      * exists in the container. It returns true if the scheduler is found,
      * otherwise false.
-     * 
+     *
      * @param id The type index of the scheduler to check for.
      * @return true if the scheduler exists, false otherwise.
      */
