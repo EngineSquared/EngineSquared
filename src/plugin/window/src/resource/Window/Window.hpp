@@ -77,28 +77,26 @@ class Window {
 
     void ToggleFullscreen()
     {
-        if (!_window) return;
+        if (!_window)
+            return;
 
-        if (!_isFullscreen) {
+        if (!_isFullscreen)
+        {
             // Save windowed position and size
             glfwGetWindowPos(_window, &_windowedX, &_windowedY);
             glfwGetWindowSize(_window, &_windowedWidth, &_windowedHeight);
 
             // Get primary monitor and video mode
             _monitor = glfwGetPrimaryMonitor();
-            const GLFWvidmode* mode = glfwGetVideoMode(_monitor);
+            const GLFWvidmode *mode = glfwGetVideoMode(_monitor);
 
             // Switch to fullscreen
-            glfwSetWindowMonitor(_window, _monitor,
-                                0, 0,
-                                mode->width, mode->height,
-                                mode->refreshRate);
-        } else {
+            glfwSetWindowMonitor(_window, _monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        }
+        else
+        {
             // Restore windowed mode
-            glfwSetWindowMonitor(_window, nullptr,
-                                _windowedX, _windowedY,
-                                _windowedWidth, _windowedHeight,
-                                0);
+            glfwSetWindowMonitor(_window, nullptr, _windowedX, _windowedY, _windowedWidth, _windowedHeight, 0);
         }
 
         _isFullscreen = !_isFullscreen;
