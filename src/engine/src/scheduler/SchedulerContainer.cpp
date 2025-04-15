@@ -23,7 +23,7 @@ void ES::Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
     }
 }
 
-std::weak_ptr<ES::Engine::Scheduler::AScheduler> ES::Engine::SchedulerContainer::GetScheduler(std::type_index id)
+std::shared_ptr<ES::Engine::Scheduler::AScheduler> ES::Engine::SchedulerContainer::GetScheduler(std::type_index id)
 {
     auto it = _idToIndex.find(id);
     if (it == _idToIndex.end())

@@ -73,7 +73,7 @@ class SchedulerContainer {
      * @return std::weak_ptr<Scheduler::AScheduler> A weak pointer to the scheduler of the specified type.
      * @throws SchedulerError If the scheduler of the specified type is not found.
      */
-    std::weak_ptr<Scheduler::AScheduler> GetScheduler(std::type_index id);
+    std::shared_ptr<Scheduler::AScheduler> GetScheduler(std::type_index id);
 
     /**
      * @brief Retrieves the list of schedulers.
