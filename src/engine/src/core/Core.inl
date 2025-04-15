@@ -37,7 +37,13 @@ inline void Core::RegisterSystem(Systems... systems)
 template <typename... Systems>
 inline void Core::RegisterSystem(Systems... systems)
 {
-    this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(systems...);
+    #ifdef ES_DEBUG
+    if (!this->_schedulers.Contains(_defaultScheduler))
+    {
+        ES::Utils::Log::Warn(fmt::format("Trying to register systems with a default scheduler that does not exist: {}", _defaultScheduler.name()));
+    }
+    #endif
+    this->_schedulers.GetScheduler(_defaultScheduler).AddSystems(systems...);
 }
 
 template <typename... TPlugins> void Core::AddPlugins() { (AddPlugin<TPlugins>(), ...); }
