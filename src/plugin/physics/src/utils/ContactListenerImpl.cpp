@@ -12,6 +12,11 @@
  * When recreating an entity from an integer, we need to make sure that both parts are preserved.
  *
  * With 32 bits the value of ENTITY_ID_MASK will be 0xFFFFFFFF.
+ *
+ * Note: we have to shift the entity mask to the left by the number of bits it has,
+ * which means we have to compute the size of the type in bits (sizeof(type) * 8),
+ * substract the number of bits used by the entity mask (we get it using popcount)
+ * and then shift the entity mask to the left by that number of bits.
  */
 static constexpr inline const uint32_t ENTITY_ID_MASK =
     entt::entt_traits<ES::Engine::Entity::entity_id_type>::entity_mask
