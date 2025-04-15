@@ -27,8 +27,8 @@ void UpdateButton(ES::Engine::Core &core)
     for (auto &[key, button] : mouseButtons)
     {
         bool pressed = glfwGetMouseButton(window, key) == GLFW_PRESS;
-        button.pressed = pressed;
         button.updated = button.pressed != pressed;
+        button.pressed = pressed;
     }
 }
 
