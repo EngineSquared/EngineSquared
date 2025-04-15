@@ -22,3 +22,11 @@ void ES::Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
         ES::Utils::Log::Warn(fmt::format("Scheduler does not exist: {}", id.name()));
     }
 }
+
+std::weak_ptr<ES::Engine::Scheduler::AScheduler> ES::Engine::SchedulerContainer::GetScheduler(std::type_index id)
+{
+    auto it = _idToIndex.find(id);
+    if (it == _idToIndex.end())
+        throw SchedulerError(fmt::format("Scheduler not found: {}", id.name()));
+    return _orderedSchedulers[it->second];
+}

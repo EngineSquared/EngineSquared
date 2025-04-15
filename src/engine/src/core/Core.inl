@@ -27,9 +27,17 @@ template <typename TScheduler> inline TScheduler &Core::GetScheduler()
     return this->_schedulers.GetScheduler<TScheduler>();
 }
 
-template <typename TScheduler, typename... Systems> inline void Core::RegisterSystem(Systems... systems)
+template <typename TScheduler, typename... Systems>
+requires std::derived_from<TScheduler, Scheduler::AScheduler>
+inline void Core::RegisterSystem(Systems... systems)
 {
     this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
+}
+
+template <typename... Systems>
+inline void Core::RegisterSystem(Systems... systems)
+{
+    this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(systems...);
 }
 
 template <typename... TPlugins> void Core::AddPlugins() { (AddPlugin<TPlugins>(), ...); }
@@ -50,4 +58,16 @@ template <typename TPlugin> bool Core::HasPlugin() const
 {
     return this->_plugins.contains(std::type_index(typeid(TPlugin)));
 }
+
+inline void Core::SetDefaultScheduler(std::type_index scheduler)
+{
+#ifdef ES_DEBUG
+    if (!this->_schedulers.Contains(scheduler))
+    {
+        ES::Utils::Log::Warn(fmt::format("Trying to set a default scheduler that does not exist: {}", scheduler.name()));
+    }
+#endif
+    this->_defaultScheduler = scheduler;
+}
+
 } // namespace ES::Engine

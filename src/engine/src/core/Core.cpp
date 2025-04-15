@@ -6,7 +6,7 @@
 #include "Shutdown.hpp"
 #include "Startup.hpp"
 
-ES::Engine::Core::Core() : _registry(nullptr)
+ES::Engine::Core::Core() : _registry(nullptr), _defaultScheduler(typeid(ES::Engine::Scheduler::Update))
 {
 #ifdef ES_DEBUG
     ES::Utils::Log::Info("Create Core");
