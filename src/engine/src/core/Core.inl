@@ -34,8 +34,7 @@ inline void Core::RegisterSystem(Systems... systems)
     this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
 }
 
-template <typename... Systems>
-inline void Core::RegisterSystem(Systems... systems)
+template <typename... Systems> inline void Core::RegisterSystem(Systems... systems)
 {
     #ifdef ES_DEBUG
     if (!this->_schedulers.Contains(_defaultScheduler))
@@ -70,7 +69,8 @@ inline void Core::SetDefaultScheduler(std::type_index scheduler)
 #ifdef ES_DEBUG
     if (!this->_schedulers.Contains(scheduler))
     {
-        ES::Utils::Log::Warn(fmt::format("Trying to set a default scheduler that does not exist: {}", scheduler.name()));
+        ES::Utils::Log::Warn(
+            fmt::format("Trying to set a default scheduler that does not exist: {}", scheduler.name()));
     }
 #endif
     this->_defaultScheduler = scheduler;

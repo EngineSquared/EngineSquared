@@ -129,14 +129,13 @@ class Core {
      * Add one or multiple systems to the registry. A system is a function that will be called by the registry.
      * The function will be called by the registry according to the scheduler choosen.
      * If multiple systems are added, they will be called as a group, in the order they were added.
-     * 
+     *
      * It will use the default scheduler as no scheduler is specified.
      *
      * @tparam  Systems  The systems to add.
      * @see AScheduler
      */
-    template <typename... Systems>
-    void RegisterSystem(Systems... systems);
+    template <typename... Systems> void RegisterSystem(Systems... systems);
 
     /**
      * Deletes a scheduler from the registry.
@@ -201,15 +200,17 @@ class Core {
 
     /**
      * @brief Sets the default scheduler for the core engine.
-     * 
+     *
      * This function template allows the specification of a default scheduler
      * to be used by the core engine. The scheduler type is specified as a
      * template parameter.
-     * 
+     *
      * @tparam TScheduler The type of the scheduler to be set as default.
      */
-    template <typename TScheduler>
-    inline void SetDefaultScheduler() { SetDefaultScheduler(std::type_index(typeid(TScheduler))); }
+    template <typename TScheduler> inline void SetDefaultScheduler()
+    {
+        SetDefaultScheduler(std::type_index(typeid(TScheduler)));
+    }
 
     /**
      * @brief Sets the default scheduler for the core engine.
