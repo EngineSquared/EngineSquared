@@ -225,7 +225,7 @@ class Core {
   private:
     std::unique_ptr<entt::registry> _registry;
     ES::Engine::SchedulerContainer _schedulers;
-    std::type_index _defaultScheduler;
+    std::type_index _defaultScheduler = typeid(ES::Engine::Scheduler::Update);
     std::vector<std::type_index> _schedulersToDelete;
     std::unordered_map<std::type_index, std::unique_ptr<APlugin>> _plugins;
     bool _running = false;
