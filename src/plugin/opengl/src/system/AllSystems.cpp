@@ -50,7 +50,8 @@ void ES::Plugin::OpenGL::System::SetupResizeViewport(ES::Engine::Core &core)
     core.GetResource<Window::Resource::Window>().SetFramebufferSizeCallback(
         &core, [](GLFWwindow *window, int width, int height) {
             auto &c = *static_cast<ES::Engine::Core *>(glfwGetWindowUserPointer(window));
-            c.GetResource<OpenGL::Resource::Camera>().viewer.setAspectRatio(static_cast<float>(width) / static_cast<float>(height));
+            c.GetResource<OpenGL::Resource::Camera>().viewer.setAspectRatio(static_cast<float>(width) /
+                                                                            static_cast<float>(height));
             c.GetResource<Resource::Camera>().size = glm::vec2(width, height);
             glViewport(0, 0, width, height);
         });
