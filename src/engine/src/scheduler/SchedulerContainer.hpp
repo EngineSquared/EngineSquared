@@ -30,6 +30,9 @@ class SchedulerError : public std::exception {
  */
 class SchedulerContainer {
   public:
+    using SchedulerStorage = std::vector<std::shared_ptr<Scheduler::AScheduler>>;
+
+  public:
     SchedulerContainer() = default;
     ~SchedulerContainer() = default;
 
@@ -61,6 +64,18 @@ class SchedulerContainer {
     template <typename TScheduler> TScheduler &GetScheduler();
 
     /**
+     * @brief Retrieves a scheduler identified by the given type index.
+     *
+     * This function searches for a scheduler associated with the specified type index.
+     * If the scheduler is found, it returns a weak pointer to it. If not found, it throws an error.
+     *
+     * @param id The type index of the scheduler to retrieve.
+     * @return std::weak_ptr<Scheduler::AScheduler> A weak pointer to the scheduler of the specified type.
+     * @throws SchedulerError If the scheduler of the specified type is not found.
+     */
+    std::shared_ptr<Scheduler::AScheduler> GetScheduler(std::type_index id);
+
+    /**
      * @brief Retrieves the list of schedulers.
      *
      * This function returns a reference to a vector containing unique pointers
@@ -68,7 +83,7 @@ class SchedulerContainer {
      *
      * @return A reference to a vector of unique pointers to AScheduler objects.
      */
-    inline std::vector<std::unique_ptr<Scheduler::AScheduler>> &GetSchedulers() { return _orderedSchedulers; }
+    inline SchedulerStorage &GetSchedulers() { return _orderedSchedulers; }
 
     /**
      * @brief Deletes a scheduler of the specified type.
@@ -95,11 +110,34 @@ class SchedulerContainer {
      */
     void DeleteScheduler(std::type_index id);
 
+    /**
+     * @brief Checks if a scheduler of the specified type exists in the container.
+     *
+     * This function checks if a scheduler of the specified type TScheduler
+     * exists in the container. It returns true if the scheduler is found,
+     * otherwise false.
+     *
+     * @param id The type index of the scheduler to check for.
+     * @return true if the scheduler exists, false otherwise.
+     */
+    template <typename TScheduler> bool Contains() const;
+
+    /**
+     * @brief Checks if a scheduler identified by the given type index exists in the container.
+     *
+     * This function checks if a scheduler associated with the specified type index exists in the container.
+     * It returns true if the scheduler is found, otherwise false.
+     *
+     * @param id The type index of the scheduler to check for.
+     * @return true if the scheduler exists, false otherwise.
+     */
+    bool Contains(std::type_index id) const;
+
   private:
     std::unordered_map<std::type_index, std::size_t>
         _idToIndex; ///< Map to store unique ids for each scheduler, mapping type_index to their position in the vector.
     // TODO: Have a better data structure to avoid moving all the elements when deleting a scheduler.
-    std::vector<std::unique_ptr<Scheduler::AScheduler>> _orderedSchedulers; ///< Vector to store schedulers in order.
+    SchedulerStorage _orderedSchedulers; ///< Vector to store schedulers in order.
 };
 } // namespace ES::Engine
 
