@@ -6,6 +6,7 @@
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
+#include <concepts>
 
 #include "Logger.hpp"
 #include "SchedulerContainer.hpp"
@@ -27,6 +28,9 @@ namespace ES::Engine {
 class Entity;
 
 class APlugin;
+
+template <typename T>
+concept CScheduler = std::derived_from<T, Scheduler::AScheduler>;
 
 class Core {
   private:
@@ -85,7 +89,7 @@ class Core {
      * @tparam TScheduler The type of scheduler to use.
      * @param scheduler The scheduler to add.
      */
-    template <typename TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&...args);
+    template <CScheduler TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&...args);
 
     /**
      * Get a scheduler from the registry.
@@ -93,7 +97,7 @@ class Core {
      * @tparam TScheduler The type of scheduler to get.
      * @return The scheduler.
      */
-    template <typename TScheduler> TScheduler &GetScheduler();
+    template <CScheduler TScheduler> TScheduler &GetScheduler();
 
     /**
      * Get the running state of the core
@@ -121,8 +125,7 @@ class Core {
      * @param   systems     The systems to add.
      * @see AScheduler
      */
-    template <typename TScheduler, typename... Systems>
-    requires std::derived_from<TScheduler, Scheduler::AScheduler>
+    template <CScheduler TScheduler, typename... Systems>
     void RegisterSystem(Systems... systems);
 
     /**
@@ -143,7 +146,7 @@ class Core {
      * @tparam TScheduler The type of scheduler to delete.
      * @note This will delete the scheduler at the end of the frame.
      */
-    template <typename TScheduler> void DeleteScheduler();
+    template <CScheduler TScheduler> void DeleteScheduler();
 
     /**
      * Run all the systems. The systems will be called in the order they were added. It will also update the delta time.
@@ -187,18 +190,7 @@ class Core {
      */
     void ClearEntities();
 
-  private:
-    /**
-     * @brief Adds a plugin of type TPlugin to the engine.
-     *
-     * This function template allows the addition of a plugin to the engine. The plugin
-     * type is specified as a template parameter.
-     *
-     * @tparam TPlugin The type of the plugin to be added.
-     */
-    template <typename TPlugin> void AddPlugin();
-
-    /**
+        /**
      * @brief Sets the default scheduler for the core engine.
      *
      * This function template allows the specification of a default scheduler
@@ -207,7 +199,8 @@ class Core {
      *
      * @tparam TScheduler The type of the scheduler to be set as default.
      */
-    template <typename TScheduler> inline void SetDefaultScheduler()
+    template <CScheduler TScheduler>
+    inline void SetDefaultScheduler()
     {
         SetDefaultScheduler(std::type_index(typeid(TScheduler)));
     }
@@ -221,6 +214,17 @@ class Core {
      * @param scheduler The type index of the scheduler to be set as default.
      */
     inline void SetDefaultScheduler(std::type_index scheduler);
+
+  private:
+    /**
+     * @brief Adds a plugin of type TPlugin to the engine.
+     *
+     * This function template allows the addition of a plugin to the engine. The plugin
+     * type is specified as a template parameter.
+     *
+     * @tparam TPlugin The type of the plugin to be added.
+     */
+    template <typename TPlugin> void AddPlugin();
 
   private:
     std::unique_ptr<entt::registry> _registry;

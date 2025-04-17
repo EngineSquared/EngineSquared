@@ -11,24 +11,23 @@ template <typename TResource> inline TResource &Core::RegisterResource(TResource
 
 template <typename TResource> inline TResource &Core::GetResource() { return this->_registry->ctx().get<TResource>(); }
 
-template <typename TScheduler, typename... Args> inline TScheduler &Core::RegisterScheduler(Args &&...args)
+template <CScheduler TScheduler, typename... Args> inline TScheduler &Core::RegisterScheduler(Args &&...args)
 {
     this->_schedulers.AddScheduler<TScheduler>(*this, std::forward<Args>(args)...);
     return this->_schedulers.GetScheduler<TScheduler>();
 }
 
-template <typename TScheduler> void Core::DeleteScheduler()
+template <CScheduler TScheduler> void Core::DeleteScheduler()
 {
     this->_schedulersToDelete.push_back(std::type_index(typeid(TScheduler)));
 }
 
-template <typename TScheduler> inline TScheduler &Core::GetScheduler()
+template <CScheduler TScheduler> inline TScheduler &Core::GetScheduler()
 {
     return this->_schedulers.GetScheduler<TScheduler>();
 }
 
-template <typename TScheduler, typename... Systems>
-requires std::derived_from<TScheduler, Scheduler::AScheduler>
+template <CScheduler TScheduler, typename... Systems>
 inline void Core::RegisterSystem(Systems... systems)
 {
     this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
