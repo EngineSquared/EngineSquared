@@ -1,14 +1,14 @@
 #pragma once
 
 #include "AScheduler.hpp"
+#include <list>
 #include <memory>
+#include <queue>
 #include <stdexcept>
 #include <typeindex>
 #include <unordered_map>
-#include <vector>
 #include <unordered_set>
-#include <list>
-#include <queue>
+#include <vector>
 
 namespace ES::Engine {
 class Core;
@@ -71,12 +71,14 @@ class SchedulerContainer {
      *
      * @return A reference to a vector of unique pointers to AScheduler objects.
      */
-    inline void RunSchedulers() {
-      Sort();
-      for (const auto &scheduler : _orderedSchedulers) {
-        scheduler->RunSystems();
-      }
-    } 
+    inline void RunSchedulers()
+    {
+        Sort();
+        for (const auto &scheduler : _orderedSchedulers)
+        {
+            scheduler->RunSystems();
+        }
+    }
 
     /**
      * @brief Deletes a scheduler of the specified type.
@@ -103,72 +105,83 @@ class SchedulerContainer {
      */
     void DeleteScheduler(std::type_index id);
 
-    template <typename TBefore, typename TAfter>
-    void Before() {
-      _dirty = true;
-      _dependencies[std::type_index(typeid(TAfter))].insert(std::type_index(typeid(TBefore)));
+    template <typename TBefore, typename TAfter> void Before()
+    {
+        _dirty = true;
+        _dependencies[std::type_index(typeid(TAfter))].insert(std::type_index(typeid(TBefore)));
     }
 
-    template <typename TAfter, typename TBefore>
-    inline void After() {
-      Before<TBefore, TAfter>();
-    }
+    template <typename TAfter, typename TBefore> inline void After() { Before<TBefore, TAfter>(); }
 
-    inline void Sort() {
-      if (!_dirty) return;
-      DependenciesToOrderedScheduler();
-      _dirty = false;
+    inline void Sort()
+    {
+        if (!_dirty)
+            return;
+        DependenciesToOrderedScheduler();
+        _dirty = false;
     }
 
   private:
+    inline void DependenciesToOrderedScheduler()
+    {
+        _orderedSchedulers.clear();
 
-    inline void DependenciesToOrderedScheduler() {
-      _orderedSchedulers.clear();
+        std::unordered_map<std::type_index, size_t> inDegree;
+        for (const auto &[type, _] : _schedulers)
+        {
+            inDegree[type] = 0;
+        }
 
-      std::unordered_map<std::type_index, size_t> inDegree;
-      for (const auto &[type, _] : _schedulers) {
-          inDegree[type] = 0;
-      }
+        for (const auto &[after, befores] : _dependencies)
+        {
+            for (const auto &before : befores)
+            {
+                inDegree[after]++;
+            }
+        }
 
-      for (const auto &[after, befores] : _dependencies) {
-          for (const auto &before : befores) {
-              inDegree[after]++;
-          }
-      }
+        std::queue<std::type_index> q;
+        for (const auto &[type, degree] : inDegree)
+        {
+            if (degree == 0)
+            {
+                q.push(type);
+            }
+        }
 
-      std::queue<std::type_index> q;
-      for (const auto &[type, degree] : inDegree) {
-          if (degree == 0) {
-              q.push(type);
-          }
-      }
+        while (!q.empty())
+        {
+            auto current = q.front();
+            q.pop();
 
-      while (!q.empty()) {
-          auto current = q.front();
-          q.pop();
+            auto it = _schedulers.find(current);
+            if (it != _schedulers.end())
+            {
+                _orderedSchedulers.push_back(it->second);
+            }
 
-          auto it = _schedulers.find(current);
-          if (it != _schedulers.end()) {
-              _orderedSchedulers.push_back(it->second);
-          }
+            for (const auto &[after, befores] : _dependencies)
+            {
+                if (befores.find(current) != befores.end())
+                {
+                    if (--inDegree[after] == 0)
+                    {
+                        q.push(after);
+                    }
+                }
+            }
+        }
 
-          for (const auto &[after, befores] : _dependencies) {
-              if (befores.find(current) != befores.end()) {
-                  if (--inDegree[after] == 0) {
-                      q.push(after);
-                  }
-              }
-          }
-      }
-
-      if (_orderedSchedulers.size() != _schedulers.size()) {
-          throw SchedulerError("Cyclic dependency detected between schedulers.");
-      }
+        if (_orderedSchedulers.size() != _schedulers.size())
+        {
+            throw SchedulerError("Cyclic dependency detected between schedulers.");
+        }
     }
 
   private:
     bool _dirty = false;
-    std::unordered_map<std::type_index, std::shared_ptr<Scheduler::AScheduler>> _schedulers; ///< Vector to store schedulers in order.
+    std::unordered_map<std::type_index, std::shared_ptr<Scheduler::AScheduler>>
+        _schedulers; ///< Vector to store schedulers in order.
     std::unordered_map<std::type_index, std::unordered_set<std::type_index>> _dependencies;
     std::list<std::shared_ptr<Scheduler::AScheduler>> _orderedSchedulers; ///< Vector to store schedulers in order.
 };
