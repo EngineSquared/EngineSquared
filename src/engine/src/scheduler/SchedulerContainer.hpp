@@ -134,10 +134,7 @@ class SchedulerContainer {
 
         for (const auto &[after, befores] : _dependencies)
         {
-            for (const auto &before : befores)
-            {
-                inDegree[after]++;
-            }
+            inDegree[after] += befores.size();
         }
 
         std::queue<std::type_index> q;
@@ -154,27 +151,34 @@ class SchedulerContainer {
             auto current = q.front();
             q.pop();
 
-            auto it = _schedulers.find(current);
-            if (it != _schedulers.end())
+            if (auto it = _schedulers.find(current); it != _schedulers.end())
             {
                 _orderedSchedulers.push_back(it->second);
             }
 
-            for (const auto &[after, befores] : _dependencies)
-            {
-                if (befores.find(current) != befores.end())
-                {
-                    if (--inDegree[after] == 0)
-                    {
-                        q.push(after);
-                    }
-                }
-            }
+            ProcessDependencies(current, q, inDegree);
         }
 
         if (_orderedSchedulers.size() != _schedulers.size())
         {
             throw SchedulerError("Cyclic dependency detected between schedulers.");
+        }
+    }
+
+    void ProcessDependencies(std::type_index current,
+                             std::queue<std::type_index> &q,
+                             std::unordered_map<std::type_index, size_t> &inDegree)
+    {
+        for (const auto &[after, befores] : _dependencies)
+        {
+            if (befores.contains(current))
+            {
+                --inDegree[after];
+                if (inDegree[after] == 0)
+                {
+                    q.push(after);
+                }
+            }
         }
     }
 
