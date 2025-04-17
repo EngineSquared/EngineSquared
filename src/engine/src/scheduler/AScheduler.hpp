@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IScheduler.hpp"
+#include <set>
+#include <typeindex>
 
 namespace ES::Engine::Scheduler {
 /**
@@ -11,7 +13,6 @@ class AScheduler : public IScheduler {
     explicit AScheduler(Core &core) : _core(core) {}
 
     template <typename... Systems> void AddSystems(Systems... systems) { _systemsList.AddSystems(systems...); }
-
   protected:
     Core &_core;
     SystemContainer _systemsList;

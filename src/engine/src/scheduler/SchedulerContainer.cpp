@@ -2,20 +2,17 @@
 
 void ES::Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
 {
-    if (_idToIndex.contains(id))
+    if (this->_schedulers.contains(id))
     {
 #ifdef ES_DEBUG
         ES::Utils::Log::Info(fmt::format("Deleting scheduler: {}", id.name()));
 #endif
-        _orderedSchedulers.erase(_orderedSchedulers.begin() + _idToIndex[id]);
-        for (auto &[key, value] : _idToIndex)
+        this->_schedulers.erase(id);
+        this->_dirty = true;
+        if (this->_dependencies.contains(id))
         {
-            if (value > _idToIndex[id])
-            {
-                value--;
-            }
+            this->_dependencies.erase(id);
         }
-        _idToIndex.erase(id);
     }
     else
     {
