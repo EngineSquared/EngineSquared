@@ -1,12 +1,12 @@
 #pragma once
 
+#include <concepts>
 #include <entt/entt.hpp>
 #include <functional>
 #include <memory>
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
-#include <concepts>
 
 #include "Logger.hpp"
 #include "SchedulerContainer.hpp"
@@ -125,8 +125,7 @@ class Core {
      * @param   systems     The systems to add.
      * @see AScheduler
      */
-    template <CScheduler TScheduler, typename... Systems>
-    void RegisterSystem(Systems... systems);
+    template <CScheduler TScheduler, typename... Systems> void RegisterSystem(Systems... systems);
 
     /**
      * Add one or multiple systems to the registry. A system is a function that will be called by the registry.
@@ -190,7 +189,7 @@ class Core {
      */
     void ClearEntities();
 
-        /**
+    /**
      * @brief Sets the default scheduler for the core engine.
      *
      * This function template allows the specification of a default scheduler
@@ -199,8 +198,7 @@ class Core {
      *
      * @tparam TScheduler The type of the scheduler to be set as default.
      */
-    template <CScheduler TScheduler>
-    inline void SetDefaultScheduler()
+    template <CScheduler TScheduler> inline void SetDefaultScheduler()
     {
         SetDefaultScheduler(std::type_index(typeid(TScheduler)));
     }

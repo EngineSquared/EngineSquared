@@ -27,8 +27,7 @@ template <CScheduler TScheduler> inline TScheduler &Core::GetScheduler()
     return this->_schedulers.GetScheduler<TScheduler>();
 }
 
-template <CScheduler TScheduler, typename... Systems>
-inline void Core::RegisterSystem(Systems... systems)
+template <CScheduler TScheduler, typename... Systems> inline void Core::RegisterSystem(Systems... systems)
 {
     this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
 }

@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
+#include "AScheduler.hpp"
 #include "Core.hpp"
 #include "Entity.hpp"
-#include "AScheduler.hpp"
 
 using namespace ES::Engine;
 
@@ -50,25 +50,27 @@ TEST(Core, Resources)
 }
 
 class TestSchedulerA : public Scheduler::AScheduler {
-    public:
-        using Scheduler::AScheduler::AScheduler;
-        void RunSystems() override {
-            for (auto const &system : this->_systemsList.GetSystems())
-            {
-                (*system)(_core);
-            }
+  public:
+    using Scheduler::AScheduler::AScheduler;
+    void RunSystems() override
+    {
+        for (auto const &system : this->_systemsList.GetSystems())
+        {
+            (*system)(_core);
         }
+    }
 };
 
 class TestSchedulerB : public Scheduler::AScheduler {
-    public:
-        using Scheduler::AScheduler::AScheduler;
-        void RunSystems() override {
-            for (auto const &system : this->_systemsList.GetSystems())
-            {
-                (*system)(_core);
-            }
+  public:
+    using Scheduler::AScheduler::AScheduler;
+    void RunSystems() override
+    {
+        for (auto const &system : this->_systemsList.GetSystems())
+        {
+            (*system)(_core);
         }
+    }
 };
 
 struct HistoryStorage {
@@ -83,7 +85,6 @@ TEST(Core, DefaultScheduler)
     core.RegisterScheduler<TestSchedulerA>();
     core.RegisterScheduler<TestSchedulerB>();
 
-    
     core.RegisterSystem<TestSchedulerA>([](Core &core) {
         auto &history = core.GetResource<HistoryStorage>().history;
         history.emplace_back("Starting Scheduler A");
@@ -93,7 +94,7 @@ TEST(Core, DefaultScheduler)
         auto &history = core.GetResource<HistoryStorage>().history;
         history.emplace_back("Starting Scheduler B");
     });
-    
+
     core.SetDefaultScheduler<TestSchedulerA>();
 
     core.RegisterSystem([](Core &core) {
