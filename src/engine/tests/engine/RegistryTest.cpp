@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include "AScheduler.hpp"
 #include "Core.hpp"
 #include "Entity.hpp"
 
@@ -46,4 +47,75 @@ TEST(Core, Resources)
     core.RunSystems();
 
     ASSERT_EQ(core.GetResource<Res>().x, 69);
+}
+
+class TestSchedulerA : public Scheduler::AScheduler {
+  public:
+    using Scheduler::AScheduler::AScheduler;
+    void RunSystems() override
+    {
+        for (auto const &system : this->_systemsList.GetSystems())
+        {
+            (*system)(_core);
+        }
+    }
+};
+
+class TestSchedulerB : public Scheduler::AScheduler {
+  public:
+    using Scheduler::AScheduler::AScheduler;
+    void RunSystems() override
+    {
+        for (auto const &system : this->_systemsList.GetSystems())
+        {
+            (*system)(_core);
+        }
+    }
+};
+
+struct HistoryStorage {
+    std::vector<std::string> history;
+};
+
+TEST(Core, DefaultScheduler)
+{
+    Core core;
+    core.RegisterResource<HistoryStorage>(HistoryStorage());
+
+    core.RegisterScheduler<TestSchedulerA>();
+    core.RegisterScheduler<TestSchedulerB>();
+
+    core.RegisterSystem<TestSchedulerA>([](Core &core) {
+        auto &history = core.GetResource<HistoryStorage>().history;
+        history.emplace_back("Starting Scheduler A");
+    });
+
+    core.RegisterSystem<TestSchedulerB>([](Core &core) {
+        auto &history = core.GetResource<HistoryStorage>().history;
+        history.emplace_back("Starting Scheduler B");
+    });
+
+    core.SetDefaultScheduler<TestSchedulerA>();
+
+    core.RegisterSystem([](Core &core) {
+        auto &history = core.GetResource<HistoryStorage>().history;
+        history.emplace_back("System Test 1");
+    });
+
+    core.SetDefaultScheduler<TestSchedulerB>();
+
+    core.RegisterSystem([](Core &core) {
+        auto &history = core.GetResource<HistoryStorage>().history;
+        history.emplace_back("System Test 2");
+    });
+
+    core.RunSystems();
+
+    auto &history = core.GetResource<HistoryStorage>().history;
+
+    ASSERT_EQ(history.size(), 4);
+    ASSERT_EQ(history[0], "Starting Scheduler A");
+    ASSERT_EQ(history[1], "System Test 1");
+    ASSERT_EQ(history[2], "Starting Scheduler B");
+    ASSERT_EQ(history[3], "System Test 2");
 }
