@@ -165,8 +165,7 @@ class SchedulerContainer {
         }
     }
 
-    void ProcessDependencies(std::type_index current,
-                             std::queue<std::type_index> &q,
+    void ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
                              std::unordered_map<std::type_index, size_t> &inDegree)
     {
         for (const auto &[after, befores] : _dependencies)
