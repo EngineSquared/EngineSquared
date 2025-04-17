@@ -71,7 +71,7 @@ class SchedulerContainer {
      *
      * @return A reference to a vector of unique pointers to AScheduler objects.
      */
-    inline void RunSchedulers();
+    void RunSchedulers();
 
     /**
      * @brief Deletes a scheduler of the specified type.
