@@ -101,7 +101,7 @@ class SchedulerContainer {
     /**
      * @brief Add a dependency between two schedulers.
      * It will set the first scheduler to be before the second one.
-     * 
+     *
      * @tparam TBefore The type of the first scheduler.
      * @tparam TAfter The type of the second scheduler.
      */
@@ -110,20 +110,18 @@ class SchedulerContainer {
     /**
      * @brief Add a dependency between two schedulers.
      * It will set the first scheduler to be after the second one.
-     * 
+     *
      * @tparam TAfter The type of the first scheduler.
      * @tparam TBefore The type of the second scheduler.
      */
     template <typename TAfter, typename TBefore> void After();
 
-    
-private:
+  private:
     void Update();
 
     void TopologicalSort();
 
-    void ProcessDependencies(std::type_index current,
-                             std::queue<std::type_index> &q,
+    void ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
                              std::unordered_map<std::type_index, size_t> &inDegree) const;
 
   private:

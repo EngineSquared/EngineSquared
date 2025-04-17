@@ -20,21 +20,20 @@ void ES::Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
     }
 }
 
-void ES::Engine::SchedulerContainer::ProcessDependencies(std::type_index current,
-    std::queue<std::type_index> &q,
-    std::unordered_map<std::type_index, size_t> &inDegree) const
+void ES::Engine::SchedulerContainer::ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
+                                                         std::unordered_map<std::type_index, size_t> &inDegree) const
 {
-for (const auto &[after, befores] : _dependencies)
-{
-if (befores.contains(current))
-{
---inDegree[after];
-if (inDegree[after] == 0)
-{
-q.push(after);
-}
-}
-}
+    for (const auto &[after, befores] : _dependencies)
+    {
+        if (befores.contains(current))
+        {
+            --inDegree[after];
+            if (inDegree[after] == 0)
+            {
+                q.push(after);
+            }
+        }
+    }
 }
 
 void ES::Engine::SchedulerContainer::TopologicalSort()
