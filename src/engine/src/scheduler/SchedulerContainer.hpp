@@ -71,14 +71,7 @@ class SchedulerContainer {
      *
      * @return A reference to a vector of unique pointers to AScheduler objects.
      */
-    inline void RunSchedulers()
-    {
-        Sort();
-        for (const auto &scheduler : _orderedSchedulers)
-        {
-            scheduler->RunSystems();
-        }
-    }
+    inline void RunSchedulers();
 
     /**
      * @brief Deletes a scheduler of the specified type.
@@ -105,81 +98,33 @@ class SchedulerContainer {
      */
     void DeleteScheduler(std::type_index id);
 
-    template <typename TBefore, typename TAfter> void Before()
-    {
-        _dirty = true;
-        _dependencies[std::type_index(typeid(TAfter))].insert(std::type_index(typeid(TBefore)));
-    }
+    /**
+     * @brief Add a dependency between two schedulers.
+     * It will set the first scheduler to be before the second one.
+     * 
+     * @tparam TBefore The type of the first scheduler.
+     * @tparam TAfter The type of the second scheduler.
+     */
+    template <typename TBefore, typename TAfter> void Before();
 
-    template <typename TAfter, typename TBefore> inline void After() { Before<TBefore, TAfter>(); }
+    /**
+     * @brief Add a dependency between two schedulers.
+     * It will set the first scheduler to be after the second one.
+     * 
+     * @tparam TAfter The type of the first scheduler.
+     * @tparam TBefore The type of the second scheduler.
+     */
+    template <typename TAfter, typename TBefore> void After();
 
-    inline void Sort()
-    {
-        if (!_dirty)
-            return;
-        DependenciesToOrderedScheduler();
-        _dirty = false;
-    }
+    
+private:
+    void Update();
 
-  private:
-    inline void DependenciesToOrderedScheduler()
-    {
-        _orderedSchedulers.clear();
+    void TopologicalSort();
 
-        std::unordered_map<std::type_index, size_t> inDegree;
-        for (const auto &[type, _] : _schedulers)
-        {
-            inDegree[type] = 0;
-        }
-
-        for (const auto &[after, befores] : _dependencies)
-        {
-            inDegree[after] += befores.size();
-        }
-
-        std::queue<std::type_index> q;
-        for (const auto &[type, degree] : inDegree)
-        {
-            if (degree == 0)
-            {
-                q.push(type);
-            }
-        }
-
-        while (!q.empty())
-        {
-            auto current = q.front();
-            q.pop();
-
-            if (auto it = _schedulers.find(current); it != _schedulers.end())
-            {
-                _orderedSchedulers.push_back(it->second);
-            }
-
-            ProcessDependencies(current, q, inDegree);
-        }
-
-        if (_orderedSchedulers.size() != _schedulers.size())
-        {
-            throw SchedulerError("Cyclic dependency detected between schedulers.");
-        }
-    }
-
-    void ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
-                             std::unordered_map<std::type_index, size_t> &inDegree)
-    {
-        for (const auto &[after, befores] : _dependencies)
-        {
-            if (befores.contains(current))
-            {
-                --inDegree[after];
-                if (inDegree[after] == 0)
-                {
-                    q.push(after);
-                }
-            }
-        }
-    }
+    void ProcessDependencies(std::type_index current,
+                             std::queue<std::type_index> &q,
+                             std::unordered_map<std::type_index, size_t> &inDegree) const;
 
   private:
     bool _dirty = false;

@@ -25,3 +25,20 @@ template <typename TScheduler> inline TScheduler &ES::Engine::SchedulerContainer
     }
     return *static_cast<TScheduler *>(it->second.get());
 }
+
+template <typename TBefore, typename TAfter> inline void ES::Engine::SchedulerContainer::Before()
+{
+    _dirty = true;
+    _dependencies[std::type_index(typeid(TAfter))].insert(std::type_index(typeid(TBefore)));
+}
+
+template <typename TAfter, typename TBefore> inline void ES::Engine::SchedulerContainer::After() { Before<TBefore, TAfter>(); }
+
+inline void ES::Engine::SchedulerContainer::RunSchedulers()
+{
+    Update();
+    for (const auto &scheduler : _orderedSchedulers)
+    {
+        scheduler->RunSystems();
+    }
+}
