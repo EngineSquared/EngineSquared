@@ -33,9 +33,16 @@ void GLMeshBuffer::GenerateGLMeshBuffers(const Object::Component::Mesh &mesh) no
     // Vertex Normal VBO
     glGenBuffers(1, &VBO_normal);
     glBindBuffer(GL_ARRAY_BUFFER, VBO_normal);
-    glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(glm::vec3), mesh.normals.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, mesh.normals.size() * sizeof(glm::vec3), mesh.normals.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     glEnableVertexAttribArray(1);
+
+    // Vertex Texture Coordinates VBO
+    glGenBuffers(1, &VBO_texCoords);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_texCoords);
+    glBufferData(GL_ARRAY_BUFFER, mesh.texCoords.size() * sizeof(glm::vec2), mesh.texCoords.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+    glEnableVertexAttribArray(2);
 
     // Element indices buffer
     glGenBuffers(1, &IBO);
@@ -55,7 +62,11 @@ void GLMeshBuffer::Update(const Object::Component::Mesh &mesh) const noexcept
 
     // Vertex Normal VBO
     glBindBuffer(GL_ARRAY_BUFFER, VBO_normal);
-    glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(glm::vec3), mesh.normals.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, mesh.normals.size() * sizeof(glm::vec3), mesh.normals.data(), GL_STATIC_DRAW);
+
+    // Vertex Texture Coordinates VBO
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_texCoords);
+    glBufferData(GL_ARRAY_BUFFER, mesh.texCoords.size() * sizeof(glm::vec2), mesh.texCoords.data(), GL_STATIC_DRAW);
 
     // Element indices buffer
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);

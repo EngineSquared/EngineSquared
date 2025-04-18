@@ -39,5 +39,6 @@ void main() {
     vec3 specular = Material.Ks * Light[4].Intensity * pow( max( dot( HalfwayVector, Normal), 0.0), Material.Shiness);
     finalColor = finalColor + diffuse + specular;
     finalColor = ambient + finalColor;
+
     FragColor = vec4(finalColor, 1.0);
 }
