@@ -28,6 +28,21 @@ void GLSpriteBuffer::GenerateGLSpriteBuffers(const Component::Sprite &sprite) no
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), nullptr);
     glEnableVertexAttribArray(0);
 
+    // texture coordinates VBO
+    std::array<glm::vec2, 4> texCoords = {
+        glm::vec2{0.f, 1.f},
+        glm::vec2{1.f, 1.f},
+        glm::vec2{0.f, 0.f},
+        glm::vec2{1.f, 0.f}
+    };
+
+    // Vertex Texture Coordinates VBO
+    glGenBuffers(1, &VBO_texCoords);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_texCoords);
+    glBufferData(GL_ARRAY_BUFFER,  sizeof(texCoords), texCoords.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), nullptr);
+    glEnableVertexAttribArray(1);
+
     // Element indices buffer
     std::array<unsigned int, 6> indices = {2, 0, 1, 2, 1, 3};
     glGenBuffers(1, &IBO);
