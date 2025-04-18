@@ -455,7 +455,8 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
             glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
-            Component::TextureHandle *textureHandle = ES::Engine::Entity(entity).TryGetComponent<Component::TextureHandle>(core);
+            Component::TextureHandle *textureHandle =
+                ES::Engine::Entity(entity).TryGetComponent<Component::TextureHandle>(core);
 
             if (textureHandle)
                 core.GetResource<Resource::TextureManager>().Get(textureHandle->id).Bind();
