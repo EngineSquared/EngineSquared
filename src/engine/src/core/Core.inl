@@ -11,25 +11,37 @@ template <typename TResource> inline TResource &Core::RegisterResource(TResource
 
 template <typename TResource> inline TResource &Core::GetResource() { return this->_registry->ctx().get<TResource>(); }
 
-template <typename TScheduler, typename... Args> inline TScheduler &Core::RegisterScheduler(Args &&...args)
+template <CScheduler TScheduler, typename... Args> inline TScheduler &Core::RegisterScheduler(Args &&...args)
 {
     this->_schedulers.AddScheduler<TScheduler>(*this, std::forward<Args>(args)...);
     return this->_schedulers.GetScheduler<TScheduler>();
 }
 
-template <typename TScheduler> void Core::DeleteScheduler()
+template <CScheduler TScheduler> void Core::DeleteScheduler()
 {
     this->_schedulersToDelete.push_back(std::type_index(typeid(TScheduler)));
 }
 
-template <typename TScheduler> inline TScheduler &Core::GetScheduler()
+template <CScheduler TScheduler> inline TScheduler &Core::GetScheduler()
 {
     return this->_schedulers.GetScheduler<TScheduler>();
 }
 
-template <typename TScheduler, typename... Systems> inline void Core::RegisterSystem(Systems... systems)
+template <CScheduler TScheduler, typename... Systems> inline void Core::RegisterSystem(Systems... systems)
 {
     this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
+}
+
+template <typename... Systems> inline void Core::RegisterSystem(Systems... systems)
+{
+#ifdef ES_DEBUG
+    if (!this->_schedulers.Contains(_defaultScheduler))
+    {
+        ES::Utils::Log::Warn(fmt::format("Trying to register systems with a default scheduler that does not exist: {}",
+                                         _defaultScheduler.name()));
+    }
+#endif
+    this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(systems...);
 }
 
 template <typename... TPlugins> void Core::AddPlugins() { (AddPlugin<TPlugins>(), ...); }
@@ -50,4 +62,17 @@ template <typename TPlugin> bool Core::HasPlugin() const
 {
     return this->_plugins.contains(std::type_index(typeid(TPlugin)));
 }
+
+inline void Core::SetDefaultScheduler(std::type_index scheduler)
+{
+#ifdef ES_DEBUG
+    if (!this->_schedulers.Contains(scheduler))
+    {
+        ES::Utils::Log::Warn(
+            fmt::format("Trying to set a default scheduler that does not exist: {}", scheduler.name()));
+    }
+#endif
+    this->_defaultScheduler = scheduler;
+}
+
 } // namespace ES::Engine
