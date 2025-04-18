@@ -105,9 +105,11 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
 
         layout (location = 0) in vec4 VertexPosition;
         layout (location = 1) in vec3 VertexNormal;
+        layout (location = 2) in vec2 VertexTexCoord;
 
         out vec3 Position;
         out vec3 Normal;
+        out vec2 TexCoord;
 
         uniform mat4 ModelMatrix;
         uniform mat3 NormalMatrix;
@@ -117,6 +119,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
         {
             Normal = normalize(NormalMatrix * VertexNormal);
             Position = (ModelMatrix * VertexPosition).xyz;
+            TexCoord = VertexTexCoord;
             gl_Position = MVP * VertexPosition;
         }
     )";
@@ -126,6 +129,9 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
 
         in vec3 Position;
         in vec3 Normal;
+        in vec2 TexCoord;
+
+        uniform sampler2D texture0;
 
         uniform vec3 CamPos;
 
@@ -146,6 +152,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
         out vec4 FragColor;
 
         void main() {
+            vec3 base_color = texture(texture0, TexCoord).rgb;
             vec3 finalColor = vec3(0,0,0);
             vec3 ambient = Material.Ka * Light[0].Intensity;
             for (int i = 0; i < 4; i++) {
@@ -163,7 +170,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
             vec3 specular = Material.Ks * Light[4].Intensity * pow( max( dot( HalfwayVector, Normal), 0.0), Material.Shiness);
             finalColor = finalColor + diffuse + specular;
             finalColor = ambient + finalColor;
-            FragColor = vec4(finalColor, 1.0);
+            FragColor = vec4(finalColor * base_color, 1.0);
         }
     )";
 
