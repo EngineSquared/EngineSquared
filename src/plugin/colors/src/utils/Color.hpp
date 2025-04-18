@@ -27,6 +27,7 @@ inline static const Color BLUE_COLOR = {0, 0, 255, 255};
 inline static const Color YELLOW_COLOR = {255, 255, 0, 255};
 inline static const Color MAGENTA_COLOR = {255, 0, 255, 255};
 inline static const Color CYAN_COLOR = {0, 255, 255, 255};
+inline static const Color LIGHTGRAY_COLOR = {192, 192, 192, 255};
 inline static const Color GRAY_COLOR = {128, 128, 128, 255};
 inline static const Color DARKGRAY_COLOR = {64, 64, 64, 255};
 } // namespace ES::Plugin::Colors::Utils
