@@ -61,10 +61,7 @@ void ES::Engine::Core::RunCore()
 
 void ES::Engine::Core::RunSystems()
 {
-    for (const auto &scheduler : this->_schedulers.GetSchedulers())
-    {
-        scheduler->RunSystems();
-    }
+    this->_schedulers.RunSchedulers();
 
     for (const auto &scheduler : this->_schedulersToDelete)
     {

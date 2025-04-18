@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IScheduler.hpp"
+#include <set>
+#include <typeindex>
 
 namespace ES::Engine::Scheduler {
 /**

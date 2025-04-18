@@ -50,3 +50,49 @@ TEST(SchedulerContainer, CasualUse)
         ASSERT_EQ(data[1], 1);
     }
 }
+
+TEST(SchedulerContainer, DependencyAfter)
+{
+    Core core;
+    core.RegisterResource<ResourceTest>(ResourceTest());
+    auto &data = core.GetResource<ResourceTest>().data;
+    core.RegisterScheduler<SchedulerTest1>();
+    core.RegisterScheduler<SchedulerTest2>();
+    core.RunSystems();
+    {
+        ASSERT_EQ(data.size(), 2);
+        ASSERT_EQ(data[0], 1);
+        ASSERT_EQ(data[1], 2);
+    }
+    data.clear();
+    core.SetSchedulerAfter<SchedulerTest1, SchedulerTest2>();
+    core.RunSystems();
+    {
+        ASSERT_EQ(data.size(), 2);
+        ASSERT_EQ(data[0], 2);
+        ASSERT_EQ(data[1], 1);
+    }
+}
+
+TEST(SchedulerContainer, DependencyBefore)
+{
+    Core core;
+    core.RegisterResource<ResourceTest>(ResourceTest());
+    auto &data = core.GetResource<ResourceTest>().data;
+    core.RegisterScheduler<SchedulerTest2>();
+    core.RegisterScheduler<SchedulerTest1>();
+    core.RunSystems();
+    {
+        ASSERT_EQ(data.size(), 2);
+        ASSERT_EQ(data[0], 2);
+        ASSERT_EQ(data[1], 1);
+    }
+    data.clear();
+    core.SetSchedulerBefore<SchedulerTest1, SchedulerTest2>();
+    core.RunSystems();
+    {
+        ASSERT_EQ(data.size(), 2);
+        ASSERT_EQ(data[0], 1);
+        ASSERT_EQ(data[1], 2);
+    }
+}

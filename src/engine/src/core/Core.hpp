@@ -99,6 +99,16 @@ class Core {
      */
     template <CScheduler TScheduler> TScheduler &GetScheduler();
 
+    template <typename TSchedulerA, typename TSchedulerB> inline void SetSchedulerBefore()
+    {
+        this->_schedulers.Before<TSchedulerA, TSchedulerB>();
+    }
+
+    template <typename TSchedulerA, typename TSchedulerB> inline void SetSchedulerAfter()
+    {
+        this->_schedulers.After<TSchedulerA, TSchedulerB>();
+    }
+
     /**
      * Get the running state of the core
      *
