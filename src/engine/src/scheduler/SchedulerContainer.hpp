@@ -33,9 +33,6 @@ class SchedulerError : public std::exception {
  */
 class SchedulerContainer {
   public:
-    using SchedulerStorage = std::vector<std::shared_ptr<Scheduler::AScheduler>>;
-
-  public:
     SchedulerContainer() = default;
     ~SchedulerContainer() = default;
 
