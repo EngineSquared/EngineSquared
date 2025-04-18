@@ -1,10 +1,13 @@
 #pragma once
 
 #include "AScheduler.hpp"
+#include <list>
 #include <memory>
+#include <queue>
 #include <stdexcept>
 #include <typeindex>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 namespace ES::Engine {
@@ -29,9 +32,6 @@ class SchedulerError : public std::exception {
  *
  */
 class SchedulerContainer {
-  public:
-    using SchedulerStorage = std::vector<std::shared_ptr<Scheduler::AScheduler>>;
-
   public:
     SchedulerContainer() = default;
     ~SchedulerContainer() = default;
@@ -76,14 +76,13 @@ class SchedulerContainer {
     std::shared_ptr<Scheduler::AScheduler> GetScheduler(std::type_index id);
 
     /**
-     * @brief Retrieves the list of schedulers.
+     * @brief Runs all schedulers in the container.
      *
-     * This function returns a reference to a vector containing unique pointers
-     * to AScheduler objects. The vector maintains the order of the schedulers.
-     *
-     * @return A reference to a vector of unique pointers to AScheduler objects.
+     * This function iterates through the ordered list of schedulers and calls
+     * the RunSystems method on each scheduler.
+     * It ensures that the schedulers are executed in the order defined by their dependencies.
      */
-    inline SchedulerStorage &GetSchedulers() { return _orderedSchedulers; }
+    void RunSchedulers();
 
     /**
      * @brief Deletes a scheduler of the specified type.
@@ -111,6 +110,24 @@ class SchedulerContainer {
     void DeleteScheduler(std::type_index id);
 
     /**
+     * @brief Add a dependency between two schedulers.
+     * It will set the first scheduler to be before the second one.
+     *
+     * @tparam TBefore The type of the first scheduler.
+     * @tparam TAfter The type of the second scheduler.
+     */
+    template <typename TBefore, typename TAfter> void Before();
+
+    /**
+     * @brief Add a dependency between two schedulers.
+     * It will set the first scheduler to be after the second one.
+     *
+     * @tparam TAfter The type of the first scheduler.
+     * @tparam TBefore The type of the second scheduler.
+     */
+    template <typename TAfter, typename TBefore> void After();
+
+    /**
      * @brief Checks if a scheduler of the specified type exists in the container.
      *
      * This function checks if a scheduler of the specified type TScheduler
@@ -134,10 +151,19 @@ class SchedulerContainer {
     bool Contains(std::type_index id) const;
 
   private:
-    std::unordered_map<std::type_index, std::size_t>
-        _idToIndex; ///< Map to store unique ids for each scheduler, mapping type_index to their position in the vector.
-    // TODO: Have a better data structure to avoid moving all the elements when deleting a scheduler.
-    SchedulerStorage _orderedSchedulers; ///< Vector to store schedulers in order.
+    void Update();
+
+    void TopologicalSort();
+
+    void ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
+                             std::unordered_map<std::type_index, size_t> &inDegree) const;
+
+  private:
+    bool _dirty = false;
+    std::unordered_map<std::type_index, std::shared_ptr<Scheduler::AScheduler>>
+        _schedulers; ///< Vector to store schedulers in order.
+    std::unordered_map<std::type_index, std::unordered_set<std::type_index>> _dependencies;
+    std::list<std::shared_ptr<Scheduler::AScheduler>> _orderedSchedulers; ///< Vector to store schedulers in order.
 };
 } // namespace ES::Engine
 
