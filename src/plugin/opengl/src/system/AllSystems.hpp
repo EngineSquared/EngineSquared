@@ -48,7 +48,6 @@ void GLEnableCullFace(const ES::Engine::Core &core);
 void SetupLights(ES::Engine::Core &core);
 void SetupCamera(ES::Engine::Core &core);
 
-void BindTexture(ES::Engine::Core &core);
 void RenderMeshes(ES::Engine::Core &core);
 void RenderText(ES::Engine::Core &core);
 void RenderSprites(ES::Engine::Core &core);
