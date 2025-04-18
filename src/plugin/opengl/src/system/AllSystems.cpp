@@ -20,9 +20,9 @@
 #include "SpriteHandle.hpp"
 #include "Text.hpp"
 #include "TextHandle.hpp"
-#include "Window.hpp"
 #include "TextureHandle.hpp"
 #include "TextureManager.hpp"
+#include "Window.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
