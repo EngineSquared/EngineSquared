@@ -8,6 +8,7 @@
 #include "component/SpriteHandle/SpriteHandle.hpp"
 #include "component/Text/Text.hpp"
 #include "component/TextHandle/TextHandle.hpp"
+#include "component/TextureHandle/TextureHandle.hpp"
 
 #include "plugin/PluginOpenGL.hpp"
 
@@ -16,6 +17,7 @@
 #include "resource/GLTextBufferManager/GLTextBufferManager.hpp"
 #include "resource/MaterialCache/MaterialCache.hpp"
 #include "resource/ShaderManager/ShaderManager.hpp"
+#include "resource/TextureManager/TextureManager.hpp"
 
 #include "system/AllSystems.hpp"
 
@@ -24,4 +26,5 @@
 #include "utils/GLTextBuffer/GLTextBuffer.hpp"
 #include "utils/Loader/Loader.hpp"
 #include "utils/Material/Material.hpp"
+#include "utils/Texture/Texture.hpp"
 #include "utils/Viewer/Viewer.hpp"

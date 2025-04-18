@@ -20,6 +20,8 @@
 #include "SpriteHandle.hpp"
 #include "Text.hpp"
 #include "TextHandle.hpp"
+#include "TextureHandle.hpp"
+#include "TextureManager.hpp"
 #include "Window.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
@@ -296,6 +298,11 @@ void ES::Plugin::OpenGL::System::LoadGLTextBufferManager(ES::Engine::Core &core)
     core.RegisterResource<Resource::GLTextBufferManager>(Resource::GLTextBufferManager());
 }
 
+void ES::Plugin::OpenGL::System::LoadTextureManager(ES::Engine::Core &core)
+{
+    core.RegisterResource<Resource::TextureManager>(Resource::TextureManager());
+}
+
 void ES::Plugin::OpenGL::System::LoadGLSpriteBufferManager(ES::Engine::Core &core)
 {
     core.RegisterResource<Resource::GLSpriteBufferManager>(Resource::GLSpriteBufferManager());
@@ -448,6 +455,12 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
             glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
+
+            Component::TextureHandle *textureHandle =
+                ES::Engine::Entity(entity).TryGetComponent<Component::TextureHandle>(core);
+            if (textureHandle)
+                core.GetResource<Resource::TextureManager>().Get(textureHandle->id).Bind();
+
             glBuffer.Draw(mesh);
             shader.disable();
         });

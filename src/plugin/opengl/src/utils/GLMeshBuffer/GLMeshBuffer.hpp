@@ -52,6 +52,7 @@ class GLMeshBuffer {
     GLuint VAO = 0;
     GLuint VBO_position = 0;
     GLuint VBO_normal = 0;
+    GLuint VBO_texCoords = 0;
     GLuint IBO = 0;
 };
 

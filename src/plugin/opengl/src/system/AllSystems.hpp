@@ -33,6 +33,7 @@ void LoadGLSpriteBuffer(ES::Engine::Core &core);
 
 void LoadGLTextBufferManager(ES::Engine::Core &core);
 void LoadGLTextBuffer(ES::Engine::Core &core);
+void LoadTextureManager(ES::Engine::Core &core);
 void LoadGLSpriteBufferManager(ES::Engine::Core &core);
 
 void CreateCamera(ES::Engine::Core &core);
