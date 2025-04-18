@@ -33,6 +33,9 @@ class SchedulerError : public std::exception {
  */
 class SchedulerContainer {
   public:
+    using SchedulerStorage = std::vector<std::shared_ptr<Scheduler::AScheduler>>;
+
+  public:
     SchedulerContainer() = default;
     ~SchedulerContainer() = default;
 
@@ -64,12 +67,23 @@ class SchedulerContainer {
     template <typename TScheduler> TScheduler &GetScheduler();
 
     /**
-     * @brief Retrieves the list of schedulers.
+     * @brief Retrieves a scheduler identified by the given type index.
      *
-     * This function returns a reference to a vector containing unique pointers
-     * to AScheduler objects. The vector maintains the order of the schedulers.
+     * This function searches for a scheduler associated with the specified type index.
+     * If the scheduler is found, it returns a weak pointer to it. If not found, it throws an error.
      *
-     * @return A reference to a vector of unique pointers to AScheduler objects.
+     * @param id The type index of the scheduler to retrieve.
+     * @return std::weak_ptr<Scheduler::AScheduler> A weak pointer to the scheduler of the specified type.
+     * @throws SchedulerError If the scheduler of the specified type is not found.
+     */
+    std::shared_ptr<Scheduler::AScheduler> GetScheduler(std::type_index id);
+
+    /**
+     * @brief Runs all schedulers in the container.
+     * 
+     * This function iterates through the ordered list of schedulers and calls
+     * the RunSystems method on each scheduler.
+     * It ensures that the schedulers are executed in the order defined by their dependencies.
      */
     void RunSchedulers();
 
@@ -115,6 +129,29 @@ class SchedulerContainer {
      * @tparam TBefore The type of the second scheduler.
      */
     template <typename TAfter, typename TBefore> void After();
+
+    /**
+     * @brief Checks if a scheduler of the specified type exists in the container.
+     *
+     * This function checks if a scheduler of the specified type TScheduler
+     * exists in the container. It returns true if the scheduler is found,
+     * otherwise false.
+     *
+     * @param id The type index of the scheduler to check for.
+     * @return true if the scheduler exists, false otherwise.
+     */
+    template <typename TScheduler> bool Contains() const;
+
+    /**
+     * @brief Checks if a scheduler identified by the given type index exists in the container.
+     *
+     * This function checks if a scheduler associated with the specified type index exists in the container.
+     * It returns true if the scheduler is found, otherwise false.
+     *
+     * @param id The type index of the scheduler to check for.
+     * @return true if the scheduler exists, false otherwise.
+     */
+    bool Contains(std::type_index id) const;
 
   private:
     void Update();

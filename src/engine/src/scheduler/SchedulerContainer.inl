@@ -45,3 +45,10 @@ inline void ES::Engine::SchedulerContainer::RunSchedulers()
         scheduler->RunSystems();
     }
 }
+
+inline bool ES::Engine::SchedulerContainer::Contains(std::type_index id) const { return _idToIndex.contains(id); }
+
+template <typename TScheduler> inline bool ES::Engine::SchedulerContainer::Contains() const
+{
+    return Contains(std::type_index(typeid(TScheduler)));
+}
