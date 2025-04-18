@@ -46,14 +46,18 @@ inline void ES::Engine::SchedulerContainer::RunSchedulers()
     }
 }
 
-inline bool ES::Engine::SchedulerContainer::Contains(std::type_index id) const { return this->_schedulers.contains(id); }
+inline bool ES::Engine::SchedulerContainer::Contains(std::type_index id) const
+{
+    return this->_schedulers.contains(id);
+}
 
 template <typename TScheduler> inline bool ES::Engine::SchedulerContainer::Contains() const
 {
     return Contains(std::type_index(typeid(TScheduler)));
 }
 
-inline std::shared_ptr<ES::Engine::Scheduler::AScheduler> ES::Engine::SchedulerContainer::GetScheduler(std::type_index id)
+inline std::shared_ptr<ES::Engine::Scheduler::AScheduler>
+ES::Engine::SchedulerContainer::GetScheduler(std::type_index id)
 {
     auto it = this->_schedulers.find(id);
     if (it == this->_schedulers.end())
