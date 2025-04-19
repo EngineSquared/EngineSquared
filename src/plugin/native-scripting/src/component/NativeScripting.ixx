@@ -1,8 +1,13 @@
-#pragma once
+module;
 
-#include "ScriptableEntity.hpp"
+#include "Core.hpp"
+#include "Entity.hpp"
 
-namespace ES::Plugin::NativeScripting::Component {
+export module ESPluginNativeScriptingComponent;
+
+import ESPluginNativeScriptingUtils;
+
+export namespace ES::Plugin::NativeScripting::Component {
 /**
  * Component used to allow native scripting for entities.
  * Implementation is well explained and inspired from this Youtube video made by @TheCherno
@@ -18,8 +23,8 @@ struct NativeScripting {
     std::function<void(ES::Plugin::NativeScripting::Utils::ScriptableEntity *)> OnDestroy;
     std::function<void(ES::Plugin::NativeScripting::Utils::ScriptableEntity *)> OnUpdate;
 
-    template <typename T> void Bind(ES::Engine::Core &core)
-    {
+    template <typename T>
+    void Bind(ES::Engine::Core &core) {
         Instantiate = [this]() { seInstance = std::make_unique<T>(); };
         DestroyInstance = [this]() { seInstance.reset(); };
 

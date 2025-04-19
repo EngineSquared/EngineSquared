@@ -11,12 +11,17 @@ target("PluginNativeScripting")
 
     add_deps("EngineSquaredCore")
 
-    add_files("src/**.cpp")
+    add_files("src/component/NativeScripting.ixx", {public = true})
+    add_files("src/system/ScriptingSystem.ixx", {public = true})
+    add_files("src/utils/ScriptableEntity.ixx", {public = true})
+    add_files("src/plugin/PluginNativeScripting.ixx", {public = true})
+    add_files("src/NativeScripting.ixx", {public = true})
     add_includedirs("src", {public = true})
     add_includedirs("src/component", {public = true})
     add_includedirs("src/utils", {public = true})
     add_includedirs("src/system", {public = true})
     add_includedirs("src/plugin", {public = true})
+
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)

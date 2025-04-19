@@ -1,0 +1,6 @@
+export module NativeScripting;
+
+export import ESPluginNativeScriptingSystem;
+export import ESPluginNativeScriptingComponent;
+export import ESPluginNativeScriptingUtils;
+export import ESPluginNativeScriptingPlugin;

@@ -1,0 +1,36 @@
+module;
+
+#include "Engine.hpp"
+
+export module ESPluginNativeScriptingSystem;
+
+import ESPluginNativeScriptingComponent;
+
+export namespace ES::Plugin::NativeScripting::System {
+    void UpdateScripts(ES::Engine::Core &core)
+    {
+        core.GetRegistry().view<ES::Plugin::NativeScripting::Component::NativeScripting>().each(
+            [&core](auto entity, auto &nsComponent) {
+                if (!nsComponent.seInstance.get())
+                {
+                    nsComponent.Instantiate();
+                    nsComponent.seInstance->entity = entity;
+                    nsComponent.OnCreate(nsComponent.seInstance.get());
+                }
+
+                nsComponent.OnUpdate(nsComponent.seInstance.get());
+            });
+    }
+
+    void DestroyScript(entt::registry &registry, entt::entity entity)
+    {
+        const auto &script = registry.get<ES::Plugin::NativeScripting::Component::NativeScripting>(entity);
+        script.OnDestroy(script.seInstance.get());
+        script.DestroyInstance();
+    }
+
+    void SetOnDestroy(ES::Engine::Core &core)
+    {
+        core.GetRegistry().on_destroy<ES::Plugin::NativeScripting::Component::NativeScripting>().connect<&DestroyScript>();
+    }
+}

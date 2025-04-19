@@ -2,9 +2,8 @@
 
 #include "Core.hpp"
 #include "Entity.hpp"
-#include "NativeScripting.hpp"
-#include "PluginNativeScripting.hpp"
-#include "ScriptableEntity.hpp"
+
+import NativeScripting;
 
 struct ActionHistory {
     std::vector<std::string> actions;

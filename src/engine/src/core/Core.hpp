@@ -1,6 +1,5 @@
 #pragma once
 
-#include <concepts>
 #include <entt/entt.hpp>
 #include <functional>
 #include <memory>
@@ -28,9 +27,6 @@ namespace ES::Engine {
 class Entity;
 
 class APlugin;
-
-template <typename T>
-concept CScheduler = std::derived_from<T, Scheduler::AScheduler>;
 
 class Core {
   private:
@@ -89,7 +85,7 @@ class Core {
      * @tparam TScheduler The type of scheduler to use.
      * @param scheduler The scheduler to add.
      */
-    template <CScheduler TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&...args);
+    template <typename TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&...args);
 
     /**
      * Get a scheduler from the registry.
@@ -97,17 +93,7 @@ class Core {
      * @tparam TScheduler The type of scheduler to get.
      * @return The scheduler.
      */
-    template <CScheduler TScheduler> TScheduler &GetScheduler();
-
-    template <typename TSchedulerA, typename TSchedulerB> inline void SetSchedulerBefore()
-    {
-        this->_schedulers.Before<TSchedulerA, TSchedulerB>();
-    }
-
-    template <typename TSchedulerA, typename TSchedulerB> inline void SetSchedulerAfter()
-    {
-        this->_schedulers.After<TSchedulerA, TSchedulerB>();
-    }
+    template <typename TScheduler> TScheduler &GetScheduler();
 
     /**
      * Get the running state of the core
@@ -128,26 +114,17 @@ class Core {
 
     /**
      * Add one or multiple systems to the registry. A system is a function that will be called by the registry.
+     * The function must take a Registry as first parameter.
+     * The function must return void.
      * The function will be called by the registry according to the scheduler choosen.
      * If multiple systems are added, they will be called as a group, in the order they were added.
      *
-     * @tparam  TScheduler  The type of scheduler to use. It must be derived from AScheduler.
-     * @param   systems     The systems to add.
-     * @see AScheduler
+     * @tparam  TScheduler  The type of scheduler to use.
+     * @param   systems    The systems to add.
+     * @see IScheduler
      */
-    template <CScheduler TScheduler, typename... Systems> void RegisterSystem(Systems... systems);
-
-    /**
-     * Add one or multiple systems to the registry. A system is a function that will be called by the registry.
-     * The function will be called by the registry according to the scheduler choosen.
-     * If multiple systems are added, they will be called as a group, in the order they were added.
-     *
-     * It will use the default scheduler as no scheduler is specified.
-     *
-     * @tparam  Systems  The systems to add.
-     * @see AScheduler
-     */
-    template <typename... Systems> void RegisterSystem(Systems... systems);
+    template <typename TScheduler = ES::Engine::Scheduler::Update, typename... Systems>
+    void RegisterSystem(Systems... systems);
 
     /**
      * Deletes a scheduler from the registry.
@@ -155,7 +132,7 @@ class Core {
      * @tparam TScheduler The type of scheduler to delete.
      * @note This will delete the scheduler at the end of the frame.
      */
-    template <CScheduler TScheduler> void DeleteScheduler();
+    template <typename TScheduler> void DeleteScheduler();
 
     /**
      * Run all the systems. The systems will be called in the order they were added. It will also update the delta time.
@@ -199,30 +176,6 @@ class Core {
      */
     void ClearEntities();
 
-    /**
-     * @brief Sets the default scheduler for the core engine.
-     *
-     * This function template allows the specification of a default scheduler
-     * to be used by the core engine. The scheduler type is specified as a
-     * template parameter.
-     *
-     * @tparam TScheduler The type of the scheduler to be set as default.
-     */
-    template <CScheduler TScheduler> inline void SetDefaultScheduler()
-    {
-        SetDefaultScheduler(std::type_index(typeid(TScheduler)));
-    }
-
-    /**
-     * @brief Sets the default scheduler for the core engine.
-     *
-     * This function allows the specification of a default scheduler to be used
-     * by the core engine. The scheduler type is specified as a type index.
-     *
-     * @param scheduler The type index of the scheduler to be set as default.
-     */
-    inline void SetDefaultScheduler(std::type_index scheduler);
-
   private:
     /**
      * @brief Adds a plugin of type TPlugin to the engine.
@@ -237,7 +190,6 @@ class Core {
   private:
     std::unique_ptr<entt::registry> _registry;
     ES::Engine::SchedulerContainer _schedulers;
-    std::type_index _defaultScheduler = typeid(ES::Engine::Scheduler::Update);
     std::vector<std::type_index> _schedulersToDelete;
     std::unordered_map<std::type_index, std::unique_ptr<APlugin>> _plugins;
     bool _running = false;
