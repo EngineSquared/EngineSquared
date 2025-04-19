@@ -29,8 +29,10 @@ void Texture::LoadTexture(const std::string &texturePath)
     glGenTextures(1, &_textureID);
     glBindTexture(GL_TEXTURE_2D, _textureID);
 
-    GLenum format = _channels == 4 ? GL_RGBA : GL_RGB;
-    glTexImage2D(GL_TEXTURE_2D, 0, format, _width, _height, 0, format, GL_UNSIGNED_BYTE, pixels);
+    GLenum format = GL_RGBA;
+    GLenum internalFormat = GL_SRGB_ALPHA;
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, _width, _height, 0, format, GL_UNSIGNED_BYTE, pixels);
+
     glGenerateMipmap(GL_TEXTURE_2D);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
