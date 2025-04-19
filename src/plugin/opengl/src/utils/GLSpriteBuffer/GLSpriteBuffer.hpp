@@ -51,6 +51,7 @@ class GLSpriteBuffer {
     GLuint VAO = 0;
     GLuint VBO = 0;
     GLuint IBO = 0;
+    GLuint VBO_texCoords = 0;
 };
 
 } // namespace ES::Plugin::OpenGL::Utils

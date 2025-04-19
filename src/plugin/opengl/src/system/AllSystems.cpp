@@ -519,6 +519,11 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
                                glm::value_ptr(transform.getTransformationMatrix()));
             glUniformMatrix4fv(shader.uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
+            Component::TextureHandle *textureHandle =
+                ES::Engine::Entity(e).TryGetComponent<Component::TextureHandle>(core);
+            if (textureHandle)
+                core.GetResource<Resource::TextureManager>().Get(textureHandle->id).Bind();
+
             glBuffer.Draw();
             shader.disable();
         });
