@@ -1,0 +1,6 @@
+export module nativescripting;
+
+export import :utils;
+export import :component;
+export import :system;
+export import :plugin;

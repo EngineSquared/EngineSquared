@@ -2,9 +2,9 @@ module;
 
 #include "Engine.hpp"
 
-export module ESPluginNativeScriptingSystem;
+export module nativescripting:system;
 
-import ESPluginNativeScriptingComponent;
+import :component;
 
 export namespace ES::Plugin::NativeScripting::System {
     void UpdateScripts(ES::Engine::Core &core)

@@ -3,7 +3,7 @@ module;
 #include "Core.hpp"
 #include "Entity.hpp"
 
-export module ESPluginNativeScriptingUtils;
+export module nativescripting:utils;
 
 export namespace ES::Plugin::NativeScripting::Utils {
   class ScriptableEntity {

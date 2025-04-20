@@ -3,9 +3,9 @@ module;
 #include "Core.hpp"
 #include "Entity.hpp"
 
-export module ESPluginNativeScriptingComponent;
+export module nativescripting:component;
 
-import ESPluginNativeScriptingUtils;
+import :utils;
 
 export namespace ES::Plugin::NativeScripting::Component {
 /**

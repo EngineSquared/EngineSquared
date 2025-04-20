@@ -3,7 +3,7 @@
 #include "Core.hpp"
 #include "Entity.hpp"
 
-import NativeScripting;
+import nativescripting;
 
 struct ActionHistory {
     std::vector<std::string> actions;

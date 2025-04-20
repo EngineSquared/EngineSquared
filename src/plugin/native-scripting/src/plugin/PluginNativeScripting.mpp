@@ -4,9 +4,9 @@ module;
 #include "Startup.hpp"
 #include "Update.hpp"
 
-export module ESPluginNativeScriptingPlugin;
+export module nativescripting:plugin;
 
-import ESPluginNativeScriptingSystem;
+import :system;
 
 export namespace ES::Plugin::NativeScripting {
     class Plugin : public ES::Engine::APlugin {

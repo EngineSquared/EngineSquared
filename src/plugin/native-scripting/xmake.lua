@@ -4,23 +4,14 @@ add_requires("entt", "spdlog", "fmt")
 includes("../../engine/xmake.lua")
 
 target("PluginNativeScripting")
-    set_kind("static")
+    set_kind("moduleonly")
     set_languages("cxx20")
     add_packages("entt", "spdlog", "fmt")
     set_policy("build.warning", true)
 
     add_deps("EngineSquaredCore")
 
-    add_files("src/component/NativeScripting.ixx", {public = true})
-    add_files("src/system/ScriptingSystem.ixx", {public = true})
-    add_files("src/utils/ScriptableEntity.ixx", {public = true})
-    add_files("src/plugin/PluginNativeScripting.ixx", {public = true})
-    add_files("src/NativeScripting.ixx", {public = true})
-    add_includedirs("src", {public = true})
-    add_includedirs("src/component", {public = true})
-    add_includedirs("src/utils", {public = true})
-    add_includedirs("src/system", {public = true})
-    add_includedirs("src/plugin", {public = true})
+    add_files("src/**.mpp")
 
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
