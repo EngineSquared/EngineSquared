@@ -13,6 +13,10 @@ target("PluginNativeScripting")
 
     add_files("src/**.mpp")
 
+    if is_plat("linux") and is_cc("gcc") then
+        add_cxxflags("-fmodules-ts", {force = true})
+    end
+
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
