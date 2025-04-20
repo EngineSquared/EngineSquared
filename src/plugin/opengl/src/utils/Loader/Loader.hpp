@@ -1,4 +1,3 @@
-
 // Original author: r3dux
 
 #ifndef SHADER_PROGRAM_HPP
@@ -38,6 +37,9 @@ class ShaderProgram {
 
     // Map of uniforms and their binding locations
     std::map<std::string, int, std::less<>> uniformMap;
+
+    // Map to store SSBO bindings
+    std::map<std::string, GLuint, std::less<>> ssboMap;
 
     // Has this shader program been initialised?
 
@@ -329,6 +331,25 @@ class ShaderProgram {
         return uniformMap[uniformName];
     }
 
+    GLuint ssbo(const std::string &ssboName)
+    {
+        // Create an iterator to look through our ssbo map (only create iterator on first run -
+        // reuse it for all further calls).
+        static std::map<std::string, GLuint, std::less<>>::const_iterator ssboIter;
+
+        // Try to find the named ssbo
+        ssboIter = ssboMap.find(ssboName);
+
+        // Not found? Bail.
+        if (ssboIter == ssboMap.end())
+        {
+            ES::Utils::Log::Error(fmt::format("Could not find ssbo in shader program: {}", ssboName));
+        }
+
+        // Otherwise return the ssbo location from the ssbo map
+        return ssboMap[ssboName];
+    }
+
     // Method to add an attribute to the shader and return the bound location
     int addAttribute(const std::string &attributeName)
     {
@@ -375,6 +396,58 @@ class ShaderProgram {
 
         // Return the uniform location
         return uniformMap[uniformName];
+    }
+
+    // Method to add an SSBO to the shader program
+    void addSSBO(const std::string &ssboName, GLuint bindingPoint, GLsizeiptr size, const void *data = nullptr)
+    {
+        GLuint ssbo;
+        glGenBuffers(1, &ssbo);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, size, data, GL_DYNAMIC_DRAW);
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, bindingPoint, ssbo);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+        ssboMap[ssboName] = bindingPoint;
+
+        if (DEBUG_SHADER)
+        {
+            ES::Utils::Log::Info(fmt::format("SSBO {} added and bound to binding point {}", ssboName, bindingPoint));
+        }
+    }
+
+    // Method to update an SSBO's data
+    void updateSSBO(const std::string &ssboName, GLsizeiptr size, const void *data)
+    {
+        auto it = ssboMap.find(ssboName);
+        if (it == ssboMap.end())
+        {
+            ES::Utils::Log::Error(fmt::format("SSBO {} not found.", ssboName));
+            return;
+        }
+
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, it->second);
+        glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, size, data);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+    }
+
+    // Method to delete an SSBO
+    void deleteSSBO(const std::string &ssboName)
+    {
+        auto it = ssboMap.find(ssboName);
+        if (it == ssboMap.end())
+        {
+            ES::Utils::Log::Error(fmt::format("SSBO {} not found.", ssboName));
+            return;
+        }
+
+        glDeleteBuffers(1, &it->second);
+        ssboMap.erase(it);
+
+        if (DEBUG_SHADER)
+        {
+            ES::Utils::Log::Info(fmt::format("SSBO {} deleted.", ssboName));
+        }
     }
 
 }; // End of class

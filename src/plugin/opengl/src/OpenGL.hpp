@@ -9,6 +9,7 @@
 #include "component/Text/Text.hpp"
 #include "component/TextHandle/TextHandle.hpp"
 #include "component/TextureHandle/TextureHandle.hpp"
+#include "component/Light/Light.hpp"
 
 #include "plugin/PluginOpenGL.hpp"
 
@@ -29,3 +30,4 @@
 #include "utils/MouseDragging/MouseDragging.hpp"
 #include "utils/Texture/Texture.hpp"
 #include "utils/Viewer/Viewer.hpp"
+#include "utils/LightInfo/LightInfo.hpp"

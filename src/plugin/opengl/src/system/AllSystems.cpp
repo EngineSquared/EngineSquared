@@ -10,6 +10,7 @@
 #include "GLTextBufferManager.hpp"
 #include "Input.hpp"
 #include "Light.hpp"
+#include "LightInfo.hpp"
 #include "MaterialCache.hpp"
 #include "MaterialHandle.hpp"
 #include "Mesh.hpp"
@@ -140,11 +141,16 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
 
         uniform vec3 CamPos;
 
+        uniform int NumberLights;
+
         struct LightInfo {
-            vec4 Position; // Light position in eye coords.
-            vec3 Intensity; // Light intensity
+            vec4 Position;      // Light position (x, y, z) + w (Type of light)
+            vec4 Intensity;     // Light intensity
         };
-        uniform LightInfo Light[5];
+
+        layout(std430, binding = 0) buffer LightBuffer {
+            LightInfo Light[];
+        };
 
         struct MaterialInfo {
             vec3 Ka; // Ambient reflectivity
@@ -157,24 +163,26 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
         out vec4 FragColor;
 
         void main() {
-            vec3 finalColor = vec3(0,0,0);
-            vec3 ambient = Material.Ka * Light[0].Intensity;
-            for (int i = 0; i < 4; i++) {
-                vec3 L = normalize(Light[i].Position.xyz - Position);
-                vec3 V = normalize(CamPos - Position);
-                vec3 diffuse = Material.Kd * Light[i].Intensity * max( dot(L, Normal), 0.0);
-                vec3 HalfwayVector = normalize(V + L);
-                vec3 specular = Material.Ks * Light[i].Intensity * pow( max( dot( HalfwayVector, Normal), 0.0), Material.Shiness);
-                finalColor = finalColor + diffuse + specular;
+            vec3 finalColor = vec3(0.0, 0.0, 0.0);
+            vec3 ambient = vec3(0.0, 0.0, 0.0);
+
+            for (int i = 0; i < NumberLights; i++) {
+                int type = int(Light[i].Position.w);
+
+                if (type == 0) { // Point light
+                    vec3 L = normalize(Light[i].Position.xyz - Position);
+                    vec3 V = normalize(CamPos - Position);
+                    vec3 HalfwayVector = normalize(V + L);
+
+                    vec3 diffuse = Material.Kd * Light[i].Intensity.rgb * max(dot(L, Normal), 0.0);
+                    vec3 specular = Material.Ks * Light[i].Intensity.rgb * pow(max(dot(HalfwayVector, Normal), 0.0), Material.Shiness);
+                    finalColor += diffuse + specular;
+                } else if (type == 1) { // Ambient light
+                    ambient += Material.Ka * Light[i].Intensity.rgb;
+                }
             }
-            vec3 L = normalize(Light[4].Position.xyz);
-            vec3 V = normalize(CamPos - Position);
-            vec3 diffuse = Material.Kd * Light[4].Intensity * max( dot(L, Normal), 0.0);
-            vec3 HalfwayVector = normalize(V + L);
-            vec3 specular = Material.Ks * Light[4].Intensity * pow( max( dot( HalfwayVector, Normal), 0.0), Material.Shiness);
-            finalColor = finalColor + diffuse + specular;
-            finalColor = ambient + finalColor;
-            FragColor = vec4(finalColor, 1.0);
+
+            FragColor = vec4(finalColor + ambient, 1.0);
         }
     )";
 
@@ -262,11 +270,8 @@ void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
     m_shaderProgram.addUniform("ModelMatrix");  // View*Model : mat4
     m_shaderProgram.addUniform("NormalMatrix"); // Refer next slide : mat3
 
-    for (int i = 0; i < 5; i++)
-    {
-        m_shaderProgram.addUniform(fmt::format("Light[{}].Position", i));
-        m_shaderProgram.addUniform(fmt::format("Light[{}].Intensity", i));
-    }
+    m_shaderProgram.addUniform("NumberLights");
+    m_shaderProgram.addSSBO("LightBuffer", 0, sizeof(ES::Plugin::OpenGL::Utils::LightInfo));
     m_shaderProgram.addUniform("Material.Ka");
     m_shaderProgram.addUniform("Material.Kd");
     m_shaderProgram.addUniform("Material.Ks");
@@ -395,34 +400,27 @@ void ES::Plugin::OpenGL::System::GLEnableCullFace(const ES::Engine::Core &)
 
 void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
 {
-    auto &shader = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
+    std::unordered_map<Component::ShaderHandle, std::vector<ES::Plugin::OpenGL::Utils::LightInfo>> ssbo_lights;
 
-    std::array<ES::Plugin::OpenGL::Utils::Light, 5> light = {
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.8f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.0f, 0.8f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.0f, 0.0f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.0f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.8f, 0.8f)}
-    };
+    core.GetRegistry().view<ES::Plugin::Object::Component::Transform, Component::ShaderHandle, Component::Light>().each(
+        [&](auto entity, ES::Plugin::Object::Component::Transform &transform, Component::ShaderHandle &shaderHandle,
+            ES::Plugin::OpenGL::Component::Light &light) {
+            ES::Plugin::OpenGL::Utils::LightInfo lightInfo;
+            lightInfo.position = glm::vec4(transform.position, static_cast<float>(light.type));
+            lightInfo.intensity = glm::vec4(light.intensity, 0.f);
 
-    float nbr_lights = 5.f;
-    float scale = 2.f * glm::pi<float>() / nbr_lights;
+            ssbo_lights[shaderHandle].emplace_back(lightInfo);
+        });
 
-    light[0].position = glm::vec4(5.f * cosf(scale * 0.f), 5.f, 5.f * sinf(scale * 0.f), 1.f);
-    light[1].position = glm::vec4(5.f * cosf(scale * 1.f), 5.f, 5.f * sinf(scale * 1.f), 1.f);
-    light[2].position = glm::vec4(5.f * cosf(scale * 2.f), 5.f, 5.f * sinf(scale * 2.f), 1.f);
-    light[3].position = glm::vec4(5.f * cosf(scale * 3.f), 5.f, 5.f * sinf(scale * 3.f), 1.f);
-    light[4].position = glm::vec4(5.f * cosf(scale * 4.f), 5.f, 5.f * sinf(scale * 4.f), 1.f);
-
-    shader.use();
-    for (int i = 0; i < 5; i++)
+    for (auto &[shaderId, lights] : ssbo_lights)
     {
-        glUniform4fv(shader.uniform(fmt::format("Light[{}].Position", i).c_str()), 1,
-                     glm::value_ptr(light[i].position));
-        glUniform3fv(shader.uniform(fmt::format("Light[{}].Intensity", i).c_str()), 1,
-                     glm::value_ptr(light[i].intensity));
+        auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId.id);
+        shader.use();
+        shader.updateSSBO("LightBuffer", lights.size() * sizeof(ES::Plugin::OpenGL::Utils::LightInfo),
+                          static_cast<const void *>(lights.data()));
+        glUniform1i(shader.uniform("NumberLights"), static_cast<int>(lights.size()));
+        shader.disable();
     }
-    shader.disable();
 }
 
 void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
