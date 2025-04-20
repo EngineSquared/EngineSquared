@@ -13,7 +13,8 @@ target("PluginNativeScripting")
 
     add_files("src/**.mpp")
 
-    if is_plat("linux") and is_cc("gcc") then
+    -- if using gcc or clang, enable modules
+    if (is_plat("linux") and is_toolchain("gcc", "clang")) then
         add_cxxflags("-fmodules-ts", {force = true})
     end
 
