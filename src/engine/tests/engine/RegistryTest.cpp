@@ -85,13 +85,13 @@ TEST(Core, DefaultScheduler)
     core.RegisterScheduler<TestSchedulerA>();
     core.RegisterScheduler<TestSchedulerB>();
 
-    core.RegisterSystem<TestSchedulerA>([](Core &core) {
-        auto &history = core.GetResource<HistoryStorage>().history;
+    core.RegisterSystem<TestSchedulerA>([](Core &sCore) {
+        auto &history = sCore.GetResource<HistoryStorage>().history;
         history.emplace_back("Starting Scheduler A");
     });
 
-    core.RegisterSystem<TestSchedulerB>([](Core &core) {
-        auto &history = core.GetResource<HistoryStorage>().history;
+    core.RegisterSystem<TestSchedulerB>([](Core &sCore) {
+        auto &history = sCore.GetResource<HistoryStorage>().history;
         history.emplace_back("Starting Scheduler B");
     });
 

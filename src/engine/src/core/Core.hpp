@@ -221,7 +221,7 @@ class Core {
      *
      * @param scheduler The type index of the scheduler to be set as default.
      */
-    inline void SetDefaultScheduler(std::type_index scheduler);
+    void SetDefaultScheduler(std::type_index scheduler);
 
   private:
     /**
