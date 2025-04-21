@@ -2,6 +2,7 @@
 #include "RenderingPipeline.hpp"
 #include "Startup.hpp"
 #include "Update.hpp"
+#include "Shutdown.hpp"
 
 void ES::Plugin::RenderingPipeline::Plugin::Bind()
 {
@@ -15,9 +16,11 @@ void ES::Plugin::RenderingPipeline::Plugin::Bind()
     this->RegisterScheduler<RenderSetup>();
     this->RegisterScheduler<ToGPU>();
     this->RegisterScheduler<Draw>();
+    this->GetCore().SetSchedulerAfter<PreUpdate, ES::Engine::Scheduler::Startup>();
     this->GetCore().SetSchedulerBefore<PreUpdate, ES::Engine::Scheduler::Update>();
     this->GetCore().SetSchedulerBefore<ES::Engine::Scheduler::Update, RenderSetup>();
     this->GetCore().SetSchedulerBefore<RenderSetup, ToGPU>();
     this->GetCore().SetSchedulerBefore<ToGPU, Draw>();
+    this->GetCore().SetSchedulerBefore<Draw, ES::Engine::Scheduler::Shutdown>();
     // PreUpdate, Update, RenderSetup, ToGPU, Draw
 }
