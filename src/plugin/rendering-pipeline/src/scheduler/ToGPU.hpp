@@ -12,4 +12,4 @@ class ToGPU : public ES::Engine::Scheduler::Update {
   public:
     using ES::Engine::Scheduler::Update::Update;
 };
-} // namespace ES::Engine::Scheduler
+} // namespace ES::Plugin::RenderingPipeline

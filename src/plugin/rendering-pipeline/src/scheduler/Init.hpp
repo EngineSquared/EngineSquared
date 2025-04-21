@@ -13,4 +13,4 @@ class Init : public ES::Engine::Scheduler::AScheduler {
     using AScheduler::AScheduler;
     void RunSystems() override;
 };
-} // namespace ES::Engine::Scheduler
+} // namespace ES::Plugin::RenderingPipeline

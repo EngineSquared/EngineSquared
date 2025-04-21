@@ -5,8 +5,8 @@
 
 #include "PreUpdate.hpp"
 
+#include "Draw.hpp"
 #include "RenderSetup.hpp"
 #include "ToGPU.hpp"
-#include "Draw.hpp"
 
 #include "PluginRenderingPipeline.hpp"
