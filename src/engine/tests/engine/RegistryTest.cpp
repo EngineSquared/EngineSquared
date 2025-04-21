@@ -97,15 +97,15 @@ TEST(Core, DefaultScheduler)
 
     core.SetDefaultScheduler<TestSchedulerA>();
 
-    core.RegisterSystem([](Core &core) {
-        auto &history = core.GetResource<HistoryStorage>().history;
+    core.RegisterSystem([](Core &sCore) {
+        auto &history = sCore.GetResource<HistoryStorage>().history;
         history.emplace_back("System Test 1");
     });
 
     core.SetDefaultScheduler<TestSchedulerB>();
 
-    core.RegisterSystem([](Core &core) {
-        auto &history = core.GetResource<HistoryStorage>().history;
+    core.RegisterSystem([](Core &sCore) {
+        auto &history = sCore.GetResource<HistoryStorage>().history;
         history.emplace_back("System Test 2");
     });
 
