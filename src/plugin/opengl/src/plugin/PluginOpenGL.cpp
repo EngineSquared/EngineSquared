@@ -2,9 +2,11 @@
 #include "Startup.hpp"
 #include "system/AllSystems.hpp"
 #include "system/WindowSystem.hpp"
+#include "RenderingPipeline.hpp"
 
 void ES::Plugin::OpenGL::Plugin::Bind()
 {
+    RequirePlugins<ES::Plugin::RenderingPipeline::Plugin>();
 
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::Window::System::InitGLFW);
     RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::Window::System::SetupGLFWHints);
