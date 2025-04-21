@@ -23,6 +23,7 @@ static void UpdateButtonTextureColor(ES::Plugin::UI::Component::Button &button,
 static void UpdateButtonTextureImage(const ES::Plugin::UI::Component::Button &,
                                      const ES::Plugin::OpenGL::Component::Sprite &)
 {
+    // tbd later
 }
 
 void ES::Plugin::UI::System::UpdateButtonTexture(ES::Engine::Core &core)
