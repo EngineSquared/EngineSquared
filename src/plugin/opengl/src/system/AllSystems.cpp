@@ -432,6 +432,14 @@ static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader,
     glUniform1fv(shader.uniform("Material.Shiness"), 1, &material.Shiness);
 }
 
+static void BindTextureIfNeeded(ES::Engine::Core &core, ES::Engine::Entity entity)
+{
+    ES::Plugin::OpenGL::Component::TextureHandle *textureHandle =
+        ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::OpenGL::Component::TextureHandle>(core);
+    if (textureHandle)
+        core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Get(textureHandle->id).Bind();
+}
+
 void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 {
     auto &view = core.GetResource<Resource::Camera>().view;
@@ -455,10 +463,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
             glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
-            Component::TextureHandle *textureHandle =
-                ES::Engine::Entity(entity).TryGetComponent<Component::TextureHandle>(core);
-            if (textureHandle)
-                core.GetResource<Resource::TextureManager>().Get(textureHandle->id).Bind();
+            BindTextureIfNeeded(core, entity);
             glBuffer.Draw(mesh);
             shader.disable();
         });
