@@ -1,10 +1,9 @@
 #include <gtest/gtest.h>
 
-#include "RenderingPipeline.hpp"
 #include "Engine.hpp"
+#include "RenderingPipeline.hpp"
 
-struct History
-{
+struct History {
     std::vector<std::string> messages;
 };
 
@@ -16,39 +15,39 @@ TEST(RenderingPipeline, CasualUse)
 
     core.AddPlugins<ES::Plugin::RenderingPipeline::Plugin>();
 
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::Init>([](ES::Engine::Core &c){
+    core.RegisterSystem<ES::Plugin::RenderingPipeline::Init>([](ES::Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Init");
     });
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::Setup>([](ES::Engine::Core &c){
+    core.RegisterSystem<ES::Plugin::RenderingPipeline::Setup>([](ES::Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Setup");
     });
-    core.RegisterSystem<ES::Engine::Scheduler::Startup>([](ES::Engine::Core &c){
+    core.RegisterSystem<ES::Engine::Scheduler::Startup>([](ES::Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Startup");
     });
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::PreUpdate>([](ES::Engine::Core &c){
+    core.RegisterSystem<ES::Plugin::RenderingPipeline::PreUpdate>([](ES::Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("PreUpdate");
     });
-    core.RegisterSystem<ES::Engine::Scheduler::Update>([](ES::Engine::Core &c){
+    core.RegisterSystem<ES::Engine::Scheduler::Update>([](ES::Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Update");
     });
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::RenderSetup>([](ES::Engine::Core &c){
+    core.RegisterSystem<ES::Plugin::RenderingPipeline::RenderSetup>([](ES::Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("RenderSetup");
     });
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::ToGPU>([](ES::Engine::Core &c){
+    core.RegisterSystem<ES::Plugin::RenderingPipeline::ToGPU>([](ES::Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("ToGPU");
     });
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::Draw>([](ES::Engine::Core &c){
+    core.RegisterSystem<ES::Plugin::RenderingPipeline::Draw>([](ES::Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Draw");
     });
-    core.RegisterSystem<ES::Engine::Scheduler::Shutdown>([](ES::Engine::Core &c){
+    core.RegisterSystem<ES::Engine::Scheduler::Shutdown>([](ES::Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Shutdown");
     });

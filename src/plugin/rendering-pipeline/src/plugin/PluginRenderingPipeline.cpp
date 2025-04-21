@@ -1,8 +1,8 @@
 #include "PluginRenderingPipeline.hpp"
 #include "RenderingPipeline.hpp"
+#include "Shutdown.hpp"
 #include "Startup.hpp"
 #include "Update.hpp"
-#include "Shutdown.hpp"
 
 void ES::Plugin::RenderingPipeline::Plugin::Bind()
 {
