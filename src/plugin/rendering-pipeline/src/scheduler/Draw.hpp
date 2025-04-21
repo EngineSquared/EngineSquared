@@ -2,21 +2,14 @@
 
 #include <entt/entt.hpp>
 
-#include "AScheduler.hpp"
+#include "Update.hpp"
 
 namespace ES::Plugin::RenderingPipeline {
 /**
  * @brief Update scheduler that runs systems every time it is called
  */
-class Draw : public ES::Engine::Scheduler::AScheduler {
+class Draw : public ES::Engine::Scheduler::Update {
   public:
-    using AScheduler::AScheduler;
-    void RunSystems() override;
-
-    inline float GetDeltaTime() const { return _elapsedTime; }
-
-  private:
-    float _elapsedTime = 0.0f;
-    std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime = std::chrono::high_resolution_clock::now();
+    using ES::Engine::Scheduler::Update::Update;
 };
 } // namespace ES::Plugin::RenderingPipeline
