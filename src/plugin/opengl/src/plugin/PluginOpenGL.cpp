@@ -1,8 +1,8 @@
 #include "PluginOpenGL.hpp"
+#include "RenderingPipeline.hpp"
 #include "Startup.hpp"
 #include "system/AllSystems.hpp"
 #include "system/WindowSystem.hpp"
-#include "RenderingPipeline.hpp"
 
 void ES::Plugin::OpenGL::Plugin::Bind()
 {

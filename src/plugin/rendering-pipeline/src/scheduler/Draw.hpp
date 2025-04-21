@@ -19,4 +19,4 @@ class Draw : public ES::Engine::Scheduler::AScheduler {
     float _elapsedTime = 0.0f;
     std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime = std::chrono::high_resolution_clock::now();
 };
-}
+} // namespace ES::Plugin::RenderingPipeline
