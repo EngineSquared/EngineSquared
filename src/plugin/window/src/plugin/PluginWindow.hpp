@@ -5,9 +5,10 @@
 namespace ES::Plugin::Window {
 class Plugin : public ES::Engine::APlugin {
   public:
-    using APlugin::APlugin;;
+    using APlugin::APlugin;
+    ;
     ~Plugin() = default;
 
     void Bind() final;
 };
-} // namespace ES::Plugin::OpenGL
+} // namespace ES::Plugin::Window
