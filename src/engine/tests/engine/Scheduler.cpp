@@ -2,6 +2,7 @@
 
 #include "Core.hpp"
 #include "Entity.hpp"
+#include "Startup.hpp"
 
 using namespace ES::Engine;
 
@@ -95,4 +96,33 @@ TEST(SchedulerContainer, DependencyBefore)
         ASSERT_EQ(data[0], 1);
         ASSERT_EQ(data[1], 2);
     }
+}
+
+TEST(SchedulerContainer, CurrentScheduler)
+{
+    Core core;
+    core.RegisterResource<ResourceTest>(ResourceTest());
+    auto &data = core.GetResource<ResourceTest>().data;
+    core.RegisterSystem<Scheduler::Startup>([](Core &c)
+    {
+        c.GetResource<ResourceTest>().data.push_back(1);
+    });
+    core.RegisterSystem<Scheduler::Update>([](Core &c)
+    {
+        c.GetResource<ResourceTest>().data.push_back(2);
+    });
+    core.RegisterSystem<Scheduler::Shutdown>([](Core &c)
+    {
+        c.GetResource<ResourceTest>().data.push_back(3);
+    });
+
+    core.RunSystems();
+    core.RunSystems();
+
+    ASSERT_EQ(data.size(), 5);
+    ASSERT_EQ(data[0], 1);
+    ASSERT_EQ(data[1], 2);
+    ASSERT_EQ(data[2], 3);
+    ASSERT_EQ(data[3], 2);
+    ASSERT_EQ(data[4], 3);
 }
