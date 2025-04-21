@@ -55,7 +55,7 @@ void GLSpriteBuffer::GenerateGLSpriteBuffers(const Component::Sprite &sprite) no
 void GLSpriteBuffer::Draw() const
 {
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
 }
 

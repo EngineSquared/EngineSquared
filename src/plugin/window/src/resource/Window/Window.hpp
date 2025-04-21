@@ -31,8 +31,10 @@ class Window {
     GLFWwindow *_share;
 
     bool _isFullscreen = false;
-    int _windowedX = 0, _windowedY = 0;
-    int _windowedWidth = 0, _windowedHeight = 0;
+    int _windowedX = 0;
+    int _windowedY = 0;
+    int _windowedWidth = 0;
+    int _windowedHeight = 0;
 
   public:
     Window(uint32_t width, uint32_t height, const std::string &title, GLFWmonitor *monitor = nullptr,
