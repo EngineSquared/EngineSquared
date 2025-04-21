@@ -5,6 +5,7 @@ includes("../object/xmake.lua")
 includes("../window/xmake.lua")
 includes("../colors/xmake.lua")
 includes("../math/xmake.lua")
+includes("../rendering-pipeline/xmake.lua")
 
 target("PluginOpenGL")
     set_kind("static")
@@ -21,6 +22,7 @@ target("PluginOpenGL")
     add_deps("PluginWindow")
     add_deps("PluginMath")
     add_deps("PluginColors")
+    add_deps("PluginRenderingPipeline")
 
     add_files("src/**.cpp")
 
