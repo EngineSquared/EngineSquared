@@ -18,7 +18,7 @@ class InputManager {
      * @brief Print the available controllers detected by glfw.
      *
      * @return void
-    */
+     */
     void PrintAvailableControllers() const;
 
   private:

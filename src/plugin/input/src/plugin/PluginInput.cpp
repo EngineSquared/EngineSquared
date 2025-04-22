@@ -1,7 +1,7 @@
 #include "PluginInput.hpp"
 
-#include "Startup.hpp"
 #include "InputManager.hpp"
+#include "Startup.hpp"
 
 void ES::Plugin::Input::Plugin::Bind()
 {
