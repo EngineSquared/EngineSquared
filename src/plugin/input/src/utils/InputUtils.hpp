@@ -37,4 +37,4 @@ inline glm::vec2 GetMousePosition()
     glfwGetCursorPos(glfwGetCurrentContext(), &x, &y);
     return {x, y};
 }
-} // namespace ES::Plugin::Input::Resource
+} // namespace ES::Plugin::Input::Utils
