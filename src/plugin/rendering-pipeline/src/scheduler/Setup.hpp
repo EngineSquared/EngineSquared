@@ -5,7 +5,9 @@
 #include "AScheduler.hpp"
 
 namespace ES::Plugin::RenderingPipeline {
-// TODO: doc
+/**
+ * @brief This class is used to setup libraries like GLFW, GLEW, etc.
+ */
 class Setup : public ES::Engine::Scheduler::AScheduler {
   public:
     using AScheduler::AScheduler;

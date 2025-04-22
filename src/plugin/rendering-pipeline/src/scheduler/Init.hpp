@@ -6,7 +6,7 @@
 
 namespace ES::Plugin::RenderingPipeline {
 /**
- * @brief Update scheduler that runs systems every time it is called
+ * @brief This class is used to initialize libraries like GLFW, GLEW, etc.
  */
 class Init : public ES::Engine::Scheduler::AScheduler {
   public:

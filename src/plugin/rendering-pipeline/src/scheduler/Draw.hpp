@@ -6,7 +6,7 @@
 
 namespace ES::Plugin::RenderingPipeline {
 /**
- * @brief Update scheduler that runs systems every time it is called
+ * @brief This class is used to swap the buffers and draw the data on the screen.
  */
 class Draw : public ES::Engine::Scheduler::Update {
   public:

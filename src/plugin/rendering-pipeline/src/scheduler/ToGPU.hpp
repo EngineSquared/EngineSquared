@@ -6,7 +6,7 @@
 
 namespace ES::Plugin::RenderingPipeline {
 /**
- * @brief Update scheduler that runs systems every time it is called
+ * @brief Used to send the data to the GPU, like meshes, text, sprites, etc.
  */
 class ToGPU : public ES::Engine::Scheduler::Update {
   public:
