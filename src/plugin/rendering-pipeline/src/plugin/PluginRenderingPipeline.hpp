@@ -14,9 +14,9 @@ namespace ES::Plugin::RenderingPipeline {
  * - Update: Here for engine's user to add their own update code.
  * - RenderSetup: Setup the rendering pipeline, like clearing the screen, setting up the camera, etc.
  * - ToGPU: Used to send the data to the GPU, like meshes, text, sprites, etc.
- * - Draw: Used for swapping the buffers and drawing the data on the screen. 
+ * - Draw: Used for swapping the buffers and drawing the data on the screen.
  */
-  class Plugin : public ES::Engine::APlugin {
+class Plugin : public ES::Engine::APlugin {
   public:
     using APlugin::APlugin;
     virtual ~Plugin() = default;

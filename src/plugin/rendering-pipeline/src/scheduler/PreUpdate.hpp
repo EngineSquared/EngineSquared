@@ -6,7 +6,7 @@
 
 namespace ES::Plugin::RenderingPipeline {
 /**
- * @brief Used for player's event handling like updating mouse position, buttons'state, etc. 
+ * @brief Used for player's event handling like updating mouse position, buttons'state, etc.
  */
 class PreUpdate : public ES::Engine::Scheduler::Update {
   public:
