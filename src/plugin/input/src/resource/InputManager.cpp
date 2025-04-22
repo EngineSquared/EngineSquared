@@ -1,7 +1,7 @@
 #include "InputManager.hpp"
 
-#include <fmt/format.h>
 #include <GLFW/glfw3.h>
+#include <fmt/format.h>
 
 #include "Core.hpp"
 #include "Logger.hpp"
