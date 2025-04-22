@@ -3,7 +3,7 @@
 #include "BoxCollider2D.hpp"
 #include "CollisionUtils2D.hpp"
 #include "HasChanged.hpp"
-#include "InputManager.hpp"
+#include "InputUtils.hpp"
 #include "Math.hpp"
 #include "Transform.hpp"
 #include "Window.hpp"
@@ -12,12 +12,11 @@
 
 void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Core &core)
 {
-    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
-    const bool &isMouseLeftPressed = inputManager.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
+    const bool &isMouseLeftPressed = Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
     int width = 0;
     int height = 0;
     core.GetResource<ES::Plugin::Window::Resource::Window>().GetWindowSize(width, height);
-    glm::vec2 mousePos = inputManager.GetMousePosition();
+    glm::vec2 mousePos = Input::Utils::GetMousePosition();
     mousePos.y = height - mousePos.y; // Invert Y axis to match the window coordinates
     auto view = core.GetRegistry()
                     .view<ES::Plugin::UI::Component::Button, ES::Plugin::UI::Component::BoxCollider2D,
