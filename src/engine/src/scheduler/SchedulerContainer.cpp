@@ -13,6 +13,13 @@ void ES::Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
         {
             this->_dependencies.erase(id);
         }
+        for (auto &[after, befores] : this->_dependencies)
+        {
+            if (befores.contains(id))
+            {
+                befores.erase(id);
+            }
+        }
     }
     else
     {

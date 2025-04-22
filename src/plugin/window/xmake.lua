@@ -3,6 +3,7 @@ add_requires("glfw", "glm", "entt", "spdlog")
 
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
+includes("../rendering-pipeline/xmake.lua")
 
 target("PluginWindow")
     set_kind("static")
@@ -11,6 +12,7 @@ target("PluginWindow")
 
     add_deps("EngineSquaredCore")
     add_deps("UtilsLog")
+    add_deps("PluginRenderingPipeline")
 
     add_packages("glfw", "glm", "entt", "spdlog")
 
@@ -22,3 +24,4 @@ target("PluginWindow")
     add_includedirs("src/resource/Button", {public = true})
     add_includedirs("src/exception", {public = true})
     add_includedirs("src/system", {public = true})
+    add_includedirs("src/plugin", {public = true})

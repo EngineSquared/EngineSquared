@@ -8,7 +8,6 @@ class APlugin {
     explicit APlugin(Core &core) : _core(core){};
     virtual void Bind(void) = 0;
 
-    // AddSystem
     template <typename TScheduler, typename... Systems> void RegisterSystems(Systems... systems)
     {
         _core.RegisterSystem<TScheduler>(systems...);
@@ -20,6 +19,13 @@ class APlugin {
     }
 
     template <typename... TPlugins> void RequirePlugins() { (RequirePlugin<TPlugins>(), ...); }
+
+    template <CScheduler TScheduler, typename... Args> inline TScheduler &RegisterScheduler(Args &&...args)
+    {
+        return _core.RegisterScheduler<TScheduler>(std::forward<Args>(args)...);
+    }
+
+    Core &GetCore() { return _core; }
 
   private:
     template <typename TPlugin> void RequirePlugin()
