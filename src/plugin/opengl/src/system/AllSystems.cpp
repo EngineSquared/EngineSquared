@@ -232,7 +232,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultSpriteShader(ES::Engine::Core &core)
         uniform vec4 color;
         void main()
         {
-            FragColor = color / vec4(255.0, 255.0, 255.0, 255.0);
+            FragColor = color;
         }
     )";
 
@@ -488,7 +488,7 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
             glUniformMatrix4fv(shader.uniform("Projection"), 1, GL_FALSE, glm::value_ptr(projection));
             glUniform1i(shader.uniform("Text"), 0);
-            glUniform3f(shader.uniform("TextColor"), text.color.x, text.color.y, text.color.z);
+            glUniform3f(shader.uniform("TextColor"), text.color.red, text.color.green, text.color.blue);
 
             auto &textBuffer = core.GetResource<Resource::GLTextBufferManager>().Get(textHandle.id);
 
@@ -516,8 +516,7 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
 
             shader.use();
 
-            glUniform4f(shader.uniform("color"), sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a);
-
+            glUniform4f(shader.uniform("color"), sprite.color.red, sprite.color.green, sprite.color.blue, sprite.color.alpha);
             glUniformMatrix4fv(shader.uniform("model"), 1, GL_FALSE,
                                glm::value_ptr(transform.getTransformationMatrix()));
             glUniformMatrix4fv(shader.uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
