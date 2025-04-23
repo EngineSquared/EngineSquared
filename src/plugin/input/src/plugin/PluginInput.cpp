@@ -1,5 +1,5 @@
-#include "BindCallbacksToGLFW.hpp"
 #include "PluginInput.hpp"
+#include "BindCallbacksToGLFW.hpp"
 #include "InputManager.hpp"
 #include "PluginWindow.hpp"
 #include "Startup.hpp"

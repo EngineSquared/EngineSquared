@@ -1,8 +1,8 @@
 #include "BindCallbacksToGLFW.hpp"
 #include "Engine.hpp"
-#include "Window.hpp"
-#include "InputManager.hpp"
 #include "Input.hpp"
+#include "InputManager.hpp"
+#include "Window.hpp"
 
 #include <GLFW/glfw3.h>
 
