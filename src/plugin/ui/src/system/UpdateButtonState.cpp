@@ -12,12 +12,10 @@
 
 void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Core &core)
 {
+    auto &window = core.GetResource<ES::Plugin::Window::Resource::Window>();
     const bool &isMouseLeftPressed = Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
-    int width = 0;
-    int height = 0;
-    core.GetResource<ES::Plugin::Window::Resource::Window>().GetWindowSize(width, height);
-    glm::vec2 mousePos = Input::Utils::GetMousePosition();
-    mousePos.y = height - mousePos.y; // Invert Y axis to match the window coordinates
+    glm::vec2 mousePos = window.GetMousePosition();
+
     auto view = core.GetRegistry()
                     .view<ES::Plugin::UI::Component::Button, ES::Plugin::UI::Component::BoxCollider2D,
                           ES::Plugin::Object::Component::Transform>();
