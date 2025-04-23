@@ -30,16 +30,13 @@ static void UpdateButtonTextureImage(const ES::Plugin::UI::Component::Button &bu
     {
         using enum ES::Plugin::UI::Component::Button::State;
     case Normal:
-        textureHandle.id = displayType.normalImageID.id;
-        textureHandle.name = displayType.normalImageID.name;
+        textureHandle = displayType.normalImageID;
         break;
     case Hover:
-        textureHandle.id = displayType.hoverImageID.id;
-        textureHandle.name = displayType.hoverImageID.name;
+        textureHandle = displayType.hoverImageID;
         break;
     case Pressed:
-        textureHandle.id = displayType.pressedImageID.id;
-        textureHandle.name = displayType.pressedImageID.name;
+        textureHandle = displayType.pressedImageID;
         break;
     }
 }
