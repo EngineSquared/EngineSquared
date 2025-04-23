@@ -9,6 +9,7 @@
 
 #include "AssetID.hpp"
 #include "Color.hpp"
+#include "TextureHandle.hpp"
 
 namespace ES::Plugin::UI::Component {
 /**
@@ -33,14 +34,14 @@ struct TintColor {
 /**
  * @brief A struct representing the image of a button
  *
- * @param   normalImageID   The ID of the image to use when the button is in the normal state
- * @param   hoverImageID    The ID of the image to use when the button is in the hover state
- * @param   pressedImageID  The ID of the image to use when the button is in the pressed state
+ * @param   normal   The ID of the image to use when the button is in the normal state
+ * @param   hover    The ID of the image to use when the button is in the hover state
+ * @param   pressed  The ID of the image to use when the button is in the pressed state
  */
 struct Image {
-    ES::Plugin::Object::Utils::AssetID normalImageID;
-    ES::Plugin::Object::Utils::AssetID hoverImageID;
-    ES::Plugin::Object::Utils::AssetID pressedImageID;
+    ES::Plugin::OpenGL::Component::TextureHandle normal;
+    ES::Plugin::OpenGL::Component::TextureHandle hover;
+    ES::Plugin::OpenGL::Component::TextureHandle pressed;
 };
 
 /**
