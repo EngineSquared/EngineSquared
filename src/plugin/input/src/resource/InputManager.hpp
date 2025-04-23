@@ -70,7 +70,10 @@ class InputManager {
      *
      * @param callback The callback to register.
      */
-    inline void RegisterCursorPosCallback(const CursorPosCallbackFn &callback) { _cursorPosCallbacks.push_back(callback); }
+    inline void RegisterCursorPosCallback(const CursorPosCallbackFn &callback)
+    {
+        _cursorPosCallbacks.push_back(callback);
+    }
 
     /**
      * @brief Register a cursor enter callback.
