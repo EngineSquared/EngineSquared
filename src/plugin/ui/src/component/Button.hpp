@@ -9,6 +9,7 @@
 
 #include "AssetID.hpp"
 #include "Color.hpp"
+#include "TextureHandle.hpp"
 
 namespace ES::Plugin::UI::Component {
 /**
@@ -38,9 +39,9 @@ struct TintColor {
  * @param   pressedImageID  The ID of the image to use when the button is in the pressed state
  */
 struct Image {
-    ES::Plugin::Object::Utils::AssetID normalImageID;
-    ES::Plugin::Object::Utils::AssetID hoverImageID;
-    ES::Plugin::Object::Utils::AssetID pressedImageID;
+    ES::Plugin::OpenGL::Component::TextureHandle normalImageID;
+    ES::Plugin::OpenGL::Component::TextureHandle hoverImageID;
+    ES::Plugin::OpenGL::Component::TextureHandle pressedImageID;
 };
 
 /**
