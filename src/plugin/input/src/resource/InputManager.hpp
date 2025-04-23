@@ -28,13 +28,6 @@ class InputManager {
     ~InputManager() = default;
 
     /**
-     * @brief Print the available controllers detected by glfw.
-     *
-     * @return void
-     */
-    void PrintAvailableControllers() const;
-
-    /**
      * @brief Register a key callback.
      *
      * @param callback The callback to register.
