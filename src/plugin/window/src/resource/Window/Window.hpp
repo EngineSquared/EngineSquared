@@ -3,6 +3,7 @@
 #include <string>
 
 #include <GLFW/glfw3.h>
+#include <glm/vec2.hpp>
 #include <stdexcept>
 
 #include "WindowError.hpp"
@@ -91,6 +92,23 @@ class Window {
     void SetSize(int width, int height);
 
     void ToggleFullscreen();
+
+    /**
+     * @brief Get the current mouse position.
+     *
+     * @return A pair containing the x and y coordinates of the mouse.
+     */
+    inline glm::vec2 GetMousePosition()
+    {
+        int width = 0;
+        int height = 0;
+        double x = 0;
+        double y = 0;
+        this->GetWindowSize(width, height);
+        glfwGetCursorPos(_window, &x, &y);
+        y = height - y;
+        return {x, y};
+    }
 };
 
 } // namespace ES::Plugin::Window::Resource
