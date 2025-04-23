@@ -38,6 +38,8 @@ class InputManager {
      * @brief Register a key callback.
      *
      * @param callback The callback to register.
+     *
+     * @note The callback will be called when a key is pressed or released.
      */
     inline void RegisterKeyCallback(const KeyCallbackFn &callback) { _keyCallbacks.push_back(callback); }
 
@@ -45,6 +47,8 @@ class InputManager {
      * @brief Register a char callback.
      *
      * @param callback The callback to register.
+     *
+     * @note The callback will be called when a character is typed.
      */
     inline void RegisterCharCallback(const CharCallbackFn &callback) { _charCallbacks.push_back(callback); }
 
@@ -52,6 +56,9 @@ class InputManager {
      * @brief Register a char mods callback.
      *
      * @param callback The callback to register.
+     *
+     * @note The callback will be called when a character is typed with modifiers.
+     * (modifiers are used to detect if the key is pressed with shift, ctrl, alt, etc.)
      */
     inline void RegisterCharModsCallback(const CharModsCallbackFn &callback) { _charModsCallbacks.push_back(callback); }
 
@@ -59,6 +66,8 @@ class InputManager {
      * @brief Register a mouse button callback.
      *
      * @param callback The callback to register.
+     *
+     * @note The callback will be called when a mouse button is pressed or released.
      */
     inline void RegisterMouseButtonCallback(const MouseButtonCallbackFn &callback)
     {
@@ -69,6 +78,8 @@ class InputManager {
      * @brief Register a cursor position callback.
      *
      * @param callback The callback to register.
+     *
+     * @note The callback will be called when the cursor position is updated.
      */
     inline void RegisterCursorPosCallback(const CursorPosCallbackFn &callback)
     {
@@ -79,6 +90,8 @@ class InputManager {
      * @brief Register a cursor enter callback.
      *
      * @param callback The callback to register.
+     *
+     * @note The callback will be called when the cursor enters or leaves the window.
      */
     inline void RegisterCursorEnterCallback(const CursorEnterCallbackFn &callback)
     {
@@ -89,6 +102,8 @@ class InputManager {
      * @brief Register a scroll callback.
      *
      * @param callback The callback to register.
+     *
+     * @note The callback will be called when the scroll wheel is used.
      */
     inline void RegisterScrollCallback(const ScrollCallbackFn &callback) { _scrollCallbacks.push_back(callback); }
 
@@ -96,6 +111,8 @@ class InputManager {
      * @brief Register a drop callback.
      *
      * @param callback The drop function
+     *
+     * @note The callback will be called when one or multiple files are dropped on the window.
      */
     inline void RegisterDropCallback(const DropCallbackFn &callback) { _dropCallbacks.push_back(callback); }
 
@@ -103,6 +120,8 @@ class InputManager {
      * @brief Register a joystick callback.
      *
      * @param callback The callback to register.
+     *
+     * @note The callback will be called when a controller is connected or disconnected.
      */
     inline void RegisterJoystickCallback(const JoystickCallbackFn &callback) { _joystickCallbacks.push_back(callback); }
 
@@ -110,10 +129,10 @@ class InputManager {
      * @brief Call the key callbacks.
      *
      * @param core The core.
-     * @param key The key.
-     * @param scancode The scancode.
-     * @param action The action.
-     * @param mods The mods.
+     * @param key The key. (Raw input, like 'a', 'b', 'c', etc.)
+     * @param scancode The scancode. (Matches with GLFW_KEY_* constants)
+     * @param action The action. (One of GLFW_PRESS, GLFW_RELEASE, GLFW_REPEAT)
+     * @param mods The mods. (One of GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER)
      *
      * @return void
      */
@@ -129,7 +148,7 @@ class InputManager {
      * @brief Call the char callbacks.
      *
      * @param core The core.
-     * @param codepoint The codepoint.
+     * @param codepoint The codepoint. (Raw input, like 'a', 'b', 'c', etc.)
      *
      * @return void
      */
@@ -145,8 +164,8 @@ class InputManager {
      * @brief Call the char mods callbacks.
      *
      * @param core The core.
-     * @param codepoint The codepoint.
-     * @param mods The mods.
+     * @param codepoint The codepoint. (Raw input, like 'a', 'b', 'c', etc.)
+     * @param mods The mods. (One of GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER)
      *
      * @return void
      */
@@ -162,9 +181,9 @@ class InputManager {
      * @brief Call the mouse button callbacks.
      *
      * @param core The core.
-     * @param button The button.
-     * @param action The action.
-     * @param mods The mods.
+     * @param button The button. (Matches with GLFW_MOUSE_BUTTON_* constants)
+     * @param action The action. (One of GLFW_PRESS, GLFW_RELEASE)
+     * @param mods The mods. (One of GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER)
      *
      * @return void
      */
@@ -197,7 +216,7 @@ class InputManager {
      * @brief Call the cursor enter callbacks.
      *
      * @param core The core.
-     * @param entered The entered state.
+     * @param entered The entered state. (1 if the cursor entered the window, 0 if it left)
      *
      * @return void
      */
@@ -230,8 +249,8 @@ class InputManager {
      * @brief Call the drop callbacks.
      *
      * @param core The core.
-     * @param count The count.
-     * @param paths The paths.
+     * @param count The number of paths in the C array.
+     * @param paths The paths. (C array of strings)
      *
      * @return void
      */
