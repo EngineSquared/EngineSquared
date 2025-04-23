@@ -32,18 +32,5 @@ class InputManager {
     {
         return glfwGetMouseButton(glfwGetCurrentContext(), button) == GLFW_PRESS;
     }
-
-    /**
-     * @brief Get the current mouse position.
-     *
-     * @return A pair containing the x and y coordinates of the mouse.
-     */
-    inline glm::vec2 GetMousePosition()
-    {
-        double x;
-        double y;
-        glfwGetCursorPos(glfwGetCurrentContext(), &x, &y);
-        return {x, y};
-    }
 };
 } // namespace ES::Plugin::Input::Resource
