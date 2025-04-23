@@ -5,9 +5,8 @@
 #include "Tools.hpp"
 
 #include "Button.hpp"
-#include "Sprite.hpp"
 #include "Logger.hpp"
-
+#include "Sprite.hpp"
 
 static void UpdateButtonTextureColor(ES::Plugin::UI::Component::Button &button,
                                      ES::Plugin::OpenGL::Component::Sprite &sprite)
@@ -46,21 +45,23 @@ void ES::Plugin::UI::System::UpdateButtonTexture(ES::Engine::Core &core)
     auto view = core.GetRegistry()
                     .view<ES::Plugin::UI::Component::Button, ES::Plugin::OpenGL::Component::Sprite,
                           ES::Plugin::Tools::HasChanged<ES::Plugin::UI::Component::Button>>();
-    view.each([&core](auto e, ES::Plugin::UI::Component::Button &button, ES::Plugin::OpenGL::Component::Sprite &sprite)
-    {
-        if (std::holds_alternative<ES::Plugin::UI::Component::DisplayType::TintColor>(button.displayType))
-        {
-            UpdateButtonTextureColor(button, sprite);
-        }
-        else if (std::holds_alternative<ES::Plugin::UI::Component::DisplayType::Image>(button.displayType))
-        {
-            ES::Engine::Entity entity(e);
-            ES::Plugin::OpenGL::Component::TextureHandle *textureHandle = entity.TryGetComponent<ES::Plugin::OpenGL::Component::TextureHandle>(core);
-            if (!textureHandle) {
-                ES::Utils::Log::Warn(fmt::format("Button {} has no texture handle", (unsigned int)(entity)));
-                return;
+    view.each(
+        [&core](auto e, ES::Plugin::UI::Component::Button &button, ES::Plugin::OpenGL::Component::Sprite &sprite) {
+            if (std::holds_alternative<ES::Plugin::UI::Component::DisplayType::TintColor>(button.displayType))
+            {
+                UpdateButtonTextureColor(button, sprite);
             }
-            UpdateButtonTextureImage(button, *textureHandle);
-        }
-    });
+            else if (std::holds_alternative<ES::Plugin::UI::Component::DisplayType::Image>(button.displayType))
+            {
+                ES::Engine::Entity entity(e);
+                ES::Plugin::OpenGL::Component::TextureHandle *textureHandle =
+                    entity.TryGetComponent<ES::Plugin::OpenGL::Component::TextureHandle>(core);
+                if (!textureHandle)
+                {
+                    ES::Utils::Log::Warn(fmt::format("Button {} has no texture handle", (unsigned int) (entity)));
+                    return;
+                }
+                UpdateButtonTextureImage(button, *textureHandle);
+            }
+        });
 }
