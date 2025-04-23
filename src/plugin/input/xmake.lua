@@ -2,6 +2,7 @@ add_rules("mode.debug", "mode.release")
 add_requires("glm", "glfw", "entt", "spdlog", "fmt")
 
 includes("../../engine/xmake.lua")
+includes("../../window/xmake.lua")
 includes("../../utils/log/xmake.lua")
 
 target("PluginInput")
@@ -13,6 +14,7 @@ target("PluginInput")
     add_files("src/**.cpp")
 
     add_deps("EngineSquaredCore")
+    add_deps("PluginWindow")
     add_deps("UtilsLog")
 
     add_includedirs("src", {public = true})
