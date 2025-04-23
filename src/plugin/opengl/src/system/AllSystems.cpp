@@ -516,7 +516,8 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
 
             shader.use();
 
-            glUniform4f(shader.uniform("color"), sprite.color.red, sprite.color.green, sprite.color.blue, sprite.color.alpha);
+            glUniform4f(shader.uniform("color"), sprite.color.red, sprite.color.green, sprite.color.blue,
+                        sprite.color.alpha);
             glUniformMatrix4fv(shader.uniform("model"), 1, GL_FALSE,
                                glm::value_ptr(transform.getTransformationMatrix()));
             glUniformMatrix4fv(shader.uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
