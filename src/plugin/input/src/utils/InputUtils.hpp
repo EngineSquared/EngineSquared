@@ -5,6 +5,8 @@
 
 #include "Core.hpp"
 
+#include "Logger.hpp"
+
 namespace ES::Plugin::Input::Utils {
 /**
  * @brief Check if a key is pressed.
@@ -36,5 +38,20 @@ inline glm::vec2 GetMousePosition()
     double y;
     glfwGetCursorPos(glfwGetCurrentContext(), &x, &y);
     return {x, y};
+}
+
+/**
+ * @brief Prints the available controllers that glfw can handle.
+ */
+inline void PrintAvailableControllers()
+{
+    for (int jid = GLFW_JOYSTICK_1; jid <= GLFW_JOYSTICK_LAST; ++jid)
+    {
+        if (glfwJoystickPresent(jid))
+        {
+            const char *name = glfwGetJoystickName(jid);
+            ES::Utils::Log::Info(fmt::format("Detected controller {}: {}", jid, name ? name : "Unknown"));
+        }
+    }
 }
 } // namespace ES::Plugin::Input::Utils
