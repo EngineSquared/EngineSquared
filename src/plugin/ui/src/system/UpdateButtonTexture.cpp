@@ -28,15 +28,9 @@ static void UpdateButtonTextureImage(const ES::Plugin::UI::Component::Button &bu
     switch (button.state)
     {
         using enum ES::Plugin::UI::Component::Button::State;
-    case Normal:
-        textureHandle = displayType.normal;
-        break;
-    case Hover:
-        textureHandle = displayType.hover;
-        break;
-    case Pressed:
-        textureHandle = displayType.pressed;
-        break;
+    case Normal: textureHandle = displayType.normal; break;
+    case Hover: textureHandle = displayType.hover; break;
+    case Pressed: textureHandle = displayType.pressed; break;
     }
 }
 
