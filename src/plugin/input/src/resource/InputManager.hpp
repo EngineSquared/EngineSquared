@@ -24,7 +24,7 @@ class InputManager {
     using DropCallbackFn = std::function<void(ES::Engine::Core &, int, const char **)>;
     using JoystickCallbackFn = std::function<void(ES::Engine::Core &, int, int)>;
 
-    InputManager();
+    InputManager() = default;
     ~InputManager() = default;
 
     /**

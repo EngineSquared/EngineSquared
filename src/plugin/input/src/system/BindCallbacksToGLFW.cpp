@@ -1,10 +1,10 @@
+#include "BindCallbacksToGLFW.hpp"
+#include "Engine.hpp"
+#include "Window.hpp"
 #include "InputManager.hpp"
+#include "Input.hpp"
 
 #include <GLFW/glfw3.h>
-#include <fmt/format.h>
-
-#include "Core.hpp"
-#include "Logger.hpp"
 
 /**
  * @brief Get the core from the window user pointer.
@@ -75,14 +75,16 @@ static void DropCallback(GLFWwindow *window, int count, const char **paths)
     inputManager.CallDropCallbacks(core, count, paths);
 }
 
-ES::Plugin::Input::Resource::InputManager::InputManager()
+void ES::Plugin::Input::System::BindCallbacksToGLFW(ES::Engine::Core &core)
 {
-    glfwSetKeyCallback(glfwGetCurrentContext(), KeyCallback);
-    glfwSetCharCallback(glfwGetCurrentContext(), CharCallback);
-    glfwSetCharModsCallback(glfwGetCurrentContext(), CharModsCallback);
-    glfwSetMouseButtonCallback(glfwGetCurrentContext(), MouseButtonCallback);
-    glfwSetCursorPosCallback(glfwGetCurrentContext(), CursorPosCallback);
-    glfwSetCursorEnterCallback(glfwGetCurrentContext(), CursorEnterCallback);
-    glfwSetScrollCallback(glfwGetCurrentContext(), ScrollCallback);
-    glfwSetDropCallback(glfwGetCurrentContext(), DropCallback);
+    auto &window = core.GetResource<ES::Plugin::Window::Resource::Window>();
+
+    glfwSetKeyCallback(window.GetGLFWWindow(), KeyCallback);
+    glfwSetCharCallback(window.GetGLFWWindow(), CharCallback);
+    glfwSetCharModsCallback(window.GetGLFWWindow(), CharModsCallback);
+    glfwSetMouseButtonCallback(window.GetGLFWWindow(), MouseButtonCallback);
+    glfwSetCursorPosCallback(window.GetGLFWWindow(), CursorPosCallback);
+    glfwSetCursorEnterCallback(window.GetGLFWWindow(), CursorEnterCallback);
+    glfwSetScrollCallback(window.GetGLFWWindow(), ScrollCallback);
+    glfwSetDropCallback(window.GetGLFWWindow(), DropCallback);
 }
