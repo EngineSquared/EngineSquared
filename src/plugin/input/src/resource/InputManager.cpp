@@ -88,15 +88,3 @@ ES::Plugin::Input::Resource::InputManager::InputManager()
     glfwSetScrollCallback(glfwGetCurrentContext(), ScrollCallback);
     glfwSetDropCallback(glfwGetCurrentContext(), DropCallback);
 }
-
-void ES::Plugin::Input::Resource::InputManager::PrintAvailableControllers() const
-{
-    for (int jid = GLFW_JOYSTICK_1; jid <= GLFW_JOYSTICK_LAST; ++jid)
-    {
-        if (glfwJoystickPresent(jid))
-        {
-            const char *name = glfwGetJoystickName(jid);
-            ES::Utils::Log::Info(fmt::format("Detected controller {}: {}", jid, name ? name : "Unknown"));
-        }
-    }
-}
