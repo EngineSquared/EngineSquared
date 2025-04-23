@@ -12,8 +12,6 @@ void CheckGLEWVersion(const ES::Engine::Core &core);
 
 void SetupResizeViewport(ES::Engine::Core &core);
 
-void MouseDragging(ES::Engine::Core &core);
-
 void LoadFontManager(ES::Engine::Core &core);
 
 void LoadShaderManager(ES::Engine::Core &core);
