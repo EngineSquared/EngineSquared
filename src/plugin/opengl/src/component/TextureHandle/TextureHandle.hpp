@@ -20,7 +20,7 @@ struct TextureHandle {
 
     TextureHandle(const TextureHandle &) = default;
     TextureHandle(TextureHandle &&) = default;
-    
+
     TextureHandle &operator=(const TextureHandle &) = default;
     TextureHandle &operator=(TextureHandle &&) noexcept = default;
 };
