@@ -77,8 +77,6 @@ static void DropCallback(GLFWwindow *window, int count, const char **paths)
 
 ES::Plugin::Input::Resource::InputManager::InputManager()
 {
-    PrintAvailableControllers(); // TODO: enclose in ES_DEBUG
-
     glfwSetKeyCallback(glfwGetCurrentContext(), KeyCallback);
     glfwSetCharCallback(glfwGetCurrentContext(), CharCallback);
     glfwSetCharModsCallback(glfwGetCurrentContext(), CharModsCallback);
