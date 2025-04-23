@@ -132,7 +132,7 @@ class InputManager {
      * @param key The key. (Raw input, like 'a', 'b', 'c', etc.)
      * @param scancode The scancode. (Matches with GLFW_KEY_* constants)
      * @param action The action. (One of GLFW_PRESS, GLFW_RELEASE, GLFW_REPEAT)
-     * @param mods The mods. (One of GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER)
+     * @param mods The mods. (Matches with GLFW_MOD_* constants)
      *
      * @return void
      */
@@ -165,7 +165,7 @@ class InputManager {
      *
      * @param core The core.
      * @param codepoint The codepoint. (Raw input, like 'a', 'b', 'c', etc.)
-     * @param mods The mods. (One of GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER)
+     * @param mods The mods. (Matches with GLFW_MOD_* constants)
      *
      * @return void
      */
@@ -183,7 +183,7 @@ class InputManager {
      * @param core The core.
      * @param button The button. (Matches with GLFW_MOUSE_BUTTON_* constants)
      * @param action The action. (One of GLFW_PRESS, GLFW_RELEASE)
-     * @param mods The mods. (One of GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER)
+     * @param mods The mods. (Matches with GLFW_MOD_* constants)
      *
      * @return void
      */
