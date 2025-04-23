@@ -39,28 +39,28 @@ class InputManager {
      *
      * @param callback The callback to register.
      */
-    inline void RegisterKeyCallback(KeyCallbackFn callback) { _keyCallbacks.push_back(callback); }
+    inline void RegisterKeyCallback(const KeyCallbackFn &callback) { _keyCallbacks.push_back(callback); }
 
     /**
      * @brief Register a char callback.
      *
      * @param callback The callback to register.
      */
-    inline void RegisterCharCallback(CharCallbackFn callback) { _charCallbacks.push_back(callback); }
+    inline void RegisterCharCallback(const CharCallbackFn &callback) { _charCallbacks.push_back(callback); }
 
     /**
      * @brief Register a char mods callback.
      *
      * @param callback The callback to register.
      */
-    inline void RegisterCharModsCallback(CharModsCallbackFn callback) { _charModsCallbacks.push_back(callback); }
+    inline void RegisterCharModsCallback(const CharModsCallbackFn &callback) { _charModsCallbacks.push_back(callback); }
 
     /**
      * @brief Register a mouse button callback.
      *
      * @param callback The callback to register.
      */
-    inline void RegisterMouseButtonCallback(MouseButtonCallbackFn callback)
+    inline void RegisterMouseButtonCallback(const MouseButtonCallbackFn &callback)
     {
         _mouseButtonCallbacks.push_back(callback);
     }
@@ -70,14 +70,14 @@ class InputManager {
      *
      * @param callback The callback to register.
      */
-    inline void RegisterCursorPosCallback(CursorPosCallbackFn callback) { _cursorPosCallbacks.push_back(callback); }
+    inline void RegisterCursorPosCallback(const CursorPosCallbackFn &callback) { _cursorPosCallbacks.push_back(callback); }
 
     /**
      * @brief Register a cursor enter callback.
      *
      * @param callback The callback to register.
      */
-    inline void RegisterCursorEnterCallback(CursorEnterCallbackFn callback)
+    inline void RegisterCursorEnterCallback(const CursorEnterCallbackFn &callback)
     {
         _cursorEnterCallbacks.push_back(callback);
     }
@@ -87,21 +87,21 @@ class InputManager {
      *
      * @param callback The callback to register.
      */
-    inline void RegisterScrollCallback(ScrollCallbackFn callback) { _scrollCallbacks.push_back(callback); }
+    inline void RegisterScrollCallback(const ScrollCallbackFn &callback) { _scrollCallbacks.push_back(callback); }
 
     /**
      * @brief Register a drop callback.
      *
      * @param callback The drop function
      */
-    inline void RegisterDropCallback(DropCallbackFn callback) { _dropCallbacks.push_back(callback); }
+    inline void RegisterDropCallback(const DropCallbackFn &callback) { _dropCallbacks.push_back(callback); }
 
     /**
      * @brief Register a joystick callback.
      *
      * @param callback The callback to register.
      */
-    inline void RegisterJoystickCallback(JoystickCallbackFn callback) { _joystickCallbacks.push_back(callback); }
+    inline void RegisterJoystickCallback(const JoystickCallbackFn &callback) { _joystickCallbacks.push_back(callback); }
 
     /**
      * @brief Call the key callbacks.
@@ -147,7 +147,7 @@ class InputManager {
      *
      * @return void
      */
-    inline void CallCharModsCallbacks(ES::Engine::Core &core, unsigned int codepoint, int mods)
+    inline void CallCharModsCallbacks(ES::Engine::Core &core, unsigned int codepoint, int mods) const
     {
         for (auto &callback : _charModsCallbacks)
         {
@@ -165,7 +165,7 @@ class InputManager {
      *
      * @return void
      */
-    inline void CallMouseButtonCallbacks(ES::Engine::Core &core, int button, int action, int mods)
+    inline void CallMouseButtonCallbacks(ES::Engine::Core &core, int button, int action, int mods) const
     {
         for (auto &callback : _mouseButtonCallbacks)
         {
@@ -182,7 +182,7 @@ class InputManager {
      *
      * @return void
      */
-    inline void CallCursorPosCallbacks(ES::Engine::Core &core, double xpos, double ypos)
+    inline void CallCursorPosCallbacks(ES::Engine::Core &core, double xpos, double ypos) const
     {
         for (auto &callback : _cursorPosCallbacks)
         {
@@ -198,7 +198,7 @@ class InputManager {
      *
      * @return void
      */
-    inline void CallCursorEnterCallbacks(ES::Engine::Core &core, int entered)
+    inline void CallCursorEnterCallbacks(ES::Engine::Core &core, int entered) const
     {
         for (auto &callback : _cursorEnterCallbacks)
         {
@@ -215,7 +215,7 @@ class InputManager {
      *
      * @return void
      */
-    inline void CallScrollCallbacks(ES::Engine::Core &core, double xoffset, double yoffset)
+    inline void CallScrollCallbacks(ES::Engine::Core &core, double xoffset, double yoffset) const
     {
         for (auto &callback : _scrollCallbacks)
         {
@@ -232,7 +232,7 @@ class InputManager {
      *
      * @return void
      */
-    inline void CallDropCallbacks(ES::Engine::Core &core, int count, const char **paths)
+    inline void CallDropCallbacks(ES::Engine::Core &core, int count, const char **paths) const
     {
         for (auto &callback : _dropCallbacks)
         {
@@ -248,7 +248,7 @@ class InputManager {
      *
      * @return void
      */
-    inline void CallJoystickCallbacks(int jid, int event)
+    inline void CallJoystickCallbacks(int jid, int event) const
     {
         for (auto &callback : _joystickCallbacks)
         {
