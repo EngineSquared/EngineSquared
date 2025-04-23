@@ -1,8 +1,8 @@
 #include "PluginInput.hpp"
 
 #include "InputManager.hpp"
-#include "Startup.hpp"
 #include "PluginWindow.hpp"
+#include "Startup.hpp"
 #include "Window.hpp"
 
 void ES::Plugin::Input::Plugin::Bind()
