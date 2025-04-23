@@ -2,8 +2,8 @@ add_rules("mode.debug", "mode.release")
 add_requires("glm", "glfw", "entt", "spdlog", "fmt")
 
 includes("../../engine/xmake.lua")
-includes("../../window/xmake.lua")
 includes("../../utils/log/xmake.lua")
+includes("../window/xmake.lua")
 
 target("PluginInput")
     set_kind("static")
