@@ -9,9 +9,7 @@ void ES::Plugin::Input::Plugin::Bind()
 {
     RequirePlugins<ES::Plugin::Window::Plugin>();
 
-    RegisterSystems<ES::Engine::Scheduler::Startup>([](ES::Engine::Core &core) {
-        glfwUser(
-    });
+    RegisterSystems<ES::Engine::Scheduler::Startup>([](ES::Engine::Core &core) { glfwUser( });
 
     RegisterResource<ES::Plugin::Input::Resource::InputManager>(ES::Plugin::Input::Resource::InputManager());
 }
