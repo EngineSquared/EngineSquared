@@ -88,4 +88,8 @@ void StopSystems(ES::Engine::Core &core)
 
 void LoadButtons(ES::Engine::Core &core) { core.RegisterResource<Resource::Buttons>(Resource::Buttons()); }
 
+void StoreCoreInWindow(ES::Engine::Core &core)
+{
+    glfwSetWindowUserPointer(glfwGetCurrentContext(), &core);
+}
 } // namespace ES::Plugin::Window::System

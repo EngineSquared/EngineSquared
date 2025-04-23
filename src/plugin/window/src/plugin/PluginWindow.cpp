@@ -8,7 +8,8 @@ void ES::Plugin::Window::Plugin::Bind()
 
     RegisterSystems<ES::Plugin::RenderingPipeline::Init>(
         ES::Plugin::Window::System::InitGLFW, ES::Plugin::Window::System::SetupGLFWHints,
-        ES::Plugin::Window::System::CreateWindowSystem, ES::Plugin::Window::System::LinkGLFWContextToGL);
+        ES::Plugin::Window::System::CreateWindowSystem, ES::Plugin::Window::System::LinkGLFWContextToGL,
+        ES::Plugin::Window::System::StoreCoreInWindow);
 
     RegisterSystems<ES::Plugin::RenderingPipeline::Setup>(ES::Plugin::Window::System::EnableVSync,
                                                           ES::Plugin::Window::System::LoadButtons);

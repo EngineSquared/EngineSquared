@@ -6,6 +6,82 @@
 #include "Core.hpp"
 #include "Logger.hpp"
 
+/**
+ * @brief Get the core from the window user pointer.
+ *
+ * @return A reference to the core.
+ *
+ * @note This is needed as the callbacks need to access the core, but they
+ * also need to be static functions to be used as GLFW callbacks.
+ */
+static ES::Engine::Core &GetCoreFromWindow(GLFWwindow *window)
+{
+    return *static_cast<ES::Engine::Core *>(glfwGetWindowUserPointer(window));
+}
+
+static void KeyCallback(GLFWwindow *window, int key, int scancode, int action,
+    int mods)
+{
+    ES::Engine::Core &core = GetCoreFromWindow(window);
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+    inputManager.CallKeyCallbacks(core, key, scancode, action, mods);
+}
+
+static void CharCallback(GLFWwindow *window, unsigned int codepoint)
+{
+    ES::Engine::Core &core = GetCoreFromWindow(window);
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+    inputManager.CallCharCallbacks(core, codepoint);
+}
+
+static void CharModsCallback(GLFWwindow *window, unsigned int codepoint, int mods)
+{
+    ES::Engine::Core &core = GetCoreFromWindow(window);
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+    inputManager.CallCharModsCallbacks(core, codepoint, mods);
+}
+
+static void MouseButtonCallback(GLFWwindow *window, int button, int action,
+            int mods)
+{
+    ES::Engine::Core &core = GetCoreFromWindow(window);
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+    inputManager.CallMouseButtonCallbacks(core, button, action, mods);
+}
+
+static void CursorPosCallback(GLFWwindow *window, double xpos, double ypos)
+{
+    ES::Engine::Core &core = GetCoreFromWindow(window);
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+    inputManager.CallCursorPosCallbacks(core, xpos, ypos);
+}
+
+static void CursorEnterCallback(GLFWwindow *window, int entered)
+{
+    ES::Engine::Core &core = GetCoreFromWindow(window);
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+    inputManager.CallCursorEnterCallbacks(core, entered);
+}
+
+static void ScrollCallback(GLFWwindow *window, double xoffset, double yoffset)
+{
+    ES::Engine::Core &core = GetCoreFromWindow(window);
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+    inputManager.CallScrollCallbacks(core, xoffset, yoffset);
+}
+
+static void DropCallback(GLFWwindow *window, int count, const char **paths)
+{
+    ES::Engine::Core &core = GetCoreFromWindow(window);
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+    inputManager.CallDropCallbacks(core, count, paths);
+}
+
+static void JoystickCallback(int jid, int event)
+{
+    // TODO: no window here, find a solution
+}
+
 ES::Plugin::Input::Resource::InputManager::InputManager()
 {
     PrintAvailableControllers(); // TODO: enclose in ES_DEBUG
@@ -30,83 +106,5 @@ void ES::Plugin::Input::Resource::InputManager::PrintAvailableControllers() cons
             const char *name = glfwGetJoystickName(jid);
             ES::Utils::Log::Info(fmt::format("Detected controller {}: {}", jid, name ? name : "Unknown"));
         }
-    }
-}
-
-void ES::Plugin::Input::Resource::InputManager::KeyCallback(GLFWwindow *window, int key, int scancode, int action,
-                                                            int mods)
-{
-    if (action == GLFW_PRESS)
-    {
-        ES::Utils::Log::Info(fmt::format("Key pressed: {} (scancode: {}, mods: {})", key, scancode, mods));
-    }
-    else if (action == GLFW_RELEASE)
-    {
-        ES::Utils::Log::Info(fmt::format("Key released: {} (scancode: {}, mods: {})", key, scancode, mods));
-    }
-}
-
-void ES::Plugin::Input::Resource::InputManager::CharCallback(GLFWwindow *window, unsigned int codepoint)
-{
-    ES::Utils::Log::Info(fmt::format("Character input: {}", codepoint));
-}
-
-void ES::Plugin::Input::Resource::InputManager::CharModsCallback(GLFWwindow *window, unsigned int codepoint, int mods)
-{
-    ES::Utils::Log::Info(fmt::format("Character input with mods: {} (mods: {})", codepoint, mods));
-}
-
-void ES::Plugin::Input::Resource::InputManager::MouseButtonCallback(GLFWwindow *window, int button, int action,
-                                                                    int mods)
-{
-    if (action == GLFW_PRESS)
-    {
-        ES::Utils::Log::Info(fmt::format("Mouse button pressed: {} (mods: {})", button, mods));
-    }
-    else if (action == GLFW_RELEASE)
-    {
-        ES::Utils::Log::Info(fmt::format("Mouse button released: {} (mods: {})", button, mods));
-    }
-}
-
-void ES::Plugin::Input::Resource::InputManager::CursorPosCallback(GLFWwindow *window, double xpos, double ypos)
-{
-    ES::Utils::Log::Info(fmt::format("Mouse cursor position: ({}, {})", xpos, ypos));
-}
-
-void ES::Plugin::Input::Resource::InputManager::CursorEnterCallback(GLFWwindow *window, int entered)
-{
-    if (entered)
-    {
-        ES::Utils::Log::Info("Mouse cursor entered the window");
-    }
-    else
-    {
-        ES::Utils::Log::Info("Mouse cursor left the window");
-    }
-}
-
-void ES::Plugin::Input::Resource::InputManager::ScrollCallback(GLFWwindow *window, double xoffset, double yoffset)
-{
-    ES::Utils::Log::Info(fmt::format("Mouse scroll: ({}, {})", xoffset, yoffset));
-}
-
-void ES::Plugin::Input::Resource::InputManager::DropCallback(GLFWwindow *window, int count, const char **paths)
-{
-    for (int i = 0; i < count; ++i)
-    {
-        ES::Utils::Log::Info(fmt::format("Dropped file: {}", paths[i]));
-    }
-}
-
-void ES::Plugin::Input::Resource::InputManager::JoystickCallback(int jid, int event)
-{
-    if (event == GLFW_CONNECTED)
-    {
-        ES::Utils::Log::Info(fmt::format("Joystick {} connected", jid));
-    }
-    else if (event == GLFW_DISCONNECTED)
-    {
-        ES::Utils::Log::Info(fmt::format("Joystick {} disconnected", jid));
     }
 }

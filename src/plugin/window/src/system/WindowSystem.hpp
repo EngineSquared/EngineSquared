@@ -153,6 +153,16 @@ void StopSystems(ES::Engine::Core &core);
  */
 void LoadButtons(ES::Engine::Core &core);
 
+/**
+ * @brief Store a pointer to the currently used Core in the GLFW window
+ *
+ * @param core  The Engine² Core.
+ *
+ * @note This can be used later to access the Core from the GLFW window,
+ * for example in callbacks where the Core is not directly accessible.
+ */
+void StoreCoreInWindow(ES::Engine::Core &core);
+
 } // namespace ES::Plugin::Window::System
 
 #endif /* !WINDOWSYSTEM_HPP_ */
