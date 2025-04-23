@@ -22,7 +22,7 @@ class InputManager {
     using CursorEnterCallbackFn = std::function<void(ES::Engine::Core &, int)>;
     using ScrollCallbackFn = std::function<void(ES::Engine::Core &, double, double)>;
     using DropCallbackFn = std::function<void(ES::Engine::Core &, int, const char **)>;
-    using JoystickCallbackFn = std::function<void(int, int)>; // TODO: no window here, find a solution
+    using JoystickCallbackFn = std::function<void(ES::Engine::Core &, int, int)>;
 
     InputManager();
     ~InputManager() = default;
@@ -115,15 +115,6 @@ class InputManager {
      * @note The callback will be called when one or multiple files are dropped on the window.
      */
     inline void RegisterDropCallback(const DropCallbackFn &callback) { _dropCallbacks.push_back(callback); }
-
-    /**
-     * @brief Register a joystick callback.
-     *
-     * @param callback The callback to register.
-     *
-     * @note The callback will be called when a controller is connected or disconnected.
-     */
-    inline void RegisterJoystickCallback(const JoystickCallbackFn &callback) { _joystickCallbacks.push_back(callback); }
 
     /**
      * @brief Call the key callbacks.
@@ -262,22 +253,6 @@ class InputManager {
         }
     }
 
-    /**
-     * @brief Call the joystick callbacks.
-     *
-     * @param jid The joystick id.
-     * @param event The event.
-     *
-     * @return void
-     */
-    inline void CallJoystickCallbacks(int jid, int event) const
-    {
-        for (auto &callback : _joystickCallbacks)
-        {
-            callback(jid, event);
-        }
-    }
-
     // TODO: add a way to delete callbacks
   private:
     std::vector<KeyCallbackFn> _keyCallbacks;
@@ -288,6 +263,5 @@ class InputManager {
     std::vector<CursorEnterCallbackFn> _cursorEnterCallbacks;
     std::vector<ScrollCallbackFn> _scrollCallbacks;
     std::vector<DropCallbackFn> _dropCallbacks;
-    std::vector<JoystickCallbackFn> _joystickCallbacks;
 };
 } // namespace ES::Plugin::Input::Resource

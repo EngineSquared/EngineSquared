@@ -75,11 +75,6 @@ static void DropCallback(GLFWwindow *window, int count, const char **paths)
     inputManager.CallDropCallbacks(core, count, paths);
 }
 
-static void JoystickCallback(int jid, int event)
-{
-    // TODO: no window here, find a solution
-}
-
 ES::Plugin::Input::Resource::InputManager::InputManager()
 {
     PrintAvailableControllers(); // TODO: enclose in ES_DEBUG
@@ -92,7 +87,6 @@ ES::Plugin::Input::Resource::InputManager::InputManager()
     glfwSetCursorEnterCallback(glfwGetCurrentContext(), CursorEnterCallback);
     glfwSetScrollCallback(glfwGetCurrentContext(), ScrollCallback);
     glfwSetDropCallback(glfwGetCurrentContext(), DropCallback);
-    glfwSetJoystickCallback(JoystickCallback);
 }
 
 void ES::Plugin::Input::Resource::InputManager::PrintAvailableControllers() const
