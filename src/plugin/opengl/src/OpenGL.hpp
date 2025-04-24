@@ -26,5 +26,6 @@
 #include "utils/GLTextBuffer/GLTextBuffer.hpp"
 #include "utils/Loader/Loader.hpp"
 #include "utils/Material/Material.hpp"
+#include "utils/MouseDragging/MouseDragging.hpp"
 #include "utils/Texture/Texture.hpp"
 #include "utils/Viewer/Viewer.hpp"

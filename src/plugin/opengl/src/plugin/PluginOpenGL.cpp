@@ -19,7 +19,7 @@ void ES::Plugin::OpenGL::Plugin::Bind()
         ES::Plugin::OpenGL::System::CreateCamera, ES::Plugin::OpenGL::System::SetupShaderUniforms,
         ES::Plugin::OpenGL::System::SetupTextShaderUniforms, ES::Plugin::OpenGL::System::SetupSpriteShaderUniforms,
         ES::Plugin::OpenGL::System::LoadGLMeshBufferManager, ES::Plugin::OpenGL::System::LoadGLTextBufferManager,
-        ES::Plugin::OpenGL::System::LoadGLSpriteBufferManager);
+        ES::Plugin::OpenGL::System::LoadGLSpriteBufferManager, ES::Plugin::OpenGL::System::SetupMouseDragging);
 
     RegisterSystems<ES::Plugin::RenderingPipeline::RenderSetup>(
         ES::Plugin::OpenGL::System::GLClearColor, ES::Plugin::OpenGL::System::GLClearDepth,

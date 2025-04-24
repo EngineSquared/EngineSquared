@@ -1,6 +1,7 @@
 add_requires("entt", "gtest", "glm", "spdlog", "fmt", "glfw >=3.4", "glew", "stb")
 
 includes("../../engine/xmake.lua")
+includes("../input/xmake.lua")
 includes("../object/xmake.lua")
 includes("../window/xmake.lua")
 includes("../colors/xmake.lua")
@@ -18,6 +19,7 @@ target("PluginOpenGL")
     end
 
     add_deps("EngineSquaredCore")
+    add_deps("PluginInput")
     add_deps("PluginObject")
     add_deps("PluginWindow")
     add_deps("PluginMath")
@@ -34,6 +36,7 @@ target("PluginOpenGL")
     add_includedirs("src/utils/GLTextBuffer/", {public = true})
     add_includedirs("src/utils/GLSpriteBuffer/", {public = true})
     add_includedirs("src/utils/Material/", {public = true})
+    add_includedirs("src/utils/MouseDragging/", {public = true})
     add_includedirs("src/utils/Viewer/", {public = true})
     add_includedirs("src/utils/Loader/", {public = true})
     add_includedirs("src/utils/Light", {public = true})
