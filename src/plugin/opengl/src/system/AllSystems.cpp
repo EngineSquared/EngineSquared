@@ -66,32 +66,31 @@ void ES::Plugin::OpenGL::System::SetupMouseDragging(ES::Engine::Core &core)
 
     auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
 
-    inputManager.RegisterCursorPosCallback(
-        [&](ES::Engine::Core &cbCore, double xpos, double ypos) {
-            auto &dragging = cbCore.GetResource<ES::Plugin::OpenGL::Utils::MouseDragging>();
-            auto &camera = cbCore.GetResource<ES::Plugin::OpenGL::Resource::Camera>();
+    inputManager.RegisterCursorPosCallback([&](ES::Engine::Core &cbCore, double xpos, double ypos) {
+        auto &dragging = cbCore.GetResource<ES::Plugin::OpenGL::Utils::MouseDragging>();
+        auto &camera = cbCore.GetResource<ES::Plugin::OpenGL::Resource::Camera>();
 
-            if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
-            {
-                float fractionChangeX = static_cast<float>(xpos - dragging.lastMousePos.x) / camera.size.x;
-                float fractionChangeY = static_cast<float>(dragging.lastMousePos.y - ypos) / camera.size.y;
-                camera.viewer.rotate(fractionChangeX, fractionChangeY);
-            }
-            else if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_MIDDLE))
-            {
-                float fractionChangeY = static_cast<float>(dragging.lastMousePos.y - ypos) / camera.size.y;
-                camera.viewer.zoom(fractionChangeY);
-            }
-            else if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
-            {
-                float fractionChangeX = static_cast<float>(xpos - dragging.lastMousePos.x) / camera.size.x;
-                float fractionChangeY = static_cast<float>(dragging.lastMousePos.y - ypos) / camera.size.y;
-                camera.viewer.translate(-fractionChangeX, -fractionChangeY, true);
-            }
+        if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
+        {
+            float fractionChangeX = static_cast<float>(xpos - dragging.lastMousePos.x) / camera.size.x;
+            float fractionChangeY = static_cast<float>(dragging.lastMousePos.y - ypos) / camera.size.y;
+            camera.viewer.rotate(fractionChangeX, fractionChangeY);
+        }
+        else if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_MIDDLE))
+        {
+            float fractionChangeY = static_cast<float>(dragging.lastMousePos.y - ypos) / camera.size.y;
+            camera.viewer.zoom(fractionChangeY);
+        }
+        else if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
+        {
+            float fractionChangeX = static_cast<float>(xpos - dragging.lastMousePos.x) / camera.size.x;
+            float fractionChangeY = static_cast<float>(dragging.lastMousePos.y - ypos) / camera.size.y;
+            camera.viewer.translate(-fractionChangeX, -fractionChangeY, true);
+        }
 
-            dragging.lastMousePos.x = xpos;
-            dragging.lastMousePos.y = ypos;
-        });
+        dragging.lastMousePos.x = xpos;
+        dragging.lastMousePos.y = ypos;
+    });
 }
 
 void ES::Plugin::OpenGL::System::LoadShaderManager(ES::Engine::Core &core)
