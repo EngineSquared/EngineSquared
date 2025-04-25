@@ -76,7 +76,7 @@ class Window {
      * @brief Get the window size.
      *
      * This function will update the window size from the GLFW window content area and return it.
-     * 
+     *
      * @return A vector of integers to store the size of the window.
      */
     glm::ivec2 &GetSize();
