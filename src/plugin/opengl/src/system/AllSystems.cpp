@@ -1,6 +1,5 @@
 #include "AllSystems.hpp"
 
-#include "Buttons.hpp"
 #include "Camera.hpp"
 #include "Entity.hpp"
 #include "Font.hpp"
@@ -9,11 +8,13 @@
 #include "GLMeshBufferManager.hpp"
 #include "GLSpriteBufferManager.hpp"
 #include "GLTextBufferManager.hpp"
+#include "Input.hpp"
 #include "Light.hpp"
 #include "MaterialCache.hpp"
 #include "MaterialHandle.hpp"
 #include "Mesh.hpp"
 #include "ModelHandle.hpp"
+#include "MouseDragging.hpp"
 #include "ShaderHandle.hpp"
 #include "ShaderManager.hpp"
 #include "Sprite.hpp"
@@ -59,33 +60,43 @@ void ES::Plugin::OpenGL::System::SetupResizeViewport(ES::Engine::Core &core)
         });
 }
 
-// Function to handle mouse dragging interactions
-void ES::Plugin::OpenGL::System::MouseDragging(ES::Engine::Core &core)
+void ES::Plugin::OpenGL::System::SetupMouseDragging(ES::Engine::Core &core)
 {
-    auto &buttons = core.GetResource<Window::Resource::Buttons>();
-    auto &lastMousePos = buttons.lastMousePos;
-    auto &currentMousePos = buttons.currentMousePos;
-    auto &mouseButtons = buttons.mouse;
-    auto &camera = core.GetResource<Resource::Camera>();
-    if (mouseButtons[GLFW_MOUSE_BUTTON_LEFT].pressed)
-    {
-        float fractionChangeX = static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
-        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
-        camera.viewer.rotate(fractionChangeX, fractionChangeY);
-    }
-    else if (mouseButtons[GLFW_MOUSE_BUTTON_MIDDLE].pressed)
-    {
-        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
-        camera.viewer.zoom(fractionChangeY);
-    }
-    else if (mouseButtons[GLFW_MOUSE_BUTTON_RIGHT].pressed)
-    {
-        float fractionChangeX = static_cast<float>(currentMousePos.x - lastMousePos.x) / camera.size.x;
-        float fractionChangeY = static_cast<float>(lastMousePos.y - currentMousePos.y) / camera.size.y;
-        camera.viewer.translate(-fractionChangeX, -fractionChangeY, true);
-    }
-    lastMousePos.x = currentMousePos.x;
-    lastMousePos.y = currentMousePos.y;
+    core.RegisterResource<ES::Plugin::OpenGL::Utils::MouseDragging>(ES::Plugin::OpenGL::Utils::MouseDragging());
+
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+
+    auto handleLeftDrag = [](auto &camera, const auto &dragging, double xpos, double ypos) {
+        float dx = static_cast<float>(xpos - dragging.lastMousePos.x) / camera.size.x;
+        float dy = static_cast<float>(dragging.lastMousePos.y - ypos) / camera.size.y;
+        camera.viewer.rotate(dx, dy);
+    };
+
+    auto handleMiddleDrag = [](auto &camera, const auto &dragging, double /*xpos*/, double ypos) {
+        float dy = static_cast<float>(dragging.lastMousePos.y - ypos) / camera.size.y;
+        camera.viewer.zoom(dy);
+    };
+
+    auto handleRightDrag = [](auto &camera, const auto &dragging, double xpos, double ypos) {
+        float dx = static_cast<float>(xpos - dragging.lastMousePos.x) / camera.size.x;
+        float dy = static_cast<float>(dragging.lastMousePos.y - ypos) / camera.size.y;
+        camera.viewer.translate(-dx, -dy, true);
+    };
+
+    inputManager.RegisterCursorPosCallback([=](ES::Engine::Core &cbCore, double xpos, double ypos) {
+        auto &dragging = cbCore.GetResource<ES::Plugin::OpenGL::Utils::MouseDragging>();
+        auto &camera = cbCore.GetResource<ES::Plugin::OpenGL::Resource::Camera>();
+
+        if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
+            handleLeftDrag(camera, dragging, xpos, ypos);
+        else if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_MIDDLE))
+            handleMiddleDrag(camera, dragging, xpos, ypos);
+        else if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
+            handleRightDrag(camera, dragging, xpos, ypos);
+
+        dragging.lastMousePos.x = xpos;
+        dragging.lastMousePos.y = ypos;
+    });
 }
 
 void ES::Plugin::OpenGL::System::LoadShaderManager(ES::Engine::Core &core)

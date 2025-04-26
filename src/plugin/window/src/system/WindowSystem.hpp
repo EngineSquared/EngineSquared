@@ -22,10 +22,8 @@
  * @date 2025-03-11
  **************************************************************************/
 
-#ifndef WINDOWSYSTEM_HPP_
-#define WINDOWSYSTEM_HPP_
+#pragma once
 
-#include "Button/Buttons.hpp"
 #include "Engine.hpp"
 #include "Window/Window.hpp"
 
@@ -64,33 +62,6 @@ void EnableVSync(ES::Engine::Core &core);
 void PollEvents(ES::Engine::Core &core);
 
 /**
- * @brief Update the key.
- *
- * This function updates the key.
- *
- * @param core  The Engine² Core.
- */
-void UpdateKey(ES::Engine::Core &core);
-
-/**
- * @brief Update the button.
- *
- * This function updates the button.
- *
- * @param core  The Engine² Core.
- */
-void UpdateButton(ES::Engine::Core &core);
-
-/**
- * @brief Save the previous mouse position.
- *
- * This function saves the last read mouse position.
- *
- * @param core  The Engine² Core.
- */
-void SaveLastMousePos(ES::Engine::Core &core);
-
-/**
  * @brief Initialize the GLFW
  *
  * This function initialize GLFW.
@@ -118,15 +89,6 @@ void SetupGLFWHints(const ES::Engine::Core &core);
 void LinkGLFWContextToGL(ES::Engine::Core &core);
 
 /**
- * @brief Update the cursor to current position
- *
- * This function Update the cursor to the current position.
- *
- * @param core  The Engine² Core.
- */
-void UpdatePosCursor(ES::Engine::Core &core);
-
-/**
  * @brief Swap the buffers
  *
  * This function swaps the buffers.
@@ -145,14 +107,13 @@ void SwapBuffers(ES::Engine::Core &core);
 void StopSystems(ES::Engine::Core &core);
 
 /**
- * @brief Load the buttons resource
- *
- * This function create the buttons resource that will manage buttons (mouse and keyboard).
+ * @brief Store a pointer to the currently used Core in the GLFW window
  *
  * @param core  The Engine² Core.
+ *
+ * @note This can be used later to access the Core from the GLFW window,
+ * for example in callbacks where the Core is not directly accessible.
  */
-void LoadButtons(ES::Engine::Core &core);
+void StoreCoreInWindow(ES::Engine::Core &core);
 
 } // namespace ES::Plugin::Window::System
-
-#endif /* !WINDOWSYSTEM_HPP_ */
