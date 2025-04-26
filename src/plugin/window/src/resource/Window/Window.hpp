@@ -24,7 +24,6 @@ namespace ES::Plugin::Window::Resource {
  */
 class Window {
   private:
-    glm::ivec2 _size;
     std::string _title;
     GLFWwindow *_window;
     GLFWmonitor *_monitor;
@@ -79,7 +78,7 @@ class Window {
      *
      * @return A vector of integers to store the size of the window.
      */
-    glm::ivec2 &GetSize();
+    glm::ivec2 GetSize();
 
     /**
      * @brief Set the framebuffer size callback.
