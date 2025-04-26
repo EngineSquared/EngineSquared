@@ -41,10 +41,7 @@ void Window::SetFramebufferSizeCallback(void *userPointer, GLFWframebuffersizefu
     glfwSetFramebufferSizeCallback(_window, callback);
 }
 
-void Window::SetSize(int width, int height)
-{
-    glfwSetWindowSize(_window, width, height);
-}
+void Window::SetSize(int width, int height) { glfwSetWindowSize(_window, width, height); }
 
 void Window::ToggleFullscreen()
 {
