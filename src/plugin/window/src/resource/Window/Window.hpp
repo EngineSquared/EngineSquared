@@ -24,8 +24,6 @@ namespace ES::Plugin::Window::Resource {
  */
 class Window {
   private:
-    uint32_t _width;
-    uint32_t _height;
     std::string _title;
     GLFWwindow *_window;
     GLFWmonitor *_monitor;
@@ -76,10 +74,11 @@ class Window {
     /**
      * @brief Get the window size.
      *
-     * @param[out] width The width of the window.
-     * @param[out] height The height of the window.
+     * This function will update the window size from the GLFW window content area and return it.
+     *
+     * @return A vector of integers to store the size of the window.
      */
-    void GetWindowSize(int &width, int &height);
+    glm::ivec2 GetSize();
 
     /**
      * @brief Set the framebuffer size callback.
@@ -100,13 +99,11 @@ class Window {
      */
     inline glm::vec2 GetMousePosition()
     {
-        int width = 0;
-        int height = 0;
         double x = 0;
         double y = 0;
-        this->GetWindowSize(width, height);
+        glm::ivec2 windowSize = GetSize();
         glfwGetCursorPos(_window, &x, &y);
-        y = height - y;
+        y = windowSize.y - y;
         return {x, y};
     }
 };
