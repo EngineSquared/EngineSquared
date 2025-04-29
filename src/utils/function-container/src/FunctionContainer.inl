@@ -1,9 +1,9 @@
-#include "FunctionContainer.hpp"
 #include "CallableFunction.hpp" // TODO: seems wrong to construct a callable fn?
+#include "FunctionContainer.hpp"
 #include "Logger.hpp"
 
-template<typename TReturn, typename... TArgs>
-template<typename TCallable>
+template <typename TReturn, typename... TArgs>
+template <typename TCallable>
 void ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
 {
     std::size_t id = 0;

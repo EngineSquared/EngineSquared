@@ -2,17 +2,16 @@
 
 #include "BaseFunction.hpp"
 
-#include <vector>
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
+#include <vector>
 
 namespace ES::Utils::FunctionContainer {
 /**
  * @brief Container for functions, allowing for dynamic storage and invocation.
-**/
-template<typename TReturn, typename... TArgs>
-class FunctionContainer {
-public:
+ **/
+template <typename TReturn, typename... TArgs> class FunctionContainer {
+  public:
     /**
      * @brief Default constructor for FunctionContainer.
      */
@@ -28,14 +27,14 @@ public:
      * @tparam TCallable Type of the callable function.
      * @param callable The callable function to be added.
      */
-    template<typename TCallable> void AddFunction(TCallable callable);
+    template <typename TCallable> void AddFunction(TCallable callable);
 
     /**
      * @brief Adds multiple functions to the container.
      * @tparam TFunctions Variadic template parameter for function types.
      * @param functions The functions to be added.
      */
-    template<typename... TFunctions> void AddFunctions(TFunctions... functions) { (AddFunction(functions), ...); }
+    template <typename... TFunctions> void AddFunctions(TFunctions... functions) { (AddFunction(functions), ...); }
 
     /**
      * @brief Gets the list of functions in the container.
@@ -43,9 +42,10 @@ public:
      */
     inline std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>> &GetFunctions() { return _orderedFunctions; }
 
-protected:
+  protected:
     std::unordered_map<unsigned int, std::size_t> _idToIndex; ///< Map to store unique ids for each function.
-    std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>> _orderedFunctions; ///< Vector to store functions in order.
+    std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>>
+        _orderedFunctions; ///< Vector to store functions in order.
 };
 } // namespace ES::Utils::FunctionContainer
 

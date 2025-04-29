@@ -8,7 +8,7 @@ namespace ES::Utils::FunctionContainer {
  */
 template <typename TCallable, typename TReturn, typename... TArgs>
 class CallableFunction : public BaseFunction<TReturn, TArgs...> {
-public:
+  public:
     /**
      * @brief Constructor for CallableFunction.
      * @param callable The callable object to be stored.
@@ -27,7 +27,7 @@ public:
      */
     TReturn operator()(TArgs... args) const override { return _callable(args...); }
 
-protected:
+  protected:
     TCallable _callable;
 };
 } // namespace ES::Utils::FunctionContainer

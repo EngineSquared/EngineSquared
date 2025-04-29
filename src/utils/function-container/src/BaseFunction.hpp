@@ -4,9 +4,8 @@ namespace ES::Utils::FunctionContainer {
 /**
  * @brief Base class for all functions contained in a FunctionContainer.
  */
-template<typename TReturn, typename... TArgs>
-class BaseFunction {
-public:
+template <typename TReturn, typename... TArgs> class BaseFunction {
+  public:
     virtual ~BaseFunction() = default;
 
     /**
