@@ -1,6 +1,6 @@
 #include "PluginSound.hpp"
-#include "SoundManager.hpp"
 #include "InitSound.hpp"
+#include "SoundManager.hpp"
 #include "Update.hpp"
 
 void ES::Plugin::Sound::Plugin::Bind()

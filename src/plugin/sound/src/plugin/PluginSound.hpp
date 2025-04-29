@@ -4,11 +4,11 @@
 
 namespace ES::Plugin::Sound {
 class Plugin : public ES::Engine::APlugin {
-    public:
-        explicit Plugin(ES::Engine::Core &core)
+  public:
+    explicit Plugin(ES::Engine::Core &core)
         : ES::Engine::APlugin(core){
-            // empty
-        };
+              // empty
+          };
     ~Plugin() = default;
 
     void Bind() final;
