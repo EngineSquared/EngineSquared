@@ -145,10 +145,10 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
 
         struct LightInfo {
             vec4 Position;      // Light position (x, y, z) + w (Type of light)
-            vec4 Intensity;     // Light intensity
+            vec4 Colour;        // Light colour (x, y, z) + w (Intensity)
         };
 
-        layout(std430, binding = 0) buffer LightBuffer {
+        layout(std140, binding = 0) buffer LightBuffer {
             LightInfo Light[];
         };
 
@@ -174,11 +174,11 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
                     vec3 V = normalize(CamPos - Position);
                     vec3 HalfwayVector = normalize(V + L);
 
-                    vec3 diffuse = Material.Kd * Light[i].Intensity.rgb * max(dot(L, Normal), 0.0);
-                    vec3 specular = Material.Ks * Light[i].Intensity.rgb * pow(max(dot(HalfwayVector, Normal), 0.0), Material.Shiness);
+                    vec3 diffuse = Material.Kd * Light[i].Colour.rgb * max(dot(L, Normal), 0.0);
+                    vec3 specular = Material.Ks * Light[i].Colour.rgb * pow(max(dot(HalfwayVector, Normal), 0.0), Material.Shiness);
                     finalColor += diffuse + specular;
                 } else if (type == 1) { // Ambient light
-                    ambient += Material.Ka * Light[i].Intensity.rgb;
+                    ambient += Material.Ka * Light[i].Colour.rgb;
                 }
             }
 
@@ -407,7 +407,7 @@ void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
             ES::Plugin::OpenGL::Component::Light &light) {
             ES::Plugin::OpenGL::Utils::LightInfo lightInfo;
             lightInfo.position = glm::vec4(transform.position, static_cast<float>(light.type));
-            lightInfo.intensity = glm::vec4(light.intensity, 0.f);
+            lightInfo.colour = glm::vec4(light.colour, light.intensity);
 
             ssbo_lights[shaderHandle].emplace_back(lightInfo);
         });

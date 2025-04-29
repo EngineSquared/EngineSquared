@@ -406,7 +406,6 @@ class ShaderProgram {
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo);
         glBufferData(GL_SHADER_STORAGE_BUFFER, size, data, GL_DYNAMIC_DRAW);
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, bindingPoint, ssbo);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
         ssboMap[ssboName] = bindingPoint;
 
@@ -428,7 +427,6 @@ class ShaderProgram {
 
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, it->second);
         glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, size, data);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
     }
 
     // Method to delete an SSBO

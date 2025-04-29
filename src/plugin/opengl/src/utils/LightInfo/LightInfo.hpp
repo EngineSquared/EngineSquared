@@ -4,9 +4,9 @@
 
 namespace ES::Plugin::OpenGL::Utils {
 
-struct alignas(16) LightInfo {
-    glm::vec4 position;  // .xyz = position, .w = type
-    glm::vec4 intensity; // .xyz = intensité, .w = unused
+struct LightInfo {
+    glm::vec4 position; // .xyz = position, .w = type
+    glm::vec4 colour;   // .rgb = colour, .a = intensity
 };
 
 } // namespace ES::Plugin::OpenGL::Utils

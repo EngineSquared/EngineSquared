@@ -8,11 +8,11 @@ uniform vec3 CamPos;
 uniform int NumberLights;
 
 struct LightInfo {
-    vec4 Position;      // Light position (x, y, z) + w (Type of light)
-    vec4 Intensity;     // Light intensity
+    vec4 Position;   // Light position (x, y, z) + w (Type of light)
+    vec4 Colour;     // Light colour (r, g, b) + a (intensity)
 };
 
-layout(std430, binding = 0) buffer LightBuffer {
+layout(std140, binding = 0) buffer LightBuffer {
     LightInfo Light[];
 };
 
@@ -38,11 +38,11 @@ void main() {
             vec3 V = normalize(CamPos - Position);
             vec3 HalfwayVector = normalize(V + L);
 
-            vec3 diffuse = Material.Kd * Light[i].Intensity.rgb * max(dot(L, Normal), 0.0);
-            vec3 specular = Material.Ks * Light[i].Intensity.rgb * pow(max(dot(HalfwayVector, Normal), 0.0), Material.Shiness);
+            vec3 diffuse = Material.Kd * Light[i].Colour.rgb * max(dot(L, Normal), 0.0);
+            vec3 specular = Material.Ks * Light[i].Colour.rgb * pow(max(dot(HalfwayVector, Normal), 0.0), Material.Shiness);
             finalColor += diffuse + specular;
         } else if (type == 1) { // Ambient light
-            ambient += Material.Ka * Light[i].Intensity.rgb;
+            ambient += Material.Ka * Light[i].Colour.rgb;
         }
     }
 

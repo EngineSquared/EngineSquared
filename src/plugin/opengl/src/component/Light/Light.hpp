@@ -7,11 +7,11 @@ namespace ES::Plugin::OpenGL::Component {
 /**
  * @brief Structure to hold light information.
  *
- * This structure contains the type of the light and its intensity.
+ * This structure contains the type of the light and its colour.
  * The `type` field is an unsigned integer representing the type of light
  * (e.g., point, ambient, etc.).
- * The `intensity` field is a 3D vector representing the RGB intensity
- * of the light.
+ * The `colour` field is a 3D vector representing the RGB colour of the light.
+ * The `intensity` field is a float representing the intensity of the light.
  */
 struct Light {
     enum class TYPE : uint32_t {
@@ -20,13 +20,18 @@ struct Light {
     };
 
     TYPE type;
-    glm::vec3 intensity;
+    glm::vec3 colour;
+    float intensity;
 
     /**
      * @param   type      Type of the light. Default is POINT.
-     * @param   intensity Intensity of the light. Default is (1, 1, 1).
+     * @param   colour    Colour of the light. Default is (1, 1, 1).
+     * @param   intensity Intensity of the light. Default is 1.0.
      */
-    Light(TYPE type = TYPE::POINT, glm::vec3 intensity = glm::vec3(1)) : type(type), intensity(intensity) {}
+    Light(TYPE type = TYPE::POINT, glm::vec3 colour = glm::vec3(1), float intensity = 1.0f)
+        : type(type), colour(colour), intensity(intensity)
+    {
+    }
 
     Light(const Light &) = default;
     Light(Light &&) = default;
