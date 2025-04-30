@@ -108,13 +108,13 @@ TEST_F(FunctionContainerTest, DeleteNonExistingFunction)
 // Test: Deleting a function doesn't mess up the list and the order
 TEST_F(FunctionContainerTest, DeleteFunctionDoesNotMessUpOrder)
 {
-    auto id1 = container.AddFunction([](int x) { return x + 1; });
+    container.AddFunction([](int x) { return x + 1; });
     auto id2 = container.AddFunction([](int x) { return x + 2; });
-    auto id3 = container.AddFunction([](int x) { return x + 3; });
+    container.AddFunction([](int x) { return x + 3; });
 
     EXPECT_TRUE(container.DeleteFunction(id2));
 
-    auto &functions = container.GetFunctions();
+    const auto &functions = container.GetFunctions();
     ASSERT_EQ(functions.size(), 2);
 
     std::vector<int> expected = {6, 8}; // 5 + 1 and 5 + 3
