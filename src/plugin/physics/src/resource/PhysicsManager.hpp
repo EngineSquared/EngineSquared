@@ -115,9 +115,7 @@ class PhysicsManager {
     inline ES::Utils::FunctionContainer::FunctionID
     AddContactAddedCallback(std::unique_ptr<ES::Plugin::Physics::Utils::BaseCallback> &&callback)
     {
-        auto contactListener = GetContactListener();
-
-        if (contactListener != nullptr)
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
             return contactListener->AddOnContactAddedCallback(std::move(callback));
         }
@@ -160,9 +158,7 @@ class PhysicsManager {
     inline ES::Utils::FunctionContainer::FunctionID
     AddContactPersistedCallback(std::unique_ptr<ES::Plugin::Physics::Utils::BaseCallback> &&callback)
     {
-        auto contactListener = GetContactListener();
-
-        if (contactListener != nullptr)
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
             return contactListener->AddOnContactPersistedCallback(std::move(callback));
         }
@@ -205,9 +201,7 @@ class PhysicsManager {
     inline ES::Utils::FunctionContainer::FunctionID
     AddContactRemovedCallback(std::unique_ptr<ES::Plugin::Physics::Utils::BaseCallback> &&callback)
     {
-        auto contactListener = GetContactListener();
-
-        if (contactListener != nullptr)
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
             return contactListener->AddOnContactRemovedCallback(std::move(callback));
         }
@@ -247,9 +241,7 @@ class PhysicsManager {
      */
     inline bool RemoveContactAddedCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        auto contactListener = GetContactListener();
-
-        if (contactListener != nullptr)
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
             return contactListener->RemoveOnContactAddedCallback(id);
         }
@@ -272,9 +264,7 @@ class PhysicsManager {
      */
     inline bool RemoveContactPersistedCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        auto contactListener = GetContactListener();
-
-        if (contactListener != nullptr)
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
             return contactListener->RemoveOnContactPersistedCallback(id);
         }
@@ -297,9 +287,7 @@ class PhysicsManager {
      */
     inline bool RemoveContactRemovedCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        auto contactListener = GetContactListener();
-
-        if (contactListener != nullptr)
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
             return contactListener->RemoveOnContactRemovedCallback(id);
         }
