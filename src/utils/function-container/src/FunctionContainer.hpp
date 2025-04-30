@@ -50,6 +50,12 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      */
     inline std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>> &GetFunctions() { return _orderedFunctions; }
 
+    /**
+     * @brief Returns true if the container is empty.
+     * @return True if the container is empty, false otherwise.
+     */
+    inline bool IsEmpty() const { return _orderedFunctions.empty(); }
+
   protected:
     std::unordered_map<FunctionID, std::size_t> _idToIndex; ///< Map to store unique ids for each function.
     std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>>
