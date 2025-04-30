@@ -7,7 +7,7 @@ using namespace ES::Utils::FunctionContainer;
 
 // Test fixture
 class FunctionContainerTest : public ::testing::Test {
-  protected:
+  public:
     FunctionContainer<int, int> container;
 
     static int FreeFunction(int x) { return x + 10; }

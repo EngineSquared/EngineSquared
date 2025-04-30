@@ -15,7 +15,7 @@ namespace ES::Utils::FunctionContainer {
 
 // Test fixture for CallableFunction
 class CallableFunctionTest : public ::testing::Test {
-  protected:
+  public:
     using FunctionBase = BaseFunction<int, int>;
 };
 
