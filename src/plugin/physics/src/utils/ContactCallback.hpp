@@ -52,8 +52,7 @@ template <typename... Components> class ContactCallback : public BaseCallback {
 
     unsigned int GetID() const final
     {
-        static unsigned int cId = 0; // TODO: copy/paste from CallableFunction
-        return cId++;                // TODO: copy/paste from CallableFunction
+        return _callback.target_type().hash_code();
     }
 
   private:
