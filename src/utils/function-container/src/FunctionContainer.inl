@@ -4,9 +4,11 @@
 
 template <typename TReturn, typename... TArgs>
 template <typename TCallable>
-ES::Utils::FunctionContainer::FunctionID ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
+ES::Utils::FunctionContainer::FunctionID
+ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
 {
-    ES::Utils::FunctionContainer::FunctionID id = CallableFunction<TCallable, TReturn, TArgs...>::GetCallableID(callable);
+    ES::Utils::FunctionContainer::FunctionID id =
+        CallableFunction<TCallable, TReturn, TArgs...>::GetCallableID(callable);
 
     if (_idToIndex.find(id) != _idToIndex.end())
     {
@@ -22,7 +24,8 @@ ES::Utils::FunctionContainer::FunctionID ES::Utils::FunctionContainer::FunctionC
 }
 
 template <typename TReturn, typename... TArgs>
-ES::Utils::FunctionContainer::FunctionID ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
+ES::Utils::FunctionContainer::FunctionID
+ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
     std::unique_ptr<BaseFunction<TReturn, TArgs...>> &&function)
 {
     ES::Utils::FunctionContainer::FunctionID id = function->GetID();
