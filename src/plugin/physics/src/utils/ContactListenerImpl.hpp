@@ -50,7 +50,8 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called with the Core, as well as the two entities that collided.
      * @note The callback will be called once for each contact added.
      */
-    template <typename... Components> inline ES::Utils::FunctionContainer::FunctionID AddOnContactAddedCallback(std::unique_ptr<BaseCallback> &&callback)
+    template <typename... Components>
+    inline ES::Utils::FunctionContainer::FunctionID AddOnContactAddedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
         return _onContactAddedCallbacks.AddFunction(std::move(callback));
     }
@@ -63,7 +64,8 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called every frame until the contact is removed.
      */
     template <typename... Components>
-    inline ES::Utils::FunctionContainer::FunctionID AddOnContactPersistedCallback(std::unique_ptr<BaseCallback> &&callback)
+    inline ES::Utils::FunctionContainer::FunctionID
+    AddOnContactPersistedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
         return _onContactPersistedCallbacks.AddFunction(std::move(callback));
     }
@@ -74,7 +76,9 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called with the Core, as well as the two entities that collided.
      * @note The callback will be called once for each contact removed.
      */
-    template <typename... Components> inline ES::Utils::FunctionContainer::FunctionID AddOnContactRemovedCallback(std::unique_ptr<BaseCallback> &&callback)
+    template <typename... Components>
+    inline ES::Utils::FunctionContainer::FunctionID
+    AddOnContactRemovedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
         return _onContactRemovedCallbacks.AddFunction(std::move(callback));
     }
