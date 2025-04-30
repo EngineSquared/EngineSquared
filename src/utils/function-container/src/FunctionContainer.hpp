@@ -29,7 +29,7 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      * @param callable The callable function to be added.
      */
     template <typename TCallable>
-    FunctionID AddFunction(TCallable callable); // TODO: return the ID when a callable is created
+    FunctionID AddFunction(TCallable callable);
 
     /**
      * @brief Adds a wrapped function to the container.

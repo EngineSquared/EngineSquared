@@ -70,7 +70,7 @@ TEST_F(FunctionContainerTest, FunctionsInvokeInOrder)
     std::vector<int> expected = {6, 25, 15};
     container.AddFunctions([](int x) { return x + 1; }, Functor{}, &FreeFunction);
 
-    auto &functions = container.GetFunctions();
+    const auto &functions = container.GetFunctions();
     ASSERT_EQ(functions.size(), 3);
 
     int index = 0;

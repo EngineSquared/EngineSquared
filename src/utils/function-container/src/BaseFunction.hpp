@@ -19,7 +19,9 @@ template <typename TReturn, typename... TArgs> class BaseFunction {
 
     /**
      * @brief External Call function
-     * TODO: write better doc
+     * @param args Arguments to pass to the function.
+     * @return Return value of the function.
+     * @note This function is used to call the wrapped function when using the operator() is not possible.
      */
     TReturn Call(TArgs... args) const { return (*this)(args...); }
 

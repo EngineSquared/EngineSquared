@@ -1,4 +1,4 @@
-#include "CallableFunction.hpp" // TODO: seems wrong to construct a callable fn?
+#include "CallableFunction.hpp"
 #include "FunctionContainer.hpp"
 #include "Logger.hpp"
 
