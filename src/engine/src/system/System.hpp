@@ -27,6 +27,11 @@ class SystemContainer : public ES::Utils::FunctionContainer::FunctionContainer<v
 
     inline std::list<std::unique_ptr<SystemBase>> &GetSystems() { return _orderedFunctions; }
 
+    inline bool DeleteSystem(ES::Utils::FunctionContainer::FunctionID id)
+    {
+      return DeleteFunction(id);
+    }
+
   private:
     template <typename TCallable> void AddSystem(TCallable callable) { AddFunction(callable); }
 };

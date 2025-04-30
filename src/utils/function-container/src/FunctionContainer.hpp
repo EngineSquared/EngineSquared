@@ -56,6 +56,13 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      */
     inline bool IsEmpty() const { return _orderedFunctions.empty(); }
 
+    /**
+     * @brief Deletes a function from the container.
+     * @param id The ID of the function to be deleted.
+     * @return True if the function was deleted, false otherwise.
+     */
+    bool DeleteFunction(FunctionID id);
+
   protected:
     std::unordered_map<FunctionID, std::size_t> _idToIndex; ///< Map to store unique ids for each function.
     std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>>

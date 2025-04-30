@@ -41,3 +41,20 @@ ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
     _idToIndex[id] = index;
     return id;
 }
+
+template <typename TReturn, typename... TArgs>
+bool ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::DeleteFunction(
+    ES::Utils::FunctionContainer::FunctionID id)
+{
+    auto it = _idToIndex.find(id);
+    if (it == _idToIndex.end())
+    {
+        ES::Utils::Log::Warn("Function not found");
+        return false;
+    }
+
+    std::size_t index = it->second;
+    _orderedFunctions.erase(std::next(_orderedFunctions.begin(), index));
+    _idToIndex.erase(it);
+    return true;
+}
