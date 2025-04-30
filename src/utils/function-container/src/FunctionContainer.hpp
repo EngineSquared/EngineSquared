@@ -5,6 +5,7 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include <list>
 
 namespace ES::Utils::FunctionContainer {
 /**
