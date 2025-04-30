@@ -25,7 +25,7 @@ class SystemContainer : public ES::Utils::FunctionContainer::FunctionContainer<v
   public:
     template <typename... TSystem> inline void AddSystems(TSystem... systems) { AddFunctions(systems...); }
 
-    inline std::list<std::unique_ptr<SystemBase>> &GetSystems() { return _orderedFunctions; }
+    inline const std::list<std::unique_ptr<SystemBase>> &GetSystems() { return GetFunctions(); }
 
     inline bool DeleteSystem(ES::Utils::FunctionContainer::FunctionID id) { return DeleteFunction(id); }
 

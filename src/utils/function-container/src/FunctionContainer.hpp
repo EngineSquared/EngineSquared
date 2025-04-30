@@ -72,7 +72,7 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      */
     bool DeleteFunction(FunctionID id);
 
-  protected:
+  private:
     std::unordered_map<FunctionID, std::size_t> _idToIndex; ///< Map to store unique ids for each function.
     std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>>
         _orderedFunctions; ///< Vector to store functions in order.
