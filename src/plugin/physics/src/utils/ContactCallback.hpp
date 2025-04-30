@@ -3,7 +3,6 @@
 #include "Core.hpp"
 #include "Entity.hpp"
 #include "FunctionContainer.hpp"
-#include "IContactCallback.hpp"
 
 #include <functional>
 

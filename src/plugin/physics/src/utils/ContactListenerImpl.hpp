@@ -4,7 +4,6 @@
 #include "Core.hpp"
 #include "Entity.hpp"
 #include "FunctionContainer.hpp"
-#include "IContactCallback.hpp"
 
 // clang-format off
 #include <Jolt/Jolt.h>

@@ -46,15 +46,21 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
 
     /**
      * @brief Gets the list of functions in the container.
-     * @return Reference to the vector of unique pointers to BaseFunction.
+     * @return Const reference to the vector of unique pointers to BaseFunction.
      */
-    inline std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>> &GetFunctions() { return _orderedFunctions; }
+    inline const std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>> &GetFunctions() { return _orderedFunctions; }
 
     /**
      * @brief Returns true if the container is empty.
      * @return True if the container is empty, false otherwise.
      */
     inline bool IsEmpty() const { return _orderedFunctions.empty(); }
+
+    /**
+     * @brief Returns the number of functions in the container.
+     * @return The number of functions in the container.
+     */
+    inline std::size_t Size() const { return _orderedFunctions.size(); }
 
     /**
      * @brief Deletes a function from the container.

@@ -18,7 +18,7 @@ ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
 
     std::size_t index = _orderedFunctions.size();
     auto function = std::make_unique<CallableFunction<TCallable, TReturn, TArgs...>>(callable);
-    _idToIndex[function->GetID()] = index;
+    _idToIndex[id] = index;
     _orderedFunctions.push_back(std::move(function));
     return id;
 }
