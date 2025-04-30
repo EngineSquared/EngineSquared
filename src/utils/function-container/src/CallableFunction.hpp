@@ -13,9 +13,7 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
      * @brief Constructor for CallableFunction.
      * @param callable The callable object to be stored.
      */
-    explicit CallableFunction(TCallable callable) : _callable(callable) {
-      _id = GetCallableID(_callable);
-    }
+    explicit CallableFunction(TCallable callable) : _callable(callable) { _id = GetCallableID(_callable); }
 
     /**
      * @brief Destructor for CallableFunction.
@@ -41,7 +39,8 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
      * @tparam TCallable The type of the callable object.
      * @return The ID of the callable object.
      */
-    static unsigned int GetCallableID(TCallable callable) {
+    static unsigned int GetCallableID(TCallable callable)
+    {
         if constexpr (std::is_class_v<TCallable>)
         {
             return typeid(callable).hash_code();

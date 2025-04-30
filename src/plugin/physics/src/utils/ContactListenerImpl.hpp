@@ -3,8 +3,8 @@
 #include "ContactCallback.hpp"
 #include "Core.hpp"
 #include "Entity.hpp"
-#include "IContactCallback.hpp"
 #include "FunctionContainer.hpp"
+#include "IContactCallback.hpp"
 
 // clang-format off
 #include <Jolt/Jolt.h>
@@ -50,8 +50,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called with the Core, as well as the two entities that collided.
      * @note The callback will be called once for each contact added.
      */
-    template <typename... Components>
-    inline void AddOnContactAddedCallback(std::unique_ptr<BaseCallback> &&callback)
+    template <typename... Components> inline void AddOnContactAddedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
         _onContactAddedCallbacks.AddFunctionC(std::move(callback));
     }
@@ -75,18 +74,19 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called with the Core, as well as the two entities that collided.
      * @note The callback will be called once for each contact removed.
      */
-    template <typename... Components>
-    inline void AddOnContactRemovedCallback(std::unique_ptr<BaseCallback> &&callback)
+    template <typename... Components> inline void AddOnContactRemovedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
         _onContactRemovedCallbacks.AddFunctionC(std::move(callback));
     }
 
   private:
-    using CallbackContainer = ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &>;
+    using CallbackContainer =
+        ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, ES::Engine::Entity &,
+                                                        ES::Engine::Entity &>;
     ES::Engine::Core &_core;
 
-    CallbackContainer _onContactAddedCallbacks;      ///< Callbacks for when a contact is added.
-    CallbackContainer _onContactPersistedCallbacks;  ///< Callbacks for when a contact is persisted.
-    CallbackContainer _onContactRemovedCallbacks;    ///< Callbacks for when a contact is removed.
+    CallbackContainer _onContactAddedCallbacks;     ///< Callbacks for when a contact is added.
+    CallbackContainer _onContactPersistedCallbacks; ///< Callbacks for when a contact is persisted.
+    CallbackContainer _onContactRemovedCallbacks;   ///< Callbacks for when a contact is removed.
 };
 } // namespace ES::Plugin::Physics::Utils

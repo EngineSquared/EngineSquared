@@ -2,8 +2,8 @@
 
 #include "Core.hpp"
 #include "Entity.hpp"
-#include "IContactCallback.hpp"
 #include "FunctionContainer.hpp"
+#include "IContactCallback.hpp"
 
 #include <functional>
 
@@ -21,7 +21,8 @@ namespace ES::Plugin::Physics::Utils {
  * @note If two components are specified, the callback will be called only if one entity has the first component
  * and the other entity has the second component.
  */
-using BaseCallback = ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &>;
+using BaseCallback =
+    ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &>;
 template <typename... Components> class ContactCallback : BaseCallback {
   public:
     using CallbackFunc = std::function<void(ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &)>;

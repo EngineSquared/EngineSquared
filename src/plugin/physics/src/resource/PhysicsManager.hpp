@@ -140,8 +140,8 @@ class PhysicsManager {
     template <typename... Components>
     inline void AddContactAddedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
     {
-        //auto callback = std::make_unique<Utils::ContactCallback<Components...>>(fn);
-        //AddContactAddedCallback(std::move(callback));
+        // auto callback = std::make_unique<Utils::ContactCallback<Components...>>(fn);
+        // AddContactAddedCallback(std::move(callback));
     }
 
     /**
@@ -182,8 +182,8 @@ class PhysicsManager {
     template <typename... Components>
     inline void AddContactPersistedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
     {
-        //auto callback = std::make_unique<Utils::ContactCallback<Components...>>(fn);
-        //AddContactPersistedCallback(std::move(callback));
+        // auto callback = std::make_unique<Utils::ContactCallback<Components...>>(fn);
+        // AddContactPersistedCallback(std::move(callback));
     }
 
     /**
@@ -224,8 +224,8 @@ class PhysicsManager {
     template <typename... Components>
     inline void AddContactRemovedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
     {
-        //auto callback = std::make_unique<Utils::ContactCallback<Components...>>(fn);
-        //AddContactRemovedCallback(std::move(callback));
+        // auto callback = std::make_unique<Utils::ContactCallback<Components...>>(fn);
+        // AddContactRemovedCallback(std::move(callback));
     }
 
   private:

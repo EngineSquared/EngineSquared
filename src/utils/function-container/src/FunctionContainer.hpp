@@ -27,14 +27,16 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      * @tparam TCallable Type of the callable function.
      * @param callable The callable function to be added.
      */
-    template <typename TCallable> void AddFunction(TCallable callable); // TODO: return the ID when a callable is created
+    template <typename TCallable>
+    void AddFunction(TCallable callable); // TODO: return the ID when a callable is created
 
     /**
      * @brief Adds a function to the container.
      * @param function A function object to be added, in the form of a class that inherits BaseFunction.
      * TODO: rename
      */
-    template <typename TCallable> void AddFunctionC(std::unique_ptr<BaseFunction<TCallable, TReturn, TArgs...>> &&function);
+    template <typename TCallable>
+    void AddFunctionC(std::unique_ptr<BaseFunction<TCallable, TReturn, TArgs...>> &&function);
 
     /**
      * @brief Adds multiple functions to the container.
