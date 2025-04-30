@@ -13,7 +13,9 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
      * @brief Constructor for CallableFunction.
      * @param callable The callable object to be stored.
      */
-    explicit CallableFunction(TCallable callable) : _callable(callable) {}
+    explicit CallableFunction(TCallable callable) : _callable(callable) {
+      _id = GetCallableID(_callable);
+    }
 
     /**
      * @brief Destructor for CallableFunction.
@@ -27,7 +29,31 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
      */
     TReturn operator()(TArgs... args) const override { return _callable(args...); }
 
+    /**
+     * @brief Returns the unique ID of the callable object.
+     * @return Unique ID of the callable object.
+     */
+    unsigned int GetID() const override { return _id; }
+
+    /**
+     * @brief Get the ID of the callable object.
+     * @param callable The callable object.
+     * @tparam TCallable The type of the callable object.
+     * @return The ID of the callable object.
+     */
+    static unsigned int GetCallableID(TCallable callable) {
+        if constexpr (std::is_class_v<TCallable>)
+        {
+            return typeid(callable).hash_code();
+        }
+        else
+        {
+            return std::hash<TCallable>{}(callable);
+        }
+    }
+
   protected:
     TCallable _callable;
+    unsigned int _id = 0; ///< Unique ID for the function.
 };
 } // namespace ES::Utils::FunctionContainer

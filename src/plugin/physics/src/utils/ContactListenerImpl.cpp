@@ -28,17 +28,17 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::
                                                                      const JPH::ContactManifold &,
                                                                      JPH::ContactSettings &)
 {
-    if (_onContactAddedCallbacks.empty())
-    {
-        return;
-    }
+    // if (_onContactAddedCallbacks.empty())
+    // {
+    //     return;
+    // }
 
     // Right now we use 32 bits for entities IDs with EnTT but Jolt stores user data as 64 bits
     // so we have to mask the upper 32 bits
     auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
-    for (auto &callback : _onContactAddedCallbacks)
+    for (auto &callback : _onContactAddedCallbacks.GetFunctions())
     {
         callback->Call(_core, entity1, entity2);
     }
@@ -49,15 +49,15 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const J
                                                                          const JPH::ContactManifold &,
                                                                          JPH::ContactSettings &)
 {
-    if (_onContactPersistedCallbacks.empty())
-    {
-        return;
-    }
+    // if (_onContactPersistedCallbacks.empty())
+    // {
+    //     return;
+    // }
 
     auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
-    for (auto &callback : _onContactPersistedCallbacks)
+    for (auto &callback : _onContactPersistedCallbacks.GetFunctions())
     {
         callback->Call(_core, entity1, entity2);
     }
@@ -65,10 +65,10 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const J
 
 void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH::SubShapeIDPair &inSubShapePair)
 {
-    if (_onContactRemovedCallbacks.empty())
-    {
-        return;
-    }
+    // if (_onContactRemovedCallbacks.empty())
+    // {
+    //     return;
+    // }
 
     auto &physicsManager = _core.GetResource<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
@@ -86,7 +86,7 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH
     auto entity1 = static_cast<ES::Engine::Entity>(body1->GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<ES::Engine::Entity>(body2->GetUserData() & ENTITY_ID_MASK);
 
-    for (auto &callback : _onContactRemovedCallbacks)
+    for (auto &callback : _onContactRemovedCallbacks.GetFunctions())
     {
         callback->Call(_core, entity1, entity2);
     }

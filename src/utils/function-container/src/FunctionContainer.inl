@@ -6,16 +6,24 @@ template <typename TReturn, typename... TArgs>
 template <typename TCallable>
 void ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
 {
-    std::size_t id = 0;
+    if (_idToIndex.find(CallableFunction<TCallable, TReturn, TArgs...>::GetCallableID(callable)) != _idToIndex.end())
+    {
+        ES::Utils::Log::Warn("Function already exists"); // TODO: be able to change container thing name
+        return;
+    }
 
-    if constexpr (std::is_class_v<TCallable>)
-    {
-        id = typeid(callable).hash_code();
-    }
-    else
-    {
-        id = std::hash<TCallable>{}(callable);
-    }
+    std::size_t index = _orderedFunctions.size();
+    auto function = std::make_unique<CallableFunction<TCallable, TReturn, TArgs...>>(callable);
+    _idToIndex[function->GetID()] = index;
+    _orderedFunctions.push_back(std::move(function));
+}
+
+template <typename TReturn, typename... TArgs>
+template <typename TCallable>
+void ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunctionC(
+    std::unique_ptr<BaseFunction<TCallable, TReturn, TArgs...>> &&function)
+{
+    unsigned int id = function->GetID();
 
     if (_idToIndex.find(id) != _idToIndex.end())
     {
@@ -24,7 +32,6 @@ void ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunc
     }
 
     std::size_t index = _orderedFunctions.size();
-    auto function = std::make_unique<CallableFunction<TCallable, TReturn, TArgs...>>(callable);
     _orderedFunctions.push_back(std::move(function));
     _idToIndex[id] = index;
 }

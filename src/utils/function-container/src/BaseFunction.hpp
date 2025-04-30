@@ -14,5 +14,17 @@ template <typename TReturn, typename... TArgs> class BaseFunction {
      * @return Return value of the function.
      */
     virtual TReturn operator()(TArgs... args) const = 0;
+
+    /**
+     * @brief External Call function
+     * TODO: write better doc
+     */
+    TReturn Call(TArgs... args) const { return (*this)(args...); }
+
+    /**
+     * @brief Pure virtual function to get the unique ID of the function.
+     * @return Unique ID of the function.
+     */
+    virtual unsigned int GetID() const = 0; // TODO: do not use an unsigned int, define a more explicit type
 };
 } // namespace ES::Utils::FunctionContainer
