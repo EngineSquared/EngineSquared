@@ -31,7 +31,7 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
      * @brief Returns the unique ID of the callable object.
      * @return Unique ID of the callable object.
      */
-    unsigned int GetID() const override { return _id; }
+    FunctionID GetID() const override { return _id; }
 
     /**
      * @brief Get the ID of the callable object.
@@ -39,7 +39,7 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
      * @tparam TCallable The type of the callable object.
      * @return The ID of the callable object.
      */
-    static unsigned int GetCallableID(TCallable callable)
+    static FunctionID GetCallableID(TCallable callable)
     {
         if constexpr (std::is_class_v<TCallable>)
         {
@@ -53,6 +53,6 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
 
   protected:
     TCallable _callable;
-    unsigned int _id = 0; ///< Unique ID for the function.
+    FunctionID _id = 0; ///< Unique ID for the function.
 };
 } // namespace ES::Utils::FunctionContainer

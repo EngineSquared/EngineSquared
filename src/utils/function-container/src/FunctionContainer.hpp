@@ -28,14 +28,14 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      * @param callable The callable function to be added.
      */
     template <typename TCallable>
-    void AddFunction(TCallable callable); // TODO: return the ID when a callable is created
+    FunctionID AddFunction(TCallable callable); // TODO: return the ID when a callable is created
 
     /**
-     * @brief Adds a function to the container.
-     * @param function A function object to be added, in the form of a class that inherits BaseFunction.
-     * TODO: better doc
+     * @brief Adds a wrapped function to the container.
+     * @param function A wrapped function to be added.
+     * @note A wrapped function is a unique pointer to a class derived from BaseFunction.
      */
-    void AddFunction(std::unique_ptr<BaseFunction<TReturn, TArgs...>> &&function);
+    FunctionID AddFunction(std::unique_ptr<BaseFunction<TReturn, TArgs...>> &&function);
 
     /**
      * @brief Adds multiple functions to the container.
@@ -51,7 +51,7 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
     inline std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>> &GetFunctions() { return _orderedFunctions; }
 
   protected:
-    std::unordered_map<unsigned int, std::size_t> _idToIndex; ///< Map to store unique ids for each function.
+    std::unordered_map<FunctionID, std::size_t> _idToIndex; ///< Map to store unique ids for each function.
     std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>>
         _orderedFunctions; ///< Vector to store functions in order.
 };

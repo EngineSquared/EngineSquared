@@ -1,5 +1,7 @@
 #pragma once
 
+#include "FunctionID.hpp"
+
 namespace ES::Utils::FunctionContainer {
 /**
  * @brief Base class for all functions contained in a FunctionContainer.
@@ -25,6 +27,6 @@ template <typename TReturn, typename... TArgs> class BaseFunction {
      * @brief Pure virtual function to get the unique ID of the function.
      * @return Unique ID of the function.
      */
-    virtual unsigned int GetID() const = 0; // TODO: do not use an unsigned int, define a more explicit type
+    virtual FunctionID GetID() const = 0; // TODO: do not use an unsigned int, define a more explicit type
 };
 } // namespace ES::Utils::FunctionContainer
