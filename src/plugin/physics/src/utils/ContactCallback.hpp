@@ -23,7 +23,7 @@ namespace ES::Plugin::Physics::Utils {
  */
 using BaseCallback =
     ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &>;
-template <typename... Components> class ContactCallback : BaseCallback {
+template <typename... Components> class ContactCallback : public BaseCallback {
   public:
     using CallbackFunc = std::function<void(ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &)>;
 
@@ -52,7 +52,8 @@ template <typename... Components> class ContactCallback : BaseCallback {
 
     unsigned int GetID() const final
     {
-        return 0; // TODO: copy/paste from CallableFunction
+        static unsigned int cId = 0; // TODO: copy/paste from CallableFunction
+        return cId++; // TODO: copy/paste from CallableFunction
     }
 
   private:

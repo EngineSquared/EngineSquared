@@ -52,7 +52,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      */
     template <typename... Components> inline void AddOnContactAddedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
-        _onContactAddedCallbacks.AddFunctionC(std::move(callback));
+        _onContactAddedCallbacks.AddFunction(std::move(callback));
     }
 
     /**
@@ -65,7 +65,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
     template <typename... Components>
     inline void AddOnContactPersistedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
-        _onContactPersistedCallbacks.AddFunctionC(std::move(callback));
+        _onContactPersistedCallbacks.AddFunction(std::move(callback));
     }
 
     /**
@@ -76,7 +76,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      */
     template <typename... Components> inline void AddOnContactRemovedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
-        _onContactRemovedCallbacks.AddFunctionC(std::move(callback));
+        _onContactRemovedCallbacks.AddFunction(std::move(callback));
     }
 
   private:

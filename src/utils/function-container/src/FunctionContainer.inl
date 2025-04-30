@@ -19,9 +19,8 @@ void ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunc
 }
 
 template <typename TReturn, typename... TArgs>
-template <typename TCallable>
-void ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunctionC(
-    std::unique_ptr<BaseFunction<TCallable, TReturn, TArgs...>> &&function)
+void ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
+    std::unique_ptr<BaseFunction<TReturn, TArgs...>> &&function)
 {
     unsigned int id = function->GetID();
 

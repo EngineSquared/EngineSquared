@@ -33,10 +33,9 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
     /**
      * @brief Adds a function to the container.
      * @param function A function object to be added, in the form of a class that inherits BaseFunction.
-     * TODO: rename
+     * TODO: better doc
      */
-    template <typename TCallable>
-    void AddFunctionC(std::unique_ptr<BaseFunction<TCallable, TReturn, TArgs...>> &&function);
+    void AddFunction(std::unique_ptr<BaseFunction<TReturn, TArgs...>> &&function);
 
     /**
      * @brief Adds multiple functions to the container.
