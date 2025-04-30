@@ -51,7 +51,7 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
         }
     }
 
-  protected:
+  private:
     [[no_unique_address]] TCallable _callable;
     FunctionID _id = 0; ///< Unique ID for the function.
 };
