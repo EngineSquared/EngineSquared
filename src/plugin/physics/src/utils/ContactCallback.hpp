@@ -50,10 +50,7 @@ template <typename... Components> class ContactCallback : public BaseCallback {
         }
     }
 
-    unsigned int GetID() const final
-    {
-        return _callback.target_type().hash_code();
-    }
+    unsigned int GetID() const final { return _callback.target_type().hash_code(); }
 
   private:
     template <typename... Cs>
