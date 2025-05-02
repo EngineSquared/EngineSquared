@@ -19,10 +19,7 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->RegisterScheduler<ES::Engine::Scheduler::Shutdown>();
 }
 
-ES::Engine::Core::~Core()
-{
-    ES::Utils::Log::Info("Destroy Core");
-}
+ES::Engine::Core::~Core() { ES::Utils::Log::Info("Destroy Core"); }
 
 ES::Engine::Entity ES::Engine::Core::CreateEntity()
 {
