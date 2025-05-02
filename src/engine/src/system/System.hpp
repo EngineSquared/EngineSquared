@@ -24,6 +24,20 @@ class SystemBase {
      * @param core Reference to the Core object.
      */
     virtual void operator()(Core &core) const = 0;
+
+    SystemBase &Disable()
+    {
+        enabled = false;
+        return *this;
+    }
+    
+    SystemBase &Enable()
+    {
+        enabled = true;
+        return *this;
+    }
+
+    bool enabled = true; ///< Flag to enable or disable the system.
 };
 
 /**
@@ -69,21 +83,24 @@ class SystemContainer {
      * @tparam TSystem Variadic template parameter for system types.
      * @param systems The systems to be added.
      */
-    template <typename... TSystem> inline void AddSystems(TSystem... systems) { (AddSystem(systems), ...); }
+    template <typename... TSystem>
+    inline auto AddSystems(TSystem... systems)
+    {
+        return std::make_tuple(std::ref(AddSystem(systems))...);
+    }
 
     /**
      * @brief Retrieves the vector of systems.
      * @return Reference to the vector of unique pointers to SystemBase.
      */
     inline std::list<std::unique_ptr<SystemBase>> &GetSystems() { return _orderedSystems; }
-
   private:
     /**
      * @brief Adds a single system to the container.
      * @tparam TCallable Type of the callable system.
      * @param callable The callable system to be added.
      */
-    template <typename TSystem> void AddSystem(TSystem callable);
+    template <typename TSystem> SystemBase &AddSystem(TSystem callable);
 
     std::unordered_map<entt::id_type, std::size_t> _idToIndex; ///< Map to store unique ids for each system.
     std::list<std::unique_ptr<SystemBase>> _orderedSystems;    ///< Vector to store systems in order.

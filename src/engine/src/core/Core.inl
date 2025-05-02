@@ -27,19 +27,19 @@ template <CScheduler TScheduler> inline TScheduler &Core::GetScheduler()
     return this->_schedulers.GetScheduler<TScheduler>();
 }
 
-template <CScheduler TScheduler, typename... Systems> inline void Core::RegisterSystem(Systems... systems)
+template <CScheduler TScheduler, typename... Systems> inline decltype(auto) Core::RegisterSystem(Systems... systems)
 {
-    this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
+    return this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
 }
 
-template <typename... Systems> inline void Core::RegisterSystem(Systems... systems)
+template <typename... Systems> inline decltype(auto) Core::RegisterSystem(Systems... systems)
 {
     if (!this->_schedulers.Contains(_defaultScheduler))
     {
         ES::Utils::Log::Warn(fmt::format("Trying to register systems with a default scheduler that does not exist: {}",
                                          _defaultScheduler.name()));
     }
-    this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(systems...);
+    return this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(systems...);
 }
 
 template <typename... TPlugins> void Core::AddPlugins() { (AddPlugin<TPlugins>(), ...); }

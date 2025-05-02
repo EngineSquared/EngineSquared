@@ -51,3 +51,14 @@ TEST(Systems, Casual)
     ASSERT_EQ(core.GetResource<B>().value, 1);
     ASSERT_EQ(core.GetResource<C>().value, 3);
 }
+
+TEST(Systems, EnableDisable)
+{
+    Core core;
+
+    core.RegisterResource<A>({});
+    core.RegisterResource<B>({});
+    core.RegisterResource<C>({});
+
+    auto &[a, b, c] = core.RegisterSystem(TestSystemClass(), TestSystemFunction, [](Core &core) { core.GetResource<C>().value++; });
+}

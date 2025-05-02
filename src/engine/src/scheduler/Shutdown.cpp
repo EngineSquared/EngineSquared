@@ -9,6 +9,9 @@ void ES::Engine::Scheduler::Shutdown::RunSystems()
     }
     for (auto const &system : this->_systemsList.GetSystems())
     {
-        (*system)(_core);
+        if (system->enabled)
+        {
+            (*system)(_core);
+        }
     }
 }

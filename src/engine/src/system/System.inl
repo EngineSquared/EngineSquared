@@ -1,6 +1,6 @@
 #include "System.hpp"
 
-template <typename TCallable> void ES::Engine::SystemContainer::AddSystem(TCallable callable)
+template <typename TCallable> ES::Engine::SystemBase &ES::Engine::SystemContainer::AddSystem(TCallable callable)
 {
     std::size_t id = 0;
 
@@ -15,11 +15,12 @@ template <typename TCallable> void ES::Engine::SystemContainer::AddSystem(TCalla
 
     if (_idToIndex.find(id) != _idToIndex.end())
     {
-        ES::Utils::Log::Warn("System already exists");
-        return;
+        // ES::Utils::Log::Warn("System already exists");
+        throw std::runtime_error("System already exists");
     }
     std::size_t index = _orderedSystems.size();
     auto system = std::make_unique<System<TCallable>>(callable);
     _orderedSystems.push_back(std::move(system));
     _idToIndex[id] = index;
+    return *_orderedSystems.back();
 }
