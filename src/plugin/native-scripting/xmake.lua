@@ -33,7 +33,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_languages("cxx20")
         add_links("gtest")
         add_tests("default")
-        add_packages("glm", "entt", "gtest", "spdlog")
+        add_packages("glm", "entt", "gtest", "spdlog", "fmt")
 
         add_deps("PluginNativeScripting")
         add_deps("EngineSquaredCore")
