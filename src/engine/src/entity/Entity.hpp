@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Core.hpp"
+#include "EntityToIDString.hpp"
 #include "Logger.hpp"
 #include <entt/entt.hpp>
 #include <typeindex>
-#include "EntityToIDString.hpp"
 
 namespace ES::Engine {
 /**
@@ -56,7 +56,8 @@ class Entity {
      */
     void Destroy(Core &core)
     {
-        ES::Utils::Log::Debug(fmt::format("[EntityID:{}] Destroy Entity", ES::Utils::Log::EntityToDebugString(_entity)));
+        ES::Utils::Log::Debug(
+            fmt::format("[EntityID:{}] Destroy Entity", ES::Utils::Log::EntityToDebugString(_entity)));
         core.KillEntity(*this);
     }
 
@@ -87,8 +88,8 @@ class Entity {
 
     template <typename TComponent> inline decltype(auto) AddComponent(Core &core, TComponent &&component)
     {
-        ES::Utils::Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}", ES::Utils::Log::EntityToDebugString(_entity),
-                                         typeid(TComponent).name()));
+        ES::Utils::Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}",
+                                          ES::Utils::Log::EntityToDebugString(_entity), typeid(TComponent).name()));
         return core.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TComponent>(component));
     }
 
@@ -103,8 +104,8 @@ class Entity {
      */
     template <typename TComponent, typename... TArgs> inline decltype(auto) AddComponent(Core &core, TArgs &&...args)
     {
-        ES::Utils::Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}", ES::Utils::Log::EntityToDebugString(_entity),
-                                         typeid(TComponent).name()));
+        ES::Utils::Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}",
+                                          ES::Utils::Log::EntityToDebugString(_entity), typeid(TComponent).name()));
         return core.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
     }
 
@@ -181,7 +182,7 @@ class Entity {
     template <typename TComponent> inline void RemoveComponent(Core &core)
     {
         ES::Utils::Log::Debug(fmt::format("[EntityID:{}] RemoveComponent: {}",
-                                         ES::Utils::Log::EntityToDebugString(_entity), typeid(TComponent).name()));
+                                          ES::Utils::Log::EntityToDebugString(_entity), typeid(TComponent).name()));
         core.GetRegistry().remove<TComponent>(ToEnttEntity(this->_entity));
     }
 
