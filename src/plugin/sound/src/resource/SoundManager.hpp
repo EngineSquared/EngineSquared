@@ -25,7 +25,23 @@ class SoundManager {
         ma_uint64 loopEndFrame = 0;
     };
 
-    std::unordered_map<std::string, Sound> _soundsToPlay;
+    struct TransparentHash {
+        using is_transparent = void;
+    
+        std::size_t operator()(std::string_view key) const noexcept {
+            return std::hash<std::string_view>{}(key);
+        }
+    };
+
+    struct TransparentEqual {
+        using is_transparent = void;
+    
+        bool operator()(std::string_view lhs, std::string_view rhs) const noexcept {
+            return lhs == rhs;
+        }
+    };
+
+    std::unordered_map<std::string, Sound, TransparentHash, TransparentEqual> _soundsToPlay;
 
   public:
     /**
@@ -50,8 +66,8 @@ class SoundManager {
      */
     static void data_callback(ma_device *pDevice, void *pOutput, const void * /*pInput*/, ma_uint32 frameCount)
     {
-        SoundManager *self = reinterpret_cast<SoundManager *>(pDevice->pUserData);
-        float *outputBuffer = static_cast<float *>(pOutput);
+        auto *self = static_cast<SoundManager *>(pDevice->pUserData);
+        auto *outputBuffer = static_cast<float *>(pOutput);
         std::memset(outputBuffer, 0, sizeof(float) * frameCount * 2); // stereo clear
 
         for (auto &[name, sound] : self->_soundsToPlay)
@@ -59,15 +75,15 @@ class SoundManager {
             if (!sound.isPlaying || sound.isPaused)
                 continue;
 
-            float tempBuffer[4096 * 2] = {}; // large enough for stereo samples
+            std::array<float, 4096 * 2> tempBuffer; // large enough for stereo samples
             ma_uint32 framesRemaining = frameCount;
-            ma_uint32 tempBufferSize = sizeof(tempBuffer) / sizeof(float) / 2;
+            ma_uint32 tempBufferSize = tempBuffer.size() / sizeof(float) / 2;
 
             while (framesRemaining > 0)
             {
                 ma_uint32 framesToRead = (tempBufferSize < framesRemaining) ? tempBufferSize : framesRemaining;
                 ma_uint64 framesRead = 0;
-                ma_result result = ma_decoder_read_pcm_frames(&sound.decoder, tempBuffer, framesToRead, &framesRead);
+                ma_result result = ma_decoder_read_pcm_frames(&sound.decoder, tempBuffer.data(), framesToRead, &framesRead);
 
                 if (result != MA_SUCCESS)
                 {
