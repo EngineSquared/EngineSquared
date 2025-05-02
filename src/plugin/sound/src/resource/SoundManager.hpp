@@ -27,18 +27,14 @@ class SoundManager {
 
     struct TransparentHash {
         using is_transparent = void;
-    
-        std::size_t operator()(std::string_view key) const noexcept {
-            return std::hash<std::string_view>{}(key);
-        }
+
+        std::size_t operator()(std::string_view key) const noexcept { return std::hash<std::string_view>{}(key); }
     };
 
     struct TransparentEqual {
         using is_transparent = void;
-    
-        bool operator()(std::string_view lhs, std::string_view rhs) const noexcept {
-            return lhs == rhs;
-        }
+
+        bool operator()(std::string_view lhs, std::string_view rhs) const noexcept { return lhs == rhs; }
     };
 
     std::unordered_map<std::string, Sound, TransparentHash, TransparentEqual> _soundsToPlay;
@@ -83,7 +79,8 @@ class SoundManager {
             {
                 ma_uint32 framesToRead = (tempBufferSize < framesRemaining) ? tempBufferSize : framesRemaining;
                 ma_uint64 framesRead = 0;
-                ma_result result = ma_decoder_read_pcm_frames(&sound.decoder, tempBuffer.data(), framesToRead, &framesRead);
+                ma_result result =
+                    ma_decoder_read_pcm_frames(&sound.decoder, tempBuffer.data(), framesToRead, &framesRead);
 
                 if (result != MA_SUCCESS)
                 {
