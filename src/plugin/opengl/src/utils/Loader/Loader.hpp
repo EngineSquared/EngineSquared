@@ -12,6 +12,7 @@
 
 #include "Logger.hpp"
 #include "OpenGLError.hpp"
+#include "Exception.hpp"
 
 #include <GL/glew.h>
 
@@ -166,7 +167,7 @@ class ShaderProgram {
         // If we couldn't open the file we'll bail out
         if (!file.good())
         {
-            ES::Utils::Log::Error(fmt::format("Failed to open file({}): {}", filename, std::strerror(errno)));
+            ES::Utils::Log::Error(fmt::format("Failed to open file({}): {}", filename, GetErrnoMessage()));
         }
 
         // Otherwise, create a string stream...

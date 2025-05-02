@@ -30,6 +30,7 @@ target("PluginOpenGL")
 
     add_includedirs("src/", {public = true})
     add_includedirs("src/exception/", {public = true})
+    add_includedirs("src/utils/Exception/", {public = true})
     add_includedirs("src/utils/Font/", {public = true})
     add_includedirs("src/utils/Texture/", {public = true})
     add_includedirs("src/utils/GLMeshBuffer/", {public = true})
