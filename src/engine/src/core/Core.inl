@@ -34,13 +34,11 @@ template <CScheduler TScheduler, typename... Systems> inline void Core::Register
 
 template <typename... Systems> inline void Core::RegisterSystem(Systems... systems)
 {
-#ifdef ES_DEBUG
     if (!this->_schedulers.Contains(_defaultScheduler))
     {
         ES::Utils::Log::Warn(fmt::format("Trying to register systems with a default scheduler that does not exist: {}",
                                          _defaultScheduler.name()));
     }
-#endif
     this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(systems...);
 }
 
@@ -48,12 +46,10 @@ template <typename... TPlugins> void Core::AddPlugins() { (AddPlugin<TPlugins>()
 
 template <typename TPlugin> void Core::AddPlugin()
 {
-#ifdef ES_DEBUG
     if (this->_plugins.contains(std::type_index(typeid(TPlugin))))
     {
         ES::Utils::Log::Warn(fmt::format("Plugin {} already added", typeid(TPlugin).name()));
     }
-#endif
     this->_plugins.emplace(std::type_index(typeid(TPlugin)), std::make_unique<TPlugin>(*this));
     this->_plugins.at(std::type_index(typeid(TPlugin)))->Bind();
 }
@@ -65,13 +61,11 @@ template <typename TPlugin> bool Core::HasPlugin() const
 
 inline void Core::SetDefaultScheduler(std::type_index scheduler)
 {
-#ifdef ES_DEBUG
     if (!this->_schedulers.Contains(scheduler))
     {
         ES::Utils::Log::Warn(
             fmt::format("Trying to set a default scheduler that does not exist: {}", scheduler.name()));
     }
-#endif
     this->_defaultScheduler = scheduler;
 }
 
