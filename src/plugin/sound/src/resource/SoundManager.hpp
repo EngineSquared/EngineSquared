@@ -69,6 +69,11 @@ class SoundManager {
                 ma_uint64 framesRead = 0;
                 ma_result result = ma_decoder_read_pcm_frames(&sound.decoder, tempBuffer, framesToRead, &framesRead);
 
+                if (result != MA_SUCCESS)
+                {
+                    ES::Utils::Log::Error(fmt::format("Could not read PCM frames: {}", ma_result_description(result)));
+                }
+
                 if (framesRead < framesToRead)
                 {
                     if (sound.loop)
@@ -104,11 +109,9 @@ class SoundManager {
     /**
      * @brief Initialize the sound system.
      *
-     * @param core A reference to the core engine, used for the contact listener.
-     *
      * @return void
      */
-    inline void Init(ES::Engine::Core &core)
+    inline void Init()
     {
         _deviceConfig = ma_device_config_init(ma_device_type_playback);
         _deviceConfig.playback.format = ma_format_f32;
@@ -158,8 +161,8 @@ class SoundManager {
         sound.path = filePath;
         sound.loop = loop;
 
-        ma_result result = ma_decoder_init_file(filePath.c_str(), nullptr, &sound.decoder);
-        if (result != MA_SUCCESS)
+        _result = ma_decoder_init_file(filePath.c_str(), nullptr, &sound.decoder);
+        if (_result != MA_SUCCESS)
         {
             ES::Utils::Log::Error(
                 fmt::format("Failed to initialize the audio device: {}", ma_result_description(_result)));
@@ -346,6 +349,43 @@ class SoundManager {
         {
             ES::Utils::Log::Error(fmt::format("Could not set loop points: Sound \"{}\" does not exist", soundName));
         }
+    }
+
+    /**
+     * @brief Get the current playback position of a sound in seconds.
+     * 
+     * Return value is related to the absolute begin of the sound, not the start frame.
+     *
+     * @param soundName The name of the target sound to query.
+     * 
+     * @return double The playback position in seconds, or -1.0 on error.
+     */
+    inline double GetPlayPosition(const std::string &soundName)
+    {
+        auto it = _soundsToPlay.find(soundName);
+        if (it == _soundsToPlay.end())
+        {
+            ES::Utils::Log::Error(fmt::format("Could not get the playback position: Sound \"{}\" does not exist", soundName));
+            return -1.0f;
+        }
+
+        Sound &sound = it->second;
+        if (!sound.isPlaying)
+        {
+            ES::Utils::Log::Warn(fmt::format("Sound \"{}\" is not currently playing", soundName));
+            return 0.0f;
+        }
+
+        ma_uint64 currentFrame;
+        _result = ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &currentFrame);
+        if (_result != MA_SUCCESS)
+        {
+            ES::Utils::Log::Error(
+                fmt::format("Could not get the playback position: {}", ma_result_description(_result)));
+            return -1.0f;
+        }
+        double position = static_cast<double>(currentFrame) / sound.decoder.outputSampleRate;
+        return position;
     }
 };
 } // namespace ES::Plugin::Sound::Resource
