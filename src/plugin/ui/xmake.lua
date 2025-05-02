@@ -26,7 +26,7 @@ target("PluginUI")
     add_deps("PluginPhysics")
     add_deps("PluginOpenGL")
     add_deps("PluginWindow")
-    
+
     add_files("src/**.cpp")
     add_includedirs("src/", {public = true})
     add_includedirs("src/system", {public = true})
