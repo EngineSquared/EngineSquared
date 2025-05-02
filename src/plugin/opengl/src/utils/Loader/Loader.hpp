@@ -10,9 +10,9 @@
 #include <sstream>
 #include <string>
 
+#include "Exception.hpp"
 #include "Logger.hpp"
 #include "OpenGLError.hpp"
-#include "Exception.hpp"
 
 #include <GL/glew.h>
 
