@@ -6,6 +6,9 @@
 // Utils
 #include "utils/InputUtils.hpp"
 
+// Exceptions
+#include "exception/InputError.hpp"
+
 // Plugin
 #include "plugin/PluginInput.hpp"
 

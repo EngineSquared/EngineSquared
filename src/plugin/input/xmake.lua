@@ -20,6 +20,7 @@ target("PluginInput")
     add_deps("UtilsFunctionContainer")
 
     add_includedirs("src", {public = true})
+    add_includedirs("src/exception", {public = true})
     add_includedirs("src/resource", {public = true})
     add_includedirs("src/utils", {public = true})
     add_includedirs("src/plugin", {public = true})
