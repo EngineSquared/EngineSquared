@@ -12,7 +12,10 @@ class AScheduler : public IScheduler {
   public:
     explicit AScheduler(Core &core) : _core(core) {}
 
-    template <typename... Systems> decltype(auto) AddSystems(Systems... systems) { _systemsList.AddSystems(systems...); }
+    template <typename... Systems> decltype(auto) AddSystems(Systems... systems)
+    {
+        _systemsList.AddSystems(systems...);
+    }
 
   protected:
     Core &_core;

@@ -30,7 +30,7 @@ class SystemBase {
         enabled = false;
         return *this;
     }
-    
+
     SystemBase &Enable()
     {
         enabled = true;
@@ -83,8 +83,7 @@ class SystemContainer {
      * @tparam TSystem Variadic template parameter for system types.
      * @param systems The systems to be added.
      */
-    template <typename... TSystem>
-    inline auto AddSystems(TSystem... systems)
+    template <typename... TSystem> inline auto AddSystems(TSystem... systems)
     {
         return std::make_tuple(std::ref(AddSystem(systems))...);
     }
@@ -94,6 +93,7 @@ class SystemContainer {
      * @return Reference to the vector of unique pointers to SystemBase.
      */
     inline std::list<std::unique_ptr<SystemBase>> &GetSystems() { return _orderedSystems; }
+
   private:
     /**
      * @brief Adds a single system to the container.
