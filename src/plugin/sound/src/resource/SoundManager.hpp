@@ -353,11 +353,11 @@ class SoundManager {
 
     /**
      * @brief Get the current playback position of a sound in seconds.
-     * 
+     *
      * Return value is related to the absolute begin of the sound, not the start frame.
      *
      * @param soundName The name of the target sound to query.
-     * 
+     *
      * @return double The playback position in seconds, or -1.0 on error.
      */
     inline double GetPlayPosition(const std::string &soundName)
@@ -365,7 +365,8 @@ class SoundManager {
         auto it = _soundsToPlay.find(soundName);
         if (it == _soundsToPlay.end())
         {
-            ES::Utils::Log::Error(fmt::format("Could not get the playback position: Sound \"{}\" does not exist", soundName));
+            ES::Utils::Log::Error(
+                fmt::format("Could not get the playback position: Sound \"{}\" does not exist", soundName));
             return -1.0f;
         }
 
