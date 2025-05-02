@@ -4,7 +4,7 @@ void ES::Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
 {
     if (this->_schedulers.contains(id))
     {
-        ES::Utils::Log::Info(fmt::format("Deleting scheduler: {}", id.name()));
+        ES::Utils::Log::Debug(fmt::format("Deleting scheduler: {}", id.name()));
         this->_schedulers.erase(id);
         this->_dirty = true;
         if (this->_dependencies.contains(id))
@@ -21,7 +21,7 @@ void ES::Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
     }
     else
     {
-        ES::Utils::Log::Warn(fmt::format("Scheduler does not exist: {}", id.name()));
+        ES::Utils::Log::Warn(fmt::format("Trying to delete Scheduler but it does not exist: {}", id.name()));
     }
 }
 

@@ -8,7 +8,7 @@
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
-    ES::Utils::Log::Info("Create Core");
+    ES::Utils::Log::Debug("Create Core");
     this->_registry = std::make_unique<entt::registry>();
 
     this->RegisterScheduler<ES::Engine::Scheduler::Startup>(
@@ -19,7 +19,7 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->RegisterScheduler<ES::Engine::Scheduler::Shutdown>();
 }
 
-ES::Engine::Core::~Core() { ES::Utils::Log::Info("Destroy Core"); }
+ES::Engine::Core::~Core() { ES::Utils::Log::Debug("Destroy Core"); }
 
 ES::Engine::Entity ES::Engine::Core::CreateEntity()
 {
