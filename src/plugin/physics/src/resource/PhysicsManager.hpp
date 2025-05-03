@@ -119,13 +119,11 @@ class PhysicsManager {
         {
             return contactListener->AddOnContactAddedCallback(std::move(callback));
         }
-#ifdef ES_DEBUG
         else
         {
             ES::Utils::Log::Error(
                 "PhysicsManager: tried to add contact added callback, but contact listener is not initialized.");
         }
-#endif
         return ES::Utils::FunctionContainer::FunctionID(); // Should never happen
     }
 
@@ -162,13 +160,11 @@ class PhysicsManager {
         {
             return contactListener->AddOnContactPersistedCallback(std::move(callback));
         }
-#ifdef ES_DEBUG
         else
         {
             ES::Utils::Log::Error(
                 "PhysicsManager: tried to add contact persisted callback, but contact listener is not initialized.");
         }
-#endif
         return ES::Utils::FunctionContainer::FunctionID(); // Should never happen
     }
 
@@ -205,13 +201,11 @@ class PhysicsManager {
         {
             return contactListener->AddOnContactRemovedCallback(std::move(callback));
         }
-#ifdef ES_DEBUG
         else
         {
             ES::Utils::Log::Error(
                 "PhysicsManager: tried to add contact removed callback, but contact listener is not initialized.");
         }
-#endif
         return ES::Utils::FunctionContainer::FunctionID(); // Should never happen
     }
 

@@ -77,9 +77,7 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH
     JPH::Body *body2 = bodyInterface.TryGetBody(inSubShapePair.GetBody2ID());
     if (body1 == nullptr || body2 == nullptr)
     {
-#ifdef ES_DEBUG
         ES::Utils::Log::Error("ContactListenerImpl: OnContactRemoved: body1 or body2 is nullptr, skipping callbacks.");
-#endif
         return;
     }
 

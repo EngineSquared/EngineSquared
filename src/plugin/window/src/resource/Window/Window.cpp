@@ -7,10 +7,8 @@ Window::Window(uint32_t width, uint32_t height, const std::string &title, GLFWmo
     : _title(title), _window(nullptr), _monitor(monitor), _share(share)
 {
     _window = glfwCreateWindow(width, height, _title.c_str(), _monitor, _share);
-#ifdef ES_DEBUG
     if (!_window)
-        ES::Utils::Error("Failed to create window");
-#endif
+        ES::Utils::Log::Error("Failed to create window");
 }
 
 void Window::Destroy()
