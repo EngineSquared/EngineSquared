@@ -6,6 +6,7 @@
 #include "GLMeshBufferManager.hpp"
 #include "GLSpriteBufferManager.hpp"
 #include "GLTextBufferManager.hpp"
+#include "Light.hpp"
 #include "MaterialCache.hpp"
 #include "MaterialHandle.hpp"
 #include "ModelHandle.hpp"
@@ -18,7 +19,6 @@
 #include "TextHandle.hpp"
 #include "TextureHandle.hpp"
 #include "TextureManager.hpp"
-#include "Light.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 
