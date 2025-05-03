@@ -239,13 +239,11 @@ class PhysicsManager {
         {
             return contactListener->RemoveOnContactAddedCallback(id);
         }
-#ifdef ES_DEBUG
         else
         {
             ES::Utils::Log::Error(
                 "PhysicsManager: tried to remove contact added callback, but contact listener is not initialized.");
         }
-#endif
         return false;
     }
 
@@ -262,13 +260,11 @@ class PhysicsManager {
         {
             return contactListener->RemoveOnContactPersistedCallback(id);
         }
-#ifdef ES_DEBUG
         else
         {
             ES::Utils::Log::Error(
                 "PhysicsManager: tried to remove contact persisted callback, but contact listener is not initialized.");
         }
-#endif
         return false;
     }
 
@@ -285,13 +281,11 @@ class PhysicsManager {
         {
             return contactListener->RemoveOnContactRemovedCallback(id);
         }
-#ifdef ES_DEBUG
         else
         {
             ES::Utils::Log::Error(
                 "PhysicsManager: tried to remove contact removed callback, but contact listener is not initialized.");
         }
-#endif
         return false;
     }
 
