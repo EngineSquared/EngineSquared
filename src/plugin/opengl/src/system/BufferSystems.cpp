@@ -2,10 +2,10 @@
 #include "GLMeshBufferManager.hpp"
 #include "GLSpriteBufferManager.hpp"
 #include "GLTextBufferManager.hpp"
-#include "TextureManager.hpp"
 #include "ModelHandle.hpp"
 #include "SpriteHandle.hpp"
 #include "TextHandle.hpp"
+#include "TextureManager.hpp"
 
 void ES::Plugin::OpenGL::System::LoadGLSpriteBuffer(ES::Engine::Core &core)
 {

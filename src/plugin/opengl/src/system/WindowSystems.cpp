@@ -1,13 +1,13 @@
 #include "WindowSystems.hpp"
-#include "Window.hpp"
 #include "Camera.hpp"
-#include "MouseDragging.hpp"
 #include "Input.hpp"
-#include "TextureManager.hpp"
-#include "MaterialCache.hpp"
-#include "ShaderManager.hpp"
 #include "Light.hpp"
+#include "MaterialCache.hpp"
+#include "MouseDragging.hpp"
+#include "ShaderManager.hpp"
 #include "TextureHandle.hpp"
+#include "TextureManager.hpp"
+#include "Window.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 
