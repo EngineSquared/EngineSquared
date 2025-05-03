@@ -53,13 +53,11 @@ template <typename ResourceType> class ResourceManager {
     {
         auto ret = cache.load(id, std::forward<Args>(args)...);
 
-#ifdef ES_DEBUG
         if (!ret.second)
         {
             ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, std::forward<Args>(args)...);
         }
-#endif
 
         return *ret.first->second;
     }
@@ -77,13 +75,11 @@ template <typename ResourceType> class ResourceManager {
     {
         auto ret = cache.load(id, resource);
 
-#ifdef ES_DEBUG
         if (!ret.second)
         {
             ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, resource);
         }
-#endif
 
         return *(ret.first->second);
     }
@@ -101,13 +97,11 @@ template <typename ResourceType> class ResourceManager {
     {
         auto ret = cache.load(id, std::move(resource));
 
-#ifdef ES_DEBUG
         if (!ret.second)
         {
             ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, std::move(resource));
         }
-#endif
 
         return *(ret.first->second);
     }
@@ -124,10 +118,8 @@ template <typename ResourceType> class ResourceManager {
     {
         auto resource = cache[id];
 
-#ifdef ES_DEBUG
         if (!resource)
             throw ResourceManagerError(fmt::format("Resource with id {} not found.", id.data()));
-#endif
 
         return *resource;
     }
@@ -144,10 +136,8 @@ template <typename ResourceType> class ResourceManager {
     {
         auto &resource = cache[id];
 
-#ifdef ES_DEBUG
         if (!resource)
             throw ResourceManagerError(fmt::format("Resource with id {} not found.", id));
-#endif
 
         return *resource;
     }
