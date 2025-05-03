@@ -16,6 +16,7 @@ class AScheduler : public IScheduler {
     {
         return _systemsList.AddSystems(systems...);
     }
+
   protected:
     Core &_core;
     SystemContainer _systemsList;

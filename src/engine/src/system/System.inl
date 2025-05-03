@@ -1,6 +1,7 @@
 #include "System.hpp"
 
-template <typename TCallable> std::shared_ptr<ES::Engine::SystemBase> ES::Engine::SystemContainer::AddSystem(TCallable callable)
+template <typename TCallable>
+std::shared_ptr<ES::Engine::SystemBase> ES::Engine::SystemContainer::AddSystem(TCallable callable)
 {
     std::size_t id = 0;
 

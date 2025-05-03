@@ -83,23 +83,21 @@ class SystemContainer {
      * @tparam TSystem Variadic template parameter for system types.
      * @param systems The systems to be added.
      */
-    template <typename... TSystem>
-    inline decltype(auto) AddSystems(TSystem... systems)
+    template <typename... TSystem> inline decltype(auto) AddSystems(TSystem... systems)
     {
-      // This immediat call ensures that the systems are added in the order they are passed.
-      // return [&]<std::size_t... I>(std::index_sequence<I...>)
-      // {
-      //     // Capture results in an array to enforce order
-      //     std::array<std::shared_ptr<SystemBase>, sizeof...(TSystem)> temp{
-      //         AddSystem(systems)...
-      //     };
-      //     return std::tuple{temp[I]...};
-      // }(std::make_index_sequence<sizeof...(TSystem)>{});
+        // This immediat call ensures that the systems are added in the order they are passed.
+        // return [&]<std::size_t... I>(std::index_sequence<I...>)
+        // {
+        //     // Capture results in an array to enforce order
+        //     std::array<std::shared_ptr<SystemBase>, sizeof...(TSystem)> temp{
+        //         AddSystem(systems)...
+        //     };
+        //     return std::tuple{temp[I]...};
+        // }(std::make_index_sequence<sizeof...(TSystem)>{});
 
-      // This is a workaround to ensure that the systems are added in the order they are passed.
-      std::array<std::shared_ptr<SystemBase>, sizeof...(TSystem)> temp{
-          AddSystem(systems)...};
-      return std::tuple_cat(temp);
+        // This is a workaround to ensure that the systems are added in the order they are passed.
+        std::array<std::shared_ptr<SystemBase>, sizeof...(TSystem)> temp{AddSystem(systems)...};
+        return std::tuple_cat(temp);
     }
 
     /**
@@ -107,6 +105,7 @@ class SystemContainer {
      * @return Reference to the vector of unique pointers to SystemBase.
      */
     inline std::list<std::shared_ptr<SystemBase>> &GetSystems() { return _orderedSystems; }
+
   private:
     /**
      * @brief Adds a single system to the container.
