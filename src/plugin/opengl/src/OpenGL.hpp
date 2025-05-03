@@ -19,7 +19,11 @@
 #include "resource/ShaderManager/ShaderManager.hpp"
 #include "resource/TextureManager/TextureManager.hpp"
 
-#include "system/AllSystems.hpp"
+#include "system/BufferSystems.hpp"
+#include "system/ManagerSystems.hpp"
+#include "system/RenderSystems.hpp"
+#include "system/ShaderSystems.hpp"
+#include "system/WindowSystems.hpp"
 
 #include "utils/Font/Font.hpp"
 #include "utils/GLMeshBuffer/GLMeshBuffer.hpp"
