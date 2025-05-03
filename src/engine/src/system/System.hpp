@@ -83,27 +83,40 @@ class SystemContainer {
      * @tparam TSystem Variadic template parameter for system types.
      * @param systems The systems to be added.
      */
-    template <typename... TSystem> inline auto AddSystems(TSystem... systems)
+    template <typename... TSystem>
+    inline decltype(auto) AddSystems(TSystem... systems)
     {
-        return std::make_tuple(std::ref(AddSystem(systems))...);
+      // This immediat call ensures that the systems are added in the order they are passed.
+      // return [&]<std::size_t... I>(std::index_sequence<I...>)
+      // {
+      //     // Capture results in an array to enforce order
+      //     std::array<std::shared_ptr<SystemBase>, sizeof...(TSystem)> temp{
+      //         AddSystem(systems)...
+      //     };
+      //     return std::tuple{temp[I]...};
+      // }(std::make_index_sequence<sizeof...(TSystem)>{});
+
+      // This is a workaround to ensure that the systems are added in the order they are passed.
+      std::array<std::shared_ptr<SystemBase>, sizeof...(TSystem)> temp{
+          AddSystem(systems)...};
+      return std::tuple_cat(temp);
     }
 
     /**
      * @brief Retrieves the vector of systems.
      * @return Reference to the vector of unique pointers to SystemBase.
      */
-    inline std::list<std::unique_ptr<SystemBase>> &GetSystems() { return _orderedSystems; }
-
+    inline std::list<std::shared_ptr<SystemBase>> &GetSystems() { return _orderedSystems; }
   private:
     /**
      * @brief Adds a single system to the container.
      * @tparam TCallable Type of the callable system.
      * @param callable The callable system to be added.
      */
-    template <typename TSystem> SystemBase &AddSystem(TSystem callable);
+    template <typename TSystem> std::shared_ptr<SystemBase> AddSystem(TSystem callable);
 
     std::unordered_map<entt::id_type, std::size_t> _idToIndex; ///< Map to store unique ids for each system.
-    std::list<std::unique_ptr<SystemBase>> _orderedSystems;    ///< Vector to store systems in order.
+    std::list<std::shared_ptr<SystemBase>> _orderedSystems;    ///< Vector to store systems in order.
 };
 
 } // namespace ES::Engine

@@ -14,9 +14,8 @@ class AScheduler : public IScheduler {
 
     template <typename... Systems> decltype(auto) AddSystems(Systems... systems)
     {
-        _systemsList.AddSystems(systems...);
+        return _systemsList.AddSystems(systems...);
     }
-
   protected:
     Core &_core;
     SystemContainer _systemsList;
