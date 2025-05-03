@@ -167,7 +167,8 @@ class ShaderProgram {
         // If we couldn't open the file we'll bail out
         if (!file.good())
         {
-            ES::Utils::Log::Error(fmt::format("Failed to open file({}): {}", filename, ES::Utils::Log::GetErrnoMessage()));
+            ES::Utils::Log::Error(
+                fmt::format("Failed to open file({}): {}", filename, ES::Utils::Log::GetErrnoMessage()));
         }
 
         // Otherwise, create a string stream...
