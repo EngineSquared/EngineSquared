@@ -1,23 +1,23 @@
 #include "RenderSystems.hpp"
 #include "Camera.hpp"
-#include "Object.hpp"
-#include "ModelHandle.hpp"
-#include "MaterialHandle.hpp"
-#include "MaterialCache.hpp"
-#include "ShaderHandle.hpp"
-#include "ShaderManager.hpp"
+#include "Entity.hpp"
+#include "FontHandle.hpp"
 #include "FontManager.hpp"
 #include "GLMeshBufferManager.hpp"
-#include "GLTextBufferManager.hpp"
 #include "GLSpriteBufferManager.hpp"
-#include "TextureManager.hpp"
-#include "FontHandle.hpp"
-#include "TextHandle.hpp"
-#include "SpriteHandle.hpp"
-#include "TextureHandle.hpp"
-#include "Text.hpp"
+#include "GLTextBufferManager.hpp"
+#include "MaterialCache.hpp"
+#include "MaterialHandle.hpp"
+#include "ModelHandle.hpp"
+#include "Object.hpp"
+#include "ShaderHandle.hpp"
+#include "ShaderManager.hpp"
 #include "Sprite.hpp"
-#include "Entity.hpp"
+#include "SpriteHandle.hpp"
+#include "Text.hpp"
+#include "TextHandle.hpp"
+#include "TextureHandle.hpp"
+#include "TextureManager.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -30,12 +30,12 @@ static void BindTextureIfNeeded(ES::Engine::Core &core, ES::Engine::Entity entit
 }
 
 static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader,
-    const ES::Plugin::OpenGL::Utils::Material &material)
+                         const ES::Plugin::OpenGL::Utils::Material &material)
 {
-glUniform3fv(shader.uniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
-glUniform3fv(shader.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
-glUniform3fv(shader.uniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
-glUniform1fv(shader.uniform("Material.Shiness"), 1, &material.Shiness);
+    glUniform3fv(shader.uniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
+    glUniform3fv(shader.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
+    glUniform3fv(shader.uniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
+    glUniform1fv(shader.uniform("Material.Shiness"), 1, &material.Shiness);
 }
 
 void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)

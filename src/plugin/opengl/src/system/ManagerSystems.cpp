@@ -1,10 +1,10 @@
 #include "ManagerSystems.hpp"
 #include "FontManager.hpp"
-#include "TextureManager.hpp"
 #include "GLMeshBufferManager.hpp"
 #include "GLSpriteBufferManager.hpp"
 #include "GLTextBufferManager.hpp"
 #include "ShaderManager.hpp"
+#include "TextureManager.hpp"
 
 void ES::Plugin::OpenGL::System::LoadFontManager(ES::Engine::Core &core)
 {
