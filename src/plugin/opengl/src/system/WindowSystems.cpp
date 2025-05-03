@@ -1,15 +1,12 @@
 #include "WindowSystems.hpp"
 #include "Camera.hpp"
 #include "Input.hpp"
-#include "Light.hpp"
 #include "MaterialCache.hpp"
 #include "MouseDragging.hpp"
 #include "ShaderManager.hpp"
 #include "TextureHandle.hpp"
 #include "TextureManager.hpp"
 #include "Window.hpp"
-
-#include <glm/gtc/type_ptr.hpp>
 
 void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 {
@@ -80,65 +77,6 @@ void ES::Plugin::OpenGL::System::SetupMouseDragging(ES::Engine::Core &core)
         dragging.lastMousePos.x = xpos;
         dragging.lastMousePos.y = ypos;
     });
-}
-
-void ES::Plugin::OpenGL::System::CreateCamera(ES::Engine::Core &core)
-{
-    core.RegisterResource<Resource::Camera>(Resource::Camera(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-}
-
-void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
-{
-    auto &materialCache = core.RegisterResource<Resource::MaterialCache>({});
-    materialCache.Add(entt::hashed_string("default"), std::move(Utils::Material()));
-}
-
-void ES::Plugin::OpenGL::System::UpdateMatrices(ES::Engine::Core &core)
-{
-    auto &cam = core.GetResource<Resource::Camera>();
-    cam.view = glm::lookAt(cam.viewer.getViewPoint(), cam.viewer.getViewCenter(), cam.viewer.getUpVector());
-    cam.projection = glm::perspective(glm::radians(45.0f), cam.size.x / cam.size.y, 0.1f, 100.0f);
-}
-
-void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
-{
-    auto &shader = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
-
-    std::array<ES::Plugin::OpenGL::Utils::Light, 5> light = {
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.8f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.0f, 0.8f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.0f, 0.0f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.0f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.8f, 0.8f)}
-    };
-
-    float nbr_lights = 5.f;
-    float scale = 2.f * glm::pi<float>() / nbr_lights;
-
-    light[0].position = glm::vec4(5.f * cosf(scale * 0.f), 5.f, 5.f * sinf(scale * 0.f), 1.f);
-    light[1].position = glm::vec4(5.f * cosf(scale * 1.f), 5.f, 5.f * sinf(scale * 1.f), 1.f);
-    light[2].position = glm::vec4(5.f * cosf(scale * 2.f), 5.f, 5.f * sinf(scale * 2.f), 1.f);
-    light[3].position = glm::vec4(5.f * cosf(scale * 3.f), 5.f, 5.f * sinf(scale * 3.f), 1.f);
-    light[4].position = glm::vec4(5.f * cosf(scale * 4.f), 5.f, 5.f * sinf(scale * 4.f), 1.f);
-
-    shader.use();
-    for (int i = 0; i < 5; i++)
-    {
-        glUniform4fv(shader.uniform(fmt::format("Light[{}].Position", i).c_str()), 1,
-                     glm::value_ptr(light[i].position));
-        glUniform3fv(shader.uniform(fmt::format("Light[{}].Intensity", i).c_str()), 1,
-                     glm::value_ptr(light[i].intensity));
-    }
-    shader.disable();
-}
-
-void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
-{
-    auto &shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
-    shaderProgram.use();
-    glUniform3fv(shaderProgram.uniform("CamPos"), 1,
-                 glm::value_ptr(core.GetResource<Resource::Camera>().viewer.getViewPoint()));
-    shaderProgram.disable();
 }
 
 void ES::Plugin::OpenGL::System::GLClearColor(const ES::Engine::Core &) { glClear(GL_COLOR_BUFFER_BIT); }
