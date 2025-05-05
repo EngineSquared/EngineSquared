@@ -1,12 +1,12 @@
 add_rules("mode.debug", "mode.release")
-add_requires("miniaudio", "entt", "spdlog")
+add_requires("miniaudio", "entt", "spdlog", "fmt")
 
 includes("../../engine/xmake.lua")
 
 target("PluginSound")
     set_kind("static")
     set_languages("cxx20")
-    add_packages("miniaudio", "entt", "spdlog")
+    add_packages("miniaudio", "entt", "spdlog", "fmt")
     set_policy("build.warning", true)
 
     add_deps("EngineSquaredCore")
