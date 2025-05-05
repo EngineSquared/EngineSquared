@@ -75,10 +75,8 @@ void ES::Plugin::Physics::System::LinkSoftBodiesToPhysicsSystem(entt::registry &
     if (!registry.all_of<ES::Plugin::Object::Component::Transform>(entity))
     {
         registry.emplace<ES::Plugin::Object::Component::Transform>(entity);
-#ifdef ES_DEBUG
         ES::Utils::Log::Warn(fmt::format("Entity {} does not have a transform component, creating one for soft body",
                                          static_cast<uint32_t>(entity)));
-#endif
     }
 
     auto &initialTransform = registry.get<ES::Plugin::Object::Component::Transform>(entity);
