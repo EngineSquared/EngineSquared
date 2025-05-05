@@ -75,8 +75,9 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
     core.GetRegistry()
         .view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle, Component::TextHandle>()
-        .each([&](auto entity, ES::Plugin::UI::Component::Text &text, Component::FontHandle &fontHandle,
-                  Component::ShaderHandle &shaderHandle, Component::TextHandle &textHandle) {
+        .each([&](auto [[maybe_unused]] entity, ES::Plugin::UI::Component::Text &text,
+                  Component::FontHandle &fontHandle, Component::ShaderHandle &shaderHandle,
+                  Component::TextHandle &textHandle) {
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &font = core.GetResource<Resource::FontManager>().Get(fontHandle.id);
 

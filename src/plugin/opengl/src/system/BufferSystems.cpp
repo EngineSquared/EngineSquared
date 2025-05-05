@@ -12,7 +12,7 @@ void ES::Plugin::OpenGL::System::LoadGLSpriteBuffer(ES::Engine::Core &core)
     auto &glBufferManager = core.GetResource<Resource::GLSpriteBufferManager>();
 
     core.GetRegistry().view<Component::SpriteHandle, Component::Sprite>().each(
-        [&](auto entity, Component::SpriteHandle &spriteHandle, Component::Sprite &sprite) {
+        [&](auto [[maybe_unused]] entity, Component::SpriteHandle &spriteHandle, Component::Sprite &sprite) {
             if (glBufferManager.Contains(spriteHandle.id))
             {
                 glBufferManager.Get(spriteHandle.id).Update(sprite);
@@ -29,7 +29,7 @@ void ES::Plugin::OpenGL::System::LoadGLMeshBuffer(ES::Engine::Core &core)
     auto &glBufferManager = core.GetResource<Resource::GLMeshBufferManager>();
 
     core.GetRegistry().view<Component::ModelHandle, ES::Plugin::Object::Component::Mesh>().each(
-        [&](auto entity, Component::ModelHandle &model, ES::Plugin::Object::Component::Mesh &mesh) {
+        [&](auto [[maybe_unused]] entity, Component::ModelHandle &model, ES::Plugin::Object::Component::Mesh &mesh) {
             if (glBufferManager.Contains(model.id))
             {
                 glBufferManager.Get(model.id).Update(mesh);
@@ -45,13 +45,14 @@ void ES::Plugin::OpenGL::System::LoadGLTextBuffer(ES::Engine::Core &core)
 {
     auto &glBufferManager = core.GetResource<Resource::GLTextBufferManager>();
 
-    core.GetRegistry().view<Component::TextHandle>().each([&](auto entity, Component::TextHandle &textHandle) {
-        if (glBufferManager.Contains(textHandle.id))
-        {
-            return;
-        }
-        Utils::GLTextBuffer buffer;
-        buffer.GenerateGLTextBuffers();
-        glBufferManager.Add(textHandle.id, std::move(buffer));
-    });
+    core.GetRegistry().view<Component::TextHandle>().each(
+        [&](auto [[maybe_unused]] entity, Component::TextHandle &textHandle) {
+            if (glBufferManager.Contains(textHandle.id))
+            {
+                return;
+            }
+            Utils::GLTextBuffer buffer;
+            buffer.GenerateGLTextBuffers();
+            glBufferManager.Add(textHandle.id, std::move(buffer));
+        });
 }
