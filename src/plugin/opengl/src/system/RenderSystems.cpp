@@ -69,8 +69,6 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 
 void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 {
-    auto &view = core.GetResource<Resource::Camera>().view;
-
     auto &size = core.GetResource<Resource::Camera>().size;
 
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
@@ -98,8 +96,6 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
 void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
 {
-    auto &view = core.GetResource<Resource::Camera>().view;
-
     auto &size = core.GetResource<Resource::Camera>().size;
 
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.f, size.y, -1.0f, 1.0f);
