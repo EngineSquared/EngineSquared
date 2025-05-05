@@ -18,7 +18,8 @@ template <typename TCallable> void ES::Engine::SystemContainer::AddSystem(TCalla
         ES::Utils::Log::Warn("System already exists");
         return;
     }
-    std::size_t index = _orderedSystems.size();
+
+    auto index = static_cast<unsigned int>(_orderedSystems.size());
     auto system = std::make_unique<System<TCallable>>(callable);
     _orderedSystems.push_back(std::move(system));
     _idToIndex[id] = index;
