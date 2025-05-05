@@ -39,9 +39,7 @@ void GLTextBuffer::RenderText(const ES::Plugin::UI::Component::Text &text,
     {
         if (!font.HasCharacter(c))
         {
-#ifdef ES_DEBUG
             ES::Utils::Log::Warn(fmt::format("Character not found: 0x{:02X}", static_cast<unsigned char>(c)));
-#endif
             continue;
         }
 

@@ -25,7 +25,7 @@ class Font {
 
     inline const Character &GetCharacter(char c) const { return characters.at(c); }
 
-    inline const bool HasCharacter(char c) const { return characters.contains(c); }
+    inline bool HasCharacter(char c) const { return characters.contains(c); }
 
   private:
     std::unordered_map<char, Character> characters;
