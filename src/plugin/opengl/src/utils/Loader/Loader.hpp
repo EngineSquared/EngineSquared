@@ -417,8 +417,7 @@ class ShaderProgram {
 
     // Method to update an SSBO's data
     // Note: This method will resize the SSBO if the new size is larger than the current size
-    template <typename T>
-    void updateSSBO(const std::string &ssboName, GLsizeiptr size, const void *data)
+    template <typename T> void updateSSBO(const std::string &ssboName, GLsizeiptr size, const void *data)
     {
         auto it = ssboMap.find(ssboName);
         if (it == ssboMap.end())
