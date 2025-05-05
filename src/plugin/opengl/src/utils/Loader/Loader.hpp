@@ -39,7 +39,7 @@ class ShaderProgram {
     std::map<std::string, int, std::less<>> uniformMap;
 
     // Map to store SSBO bindings
-    std::map<std::string, GLuint, std::less<>> ssboMap;
+    std::map<std::string, std::pair<GLuint, size_t>, std::less<>> ssboMap;
 
     // Has this shader program been initialised?
 
@@ -335,7 +335,7 @@ class ShaderProgram {
     {
         // Create an iterator to look through our ssbo map (only create iterator on first run -
         // reuse it for all further calls).
-        static std::map<std::string, GLuint, std::less<>>::const_iterator ssboIter;
+        static std::map<std::string, std::pair<GLuint, size_t>, std::less<>>::const_iterator ssboIter;
 
         // Try to find the named ssbo
         ssboIter = ssboMap.find(ssboName);
@@ -347,7 +347,7 @@ class ShaderProgram {
         }
 
         // Otherwise return the ssbo location from the ssbo map
-        return ssboMap[ssboName];
+        return ssboMap[ssboName].first;
     }
 
     // Method to add an attribute to the shader and return the bound location
@@ -407,7 +407,7 @@ class ShaderProgram {
         glBufferData(GL_SHADER_STORAGE_BUFFER, size, data, GL_DYNAMIC_DRAW);
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, bindingPoint, ssbo);
 
-        ssboMap[ssboName] = bindingPoint;
+        ssboMap[ssboName] = {bindingPoint, size};
 
         if (DEBUG_SHADER)
         {
@@ -416,6 +416,8 @@ class ShaderProgram {
     }
 
     // Method to update an SSBO's data
+    // Note: This method will resize the SSBO if the new size is larger than the current size
+    template <typename T>
     void updateSSBO(const std::string &ssboName, GLsizeiptr size, const void *data)
     {
         auto it = ssboMap.find(ssboName);
@@ -425,7 +427,12 @@ class ShaderProgram {
             return;
         }
 
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, it->second);
+        if (size > it->second.second * sizeof(T))
+        {
+            addSSBO(ssboName, it->second.second, size, data);
+        }
+
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, it->second.first);
         glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, size, data);
     }
 
@@ -439,7 +446,7 @@ class ShaderProgram {
             return;
         }
 
-        glDeleteBuffers(1, &it->second);
+        glDeleteBuffers(1, &it->second.first);
         ssboMap.erase(it);
 
         if (DEBUG_SHADER)
