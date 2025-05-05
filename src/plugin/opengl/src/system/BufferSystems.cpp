@@ -45,14 +45,13 @@ void ES::Plugin::OpenGL::System::LoadGLTextBuffer(ES::Engine::Core &core)
 {
     auto &glBufferManager = core.GetResource<Resource::GLTextBufferManager>();
 
-    core.GetRegistry().view<Component::TextHandle>().each(
-        [&](auto entity, Component::TextHandle &textHandle) {
-            if (glBufferManager.Contains(textHandle.id))
-            {
-                return;
-            }
-            Utils::GLTextBuffer buffer;
-            buffer.GenerateGLTextBuffers();
-            glBufferManager.Add(textHandle.id, std::move(buffer));
-        });
+    core.GetRegistry().view<Component::TextHandle>().each([&](auto entity, Component::TextHandle &textHandle) {
+        if (glBufferManager.Contains(textHandle.id))
+        {
+            return;
+        }
+        Utils::GLTextBuffer buffer;
+        buffer.GenerateGLTextBuffers();
+        glBufferManager.Add(textHandle.id, std::move(buffer));
+    });
 }
