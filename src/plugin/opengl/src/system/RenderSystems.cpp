@@ -56,7 +56,6 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             shader.use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
-            glm::mat4 mview = view * modelmat;
             glm::mat4 mvp = projection * view * modelmat;
             auto nmat = glm::mat3(glm::transpose(glm::inverse(modelmat))); // normal matrix
             glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
