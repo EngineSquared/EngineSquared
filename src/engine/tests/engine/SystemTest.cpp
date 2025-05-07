@@ -63,7 +63,7 @@ TEST(Systems, EnableDisable)
     core.RegisterResource<C>({});
 
     auto [a, b, c] =
-        core.RegisterSystem(TestSystemClass(), TestSystemFunction, [](Core &core) { core.GetResource<C>().value++; });
+        core.RegisterSystem(TestSystemClass(), TestSystemFunction, [](Core &c) { c.GetResource<C>().value++; });
 
     core.RunSystems();
 
