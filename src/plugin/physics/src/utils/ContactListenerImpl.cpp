@@ -28,7 +28,7 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::
                                                                      const JPH::ContactManifold &,
                                                                      JPH::ContactSettings &)
 {
-    if (_onContactAddedCallbacks.empty())
+    if (_onContactAddedCallbacks.IsEmpty())
     {
         return;
     }
@@ -38,7 +38,7 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::
     auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
-    for (auto &callback : _onContactAddedCallbacks)
+    for (auto &callback : _onContactAddedCallbacks.GetFunctions())
     {
         callback->Call(_core, entity1, entity2);
     }
@@ -49,7 +49,7 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const J
                                                                          const JPH::ContactManifold &,
                                                                          JPH::ContactSettings &)
 {
-    if (_onContactPersistedCallbacks.empty())
+    if (_onContactPersistedCallbacks.IsEmpty())
     {
         return;
     }
@@ -57,7 +57,7 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const J
     auto entity1 = static_cast<ES::Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<ES::Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
-    for (auto &callback : _onContactPersistedCallbacks)
+    for (auto &callback : _onContactPersistedCallbacks.GetFunctions())
     {
         callback->Call(_core, entity1, entity2);
     }
@@ -65,7 +65,7 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const J
 
 void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH::SubShapeIDPair &inSubShapePair)
 {
-    if (_onContactRemovedCallbacks.empty())
+    if (_onContactRemovedCallbacks.IsEmpty())
     {
         return;
     }
@@ -77,16 +77,14 @@ void ES::Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH
     JPH::Body *body2 = bodyInterface.TryGetBody(inSubShapePair.GetBody2ID());
     if (body1 == nullptr || body2 == nullptr)
     {
-#ifdef ES_DEBUG
         ES::Utils::Log::Error("ContactListenerImpl: OnContactRemoved: body1 or body2 is nullptr, skipping callbacks.");
-#endif
         return;
     }
 
     auto entity1 = static_cast<ES::Engine::Entity>(body1->GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<ES::Engine::Entity>(body2->GetUserData() & ENTITY_ID_MASK);
 
-    for (auto &callback : _onContactRemovedCallbacks)
+    for (auto &callback : _onContactRemovedCallbacks.GetFunctions())
     {
         callback->Call(_core, entity1, entity2);
     }

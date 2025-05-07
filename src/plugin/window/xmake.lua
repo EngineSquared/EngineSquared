@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("glfw", "glm", "entt", "spdlog")
+add_requires("glfw", "glm", "entt", "spdlog", "fmt")
 
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
@@ -14,7 +14,7 @@ target("PluginWindow")
     add_deps("UtilsLog")
     add_deps("PluginRenderingPipeline")
 
-    add_packages("glfw", "glm", "entt", "spdlog")
+    add_packages("glfw", "glm", "entt", "spdlog", "fmt")
 
     add_files("src/**.cpp")
     add_headerfiles("src/**.hpp", { public = true })

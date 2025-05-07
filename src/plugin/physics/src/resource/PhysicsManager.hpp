@@ -7,6 +7,7 @@
 // clang-format on
 
 #include "ContactListenerImpl.hpp"
+#include "FunctionContainer.hpp"
 
 #include <Jolt/Core/Factory.h>
 #include <Jolt/Core/JobSystemThreadPool.h>
@@ -111,21 +112,19 @@ class PhysicsManager {
      * @return void
      */
     template <typename... Components>
-    inline void AddContactAddedCallback(std::unique_ptr<Utils::ContactCallback<Components...>> &&callback)
+    inline ES::Utils::FunctionContainer::FunctionID
+    AddContactAddedCallback(std::unique_ptr<ES::Plugin::Physics::Utils::BaseCallback> &&callback)
     {
-        auto contactListener = GetContactListener();
-
-        if (contactListener != nullptr)
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
-            contactListener->AddOnContactAddedCallback(std::move(callback));
+            return contactListener->AddOnContactAddedCallback(std::move(callback));
         }
-#ifdef ES_DEBUG
         else
         {
             ES::Utils::Log::Error(
                 "PhysicsManager: tried to add contact added callback, but contact listener is not initialized.");
         }
-#endif
+        return ES::Utils::FunctionContainer::FunctionID(); // Should never happen
     }
 
     /**
@@ -138,10 +137,11 @@ class PhysicsManager {
      * @note This will create a new ContactCallback object and add it to the contact listener.
      */
     template <typename... Components>
-    inline void AddContactAddedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
+    inline ES::Utils::FunctionContainer::FunctionID
+    AddContactAddedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
     {
-        auto callback = std::make_unique<Utils::ContactCallback<Components...>>(std::move(fn));
-        AddContactAddedCallback(std::move(callback));
+        auto callback = std::make_unique<Utils::ContactCallback<Components...>>(fn);
+        return AddContactAddedCallback(std::move(callback));
     }
 
     /**
@@ -153,21 +153,19 @@ class PhysicsManager {
      * @return void
      */
     template <typename... Components>
-    inline void AddContactPersistedCallback(std::unique_ptr<Utils::ContactCallback<Components...>> &&callback)
+    inline ES::Utils::FunctionContainer::FunctionID
+    AddContactPersistedCallback(std::unique_ptr<ES::Plugin::Physics::Utils::BaseCallback> &&callback)
     {
-        auto contactListener = GetContactListener();
-
-        if (contactListener != nullptr)
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
-            contactListener->AddOnContactPersistedCallback(std::move(callback));
+            return contactListener->AddOnContactPersistedCallback(std::move(callback));
         }
-#ifdef ES_DEBUG
         else
         {
             ES::Utils::Log::Error(
                 "PhysicsManager: tried to add contact persisted callback, but contact listener is not initialized.");
         }
-#endif
+        return ES::Utils::FunctionContainer::FunctionID(); // Should never happen
     }
 
     /**
@@ -180,10 +178,11 @@ class PhysicsManager {
      * @note This will create a new ContactCallback object and add it to the contact listener.
      */
     template <typename... Components>
-    inline void AddContactPersistedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
+    inline ES::Utils::FunctionContainer::FunctionID
+    AddContactPersistedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
     {
-        auto callback = std::make_unique<Utils::ContactCallback<Components...>>(std::move(fn));
-        AddContactPersistedCallback(std::move(callback));
+        auto callback = std::make_unique<Utils::ContactCallback<Components...>>(fn);
+        return AddContactPersistedCallback(std::move(callback));
     }
 
     /**
@@ -195,21 +194,19 @@ class PhysicsManager {
      * @return void
      */
     template <typename... Components>
-    inline void AddContactRemovedCallback(std::unique_ptr<Utils::ContactCallback<Components...>> &&callback)
+    inline ES::Utils::FunctionContainer::FunctionID
+    AddContactRemovedCallback(std::unique_ptr<ES::Plugin::Physics::Utils::BaseCallback> &&callback)
     {
-        auto contactListener = GetContactListener();
-
-        if (contactListener != nullptr)
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
-            contactListener->AddOnContactRemovedCallback(std::move(callback));
+            return contactListener->AddOnContactRemovedCallback(std::move(callback));
         }
-#ifdef ES_DEBUG
         else
         {
             ES::Utils::Log::Error(
                 "PhysicsManager: tried to add contact removed callback, but contact listener is not initialized.");
         }
-#endif
+        return ES::Utils::FunctionContainer::FunctionID(); // Should never happen
     }
 
     /**
@@ -222,10 +219,74 @@ class PhysicsManager {
      * @note This will create a new ContactCallback object and add it to the contact listener.
      */
     template <typename... Components>
-    inline void AddContactRemovedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
+    inline ES::Utils::FunctionContainer::FunctionID
+    AddContactRemovedCallback(Utils::ContactCallback<Components...>::CallbackFunc fn)
     {
-        auto callback = std::make_unique<Utils::ContactCallback<Components...>>(std::move(fn));
-        AddContactRemovedCallback(std::move(callback));
+        auto callback = std::make_unique<Utils::ContactCallback<Components...>>(fn);
+        return AddContactRemovedCallback(std::move(callback));
+    }
+
+    /**
+     * @brief Remove a contact added callback from the contact listener.
+     *
+     * @param id The ID of the callback to remove.
+     *
+     * @return bool Whether the callback was removed successfully.
+     */
+    inline bool RemoveContactAddedCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
+        {
+            return contactListener->RemoveOnContactAddedCallback(id);
+        }
+        else
+        {
+            ES::Utils::Log::Error(
+                "PhysicsManager: tried to remove contact added callback, but contact listener is not initialized.");
+        }
+        return false;
+    }
+
+    /**
+     * @brief Remove a contact persisted callback from the contact listener.
+     *
+     * @param id The ID of the callback to remove.
+     *
+     * @return bool Whether the callback was removed successfully.
+     */
+    inline bool RemoveContactPersistedCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
+        {
+            return contactListener->RemoveOnContactPersistedCallback(id);
+        }
+        else
+        {
+            ES::Utils::Log::Error(
+                "PhysicsManager: tried to remove contact persisted callback, but contact listener is not initialized.");
+        }
+        return false;
+    }
+
+    /**
+     * @brief Remove a contact removed callback from the contact listener.
+     *
+     * @param id The ID of the callback to remove.
+     *
+     * @return bool Whether the callback was removed successfully.
+     */
+    inline bool RemoveContactRemovedCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        if (auto contactListener = GetContactListener(); contactListener != nullptr)
+        {
+            return contactListener->RemoveOnContactRemovedCallback(id);
+        }
+        else
+        {
+            ES::Utils::Log::Error(
+                "PhysicsManager: tried to remove contact removed callback, but contact listener is not initialized.");
+        }
+        return false;
     }
 
   private:

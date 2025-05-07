@@ -1,8 +1,15 @@
 #pragma once
 
+#ifdef ES_DEBUG
+#    define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_DEBUG
+#else
+#    define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_INFO
+#endif
+
 #include "spdlog/spdlog.h"
 
 namespace ES::Utils::Log {
+
 using Level = spdlog::level::level_enum;
 
 template <typename T> inline void Debug(const T &msg) noexcept { spdlog::debug(msg); };

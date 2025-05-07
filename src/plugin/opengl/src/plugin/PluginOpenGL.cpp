@@ -1,3 +1,4 @@
+#include "Input.hpp"
 #include "OpenGL.hpp"
 #include "PluginWindow.hpp"
 #include "RenderingPipeline.hpp"
@@ -6,7 +7,7 @@
 
 void ES::Plugin::OpenGL::Plugin::Bind()
 {
-    RequirePlugins<ES::Plugin::RenderingPipeline::Plugin, ES::Plugin::Window::Plugin>();
+    RequirePlugins<ES::Plugin::RenderingPipeline::Plugin, ES::Plugin::Window::Plugin, ES::Plugin::Input::Plugin>();
 
     RegisterSystems<ES::Plugin::RenderingPipeline::Init>(ES::Plugin::OpenGL::System::InitGLEW,
                                                          ES::Plugin::OpenGL::System::CheckGLEWVersion);

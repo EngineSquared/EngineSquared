@@ -8,9 +8,7 @@ void ES::Engine::SchedulerContainer::AddScheduler(Core &core, Args &&...args)
         ES::Utils::Log::Warn(fmt::format("Scheduler already exists: {}", typeid(TScheduler).name()));
         return;
     }
-#ifdef ES_DEBUG
-    ES::Utils::Log::Info(fmt::format("Adding scheduler: {}", typeid(TScheduler).name()));
-#endif
+    ES::Utils::Log::Debug(fmt::format("Adding scheduler: {}", typeid(TScheduler).name()));
     std::shared_ptr<TScheduler> scheduler = std::make_shared<TScheduler>(core, std::forward<Args>(args)...);
     this->_schedulers[std::type_index(typeid(TScheduler))] = scheduler;
     this->_orderedSchedulers.push_back(scheduler);
