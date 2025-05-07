@@ -73,51 +73,51 @@ class SystemContainer : public ES::Utils::FunctionContainer::FunctionContainer<v
 
     inline const std::list<std::unique_ptr<SystemBase>> &GetSystems() { return GetFunctions(); }
 
-// <<<<<<< HEAD
-//     /**
-//      * @brief Adds one or multiple systems to the container.
-//      * @tparam TSystem Variadic template parameter for system types.
-//      * @param systems The systems to be added.
-//      */
-//     template <typename... TSystem> inline decltype(auto) AddSystems(TSystem... systems)
-//     {
-//         // This immediat call ensures that the systems are added in the order they are passed.
-//         // return [&]<std::size_t... I>(std::index_sequence<I...>)
-//         // {
-//         //     // Capture results in an array to enforce order
-//         //     std::array<std::shared_ptr<SystemBase>, sizeof...(TSystem)> temp{
-//         //         AddSystem(systems)...
-//         //     };
-//         //     return std::tuple{temp[I]...};
-//         // }(std::make_index_sequence<sizeof...(TSystem)>{});
+    // <<<<<<< HEAD
+    //     /**
+    //      * @brief Adds one or multiple systems to the container.
+    //      * @tparam TSystem Variadic template parameter for system types.
+    //      * @param systems The systems to be added.
+    //      */
+    //     template <typename... TSystem> inline decltype(auto) AddSystems(TSystem... systems)
+    //     {
+    //         // This immediat call ensures that the systems are added in the order they are passed.
+    //         // return [&]<std::size_t... I>(std::index_sequence<I...>)
+    //         // {
+    //         //     // Capture results in an array to enforce order
+    //         //     std::array<std::shared_ptr<SystemBase>, sizeof...(TSystem)> temp{
+    //         //         AddSystem(systems)...
+    //         //     };
+    //         //     return std::tuple{temp[I]...};
+    //         // }(std::make_index_sequence<sizeof...(TSystem)>{});
 
-//         // This is a workaround to ensure that the systems are added in the order they are passed.
-//         std::array<std::shared_ptr<SystemBase>, sizeof...(TSystem)> temp{AddSystem(systems)...};
-//         return std::tuple_cat(temp);
-//     }
+    //         // This is a workaround to ensure that the systems are added in the order they are passed.
+    //         std::array<std::shared_ptr<SystemBase>, sizeof...(TSystem)> temp{AddSystem(systems)...};
+    //         return std::tuple_cat(temp);
+    //     }
 
-//     /**
-//      * @brief Retrieves the vector of systems.
-//      * @return Reference to the vector of unique pointers to SystemBase.
-//      */
-//     inline std::list<std::shared_ptr<SystemBase>> &GetSystems() { return _orderedSystems; }
+    //     /**
+    //      * @brief Retrieves the vector of systems.
+    //      * @return Reference to the vector of unique pointers to SystemBase.
+    //      */
+    //     inline std::list<std::shared_ptr<SystemBase>> &GetSystems() { return _orderedSystems; }
 
-//   private:
-//     /**
-//      * @brief Adds a single system to the container.
-//      * @tparam TCallable Type of the callable system.
-//      * @param callable The callable system to be added.
-//      */
-//     template <typename TSystem> std::shared_ptr<SystemBase> AddSystem(TSystem callable);
+    //   private:
+    //     /**
+    //      * @brief Adds a single system to the container.
+    //      * @tparam TCallable Type of the callable system.
+    //      * @param callable The callable system to be added.
+    //      */
+    //     template <typename TSystem> std::shared_ptr<SystemBase> AddSystem(TSystem callable);
 
-//     std::unordered_map<entt::id_type, std::size_t> _idToIndex; ///< Map to store unique ids for each system.
-//     std::list<std::shared_ptr<SystemBase>> _orderedSystems;    ///< Vector to store systems in order.
-// =======
+    //     std::unordered_map<entt::id_type, std::size_t> _idToIndex; ///< Map to store unique ids for each system.
+    //     std::list<std::shared_ptr<SystemBase>> _orderedSystems;    ///< Vector to store systems in order.
+    // =======
     inline bool DeleteSystem(ES::Utils::FunctionContainer::FunctionID id) { return DeleteFunction(id); }
 
   private:
     template <typename TCallable> void AddSystem(TCallable callable) { AddFunction(callable); }
-// >>>>>>> main
+    // >>>>>>> main
 };
 
 } // namespace ES::Engine
