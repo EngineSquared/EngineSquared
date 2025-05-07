@@ -3,7 +3,7 @@
 #include "ContactCallback.hpp"
 #include "Core.hpp"
 #include "Entity.hpp"
-#include "IContactCallback.hpp"
+#include "FunctionContainer.hpp"
 
 // clang-format off
 #include <Jolt/Jolt.h>
@@ -50,9 +50,9 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called once for each contact added.
      */
     template <typename... Components>
-    inline void AddOnContactAddedCallback(std::unique_ptr<IContactCallback> &&callback)
+    inline ES::Utils::FunctionContainer::FunctionID AddOnContactAddedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
-        _onContactAddedCallbacks.push_back(std::move(callback));
+        return _onContactAddedCallbacks.AddFunction(std::move(callback));
     }
 
     /**
@@ -63,9 +63,10 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called every frame until the contact is removed.
      */
     template <typename... Components>
-    inline void AddOnContactPersistedCallback(std::unique_ptr<IContactCallback> &&callback)
+    inline ES::Utils::FunctionContainer::FunctionID
+    AddOnContactPersistedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
-        _onContactPersistedCallbacks.push_back(std::move(callback));
+        return _onContactPersistedCallbacks.AddFunction(std::move(callback));
     }
 
     /**
@@ -75,16 +76,50 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called once for each contact removed.
      */
     template <typename... Components>
-    inline void AddOnContactRemovedCallback(std::unique_ptr<IContactCallback> &&callback)
+    inline ES::Utils::FunctionContainer::FunctionID
+    AddOnContactRemovedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
-        _onContactRemovedCallbacks.push_back(std::move(callback));
+        return _onContactRemovedCallbacks.AddFunction(std::move(callback));
+    }
+
+    /**
+     * @brief Remove a callback for when a contact between two entities is added.
+     * @param id The ID of the callback to remove.
+     * @return True if the callback was removed, false otherwise.
+     */
+    inline bool RemoveOnContactAddedCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _onContactAddedCallbacks.DeleteFunction(id);
+    }
+
+    /**
+     * @brief Remove a callback for when a contact between two entities persist.
+     * @param id The ID of the callback to remove.
+     * @return True if the callback was removed, false otherwise.
+     */
+    inline bool RemoveOnContactPersistedCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _onContactPersistedCallbacks.DeleteFunction(id);
+    }
+
+    /**
+     * @brief Remove a callback for when a contact between two entities is removed.
+     * @param id The ID of the callback to remove.
+     * @return True if the callback was removed, false otherwise.
+     */
+    inline bool RemoveOnContactRemovedCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _onContactRemovedCallbacks.DeleteFunction(id);
     }
 
   private:
+    using CallbackContainer =
+        ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, ES::Engine::Entity &,
+                                                        ES::Engine::Entity &>;
     ES::Engine::Core &_core;
 
-    std::vector<std::unique_ptr<IContactCallback>> _onContactAddedCallbacks;
-    std::vector<std::unique_ptr<IContactCallback>> _onContactPersistedCallbacks;
-    std::vector<std::unique_ptr<IContactCallback>> _onContactRemovedCallbacks;
+    CallbackContainer _onContactAddedCallbacks;     ///< Callbacks for when a contact is added.
+    CallbackContainer _onContactPersistedCallbacks; ///< Callbacks for when a contact is persisted.
+    CallbackContainer _onContactRemovedCallbacks;   ///< Callbacks for when a contact is removed.
 };
 } // namespace ES::Plugin::Physics::Utils

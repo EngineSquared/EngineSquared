@@ -74,8 +74,8 @@ void ES::Plugin::OpenGL::System::SetupMouseDragging(ES::Engine::Core &core)
         else if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
             handleRightDrag(camera, dragging, xpos, ypos);
 
-        dragging.lastMousePos.x = xpos;
-        dragging.lastMousePos.y = ypos;
+        dragging.lastMousePos.x = static_cast<float>(xpos);
+        dragging.lastMousePos.y = static_cast<float>(ypos);
     });
 }
 
