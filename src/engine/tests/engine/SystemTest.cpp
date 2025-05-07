@@ -56,6 +56,8 @@ TEST(Systems, EnableDisable)
 {
     Core core;
 
+    core.SetDefaultScheduler<Scheduler::Update>();
+
     core.RegisterResource<A>({});
     core.RegisterResource<B>({});
     core.RegisterResource<C>({});
@@ -63,36 +65,29 @@ TEST(Systems, EnableDisable)
     auto [a, b, c] =
         core.RegisterSystem(TestSystemClass(), TestSystemFunction, [](Core &core) { core.GetResource<C>().value++; });
 
-    ASSERT_NE(a, nullptr);
-    ASSERT_NE(b, nullptr);
-    ASSERT_NE(c, nullptr);
-    ASSERT_EQ(a->enabled, true);
-    ASSERT_EQ(b->enabled, true);
-    ASSERT_EQ(c->enabled, true);
-
-    a->Disable();
-    b->Disable();
-    c->Disable();
-    ASSERT_EQ(a->enabled, false);
-    ASSERT_EQ(b->enabled, false);
-    ASSERT_EQ(c->enabled, false);
-
     core.RunSystems();
 
-    ASSERT_EQ(core.GetResource<A>().value, 0);
-    ASSERT_EQ(core.GetResource<B>().value, 0);
-    ASSERT_EQ(core.GetResource<C>().value, 0);
+    ASSERT_EQ(core.GetResource<A>().value, 1);
+    ASSERT_EQ(core.GetResource<B>().value, 1);
+    ASSERT_EQ(core.GetResource<C>().value, 1);
 
-    a->Enable();
-    b->Enable();
-    c->Enable();
-    ASSERT_EQ(a->enabled, true);
-    ASSERT_EQ(b->enabled, true);
-    ASSERT_EQ(c->enabled, true);
+    core.GetScheduler<Scheduler::Update>().Disable(a);
+    core.GetScheduler<Scheduler::Update>().Disable(b);
+    core.GetScheduler<Scheduler::Update>().Disable(c);
 
     core.RunSystems();
 
     ASSERT_EQ(core.GetResource<A>().value, 1);
     ASSERT_EQ(core.GetResource<B>().value, 1);
     ASSERT_EQ(core.GetResource<C>().value, 1);
+
+    core.GetScheduler<Scheduler::Update>().Enable(a);
+    core.GetScheduler<Scheduler::Update>().Enable(b);
+    core.GetScheduler<Scheduler::Update>().Enable(c);
+
+    core.RunSystems();
+
+    ASSERT_EQ(core.GetResource<A>().value, 2);
+    ASSERT_EQ(core.GetResource<B>().value, 2);
+    ASSERT_EQ(core.GetResource<C>().value, 2);
 }

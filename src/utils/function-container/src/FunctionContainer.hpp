@@ -42,7 +42,10 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      * @tparam TFunctions Variadic template parameter for function types.
      * @param functions The functions to be added.
      */
-    template <typename... TFunctions> void AddFunctions(TFunctions... functions) { (AddFunction(functions), ...); }
+    template <typename... TFunctions> decltype(auto) AddFunctions(TFunctions... functions) {
+      std::array<FunctionID, sizeof...(TFunctions)> temp{AddFunction(functions)...};
+      return std::tuple_cat(temp);
+    }
 
     /**
      * @brief Gets the list of functions in the container.
@@ -71,6 +74,11 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      * @return True if the function was deleted, false otherwise.
      */
     bool DeleteFunction(FunctionID id);
+
+    inline bool Contains(FunctionID id) const
+    {
+        return _idToIndex.contains(id);
+    }
 
   private:
     std::unordered_map<FunctionID, std::size_t> _idToIndex; ///< Map to store unique ids for each function.

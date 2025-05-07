@@ -17,6 +17,16 @@ class AScheduler : public IScheduler {
         return _systemsList.AddSystems(systems...);
     }
 
+    inline void Disable(const ES::Utils::FunctionContainer::FunctionID &id)
+    {
+        _systemsList.Disable(id);
+    }
+
+    inline void Enable(const ES::Utils::FunctionContainer::FunctionID &id)
+    {
+        _systemsList.Enable(id);
+    }
+
   protected:
     Core &_core;
     SystemContainer _systemsList;

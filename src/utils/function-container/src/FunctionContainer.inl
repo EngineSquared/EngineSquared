@@ -30,7 +30,7 @@ ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
 {
     ES::Utils::FunctionContainer::FunctionID id = function->GetID();
 
-    if (_idToIndex.find(id) != _idToIndex.end())
+    if (_idToIndex.contains(id))
     {
         ES::Utils::Log::Warn("Function already exists"); // TODO: be able to change container thing name
         return id;
