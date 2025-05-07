@@ -2,7 +2,7 @@
 
 #include "Core.hpp"
 #include "Entity.hpp"
-#include "IContactCallback.hpp"
+#include "FunctionContainer.hpp"
 
 #include <functional>
 
@@ -20,25 +20,27 @@ namespace ES::Plugin::Physics::Utils {
  * @note If two components are specified, the callback will be called only if one entity has the first component
  * and the other entity has the second component.
  */
-template <typename... Components> class ContactCallback : public IContactCallback {
+using BaseCallback =
+    ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &>;
+template <typename... Components> class ContactCallback : public BaseCallback {
   public:
     using CallbackFunc = std::function<void(ES::Engine::Core &, ES::Engine::Entity &, ES::Engine::Entity &)>;
 
-    explicit ContactCallback(CallbackFunc cb) : callback(std::move(cb)) {}
+    explicit ContactCallback(CallbackFunc cb) : _callback(std::move(cb)) {}
 
-    void Call(ES::Engine::Core &core, ES::Engine::Entity &a, ES::Engine::Entity &b) const final
+    void operator()(ES::Engine::Core &core, ES::Engine::Entity &a, ES::Engine::Entity &b) const final
     {
         static_assert(sizeof...(Components) <= 2, "ContactCallback can only have up to 2 components.");
 
         if constexpr (sizeof...(Components) == 0)
         {
-            callback(core, a, b);
+            _callback(core, a, b);
         }
         else if constexpr (sizeof...(Components) == 1)
         {
             if (hasAllComponents<Components...>(core, a) && hasAllComponents<Components...>(core, b))
             {
-                callback(core, a, b);
+                _callback(core, a, b);
             }
         }
         else if constexpr (sizeof...(Components) == 2)
@@ -47,9 +49,9 @@ template <typename... Components> class ContactCallback : public IContactCallbac
         }
     }
 
-  private:
-    CallbackFunc callback;
+    ES::Utils::FunctionContainer::FunctionID GetID() const final { return _callback.target_type().hash_code(); }
 
+  private:
     template <typename... Cs>
     inline bool hasAllComponents(ES::Engine::Core &core, const ES::Engine::Entity &entity) const
     {
@@ -61,12 +63,14 @@ template <typename... Components> class ContactCallback : public IContactCallbac
     {
         if ((a.HasComponents<C1>(core) && b.HasComponents<C2>(core)))
         {
-            callback(core, a, b);
+            _callback(core, a, b);
         }
         else if ((a.HasComponents<C2>(core) && b.HasComponents<C1>(core)))
         {
-            callback(core, b, a);
+            _callback(core, b, a);
         }
     }
+
+    CallbackFunc _callback; ///< The callback function to call.
 };
 } // namespace ES::Plugin::Physics::Utils

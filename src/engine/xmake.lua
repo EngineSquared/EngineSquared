@@ -3,6 +3,7 @@ add_rules("mode.debug", "mode.release")
 add_requires("entt", "fmt", "spdlog", "gtest")
 
 includes("../utils/log/xmake.lua")
+includes("../utils/function-container/xmake.lua")
 
 target("EngineSquaredCore")
     set_kind("static")
@@ -10,6 +11,7 @@ target("EngineSquaredCore")
     set_policy("build.warning", true)
     add_packages("entt", "spdlog", "fmt")
     add_deps("UtilsLog")
+    add_deps("UtilsFunctionContainer")
 
     add_files("src/**.cpp")
     add_headerfiles("src/**.hpp", { public = true })

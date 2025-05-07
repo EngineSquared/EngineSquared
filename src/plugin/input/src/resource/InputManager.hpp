@@ -6,7 +6,9 @@
 #include <functional>
 #include <vector>
 
+#include "CallableFunction.hpp"
 #include "Core.hpp"
+#include "FunctionContainer.hpp"
 
 namespace ES::Plugin::Input::Resource {
 /**
@@ -14,17 +16,17 @@ namespace ES::Plugin::Input::Resource {
  */
 class InputManager {
   public:
-    using KeyCallbackFn = std::function<void(ES::Engine::Core &, int, int, int, int)>;
-    using CharCallbackFn = std::function<void(ES::Engine::Core &, unsigned int)>;
-    using CharModsCallbackFn = std::function<void(ES::Engine::Core &, unsigned int, int)>;
-    using MouseButtonCallbackFn = std::function<void(ES::Engine::Core &, int, int, int)>;
-    using CursorPosCallbackFn = std::function<void(ES::Engine::Core &, double, double)>;
-    using CursorEnterCallbackFn = std::function<void(ES::Engine::Core &, int)>;
-    using ScrollCallbackFn = std::function<void(ES::Engine::Core &, double, double)>;
-    using DropCallbackFn = std::function<void(ES::Engine::Core &, int, const char **)>;
-    using JoystickCallbackFn = std::function<void(ES::Engine::Core &, int, int)>;
-
-    InputManager() = default;
+    InputManager()
+    {
+        _keyCallbacks = std::make_shared<KeyCallbackContainer>();
+        _charCallbacks = std::make_shared<CharCallbackContainer>();
+        _charModsCallbacks = std::make_shared<CharModsCallbackContainer>();
+        _mouseButtonCallbacks = std::make_shared<MouseButtonCallbackContainer>();
+        _cursorPosCallbacks = std::make_shared<CursorPosCallbackContainer>();
+        _cursorEnterCallbacks = std::make_shared<CursorEnterCallbackContainer>();
+        _scrollCallbacks = std::make_shared<ScrollCallbackContainer>();
+        _dropCallbacks = std::make_shared<DropCallbackContainer>();
+    }
     ~InputManager() = default;
 
     /**
@@ -34,7 +36,15 @@ class InputManager {
      *
      * @note The callback will be called when a key is pressed or released.
      */
-    inline void RegisterKeyCallback(const KeyCallbackFn &callback) { _keyCallbacks.push_back(callback); }
+    template <typename TCallable> inline void RegisterKeyCallback(TCallable callback)
+    {
+        using KeyCallback =
+            ES::Utils::FunctionContainer::CallableFunction<TCallable, void, ES::Engine::Core &, int, int, int, int>;
+        std::unique_ptr<ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, int, int, int, int>>
+            keyCallback = std::make_unique<KeyCallback>(callback);
+
+        _keyCallbacks->AddFunction(std::move(keyCallback));
+    }
 
     /**
      * @brief Register a char callback.
@@ -43,7 +53,15 @@ class InputManager {
      *
      * @note The callback will be called when a character is typed.
      */
-    inline void RegisterCharCallback(const CharCallbackFn &callback) { _charCallbacks.push_back(callback); }
+    template <typename TCallable> inline void RegisterCharCallback(TCallable callback)
+    {
+        using CharCallback =
+            ES::Utils::FunctionContainer::CallableFunction<TCallable, void, ES::Engine::Core &, unsigned int>;
+        std::unique_ptr<ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, unsigned int>>
+            charCallback = std::make_unique<CharCallback>(callback);
+
+        _charCallbacks->AddFunction(std::move(charCallback));
+    }
 
     /**
      * @brief Register a char mods callback.
@@ -51,9 +69,16 @@ class InputManager {
      * @param callback The callback to register.
      *
      * @note The callback will be called when a character is typed with modifiers.
-     * (modifiers are used to detect if the key is pressed with shift, ctrl, alt, etc.)
      */
-    inline void RegisterCharModsCallback(const CharModsCallbackFn &callback) { _charModsCallbacks.push_back(callback); }
+    template <typename TCallable> inline void RegisterCharModsCallback(TCallable callback)
+    {
+        using CharModsCallback =
+            ES::Utils::FunctionContainer::CallableFunction<TCallable, void, ES::Engine::Core &, unsigned int, int>;
+        std::unique_ptr<ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, unsigned int, int>>
+            charModsCallback = std::make_unique<CharModsCallback>(callback);
+
+        _charModsCallbacks->AddFunction(std::move(charModsCallback));
+    }
 
     /**
      * @brief Register a mouse button callback.
@@ -62,9 +87,14 @@ class InputManager {
      *
      * @note The callback will be called when a mouse button is pressed or released.
      */
-    inline void RegisterMouseButtonCallback(const MouseButtonCallbackFn &callback)
+    template <typename TCallable> inline void RegisterMouseButtonCallback(TCallable callback)
     {
-        _mouseButtonCallbacks.push_back(callback);
+        using MouseButtonCallback =
+            ES::Utils::FunctionContainer::CallableFunction<TCallable, void, ES::Engine::Core &, int, int, int>;
+        std::unique_ptr<ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, int, int, int>>
+            mouseButtonCallback = std::make_unique<MouseButtonCallback>(callback);
+
+        _mouseButtonCallbacks->AddFunction(std::move(mouseButtonCallback));
     }
 
     /**
@@ -72,11 +102,16 @@ class InputManager {
      *
      * @param callback The callback to register.
      *
-     * @note The callback will be called when the cursor position is updated.
+     * @note The callback will be called when the cursor position changes.
      */
-    inline void RegisterCursorPosCallback(const CursorPosCallbackFn &callback)
+    template <typename TCallable> inline void RegisterCursorPosCallback(TCallable callback)
     {
-        _cursorPosCallbacks.push_back(callback);
+        using CursorPosCallback =
+            ES::Utils::FunctionContainer::CallableFunction<TCallable, void, ES::Engine::Core &, double, double>;
+        std::unique_ptr<ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, double, double>>
+            cursorPosCallback = std::make_unique<CursorPosCallback>(callback);
+
+        _cursorPosCallbacks->AddFunction(std::move(cursorPosCallback));
     }
 
     /**
@@ -86,9 +121,14 @@ class InputManager {
      *
      * @note The callback will be called when the cursor enters or leaves the window.
      */
-    inline void RegisterCursorEnterCallback(const CursorEnterCallbackFn &callback)
+    template <typename TCallable> inline void RegisterCursorEnterCallback(TCallable callback)
     {
-        _cursorEnterCallbacks.push_back(callback);
+        using CursorEnterCallback =
+            ES::Utils::FunctionContainer::CallableFunction<TCallable, void, ES::Engine::Core &, int>;
+        std::unique_ptr<ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, int>> cursorEnterCallback =
+            std::make_unique<CursorEnterCallback>(callback);
+
+        _cursorEnterCallbacks->AddFunction(std::move(cursorEnterCallback));
     }
 
     /**
@@ -96,18 +136,34 @@ class InputManager {
      *
      * @param callback The callback to register.
      *
-     * @note The callback will be called when the scroll wheel is used.
+     * @note The callback will be called when the mouse wheel is scrolled.
      */
-    inline void RegisterScrollCallback(const ScrollCallbackFn &callback) { _scrollCallbacks.push_back(callback); }
+    template <typename TCallable> inline void RegisterScrollCallback(TCallable callback)
+    {
+        using ScrollCallback =
+            ES::Utils::FunctionContainer::CallableFunction<TCallable, void, ES::Engine::Core &, double, double>;
+        std::unique_ptr<ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, double, double>>
+            scrollCallback = std::make_unique<ScrollCallback>(callback);
+
+        _scrollCallbacks->AddFunction(std::move(scrollCallback));
+    }
 
     /**
      * @brief Register a drop callback.
      *
-     * @param callback The drop function
+     * @param callback The callback to register.
      *
-     * @note The callback will be called when one or multiple files are dropped on the window.
+     * @note The callback will be called when a file is dropped on the window.
      */
-    inline void RegisterDropCallback(const DropCallbackFn &callback) { _dropCallbacks.push_back(callback); }
+    template <typename TCallable> inline void RegisterDropCallback(TCallable callback)
+    {
+        using DropCallback =
+            ES::Utils::FunctionContainer::CallableFunction<TCallable, void, ES::Engine::Core &, int, const char **>;
+        std::unique_ptr<ES::Utils::FunctionContainer::BaseFunction<void, ES::Engine::Core &, int, const char **>>
+            dropCallback = std::make_unique<DropCallback>(callback);
+
+        _dropCallbacks->AddFunction(std::move(dropCallback));
+    }
 
     /**
      * @brief Call the key callbacks.
@@ -122,9 +178,9 @@ class InputManager {
      */
     inline void CallKeyCallbacks(ES::Engine::Core &core, int key, int scancode, int action, int mods)
     {
-        for (auto &callback : _keyCallbacks)
+        for (auto &callback : _keyCallbacks->GetFunctions())
         {
-            callback(core, key, scancode, action, mods);
+            callback->Call(core, key, scancode, action, mods);
         }
     }
 
@@ -138,9 +194,9 @@ class InputManager {
      */
     inline void CallCharCallbacks(ES::Engine::Core &core, unsigned int codepoint)
     {
-        for (auto &callback : _charCallbacks)
+        for (auto &callback : _charCallbacks->GetFunctions())
         {
-            callback(core, codepoint);
+            callback->Call(core, codepoint);
         }
     }
 
@@ -155,9 +211,9 @@ class InputManager {
      */
     inline void CallCharModsCallbacks(ES::Engine::Core &core, unsigned int codepoint, int mods) const
     {
-        for (auto &callback : _charModsCallbacks)
+        for (auto &callback : _charModsCallbacks->GetFunctions())
         {
-            callback(core, codepoint, mods);
+            callback->Call(core, codepoint, mods);
         }
     }
 
@@ -173,9 +229,9 @@ class InputManager {
      */
     inline void CallMouseButtonCallbacks(ES::Engine::Core &core, int button, int action, int mods) const
     {
-        for (auto &callback : _mouseButtonCallbacks)
+        for (auto &callback : _mouseButtonCallbacks->GetFunctions())
         {
-            callback(core, button, action, mods);
+            callback->Call(core, button, action, mods);
         }
     }
 
@@ -190,9 +246,9 @@ class InputManager {
      */
     inline void CallCursorPosCallbacks(ES::Engine::Core &core, double xpos, double ypos) const
     {
-        for (auto &callback : _cursorPosCallbacks)
+        for (auto &callback : _cursorPosCallbacks->GetFunctions())
         {
-            callback(core, xpos, ypos);
+            callback->Call(core, xpos, ypos);
         }
     }
 
@@ -206,9 +262,9 @@ class InputManager {
      */
     inline void CallCursorEnterCallbacks(ES::Engine::Core &core, int entered) const
     {
-        for (auto &callback : _cursorEnterCallbacks)
+        for (auto &callback : _cursorEnterCallbacks->GetFunctions())
         {
-            callback(core, entered);
+            callback->Call(core, entered);
         }
     }
 
@@ -223,9 +279,9 @@ class InputManager {
      */
     inline void CallScrollCallbacks(ES::Engine::Core &core, double xoffset, double yoffset) const
     {
-        for (auto &callback : _scrollCallbacks)
+        for (auto &callback : _scrollCallbacks->GetFunctions())
         {
-            callback(core, xoffset, yoffset);
+            callback->Call(core, xoffset, yoffset);
         }
     }
 
@@ -240,21 +296,123 @@ class InputManager {
      */
     inline void CallDropCallbacks(ES::Engine::Core &core, int count, const char **paths) const
     {
-        for (auto &callback : _dropCallbacks)
+        for (auto &callback : _dropCallbacks->GetFunctions())
         {
-            callback(core, count, paths);
+            callback->Call(core, count, paths);
         }
     }
 
-    // TODO: add a way to delete callbacks
+    /**
+     * @brief Delete a key callback.
+     *
+     * @param id The ID of the callback to delete.
+     * @return True if the callback was deleted, false otherwise.
+     */
+    inline bool DeleteKeyCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _keyCallbacks->DeleteFunction(id);
+    }
+
+    /**
+     * @brief Delete a char callback.
+     *
+     * @param id The ID of the callback to delete.
+     * @return True if the callback was deleted, false otherwise.
+     */
+    inline bool DeleteCharCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _charCallbacks->DeleteFunction(id);
+    }
+
+    /**
+     * @brief Delete a char mods callback.
+     *
+     * @param id The ID of the callback to delete.
+     * @return True if the callback was deleted, false otherwise.
+     */
+    inline bool DeleteCharModsCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _charModsCallbacks->DeleteFunction(id);
+    }
+
+    /**
+     * @brief Delete a mouse button callback.
+     *
+     * @param id The ID of the callback to delete.
+     * @return True if the callback was deleted, false otherwise.
+     */
+    inline bool DeleteMouseButtonCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _mouseButtonCallbacks->DeleteFunction(id);
+    }
+
+    /**
+     * @brief Delete a cursor position callback.
+     *
+     * @param id The ID of the callback to delete.
+     * @return True if the callback was deleted, false otherwise.
+     */
+    inline bool DeleteCursorPosCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _cursorPosCallbacks->DeleteFunction(id);
+    }
+
+    /**
+     * @brief Delete a cursor enter callback.
+     *
+     * @param id The ID of the callback to delete.
+     * @return True if the callback was deleted, false otherwise.
+     */
+    inline bool DeleteCursorEnterCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _cursorEnterCallbacks->DeleteFunction(id);
+    }
+
+    /**
+     * @brief Delete a scroll callback.
+     *
+     * @param id The ID of the callback to delete.
+     * @return True if the callback was deleted, false otherwise.
+     */
+    inline bool DeleteScrollCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _scrollCallbacks->DeleteFunction(id);
+    }
+
+    /**
+     * @brief Delete a drop callback.
+     *
+     * @param id The ID of the callback to delete.
+     * @return True if the callback was deleted, false otherwise.
+     */
+    inline bool DeleteDropCallback(ES::Utils::FunctionContainer::FunctionID id)
+    {
+        return _dropCallbacks->DeleteFunction(id);
+    }
+
   private:
-    std::vector<KeyCallbackFn> _keyCallbacks;
-    std::vector<CharCallbackFn> _charCallbacks;
-    std::vector<CharModsCallbackFn> _charModsCallbacks;
-    std::vector<MouseButtonCallbackFn> _mouseButtonCallbacks;
-    std::vector<CursorPosCallbackFn> _cursorPosCallbacks;
-    std::vector<CursorEnterCallbackFn> _cursorEnterCallbacks;
-    std::vector<ScrollCallbackFn> _scrollCallbacks;
-    std::vector<DropCallbackFn> _dropCallbacks;
+    using KeyCallbackContainer =
+        ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, int, int, int, int>;
+    std::shared_ptr<KeyCallbackContainer> _keyCallbacks;
+    using CharCallbackContainer =
+        ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, unsigned int>;
+    std::shared_ptr<CharCallbackContainer> _charCallbacks;
+    using CharModsCallbackContainer =
+        ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, unsigned int, int>;
+    std::shared_ptr<CharModsCallbackContainer> _charModsCallbacks;
+    using MouseButtonCallbackContainer =
+        ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, int, int, int>;
+    std::shared_ptr<MouseButtonCallbackContainer> _mouseButtonCallbacks;
+    using CursorPosCallbackContainer =
+        ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, double, double>;
+    std::shared_ptr<CursorPosCallbackContainer> _cursorPosCallbacks;
+    using CursorEnterCallbackContainer = ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, int>;
+    std::shared_ptr<CursorEnterCallbackContainer> _cursorEnterCallbacks;
+    using ScrollCallbackContainer =
+        ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, double, double>;
+    std::shared_ptr<ScrollCallbackContainer> _scrollCallbacks;
+    using DropCallbackContainer =
+        ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, int, const char **>;
+    std::shared_ptr<DropCallbackContainer> _dropCallbacks;
 };
 } // namespace ES::Plugin::Input::Resource
