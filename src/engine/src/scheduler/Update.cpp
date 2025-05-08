@@ -6,7 +6,7 @@ void ES::Engine::Scheduler::Update::RunSystems()
     _elapsedTime = std::chrono::duration<float>(currentTime - _lastTime).count();
     _lastTime = currentTime;
 
-    for (auto const &system : this->_systemsList.GetSystems())
+    for (auto const &system : this->GetSystems())
     {
         (*system)(_core);
     }

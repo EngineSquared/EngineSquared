@@ -13,6 +13,9 @@ namespace ES::Utils::FunctionContainer {
  **/
 template <typename TReturn, typename... TArgs> class FunctionContainer {
   public:
+    using FunctionType = BaseFunction<TReturn, TArgs...>;
+
+  public:
     /**
      * @brief Default constructor for FunctionContainer.
      */
@@ -35,7 +38,7 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      * @param function A wrapped function to be added.
      * @note A wrapped function is a unique pointer to a class derived from BaseFunction.
      */
-    FunctionID AddFunction(std::unique_ptr<BaseFunction<TReturn, TArgs...>> &&function);
+    FunctionID AddFunction(std::unique_ptr<FunctionType> &&function);
 
     /**
      * @brief Adds multiple functions to the container.
@@ -52,7 +55,7 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      * @brief Gets the list of functions in the container.
      * @return Const reference to the vector of unique pointers to BaseFunction.
      */
-    inline const std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>> &GetFunctions()
+    inline const std::list<std::unique_ptr<FunctionType>> &GetFunctions()
     {
         return _orderedFunctions;
     }
@@ -74,13 +77,13 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      * @param id The ID of the function to be deleted.
      * @return True if the function was deleted, false otherwise.
      */
-    bool DeleteFunction(FunctionID id);
+    std::unique_ptr<FunctionType> DeleteFunction(FunctionID id);
 
     inline bool Contains(FunctionID id) const { return _idToIndex.contains(id); }
 
   private:
     std::unordered_map<FunctionID, std::size_t> _idToIndex; ///< Map to store unique ids for each function.
-    std::list<std::unique_ptr<BaseFunction<TReturn, TArgs...>>>
+    std::list<std::unique_ptr<FunctionType>>
         _orderedFunctions; ///< Vector to store functions in order.
 };
 } // namespace ES::Utils::FunctionContainer

@@ -82,47 +82,12 @@ class SystemContainer : public ES::Utils::FunctionContainer::FunctionContainer<v
         return AddFunctions(systems...);
     }
 
-    inline decltype(auto) GetSystems() { return SystemList(GetFunctions(), _disabledSystems); }
+    inline decltype(auto) GetSystems() { return GetFunctions(); }
 
-    inline bool DeleteSystem(ES::Utils::FunctionContainer::FunctionID id) { return DeleteFunction(id); }
-
-    inline void Disable(const ES::Utils::FunctionContainer::FunctionID &id)
-    {
-        if (!Contains(id))
-        {
-            ES::Utils::Log::Warn(fmt::format("System with ID {} not found", id));
-        }
-        else if (_disabledSystems.contains(id))
-        {
-            ES::Utils::Log::Warn(fmt::format("System with ID {} is already disabled", id));
-        }
-        else
-        {
-            _disabledSystems.insert(id);
-        }
-    }
-
-    inline void Enable(const ES::Utils::FunctionContainer::FunctionID &id)
-    {
-        if (!Contains(id))
-        {
-            ES::Utils::Log::Warn(fmt::format("System with ID {} not found", id));
-        }
-        else if (!_disabledSystems.contains(id))
-        {
-            ES::Utils::Log::Warn(fmt::format("System with ID {} is already enabled", id));
-        }
-        else
-        {
-            _disabledSystems.erase(id);
-        }
-    }
+    inline decltype(auto) DeleteSystem(const ES::Utils::FunctionContainer::FunctionID &id) { return DeleteFunction(id); }
 
   private:
     template <typename TCallable> void AddSystem(TCallable callable) { AddFunction(callable); }
-
-  private:
-    std::set<ES::Utils::FunctionContainer::FunctionID> _disabledSystems;
 };
 
 } // namespace ES::Engine

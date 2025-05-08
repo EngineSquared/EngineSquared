@@ -10,7 +10,7 @@ ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
     ES::Utils::FunctionContainer::FunctionID id =
         CallableFunction<TCallable, TReturn, TArgs...>::GetCallableID(callable);
 
-    if (_idToIndex.find(id) != _idToIndex.end())
+    if (_idToIndex.contains(id))
     {
         ES::Utils::Log::Warn("Function already exists"); // TODO: be able to change container thing name
         return id;
@@ -43,18 +43,20 @@ ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
 }
 
 template <typename TReturn, typename... TArgs>
-bool ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::DeleteFunction(
+std::unique_ptr<typename ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::FunctionType> ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::DeleteFunction(
     ES::Utils::FunctionContainer::FunctionID id)
 {
     auto it = _idToIndex.find(id);
     if (it == _idToIndex.end())
     {
         ES::Utils::Log::Warn("Function not found");
-        return false;
+        return nullptr;
     }
 
     std::size_t index = it->second;
-    _orderedFunctions.erase(std::next(_orderedFunctions.begin(), index));
+    auto funcIterator = std::next(_orderedFunctions.begin(), index);
+    auto func = std::move(*funcIterator);
+    _orderedFunctions.erase(funcIterator);
     _idToIndex.erase(it);
-    return true;
+    return func;
 }

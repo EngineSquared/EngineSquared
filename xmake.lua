@@ -53,7 +53,7 @@ target("EngineSquared")
         add_defines("DEBUG")
         add_defines("ES_DEBUG")
         if is_plat("windows") then
-            add_cxflags("/Od", "/Zi")
+            add_cxflags("/Od", "/Zi", "/Wall", "/MTd")
         else
             add_cxflags("-O0 -g3 -ggdb")
         end
