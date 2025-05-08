@@ -15,12 +15,6 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
      */
     explicit CallableFunction(TCallable callable) : _callable(callable) { _id = GetCallableID(_callable); }
 
-    CallableFunction(const CallableFunction &) = delete;
-    CallableFunction &operator=(const CallableFunction &) = delete;
-
-    CallableFunction(CallableFunction &&) = default;
-    CallableFunction &operator=(CallableFunction &&) = default;
-
     /**
      * @brief Destructor for CallableFunction.
      */
