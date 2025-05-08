@@ -428,12 +428,12 @@ class ShaderProgram {
             return;
         }
 
-        if (size > it->second.second * sizeof(T))
+        if (size > static_cast<GLsizeiptr>(it->second.second * sizeof(T)))
         {
-            addSSBO(ssboName, it->second.second, size, data);
+            addSSBO(ssboName, static_cast<GLuint>(it->second.second), size, data);
         }
 
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, it->second.first);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, static_cast<GLuint>(it->second.first));
         glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, size, data);
     }
 

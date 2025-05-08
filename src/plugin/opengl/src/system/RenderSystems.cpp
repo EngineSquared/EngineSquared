@@ -7,6 +7,7 @@
 #include "GLSpriteBufferManager.hpp"
 #include "GLTextBufferManager.hpp"
 #include "Light.hpp"
+#include "LightInfo.hpp"
 #include "MaterialCache.hpp"
 #include "MaterialHandle.hpp"
 #include "ModelHandle.hpp"
@@ -150,34 +151,28 @@ void ES::Plugin::OpenGL::System::UpdateMatrices(ES::Engine::Core &core)
 
 void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
 {
-    auto &shader = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
+    std::unordered_map<Component::ShaderHandle, std::vector<ES::Plugin::OpenGL::Utils::LightInfo>> ssbo_lights;
 
-    std::array<ES::Plugin::OpenGL::Utils::Light, 5> light = {
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.8f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.0f, 0.8f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.0f, 0.0f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.0f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.8f, 0.8f)}
-    };
+    core.GetRegistry().view<ES::Plugin::Object::Component::Transform, Component::ShaderHandle, Component::Light>().each(
+        [&](auto entity, ES::Plugin::Object::Component::Transform &transform, Component::ShaderHandle &shaderHandle,
+            ES::Plugin::OpenGL::Component::Light &light) {
+            ES::Plugin::OpenGL::Utils::LightInfo lightInfo;
+            lightInfo.position = glm::vec4(transform.position, static_cast<float>(light.type));
+            lightInfo.colour = glm::vec4(light.colour, light.intensity);
 
-    float nbr_lights = 5.f;
-    float scale = 2.f * glm::pi<float>() / nbr_lights;
+            ssbo_lights[shaderHandle].emplace_back(lightInfo);
+        });
 
-    light[0].position = glm::vec4(5.f * cosf(scale * 0.f), 5.f, 5.f * sinf(scale * 0.f), 1.f);
-    light[1].position = glm::vec4(5.f * cosf(scale * 1.f), 5.f, 5.f * sinf(scale * 1.f), 1.f);
-    light[2].position = glm::vec4(5.f * cosf(scale * 2.f), 5.f, 5.f * sinf(scale * 2.f), 1.f);
-    light[3].position = glm::vec4(5.f * cosf(scale * 3.f), 5.f, 5.f * sinf(scale * 3.f), 1.f);
-    light[4].position = glm::vec4(5.f * cosf(scale * 4.f), 5.f, 5.f * sinf(scale * 4.f), 1.f);
-
-    shader.use();
-    for (int i = 0; i < 5; i++)
+    for (auto &[shaderId, lights] : ssbo_lights)
     {
-        glUniform4fv(shader.uniform(fmt::format("Light[{}].Position", i).c_str()), 1,
-                     glm::value_ptr(light[i].position));
-        glUniform3fv(shader.uniform(fmt::format("Light[{}].Intensity", i).c_str()), 1,
-                     glm::value_ptr(light[i].intensity));
+        auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId.id);
+        shader.use();
+        shader.updateSSBO<ES::Plugin::OpenGL::Utils::LightInfo>(
+            "LightBuffer", lights.size() * sizeof(ES::Plugin::OpenGL::Utils::LightInfo),
+            static_cast<const void *>(lights.data()));
+        glUniform1i(shader.uniform("NumberLights"), static_cast<int>(lights.size()));
+        shader.disable();
     }
-    shader.disable();
 }
 
 void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
