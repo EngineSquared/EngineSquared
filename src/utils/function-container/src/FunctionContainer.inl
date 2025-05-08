@@ -43,7 +43,8 @@ ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
 }
 
 template <typename TReturn, typename... TArgs>
-std::unique_ptr<typename ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::FunctionType> ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::DeleteFunction(
+std::unique_ptr<typename ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::FunctionType>
+ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::DeleteFunction(
     ES::Utils::FunctionContainer::FunctionID id)
 {
     auto it = _idToIndex.find(id);

@@ -55,10 +55,7 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      * @brief Gets the list of functions in the container.
      * @return Const reference to the vector of unique pointers to BaseFunction.
      */
-    inline const std::list<std::unique_ptr<FunctionType>> &GetFunctions()
-    {
-        return _orderedFunctions;
-    }
+    inline const std::list<std::unique_ptr<FunctionType>> &GetFunctions() { return _orderedFunctions; }
 
     /**
      * @brief Returns true if the container is empty.
@@ -82,9 +79,8 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
     inline bool Contains(FunctionID id) const { return _idToIndex.contains(id); }
 
   private:
-    std::unordered_map<FunctionID, std::size_t> _idToIndex; ///< Map to store unique ids for each function.
-    std::list<std::unique_ptr<FunctionType>>
-        _orderedFunctions; ///< Vector to store functions in order.
+    std::unordered_map<FunctionID, std::size_t> _idToIndex;     ///< Map to store unique ids for each function.
+    std::list<std::unique_ptr<FunctionType>> _orderedFunctions; ///< Vector to store functions in order.
 };
 } // namespace ES::Utils::FunctionContainer
 

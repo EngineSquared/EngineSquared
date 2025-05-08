@@ -84,7 +84,10 @@ class SystemContainer : public ES::Utils::FunctionContainer::FunctionContainer<v
 
     inline decltype(auto) GetSystems() { return GetFunctions(); }
 
-    inline decltype(auto) DeleteSystem(const ES::Utils::FunctionContainer::FunctionID &id) { return DeleteFunction(id); }
+    inline decltype(auto) DeleteSystem(const ES::Utils::FunctionContainer::FunctionID &id)
+    {
+        return DeleteFunction(id);
+    }
 
   private:
     template <typename TCallable> void AddSystem(TCallable callable) { AddFunction(callable); }
