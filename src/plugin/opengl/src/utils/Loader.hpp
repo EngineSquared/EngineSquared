@@ -401,7 +401,7 @@ class ShaderProgram {
     }
 
     // Method to add an SSBO to the shader program
-    void addSSBO(const std::string &ssboName, GLuint bindingPoint, GLsizeiptr size, const void *data = nullptr)
+    void addSSBO(const std::string &ssboName, GLuint bindingPoint, GLsizeiptr size, const GLvoid *data = nullptr)
     {
         GLuint ssbo;
         glGenBuffers(1, &ssbo);
@@ -419,7 +419,7 @@ class ShaderProgram {
 
     // Method to update an SSBO's data
     // Note: This method will resize the SSBO if the new size is larger than the current size
-    void updateSSBO(const std::string &ssboName, GLsizeiptr size, const void *data)
+    void updateSSBO(const std::string &ssboName, GLsizeiptr size, const GLvoid *data)
     {
         auto it = ssboMap.find(ssboName);
         if (it == ssboMap.end())
