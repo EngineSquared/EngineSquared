@@ -167,9 +167,8 @@ void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
     {
         auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId.id);
         shader.use();
-        shader.updateSSBO<ES::Plugin::OpenGL::Utils::LightInfo>(
-            "LightBuffer", lights.size() * sizeof(ES::Plugin::OpenGL::Utils::LightInfo),
-            static_cast<const void *>(lights.data()));
+        shader.updateSSBO("LightBuffer", lights.size() * sizeof(ES::Plugin::OpenGL::Utils::LightInfo),
+                          static_cast<const void *>(lights.data()));
         glUniform1i(shader.uniform("NumberLights"), static_cast<int>(lights.size()));
         shader.disable();
     }

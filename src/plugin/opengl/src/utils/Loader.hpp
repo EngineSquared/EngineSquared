@@ -40,7 +40,7 @@ class ShaderProgram {
     std::map<std::string, int, std::less<>> uniformMap;
 
     // Map to store SSBO bindings
-    std::map<std::string, std::pair<GLuint, size_t>, std::less<>> ssboMap;
+    std::map<std::string, std::pair<GLuint, GLsizeiptr>, std::less<>> ssboMap;
 
     // Has this shader program been initialised?
 
@@ -337,7 +337,7 @@ class ShaderProgram {
     {
         // Create an iterator to look through our ssbo map (only create iterator on first run -
         // reuse it for all further calls).
-        static std::map<std::string, std::pair<GLuint, size_t>, std::less<>>::const_iterator ssboIter;
+        static std::map<std::string, std::pair<GLuint, GLsizeiptr>, std::less<>>::const_iterator ssboIter;
 
         // Try to find the named ssbo
         ssboIter = ssboMap.find(ssboName);
@@ -419,7 +419,7 @@ class ShaderProgram {
 
     // Method to update an SSBO's data
     // Note: This method will resize the SSBO if the new size is larger than the current size
-    template <typename T> void updateSSBO(const std::string &ssboName, GLsizeiptr size, const void *data)
+    void updateSSBO(const std::string &ssboName, GLsizeiptr size, const void *data)
     {
         auto it = ssboMap.find(ssboName);
         if (it == ssboMap.end())
@@ -428,12 +428,12 @@ class ShaderProgram {
             return;
         }
 
-        if (size > static_cast<GLsizeiptr>(it->second.second * sizeof(T)))
+        if (size > it->second.second)
         {
-            addSSBO(ssboName, static_cast<GLuint>(it->second.second), size, data);
+            addSSBO(ssboName, it->second.first, size, data);
         }
 
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, static_cast<GLuint>(it->second.first));
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, it->second.first);
         glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, size, data);
     }
 
