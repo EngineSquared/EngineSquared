@@ -5,7 +5,8 @@ namespace ES::Plugin::OpenGL::Utils {
 void GLMeshBuffer::Draw(const Object::Component::Mesh &mesh) const noexcept
 {
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mesh.indices.size() * sizeof(uint32_t)), GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mesh.indices.size() * sizeof(uint32_t)), GL_UNSIGNED_INT,
+                   nullptr);
     glBindVertexArray(0);
 }
 
