@@ -73,16 +73,17 @@ TEST(Systems, EnableDisable)
 
     core.GetScheduler<Scheduler::Update>().Disable(a);
     core.GetScheduler<Scheduler::Update>().Disable(b);
+    core.GetScheduler<Scheduler::Update>().Disable(c);
 
     core.RunSystems();
 
-    ASSERT_EQ(core.GetResource<A>().value, 1);
-    ASSERT_EQ(core.GetResource<B>().value, 1);
+    ASSERT_EQ(core.GetResource<A>().value, 2);
+    ASSERT_EQ(core.GetResource<B>().value, 2);
     ASSERT_EQ(core.GetResource<C>().value, 2);
 
     core.GetScheduler<Scheduler::Update>().Enable(a);
     core.GetScheduler<Scheduler::Update>().Enable(b);
-    core.GetScheduler<Scheduler::Update>().Disable(c);
+    core.GetScheduler<Scheduler::Update>().Enable(c);
 
     core.RunSystems();
 
