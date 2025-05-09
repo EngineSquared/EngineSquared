@@ -12,7 +12,7 @@ void ES::Plugin::OpenGL::System::LoadGLSpriteBuffer(ES::Engine::Core &core)
     auto &glBufferManager = core.GetResource<Resource::GLSpriteBufferManager>();
 
     core.GetRegistry().view<Component::SpriteHandle, Component::Sprite>().each(
-        [&](auto entity, Component::SpriteHandle &spriteHandle, Component::Sprite &sprite) {
+        [&]([[maybe_unused]] auto entity, Component::SpriteHandle &spriteHandle, Component::Sprite &sprite) {
             if (glBufferManager.Contains(spriteHandle.id))
             {
                 glBufferManager.Get(spriteHandle.id).Update(sprite);
@@ -29,7 +29,7 @@ void ES::Plugin::OpenGL::System::LoadGLMeshBuffer(ES::Engine::Core &core)
     auto &glBufferManager = core.GetResource<Resource::GLMeshBufferManager>();
 
     core.GetRegistry().view<Component::ModelHandle, ES::Plugin::Object::Component::Mesh>().each(
-        [&](auto entity, Component::ModelHandle &model, ES::Plugin::Object::Component::Mesh &mesh) {
+        [&]([[maybe_unused]] auto entity, Component::ModelHandle &model, ES::Plugin::Object::Component::Mesh &mesh) {
             if (glBufferManager.Contains(model.id))
             {
                 glBufferManager.Get(model.id).Update(mesh);
@@ -45,8 +45,8 @@ void ES::Plugin::OpenGL::System::LoadGLTextBuffer(ES::Engine::Core &core)
 {
     auto &glBufferManager = core.GetResource<Resource::GLTextBufferManager>();
 
-    core.GetRegistry().view<Component::TextHandle, ES::Plugin::UI::Component::Text>().each(
-        [&](auto entity, Component::TextHandle &textHandle, ES::Plugin::UI::Component::Text &text) {
+    core.GetRegistry().view<Component::TextHandle>().each(
+        [&]([[maybe_unused]] auto entity, Component::TextHandle &textHandle) {
             if (glBufferManager.Contains(textHandle.id))
             {
                 return;
