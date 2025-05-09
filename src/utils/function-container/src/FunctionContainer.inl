@@ -59,5 +59,12 @@ ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::DeleteFuncti
     auto func = std::move(*funcIterator);
     _orderedFunctions.erase(funcIterator);
     _idToIndex.erase(it);
+    for (auto &[first, second] : _idToIndex)
+    {
+        if (second > index)
+        {
+            second--;
+        }
+    }
     return func;
 }
