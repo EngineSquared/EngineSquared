@@ -131,6 +131,9 @@ TEST_F(FunctionContainerTest, DeletionOrdering)
     auto id = container.AddFunction([](int x) { return x + 1; });
     auto id2 = container.AddFunction([](int x) { return x + 2; });
 
-    container.DeleteFunction(id);
-    container.DeleteFunction(id2);
+    auto func = container.DeleteFunction(id);
+    auto func2 = container.DeleteFunction(id2);
+
+    EXPECT_EQ(func->GetID(), id);
+    EXPECT_EQ(func2->GetID(), id2);
 }
