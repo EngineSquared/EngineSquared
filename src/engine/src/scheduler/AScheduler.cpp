@@ -1,7 +1,6 @@
 #include "AScheduler.hpp"
 
-namespace ES::Engine::Scheduler
-{
+namespace ES::Engine::Scheduler {
 void AScheduler::Disable(ES::Utils::FunctionContainer::FunctionID &id)
 {
     if (_enabledSystemsList.Contains(id))
@@ -33,4 +32,4 @@ void AScheduler::Enable(ES::Utils::FunctionContainer::FunctionID &id)
         ES::Utils::Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
     }
 }
-}
+} // namespace ES::Engine::Scheduler
