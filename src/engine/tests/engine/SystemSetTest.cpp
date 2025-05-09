@@ -44,10 +44,6 @@ TEST(Core, SystemSet)
 {
     Core core;
 
-    std::cout << std::hash<void (*)(const Core &)>{}(TestSystemSetFirst) << std::endl;
-    std::cout << std::hash<void (*)(const Core &)>{}(TestSystemSetSecond) << std::endl;
-    std::cout << std::hash<void (*)(const Core &)>{}(TestOtherSystem) << std::endl;
-
     core.RegisterSystem(TestSystemSetFirst, TestSystemSetSecond);
 
     core.RegisterSystem(TestOtherSystem);
