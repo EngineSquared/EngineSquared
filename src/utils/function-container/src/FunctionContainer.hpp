@@ -44,6 +44,7 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      * @brief Adds multiple functions to the container.
      * @tparam TFunctions Variadic template parameter for function types.
      * @param functions The functions to be added.
+     * @return a tuple of FunctionIDs for the added functions.
      */
     template <typename... TFunctions> decltype(auto) AddFunctions(TFunctions... functions)
     {
