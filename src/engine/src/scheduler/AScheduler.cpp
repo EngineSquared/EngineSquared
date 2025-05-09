@@ -1,11 +1,11 @@
 #include "AScheduler.hpp"
 
 namespace ES::Engine::Scheduler {
-void AScheduler::Disable(ES::Utils::FunctionContainer::FunctionID &id)
+void AScheduler::Disable(ES::Utils::FunctionContainer::FunctionID id)
 {
     if (_enabledSystemsList.Contains(id))
     {
-        id = _disabledSystemsList.AddFunction(_enabledSystemsList.DeleteFunction(id));
+        _disabledSystemsList.AddFunction(_enabledSystemsList.DeleteFunction(id));
     }
     else if (_disabledSystemsList.Contains(id))
     {
@@ -17,11 +17,11 @@ void AScheduler::Disable(ES::Utils::FunctionContainer::FunctionID &id)
     }
 }
 
-void AScheduler::Enable(ES::Utils::FunctionContainer::FunctionID &id)
+void AScheduler::Enable(ES::Utils::FunctionContainer::FunctionID id)
 {
     if (_disabledSystemsList.Contains(id))
     {
-        id = _enabledSystemsList.AddFunction(_disabledSystemsList.DeleteFunction(id));
+        _enabledSystemsList.AddFunction(_disabledSystemsList.DeleteFunction(id));
     }
     else if (_enabledSystemsList.Contains(id))
     {

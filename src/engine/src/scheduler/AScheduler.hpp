@@ -31,7 +31,7 @@ class AScheduler : public IScheduler {
      * @brief Disable a system. It will remove the system from the "main" system list, and it will not be returned by
      * the GetSystems function.
      */
-    void Disable(ES::Utils::FunctionContainer::FunctionID &id);
+    void Disable(ES::Utils::FunctionContainer::FunctionID id);
 
     /**
      * @brief Enable a system. It will add the system to the "main" system list, and it will be returned by the
@@ -39,7 +39,7 @@ class AScheduler : public IScheduler {
      *
      * @param id The system to enable
      */
-    void Enable(ES::Utils::FunctionContainer::FunctionID &id);
+    void Enable(ES::Utils::FunctionContainer::FunctionID id);
 
   protected:
     Core &_core;
