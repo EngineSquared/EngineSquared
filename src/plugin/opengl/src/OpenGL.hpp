@@ -1,6 +1,7 @@
 #pragma once
 
 #include "component/FontHandle.hpp"
+#include "component/Light.hpp"
 #include "component/MaterialHandle.hpp"
 #include "component/ModelHandle.hpp"
 #include "component/ShaderHandle.hpp"
@@ -28,6 +29,7 @@
 #include "utils/Font.hpp"
 #include "utils/GLMeshBuffer.hpp"
 #include "utils/GLTextBuffer.hpp"
+#include "utils/LightInfo.hpp"
 #include "utils/Loader.hpp"
 #include "utils/Material.hpp"
 #include "utils/MouseDragging.hpp"
