@@ -14,42 +14,30 @@ class AScheduler : public IScheduler {
 
     inline decltype(auto) GetSystems() { return _enabledSystemsList.GetSystems(); }
 
-    template <typename... Systems> decltype(auto) AddSystems(Systems... systems)
+    /**
+     * @brief Get the list of enabled systems
+     * 
+     * @tparam  TSystems    Type of systems to add. (can be omitted)
+     * @param   systems     The systems to add
+     * 
+     * @return  The list of enabled systems ids
+     */
+    template <typename... TSystems> inline decltype(auto) AddSystems(TSystems... systems)
     {
         return _enabledSystemsList.AddSystems(systems...);
     }
 
-    inline void Disable(ES::Utils::FunctionContainer::FunctionID &id)
-    {
-        if (_enabledSystemsList.Contains(id))
-        {
-            id = _disabledSystemsList.AddFunction(_enabledSystemsList.DeleteFunction(id));
-        }
-        else if (_disabledSystemsList.Contains(id))
-        {
-            ES::Utils::Log::Warn(fmt::format("System with id {} is already disabled", id));
-        }
-        else
-        {
-            ES::Utils::Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
-        }
-    }
+    /**
+     * @brief Disable a system. It will remove the system from the "main" system list, and it will not be returned by the GetSystems function.
+     */
+    void Disable(ES::Utils::FunctionContainer::FunctionID &id);
 
-    inline void Enable(ES::Utils::FunctionContainer::FunctionID &id)
-    {
-        if (_disabledSystemsList.Contains(id))
-        {
-            id = _enabledSystemsList.AddFunction(_disabledSystemsList.DeleteFunction(id));
-        }
-        else if (_enabledSystemsList.Contains(id))
-        {
-            ES::Utils::Log::Warn(fmt::format("System with id {} is already enabled", id));
-        }
-        else
-        {
-            ES::Utils::Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
-        }
-    }
+    /**
+     * @brief Enable a system. It will add the system to the "main" system list, and it will be returned by the GetSystems function.
+     *
+     * @param id The system to enable
+     */
+    void Enable(ES::Utils::FunctionContainer::FunctionID &id);
 
   protected:
     Core &_core;
