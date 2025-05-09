@@ -125,3 +125,12 @@ TEST_F(FunctionContainerTest, DeleteFunctionDoesNotMessUpOrder)
         expected.erase(expected.begin());
     }
 }
+
+TEST_F(FunctionContainerTest, DeletionOrdering)
+{
+    auto id = container.AddFunction([](int x) { return x + 1; });
+    auto id2 = container.AddFunction([](int x) { return x + 2; });
+
+    container.DeleteFunction(id);
+    container.DeleteFunction(id2);
+}
