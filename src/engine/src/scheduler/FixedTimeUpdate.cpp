@@ -9,7 +9,7 @@ void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems()
 
     for (unsigned int i = 0; i < ticks; i++)
     {
-        for (auto const &system : this->_systemsList.GetSystems())
+        for (auto const &system : this->GetSystems())
         {
             (*system)(_core);
         }

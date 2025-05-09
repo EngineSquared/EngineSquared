@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <entt/entt.hpp>
 #include <functional>
 #include <iostream>
@@ -23,11 +24,17 @@ template <typename TCallable> using System = ES::Utils::FunctionContainer::Calla
  */
 class SystemContainer : public ES::Utils::FunctionContainer::FunctionContainer<void, Core &> {
   public:
-    template <typename... TSystem> inline void AddSystems(TSystem... systems) { AddFunctions(systems...); }
+    template <typename... TSystem> inline decltype(auto) AddSystems(TSystem... systems)
+    {
+        return AddFunctions(systems...);
+    }
 
-    inline const std::list<std::unique_ptr<SystemBase>> &GetSystems() { return GetFunctions(); }
+    inline decltype(auto) GetSystems() { return GetFunctions(); }
 
-    inline bool DeleteSystem(ES::Utils::FunctionContainer::FunctionID id) { return DeleteFunction(id); }
+    inline decltype(auto) DeleteSystem(const ES::Utils::FunctionContainer::FunctionID &id)
+    {
+        return DeleteFunction(id);
+    }
 
   private:
     template <typename TCallable> void AddSystem(TCallable callable) { AddFunction(callable); }
