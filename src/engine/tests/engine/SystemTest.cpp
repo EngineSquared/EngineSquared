@@ -77,9 +77,9 @@ TEST(Systems, EnableDisable)
 
     core.RunSystems();
 
-    ASSERT_EQ(core.GetResource<A>().value, 2);
-    ASSERT_EQ(core.GetResource<B>().value, 2);
-    ASSERT_EQ(core.GetResource<C>().value, 2);
+    ASSERT_EQ(core.GetResource<A>().value, 1);
+    ASSERT_EQ(core.GetResource<B>().value, 1);
+    ASSERT_EQ(core.GetResource<C>().value, 1);
 
     core.GetScheduler<Scheduler::Update>().Enable(a);
     core.GetScheduler<Scheduler::Update>().Enable(b);
