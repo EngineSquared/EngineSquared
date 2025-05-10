@@ -41,6 +41,10 @@ inline void ES::Engine::SchedulerContainer::RunSchedulers()
     for (const auto &scheduler : _orderedSchedulers)
     {
         scheduler->RunSystems();
+
+        if (!scheduler->ShouldRunNextScheduler()) {
+            break;
+        }
     }
 }
 

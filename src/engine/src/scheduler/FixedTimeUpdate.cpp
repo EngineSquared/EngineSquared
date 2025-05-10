@@ -11,7 +11,7 @@ void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems()
     {
         for (auto const &system : this->GetSystems())
         {
-            (*system)(_core);
+            RunSystem(system, _core);
         }
     }
 
