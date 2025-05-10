@@ -52,6 +52,7 @@ template <CScheduler TScheduler, typename System, typename ErrorCallback> inline
         catch (const std::exception &e)
         {
             callback(core);
+            throw e;
         }
     };
 
