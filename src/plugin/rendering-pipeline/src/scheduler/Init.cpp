@@ -3,7 +3,7 @@
 
 void ES::Plugin::RenderingPipeline::Init::RunSystems()
 {
-    for (auto const &system : this->_systemsList.GetSystems())
+    for (auto const &system : this->GetSystems())
     {
         (*system)(_core);
     }

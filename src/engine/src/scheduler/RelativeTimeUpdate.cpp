@@ -10,7 +10,7 @@ void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems()
     for (unsigned int i = 0; i < ticks; i++)
     {
         _deltaTime = _tickRate;
-        for (auto const &system : this->_systemsList.GetSystems())
+        for (auto const &system : this->GetSystems())
         {
             (*system)(_core);
         }
@@ -19,7 +19,7 @@ void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems()
     if (remainder > REMAINDER_THRESHOLD)
     {
         _deltaTime = remainder;
-        for (auto const &system : this->_systemsList.GetSystems())
+        for (auto const &system : this->GetSystems())
         {
             (*system)(_core);
         }

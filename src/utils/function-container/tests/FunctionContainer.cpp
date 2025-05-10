@@ -93,7 +93,7 @@ TEST_F(FunctionContainerTest, DeleteFunction)
 {
     auto id = container.AddFunction([](int x) { return x + 1; });
     EXPECT_FALSE(container.IsEmpty());
-    EXPECT_TRUE(container.DeleteFunction(id));
+    EXPECT_NE(container.DeleteFunction(id), nullptr);
     EXPECT_TRUE(container.IsEmpty());
 }
 
@@ -101,8 +101,8 @@ TEST_F(FunctionContainerTest, DeleteFunction)
 TEST_F(FunctionContainerTest, DeleteNonExistingFunction)
 {
     auto id = container.AddFunction([](int x) { return x + 1; });
-    EXPECT_TRUE(container.DeleteFunction(id));
-    EXPECT_FALSE(container.DeleteFunction(id)); // Try to delete again
+    EXPECT_NE(container.DeleteFunction(id), nullptr);
+    EXPECT_EQ(container.DeleteFunction(id), nullptr); // Try to delete again
 }
 
 // Test: Deleting a function doesn't mess up the list and the order
@@ -112,7 +112,7 @@ TEST_F(FunctionContainerTest, DeleteFunctionDoesNotMessUpOrder)
     auto id2 = container.AddFunction([](int x) { return x + 2; });
     container.AddFunction([](int x) { return x + 3; });
 
-    EXPECT_TRUE(container.DeleteFunction(id2));
+    EXPECT_NE(container.DeleteFunction(id2), nullptr);
 
     const auto &functions = container.GetFunctions();
     ASSERT_EQ(functions.size(), 2);
@@ -124,4 +124,16 @@ TEST_F(FunctionContainerTest, DeleteFunctionDoesNotMessUpOrder)
         EXPECT_EQ((*func)(5), expected.front());
         expected.erase(expected.begin());
     }
+}
+
+TEST_F(FunctionContainerTest, DeletionOrdering)
+{
+    auto id = container.AddFunction([](int x) { return x + 1; });
+    auto id2 = container.AddFunction([](int x) { return x + 2; });
+
+    auto func = container.DeleteFunction(id);
+    auto func2 = container.DeleteFunction(id2);
+
+    EXPECT_EQ(func->GetID(), id);
+    EXPECT_EQ(func2->GetID(), id2);
 }

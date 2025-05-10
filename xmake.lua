@@ -51,8 +51,9 @@ target("EngineSquared")
 
     if is_mode("debug") then
         add_defines("DEBUG")
+        add_defines("ES_DEBUG")
         if is_plat("windows") then
-            add_cxflags("/Od", "/Zi")
+            add_cxflags("/Od", "/Zi", "/Wall", "/MTd")
         else
             add_cxflags("-O0 -g3 -ggdb")
         end
@@ -84,6 +85,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_tests("default")
         if is_mode("debug") then
             add_defines("DEBUG")
+            add_defines("ES_DEBUG")
         end
     ::continue::
 end
