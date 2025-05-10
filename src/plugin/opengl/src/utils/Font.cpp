@@ -70,7 +70,7 @@ void Font::LoadFont(const std::string &fontPath, float fontSize)
         stbtt_GetCodepointHMetrics(fontInfo.get(), c, &advance, &lsb);
 
         Character character;
-        character.textureID = static_cast<GLuint>(texture);
+        character.textureID = texture;
         character.size = {static_cast<float>(width), static_cast<float>(height)};
         character.bearing = {static_cast<float>(xOffset), static_cast<float>(yOffset)};
         character.advance = static_cast<GLuint>(scale * advance);
