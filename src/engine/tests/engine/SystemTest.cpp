@@ -99,13 +99,10 @@ TEST(Systems, ErrorHandling)
     core.RegisterResource<A>({});
     core.RegisterResource<B>({});
 
-    core.RegisterSystemWithErrorHandler(
-        [](Core &core) { core.GetResource<A>().value++; },
-        [](const Core &) {  });
+    core.RegisterSystemWithErrorHandler([](Core &core) { core.GetResource<A>().value++; }, [](const Core &) {});
 
-    core.RegisterSystemWithErrorHandler(
-        [](const Core &) { throw std::runtime_error("Test error"); },
-        [](Core &core) { core.GetResource<B>().value++; });
+    core.RegisterSystemWithErrorHandler([](const Core &) { throw std::runtime_error("Test error"); },
+                                        [](Core &core) { core.GetResource<B>().value++; });
 
     core.RunSystems();
 

@@ -42,7 +42,8 @@ template <typename... Systems> inline decltype(auto) Core::RegisterSystem(System
     return this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(systems...);
 }
 
-template <CScheduler TScheduler, typename System, typename ErrorCallback> inline decltype(auto) Core::RegisterSystemWithErrorHandler(System system, ErrorCallback callback)
+template <CScheduler TScheduler, typename System, typename ErrorCallback>
+inline decltype(auto) Core::RegisterSystemWithErrorHandler(System system, ErrorCallback callback)
 {
     auto wrappedSystem = [this, system, callback](Core &core) {
         try
@@ -59,7 +60,8 @@ template <CScheduler TScheduler, typename System, typename ErrorCallback> inline
     return this->RegisterSystem<TScheduler>(wrappedSystem);
 }
 
-template <typename System, typename ErrorCallback> inline decltype(auto) Core::RegisterSystemWithErrorHandler(System system, ErrorCallback callback)
+template <typename System, typename ErrorCallback>
+inline decltype(auto) Core::RegisterSystemWithErrorHandler(System system, ErrorCallback callback)
 {
     auto wrappedSystem = [this, system, callback](Core &core) {
         try

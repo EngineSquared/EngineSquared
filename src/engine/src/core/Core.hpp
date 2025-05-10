@@ -157,7 +157,8 @@ class Core {
      * @param   callback    The callback to run if the system fails.
      * @see AScheduler
      */
-    template <CScheduler TScheduler, typename System, typename ErrorCallback> decltype(auto) RegisterSystemWithErrorHandler(System system, ErrorCallback callback);
+    template <CScheduler TScheduler, typename System, typename ErrorCallback>
+    decltype(auto) RegisterSystemWithErrorHandler(System system, ErrorCallback callback);
 
     /**
      * Add a system to the registry, associated with a callback that should run if the system fails.
@@ -167,7 +168,8 @@ class Core {
      * @param   callback    The callback to run if the system fails.
      * @see AScheduler
      */
-    template <typename System, typename ErrorCallback> decltype(auto) RegisterSystemWithErrorHandler(System system, ErrorCallback callback);
+    template <typename System, typename ErrorCallback>
+    decltype(auto) RegisterSystemWithErrorHandler(System system, ErrorCallback callback);
 
     /**
      * Deletes a scheduler from the registry.
