@@ -310,7 +310,7 @@ class InputManager {
      */
     inline bool DeleteKeyCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _keyCallbacks->DeleteFunction(id);
+        return _keyCallbacks->DeleteFunction(id) != nullptr;
     }
 
     /**
@@ -321,7 +321,7 @@ class InputManager {
      */
     inline bool DeleteCharCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _charCallbacks->DeleteFunction(id);
+        return _charCallbacks->DeleteFunction(id) != nullptr;
     }
 
     /**
@@ -332,7 +332,7 @@ class InputManager {
      */
     inline bool DeleteCharModsCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _charModsCallbacks->DeleteFunction(id);
+        return _charModsCallbacks->DeleteFunction(id) != nullptr;
     }
 
     /**
@@ -343,7 +343,7 @@ class InputManager {
      */
     inline bool DeleteMouseButtonCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _mouseButtonCallbacks->DeleteFunction(id);
+        return _mouseButtonCallbacks->DeleteFunction(id) != nullptr;
     }
 
     /**
@@ -354,7 +354,7 @@ class InputManager {
      */
     inline bool DeleteCursorPosCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _cursorPosCallbacks->DeleteFunction(id);
+        return _cursorPosCallbacks->DeleteFunction(id) != nullptr;
     }
 
     /**
@@ -365,7 +365,7 @@ class InputManager {
      */
     inline bool DeleteCursorEnterCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _cursorEnterCallbacks->DeleteFunction(id);
+        return _cursorEnterCallbacks->DeleteFunction(id) != nullptr;
     }
 
     /**
@@ -376,7 +376,7 @@ class InputManager {
      */
     inline bool DeleteScrollCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _scrollCallbacks->DeleteFunction(id);
+        return _scrollCallbacks->DeleteFunction(id) != nullptr;
     }
 
     /**
@@ -387,7 +387,7 @@ class InputManager {
      */
     inline bool DeleteDropCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _dropCallbacks->DeleteFunction(id);
+        return _dropCallbacks->DeleteFunction(id) != nullptr;
     }
 
   private:

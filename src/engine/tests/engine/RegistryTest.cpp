@@ -54,7 +54,7 @@ class TestSchedulerA : public Scheduler::AScheduler {
     using Scheduler::AScheduler::AScheduler;
     void RunSystems() override
     {
-        for (auto const &system : this->_systemsList.GetSystems())
+        for (auto const &system : this->GetSystems())
         {
             (*system)(_core);
         }
@@ -66,7 +66,7 @@ class TestSchedulerB : public Scheduler::AScheduler {
     using Scheduler::AScheduler::AScheduler;
     void RunSystems() override
     {
-        for (auto const &system : this->_systemsList.GetSystems())
+        for (auto const &system : this->GetSystems())
         {
             (*system)(_core);
         }

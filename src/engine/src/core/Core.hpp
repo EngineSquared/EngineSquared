@@ -135,7 +135,7 @@ class Core {
      * @param   systems     The systems to add.
      * @see AScheduler
      */
-    template <CScheduler TScheduler, typename... Systems> void RegisterSystem(Systems... systems);
+    template <CScheduler TScheduler, typename... Systems> decltype(auto) RegisterSystem(Systems... systems);
 
     /**
      * Add one or multiple systems to the registry. A system is a function that will be called by the registry.
@@ -147,7 +147,7 @@ class Core {
      * @tparam  Systems  The systems to add.
      * @see AScheduler
      */
-    template <typename... Systems> void RegisterSystem(Systems... systems);
+    template <typename... Systems> decltype(auto) RegisterSystem(Systems... systems);
 
     /**
      * Deletes a scheduler from the registry.

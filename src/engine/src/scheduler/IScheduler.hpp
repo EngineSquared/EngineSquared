@@ -8,7 +8,6 @@ class Core;
 }
 
 namespace ES::Engine::Scheduler {
-using USystemList = std::vector<std::unique_ptr<SystemBase>>;
 /**
  * @brief Interface to be implemented for every schedulers
  */

@@ -7,7 +7,7 @@ void ES::Engine::Scheduler::Shutdown::RunSystems()
     {
         return;
     }
-    for (auto const &system : this->_systemsList.GetSystems())
+    for (auto const &system : this->GetSystems())
     {
         (*system)(_core);
     }

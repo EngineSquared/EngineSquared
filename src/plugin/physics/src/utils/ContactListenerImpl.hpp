@@ -89,7 +89,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      */
     inline bool RemoveOnContactAddedCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _onContactAddedCallbacks.DeleteFunction(id);
+        return _onContactAddedCallbacks.DeleteFunction(id) != nullptr;
     }
 
     /**
@@ -99,7 +99,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      */
     inline bool RemoveOnContactPersistedCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _onContactPersistedCallbacks.DeleteFunction(id);
+        return _onContactPersistedCallbacks.DeleteFunction(id) != nullptr;
     }
 
     /**
@@ -109,7 +109,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      */
     inline bool RemoveOnContactRemovedCallback(ES::Utils::FunctionContainer::FunctionID id)
     {
-        return _onContactRemovedCallbacks.DeleteFunction(id);
+        return _onContactRemovedCallbacks.DeleteFunction(id) != nullptr;
     }
 
   private:
