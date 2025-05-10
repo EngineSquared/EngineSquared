@@ -42,6 +42,39 @@ template <typename... Systems> inline decltype(auto) Core::RegisterSystem(System
     return this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(systems...);
 }
 
+template <CScheduler TScheduler, typename System, typename ErrorCallback> inline decltype(auto) Core::RegisterSystemWithErrorHandler(System system, ErrorCallback callback)
+{
+    auto wrappedSystem = [this, system, callback](Core &core) {
+        try
+        {
+            system(core);
+        }
+        catch (const std::exception &e)
+        {
+            callback(core);
+        }
+    };
+
+    return this->RegisterSystem<TScheduler>(wrappedSystem);
+}
+
+template <typename System, typename ErrorCallback> inline decltype(auto) Core::RegisterSystemWithErrorHandler(System system, ErrorCallback callback)
+{
+    auto wrappedSystem = [this, system, callback](Core &core) {
+        try
+        {
+            system(core);
+        }
+        catch (const std::exception &e)
+        {
+            callback(core);
+            throw e;
+        }
+    };
+
+    return this->RegisterSystem(wrappedSystem);
+}
+
 template <typename... TPlugins> void Core::AddPlugins() { (AddPlugin<TPlugins>(), ...); }
 
 template <typename TPlugin> void Core::AddPlugin()

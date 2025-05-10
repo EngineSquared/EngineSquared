@@ -150,6 +150,26 @@ class Core {
     template <typename... Systems> decltype(auto) RegisterSystem(Systems... systems);
 
     /**
+     * Add a system to the registry, associated with a callback that should run if the system fails.
+     *
+     * @tparam  TScheduler  The type of scheduler to use. It must be derived from AScheduler.
+     * @param   system      The system to add.
+     * @param   callback    The callback to run if the system fails.
+     * @see AScheduler
+     */
+    template <CScheduler TScheduler, typename System, typename ErrorCallback> decltype(auto) RegisterSystemWithErrorHandler(System system, ErrorCallback callback);
+
+    /**
+     * Add a system to the registry, associated with a callback that should run if the system fails.
+     *
+     * @tparam  TScheduler  The type of scheduler to use. It must be derived from AScheduler.
+     * @param   system      The system to add.
+     * @param   callback    The callback to run if the system fails.
+     * @see AScheduler
+     */
+    template <typename System, typename ErrorCallback> decltype(auto) RegisterSystemWithErrorHandler(System system, ErrorCallback callback);
+
+    /**
      * Deletes a scheduler from the registry.
      *
      * @tparam TScheduler The type of scheduler to delete.

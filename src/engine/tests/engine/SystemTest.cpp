@@ -91,3 +91,24 @@ TEST(Systems, EnableDisable)
     ASSERT_EQ(core.GetResource<B>().value, 2);
     ASSERT_EQ(core.GetResource<C>().value, 2);
 }
+
+TEST(Systems, ErrorHandling)
+{
+    Core core;
+
+    core.RegisterResource<A>({});
+    core.RegisterResource<B>({});
+
+    core.RegisterSystemWithErrorHandler(
+        [](Core &core) { core.GetResource<A>().value++; },
+        [](const Core &) {  });
+
+    core.RegisterSystemWithErrorHandler(
+        [](const Core &) { throw std::runtime_error("Test error"); },
+        [](Core &core) { core.GetResource<B>().value++; });
+
+    core.RunSystems();
+
+    ASSERT_EQ(core.GetResource<A>().value, 1);
+    ASSERT_EQ(core.GetResource<B>().value, 1);
+}
