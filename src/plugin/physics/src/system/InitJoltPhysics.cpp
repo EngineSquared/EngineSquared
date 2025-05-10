@@ -8,7 +8,7 @@
 #include <Jolt/RegisterTypes.h>
 
 namespace ES::Plugin::Physics::System {
-void InitJoltPhysics(ES::Engine::Core &core)
+void InitJoltPhysics([[maybe_unused]] ES::Engine::Core &core)
 {
     JPH::RegisterDefaultAllocator();
     JPH::Factory::sInstance = new JPH::Factory();
