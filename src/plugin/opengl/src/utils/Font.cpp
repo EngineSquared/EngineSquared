@@ -10,9 +10,9 @@
 
 namespace ES::Plugin::OpenGL::Utils {
 
-Font::Font(const std::string &fontPath, int fontSize) { LoadFont(fontPath, fontSize); }
+Font::Font(const std::string &fontPath, float fontSize) { LoadFont(fontPath, fontSize); }
 
-void Font::LoadFont(const std::string &fontPath, int fontSize)
+void Font::LoadFont(const std::string &fontPath, float fontSize)
 {
     fontBuffer = std::make_shared<std::vector<unsigned char>>();
     fontInfo = std::make_shared<stbtt_fontinfo>();
@@ -68,13 +68,12 @@ void Font::LoadFont(const std::string &fontPath, int fontSize)
         int advance;
         int lsb;
         stbtt_GetCodepointHMetrics(fontInfo.get(), c, &advance, &lsb);
-        float scaledAdvance = (advance * scale);
 
         Character character;
-        character.textureID = texture;
-        character.size = {(float) width, (float) height};
-        character.bearing = {(float) xOffset, (float) yOffset};
-        character.advance = scaledAdvance;
+        character.textureID = static_cast<GLuint>(texture);
+        character.size = {static_cast<float>(width), static_cast<float>(height)};
+        character.bearing = {static_cast<float>(xOffset), static_cast<float>(yOffset)};
+        character.advance = static_cast<GLuint>(scale * advance);
 
         characters[c] = character;
 
