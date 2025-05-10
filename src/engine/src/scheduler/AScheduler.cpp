@@ -42,9 +42,12 @@ void AScheduler::RunSystem(const std::unique_ptr<SystemBase> &system, Core &core
         return;
     }
 
-    try {
+    try
+    {
         (*system)(core);
-    } catch (const std::exception &e) {
+    }
+    catch (const std::exception &e)
+    {
         if (_errorPolicy != SchedulerErrorPolicy::Silent)
         {
             ES::Utils::Log::Error(fmt::format("System {} failed: {}", system->GetID(), e.what()));
@@ -56,14 +59,14 @@ void AScheduler::RunSystem(const std::unique_ptr<SystemBase> &system, Core &core
 
         switch (_errorPolicy)
         {
-            case SchedulerErrorPolicy::LogAndStop:
-                _shouldRunSystems = false;
-                _shouldRunNextScheduler = false;
-                break;
-            case SchedulerErrorPolicy::LogAndFinishScheduler:
-                _shouldRunSystems = true;
-                _shouldRunNextScheduler = false;
-                break;
+        case SchedulerErrorPolicy::LogAndStop:
+            _shouldRunSystems = false;
+            _shouldRunNextScheduler = false;
+            break;
+        case SchedulerErrorPolicy::LogAndFinishScheduler:
+            _shouldRunSystems = true;
+            _shouldRunNextScheduler = false;
+            break;
         }
     }
 }

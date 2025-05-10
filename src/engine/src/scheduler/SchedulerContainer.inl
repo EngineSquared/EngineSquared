@@ -42,7 +42,8 @@ inline void ES::Engine::SchedulerContainer::RunSchedulers()
     {
         scheduler->RunSystems();
 
-        if (!scheduler->ShouldRunNextScheduler()) {
+        if (!scheduler->ShouldRunNextScheduler())
+        {
             break;
         }
     }

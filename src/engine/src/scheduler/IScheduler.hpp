@@ -12,16 +12,15 @@ namespace ES::Engine::Scheduler {
  * @brief Enum that defines how the scheduler will handle errors
  */
 enum class SchedulerErrorPolicy {
-  /// Fail silently
-  Silent,
-  /// Just log the error and resume execution
-  LogAndContinue,
-  /// Log the error, run the next systems and stop execution of other schedulers
-  LogAndFinishScheduler,
-  /// Log the error and stop execution
-  LogAndStop,
+    /// Fail silently
+    Silent,
+    /// Just log the error and resume execution
+    LogAndContinue,
+    /// Log the error, run the next systems and stop execution of other schedulers
+    LogAndFinishScheduler,
+    /// Log the error and stop execution
+    LogAndStop,
 };
-
 
 /**
  * @brief Interface to be implemented for every schedulers
