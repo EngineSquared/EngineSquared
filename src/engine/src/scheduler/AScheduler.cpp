@@ -67,8 +67,7 @@ void AScheduler::RunSystem(const SystemBase *system, Core &core)
             _shouldRunSystems = true;
             _shouldRunNextScheduler = false;
             break;
-        default:
-            break;
+        default: break;
         }
     }
 }
