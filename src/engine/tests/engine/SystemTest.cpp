@@ -99,7 +99,8 @@ TEST(Systems, ErrorHandling)
     core.RegisterResource<A>({});
     core.RegisterResource<B>({});
 
-    core.RegisterSystemWithErrorHandler([](Core &c) { c.GetResource<A>().value++; }, [](const Core &) { /* Nothing to do here */ });
+    core.RegisterSystemWithErrorHandler([](Core &c) { c.GetResource<A>().value++; },
+                                        [](const Core &) { /* Nothing to do here */ });
 
     core.RegisterSystemWithErrorHandler([](const Core &) { throw std::runtime_error("Test error"); }, // NOSONAR
                                         [](Core &c) { c.GetResource<B>().value++; });
