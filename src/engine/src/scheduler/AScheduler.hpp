@@ -73,12 +73,12 @@ class AScheduler : public IScheduler {
 
   protected:
     Core &_core;
-    bool _shouldRunSystems = true;
-    bool _shouldRunNextScheduler = true;
-    SchedulerErrorPolicy _errorPolicy = SchedulerErrorPolicy::LogAndContinue;
 
   private:
     SystemContainer _enabledSystemsList;
     SystemContainer _disabledSystemsList;
+    bool _shouldRunSystems = true;
+    bool _shouldRunNextScheduler = true;
+    SchedulerErrorPolicy _errorPolicy = SchedulerErrorPolicy::LogAndContinue;
 };
 } // namespace ES::Engine::Scheduler
