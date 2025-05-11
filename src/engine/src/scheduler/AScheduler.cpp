@@ -46,7 +46,7 @@ void AScheduler::RunSystem(const SystemBase *system, Core &core)
     {
         (*system)(core);
     }
-    catch (const std::exception &e)
+    catch (const std::exception &e) // NOSONAR
     {
         if (_errorPolicy != SchedulerErrorPolicy::Silent)
         {
@@ -66,6 +66,8 @@ void AScheduler::RunSystem(const SystemBase *system, Core &core)
         case SchedulerErrorPolicy::LogAndFinishScheduler:
             _shouldRunSystems = true;
             _shouldRunNextScheduler = false;
+            break;
+        default:
             break;
         }
     }
