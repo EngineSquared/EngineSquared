@@ -7,7 +7,7 @@
 
 namespace ES::Engine::Scheduler {
 /**
- * @brief Interface to be implemented for every schedulers
+ * @brief Interface to be implemented for every schedulers.
  */
 class AScheduler : public IScheduler {
   public:
