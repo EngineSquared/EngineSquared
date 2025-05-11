@@ -14,12 +14,12 @@ namespace ES::Plugin::OpenGL::Component {
  * The `intensity` field is a float representing the intensity of the light.
  */
 struct Light {
-    enum class TYPE : uint32_t {
+    enum class Type : uint32_t {
         POINT = 0,
         AMBIENT = 1
     };
 
-    TYPE type;
+    Type type;
     glm::vec3 colour;
     float intensity;
 
@@ -28,7 +28,7 @@ struct Light {
      * @param   colour    Colour of the light. Default is (1, 1, 1).
      * @param   intensity Intensity of the light. Default is 1.0.
      */
-    Light(TYPE type = TYPE::POINT, glm::vec3 colour = glm::vec3(1), float intensity = 1.0f)
+    Light(Type type = Type::POINT, glm::vec3 colour = glm::vec3(1), float intensity = 1.0f)
         : type(type), colour(colour), intensity(intensity)
     {
     }
