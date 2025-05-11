@@ -1,9 +1,10 @@
 #pragma once
 
 #include "Core.hpp"
+#include "IPlugin.hpp"
 
 namespace ES::Engine {
-class APlugin {
+class APlugin: public IPlugin {
   public:
     explicit APlugin(Core &core) : _core(core){};
     virtual void Bind(void) = 0;
