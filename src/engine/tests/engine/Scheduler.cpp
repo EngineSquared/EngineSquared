@@ -129,7 +129,7 @@ TEST(SchedulerErrorPolicy, Silent)
     auto &startup = core.GetScheduler<Scheduler::Startup>();
     startup.SetErrorPolicy(Scheduler::SchedulerErrorPolicy::Silent);
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(1); });
-    core.RegisterSystem<Scheduler::Startup>([](Core &c) { throw std::runtime_error("Error"); });
+    core.RegisterSystem<Scheduler::Startup>([](const Core &) { throw std::runtime_error("Error"); }); // NOSONAR
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(3); });
     core.RegisterSystem<Scheduler::Update>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(4); });
 
@@ -153,7 +153,7 @@ TEST(SchedulerErrorPolicy, LogAndContinue)
     auto &startup = core.GetScheduler<Scheduler::Startup>();
     startup.SetErrorPolicy(Scheduler::SchedulerErrorPolicy::LogAndContinue);
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(1); });
-    core.RegisterSystem<Scheduler::Startup>([](Core &c) { throw std::runtime_error("Error"); });
+    core.RegisterSystem<Scheduler::Startup>([](const Core &) { throw std::runtime_error("Error"); }); // NOSONAR
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(3); });
     core.RegisterSystem<Scheduler::Update>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(4); });
 
@@ -173,7 +173,7 @@ TEST(SchedulerErrorPolicy, LogAndFinishScheduler)
     auto &startup = core.GetScheduler<Scheduler::Startup>();
     startup.SetErrorPolicy(Scheduler::SchedulerErrorPolicy::LogAndFinishScheduler);
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(1); });
-    core.RegisterSystem<Scheduler::Startup>([](Core &c) { throw std::runtime_error("Error"); });
+    core.RegisterSystem<Scheduler::Startup>([](const Core &) { throw std::runtime_error("Error"); }); // NOSONAR
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(3); });
     core.RegisterSystem<Scheduler::Update>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(4); });
 
@@ -192,7 +192,7 @@ TEST(SchedulerErrorPolicy, LogAndStop)
     auto &startup = core.GetScheduler<Scheduler::Startup>();
     startup.SetErrorPolicy(Scheduler::SchedulerErrorPolicy::LogAndStop);
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(1); });
-    core.RegisterSystem<Scheduler::Startup>([](Core &c) { throw std::runtime_error("Error"); });
+    core.RegisterSystem<Scheduler::Startup>([](const Core &) { throw std::runtime_error("Error"); }); // NOSONAR
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(3); });
     core.RegisterSystem<Scheduler::Update>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(4); });
 
