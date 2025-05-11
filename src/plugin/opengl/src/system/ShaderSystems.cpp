@@ -83,7 +83,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
     auto &shaderManager = core.GetResource<Resource::ShaderManager>();
     Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"default"});
     sp.Create();
-    sp.initFromStrings(vertexShader, fragmentShader);
+    sp.InitFromStrings(vertexShader, fragmentShader);
 }
 
 void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
@@ -119,7 +119,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
     auto &shaderManager = core.GetResource<Resource::ShaderManager>();
     Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"textDefault"});
     sp.Create();
-    sp.initFromStrings(vertexShader, fragmentShader);
+    sp.InitFromStrings(vertexShader, fragmentShader);
 }
 
 void ES::Plugin::OpenGL::System::LoadDefaultSpriteShader(ES::Engine::Core &core)
@@ -152,7 +152,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultSpriteShader(ES::Engine::Core &core)
     auto &shaderManager = core.GetResource<Resource::ShaderManager>();
     Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"2DDefault"});
     sp.Create();
-    sp.initFromStrings(vertexShader, fragmentShader);
+    sp.InitFromStrings(vertexShader, fragmentShader);
 }
 
 void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
@@ -160,34 +160,34 @@ void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
 
     // Add uniforms
-    m_shaderProgram.addUniform("MVP");
-    m_shaderProgram.addUniform("ModelMatrix");  // View*Model : mat4
-    m_shaderProgram.addUniform("NormalMatrix"); // Refer next slide : mat3
+    m_shaderProgram.AddUniform("MVP");
+    m_shaderProgram.AddUniform("ModelMatrix");  // View*Model : mat4
+    m_shaderProgram.AddUniform("NormalMatrix"); // Refer next slide : mat3
 
-    m_shaderProgram.addUniform("NumberLights");
-    m_shaderProgram.addSSBO("LightBuffer", 0, sizeof(ES::Plugin::OpenGL::Utils::LightInfo));
-    m_shaderProgram.addUniform("Material.Ka");
-    m_shaderProgram.addUniform("Material.Kd");
-    m_shaderProgram.addUniform("Material.Ks");
-    m_shaderProgram.addUniform("Material.Shiness");
+    m_shaderProgram.AddUniform("NumberLights");
+    m_shaderProgram.AddSSBO("LightBuffer", 0, sizeof(ES::Plugin::OpenGL::Utils::LightInfo));
+    m_shaderProgram.AddUniform("Material.Ka");
+    m_shaderProgram.AddUniform("Material.Kd");
+    m_shaderProgram.AddUniform("Material.Ks");
+    m_shaderProgram.AddUniform("Material.Shiness");
 
-    m_shaderProgram.addUniform("CamPos");
+    m_shaderProgram.AddUniform("CamPos");
 }
 
 void ES::Plugin::OpenGL::System::SetupTextShaderUniforms(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"textDefault"});
 
-    m_shaderProgram.addUniform("Projection");
-    m_shaderProgram.addUniform("Text");
-    m_shaderProgram.addUniform("TextColor");
+    m_shaderProgram.AddUniform("Projection");
+    m_shaderProgram.AddUniform("Text");
+    m_shaderProgram.AddUniform("TextColor");
 }
 
 void ES::Plugin::OpenGL::System::SetupSpriteShaderUniforms(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"2DDefault"});
 
-    m_shaderProgram.addUniform("color");
-    m_shaderProgram.addUniform("model");
-    m_shaderProgram.addUniform("projection");
+    m_shaderProgram.AddUniform("color");
+    m_shaderProgram.AddUniform("model");
+    m_shaderProgram.AddUniform("projection");
 }

@@ -46,8 +46,15 @@ class ShaderProgram {
 
     // ---------- PRIVATE METHODS ----------
 
-    // Private method to compile a shader of a given type
-    GLuint compileShader(const std::string &shaderSource, GLenum shaderType) const
+    /**
+     * @brief Compiles a shader of a given type from its source code.
+     *
+     * @param shaderSource The source code of the shader.
+     * @param shaderType The type of the shader (e.g., GL_VERTEX_SHADER, GL_FRAGMENT_SHADER).
+     * @return GLuint The ID of the compiled shader.
+     * @throws OpenGLError If the shader compilation fails.
+     */
+    GLuint CompileShader(const std::string &shaderSource, GLenum shaderType) const
     {
         std::string shaderTypeString;
         switch (shaderType)
@@ -65,7 +72,7 @@ class ShaderProgram {
         {
             // Display the shader log via a OpenGLError
             throw OpenGLError("Could not create shader of type " + shaderTypeString + ": " +
-                              getInfoLog(ObjectType::SHADER, shaderId));
+                              GetInfoLog(ObjectType::SHADER, shaderId));
         }
 
         // Get the source string as a pointer to an array of characters
@@ -86,7 +93,7 @@ class ShaderProgram {
         if (shaderStatus == GL_FALSE)
         {
             ES::Utils::Log::Error(
-                fmt::format("{} compilation failed: {}", shaderTypeString, getInfoLog(ObjectType::SHADER, shaderId)));
+                fmt::format("{} compilation failed: {}", shaderTypeString, GetInfoLog(ObjectType::SHADER, shaderId)));
         }
         else
         {
@@ -100,14 +107,21 @@ class ShaderProgram {
         return shaderId;
     }
 
-    // Private method to compile/attach/link/verify the shaders.
-    // Note: Rather than returning a boolean as a success/fail status we'll just consider
-    // a failure here to be an unrecoverable error and throw a OpenGLError.
-    void initialise(const std::string &vertexShaderSource, const std::string &fragmentShaderSource)
+    /**
+     * @brief Compiles, attaches, links, and validates shaders to initialise the shader program.
+     *
+     * @note Rather than returning a boolean success value, this method will throw a OpenGLError
+     * considering the a failure to be an unrecoverable error.
+     *
+     * @param vertexShaderSource The source code of the vertex shader.
+     * @param fragmentShaderSource The source code of the fragment shader.
+     * @throws OpenGLError If any step of the initialisation fails.
+     */
+    void Initialise(const std::string &vertexShaderSource, const std::string &fragmentShaderSource)
     {
         // Compile the shaders and return their id values
-        vertexShaderId = compileShader(vertexShaderSource, GL_VERTEX_SHADER);
-        fragmentShaderId = compileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
+        vertexShaderId = CompileShader(vertexShaderSource, GL_VERTEX_SHADER);
+        fragmentShaderId = CompileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
 
         // Attach the compiled shaders to the shader program
         glAttachShader(programId, vertexShaderId);
@@ -134,7 +148,7 @@ class ShaderProgram {
         else
         {
             ES::Utils::Log::Error(
-                fmt::format("Shader program link failed: {}", getInfoLog(ObjectType::PROGRAM, programId)));
+                fmt::format("Shader program link failed: {}", GetInfoLog(ObjectType::PROGRAM, programId)));
         }
 
         // Validate the shader program
@@ -153,15 +167,21 @@ class ShaderProgram {
         else
         {
             ES::Utils::Log::Error(
-                fmt::format("Shader program validation failed: {}", getInfoLog(ObjectType::PROGRAM, programId)));
+                fmt::format("Shader program validation failed: {}", GetInfoLog(ObjectType::PROGRAM, programId)));
         }
 
         // Finally, the shader program is initialised
         initialised = true;
     }
 
-    // Private method to load the shader source code from a file
-    std::string loadShaderFromFile(const std::string &filename) const
+    /**
+     * @brief Loads the shader source code from a file.
+     *
+     * @param filename The path to the shader file.
+     * @return std::string The contents of the shader file as a string.
+     * @throws std::ios_base::failure If the file cannot be opened.
+     */
+    std::string LoadShaderFromFile(const std::string &filename) const
     {
         // Create an input filestream and attempt to open the specified file
         std::ifstream file(filename.c_str());
@@ -186,8 +206,14 @@ class ShaderProgram {
         return stream.str();
     }
 
-    // Private method to return the current shader program info log as a string
-    std::string getInfoLog(ObjectType type, int id) const
+    /**
+     * @brief Retrieves the info log for a shader or shader program.
+     *
+     * @param type The type of the object (SHADER or PROGRAM).
+     * @param id The ID of the shader or program.
+     * @return std::string The info log as a string.
+     */
+    std::string GetInfoLog(ObjectType type, int id) const
     {
         GLint infoLogLength;
         if (type == ObjectType::SHADER)
@@ -221,6 +247,11 @@ class ShaderProgram {
     ShaderProgram() = default;
     ~ShaderProgram() = default;
 
+    /**
+     * @brief Creates a new shader program.
+     *
+     * @throws OpenGLError If the program creation fails.
+     */
     void Create()
     {
         programId = glCreateProgram();
@@ -231,6 +262,9 @@ class ShaderProgram {
         glUseProgram(programId);
     }
 
+    /**
+     * @brief Deletes the shader program.
+     */
     void Destroy() const
     {
         if (programId == 0)
@@ -243,24 +277,38 @@ class ShaderProgram {
         }
     }
 
-    // Method to initialise a shader program from shaders provided as files
-    void initFromFiles(const std::string &vertexShaderFilename, const std::string &fragmentShaderFilename)
+    /**
+     * @brief Initialises the shader program using shader source files.
+     *
+     * @param vertexShaderFilename The path to the vertex shader file.
+     * @param fragmentShaderFilename The path to the fragment shader file.
+     */
+    void InitFromFiles(const std::string &vertexShaderFilename, const std::string &fragmentShaderFilename)
     {
         // Get the shader file contents as strings
-        std::string vertexShaderSource = loadShaderFromFile(vertexShaderFilename);
-        std::string fragmentShaderSource = loadShaderFromFile(fragmentShaderFilename);
+        std::string vertexShaderSource = LoadShaderFromFile(vertexShaderFilename);
+        std::string fragmentShaderSource = LoadShaderFromFile(fragmentShaderFilename);
 
-        initialise(vertexShaderSource, fragmentShaderSource);
+        Initialise(vertexShaderSource, fragmentShaderSource);
     }
 
-    // Method to initialise a shader program from shaders provided as strings
-    void initFromStrings(const std::string &vertexShaderSource, const std::string &fragmentShaderSource)
+    /**
+     * @brief Initialises the shader program using shader source strings.
+     *
+     * @param vertexShaderSource The source code of the vertex shader.
+     * @param fragmentShaderSource The source code of the fragment shader.
+     */
+    void InitFromStrings(const std::string &vertexShaderSource, const std::string &fragmentShaderSource)
     {
-        initialise(vertexShaderSource, fragmentShaderSource);
+        Initialise(vertexShaderSource, fragmentShaderSource);
     }
 
-    // Method to enable the shader program - we'll suggest this for inlining
-    inline void use() const
+    /**
+     * @brief Activates the shader program for use.
+     *
+     * @throws OpenGLError If the shader program is not initialised.
+     */
+    inline void Use() const
     {
         // Santity check that we're initialised and ready to go...
         if (initialised)
@@ -275,11 +323,18 @@ class ShaderProgram {
         }
     }
 
-    // Method to disable the shader - we'll also suggest this for inlining
-    inline void disable() const { glUseProgram(0); }
+    /**
+     * @brief Deactivates the shader program.
+     */
+    inline void Disable() const { glUseProgram(0); }
 
-    // Method to return the bound location of a named attribute, or -1 if the attribute was not found
-    GLuint attribute(const std::string &attributeName)
+    /**
+     * @brief Retrieves the location of a named attribute in the shader program.
+     *
+     * @param attributeName The name of the attribute.
+     * @return GLuint The location of the attribute, or -1 if not found.
+     */
+    GLuint GetAttribute(const std::string &attributeName)
     {
         // You could do this method with the single line:
         //
@@ -290,15 +345,8 @@ class ShaderProgram {
         // value which will likely cause the program to segfault. So we're making sure
         // the attribute asked for exists, and if it doesn't then we alert the user & bail.
 
-        // Create an iterator to look through our attribute map (only create iterator on first run -
-        // reuse it for all further calls).
-        static std::map<std::string, int, std::less<>>::const_iterator attributeIter;
-
-        // Try to find the named attribute
-        attributeIter = attributeMap.find(attributeName);
-
         // Not found? Bail.
-        if (attributeIter == attributeMap.end())
+        if (!attributeMap.contains(attributeName))
         {
             ES::Utils::Log::Error(fmt::format("Could not find attribute in shader program: {}", attributeName));
         }
@@ -307,24 +355,22 @@ class ShaderProgram {
         return attributeMap[attributeName];
     }
 
-    // Method to returns the bound location of a named uniform
-    GLuint uniform(const std::string &uniformName)
+    /**
+     * @brief Retrieves the location of a named uniform in the shader program.
+     *
+     * @param uniformName The name of the uniform.
+     * @return GLuint The location of the uniform, or -1 if not found.
+     */
+    GLuint GetUniform(const std::string &uniformName)
     {
         // Note: You could do this method with the single line:
         //
         // 		return uniformLocList[uniform];
         //
-        // But we're not doing that. Explanation in the attribute() method above.
-
-        // Create an iterator to look through our uniform map (only create iterator on first run -
-        // reuse it for all further calls).
-        static std::map<std::string, int, std::less<>>::const_iterator uniformIter;
-
-        // Try to find the named uniform
-        uniformIter = uniformMap.find(uniformName);
+        // But we're not doing that. Explanation in the GetAttribute() method above.
 
         // Found it? Great - pass it back! Didn't find it? Alert user and halt.
-        if (uniformIter == uniformMap.end())
+        if (!uniformMap.contains(uniformName))
         {
             ES::Utils::Log::Error(fmt::format("Could not find uniform in shader program: {}", uniformName));
         }
@@ -333,17 +379,16 @@ class ShaderProgram {
         return uniformMap[uniformName];
     }
 
-    GLuint ssbo(const std::string &ssboName)
+    /**
+     * @brief Returns the bound location of a named Shader Storage Buffer Object (SSBO).
+     *
+     * @param ssboName The name of the SSBO to retrieve.
+     * @return GLuint The binding point of the SSBO.
+     */
+    GLuint GetSSBO(const std::string &ssboName)
     {
-        // Create an iterator to look through our ssbo map (only create iterator on first run -
-        // reuse it for all further calls).
-        static std::map<std::string, std::pair<GLuint, GLsizeiptr>, std::less<>>::const_iterator ssboIter;
-
-        // Try to find the named ssbo
-        ssboIter = ssboMap.find(ssboName);
-
         // Not found? Bail.
-        if (ssboIter == ssboMap.end())
+        if (!ssboMap.contains(ssboName))
         {
             ES::Utils::Log::Error(fmt::format("Could not find ssbo in shader program: {}", ssboName));
         }
@@ -352,8 +397,13 @@ class ShaderProgram {
         return ssboMap[ssboName].first;
     }
 
-    // Method to add an attribute to the shader and return the bound location
-    int addAttribute(const std::string &attributeName)
+    /**
+     * @brief Adds an attribute to the shader program and returns its bound location.
+     *
+     * @param attributeName The name of the attribute to add.
+     * @return int The location of the attribute in the shader program.
+     */
+    int AddAttribute(const std::string &attributeName)
     {
         // Add the attribute location value for the attributeName key
         attributeMap[attributeName] = glGetAttribLocation(programId, attributeName.c_str());
@@ -376,8 +426,13 @@ class ShaderProgram {
         return attributeMap[attributeName];
     }
 
-    // Method to add a uniform to the shader and return the bound location
-    int addUniform(const std::string &uniformName)
+    /**
+     * @brief Adds a uniform to the shader program and returns its bound location.
+     *
+     * @param uniformName The name of the uniform to add.
+     * @return int The location of the uniform in the shader program.
+     */
+    int AddUniform(const std::string &uniformName)
     {
         // Add the uniform location value for the uniformName key
         uniformMap[uniformName] = glGetUniformLocation(programId, uniformName.c_str());
@@ -400,8 +455,15 @@ class ShaderProgram {
         return uniformMap[uniformName];
     }
 
-    // Method to add an SSBO to the shader program
-    void addSSBO(const std::string &ssboName, GLuint bindingPoint, GLsizeiptr size, const GLvoid *data = nullptr)
+    /**
+     * @brief Adds a Shader Storage Buffer Object (SSBO) to the shader program.
+     *
+     * @param ssboName The name of the SSBO.
+     * @param bindingPoint The binding point for the SSBO.
+     * @param size The size of the SSBO in bytes.
+     * @param data Optional pointer to the initial data for the SSBO. Defaults to nullptr.
+     */
+    void AddSSBO(const std::string &ssboName, GLuint bindingPoint, GLsizeiptr size, const GLvoid *data = nullptr)
     {
         GLuint ssbo;
         glGenBuffers(1, &ssbo);
@@ -417,9 +479,16 @@ class ShaderProgram {
         }
     }
 
-    // Method to update an SSBO's data
-    // Note: This method will resize the SSBO if the new size is larger than the current size
-    void updateSSBO(const std::string &ssboName, GLsizeiptr size, const GLvoid *data)
+    /**
+     * @brief Updates the data of an existing Shader Storage Buffer Object (SSBO).
+     *
+     * @note This method will resize the SSBO if the new size is larger than the current size.
+     *
+     * @param ssboName The name of the SSBO to update.
+     * @param size The new size of the SSBO in bytes.
+     * @param data Pointer to the new data for the SSBO.
+     */
+    void UpdateSSBO(const std::string &ssboName, GLsizeiptr size, const GLvoid *data)
     {
         auto it = ssboMap.find(ssboName);
         if (it == ssboMap.end())
@@ -430,15 +499,19 @@ class ShaderProgram {
 
         if (size > it->second.second)
         {
-            addSSBO(ssboName, it->second.first, size, data);
+            AddSSBO(ssboName, it->second.first, size, data);
         }
 
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, it->second.first);
         glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, size, data);
     }
 
-    // Method to delete an SSBO
-    void deleteSSBO(const std::string &ssboName)
+    /**
+     * @brief Deletes a Shader Storage Buffer Object (SSBO) from the shader program.
+     *
+     * @param ssboName The name of the SSBO to delete.
+     */
+    void DeleteSSBO(const std::string &ssboName)
     {
         auto it = ssboMap.find(ssboName);
         if (it == ssboMap.end())
