@@ -46,11 +46,12 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 
     core.GetRegistry()
         .view<Component::ModelHandle, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh,
-              Component::ShaderHandle, Component::MaterialHandle>()
+              Component::MaterialHandle>()
         .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Transform &transform,
-                  ES::Plugin::Object::Component::Mesh &mesh, Component::ShaderHandle &shaderHandle,
-                  Component::MaterialHandle &materialHandle) {
-            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
+                  ES::Plugin::Object::Component::Mesh &mesh, Component::MaterialHandle &materialHandle) {
+            auto shaderHandle = ES::Engine::Entity(entity).TryGetComponent<Component::ShaderHandle>(core);
+            auto shaderId = shaderHandle ? shaderHandle->id : entt::hashed_string{"default"};
+            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId);
             const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
             const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
             shader.use();
@@ -76,12 +77,15 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
 
     core.GetRegistry()
-        .view<ES::Plugin::UI::Component::Text, Component::FontHandle, Component::ShaderHandle, Component::TextHandle>()
-        .each([&](auto entity, ES::Plugin::UI::Component::Text &text, Component::FontHandle &fontHandle,
-                  Component::ShaderHandle &shaderHandle, Component::TextHandle &textHandle) {
-            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
-            const auto &font = core.GetResource<Resource::FontManager>().Get(fontHandle.id);
-
+        .view<ES::Plugin::UI::Component::Text, Component::TextHandle>()
+        .each([&](auto entity, ES::Plugin::UI::Component::Text &text, Component::TextHandle &textHandle) {
+            auto fontHandle = ES::Engine::Entity(entity).TryGetComponent<Component::FontHandle>(core);
+            auto shaderHandle = ES::Engine::Entity(entity).TryGetComponent<Component::ShaderHandle>(core);
+            auto fontId = fontHandle ? fontHandle->id : entt::hashed_string{"textDefault"};
+            auto shaderId = shaderHandle ? shaderHandle->id : entt::hashed_string{"default"};
+            const auto &font = core.GetResource<Resource::FontManager>().Get(fontId);
+            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId);
+            
             shader.use();
 
             glUniformMatrix4fv(shader.uniform("Projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -105,12 +109,14 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.f, size.y, -1.0f, 1.0f);
 
     core.GetRegistry()
-        .view<Component::Sprite, ES::Plugin::Object::Component::Transform, Component::ShaderHandle,
-              Component::SpriteHandle>()
-        .each([&](auto e, Component::Sprite &sprite, ES::Plugin::Object::Component::Transform &transform,
-                  Component::ShaderHandle &shaderHandle, Component::SpriteHandle &spriteHandle) {
-            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
-            const auto &glBuffer = core.GetResource<Resource::GLSpriteBufferManager>().Get(spriteHandle.id);
+        .view<Component::Sprite, ES::Plugin::Object::Component::Transform>()
+        .each([&](auto entity, Component::Sprite &sprite, ES::Plugin::Object::Component::Transform &transform ) {
+            auto spriteHandle = ES::Engine::Entity(entity).TryGetComponent<Component::SpriteHandle>(core);
+            auto shaderHandle = ES::Engine::Entity(entity).TryGetComponent<Component::ShaderHandle>(core);
+            auto spriteId = spriteHandle ? spriteHandle->id : entt::hashed_string{"2DDefault"};
+            auto shaderId = shaderHandle ? shaderHandle->id : entt::hashed_string{"default"};
+            const auto &glBuffer = core.GetResource<Resource::GLSpriteBufferManager>().Get(spriteId);
+            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId);
 
             shader.use();
 
@@ -121,7 +127,7 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
             glUniformMatrix4fv(shader.uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
             Component::TextureHandle *textureHandle =
-                ES::Engine::Entity(e).TryGetComponent<Component::TextureHandle>(core);
+                ES::Engine::Entity(entity).TryGetComponent<Component::TextureHandle>(core);
             if (textureHandle)
                 core.GetResource<Resource::TextureManager>().Get(textureHandle->id).Bind();
 
