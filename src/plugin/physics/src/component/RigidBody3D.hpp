@@ -31,12 +31,18 @@ struct RigidBody3D {
     /// @brief Layer of the rigid body.
     JPH::ObjectLayer layer;
 
+    /// @brief Whether the rigid body should be constructed as a sensor or not.
+    /// @note A sensor will receive collision callbacks, but will not cause any collision responses
+    /// and can be used as a trigger volume.
+    bool isSensor;
+
     /// @brief Construct a rigid body with a shape.
     /// @param shapeSettings
     RigidBody3D(const std::shared_ptr<JPH::ShapeSettings> &_shapeSettings,
                 const JPH::EMotionType _motionType = JPH::EMotionType::Static,
-                const JPH::ObjectLayer _layer = Utils::Layers::NON_MOVING)
-        : shapeSettings(_shapeSettings), body(nullptr), motionType(_motionType), layer(_layer)
+                const JPH::ObjectLayer _layer = Utils::Layers::NON_MOVING,
+                const bool _isSensor = false)
+        : shapeSettings(_shapeSettings), body(nullptr), motionType(_motionType), layer(_layer), isSensor(_isSensor)
     {
         // Make sure Jolt doesn't try to free the settings, the shared_ptr will do it.
         shapeSettings->SetEmbedded();
