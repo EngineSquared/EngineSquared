@@ -35,7 +35,7 @@ void AScheduler::Enable(ES::Utils::FunctionContainer::FunctionID id)
     }
 }
 
-void AScheduler::RunSystem(const std::unique_ptr<SystemBase> &system, Core &core)
+void AScheduler::RunSystem(const SystemBase *system, Core &core)
 {
     if (!_shouldRunSystems)
     {

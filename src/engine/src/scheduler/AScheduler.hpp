@@ -48,7 +48,7 @@ class AScheduler : public IScheduler {
      * @param system The system to run
      * @param core The core to pass to the system
      */
-    void RunSystem(const std::unique_ptr<SystemBase> &system, Core &core);
+    void RunSystem(const SystemBase *system, Core &core);
 
     /**
      * @brief Whether the next scheduler should run or not

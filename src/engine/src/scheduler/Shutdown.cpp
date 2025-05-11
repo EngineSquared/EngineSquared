@@ -9,6 +9,6 @@ void ES::Engine::Scheduler::Shutdown::RunSystems()
     }
     for (auto const &system : this->GetSystems())
     {
-        RunSystem(system, _core);
+        RunSystem(system.get(), _core);
     }
 }
