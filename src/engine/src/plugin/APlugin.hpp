@@ -4,7 +4,7 @@
 #include "IPlugin.hpp"
 
 namespace ES::Engine {
-class APlugin: public IPlugin {
+class APlugin : public IPlugin {
   public:
     explicit APlugin(Core &core) : _core(core){};
     virtual void Bind(void) = 0;
