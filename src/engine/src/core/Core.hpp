@@ -99,11 +99,10 @@ class Core {
      */
     template <CScheduler TScheduler> TScheduler &GetScheduler();
 
-    
     /**
      * @brief Sets the execution order of two schedulers, ensuring that TSchedulerA
      *        is executed before TSchedulerB.
-     * 
+     *
      * @tparam TSchedulerA The type of the scheduler that should execute first.
      * @tparam TSchedulerB The type of the scheduler that should execute after TSchedulerA.
      */
@@ -115,7 +114,7 @@ class Core {
     /**
      * @brief Sets the execution order of two schedulers by specifying that one scheduler
      *        should execute after another.
-     * 
+     *
      * @tparam TSchedulerA The type of the scheduler that should execute first.
      * @tparam TSchedulerB The type of the scheduler that should execute after TSchedulerA.
      */
@@ -127,7 +126,7 @@ class Core {
     /**
      * @brief Removes a dependency between two schedulers, ensuring that TSchedulerB
      *        is no longer dependent on TSchedulerA.
-     * 
+     *
      * @tparam TSchedulerA The type of the first scheduler (the one being depended on).
      * @tparam TSchedulerB The type of the second scheduler (the one depending on TSchedulerA).
      */
@@ -139,7 +138,7 @@ class Core {
     /**
      * @brief Removes a dependency between two schedulers, ensuring that TSchedulerA
      *       is no longer dependent on TSchedulerB.
-     * 
+     *
      * @tparam TSchedulerA The type of the first scheduler (the one depending on TSchedulerB).
      * @tparam TSchedulerB The type of the second scheduler (the one being depended on).
      */

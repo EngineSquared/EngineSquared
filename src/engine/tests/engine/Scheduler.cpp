@@ -2,9 +2,9 @@
 
 #include "Core.hpp"
 #include "Entity.hpp"
-#include "Startup.hpp"
-#include "RelativeTimeUpdate.hpp"
 #include "FixedTimeUpdate.hpp"
+#include "RelativeTimeUpdate.hpp"
+#include "Startup.hpp"
 
 using namespace ES::Engine;
 using namespace std::chrono_literals;
@@ -112,7 +112,8 @@ TEST(SchedulerContainer, CurrentScheduler)
     auto &data = core.GetResource<ResourceTest>().data;
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(1); });
     core.RegisterSystem<Scheduler::Update>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
-    core.RegisterSystem<Scheduler::RelativeTimeUpdate>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
+    core.RegisterSystem<Scheduler::RelativeTimeUpdate>(
+        [](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
     core.RegisterSystem<Scheduler::FixedTimeUpdate>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
     core.RegisterSystem<Scheduler::Shutdown>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(3); });
 
@@ -137,4 +138,3 @@ TEST(SchedulerContainer, CurrentScheduler)
     ASSERT_EQ(data[9], 2);
     ASSERT_EQ(data[10], 3);
 }
-

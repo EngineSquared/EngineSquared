@@ -24,7 +24,6 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->SetSchedulerAfter<ES::Engine::Scheduler::Shutdown, ES::Engine::Scheduler::Update>();
     this->SetSchedulerAfter<ES::Engine::Scheduler::Shutdown, ES::Engine::Scheduler::FixedTimeUpdate>();
     this->SetSchedulerAfter<ES::Engine::Scheduler::Shutdown, ES::Engine::Scheduler::RelativeTimeUpdate>();
-
 }
 
 ES::Engine::Core::~Core() { ES::Utils::Log::Debug("Destroy Core"); }
