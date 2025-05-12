@@ -99,14 +99,53 @@ class Core {
      */
     template <CScheduler TScheduler> TScheduler &GetScheduler();
 
+    
+    /**
+     * @brief Sets the execution order of two schedulers, ensuring that TSchedulerA
+     *        is executed before TSchedulerB.
+     * 
+     * @tparam TSchedulerA The type of the scheduler that should execute first.
+     * @tparam TSchedulerB The type of the scheduler that should execute after TSchedulerA.
+     */
     template <typename TSchedulerA, typename TSchedulerB> inline void SetSchedulerBefore()
     {
         this->_schedulers.Before<TSchedulerA, TSchedulerB>();
     }
 
+    /**
+     * @brief Sets the execution order of two schedulers by specifying that one scheduler
+     *        should execute after another.
+     * 
+     * @tparam TSchedulerA The type of the scheduler that should execute first.
+     * @tparam TSchedulerB The type of the scheduler that should execute after TSchedulerA.
+     */
     template <typename TSchedulerA, typename TSchedulerB> inline void SetSchedulerAfter()
     {
         this->_schedulers.After<TSchedulerA, TSchedulerB>();
+    }
+
+    /**
+     * @brief Removes a dependency between two schedulers, ensuring that TSchedulerB
+     *        is no longer dependent on TSchedulerA.
+     * 
+     * @tparam TSchedulerA The type of the first scheduler (the one being depended on).
+     * @tparam TSchedulerB The type of the second scheduler (the one depending on TSchedulerA).
+     */
+    template <typename TSchedulerA, typename TSchedulerB> inline void RemoveDependencyAfter()
+    {
+        this->_schedulers.RemoveDependencyAfter<TSchedulerA, TSchedulerB>();
+    }
+
+    /**
+     * @brief Removes a dependency between two schedulers, ensuring that TSchedulerA
+     *       is no longer dependent on TSchedulerB.
+     * 
+     * @tparam TSchedulerA The type of the first scheduler (the one depending on TSchedulerB).
+     * @tparam TSchedulerB The type of the second scheduler (the one being depended on).
+     */
+    template <typename TSchedulerA, typename TSchedulerB> inline void RemoveDependencyBefore()
+    {
+        this->_schedulers.RemoveDependencyBefore<TSchedulerA, TSchedulerB>();
     }
 
     /**

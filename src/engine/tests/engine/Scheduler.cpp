@@ -3,8 +3,11 @@
 #include "Core.hpp"
 #include "Entity.hpp"
 #include "Startup.hpp"
+#include "RelativeTimeUpdate.hpp"
+#include "FixedTimeUpdate.hpp"
 
 using namespace ES::Engine;
+using namespace std::chrono_literals;
 
 struct ResourceTest {
     std::vector<int> data;
@@ -33,6 +36,7 @@ TEST(SchedulerContainer, CasualUse)
         core.RegisterResource<ResourceTest>(ResourceTest());
         core.RegisterScheduler<SchedulerTest1>();
         core.RegisterScheduler<SchedulerTest2>();
+        core.SetSchedulerAfter<SchedulerTest2, SchedulerTest1>();
         core.RunSystems();
         auto &data = core.GetResource<ResourceTest>().data;
         ASSERT_EQ(data.size(), 2);
@@ -44,6 +48,7 @@ TEST(SchedulerContainer, CasualUse)
         core.RegisterResource<ResourceTest>(ResourceTest());
         core.RegisterScheduler<SchedulerTest2>();
         core.RegisterScheduler<SchedulerTest1>();
+        core.SetSchedulerAfter<SchedulerTest1, SchedulerTest2>();
         core.RunSystems();
         auto &data = core.GetResource<ResourceTest>().data;
         ASSERT_EQ(data.size(), 2);
@@ -82,6 +87,7 @@ TEST(SchedulerContainer, DependencyBefore)
     auto &data = core.GetResource<ResourceTest>().data;
     core.RegisterScheduler<SchedulerTest2>();
     core.RegisterScheduler<SchedulerTest1>();
+    core.SetSchedulerAfter<SchedulerTest1, SchedulerTest2>();
     core.RunSystems();
     {
         ASSERT_EQ(data.size(), 2);
@@ -89,6 +95,7 @@ TEST(SchedulerContainer, DependencyBefore)
         ASSERT_EQ(data[1], 1);
     }
     data.clear();
+    core.RemoveDependencyAfter<SchedulerTest1, SchedulerTest2>();
     core.SetSchedulerBefore<SchedulerTest1, SchedulerTest2>();
     core.RunSystems();
     {
@@ -105,15 +112,29 @@ TEST(SchedulerContainer, CurrentScheduler)
     auto &data = core.GetResource<ResourceTest>().data;
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(1); });
     core.RegisterSystem<Scheduler::Update>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
+    core.RegisterSystem<Scheduler::RelativeTimeUpdate>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
+    core.RegisterSystem<Scheduler::FixedTimeUpdate>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
     core.RegisterSystem<Scheduler::Shutdown>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(3); });
 
+    core.GetScheduler<Scheduler::FixedTimeUpdate>().SetTickRate(1.0 / 5.0);
+    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
+
+    std::this_thread::sleep_for(0.21s);
     core.RunSystems();
+    std::this_thread::sleep_for(0.21s);
     core.RunSystems();
 
-    ASSERT_EQ(data.size(), 5);
+    ASSERT_EQ(data.size(), 11);
     ASSERT_EQ(data[0], 1);
     ASSERT_EQ(data[1], 2);
-    ASSERT_EQ(data[2], 3);
+    ASSERT_EQ(data[2], 2);
     ASSERT_EQ(data[3], 2);
-    ASSERT_EQ(data[4], 3);
+    ASSERT_EQ(data[4], 2);
+    ASSERT_EQ(data[5], 3);
+    ASSERT_EQ(data[6], 2);
+    ASSERT_EQ(data[7], 2);
+    ASSERT_EQ(data[8], 2);
+    ASSERT_EQ(data[9], 2);
+    ASSERT_EQ(data[10], 3);
 }
+

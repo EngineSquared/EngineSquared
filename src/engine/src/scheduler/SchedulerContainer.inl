@@ -35,6 +35,26 @@ template <typename TAfter, typename TBefore> inline void ES::Engine::SchedulerCo
     Before<TBefore, TAfter>();
 }
 
+
+template <typename TBefore, typename TAfter> void ES::Engine::SchedulerContainer::RemoveDependencyBefore()
+{
+    _dirty = true;
+    auto it = _dependencies.find(std::type_index(typeid(TAfter)));
+    if (it != _dependencies.end())
+    {
+        it->second.erase(std::type_index(typeid(TBefore)));
+        if (it->second.empty())
+            _dependencies.erase(it);
+    } else {
+        ES::Utils::Log::Warn(fmt::format("Dependency not found: {} -> {}", typeid(TBefore).name(), typeid(TAfter).name()));
+    }
+}
+
+template <typename TAfter, typename TBefore> void ES::Engine::SchedulerContainer::RemoveDependencyAfter()
+{
+    RemoveDependencyBefore<TBefore, TAfter>();    
+}
+
 inline void ES::Engine::SchedulerContainer::RunSchedulers()
 {
     Update();
