@@ -39,10 +39,10 @@ class WrappedSystem : public ES::Utils::FunctionContainer::BaseFunction<void, Co
         {
             return _system(core);
         }
-        catch (const std::exception &e)
+        catch (const std::exception &e) // NOSONAR
         {
             _errorCallback(core);
-            throw e;
+            throw;
         }
     }
 
