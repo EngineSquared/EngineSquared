@@ -15,6 +15,16 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
   public:
     using FunctionType = BaseFunction<TReturn, TArgs...>;
 
+  /**
+   * @brief Type trait to check if a type is derived from BaseFunction.
+   * @tparam T The type to check.
+   * @tparam TReturn The return type of the function.
+   * @tparam TArgs The argument types of the function.
+   */
+  template<typename T>
+  struct is_derived_from_function_type
+      : std::is_base_of<FunctionType, std::decay_t<T>> {};
+
   public:
     /**
      * @brief Default constructor for FunctionContainer.

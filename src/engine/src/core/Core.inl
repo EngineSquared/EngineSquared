@@ -1,6 +1,7 @@
 #include "APlugin.hpp"
 #include "Core.hpp"
 #include "Logger.hpp"
+#include "WrappedSystem.hpp"
 
 namespace ES::Engine {
 
@@ -45,37 +46,13 @@ template <typename... Systems> inline decltype(auto) Core::RegisterSystem(System
 template <CScheduler TScheduler, typename System, typename ErrorCallback>
 inline decltype(auto) Core::RegisterSystemWithErrorHandler(System system, ErrorCallback callback)
 {
-    auto wrappedSystem = [this, system, callback](Core &core) {
-        try
-        {
-            system(core);
-        }
-        catch (const std::exception &e)
-        {
-            callback(core);
-            throw e;
-        }
-    };
-
-    return this->RegisterSystem<TScheduler>(wrappedSystem);
+    return this->RegisterSystem<TScheduler>(WrappedSystem(system, callback));
 }
 
 template <typename System, typename ErrorCallback>
 inline decltype(auto) Core::RegisterSystemWithErrorHandler(System system, ErrorCallback callback)
 {
-    auto wrappedSystem = [this, system, callback](Core &core) {
-        try
-        {
-            system(core);
-        }
-        catch (const std::exception &e)
-        {
-            callback(core);
-            throw e;
-        }
-    };
-
-    return this->RegisterSystem(wrappedSystem);
+    return this->RegisterSystem(WrappedSystem(system, callback));
 }
 
 template <typename... TPlugins> void Core::AddPlugins() { (AddPlugin<TPlugins>(), ...); }
@@ -104,5 +81,4 @@ inline void Core::SetDefaultScheduler(std::type_index scheduler)
     }
     this->_defaultScheduler = scheduler;
 }
-
 } // namespace ES::Engine
