@@ -34,7 +34,7 @@ struct RigidBody3D {
     /// @brief Whether the rigid body should be constructed as a sensor or not.
     /// @note A sensor will receive collision callbacks, but will not cause any collision responses
     /// and can be used as a trigger volume.
-    bool isSensor;
+    bool isSensor = false;
 
     /// @brief Construct a rigid body with a shape.
     /// @param shapeSettings
