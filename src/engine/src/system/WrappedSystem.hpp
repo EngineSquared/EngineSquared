@@ -21,7 +21,6 @@ class WrappedSystem : public ES::Utils::FunctionContainer::BaseFunction<void, Co
         : _system(system), _errorCallback(errorCallback)
     {
         _id = GetCallableID(_system);
-        printf("WrappedSystem created with ID: %zu\n", _id); // TODO: remove
     }
 
     /**
