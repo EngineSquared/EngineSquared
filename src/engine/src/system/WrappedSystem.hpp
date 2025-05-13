@@ -11,14 +11,15 @@ class Core;
  */
 template <typename TSystem, typename TErrorCallback>
 class WrappedSystem : public ES::Utils::FunctionContainer::BaseFunction<void, Core &> {
-public:
+  public:
     /**
      * @brief Constructor for WrappedSystem.
      * @param callable The callable object to be stored.
      * @param errorCallback The error callback to be stored.
      */
-    explicit WrappedSystem(TSystem system, TErrorCallback errorCallback) : _system(system), _errorCallback (errorCallback)
-    { 
+    explicit WrappedSystem(TSystem system, TErrorCallback errorCallback)
+        : _system(system), _errorCallback(errorCallback)
+    {
         _id = GetCallableID(_system);
         printf("WrappedSystem created with ID: %zu\n", _id); // TODO: remove
     }
@@ -33,10 +34,14 @@ public:
      * @param args Arguments to pass to the system.
      * @return Return value of the system.
      */
-    void operator()(ES::Engine::Core &core) const override {
-        try {
+    void operator()(ES::Engine::Core &core) const override
+    {
+        try
+        {
             return _system(core);
-        } catch (const std::exception &e) {
+        }
+        catch (const std::exception &e)
+        {
             _errorCallback(core);
             throw e;
         }
@@ -66,7 +71,7 @@ public:
         }
     }
 
-private:
+  private:
     [[no_unique_address]] TSystem _system;
     [[no_unique_address]] TErrorCallback _errorCallback;
     ES::Utils::FunctionContainer::FunctionID _id = 0; ///< Unique ID for the function.
