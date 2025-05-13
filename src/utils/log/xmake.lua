@@ -4,6 +4,8 @@ set_languages("cxx20")
 
 target("UtilsLog")
     set_kind("headeronly")
+    set_group(UTILS_GROUP_NAME)
+
     add_packages("spdlog", "fmt")
 
     add_includedirs("src/", {public = true})
