@@ -19,6 +19,8 @@ target("PluginUI")
     set_policy("build.warning", true)
     add_packages("entt", "glm", "glfw", "fmt", "spdlog", "glew", "stb")
 
+    set_pcxxheader("src/UI.hpp")
+
     add_deps("EngineSquaredCore")
     add_deps("PluginColors")
     add_deps("PluginUtils")

@@ -7,6 +7,8 @@ target("UtilsFunctionContainer")
     set_kind("headeronly")
     set_group(UTILS_GROUP_NAME)
 
+    set_pcxxheader("src/FunctionContainer.hpp")
+
     add_includedirs("src/", {public = true})
 
 for _, file in ipairs(os.files("tests/**.cpp")) do

@@ -10,6 +10,8 @@ target("PluginNativeScripting")
     add_packages("entt", "spdlog", "fmt")
     set_policy("build.warning", true)
 
+    set_pcxxheader("src/NativeScripting.hpp")
+
     add_deps("EngineSquaredCore")
 
     add_files("src/**.cpp")
