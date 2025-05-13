@@ -76,7 +76,7 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
     core.GetRegistry()
         .view<ES::Plugin::UI::Component::Text, Component::TextHandle, Component::ShaderHandle, Component::FontHandle>()
-        .each([&](auto entity, ES::Plugin::UI::Component::Text &text, Component::TextHandle &textHandle,
+        .each([&]([[maybe_unused]] auto entity, ES::Plugin::UI::Component::Text &text, Component::TextHandle &textHandle,
                   Component::ShaderHandle &shaderHandle, Component::FontHandle &fontHandle) {
             const auto &font = core.GetResource<Resource::FontManager>().Get(fontHandle.id);
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
@@ -150,7 +150,7 @@ void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
     std::unordered_map<Component::ShaderHandle, std::vector<ES::Plugin::OpenGL::Utils::LightInfo>> ssbo_lights;
 
     core.GetRegistry().view<ES::Plugin::Object::Component::Transform, Component::ShaderHandle, Component::Light>().each(
-        [&](auto entity, ES::Plugin::Object::Component::Transform &transform, Component::ShaderHandle &shaderHandle,
+        [&]([[maybe_unused]] auto entity, ES::Plugin::Object::Component::Transform &transform, Component::ShaderHandle &shaderHandle,
             ES::Plugin::OpenGL::Component::Light &light) {
             ES::Plugin::OpenGL::Utils::LightInfo lightInfo;
             lightInfo.position = glm::vec4(transform.position, static_cast<float>(light.type));
