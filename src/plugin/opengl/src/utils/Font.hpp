@@ -20,7 +20,7 @@ struct Character {
 
 class Font {
   public:
-    explicit Font(const std::string &fontPath, int fontSize);
+    explicit Font(const std::string &fontPath, float fontSize);
     ~Font() = default;
 
     inline const Character &GetCharacter(char c) const { return characters.at(c); }
@@ -32,7 +32,7 @@ class Font {
     std::shared_ptr<stbtt_fontinfo> fontInfo;
     std::shared_ptr<std::vector<unsigned char>> fontBuffer;
 
-    void LoadFont(const std::string &fontPath, int fontSize);
+    void LoadFont(const std::string &fontPath, float fontSize);
 };
 
 } // namespace ES::Plugin::OpenGL::Utils
