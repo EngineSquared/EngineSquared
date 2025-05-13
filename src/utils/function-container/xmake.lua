@@ -4,7 +4,7 @@ set_languages("cxx20")
 includes("../log/xmake.lua")
 
 target("UtilsFunctionContainer")
-    set_kind("static")
+    set_kind("headeronly")
     set_group(UTILS_GROUP_NAME)
 
     add_includedirs("src/", {public = true})
