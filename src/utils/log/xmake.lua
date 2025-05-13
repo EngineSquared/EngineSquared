@@ -3,7 +3,7 @@ add_requires("spdlog", "fmt")
 set_languages("cxx20")
 
 target("UtilsLog")
-    set_kind("static")
+    set_kind("headeronly")
     add_packages("spdlog", "fmt")
 
     add_includedirs("src/", {public = true})

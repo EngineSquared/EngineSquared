@@ -21,7 +21,7 @@ includes("src/engine/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
 target("EngineSquared")
-    set_kind("static")
+    set_kind("object")
     set_default(true)
     set_languages("cxx20")
     set_version("0.0.0")
