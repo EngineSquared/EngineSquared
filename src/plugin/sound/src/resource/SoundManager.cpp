@@ -1,4 +1,5 @@
 #define MINIAUDIO_IMPLEMENTATION
+#include <miniaudio.h>
 #include "SoundManager.hpp"
 
 namespace ES::Plugin::Sound::Resource {
