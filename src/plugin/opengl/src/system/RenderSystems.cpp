@@ -107,13 +107,11 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
 
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.f, size.y, -1.0f, 1.0f);
 
-    core.GetRegistry().view<Component::Sprite, ES::Plugin::Object::Component::Transform>().each(
-        [&](auto entity, Component::Sprite &sprite, ES::Plugin::Object::Component::Transform &transform) {
-            auto spriteHandle = ES::Engine::Entity(entity).TryGetComponent<Component::SpriteHandle>(core);
+    core.GetRegistry().view<Component::Sprite, ES::Plugin::Object::Component::Transform, Component::SpriteHandle>().each(
+        [&](auto entity, Component::Sprite &sprite, ES::Plugin::Object::Component::Transform &transform, Component::SpriteHandle &spriteHandle) {
             auto shaderHandle = ES::Engine::Entity(entity).TryGetComponent<Component::ShaderHandle>(core);
-            auto spriteId = spriteHandle ? spriteHandle->id : entt::hashed_string{"2DDefault"};
-            auto shaderId = shaderHandle ? shaderHandle->id : entt::hashed_string{"default"};
-            const auto &glBuffer = core.GetResource<Resource::GLSpriteBufferManager>().Get(spriteId);
+            auto shaderId = shaderHandle ? shaderHandle->id : entt::hashed_string{"2DDefault"};
+            const auto &glBuffer = core.GetResource<Resource::GLSpriteBufferManager>().Get(spriteHandle.id);
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId);
 
             shader.use();
