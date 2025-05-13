@@ -74,10 +74,10 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
 
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
 
-    core.GetRegistry().view<ES::Plugin::UI::Component::Text, Component::TextHandle, Component::ShaderHandle,
-                            Component::FontHandle>().each(
-        [&](auto entity, ES::Plugin::UI::Component::Text &text, Component::TextHandle &textHandle,
-            Component::ShaderHandle &shaderHandle, Component::FontHandle &fontHandle) {
+    core.GetRegistry()
+        .view<ES::Plugin::UI::Component::Text, Component::TextHandle, Component::ShaderHandle, Component::FontHandle>()
+        .each([&](auto entity, ES::Plugin::UI::Component::Text &text, Component::TextHandle &textHandle,
+                  Component::ShaderHandle &shaderHandle, Component::FontHandle &fontHandle) {
             const auto &font = core.GetResource<Resource::FontManager>().Get(fontHandle.id);
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
 
@@ -102,7 +102,8 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
     glm::mat4 projection = glm::ortho(0.0f, size.x, 0.f, size.y, -1.0f, 1.0f);
 
     core.GetRegistry()
-        .view<Component::Sprite, ES::Plugin::Object::Component::Transform, Component::SpriteHandle, Component::ShaderHandle>()
+        .view<Component::Sprite, ES::Plugin::Object::Component::Transform, Component::SpriteHandle,
+              Component::ShaderHandle>()
         .each([&](auto entity, Component::Sprite &sprite, ES::Plugin::Object::Component::Transform &transform,
                   Component::SpriteHandle &spriteHandle, Component::ShaderHandle &shaderHandle) {
             const auto &glBuffer = core.GetResource<Resource::GLSpriteBufferManager>().Get(spriteHandle.id);
