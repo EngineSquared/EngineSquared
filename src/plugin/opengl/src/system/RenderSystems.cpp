@@ -7,6 +7,7 @@
 #include "GLSpriteBufferManager.hpp"
 #include "GLTextBufferManager.hpp"
 #include "Light.hpp"
+#include "LightInfo.hpp"
 #include "MaterialCache.hpp"
 #include "MaterialHandle.hpp"
 #include "ModelHandle.hpp"
@@ -33,10 +34,10 @@ static void BindTextureIfNeeded(ES::Engine::Core &core, ES::Engine::Entity entit
 static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader,
                          const ES::Plugin::OpenGL::Utils::Material &material)
 {
-    glUniform3fv(shader.uniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
-    glUniform3fv(shader.uniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
-    glUniform3fv(shader.uniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
-    glUniform1fv(shader.uniform("Material.Shiness"), 1, &material.Shiness);
+    glUniform3fv(shader.GetUniform("Material.Ka"), 1, glm::value_ptr(material.Ka));
+    glUniform3fv(shader.GetUniform("Material.Kd"), 1, glm::value_ptr(material.Kd));
+    glUniform3fv(shader.GetUniform("Material.Ks"), 1, glm::value_ptr(material.Ks));
+    glUniform1fv(shader.GetUniform("Material.Shiness"), 1, &material.Shiness);
 }
 
 void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
@@ -54,17 +55,17 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId);
             const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
             const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
-            shader.use();
+            shader.Use();
             LoadMaterial(shader, material);
             glm::mat4 modelmat = transform.getTransformationMatrix();
             glm::mat4 mvp = projection * view * modelmat;
             auto nmat = glm::mat3(glm::transpose(glm::inverse(modelmat))); // normal matrix
-            glUniformMatrix3fv(shader.uniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
-            glUniformMatrix4fv(shader.uniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
-            glUniformMatrix4fv(shader.uniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
+            glUniformMatrix3fv(shader.GetUniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
+            glUniformMatrix4fv(shader.GetUniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
+            glUniformMatrix4fv(shader.GetUniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
             BindTextureIfNeeded(core, entity);
             glBuffer.Draw(mesh);
-            shader.disable();
+            shader.Disable();
         });
 }
 
@@ -83,17 +84,17 @@ void ES::Plugin::OpenGL::System::RenderText(ES::Engine::Core &core)
             const auto &font = core.GetResource<Resource::FontManager>().Get(fontId);
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId);
 
-            shader.use();
+            shader.Use();
 
-            glUniformMatrix4fv(shader.uniform("Projection"), 1, GL_FALSE, glm::value_ptr(projection));
-            glUniform1i(shader.uniform("Text"), 0);
-            glUniform3f(shader.uniform("TextColor"), text.color.red, text.color.green, text.color.blue);
+            glUniformMatrix4fv(shader.GetUniform("Projection"), 1, GL_FALSE, glm::value_ptr(projection));
+            glUniform1i(shader.GetUniform("Text"), 0);
+            glUniform3f(shader.GetUniform("TextColor"), text.color.red, text.color.green, text.color.blue);
 
             auto &textBuffer = core.GetResource<Resource::GLTextBufferManager>().Get(textHandle.id);
 
             textBuffer.RenderText(text, font);
 
-            shader.disable();
+            shader.Disable();
         });
 }
 
@@ -112,13 +113,13 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
             const auto &glBuffer = core.GetResource<Resource::GLSpriteBufferManager>().Get(spriteId);
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId);
 
-            shader.use();
+            shader.Use();
 
-            glUniform4f(shader.uniform("color"), sprite.color.red, sprite.color.green, sprite.color.blue,
+            glUniform4f(shader.GetUniform("color"), sprite.color.red, sprite.color.green, sprite.color.blue,
                         sprite.color.alpha);
-            glUniformMatrix4fv(shader.uniform("model"), 1, GL_FALSE,
+            glUniformMatrix4fv(shader.GetUniform("model"), 1, GL_FALSE,
                                glm::value_ptr(transform.getTransformationMatrix()));
-            glUniformMatrix4fv(shader.uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+            glUniformMatrix4fv(shader.GetUniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
             Component::TextureHandle *textureHandle =
                 ES::Engine::Entity(entity).TryGetComponent<Component::TextureHandle>(core);
@@ -126,7 +127,7 @@ void ES::Plugin::OpenGL::System::RenderSprites(ES::Engine::Core &core)
                 core.GetResource<Resource::TextureManager>().Get(textureHandle->id).Bind();
 
             glBuffer.Draw();
-            shader.disable();
+            shader.Disable();
         });
 }
 
@@ -150,41 +151,34 @@ void ES::Plugin::OpenGL::System::UpdateMatrices(ES::Engine::Core &core)
 
 void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
 {
-    auto &shader = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
+    std::unordered_map<Component::ShaderHandle, std::vector<ES::Plugin::OpenGL::Utils::LightInfo>> ssbo_lights;
 
-    std::array<ES::Plugin::OpenGL::Utils::Light, 5> light = {
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.8f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.0f, 0.8f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.0f, 0.0f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.0f, 0.8f, 0.0f)},
-        ES::Plugin::OpenGL::Utils::Light{glm::vec4(0, 0, 0, 1), glm::vec3(0.8f, 0.8f, 0.8f)}
-    };
+    core.GetRegistry().view<ES::Plugin::Object::Component::Transform, Component::ShaderHandle, Component::Light>().each(
+        [&](auto entity, ES::Plugin::Object::Component::Transform &transform, Component::ShaderHandle &shaderHandle,
+            ES::Plugin::OpenGL::Component::Light &light) {
+            ES::Plugin::OpenGL::Utils::LightInfo lightInfo;
+            lightInfo.position = glm::vec4(transform.position, static_cast<float>(light.type));
+            lightInfo.colour = glm::vec4(light.colour, light.intensity);
 
-    float nbr_lights = 5.f;
-    float scale = 2.f * glm::pi<float>() / nbr_lights;
+            ssbo_lights[shaderHandle].emplace_back(lightInfo);
+        });
 
-    light[0].position = glm::vec4(5.f * cosf(scale * 0.f), 5.f, 5.f * sinf(scale * 0.f), 1.f);
-    light[1].position = glm::vec4(5.f * cosf(scale * 1.f), 5.f, 5.f * sinf(scale * 1.f), 1.f);
-    light[2].position = glm::vec4(5.f * cosf(scale * 2.f), 5.f, 5.f * sinf(scale * 2.f), 1.f);
-    light[3].position = glm::vec4(5.f * cosf(scale * 3.f), 5.f, 5.f * sinf(scale * 3.f), 1.f);
-    light[4].position = glm::vec4(5.f * cosf(scale * 4.f), 5.f, 5.f * sinf(scale * 4.f), 1.f);
-
-    shader.use();
-    for (int i = 0; i < 5; i++)
+    for (auto &[shaderId, lights] : ssbo_lights)
     {
-        glUniform4fv(shader.uniform(fmt::format("Light[{}].Position", i).c_str()), 1,
-                     glm::value_ptr(light[i].position));
-        glUniform3fv(shader.uniform(fmt::format("Light[{}].Intensity", i).c_str()), 1,
-                     glm::value_ptr(light[i].intensity));
+        auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderId.id);
+        shader.Use();
+        shader.UpdateSSBO("LightBuffer", lights.size() * sizeof(ES::Plugin::OpenGL::Utils::LightInfo),
+                          static_cast<const GLvoid *>(lights.data()));
+        glUniform1i(shader.GetUniform("NumberLights"), static_cast<int>(lights.size()));
+        shader.Disable();
     }
-    shader.disable();
 }
 
 void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
 {
     auto &shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
-    shaderProgram.use();
-    glUniform3fv(shaderProgram.uniform("CamPos"), 1,
+    shaderProgram.Use();
+    glUniform3fv(shaderProgram.GetUniform("CamPos"), 1,
                  glm::value_ptr(core.GetResource<Resource::Camera>().viewer.getViewPoint()));
-    shaderProgram.disable();
+    shaderProgram.Disable();
 }
