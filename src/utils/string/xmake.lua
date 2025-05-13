@@ -4,6 +4,7 @@ set_languages("cxx20")
 
 target("UtilsString")
     set_kind("static")
+    set_group(UTILS_GROUP_NAME)
     add_packages("spdlog")
     
     add_files("src/**.cpp")
@@ -16,6 +17,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         goto continue
     end
     target(name)
+        set_group(TEST_GROUP_NAME)
         set_kind("binary")
         if is_plat("linux") then
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
