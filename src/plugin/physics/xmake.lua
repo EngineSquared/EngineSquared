@@ -6,6 +6,7 @@ includes("../object/xmake.lua")
 includes("../math/xmake.lua")
 
 target("PluginPhysics")
+    set_group(PLUGINS_GROUP_NAME)
     set_kind("static")
     set_languages("cxx20")
     add_packages("glm", "entt", "fmt", "spdlog", "joltphysics")
@@ -29,6 +30,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         goto continue
     end
     target(name)
+        set_group(TEST_GROUP_NAME)
         set_kind("binary")
         if is_plat("linux") then
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
