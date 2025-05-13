@@ -64,6 +64,7 @@ TEST(SchedulerContainer, DependencyAfter)
     auto &data = core.GetResource<ResourceTest>().data;
     core.RegisterScheduler<SchedulerTest1>();
     core.RegisterScheduler<SchedulerTest2>();
+    core.SetSchedulerAfter<SchedulerTest2, SchedulerTest1>();
     core.RunSystems();
     {
         ASSERT_EQ(data.size(), 2);
@@ -71,6 +72,7 @@ TEST(SchedulerContainer, DependencyAfter)
         ASSERT_EQ(data[1], 2);
     }
     data.clear();
+    core.RemoveDependencyAfter<SchedulerTest2, SchedulerTest1>();
     core.SetSchedulerAfter<SchedulerTest1, SchedulerTest2>();
     core.RunSystems();
     {
