@@ -134,6 +134,29 @@ class SchedulerContainer {
      * exists in the container. It returns true if the scheduler is found,
      * otherwise false.
      *
+     * @tparam TScheduler The type of the scheduler to check for.
+     * @return true if the scheduler exists, false otherwise.
+     */
+    template <typename TBefore, typename TAfter> void RemoveDependencyBefore();
+
+    /**
+     * @brief Checks if a scheduler identified by the given type index exists in the container.
+     *
+     * This function checks if a scheduler associated with the specified type index exists in the container.
+     * It returns true if the scheduler is found, otherwise false.
+     *
+     * @tparam TAfter The type of the first scheduler.
+     * @tparam TBefore The type of the second scheduler.
+     */
+    template <typename TAfter, typename TBefore> void RemoveDependencyAfter();
+
+    /**
+     * @brief Checks if a scheduler of the specified type exists in the container.
+     *
+     * This function checks if a scheduler of the specified type TScheduler
+     * exists in the container. It returns true if the scheduler is found,
+     * otherwise false.
+     *
      * @param id The type index of the scheduler to check for.
      * @return true if the scheduler exists, false otherwise.
      */

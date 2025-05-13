@@ -242,8 +242,6 @@ static void UpdateSoftBodyEntity(ES::Engine::Core &core, ES::Plugin::Physics::Co
                                  ES::Plugin::Object::Component::Transform &transform,
                                  ES::Plugin::Object::Component::Mesh &mesh)
 {
-    auto &registry = core.GetRegistry();
-
     auto &physicsManager = core.GetResource<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsSystem = physicsManager.GetPhysicsSystem();
     auto &bodyInterface = physicsSystem.GetBodyInterface();
@@ -314,9 +312,6 @@ static void UpdateSoftBodyEntity(ES::Engine::Core &core, ES::Plugin::Physics::Co
 // Sync transform and deformed mesh
 void ES::Plugin::Physics::System::SyncSoftBodiesData(ES::Engine::Core &core)
 {
-    auto &physicsManager = core.GetResource<ES::Plugin::Physics::Resource::PhysicsManager>();
-    auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyInterface();
-
     core.GetRegistry()
         .view<ES::Plugin::Physics::Component::SoftBody3D, ES::Plugin::Object::Component::Transform,
               ES::Plugin::Object::Component::Mesh>()
