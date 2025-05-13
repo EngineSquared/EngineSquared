@@ -38,11 +38,18 @@ void SwapBuffers(ES::Engine::Core &core) { glfwSwapBuffers(core.GetResource<Reso
 
 void StopSystems(ES::Engine::Core &core)
 {
-    if (glfwWindowShouldClose(core.GetResource<Resource::Window>().GetGLFWWindow()))
+    if (core.GetResource<Resource::Window>().ShouldClose())
     {
         core.Stop();
     }
 }
 
 void StoreCoreInWindow(ES::Engine::Core &core) { glfwSetWindowUserPointer(glfwGetCurrentContext(), &core); }
+
+void DestroyWindow(ES::Engine::Core &core)
+{
+    core.GetResource<Resource::Window>().Destroy();
+    glfwTerminate();
+}
+
 } // namespace ES::Plugin::Window::System

@@ -18,4 +18,6 @@ void ES::Plugin::Window::Plugin::Bind()
     RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::Window::System::StopSystems);
 
     RegisterSystems<ES::Plugin::RenderingPipeline::Draw>(ES::Plugin::Window::System::SwapBuffers);
+
+    RegisterSystems<ES::Plugin::RenderingPipeline::Shutdown>(ES::Plugin::Window::System::DestroyWindow);
 }
