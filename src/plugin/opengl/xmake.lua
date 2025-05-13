@@ -9,6 +9,7 @@ includes("../math/xmake.lua")
 includes("../rendering-pipeline/xmake.lua")
 
 target("PluginOpenGL")
+    set_group(PLUGINS_GROUP_NAME)
     set_kind("static")
     set_languages("cxx20")
     add_packages("entt", "glm", "spdlog", "fmt", "glfw", "glew", "stb")
@@ -43,6 +44,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         goto continue
     end
     target(name)
+        set_group(TEST_GROUP_NAME)
         set_kind("binary")
         if is_plat("linux") then
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})

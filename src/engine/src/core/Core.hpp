@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include "IPlugin.hpp"
 #include "Logger.hpp"
 #include "SchedulerContainer.hpp"
 #include "Shutdown.hpp"
@@ -26,8 +27,6 @@ namespace ES::Engine {
  * Required to avoid include loop between Entity and Core headers
  */
 class Entity;
-
-class APlugin;
 
 template <typename T>
 concept CScheduler = std::derived_from<T, Scheduler::AScheduler>;
@@ -277,7 +276,7 @@ class Core {
     ES::Engine::SchedulerContainer _schedulers;
     std::type_index _defaultScheduler = typeid(ES::Engine::Scheduler::Update);
     std::vector<std::type_index> _schedulersToDelete;
-    std::unordered_map<std::type_index, std::unique_ptr<APlugin>> _plugins;
+    std::unordered_map<std::type_index, std::unique_ptr<IPlugin>> _plugins;
     bool _running = false;
 };
 } // namespace ES::Engine
