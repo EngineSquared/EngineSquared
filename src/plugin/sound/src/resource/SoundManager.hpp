@@ -73,7 +73,7 @@ class SoundManager {
 
             std::array<float, 4096 * 2> tempBuffer; // large enough for stereo samples
             ma_uint32 framesRemaining = frameCount;
-            ma_uint32 tempBufferSize = tempBuffer.size() / sizeof(float) / 2;
+            ma_uint32 tempBufferSize = static_cast<ma_uint32>(tempBuffer.size() / sizeof(float) / 2);
 
             while (framesRemaining > 0)
             {
