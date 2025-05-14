@@ -1,4 +1,5 @@
 #include "ShaderSystems.hpp"
+#include "LightInfo.hpp"
 #include "ShaderManager.hpp"
 
 void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
@@ -32,11 +33,16 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
 
         uniform vec3 CamPos;
 
+        uniform int NumberLights;
+
         struct LightInfo {
-            vec4 Position; // Light position in eye coords.
-            vec3 Intensity; // Light intensity
+            vec4 Position;      // Light position (x, y, z) + w (Type of light)
+            vec4 Colour;        // Light colour (x, y, z) + w (Intensity)
         };
-        uniform LightInfo Light[5];
+
+        layout(std140, binding = 0) buffer LightBuffer {
+            LightInfo Light[];
+        };
 
         struct MaterialInfo {
             vec3 Ka; // Ambient reflectivity
@@ -49,31 +55,35 @@ void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
         out vec4 FragColor;
 
         void main() {
-            vec3 finalColor = vec3(0,0,0);
-            vec3 ambient = Material.Ka * Light[0].Intensity;
-            for (int i = 0; i < 4; i++) {
-                vec3 L = normalize(Light[i].Position.xyz - Position);
-                vec3 V = normalize(CamPos - Position);
-                vec3 diffuse = Material.Kd * Light[i].Intensity * max( dot(L, Normal), 0.0);
-                vec3 HalfwayVector = normalize(V + L);
-                vec3 specular = Material.Ks * Light[i].Intensity * pow( max( dot( HalfwayVector, Normal), 0.0), Material.Shiness);
-                finalColor = finalColor + diffuse + specular;
+            vec3 finalColor = vec3(0.0, 0.0, 0.0);
+            vec3 ambient = vec3(0.0, 0.0, 0.0);
+
+            for (int i = 0; i < NumberLights; i++) {
+                int type = int(Light[i].Position.w);
+                vec3 pos = Light[i].Position.xyz;
+                vec3 colour = Light[i].Colour.rgb;
+
+                if (type == 0) { // Point light
+                    vec3 L = normalize(pos - Position);
+                    vec3 V = normalize(CamPos - Position);
+                    vec3 HalfwayVector = normalize(V + L);
+
+                    vec3 diffuse = Material.Kd * colour * max(dot(L, Normal), 0.0);
+                    vec3 specular = Material.Ks * colour * pow(max(dot(HalfwayVector, Normal), 0.0), Material.Shiness);
+                    finalColor += diffuse + specular;
+                } else if (type == 1) { // Ambient light
+                    ambient += Material.Ka * colour;
+                }
             }
-            vec3 L = normalize(Light[4].Position.xyz);
-            vec3 V = normalize(CamPos - Position);
-            vec3 diffuse = Material.Kd * Light[4].Intensity * max( dot(L, Normal), 0.0);
-            vec3 HalfwayVector = normalize(V + L);
-            vec3 specular = Material.Ks * Light[4].Intensity * pow( max( dot( HalfwayVector, Normal), 0.0), Material.Shiness);
-            finalColor = finalColor + diffuse + specular;
-            finalColor = ambient + finalColor;
-            FragColor = vec4(finalColor, 1.0);
+
+            FragColor = vec4(finalColor + ambient, 1.0);
         }
     )";
 
     auto &shaderManager = core.GetResource<Resource::ShaderManager>();
     Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"default"});
     sp.Create();
-    sp.initFromStrings(vertexShader, fragmentShader);
+    sp.InitFromStrings(vertexShader, fragmentShader);
 }
 
 void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
@@ -109,7 +119,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
     auto &shaderManager = core.GetResource<Resource::ShaderManager>();
     Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"textDefault"});
     sp.Create();
-    sp.initFromStrings(vertexShader, fragmentShader);
+    sp.InitFromStrings(vertexShader, fragmentShader);
 }
 
 void ES::Plugin::OpenGL::System::LoadDefaultSpriteShader(ES::Engine::Core &core)
@@ -142,7 +152,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultSpriteShader(ES::Engine::Core &core)
     auto &shaderManager = core.GetResource<Resource::ShaderManager>();
     Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"2DDefault"});
     sp.Create();
-    sp.initFromStrings(vertexShader, fragmentShader);
+    sp.InitFromStrings(vertexShader, fragmentShader);
 }
 
 void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
@@ -150,37 +160,34 @@ void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
 
     // Add uniforms
-    m_shaderProgram.addUniform("MVP");
-    m_shaderProgram.addUniform("ModelMatrix");  // View*Model : mat4
-    m_shaderProgram.addUniform("NormalMatrix"); // Refer next slide : mat3
+    m_shaderProgram.AddUniform("MVP");
+    m_shaderProgram.AddUniform("ModelMatrix");  // View*Model : mat4
+    m_shaderProgram.AddUniform("NormalMatrix"); // Refer next slide : mat3
 
-    for (int i = 0; i < 5; i++)
-    {
-        m_shaderProgram.addUniform(fmt::format("Light[{}].Position", i));
-        m_shaderProgram.addUniform(fmt::format("Light[{}].Intensity", i));
-    }
-    m_shaderProgram.addUniform("Material.Ka");
-    m_shaderProgram.addUniform("Material.Kd");
-    m_shaderProgram.addUniform("Material.Ks");
-    m_shaderProgram.addUniform("Material.Shiness");
+    m_shaderProgram.AddUniform("NumberLights");
+    m_shaderProgram.AddSSBO("LightBuffer", 0, sizeof(ES::Plugin::OpenGL::Utils::LightInfo));
+    m_shaderProgram.AddUniform("Material.Ka");
+    m_shaderProgram.AddUniform("Material.Kd");
+    m_shaderProgram.AddUniform("Material.Ks");
+    m_shaderProgram.AddUniform("Material.Shiness");
 
-    m_shaderProgram.addUniform("CamPos");
+    m_shaderProgram.AddUniform("CamPos");
 }
 
 void ES::Plugin::OpenGL::System::SetupTextShaderUniforms(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"textDefault"});
 
-    m_shaderProgram.addUniform("Projection");
-    m_shaderProgram.addUniform("Text");
-    m_shaderProgram.addUniform("TextColor");
+    m_shaderProgram.AddUniform("Projection");
+    m_shaderProgram.AddUniform("Text");
+    m_shaderProgram.AddUniform("TextColor");
 }
 
 void ES::Plugin::OpenGL::System::SetupSpriteShaderUniforms(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"2DDefault"});
 
-    m_shaderProgram.addUniform("color");
-    m_shaderProgram.addUniform("model");
-    m_shaderProgram.addUniform("projection");
+    m_shaderProgram.AddUniform("color");
+    m_shaderProgram.AddUniform("model");
+    m_shaderProgram.AddUniform("projection");
 }

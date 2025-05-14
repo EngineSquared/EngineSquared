@@ -17,6 +17,13 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->RegisterScheduler<ES::Engine::Scheduler::FixedTimeUpdate>();
     this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
     this->RegisterScheduler<ES::Engine::Scheduler::Shutdown>();
+
+    this->SetSchedulerBefore<ES::Engine::Scheduler::Startup, ES::Engine::Scheduler::Update>();
+    this->SetSchedulerBefore<ES::Engine::Scheduler::Startup, ES::Engine::Scheduler::FixedTimeUpdate>();
+    this->SetSchedulerBefore<ES::Engine::Scheduler::Startup, ES::Engine::Scheduler::RelativeTimeUpdate>();
+    this->SetSchedulerAfter<ES::Engine::Scheduler::Shutdown, ES::Engine::Scheduler::Update>();
+    this->SetSchedulerAfter<ES::Engine::Scheduler::Shutdown, ES::Engine::Scheduler::FixedTimeUpdate>();
+    this->SetSchedulerAfter<ES::Engine::Scheduler::Shutdown, ES::Engine::Scheduler::RelativeTimeUpdate>();
 }
 
 ES::Engine::Core::~Core() { ES::Utils::Log::Debug("Destroy Core"); }

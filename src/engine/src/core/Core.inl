@@ -1,4 +1,3 @@
-#include "APlugin.hpp"
 #include "Core.hpp"
 #include "Logger.hpp"
 #include "WrappedSystem.hpp"

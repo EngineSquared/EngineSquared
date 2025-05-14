@@ -1,3 +1,8 @@
+TEST_GROUP_NAME = "UnitTests"
+PLUGINS_GROUP_NAME = "Plugins"
+UTILS_GROUP_NAME = "Utils"
+-- Set the default group for all targets
+
 add_rules("mode.debug", "mode.release")
 add_requires("entt", "gtest", "spdlog", "tinyobjloader", "glm >=1.0.1", "glfw >=3.4", "glew", "fmt", "stb", "joltphysics")
 
@@ -21,7 +26,7 @@ includes("src/engine/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
 target("EngineSquared")
-    set_kind("static")
+    set_kind("object")
     set_default(true)
     set_languages("cxx20")
     set_version("0.0.0")

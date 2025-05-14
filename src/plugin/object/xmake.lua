@@ -6,6 +6,7 @@ includes("../../utils/log/xmake.lua")
 
 target("PluginObject")
     set_kind("static")
+    set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
     set_policy("build.warning", true)
     add_packages("entt", "glm", "tinyobjloader", "spdlog", "fmt")
@@ -28,6 +29,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         goto continue
     end
     target(name)
+        set_group(TEST_GROUP_NAME)
         set_kind("binary")
         if is_plat("linux") then
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})

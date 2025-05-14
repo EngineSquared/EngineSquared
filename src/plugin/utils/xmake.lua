@@ -2,7 +2,8 @@ add_rules("mode.debug", "mode.release")
 add_requires("gtest", {optional = true})
 
 target("PluginUtils")
-    set_kind("static")
+    set_kind("headeronly")
+    set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
     set_policy("build.warning", true)
 

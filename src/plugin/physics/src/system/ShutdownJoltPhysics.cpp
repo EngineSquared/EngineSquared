@@ -8,7 +8,7 @@
 #include <Jolt/RegisterTypes.h>
 
 namespace ES::Plugin::Physics::System {
-void ShutdownJoltPhysics(ES::Engine::Core &core)
+void ShutdownJoltPhysics([[maybe_unused]] ES::Engine::Core &core)
 {
     JPH::UnregisterTypes();
     delete JPH::Factory::sInstance;

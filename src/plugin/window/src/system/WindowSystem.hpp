@@ -116,4 +116,13 @@ void StopSystems(ES::Engine::Core &core);
  */
 void StoreCoreInWindow(ES::Engine::Core &core);
 
+/**
+ * @brief Destroy the GLFW window
+ *
+ * This function destroys the GLFW window.
+ *
+ * @param core  The Engine² Core.
+ */
+void DestroyWindow(ES::Engine::Core &core);
+
 } // namespace ES::Plugin::Window::System
