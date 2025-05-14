@@ -20,12 +20,12 @@ void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 
 void ES::Plugin::OpenGL::System::CheckGLEWVersion(const ES::Engine::Core &)
 {
-    if (!glewIsSupported("GL_VERSION_4_2"))
+    if (!glewIsSupported("GL_VERSION_4_1"))
     {
-        ES::Utils::Log::Error("OpenGL 4.2 not supported");
+        ES::Utils::Log::Error("OpenGL 4.1 not supported");
         return;
     }
-    ES::Utils::Log::Debug("OpenGL 4.2 supported");
+    ES::Utils::Log::Debug("OpenGL 4.1 supported");
 }
 
 void ES::Plugin::OpenGL::System::SetupResizeViewport(ES::Engine::Core &core)

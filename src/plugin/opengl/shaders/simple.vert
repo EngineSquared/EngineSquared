@@ -1,4 +1,4 @@
-#version 440
+#version 410
 
 layout (location = 0) in vec4 VertexPosition; //Set particular attribute number //Get the first index of VAO and set it on VertexPosition
 layout (location = 1) in vec3 VertexNormal; //Get the second index of VAO and set it on VertexNormal
