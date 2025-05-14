@@ -5,7 +5,7 @@ void ES::Plugin::RenderingPipeline::Init::RunSystems()
 {
     for (auto const &system : this->GetSystems())
     {
-        (*system)(_core);
+        RunSystem(system.get(), _core);
     }
 
     _core.DeleteScheduler<ES::Plugin::RenderingPipeline::Init>();

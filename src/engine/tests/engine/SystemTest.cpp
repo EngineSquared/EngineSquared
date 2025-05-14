@@ -91,3 +91,70 @@ TEST(Systems, EnableDisable)
     ASSERT_EQ(core.GetResource<B>().value, 2);
     ASSERT_EQ(core.GetResource<C>().value, 2);
 }
+
+TEST(Systems, ErrorHandling)
+{
+    Core core;
+
+    core.RegisterResource<A>({});
+    core.RegisterResource<B>({});
+
+    core.RegisterSystemWithErrorHandler([](Core &c) { c.GetResource<A>().value++; },
+                                        [](const Core &) { /* Nothing to do here */ });
+
+    core.RegisterSystemWithErrorHandler([](const Core &) { throw std::runtime_error("Test error"); }, // NOSONAR
+                                        [](Core &c) { c.GetResource<B>().value++; });
+
+    core.RunSystems();
+
+    ASSERT_EQ(core.GetResource<A>().value, 1);
+    ASSERT_EQ(core.GetResource<B>().value, 1);
+}
+
+TEST(Systems, ErrorHandlingDoesNotAllowDuplicates)
+{
+    Core core;
+
+    core.RegisterResource<A>({});
+    core.RegisterResource<B>({});
+
+    core.RegisterSystemWithErrorHandler(TestSystemClass(), [](const Core &) { /* Nothing to do here */ });
+    core.RegisterSystemWithErrorHandler(TestSystemClass(), TestSystemClass());
+    core.RegisterSystemWithErrorHandler(TestSystemClass(), TestSystemFunction);
+
+    core.RegisterSystemWithErrorHandler([](const Core &) { throw std::runtime_error("Test error"); }, // NOSONAR
+                                        [](Core &c) { c.GetResource<B>().value++; });
+
+    core.RunSystems();
+
+    ASSERT_EQ(core.GetResource<A>().value, 1);
+    ASSERT_EQ(core.GetResource<B>().value, 1);
+}
+
+TEST(Systems, SystemCannotBeAddedTwiceAsWrapped)
+{
+    Core core;
+
+    core.RegisterResource<A>({});
+
+    core.RegisterSystem(TestSystemClass());
+    core.RegisterSystemWithErrorHandler(TestSystemClass(), [](const Core &) { /* Nothing to do here */ });
+
+    core.RunSystems();
+
+    ASSERT_EQ(core.GetResource<A>().value, 1);
+}
+
+TEST(Systems, SystemCannotBeAddedTwiceAsWrapped2)
+{
+    Core core;
+
+    core.RegisterResource<A>({});
+
+    core.RegisterSystemWithErrorHandler(TestSystemClass(), [](const Core &) { /* Nothing to do here */ });
+    core.RegisterSystem(TestSystemClass());
+
+    core.RunSystems();
+
+    ASSERT_EQ(core.GetResource<A>().value, 1);
+}
