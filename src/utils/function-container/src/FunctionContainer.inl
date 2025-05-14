@@ -7,8 +7,16 @@ template <typename TCallable>
 ES::Utils::FunctionContainer::FunctionID
 ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
 {
-    ES::Utils::FunctionContainer::FunctionID id =
-        CallableFunction<TCallable, TReturn, TArgs...>::GetCallableID(callable);
+    ES::Utils::FunctionContainer::FunctionID id;
+
+    if constexpr (is_derived_from_function_type<TCallable>::value)
+    {
+        id = callable.GetID();
+    }
+    else
+    {
+        id = CallableFunction<TCallable, TReturn, TArgs...>::GetCallableID(callable);
+    }
 
     if (_idToIndex.contains(id))
     {
