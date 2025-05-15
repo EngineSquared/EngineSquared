@@ -118,6 +118,7 @@ jobs:
         include:
           - os: windows-latest
           - os: ubuntu-latest
+          - os: macos-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
@@ -129,7 +130,7 @@ jobs:
         run: git pull origin ${{ github.ref_name }}
 
       - name: Setup Linux test dependencies
-        if: contains(runner.os, 'windows') == false
+        if: contains(runner.os, 'linux')
         run: |
           sudo apt-get update
           sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
