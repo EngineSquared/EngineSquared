@@ -170,14 +170,6 @@ jobs:
           xmake test -y -D
         timeout-minutes: 8
 
-      - name: Show new or modified files (macOS)
-        if: contains(runner.os, 'macos')
-        run: |
-          git status --short
-          echo "New or modified files:"
-          git ls-files --others --exclude-standard
-          git diff --name-only
-
       - name: Check test coverage (Linux)
         if: contains(runner.os, 'linux')
         uses: threeal/gcovr-action@v1.1.0
