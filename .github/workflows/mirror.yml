@@ -152,20 +152,26 @@ jobs:
           project-path: '.'
 
       - name: Run tests (Linux)
-        if: runner.os != 'Windows'
+        if: contains(runner.os, 'linux')
         run: |
           xmake test -y -D
         timeout-minutes: 8
 
       - name: Run tests (Windows)
-        if: runner.os == 'Windows'
+        if: contains(runner.os, 'windows')
         shell: pwsh
         run: |
           xmake test -y -D
         timeout-minutes: 8
 
+      - name: Run tests (macOS)
+        if: contains(runner.os, 'macos')
+        run: |
+          xmake test -y -D
+        timeout-minutes: 8
+
       - name: Check test coverage (Linux)
-        if: runner.os != 'Windows'
+        if: contains(runner.os, 'linux')
         uses: threeal/gcovr-action@v1.1.0
 
   push_to_mirror:
