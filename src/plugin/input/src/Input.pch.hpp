@@ -1,6 +1,6 @@
 #include <GLFW/glfw3.h>
-#include <glm/vec2.hpp>
 #include <functional>
+#include <glm/vec2.hpp>
 #include <vector>
 
 #include "PluginWindow.hpp"
