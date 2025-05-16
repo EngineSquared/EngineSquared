@@ -16,8 +16,10 @@
 #include "plugin/PluginOpenGL.hpp"
 
 // Resources
+#include "resource/Camera.hpp"
 #include "resource/FontManager.hpp"
 #include "resource/GLMeshBufferManager.hpp"
+#include "resource/GLSpriteBufferManager.hpp"
 #include "resource/GLTextBufferManager.hpp"
 #include "resource/MaterialCache.hpp"
 #include "resource/ShaderManager.hpp"
