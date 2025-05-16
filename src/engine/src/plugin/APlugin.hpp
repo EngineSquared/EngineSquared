@@ -6,7 +6,7 @@
 namespace ES::Engine {
 class APlugin : public IPlugin {
   public:
-    explicit APlugin(Core &core) : _core(core){};
+    explicit APlugin(Core &core) : _core(core) {};
     virtual void Bind(void) = 0;
 
     template <typename TScheduler, typename... Systems> void RegisterSystems(Systems... systems)

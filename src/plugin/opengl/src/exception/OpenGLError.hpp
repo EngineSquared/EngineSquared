@@ -25,7 +25,7 @@ namespace ES::Plugin::OpenGL {
  */
 class OpenGLError : public std::exception {
   public:
-    explicit OpenGLError(const std::string &message) : msg("OpenGL error: " + message){};
+    explicit OpenGLError(const std::string &message) : msg("OpenGL error: " + message) {};
 
     const char *what() const throw() override { return this->msg.c_str(); };
 

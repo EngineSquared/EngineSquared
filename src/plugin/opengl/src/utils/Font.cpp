@@ -1,9 +1,7 @@
+#include "OpenGL.pch.hpp"
+
 #include "Font.hpp"
 #include "Logger.hpp"
-#include <array>
-#include <fmt/format.h>
-#include <fstream>
-#include <iostream>
 
 #define STB_TRUETYPE_IMPLEMENTATION
 #include <stb_truetype.h>

@@ -15,7 +15,7 @@ struct ResourceTest {
 
 class SchedulerTest1 : public ES::Engine::Scheduler::AScheduler {
   public:
-    explicit SchedulerTest1(Core &core) : AScheduler(core){};
+    explicit SchedulerTest1(Core &core) : AScheduler(core) {};
     ~SchedulerTest1() final = default;
 
     void RunSystems() override { _core.GetResource<ResourceTest>().data.push_back(1); }
@@ -23,7 +23,7 @@ class SchedulerTest1 : public ES::Engine::Scheduler::AScheduler {
 
 class SchedulerTest2 : public ES::Engine::Scheduler::AScheduler {
   public:
-    explicit SchedulerTest2(Core &core) : AScheduler(core){};
+    explicit SchedulerTest2(Core &core) : AScheduler(core) {};
     ~SchedulerTest2() final = default;
 
     void RunSystems() override { _core.GetResource<ResourceTest>().data.push_back(2); }

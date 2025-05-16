@@ -10,8 +10,6 @@ target("PluginRenderingPipeline")
     set_policy("build.warning", true)
     add_packages("entt", "fmt", "spdlog")
 
-    set_pcxxheader("src/RenderingPipeline.hpp")
-
     add_deps("EngineSquaredCore")
 
     add_files("src/**.cpp")

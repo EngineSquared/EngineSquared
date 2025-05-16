@@ -12,7 +12,7 @@ target("PluginPhysics")
     add_packages("glm", "entt", "fmt", "spdlog", "joltphysics")
     set_policy("build.warning", true)
 
-    set_pcxxheader("src/JoltPhysics.hpp")
+    set_pcxxheader("src/JoltPhysics.pch.hpp")
 
     add_deps("EngineSquaredCore")
     add_deps("PluginObject")

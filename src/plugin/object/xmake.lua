@@ -11,7 +11,7 @@ target("PluginObject")
     set_policy("build.warning", true)
     add_packages("entt", "glm", "tinyobjloader", "spdlog", "fmt")
 
-    set_pcxxheader("src/Object.hpp")
+    set_pcxxheader("src/Object.pch.hpp")
 
     add_deps("EngineSquaredCore")
     add_deps("UtilsLog")

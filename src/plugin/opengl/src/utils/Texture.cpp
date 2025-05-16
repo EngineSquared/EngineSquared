@@ -1,3 +1,5 @@
+#include "OpenGL.pch.hpp"
+
 #include "Texture.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION

@@ -1,9 +1,8 @@
+#include "JoltPhysics.pch.hpp"
+
 #include "ContactListenerImpl.hpp"
 
 #include "PhysicsManager.hpp"
-
-#include <bit>
-#include <entt/entity/entity.hpp>
 
 /**
  * EnTT divides the entity ID into two parts: the entity index and the version.

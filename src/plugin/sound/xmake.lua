@@ -10,8 +10,6 @@ target("PluginSound")
     add_packages("miniaudio", "entt", "spdlog", "fmt")
     set_policy("build.warning", true)
 
-    set_pcxxheader("src/Sound.hpp")
-
     add_deps("EngineSquaredCore")
 
     add_files("src/**.cpp")

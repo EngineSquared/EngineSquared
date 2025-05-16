@@ -13,8 +13,6 @@ target("PluginScene")
     set_policy("build.warning", true)
     add_packages("entt", "spdlog", "fmt")
 
-    set_pcxxheader("src/Scene.hpp")
-
     add_deps("EngineSquaredCore")
     add_deps("UtilsLog")
     add_deps("UtilsString")

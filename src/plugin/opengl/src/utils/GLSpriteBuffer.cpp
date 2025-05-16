@@ -1,3 +1,5 @@
+#include "OpenGL.pch.hpp"
+
 #include "GLSpriteBuffer.hpp"
 
 namespace ES::Plugin::OpenGL::Utils {

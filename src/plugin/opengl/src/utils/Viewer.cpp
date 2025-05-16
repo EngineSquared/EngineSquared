@@ -1,7 +1,9 @@
+#include "OpenGL.pch.hpp"
+
 // Original author: mankyu sung
 
-#include "Viewer.hpp"
 #include "Logger.hpp"
+#include "Viewer.hpp"
 #include <glm/gtc/quaternion.hpp>
 #include <iostream>
 

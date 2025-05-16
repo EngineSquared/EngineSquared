@@ -10,7 +10,7 @@ struct ResourceTest {
 class PluginTestA : public ES::Engine::APlugin {
   public:
     explicit PluginTestA(ES::Engine::Core &core)
-        : ES::Engine::APlugin(core){
+        : ES::Engine::APlugin(core) {
               // empty
           };
     ~PluginTestA() = default;
@@ -28,7 +28,7 @@ class PluginTestA : public ES::Engine::APlugin {
 class PluginTestB : public ES::Engine::APlugin {
   public:
     explicit PluginTestB(ES::Engine::Core &core)
-        : ES::Engine::APlugin(core){
+        : ES::Engine::APlugin(core) {
               // empty
           };
     ~PluginTestB() = default;
