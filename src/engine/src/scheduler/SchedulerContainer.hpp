@@ -15,7 +15,7 @@ class Core;
 
 class SchedulerError : public std::exception {
   public:
-    explicit SchedulerError(const std::string &message) : msg(fmt::format("Scheduler error: {}", message)) {};
+    explicit SchedulerError(const std::string &message) : msg(fmt::format("Scheduler error: {}", message)){};
 
     const char *what() const throw() override { return this->msg.c_str(); };
 

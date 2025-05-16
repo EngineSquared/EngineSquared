@@ -6,7 +6,7 @@ namespace ES::Plugin::Scene {
 class Plugin : public ES::Engine::APlugin {
   public:
     explicit Plugin(ES::Engine::Core &core)
-        : ES::Engine::APlugin(core) {
+        : ES::Engine::APlugin(core){
               // empty
           };
     ~Plugin() = default;

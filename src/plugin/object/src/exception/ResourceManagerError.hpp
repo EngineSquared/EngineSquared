@@ -25,7 +25,7 @@ namespace ES::Plugin::Object {
  */
 class ResourceManagerError : public std::exception {
   public:
-    explicit ResourceManagerError(const std::string &message) : msg("ResourceManager error: " + message) {};
+    explicit ResourceManagerError(const std::string &message) : msg("ResourceManager error: " + message){};
 
     const char *what() const throw() override { return this->msg.c_str(); };
 

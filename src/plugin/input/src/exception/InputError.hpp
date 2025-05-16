@@ -25,7 +25,7 @@ namespace ES::Plugin::Input {
  */
 class InputError : public std::exception {
   public:
-    explicit InputError(const std::string &message) : msg("Input error: " + message) {};
+    explicit InputError(const std::string &message) : msg("Input error: " + message){};
 
     const char *what() const throw() override { return this->msg.c_str(); };
 
