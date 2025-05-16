@@ -1,8 +1,5 @@
 #pragma once
 
-#include "System.hpp"
-#include <entt/entt.hpp>
-
 namespace ES::Engine {
 class Core;
 }

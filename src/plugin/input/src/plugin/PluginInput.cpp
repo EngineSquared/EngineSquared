@@ -1,9 +1,8 @@
+#include "Input.pch.hpp"
+
 #include "PluginInput.hpp"
 #include "BindCallbacksToGLFW.hpp"
 #include "InputManager.hpp"
-#include "PluginWindow.hpp"
-#include "Startup.hpp"
-#include "Window.hpp"
 
 void ES::Plugin::Input::Plugin::Bind()
 {

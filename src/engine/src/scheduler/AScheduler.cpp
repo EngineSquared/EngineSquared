@@ -1,3 +1,5 @@
+#include "Engine.pch.hpp"
+
 #include "AScheduler.hpp"
 
 namespace ES::Engine::Scheduler {

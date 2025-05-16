@@ -1,7 +1,5 @@
 #pragma once
 
-#include <entt/entt.hpp>
-
 #include "AScheduler.hpp"
 
 namespace ES::Engine::Scheduler {

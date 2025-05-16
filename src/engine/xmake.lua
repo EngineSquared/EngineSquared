@@ -13,7 +13,7 @@ target("EngineSquaredCore")
     add_deps("UtilsLog")
     add_deps("UtilsFunctionContainer")
 
-    set_pcxxheader("src/Engine.hpp")
+    set_pcxxheader("src/Engine.pch.hpp")
 
     add_files("src/**.cpp")
     add_headerfiles("src/**.hpp", { public = true })

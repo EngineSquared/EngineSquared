@@ -6,7 +6,5 @@ target("PluginColors")
     set_languages("cxx20")
     set_policy("build.warning", true)
 
-    set_pcxxheader("src/Colors.hpp")
-
     add_includedirs("src/", {public = true})
     add_includedirs("src/utils", {public = true})

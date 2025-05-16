@@ -1,3 +1,5 @@
+#include "Engine.pch.hpp"
+
 #include "Update.hpp"
 
 void ES::Engine::Scheduler::Update::RunSystems()

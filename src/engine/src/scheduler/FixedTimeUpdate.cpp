@@ -1,3 +1,5 @@
+#include "Engine.pch.hpp"
+
 #include "FixedTimeUpdate.hpp"
 
 void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems()

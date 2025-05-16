@@ -15,7 +15,7 @@ target("PluginOpenGL")
     add_packages("entt", "glm", "spdlog", "fmt", "glfw", "glew", "stb")
     set_policy("build.warning", true)
 
-    set_pcxxheader("src/OpenGL.hpp")
+    -- set_pcxxheader("src/OpenGL.hpp")
 
     if is_mode("debug") then
         add_defines("DEBUG")

@@ -1,3 +1,5 @@
+#include "Engine.pch.hpp"
+
 #include "Core.hpp"
 #include "Entity.hpp"
 #include "FixedTimeUpdate.hpp"

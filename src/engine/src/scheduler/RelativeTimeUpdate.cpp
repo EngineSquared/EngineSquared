@@ -1,3 +1,5 @@
+#include "Engine.pch.hpp"
+
 #include "RelativeTimeUpdate.hpp"
 
 void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems()

@@ -13,7 +13,7 @@ target("PluginInput")
     set_policy("build.warning", true)
     add_packages("glm", "glfw", "entt", "spdlog", "fmt")
 
-    set_pcxxheader("src/Input.hpp")
+    set_pcxxheader("src/Input.pch.hpp")
 
     add_files("src/**.cpp")
 
