@@ -1,11 +1,11 @@
 #include "FixedTimeUpdate.hpp"
+#include "Time.hpp"
 
 void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems()
 {
-    auto currentTime = std::chrono::high_resolution_clock::now();
-    _elapsedTime += std::chrono::duration<float>(currentTime - _lastTime).count();
-    auto ticks = static_cast<unsigned int>(_elapsedTime / _tickRate);
-    _elapsedTime -= ticks * _tickRate;
+    _bufferedTime += this->_core.GetResource<ES::Engine::Resource::Time>()._elapsedTime;
+    auto ticks = static_cast<unsigned int>(_bufferedTime / _tickRate);
+    _bufferedTime -= ticks * _tickRate;
 
     for (unsigned int i = 0; i < ticks; i++)
     {
@@ -14,6 +14,4 @@ void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems()
             RunSystem(system.get(), _core);
         }
     }
-
-    _lastTime = currentTime;
 }
