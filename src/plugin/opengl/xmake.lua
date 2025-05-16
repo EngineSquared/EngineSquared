@@ -8,6 +8,16 @@ includes("../colors/xmake.lua")
 includes("../math/xmake.lua")
 includes("../rendering-pipeline/xmake.lua")
 
+target("StbImage")
+    set_kind("static")
+    set_languages("cxx20")
+    add_packages("stb")
+    add_files("lib/stb_image/src/**.cpp")
+    
+    if is_mode("debug") then
+        add_defines("DEBUG")
+    end
+
 target("PluginOpenGL")
     set_group(PLUGINS_GROUP_NAME)
     set_kind("static")
@@ -28,6 +38,7 @@ target("PluginOpenGL")
     add_deps("PluginMath")
     add_deps("PluginColors")
     add_deps("PluginRenderingPipeline")
+    add_deps("StbImage")
 
     add_files("src/**.cpp")
 

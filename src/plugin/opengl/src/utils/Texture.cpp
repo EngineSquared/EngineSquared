@@ -1,8 +1,5 @@
-#include "OpenGL.pch.hpp"
-
 #include "Texture.hpp"
 
-#define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
 namespace ES::Plugin::OpenGL::Utils {
