@@ -1,6 +1,6 @@
-#include "Texture.hpp"
+#include "OpenGL.pch.hpp"
 
-#include <stb_image.h>
+#include "Texture.hpp"
 
 namespace ES::Plugin::OpenGL::Utils {
 

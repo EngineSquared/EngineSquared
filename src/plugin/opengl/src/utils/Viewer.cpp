@@ -2,10 +2,7 @@
 
 // Original author: mankyu sung
 
-#include "Logger.hpp"
 #include "Viewer.hpp"
-#include <glm/gtc/quaternion.hpp>
-#include <iostream>
 
 static constexpr float DEFAULT_TRANSLATE_SPEED = 0.5;
 static constexpr float DEFAULT_ZOOM_FRACTION = 2.5;
