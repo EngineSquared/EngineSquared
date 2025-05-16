@@ -14,7 +14,7 @@ void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems()
         _deltaTime = _tickRate;
         for (auto const &system : this->GetSystems())
         {
-            (*system)(_core);
+            RunSystem(system.get(), _core);
         }
     }
 
@@ -23,7 +23,7 @@ void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems()
         _deltaTime = remainder;
         for (auto const &system : this->GetSystems())
         {
-            (*system)(_core);
+            RunSystem(system.get(), _core);
         }
     }
 

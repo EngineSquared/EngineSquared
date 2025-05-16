@@ -44,7 +44,7 @@ void ES::Plugin::OpenGL::System::SetupResizeViewport(ES::Engine::Core &core)
 
 void ES::Plugin::OpenGL::System::SetupMouseDragging(ES::Engine::Core &core)
 {
-    core.RegisterResource<ES::Plugin::OpenGL::Utils::MouseDragging>(ES::Plugin::OpenGL::Utils::MouseDragging());
+    core.RegisterResource<ES::Plugin::OpenGL::Resource::MouseDragging>(ES::Plugin::OpenGL::Resource::MouseDragging());
 
     auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
 
@@ -66,7 +66,7 @@ void ES::Plugin::OpenGL::System::SetupMouseDragging(ES::Engine::Core &core)
     };
 
     inputManager.RegisterCursorPosCallback([=](ES::Engine::Core &cbCore, double xpos, double ypos) {
-        auto &dragging = cbCore.GetResource<ES::Plugin::OpenGL::Utils::MouseDragging>();
+        auto &dragging = cbCore.GetResource<ES::Plugin::OpenGL::Resource::MouseDragging>();
         auto &camera = cbCore.GetResource<ES::Plugin::OpenGL::Resource::Camera>();
 
         if (ES::Plugin::Input::Utils::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))

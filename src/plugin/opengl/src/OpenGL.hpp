@@ -22,6 +22,7 @@
 #include "resource/GLSpriteBufferManager.hpp"
 #include "resource/GLTextBufferManager.hpp"
 #include "resource/MaterialCache.hpp"
+#include "resource/MouseDragging.hpp"
 #include "resource/ShaderManager.hpp"
 #include "resource/TextureManager.hpp"
 
@@ -39,6 +40,5 @@
 #include "utils/LightInfo.hpp"
 #include "utils/Loader.hpp"
 #include "utils/Material.hpp"
-#include "utils/MouseDragging.hpp"
 #include "utils/Texture.hpp"
 #include "utils/Viewer.hpp"

@@ -1,13 +1,15 @@
 #pragma once
 
 #include "IScheduler.hpp"
+
 #include "System.hpp"
+
 #include <set>
 #include <typeindex>
 
 namespace ES::Engine::Scheduler {
 /**
- * @brief Interface to be implemented for every schedulers
+ * @brief Interface to be implemented for every schedulers.
  */
 class AScheduler : public IScheduler {
   public:
@@ -42,11 +44,43 @@ class AScheduler : public IScheduler {
      */
     void Enable(ES::Utils::FunctionContainer::FunctionID id);
 
+    /**
+     * @brief Execute a system according to the scheduler policy
+     *
+     * @param system The system to run
+     * @param core The core to pass to the system
+     */
+    void RunSystem(const SystemBase *system, Core &core);
+
+    /**
+     * @brief Whether the next scheduler should run or not
+     *
+     * @return true if the next scheduler should run, false otherwise
+     */
+    inline bool ShouldRunNextScheduler() const { return _shouldRunNextScheduler; }
+
+    /**
+     * @brief Get the error policy
+     *
+     * @return The error policy
+     */
+    inline SchedulerErrorPolicy GetErrorPolicy() const override { return _errorPolicy; }
+
+    /**
+     * @brief Set the error policy
+     *
+     * @param errorPolicy The error policy
+     */
+    inline void SetErrorPolicy(SchedulerErrorPolicy errorPolicy) override { _errorPolicy = errorPolicy; }
+
   protected:
     Core &_core;
 
   private:
     SystemContainer _enabledSystemsList;
     SystemContainer _disabledSystemsList;
+    bool _shouldRunSystems = true;
+    bool _shouldRunNextScheduler = true;
+    SchedulerErrorPolicy _errorPolicy = SchedulerErrorPolicy::LogAndContinue;
 };
 } // namespace ES::Engine::Scheduler

@@ -6,7 +6,7 @@ void ES::Engine::Scheduler::Startup::RunSystems()
 {
     for (auto const &system : this->GetSystems())
     {
-        (*system)(_core);
+        RunSystem(system.get(), _core);
     }
 
     _callback();

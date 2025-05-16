@@ -10,6 +10,6 @@ void ES::Engine::Scheduler::Update::RunSystems()
 
     for (auto const &system : this->GetSystems())
     {
-        (*system)(_core);
+        RunSystem(system.get(), _core);
     }
 }

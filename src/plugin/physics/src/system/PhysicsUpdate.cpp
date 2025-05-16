@@ -43,6 +43,8 @@ void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry 
         JPH::Quat(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w),
         rigidBody.motionType, rigidBody.layer);
 
+    bodySettings.mIsSensor = rigidBody.isSensor;
+
     rigidBody.body = physicsSystem.GetBodyInterface().CreateBody(bodySettings);
 
     if (rigidBody.body == nullptr)
