@@ -5,25 +5,39 @@
 #include "RelativeTimeUpdate.hpp"
 #include "Shutdown.hpp"
 #include "Startup.hpp"
+#include "Time.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {
     ES::Utils::Log::Debug("Create Core");
     this->_registry = std::make_unique<entt::registry>();
 
-    this->RegisterScheduler<ES::Engine::Scheduler::Startup>(
-        [this]() { this->DeleteScheduler<ES::Engine::Scheduler::Startup>(); });
-    this->RegisterScheduler<ES::Engine::Scheduler::Update>();
-    this->RegisterScheduler<ES::Engine::Scheduler::FixedTimeUpdate>();
-    this->RegisterScheduler<ES::Engine::Scheduler::RelativeTimeUpdate>();
-    this->RegisterScheduler<ES::Engine::Scheduler::Shutdown>();
+    this->RegisterResource<Resource::Time>(Resource::Time());
 
-    this->SetSchedulerBefore<ES::Engine::Scheduler::Startup, ES::Engine::Scheduler::Update>();
-    this->SetSchedulerBefore<ES::Engine::Scheduler::Startup, ES::Engine::Scheduler::FixedTimeUpdate>();
-    this->SetSchedulerBefore<ES::Engine::Scheduler::Startup, ES::Engine::Scheduler::RelativeTimeUpdate>();
-    this->SetSchedulerAfter<ES::Engine::Scheduler::Shutdown, ES::Engine::Scheduler::Update>();
-    this->SetSchedulerAfter<ES::Engine::Scheduler::Shutdown, ES::Engine::Scheduler::FixedTimeUpdate>();
-    this->SetSchedulerAfter<ES::Engine::Scheduler::Shutdown, ES::Engine::Scheduler::RelativeTimeUpdate>();
+    this->RegisterScheduler<Scheduler::Startup>(
+        [this]() { this->DeleteScheduler<Scheduler::Startup>(); });
+
+
+    this->RegisterScheduler<Scheduler::Update>();
+    this->RegisterScheduler<Scheduler::FixedTimeUpdate>();
+    this->RegisterScheduler<Scheduler::RelativeTimeUpdate>();
+    this->RegisterScheduler<Scheduler::Shutdown>();
+
+    // Calling Update at startup ensure that the time is not 0 when calling the update scheduler
+    this->RegisterSystem<Scheduler::Startup>(Resource::Time::Update);
+    this->RegisterSystem<Scheduler::Update>(Resource::Time::Update);
+
+    this->SetSchedulerBefore<Scheduler::Startup, Scheduler::Update>();
+    this->SetSchedulerBefore<Scheduler::Startup, Scheduler::FixedTimeUpdate>();
+    this->SetSchedulerBefore<Scheduler::Startup, Scheduler::RelativeTimeUpdate>();
+
+    // As update scheduler update time, it should be before the fixed time update and relative time update
+    this->SetSchedulerBefore<Scheduler::Update, Scheduler::FixedTimeUpdate>();
+    this->SetSchedulerBefore<Scheduler::Update, Scheduler::RelativeTimeUpdate>();
+
+    this->SetSchedulerAfter<Scheduler::Shutdown, Scheduler::Update>();
+    this->SetSchedulerAfter<Scheduler::Shutdown, Scheduler::FixedTimeUpdate>();
+    this->SetSchedulerAfter<Scheduler::Shutdown, Scheduler::RelativeTimeUpdate>();
 }
 
 ES::Engine::Core::~Core() { ES::Utils::Log::Debug("Destroy Core"); }
