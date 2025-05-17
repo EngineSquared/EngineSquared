@@ -6,6 +6,7 @@
 #include "Core.hpp"
 #include "Entity.hpp"
 #include "RelativeTimeUpdate.hpp"
+#include "Time.hpp"
 
 using namespace ES::Engine;
 using namespace std::chrono_literals;
@@ -14,7 +15,12 @@ TEST(Core, RelativeTimeUpdateBasic)
 {
     Core core;
 
-    int update_count = 0;
+    float elapsedTime = 0.f;
+
+    core.RegisterSystem<Scheduler::Update>(
+        [&elapsedTime](Core &c) {
+            c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime;
+        });
 
     float deltaTime1 = 0.0f;
     float deltaTime2 = 0.0f;
@@ -34,9 +40,9 @@ TEST(Core, RelativeTimeUpdateBasic)
     core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
 
     core.RunSystems();
-    std::this_thread::sleep_for(0.05s);
+    elapsedTime = 0.05f;
     core.RunSystems();
-    std::this_thread::sleep_for(0.1s);
+    elapsedTime = 0.1f;
     core.RunSystems();
     ASSERT_GT(deltaTime2, deltaTime1);
 }
@@ -45,7 +51,12 @@ TEST(Core, RelativeTimeUpdateSubsteps)
 {
     Core core;
 
-    int update_count = 0;
+    float elapsedTime = 0.f;
+
+    core.RegisterSystem<Scheduler::Update>(
+        [&elapsedTime](Core &c) {
+            c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime;
+        });
 
     std::array<float, 5> deltaTimes = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
@@ -63,7 +74,7 @@ TEST(Core, RelativeTimeUpdateSubsteps)
     core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
 
     core.RunSystems();
-    std::this_thread::sleep_for(0.5s);
+    elapsedTime = 0.5f;
     core.RunSystems();
     ASSERT_EQ(deltaTimes[0], 0.2f);
     ASSERT_EQ(deltaTimes[1], 0.2f);

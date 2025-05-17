@@ -3,6 +3,7 @@
 #include "Core.hpp"
 #include "Entity.hpp"
 #include "FixedTimeUpdate.hpp"
+#include "Time.hpp"
 
 using namespace ES::Engine;
 using namespace std::chrono_literals;
@@ -10,6 +11,13 @@ using namespace std::chrono_literals;
 TEST(Core, FixedTimeUpdate)
 {
     Core core;
+
+    float elapsedTime = 0.f;
+
+    core.RegisterSystem<Scheduler::Update>(
+        [&elapsedTime](Core &c) {
+            c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime;
+        });
 
     int update_count = 0;
 
@@ -24,30 +32,31 @@ TEST(Core, FixedTimeUpdate)
     ASSERT_EQ(update_count, 0);
 
     // Assuming tick rate of 1/5, if we sleep for .2s, we should have 1 update
-    std::this_thread::sleep_for(0.2s);
+    elapsedTime = 0.2f;
     core.RunSystems();
     ASSERT_EQ(update_count, 1);
 
     // If we sleep for .4s, we should have 2 more updates
-    std::this_thread::sleep_for(0.4s);
+    elapsedTime = 0.4f;
     core.RunSystems();
     ASSERT_EQ(update_count, 3);
 
     // If we sleep for .1s, we should have 0 updates, but we accumulate the time
-    std::this_thread::sleep_for(0.1s);
+    elapsedTime = 0.1f;
     core.RunSystems();
     ASSERT_EQ(update_count, 3);
 
     // Now if we sleep back .1s, we should have 1 more update
-    std::this_thread::sleep_for(0.1s);
+    elapsedTime = 0.1f;
     core.RunSystems();
     ASSERT_EQ(update_count, 4);
 
     // If we sleep for .5s, we should have 2 more updates and accumulate the time
-    std::this_thread::sleep_for(0.5s);
+    elapsedTime = 0.5f;
     core.RunSystems();
     ASSERT_EQ(update_count, 6);
-    std::this_thread::sleep_for(0.1s);
+
+    elapsedTime = 0.100001f; // Adding a little bit more to avoid floating point precision issues
     core.RunSystems();
     ASSERT_EQ(update_count, 7);
 }
