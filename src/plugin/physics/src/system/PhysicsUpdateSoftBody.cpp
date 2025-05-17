@@ -206,4 +206,3 @@ void ES::Plugin::Physics::System::SyncSoftBodiesData(ES::Engine::Core &core)
             UpdateSoftBodyEntity(core, softBody, transform, mesh);
         });
 }
-
