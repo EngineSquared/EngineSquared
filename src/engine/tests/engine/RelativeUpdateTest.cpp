@@ -18,9 +18,7 @@ TEST(Core, RelativeTimeUpdateBasic)
     float elapsedTime = 0.f;
 
     core.RegisterSystem<Scheduler::Update>(
-        [&elapsedTime](Core &c) {
-            c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime;
-        });
+        [&elapsedTime](Core &c) { c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime; });
 
     float deltaTime1 = 0.0f;
     float deltaTime2 = 0.0f;
@@ -54,9 +52,7 @@ TEST(Core, RelativeTimeUpdateSubsteps)
     float elapsedTime = 0.f;
 
     core.RegisterSystem<Scheduler::Update>(
-        [&elapsedTime](Core &c) {
-            c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime;
-        });
+        [&elapsedTime](Core &c) { c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime; });
 
     std::array<float, 5> deltaTimes = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
