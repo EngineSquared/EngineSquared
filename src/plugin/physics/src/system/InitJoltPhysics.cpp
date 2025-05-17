@@ -1,11 +1,6 @@
+#include "JoltPhysics.pch.hpp"
+
 #include "InitJoltPhysics.hpp"
-
-// clang-format off
-#include <Jolt/Jolt.h>
-// clang-format on
-
-#include <Jolt/Core/Factory.h>
-#include <Jolt/RegisterTypes.h>
 
 namespace ES::Plugin::Physics::System {
 void InitJoltPhysics([[maybe_unused]] ES::Engine::Core &core)

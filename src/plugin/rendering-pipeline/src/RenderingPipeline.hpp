@@ -1,5 +1,6 @@
 #pragma once
 
+// Schedulers
 #include "Init.hpp"
 #include "Setup.hpp"
 
@@ -9,4 +10,5 @@
 #include "RenderSetup.hpp"
 #include "ToGPU.hpp"
 
+// Plugin
 #include "PluginRenderingPipeline.hpp"

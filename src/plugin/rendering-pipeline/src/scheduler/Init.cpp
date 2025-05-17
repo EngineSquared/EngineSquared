@@ -1,5 +1,6 @@
 #include "Init.hpp"
 #include "Engine.hpp"
+#include <entt/entt.hpp>
 
 void ES::Plugin::RenderingPipeline::Init::RunSystems()
 {

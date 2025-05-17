@@ -1,3 +1,5 @@
+#include "Engine.pch.hpp"
+
 #include "FixedTimeUpdate.hpp"
 #include "Time.hpp"
 

@@ -1,7 +1,8 @@
+#include "Engine.pch.hpp"
+
 #include "Core.hpp"
 #include "Entity.hpp"
 #include "FixedTimeUpdate.hpp"
-#include "Logger.hpp"
 #include "RelativeTimeUpdate.hpp"
 #include "Shutdown.hpp"
 #include "Startup.hpp"

@@ -1,4 +1,5 @@
-#include "WindowSystems.hpp"
+#include "OpenGL.pch.hpp"
+
 #include "Camera.hpp"
 #include "Input.hpp"
 #include "MaterialCache.hpp"
@@ -7,6 +8,7 @@
 #include "TextureHandle.hpp"
 #include "TextureManager.hpp"
 #include "Window.hpp"
+#include "WindowSystems.hpp"
 
 void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 {

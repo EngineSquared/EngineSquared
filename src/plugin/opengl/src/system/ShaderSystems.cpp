@@ -1,6 +1,8 @@
-#include "ShaderSystems.hpp"
+#include "OpenGL.pch.hpp"
+
 #include "LightInfo.hpp"
 #include "ShaderManager.hpp"
+#include "ShaderSystems.hpp"
 
 void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
 {
