@@ -23,6 +23,5 @@ class Update : public AScheduler {
 
   private:
     float _elapsedTime = 0.0f;
-    std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime = std::chrono::high_resolution_clock::now();
 };
 } // namespace ES::Engine::Scheduler

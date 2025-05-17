@@ -52,6 +52,6 @@ class RelativeTimeUpdate : public AScheduler {
   private:
     float _tickRate;
     float _deltaTime = 0.0f;
-    std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime = std::chrono::high_resolution_clock::now();
+    float _bufferedTime = 0.0f;
 };
 } // namespace ES::Engine::Scheduler
