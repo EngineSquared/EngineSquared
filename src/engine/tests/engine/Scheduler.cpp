@@ -117,9 +117,7 @@ TEST(SchedulerContainer, CurrentScheduler)
     float elapsedTime = 0.f;
 
     core.RegisterSystem<Scheduler::Update>(
-        [&elapsedTime](Core &c) {
-            c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime;
-        });
+        [&elapsedTime](Core &c) { c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime; });
 
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(1); });
     core.RegisterSystem<Scheduler::Update>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
