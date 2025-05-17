@@ -133,7 +133,7 @@ TEST(SchedulerContainer, CurrentScheduler)
     core.RunSystems();
     core.RunSystems();
 
-    // ASSERT_EQ(data.size(), 9);
+    ASSERT_EQ(data.size(), 9);
     ASSERT_EQ(data[0], 1);
     ASSERT_EQ(data[1], 2);
     ASSERT_EQ(data[2], 3);
