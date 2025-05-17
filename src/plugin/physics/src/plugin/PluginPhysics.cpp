@@ -4,6 +4,8 @@
 #include "InitPhysicsManager.hpp"
 #include "PhysicsManager.hpp"
 #include "PhysicsUpdate.hpp"
+#include "PhysicsUpdateRigidBody.hpp"
+#include "PhysicsUpdateSoftBody.hpp"
 #include "ShutdownJoltPhysics.hpp"
 #include "Startup.hpp"
 
