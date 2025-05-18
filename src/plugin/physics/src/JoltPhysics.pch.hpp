@@ -19,5 +19,4 @@
 #include <Jolt/Physics/Collision/Shape/Shape.h>
 #include <Jolt/RegisterTypes.h>
 #include <entt/entity/entity.hpp>
-#include <fmt/format.h>
 #include <glm/glm.hpp>

@@ -10,6 +10,8 @@
 #include "SoftBody3D.hpp"
 #include "Transform.hpp"
 
+#include <fmt/format.h>
+
 // TODO: find a way to have custom signal (so that we can send Core rather than entt::registry)
 void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry &registry, entt::entity entity)
 {
