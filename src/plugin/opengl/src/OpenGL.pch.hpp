@@ -10,9 +10,5 @@
 #include <vector>
 
 // External libraries
-#include <fmt/format.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
-
-// ESQ headers
-#include "Logger.hpp"

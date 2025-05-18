@@ -1,9 +1,12 @@
 #include "OpenGL.pch.hpp"
 
 #include "Font.hpp"
+#include <fmt/format.h>
+#include "Logger.hpp"
 
 #define STB_TRUETYPE_IMPLEMENTATION
 #include <stb_truetype.h>
+
 
 namespace ES::Plugin::OpenGL::Utils {
 

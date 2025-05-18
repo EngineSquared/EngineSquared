@@ -3,6 +3,8 @@
 // Original author: mankyu sung
 
 #include "Viewer.hpp"
+#include <fmt/format.h>
+#include "Logger.hpp"
 
 static constexpr float DEFAULT_TRANSLATE_SPEED = 0.5;
 static constexpr float DEFAULT_ZOOM_FRACTION = 2.5;
