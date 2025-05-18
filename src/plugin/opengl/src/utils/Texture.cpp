@@ -2,6 +2,8 @@
 
 #include "Texture.hpp"
 
+#include <stb_image.h>
+
 namespace ES::Plugin::OpenGL::Utils {
 
 Texture::Texture(const std::string &texturePath) { LoadTexture(texturePath); }

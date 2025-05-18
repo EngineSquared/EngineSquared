@@ -14,8 +14,5 @@
 #include <unordered_set>
 #include <vector>
 
-// External libraries
-#include <entt/entt.hpp>
-
 // ESQ headers
 #include "Logger.hpp"
