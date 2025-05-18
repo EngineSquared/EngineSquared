@@ -3,8 +3,6 @@
 #include <functional>
 #include <variant>
 
-#include <entt/entt.hpp>
-
 #include "Engine.hpp"
 
 #include "AssetID.hpp"

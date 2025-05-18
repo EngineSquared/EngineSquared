@@ -1,10 +1,8 @@
+#include "Input.pch.hpp"
+
 #include "BindCallbacksToGLFW.hpp"
-#include "Engine.hpp"
 #include "Input.hpp"
 #include "InputManager.hpp"
-#include "Window.hpp"
-
-#include <GLFW/glfw3.h>
 
 /**
  * @brief Get the core from the window user pointer.

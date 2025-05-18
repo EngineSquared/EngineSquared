@@ -11,7 +11,7 @@ target("PluginRenderingPipeline")
     add_packages("entt", "fmt", "spdlog")
 
     add_deps("EngineSquaredCore")
-    
+
     add_files("src/**.cpp")
     add_includedirs("src", {public = true})
     add_includedirs("src/scheduler", {public = true})

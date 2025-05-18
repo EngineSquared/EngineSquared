@@ -1,3 +1,5 @@
+#include "OpenGL.pch.hpp"
+
 #include "Input.hpp"
 #include "OpenGL.hpp"
 #include "PluginWindow.hpp"

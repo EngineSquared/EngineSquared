@@ -1,11 +1,11 @@
-#include "UpdateButtonTexture.hpp"
+#include "UI.pch.hpp"
+
 #include "OpenGL.hpp"
-#include <variant>
+#include "UpdateButtonTexture.hpp"
 
 #include "Tools.hpp"
 
 #include "Button.hpp"
-#include "Logger.hpp"
 #include "Sprite.hpp"
 
 static void UpdateButtonTextureColor(ES::Plugin::UI::Component::Button &button,

@@ -1,9 +1,10 @@
+#include "OpenGL.pch.hpp"
+
 // Original author: mankyu sung
 
-#include "Viewer.hpp"
 #include "Logger.hpp"
-#include <glm/gtc/quaternion.hpp>
-#include <iostream>
+#include "Viewer.hpp"
+#include <fmt/format.h>
 
 static constexpr float DEFAULT_TRANSLATE_SPEED = 0.5;
 static constexpr float DEFAULT_ZOOM_FRACTION = 2.5;
