@@ -7,4 +7,4 @@ namespace ES::Utils::Tools {
  * @tparam  T   The type of the object
  */
 template <typename T> struct HasChanged {};
-} // namespace ES::Plugin::Tools
+} // namespace ES::Utils::Tools

@@ -7,9 +7,9 @@
 
 void ES::Plugin::UI::System::ButtonClick(ES::Engine::Core &core)
 {
-    auto view = core.GetRegistry()
-                    .view<ES::Plugin::UI::Component::Button,
-                          ES::Utils::Tools::HasChanged<ES::Plugin::UI::Component::Button>>();
+    auto view =
+        core.GetRegistry()
+            .view<ES::Plugin::UI::Component::Button, ES::Utils::Tools::HasChanged<ES::Plugin::UI::Component::Button>>();
     for (auto entity : view)
     {
         auto const &button = view.get<ES::Plugin::UI::Component::Button>(entity);
