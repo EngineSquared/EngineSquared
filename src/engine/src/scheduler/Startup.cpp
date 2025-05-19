@@ -1,3 +1,5 @@
+#include "Engine.pch.hpp"
+
 #include "Startup.hpp"
 
 void ES::Engine::Scheduler::Startup::RunSystems()

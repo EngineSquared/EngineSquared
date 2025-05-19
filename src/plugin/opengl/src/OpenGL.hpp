@@ -1,5 +1,6 @@
 #pragma once
 
+// Components
 #include "component/FontHandle.hpp"
 #include "component/Light.hpp"
 #include "component/MaterialHandle.hpp"
@@ -11,22 +12,28 @@
 #include "component/TextHandle.hpp"
 #include "component/TextureHandle.hpp"
 
+// Plugin
 #include "plugin/PluginOpenGL.hpp"
 
+// Resources
+#include "resource/Camera.hpp"
 #include "resource/FontManager.hpp"
 #include "resource/GLMeshBufferManager.hpp"
+#include "resource/GLSpriteBufferManager.hpp"
 #include "resource/GLTextBufferManager.hpp"
 #include "resource/MaterialCache.hpp"
 #include "resource/MouseDragging.hpp"
 #include "resource/ShaderManager.hpp"
 #include "resource/TextureManager.hpp"
 
+// Systems
 #include "system/BufferSystems.hpp"
 #include "system/ManagerSystems.hpp"
 #include "system/RenderSystems.hpp"
 #include "system/ShaderSystems.hpp"
 #include "system/WindowSystems.hpp"
 
+// Utils
 #include "utils/Font.hpp"
 #include "utils/GLMeshBuffer.hpp"
 #include "utils/GLTextBuffer.hpp"

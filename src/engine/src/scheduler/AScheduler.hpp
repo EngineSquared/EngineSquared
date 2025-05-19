@@ -1,7 +1,9 @@
 #pragma once
 
 #include "IScheduler.hpp"
-#include <memory>
+
+#include "System.hpp"
+
 #include <set>
 #include <typeindex>
 

@@ -1,3 +1,5 @@
+#include "OpenGL.pch.hpp"
+
 #include "BufferSystems.hpp"
 #include "GLMeshBufferManager.hpp"
 #include "GLSpriteBufferManager.hpp"

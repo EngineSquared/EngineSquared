@@ -1,3 +1,5 @@
+#include "JoltPhysics.pch.hpp"
+
 #include "InitPhysicsManager.hpp"
 
 #include "PhysicsManager.hpp"

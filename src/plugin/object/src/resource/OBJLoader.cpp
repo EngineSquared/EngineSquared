@@ -1,9 +1,9 @@
+#include "Object.pch.hpp"
+
 #include "OBJLoader.hpp"
 
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
-
-#include "Logger.hpp"
 
 namespace ES::Plugin::Object::Resource {
 

@@ -1,4 +1,5 @@
-#include "RenderSystems.hpp"
+#include "OpenGL.pch.hpp"
+
 #include "Camera.hpp"
 #include "Entity.hpp"
 #include "FontHandle.hpp"
@@ -12,6 +13,7 @@
 #include "MaterialHandle.hpp"
 #include "ModelHandle.hpp"
 #include "Object.hpp"
+#include "RenderSystems.hpp"
 #include "ShaderHandle.hpp"
 #include "ShaderManager.hpp"
 #include "Sprite.hpp"
