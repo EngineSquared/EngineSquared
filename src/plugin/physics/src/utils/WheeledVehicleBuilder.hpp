@@ -1,0 +1,168 @@
+#pragma once
+
+#include "Core.hpp"
+#include "Mesh.hpp"
+#include "WheeledVehicle3D.hpp"
+#include <array>
+#include <functional>
+#include <glm/glm.hpp>
+#include <vector>
+#include <optional>
+
+namespace ES::Plugin::Physics::Utils
+{
+/// @brief A builder class for creating a wheeled vehicle.
+/// @note This class is used to create a wheeled vehicle and add it to the physics world.
+template<size_t WheelCount = 4>
+class WheeledVehicleBuilder
+{
+    static_assert(WheelCount > 0, "WheelCount must be greater than 0");
+
+    public:
+        /// @brief Create a wheeled vehicle builder.
+        /// @param core The core of the engine.
+        WheeledVehicleBuilder(ES::Engine::Core &core)
+            : core(core), wheelSettings()
+        {
+            for (size_t i = 0; i < WheelCount; ++i)
+            {
+                wheelSettings[i] = std::make_unique<JPH::WheelSettingsWV>();
+            }
+        }
+
+        /// @brief Set the right vector of the vehicle.
+        /// @param right The right vector to set.
+        /// @return A reference to the vehicle builder.
+        inline WheeledVehicleBuilder &SetRightVector(const glm::vec3 &right)
+        {
+            rightVector = right;
+            return *this;
+        }
+
+        /// @brief Set the up vector of the vehicle.
+        /// @param up The up vector to set.
+        /// @return A reference to the vehicle builder.
+        inline WheeledVehicleBuilder &SetUpVector(const glm::vec3 &up)
+        {
+            upVector = up;
+            return *this;
+        }
+
+        /// @brief Set the body mesh of the vehicle.
+        /// @param mesh The mesh to set.
+        /// @return A reference to the vehicle builder.
+        inline WheeledVehicleBuilder &SetBodyMesh(const ES::Plugin::Object::Component::Mesh &mesh)
+        {
+            bodyMesh.emplace(mesh);
+            return *this;
+        }
+
+        /// @brief Set the wheel mesh of the vehicle.
+        /// @param mesh The mesh to set.
+        /// @return A reference to the vehicle builder.
+        inline WheeledVehicleBuilder &SetWheelMesh(const ES::Plugin::Object::Component::Mesh &mesh)
+        {
+            wheelMesh.emplace(mesh);
+            return *this;
+        }
+
+        /// @brief Set the offset center of mass of the vehicle.
+        /// @param offset The offset to set.
+        /// @return A reference to the vehicle builder.
+        inline WheeledVehicleBuilder &SetOffsetCenterOfMass(const glm::vec3 &offset)
+        {
+            offsetCenterOfMassShape = offset;
+            return *this;
+        }
+
+        /// @brief Edit a wheel of the vehicle.
+        /// @param index The index of the wheel to edit.
+        /// @param editFn A callable that takes a reference to the wheel settings and modifies it.
+        /// @return A reference to the wheel editor.
+        /// @note The index must be less than the number of wheels.
+        /// @note Due to the amount of variables that can be set, it is easier to use a lambda function
+        /// to set the variables.
+        inline WheeledVehicleBuilder &EditWheel(size_t index,
+            const std::function<void(JPH::WheelSettingsWV &)> &editFn)
+        {
+            if (index >= WheelCount)
+                throw std::out_of_range("Index out of range"); // TODO: custom exception
+
+            editFn(*wheelSettings[index]);
+            return *this;
+        }
+
+        /// @brief Create a differential to the vehicle.
+        /// @return A reference to the vehicle builder.
+        /// @note The differential will be added to the vehicle when it is created.
+        inline WheeledVehicleBuilder &CreateDifferential()
+        {
+            differentialSettings.emplace_back();
+            return *this;
+        }
+
+        /// @brief Edit a differential of the vehicle.
+        /// @param index The index of the differential to edit.
+        /// @param editFn A callable that takes a reference to the differential settings and modifies it.
+        /// @return A reference to the vehicle builder.
+        /// @note The index must be less than the number of differentials.
+        /// @note Due to the amount of variables that can be set, it is easier to use a lambda function
+        /// to set the variables.
+        inline WheeledVehicleBuilder &EditDifferential(size_t index,
+            const std::function<void(JPH::VehicleDifferentialSettings &)> &editFn)
+        {
+            if (index >= differentialSettings.size())
+                throw std::out_of_range("Index out of range"); // TODO: custom exception
+
+            editFn(differentialSettings[index]);
+            return *this;
+        }
+
+        /// @brief Create an anti-roll bar to the vehicle.
+        /// @return A reference to the vehicle builder.
+        /// @note The anti-roll bar will be added to the vehicle when it is created.
+        inline WheeledVehicleBuilder &CreateAntiRollBar()
+        {
+            antiRollBars.emplace_back();
+            return *this;
+        }
+
+        /// @brief Edit an anti-roll bar of the vehicle.
+        /// @param index The index of the anti-roll bar to edit.
+        /// @param editFn A callable that takes a reference to the anti-roll bar settings and modifies it.
+        /// @return A reference to the vehicle builder.
+        /// @note The index must be less than the number of anti-roll bars.
+        /// @note Due to the amount of variables that can be set, it is easier to use a lambda function
+        /// to set the variables.
+        inline WheeledVehicleBuilder &EditAntiRollBar(size_t index,
+            const std::function<void(JPH::VehicleAntiRollBar &)> &editFn)
+        {
+            if (index >= antiRollBars.size())
+                throw std::out_of_range("Index out of range"); // TODO: custom exception
+
+            editFn(antiRollBars[index]);
+            return *this;
+        }
+
+    private:
+        /// Reference to the core of the engine.
+        ES::Engine::Core &core;
+        /// Default right vector of the vehicle.
+        glm::vec3 rightVector = glm::vec3(1.0f, 0.0f, 0.0f);
+        /// Default up vector of the vehicle.
+        glm::vec3 upVector = glm::vec3(0.0f, 1.0f, 0.0f);
+        /// Mesh used for the body of the vehicle.
+        std::optional<ES::Plugin::Object::Component::Mesh> bodyMesh = std::nullopt;
+        /// Mesh used for the wheels of the vehicle.
+        std::optional<ES::Plugin::Object::Component::Mesh> wheelMesh = std::nullopt;
+        /// Offset center of mass of the vehicle.
+        glm::vec3 offsetCenterOfMassShape = glm::vec3(0.0f, 0.0f, 0.0f);
+        /// Wheels settings of the vehicle.
+        /// TODO: release ownership to components when the object is created
+        std::array<std::unique_ptr<JPH::WheelSettingsWV>, WheelCount> wheelSettings = {nullptr};
+        /// Differentials settings of the vehicle.
+        std::vector<JPH::VehicleDifferentialSettings> differentialSettings;
+        /// Anti-roll bar settings of the vehicle.
+        std::vector<JPH::VehicleAntiRollBar> antiRollBars;
+};
+} // namespace ES::Plugin::Physics::Utils

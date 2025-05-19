@@ -6,6 +6,7 @@
 
 #include "component/RigidBody3D.hpp"
 #include "component/SoftBody3D.hpp"
+#include "component/WheeledVehicle3D.hpp"
 
 #include "resource/PhysicsManager.hpp"
 
@@ -23,5 +24,6 @@
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
 #include "utils/SoftBodyVertexSettings.hpp"
+#include "utils/WheeledVehicleBuilder.hpp"
 
 #include "plugin/PluginPhysics.hpp"
