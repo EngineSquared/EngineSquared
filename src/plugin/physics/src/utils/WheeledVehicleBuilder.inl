@@ -24,8 +24,7 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
 
     for (size_t i = 0; i < bodyMesh->vertices.size(); ++i)
     {
-        points.emplace_back(
-            JPH::Vec3(bodyMesh->vertices[i].x, bodyMesh->vertices[i].y, bodyMesh->vertices[i].z));
+        points.emplace_back(JPH::Vec3(bodyMesh->vertices[i].x, bodyMesh->vertices[i].y, bodyMesh->vertices[i].z));
     }
 
     vehicle.bodySettings = std::make_shared<JPH::ConvexHullShapeSettings>(points.data(), points.size());
