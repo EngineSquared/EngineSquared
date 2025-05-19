@@ -152,8 +152,8 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     /// @param fn A callable that takes a reference to the constraint settings and modifies it.
     /// @return A reference to the vehicle builder.
     /// @note This function is called before the vehicle is created.
-    inline WheeledVehicleBuilder &SetConstraintSettingsFn(
-        const std::function<void(JPH::VehicleConstraintSettings &)> &fn)
+    inline WheeledVehicleBuilder &
+    SetConstraintSettingsFn(const std::function<void(JPH::VehicleConstraintSettings &)> &fn)
     {
         constraintSettingsFn = fn;
         return *this;
@@ -186,7 +186,8 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     /// Anti-roll bar settings of the vehicle.
     std::vector<JPH::VehicleAntiRollBar> antiRollBars;
     /// Function to modify the constraint settings before creating the vehicle.
-    std::function<void(JPH::VehicleConstraintSettings &)> constraintSettingsFn = [](JPH::VehicleConstraintSettings &) {};
+    std::function<void(JPH::VehicleConstraintSettings &)> constraintSettingsFn = [](JPH::VehicleConstraintSettings &) {
+    };
 };
 } // namespace ES::Plugin::Physics::Utils
 

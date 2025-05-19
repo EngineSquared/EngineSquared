@@ -27,8 +27,7 @@
 
 namespace ES::Plugin::Physics::Component {
 /// @brief A wheeled vehicle component.
-struct WheeledVehicle3D
-{
+struct WheeledVehicle3D {
     /// @brief The shape settings for the body itself, built from the mesh.
     std::shared_ptr<JPH::ShapeSettings> bodySettings;
     /// @brief The final shape settings of the vehicle, which is a OffsetCenterOfMassShape.
