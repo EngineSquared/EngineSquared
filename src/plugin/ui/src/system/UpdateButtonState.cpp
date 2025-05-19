@@ -47,11 +47,11 @@ void ES::Plugin::UI::System::UpdateButtonState(ES::Engine::Core &core)
             button.state = ES::Plugin::UI::Component::Button::State::Normal;
         }
         if (button.lastState != button.state &&
-            !ES::Engine::Entity(entity).HasComponents<ES::Plugin::Tools::HasChanged<ES::Plugin::UI::Component::Button>>(
+            !ES::Engine::Entity(entity).HasComponents<ES::Utils::Tools::HasChanged<ES::Plugin::UI::Component::Button>>(
                 core))
         {
             ES::Engine::Entity(entity)
-                .AddTemporaryComponent<ES::Plugin::Tools::HasChanged<ES::Plugin::UI::Component::Button>>(core);
+                .AddTemporaryComponent<ES::Utils::Tools::HasChanged<ES::Plugin::UI::Component::Button>>(core);
         }
     }
 }

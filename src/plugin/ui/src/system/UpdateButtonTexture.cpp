@@ -38,7 +38,7 @@ void ES::Plugin::UI::System::UpdateButtonTexture(ES::Engine::Core &core)
 {
     auto view = core.GetRegistry()
                     .view<ES::Plugin::UI::Component::Button, ES::Plugin::OpenGL::Component::Sprite,
-                          ES::Plugin::Tools::HasChanged<ES::Plugin::UI::Component::Button>>();
+                          ES::Utils::Tools::HasChanged<ES::Plugin::UI::Component::Button>>();
     view.each(
         [&core](auto e, ES::Plugin::UI::Component::Button &button, ES::Plugin::OpenGL::Component::Sprite &sprite) {
             if (std::holds_alternative<ES::Plugin::UI::Component::DisplayType::TintColor>(button.displayType))

@@ -45,7 +45,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
 
         add_deps("EngineSquaredCore")
         add_deps("PluginObject")
-        add_deps("PluginUtils")
+        add_deps("UtilsTools")
 
         add_files(file)
         add_files("tests/main.cpp")

@@ -29,7 +29,7 @@ TEST(Button, ButtonClick)
 
     EXPECT_FALSE(core.GetResource<onClickCalled>().clicked);
 
-    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
+    button.AddTemporaryComponent<ES::Utils::Tools::HasChanged<Component::Button>>(core);
     core.RunSystems();
 
     EXPECT_TRUE(core.GetResource<onClickCalled>().clicked);
@@ -53,19 +53,19 @@ TEST(Button, UpdateButtonTexture)
                                           .pressedColor = ES::Plugin::Colors::Utils::DARKGRAY_COLOR};
 
     buttonComponent.state = Component::Button::State::Hover;
-    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
+    button.AddTemporaryComponent<ES::Utils::Tools::HasChanged<Component::Button>>(core);
     core.RunSystems();
     EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color,
               ES::Plugin::Colors::Utils::GRAY_COLOR);
 
     buttonComponent.state = Component::Button::State::Pressed;
-    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
+    button.AddTemporaryComponent<ES::Utils::Tools::HasChanged<Component::Button>>(core);
     core.RunSystems();
     EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color,
               ES::Plugin::Colors::Utils::DARKGRAY_COLOR);
 
     buttonComponent.state = Component::Button::State::Normal;
-    button.AddTemporaryComponent<ES::Plugin::Tools::HasChanged<Component::Button>>(core);
+    button.AddTemporaryComponent<ES::Utils::Tools::HasChanged<Component::Button>>(core);
     core.RunSystems();
     EXPECT_EQ(button.GetComponents<ES::Plugin::OpenGL::Component::Sprite>(core).color,
               ES::Plugin::Colors::Utils::WHITE_COLOR);
