@@ -44,6 +44,15 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
         return *this;
     }
 
+    /// @brief Set the initial position of the vehicle.
+    /// @param position The initial position to set.
+    /// @return A reference to the vehicle builder.
+    inline WheeledVehicleBuilder &SetInitialPosition(const glm::vec3 &position)
+    {
+        initialPosition = position;
+        return *this;
+    }
+
     /// @brief Set the body mesh of the vehicle.
     /// @param mesh The mesh to set.
     /// @return A reference to the vehicle builder.
@@ -139,6 +148,21 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
         return *this;
     }
 
+    /// @brief Set the function to modify the constraint settings before creating the vehicle.
+    /// @param fn A callable that takes a reference to the constraint settings and modifies it.
+    /// @return A reference to the vehicle builder.
+    /// @note This function is called before the vehicle is created.
+    inline WheeledVehicleBuilder &SetConstraintSettingsFn(
+        const std::function<void(JPH::VehicleConstraintSettings &)> &fn)
+    {
+        constraintSettingsFn = fn;
+        return *this;
+    }
+
+    /// @brief Create the vehicle and add it to the physics world.
+    /// @return The entity of the vehicle.
+    ES::Engine::Entity Build();
+
   private:
     /// Reference to the core of the engine.
     ES::Engine::Core &core;
@@ -146,6 +170,8 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     glm::vec3 rightVector = glm::vec3(1.0f, 0.0f, 0.0f);
     /// Default up vector of the vehicle.
     glm::vec3 upVector = glm::vec3(0.0f, 1.0f, 0.0f);
+    /// Initial vehicle position.
+    glm::vec3 initialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
     /// Mesh used for the body of the vehicle.
     std::optional<ES::Plugin::Object::Component::Mesh> bodyMesh = std::nullopt;
     /// Mesh used for the wheels of the vehicle.
@@ -159,5 +185,9 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     std::vector<JPH::VehicleDifferentialSettings> differentialSettings;
     /// Anti-roll bar settings of the vehicle.
     std::vector<JPH::VehicleAntiRollBar> antiRollBars;
+    /// Function to modify the constraint settings before creating the vehicle.
+    std::function<void(JPH::VehicleConstraintSettings &)> constraintSettingsFn = [](JPH::VehicleConstraintSettings &) {};
 };
 } // namespace ES::Plugin::Physics::Utils
+
+#include "WheeledVehicleBuilder.inl"
