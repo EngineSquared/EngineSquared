@@ -4,8 +4,6 @@
 #include "OpenGL.hpp"
 #include "RigidBody3D.hpp"
 
-#include <Jolt/Physics/Collision/Shape/MeshShape.h>
-
 template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::WheeledVehicleBuilder<WheelCount>::Build()
 {
     auto vehicleEntity = core.CreateEntity();
@@ -22,22 +20,18 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
     vehicleEntity.AddComponent<ES::Plugin::Object::Component::Mesh>(core, bodyMesh.value());
 
     // Create Jolt's mesh shape from the bodyMesh
-    JPH::VertexList vertices;
-    JPH::IndexedTriangleList triangles;
+    std::vector<JPH::Vec3> points;
 
-    for (const auto &vertex : bodyMesh.value().vertices)
+    for (size_t i = 0; i < bodyMesh->vertices.size(); ++i)
     {
-        vertices.push_back(JPH::Float3(vertex.x, vertex.y, vertex.z));
+        points.emplace_back(
+            JPH::Vec3(bodyMesh->vertices[i].x, bodyMesh->vertices[i].y, bodyMesh->vertices[i].z));
     }
-    for (size_t i = 0; i < bodyMesh.value().indices.size(); i += 3)
-    {
-        triangles.push_back(JPH::IndexedTriangle(bodyMesh.value().indices[i], bodyMesh.value().indices[i + 1],
-                                                 bodyMesh.value().indices[i + 2]));
-    }
+
+    vehicle.bodySettings = std::make_shared<JPH::ConvexHullShapeSettings>(points.data(), points.size());
+    vehicle.bodySettings->SetEmbedded();
 
     // Init body settings to create the body shape
-    vehicle.bodySettings = std::make_shared<JPH::MeshShapeSettings>(vertices, triangles);
-    vehicle.bodySettings->SetEmbedded();
     vehicle.finalShapeSettings = std::make_shared<JPH::OffsetCenterOfMassShapeSettings>(
         JPH::Vec3(offsetCenterOfMassShape.x, offsetCenterOfMassShape.y, offsetCenterOfMassShape.z),
         vehicle.bodySettings.get());
