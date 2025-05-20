@@ -1,0 +1,62 @@
+#include "PhysicsUpdateWheeledVehicle.hpp"
+
+#include "FixedTimeUpdate.hpp"
+#include "Logger.hpp"
+#include "Mesh.hpp"
+#include "PhysicsManager.hpp"
+#include "RigidBody3D.hpp"
+#include "WheeledVehicle3D.hpp"
+#include "Transform.hpp"
+
+#include <fmt/format.h>
+
+// TODO: find a way to have custom signal (so that we can send Core rather than entt::registry)
+void ES::Plugin::Physics::System::LinkWheeledVehicleToPhysicsSystem(entt::registry &registry, entt::entity entity)
+{
+    auto &wheeledVehicle = registry.get<ES::Plugin::Physics::Component::WheeledVehicle3D>(entity);
+    if (wheeledVehicle.bodySettings == nullptr || wheeledVehicle.finalShapeSettings == nullptr || wheeledVehicle.vehicleConstraintSettings == nullptr)
+    {
+        ES::Utils::Log::Error(fmt::format("WheeledVehicle3D component is not fully initialized for entity {}",
+                                          static_cast<uint32_t>(entity)));
+        return;
+    }
+    auto &rigidBody = registry.get<ES::Plugin::Physics::Component::RigidBody3D>(entity);
+    if (rigidBody.body == nullptr)
+    {
+        ES::Utils::Log::Error(fmt::format("WheeledVehicle3D component is trying to link to an entity that has no RigidBody3D component"));
+        return;
+    }
+
+    // Build the vehicle constraint
+    wheeledVehicle.vehicleConstraint = std::make_shared<JPH::VehicleConstraint>(
+        *rigidBody.body, *wheeledVehicle.vehicleConstraintSettings.get()
+    );
+    wheeledVehicle.vehicleConstraint->SetEmbedded();
+
+    // TODO: do not hardcode that, store it somewhere and create it through builder
+    wheeledVehicle.vehicleConstraint->SetVehicleCollisionTester(new JPH::VehicleCollisionTesterCastCylinder(
+        ES::Plugin::Physics::Utils::Layers::MOVING,
+        0.05
+    ));
+
+    auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
+    auto &physicsSystem = physicsManager.GetPhysicsSystem();
+
+    physicsSystem.AddConstraint(wheeledVehicle.vehicleConstraint.get());
+    physicsSystem.AddStepListener(wheeledVehicle.vehicleConstraint.get());
+}
+
+void ES::Plugin::Physics::System::UnlinkWheeledVehicleToPhysicsSystem(entt::registry &registry, entt::entity entity)
+{
+    
+}
+
+void ES::Plugin::Physics::System::OnConstructLinkWheeledVehiclesToPhysicsSystem(ES::Engine::Core &core)
+{
+    core.GetRegistry()
+        .on_construct<ES::Plugin::Physics::Component::WheeledVehicle3D>()
+        .connect<&ES::Plugin::Physics::System::LinkWheeledVehicleToPhysicsSystem>();
+    core.GetRegistry()
+        .on_destroy<ES::Plugin::Physics::Component::WheeledVehicle3D>()
+        .connect<&ES::Plugin::Physics::System::UnlinkWheeledVehicleToPhysicsSystem>();
+}

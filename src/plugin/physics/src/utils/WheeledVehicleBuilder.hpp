@@ -23,6 +23,7 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
         for (size_t i = 0; i < WheelCount; ++i)
         {
             wheelSettings[i] = std::make_unique<JPH::WheelSettingsWV>();
+            wheelSettings[i]->SetEmbedded();
         }
     }
 

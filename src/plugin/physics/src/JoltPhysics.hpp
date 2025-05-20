@@ -18,6 +18,7 @@
 #include "system/PhysicsUpdate.hpp"
 #include "system/PhysicsUpdateRigidBody.hpp"
 #include "system/PhysicsUpdateSoftBody.hpp"
+#include "system/PhysicsUpdateWheeledVehicle.hpp"
 #include "system/ShutdownJoltPhysics.hpp"
 
 // Utils

@@ -31,9 +31,17 @@ namespace ES::Plugin::Physics::Component {
 struct WheeledVehicle3D {
     /// @brief The shape settings for the body itself, built from the mesh.
     std::shared_ptr<JPH::ShapeSettings> bodySettings;
-    /// @brief The final shape settings of the vehicle, which is a OffsetCenterOfMassShape.
+    /// @brief The final shape settings of the vehicle.
     std::shared_ptr<JPH::ShapeSettings> finalShapeSettings;
-    /// @brief The vehicle constraint, which is a WheeledVehicleController.
-    std::shared_ptr<JPH::VehicleConstraintSettings> vehicleConstraint;
+    /// @brief The vehicle constraint settings.
+    std::shared_ptr<JPH::VehicleConstraintSettings> vehicleConstraintSettings;
+    /// @brief The vehicle constraint itself. This should not be constructed manually.
+    std::shared_ptr<JPH::VehicleConstraint> vehicleConstraint;
+    
+    /// @brief Sub struct for wheels
+    struct Wheel {
+        /// @brief The wheel settings.
+        std::shared_ptr<JPH::WheelSettingsWV> wheelSettings;
+    };
 };
 } // namespace ES::Plugin::Physics::Component
