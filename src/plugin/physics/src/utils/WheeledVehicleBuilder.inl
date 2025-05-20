@@ -53,11 +53,9 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
     {
         ES::Engine::Entity wheelEntity = core.CreateEntity();
 
-        glm::vec3 wheelPosition = glm::vec3(
-            initialPosition.x + wheelSettings[i]->mPosition.GetX(),
-            initialPosition.y + wheelSettings[i]->mPosition.GetY(),
-            initialPosition.z + wheelSettings[i]->mPosition.GetZ()
-        );
+        glm::vec3 wheelPosition = glm::vec3(initialPosition.x + wheelSettings[i]->mPosition.GetX(),
+                                            initialPosition.y + wheelSettings[i]->mPosition.GetY(),
+                                            initialPosition.z + wheelSettings[i]->mPosition.GetZ());
 
         wheelEntity.AddComponent<ES::Plugin::Object::Component::Transform>(core, wheelPosition);
         wheelEntity.AddComponent<ES::Plugin::Object::Component::Mesh>(core, wheelMesh.value());
@@ -102,8 +100,7 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
 
     // Add the component to the entity
     vehicleEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(
-        core, bodySettings, finalShapeSettings, vehicleConstraintSettings, vehicleControllerSettings
-    );
+        core, bodySettings, finalShapeSettings, vehicleConstraintSettings, vehicleControllerSettings);
 
     return vehicleEntity;
 }
