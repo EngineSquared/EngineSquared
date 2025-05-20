@@ -49,5 +49,24 @@ struct WheeledVehicle3D {
         /// @brief The index of the wheel in the vehicle.
         size_t index;
     };
+
+    /// @brief Send user (driver) input to the controller.
+    /// @param inForward The forward input (-1 to 1).
+    /// @param inRight The right input (-1 to 1).
+    /// @param inBrake The brake input (0 to 1).
+    /// @param inHandBrake The handbrake input (0 to 1).
+    /// @note Make sure the vehicle is activated before calling this function.
+    /// It can deactivate if the vehicle is not moving.
+    /// @see PhysicsManager
+    void SetDriverInput(float inForward, float inRight, float inBrake, float inHandBrake) {
+        if (!vehicleConstraint) {
+            return;
+        }
+
+        auto controller = reinterpret_cast<JPH::WheeledVehicleController*>(vehicleConstraint->GetController());
+        if (controller) {
+            controller->SetDriverInput(inForward, inRight, inBrake, inHandBrake);
+        }
+    }
 };
 } // namespace ES::Plugin::Physics::Component
