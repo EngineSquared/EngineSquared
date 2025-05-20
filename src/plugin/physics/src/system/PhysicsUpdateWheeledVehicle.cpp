@@ -56,3 +56,38 @@ void ES::Plugin::Physics::System::OnConstructLinkWheeledVehiclesToPhysicsSystem(
         .on_destroy<ES::Plugin::Physics::Component::WheeledVehicle3D>()
         .connect<&ES::Plugin::Physics::System::UnlinkWheeledVehicleToPhysicsSystem>();
 }
+
+void ES::Plugin::Physics::System::SyncWheeledVehicleWheels(ES::Engine::Core &core)
+{
+    core.GetRegistry()
+        .view<ES::Plugin::Physics::Component::WheeledVehicle3D::Wheel, ES::Plugin::Object::Component::Transform>()
+        .each([&](auto, auto &wheel, auto &transform) {
+            if (wheel.wheelSettings == nullptr)
+            {
+                return;
+            }
+
+            if (!wheel.parentVehicle.template HasComponents<ES::Plugin::Physics::Component::WheeledVehicle3D>(core))
+            {
+                ES::Utils::Log::Error(fmt::format("SyncWheeledVehicleWheels: WheeledVehicle3D component is not fully initialized for entity {}",
+                                                  static_cast<uint32_t>(wheel.parentVehicle)));
+                return;
+            }
+
+            static const JPH::Vec3 wheelRight(1.0f, 0.0f, 0.0f);
+            static const JPH::Vec3 wheelUp(0.0f, 1.0f, 0.0f);
+
+            auto &wheeledVehicle = wheel.parentVehicle.template GetComponents<ES::Plugin::Physics::Component::WheeledVehicle3D>(core);
+
+            auto wTransform = wheeledVehicle.vehicleConstraint->GetWheelWorldTransform(wheel.index, wheelRight, wheelUp);
+            auto wPosition = wTransform.GetTranslation();
+            auto wRotation = wTransform.GetRotation().GetQuaternion();
+
+            transform.setPosition(glm::vec3(wPosition.GetX(), wPosition.GetY(), wPosition.GetZ()));
+        
+            transform.rotation.w = wRotation.GetW();
+            transform.rotation.x = wRotation.GetX();
+            transform.rotation.y = wRotation.GetY();
+            transform.rotation.z = wRotation.GetZ();
+        });
+}

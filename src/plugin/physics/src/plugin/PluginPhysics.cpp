@@ -24,7 +24,8 @@ void ES::Plugin::Physics::Plugin::Bind()
 
     RegisterSystems<ES::Engine::Scheduler::FixedTimeUpdate>(
         ES::Plugin::Physics::System::SyncRigidBodiesToTransforms, ES::Plugin::Physics::System::PhysicsUpdate,
-        ES::Plugin::Physics::System::SyncTransformsToRigidBodies, ES::Plugin::Physics::System::SyncSoftBodiesData);
+        ES::Plugin::Physics::System::SyncTransformsToRigidBodies, ES::Plugin::Physics::System::SyncSoftBodiesData,
+        ES::Plugin::Physics::System::SyncWheeledVehicleWheels);
 
     RegisterSystems<ES::Engine::Scheduler::Shutdown>(ES::Plugin::Physics::System::ShutdownJoltPhysics);
 }

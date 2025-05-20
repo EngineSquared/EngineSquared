@@ -35,13 +35,19 @@ struct WheeledVehicle3D {
     std::shared_ptr<JPH::ShapeSettings> finalShapeSettings;
     /// @brief The vehicle constraint settings.
     std::shared_ptr<JPH::VehicleConstraintSettings> vehicleConstraintSettings;
+    /// @brief The vehicle controller settings.
+    std::shared_ptr<JPH::WheeledVehicleControllerSettings> controllerSettings;
     /// @brief The vehicle constraint itself. This should not be constructed manually.
     std::shared_ptr<JPH::VehicleConstraint> vehicleConstraint;
 
     /// @brief Sub struct for wheels
     struct Wheel {
+        /// @brief The vehicle parent entity.
+        ES::Engine::Entity parentVehicle;
         /// @brief The wheel settings.
         std::shared_ptr<JPH::WheelSettingsWV> wheelSettings;
+        /// @brief The index of the wheel in the vehicle.
+        size_t index;
     };
 };
 } // namespace ES::Plugin::Physics::Component

@@ -53,8 +53,22 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
     {
         ES::Engine::Entity wheelEntity = core.CreateEntity();
 
+        glm::vec3 wheelPosition = glm::vec3(
+            initialPosition.x + wheelSettings[i]->mPosition.GetX(),
+            initialPosition.y + wheelSettings[i]->mPosition.GetY(),
+            initialPosition.z + wheelSettings[i]->mPosition.GetZ()
+        );
+
+        wheelEntity.AddComponent<ES::Plugin::Object::Component::Transform>(core, wheelPosition);
+        wheelEntity.AddComponent<ES::Plugin::Object::Component::Mesh>(core, wheelMesh.value());
+
+        // TODO: do not hardcode that
+        wheelEntity.AddComponent<ES::Plugin::OpenGL::Component::ShaderHandle>(core, "no_light");
+        wheelEntity.AddComponent<ES::Plugin::OpenGL::Component::MaterialHandle>(core, "car_wheel");
+        wheelEntity.AddComponent<ES::Plugin::OpenGL::Component::ModelHandle>(core, "car_wheel");
+
         auto &wheel = wheelEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D::Wheel>(
-            core, std::move(wheelSettings[i]));
+            core, vehicleEntity, std::move(wheelSettings[i]), i);
         vehicleConstraintSettings->mWheels[i] = wheel.wheelSettings.get();
     }
 
@@ -71,8 +85,7 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
         vehicleConstraintSettings->mAntiRollBars[i] = antiRollBars[i];
     }
 
-    // TODO: do not hardcode controller settings
-    static auto vehicleControllerSettings = std::make_shared<JPH::WheeledVehicleControllerSettings>();
+    auto vehicleControllerSettings = std::make_shared<JPH::WheeledVehicleControllerSettings>();
     vehicleControllerSettings->SetEmbedded();
     vehicleControllerSettings->mEngine.mMaxTorque = 500.0f;
     vehicleControllerSettings->mTransmission.mClutchStrength = 10.0f;
@@ -88,8 +101,9 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
     vehicleConstraintSettings->mController = vehicleControllerSettings.get();
 
     // Add the component to the entity
-    vehicleEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(core, bodySettings, finalShapeSettings,
-                                                                                 vehicleConstraintSettings);
+    vehicleEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(
+        core, bodySettings, finalShapeSettings, vehicleConstraintSettings, vehicleControllerSettings
+    );
 
     return vehicleEntity;
 }
