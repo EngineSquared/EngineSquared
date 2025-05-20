@@ -75,6 +75,7 @@ void ES::Plugin::Physics::System::SyncWheeledVehicleWheels(ES::Engine::Core &cor
                 return;
             }
 
+            // TODO: do not hardcode this
             static const JPH::Vec3 wheelRight(1.0f, 0.0f, 0.0f);
             static const JPH::Vec3 wheelUp(0.0f, 1.0f, 0.0f);
 
