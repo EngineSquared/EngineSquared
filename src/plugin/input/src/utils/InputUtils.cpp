@@ -1,3 +1,5 @@
+#include "Input.pch.hpp"
+
 #include "InputUtils.hpp"
 
 void ES::Plugin::Input::Utils::PrintAvailableControllers() noexcept

@@ -3,8 +3,8 @@ add_requires("entt", "glfw >=3.4", "glew", "fmt", "spdlog", "glm", "stb")
 add_requires("gtest", {optional = true})
 
 includes("../../engine/xmake.lua")
+includes("../../utils/tools/xmake.lua")
 includes("../colors/xmake.lua")
-includes("../utils/xmake.lua")
 includes("../math/xmake.lua")
 includes("../input/xmake.lua")
 includes("../object/xmake.lua")
@@ -19,9 +19,11 @@ target("PluginUI")
     set_policy("build.warning", true)
     add_packages("entt", "glm", "glfw", "fmt", "spdlog", "glew", "stb")
 
+    set_pcxxheader("src/UI.pch.hpp")
+
     add_deps("EngineSquaredCore")
     add_deps("PluginColors")
-    add_deps("PluginUtils")
+    add_deps("UtilsTools")
     add_deps("PluginMath")
     add_deps("PluginInput")
     add_deps("PluginPhysics")
@@ -54,7 +56,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         
         add_deps("PluginUI")
         add_deps("EngineSquaredCore")
-        add_deps("PluginUtils")
+        add_deps("UtilsTools")
         add_deps("PluginObject")
         
         add_files(file)

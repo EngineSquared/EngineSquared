@@ -3,7 +3,6 @@
 #include <GL/glew.h>
 
 #include "Logger.hpp"
-#include <fmt/format.h>
 
 namespace ES::Plugin::OpenGL::Utils {
 

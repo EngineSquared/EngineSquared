@@ -5,6 +5,7 @@
 #include "FixedTimeUpdate.hpp"
 #include "RelativeTimeUpdate.hpp"
 #include "Startup.hpp"
+#include "Time.hpp"
 
 using namespace ES::Engine;
 using namespace std::chrono_literals;
@@ -112,33 +113,36 @@ TEST(SchedulerContainer, CurrentScheduler)
     Core core;
     core.RegisterResource<ResourceTest>(ResourceTest());
     auto &data = core.GetResource<ResourceTest>().data;
+
+    float elapsedTime = 0.f;
+
+    core.RegisterSystem<Scheduler::Update>(
+        [&elapsedTime](Core &c) { c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime; });
+
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(1); });
     core.RegisterSystem<Scheduler::Update>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
     core.RegisterSystem<Scheduler::RelativeTimeUpdate>(
-        [](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
-    core.RegisterSystem<Scheduler::FixedTimeUpdate>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });
-    core.RegisterSystem<Scheduler::Shutdown>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(3); });
+        [](Core &c) { c.GetResource<ResourceTest>().data.push_back(3); });
+    core.RegisterSystem<Scheduler::FixedTimeUpdate>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(3); });
+    core.RegisterSystem<Scheduler::Shutdown>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(4); });
 
-    core.GetScheduler<Scheduler::FixedTimeUpdate>().SetTickRate(1.0 / 5.0);
-    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
+    core.GetScheduler<Scheduler::FixedTimeUpdate>().SetTickRate(0.2f);
+    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(0.2f);
 
-    std::this_thread::sleep_for(0.21s);
+    elapsedTime = 0.2f;
     core.RunSystems();
-    std::this_thread::sleep_for(0.21s);
     core.RunSystems();
 
-    ASSERT_EQ(data.size(), 11);
+    ASSERT_EQ(data.size(), 9);
     ASSERT_EQ(data[0], 1);
     ASSERT_EQ(data[1], 2);
-    ASSERT_EQ(data[2], 2);
-    ASSERT_EQ(data[3], 2);
-    ASSERT_EQ(data[4], 2);
-    ASSERT_EQ(data[5], 3);
-    ASSERT_EQ(data[6], 2);
-    ASSERT_EQ(data[7], 2);
-    ASSERT_EQ(data[8], 2);
-    ASSERT_EQ(data[9], 2);
-    ASSERT_EQ(data[10], 3);
+    ASSERT_EQ(data[2], 3);
+    ASSERT_EQ(data[3], 3);
+    ASSERT_EQ(data[4], 4);
+    ASSERT_EQ(data[5], 2);
+    ASSERT_EQ(data[6], 3);
+    ASSERT_EQ(data[7], 3);
+    ASSERT_EQ(data[8], 4);
 }
 
 TEST(SchedulerErrorPolicy, Silent)
