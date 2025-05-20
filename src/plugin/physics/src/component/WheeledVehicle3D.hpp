@@ -37,7 +37,7 @@ struct WheeledVehicle3D {
     std::shared_ptr<JPH::VehicleConstraintSettings> vehicleConstraintSettings;
     /// @brief The vehicle constraint itself. This should not be constructed manually.
     std::shared_ptr<JPH::VehicleConstraint> vehicleConstraint;
-    
+
     /// @brief Sub struct for wheels
     struct Wheel {
         /// @brief The wheel settings.

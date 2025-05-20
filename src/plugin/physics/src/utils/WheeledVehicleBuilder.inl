@@ -25,7 +25,8 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
         points.emplace_back(JPH::Vec3(bodyMesh->vertices[i].x, bodyMesh->vertices[i].y, bodyMesh->vertices[i].z));
     }
 
-    std::shared_ptr<JPH::ShapeSettings> bodySettings = std::make_shared<JPH::ConvexHullShapeSettings>(points.data(), points.size());
+    std::shared_ptr<JPH::ShapeSettings> bodySettings =
+        std::make_shared<JPH::ConvexHullShapeSettings>(points.data(), points.size());
     bodySettings->SetEmbedded();
 
     // Init body settings to create the body shape
@@ -53,9 +54,8 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
         ES::Engine::Entity wheelEntity = core.CreateEntity();
 
         auto &wheel = wheelEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D::Wheel>(
-            core, std::move(wheelSettings[i])
-        );
-        vehicleConstraintSettings->mWheels[i] = wheel.wheelSettings.get(); 
+            core, std::move(wheelSettings[i]));
+        vehicleConstraintSettings->mWheels[i] = wheel.wheelSettings.get();
     }
 
     // Apply the function to modify the constraint settings
@@ -88,9 +88,8 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
     vehicleConstraintSettings->mController = vehicleControllerSettings.get();
 
     // Add the component to the entity
-    vehicleEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(
-        core, bodySettings, finalShapeSettings, vehicleConstraintSettings
-    );
+    vehicleEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(core, bodySettings, finalShapeSettings,
+                                                                                 vehicleConstraintSettings);
 
     return vehicleEntity;
 }
