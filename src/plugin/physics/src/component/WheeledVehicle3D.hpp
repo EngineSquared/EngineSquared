@@ -58,13 +58,16 @@ struct WheeledVehicle3D {
     /// @note Make sure the vehicle is activated before calling this function.
     /// It can deactivate if the vehicle is not moving.
     /// @see PhysicsManager
-    void SetDriverInput(float inForward, float inRight, float inBrake, float inHandBrake) {
-        if (!vehicleConstraint) {
+    void SetDriverInput(float inForward, float inRight, float inBrake, float inHandBrake)
+    {
+        if (!vehicleConstraint)
+        {
             return;
         }
 
-        auto controller = reinterpret_cast<JPH::WheeledVehicleController*>(vehicleConstraint->GetController());
-        if (controller) {
+        auto controller = reinterpret_cast<JPH::WheeledVehicleController *>(vehicleConstraint->GetController());
+        if (controller)
+        {
             controller->SetDriverInput(inForward, inRight, inBrake, inHandBrake);
         }
     }
