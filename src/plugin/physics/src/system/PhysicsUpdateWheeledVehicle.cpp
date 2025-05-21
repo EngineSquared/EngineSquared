@@ -45,7 +45,23 @@ void ES::Plugin::Physics::System::LinkWheeledVehicleToPhysicsSystem(entt::regist
     physicsSystem.AddStepListener(wheeledVehicle.vehicleConstraint.get());
 }
 
-void ES::Plugin::Physics::System::UnlinkWheeledVehicleToPhysicsSystem(entt::registry &registry, entt::entity entity) {}
+void ES::Plugin::Physics::System::UnlinkWheeledVehicleToPhysicsSystem(entt::registry &registry, entt::entity entity) {
+    auto &wheeledVehicle = registry.get<ES::Plugin::Physics::Component::WheeledVehicle3D>(entity);
+    if (wheeledVehicle.vehicleConstraint == nullptr)
+    {
+        ES::Utils::Log::Error(fmt::format("WheeledVehicle3D component is not fully initialized for entity {}",
+                                          static_cast<uint32_t>(entity)));
+        return;
+    }
+
+    auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
+    auto &physicsSystem = physicsManager.GetPhysicsSystem();
+
+    physicsSystem.RemoveConstraint(wheeledVehicle.vehicleConstraint.get());
+    physicsSystem.RemoveStepListener(wheeledVehicle.vehicleConstraint.get());
+
+    wheeledVehicle.vehicleConstraint.reset();
+}
 
 void ES::Plugin::Physics::System::OnConstructLinkWheeledVehiclesToPhysicsSystem(ES::Engine::Core &core)
 {
