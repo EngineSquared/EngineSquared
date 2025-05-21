@@ -9,6 +9,9 @@
 #include "component/SoftBody3D.hpp"
 #include "component/WheeledVehicle3D.hpp"
 
+// Exceptions
+#include "exception/WheeledVehicleBuilderError.hpp"
+
 // Resource
 #include "resource/PhysicsManager.hpp"
 

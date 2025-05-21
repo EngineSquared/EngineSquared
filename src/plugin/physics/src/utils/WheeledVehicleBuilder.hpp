@@ -3,6 +3,7 @@
 #include "Core.hpp"
 #include "Mesh.hpp"
 #include "WheeledVehicle3D.hpp"
+#include "WheeledVehicleBuilderError.hpp"
 #include <array>
 #include <functional>
 #include <glm/glm.hpp>
@@ -91,7 +92,7 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     inline WheeledVehicleBuilder &EditWheel(size_t index, const std::function<void(JPH::WheelSettingsWV &)> &editFn)
     {
         if (index >= WheelCount)
-            throw std::out_of_range("Index out of range"); // TODO: custom exception
+            throw WheeledVehicleBuilderError("Index out of range");
 
         editFn(*wheelSettings[index]);
         return *this;
@@ -117,7 +118,7 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     EditDifferential(size_t index, const std::function<void(JPH::VehicleDifferentialSettings &)> &editFn)
     {
         if (index >= differentialSettings.size())
-            throw std::out_of_range("Index out of range"); // TODO: custom exception
+            throw WheeledVehicleBuilderError("Index out of range");
 
         editFn(differentialSettings[index]);
         return *this;
@@ -143,7 +144,7 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
                                                   const std::function<void(JPH::VehicleAntiRollBar &)> &editFn)
     {
         if (index >= antiRollBars.size())
-            throw std::out_of_range("Index out of range"); // TODO: custom exception
+            throw WheeledVehicleBuilderError("Index out of range");
 
         editFn(antiRollBars[index]);
         return *this;
