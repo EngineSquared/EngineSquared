@@ -205,13 +205,12 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     std::array<std::unique_ptr<JPH::WheelSettingsWV>, WheelCount> wheelSettings = {nullptr};
     /// Wheel callback function to be called when a wheel is created.
     /// @note This function is called after a wheel is fully initialized.
-    std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> wheelCallbackFn = [](ES::Engine::Core &, ES::Engine::Entity &) {
-    };
+    std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> wheelCallbackFn = [](ES::Engine::Core &,
+                                                                                       ES::Engine::Entity &) {};
     /// Vehicle callback function to be called when a vehicle is created.
     /// @note This function is called after a vehicle is fully initialized.
-    std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> vehicleCallbackFn =
-        [](ES::Engine::Core &, ES::Engine::Entity &) {
-        };
+    std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> vehicleCallbackFn = [](ES::Engine::Core &,
+                                                                                         ES::Engine::Entity &) {};
     /// Differentials settings of the vehicle.
     std::vector<JPH::VehicleDifferentialSettings> differentialSettings;
     /// Anti-roll bar settings of the vehicle.
