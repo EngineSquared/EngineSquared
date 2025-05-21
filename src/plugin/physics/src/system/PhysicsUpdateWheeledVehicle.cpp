@@ -45,7 +45,8 @@ void ES::Plugin::Physics::System::LinkWheeledVehicleToPhysicsSystem(entt::regist
     physicsSystem.AddStepListener(wheeledVehicle.vehicleConstraint.get());
 }
 
-void ES::Plugin::Physics::System::UnlinkWheeledVehicleToPhysicsSystem(entt::registry &registry, entt::entity entity) {
+void ES::Plugin::Physics::System::UnlinkWheeledVehicleToPhysicsSystem(entt::registry &registry, entt::entity entity)
+{
     auto &wheeledVehicle = registry.get<ES::Plugin::Physics::Component::WheeledVehicle3D>(entity);
     if (wheeledVehicle.vehicleConstraint == nullptr)
     {
