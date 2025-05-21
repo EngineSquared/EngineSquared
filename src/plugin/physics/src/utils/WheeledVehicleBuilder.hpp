@@ -160,6 +160,28 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
         return *this;
     }
 
+    /// @brief Set a callback to be called when a vehicle wheel is created.
+    /// @param fn A callable that takes a reference to the wheel entity and modifies it.
+    /// @return A reference to the vehicle builder.
+    /// @note This function is called when a wheel is created.
+    inline WheeledVehicleBuilder &
+    SetWheelCallbackFn(const std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> &fn)
+    {
+        wheelCallbackFn = fn;
+        return *this;
+    }
+
+    /// @brief Set a callback to be called when a vehicle is created.
+    /// @param fn A callable that takes a reference to the vehicle entity and modifies it.
+    /// @return A reference to the vehicle builder.
+    /// @note This function is called when the vehicle is created.
+    inline WheeledVehicleBuilder &
+    SetVehicleCallbackFn(const std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> &fn)
+    {
+        vehicleCallbackFn = fn;
+        return *this;
+    }
+
     /// @brief Create the vehicle and add it to the physics world.
     /// @return The entity of the vehicle.
     ES::Engine::Entity Build();
@@ -180,8 +202,16 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     /// Offset center of mass of the vehicle.
     glm::vec3 offsetCenterOfMassShape = glm::vec3(0.0f, 0.0f, 0.0f);
     /// Wheels settings of the vehicle.
-    /// TODO: release ownership to components when the object is created
     std::array<std::unique_ptr<JPH::WheelSettingsWV>, WheelCount> wheelSettings = {nullptr};
+    /// Wheel callback function to be called when a wheel is created.
+    /// @note This function is called after a wheel is fully initialized.
+    std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> wheelCallbackFn = [](ES::Engine::Core &, ES::Engine::Entity &) {
+    };
+    /// Vehicle callback function to be called when a vehicle is created.
+    /// @note This function is called after a vehicle is fully initialized.
+    std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> vehicleCallbackFn =
+        [](ES::Engine::Core &, ES::Engine::Entity &) {
+        };
     /// Differentials settings of the vehicle.
     std::vector<JPH::VehicleDifferentialSettings> differentialSettings;
     /// Anti-roll bar settings of the vehicle.

@@ -38,11 +38,6 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
     auto &vehicleRigidBody = vehicleEntity.AddComponent<ES::Plugin::Physics::Component::RigidBody3D>(
         core, finalShapeSettings, JPH::EMotionType::Dynamic, ES::Plugin::Physics::Utils::Layers::MOVING);
 
-    // TODO: do not hardcode that
-    vehicleEntity.AddComponent<ES::Plugin::OpenGL::Component::ShaderHandle>(core, "no_light");
-    vehicleEntity.AddComponent<ES::Plugin::OpenGL::Component::MaterialHandle>(core, "car_body");
-    vehicleEntity.AddComponent<ES::Plugin::OpenGL::Component::ModelHandle>(core, "car_body");
-
     // Create the vehicle constraint settings
     auto vehicleConstraintSettings = std::make_shared<JPH::VehicleConstraintSettings>();
     vehicleConstraintSettings->SetEmbedded();
@@ -60,10 +55,10 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
         wheelEntity.AddComponent<ES::Plugin::Object::Component::Transform>(core, wheelPosition);
         wheelEntity.AddComponent<ES::Plugin::Object::Component::Mesh>(core, wheelMesh.value());
 
-        // TODO: do not hardcode that
-        wheelEntity.AddComponent<ES::Plugin::OpenGL::Component::ShaderHandle>(core, "no_light");
-        wheelEntity.AddComponent<ES::Plugin::OpenGL::Component::MaterialHandle>(core, "car_wheel");
-        wheelEntity.AddComponent<ES::Plugin::OpenGL::Component::ModelHandle>(core, "car_wheel");
+        if (wheelCallbackFn)
+        {
+            wheelCallbackFn(core, wheelEntity);
+        }
 
         auto &wheel = wheelEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D::Wheel>(
             core, vehicleEntity, std::move(wheelSettings[i]), i);
@@ -101,6 +96,11 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
     // Add the component to the entity
     vehicleEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(
         core, bodySettings, finalShapeSettings, vehicleConstraintSettings, vehicleControllerSettings);
+
+    if (vehicleCallbackFn)
+    {
+        vehicleCallbackFn(core, vehicleEntity);
+    }
 
     return vehicleEntity;
 }
