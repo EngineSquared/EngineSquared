@@ -34,6 +34,8 @@ void ES::Plugin::Physics::System::LinkWheeledVehicleToPhysicsSystem(entt::regist
         std::make_shared<JPH::VehicleConstraint>(*rigidBody.body, *wheeledVehicle.vehicleConstraintSettings.get());
     wheeledVehicle.vehicleConstraint->SetEmbedded();
 
+    wheeledVehicle.vehicleConstraintSettings = nullptr;
+
     // TODO: do not hardcode that, store it somewhere and create it through builder
     wheeledVehicle.vehicleConstraint->SetVehicleCollisionTester(
         new JPH::VehicleCollisionTesterCastCylinder(ES::Plugin::Physics::Utils::Layers::MOVING, 0.05));
@@ -41,6 +43,7 @@ void ES::Plugin::Physics::System::LinkWheeledVehicleToPhysicsSystem(entt::regist
     auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsSystem = physicsManager.GetPhysicsSystem();
 
+    printf("Linking vehicle constraint to physics system\n");; fflush(stdout);
     physicsSystem.AddConstraint(wheeledVehicle.vehicleConstraint.get());
     physicsSystem.AddStepListener(wheeledVehicle.vehicleConstraint.get());
 }
@@ -58,10 +61,9 @@ void ES::Plugin::Physics::System::UnlinkWheeledVehicleToPhysicsSystem(entt::regi
     auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsSystem = physicsManager.GetPhysicsSystem();
 
+    printf("Unlinking vehicle constraint from physics system\n");; fflush(stdout);
     physicsSystem.RemoveConstraint(wheeledVehicle.vehicleConstraint.get());
     physicsSystem.RemoveStepListener(wheeledVehicle.vehicleConstraint.get());
-
-    wheeledVehicle.vehicleConstraint.reset();
 }
 
 void ES::Plugin::Physics::System::OnConstructLinkWheeledVehiclesToPhysicsSystem(ES::Engine::Core &core)

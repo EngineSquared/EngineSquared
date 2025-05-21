@@ -24,6 +24,7 @@
 #include <glm/glm.hpp>
 #include <memory>
 
+#include "Entity.hpp"
 #include "Layers.hpp"
 
 namespace ES::Plugin::Physics::Component {
