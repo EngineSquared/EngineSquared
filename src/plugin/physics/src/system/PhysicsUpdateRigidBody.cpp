@@ -70,8 +70,6 @@ void ES::Plugin::Physics::System::UnlinkRigidBodiesToPhysicsSystem(entt::registr
     auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsSystem = physicsManager.GetPhysicsSystem();
 
-    printf("Unlinking rigid body from physics system\n");
-    fflush(stdout);
     physicsSystem.GetBodyInterface().RemoveBody(rigidBody.body->GetID());
     rigidBody.body = nullptr;
 }

@@ -43,9 +43,6 @@ void ES::Plugin::Physics::System::LinkWheeledVehicleToPhysicsSystem(entt::regist
     auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsSystem = physicsManager.GetPhysicsSystem();
 
-    printf("Linking vehicle constraint to physics system\n");
-    ;
-    fflush(stdout);
     physicsSystem.AddConstraint(wheeledVehicle.vehicleConstraint.get());
     physicsSystem.AddStepListener(wheeledVehicle.vehicleConstraint.get());
 }
@@ -63,9 +60,6 @@ void ES::Plugin::Physics::System::UnlinkWheeledVehicleToPhysicsSystem(entt::regi
     auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsSystem = physicsManager.GetPhysicsSystem();
 
-    printf("Unlinking vehicle constraint from physics system\n");
-    ;
-    fflush(stdout);
     physicsSystem.RemoveConstraint(wheeledVehicle.vehicleConstraint.get());
     physicsSystem.RemoveStepListener(wheeledVehicle.vehicleConstraint.get());
 }
