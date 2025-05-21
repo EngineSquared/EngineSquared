@@ -7,7 +7,7 @@
 #include "WheeledVehicle3D.hpp"
 
 namespace ES::Plugin::Physics::System {
-void ShutdownJoltPhysics([[maybe_unused]] ES::Engine::Core &core)
+void ShutdownJoltPhysics(ES::Engine::Core &core)
 {
     // Trigger the destruction of all physics components
     core.GetRegistry().view<ES::Plugin::Physics::Component::RigidBody3D>().each([&](auto entity, const auto &) {

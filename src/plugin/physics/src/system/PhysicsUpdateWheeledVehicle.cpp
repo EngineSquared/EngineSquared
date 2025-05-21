@@ -1,3 +1,5 @@
+#include "JoltPhysics.pch.hpp"
+
 #include "PhysicsUpdateWheeledVehicle.hpp"
 
 #include "FixedTimeUpdate.hpp"

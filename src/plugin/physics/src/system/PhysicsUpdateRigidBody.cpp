@@ -1,3 +1,5 @@
+#include "JoltPhysics.pch.hpp"
+
 #include "PhysicsUpdateRigidBody.hpp"
 
 #include "FixedTimeUpdate.hpp"
