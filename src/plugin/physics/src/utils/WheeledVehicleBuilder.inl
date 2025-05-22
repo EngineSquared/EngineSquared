@@ -95,7 +95,7 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
 
     // Add the component to the entity
     vehicleEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(
-        core, bodySettings, finalShapeSettings, vehicleConstraintSettings, vehicleControllerSettings);
+        core, bodySettings, finalShapeSettings, vehicleConstraintSettings, vehicleControllerSettings, collisionTester);
 
     if (vehicleCallbackFn)
     {

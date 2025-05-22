@@ -38,9 +38,7 @@ void ES::Plugin::Physics::System::LinkWheeledVehicleToPhysicsSystem(entt::regist
 
     wheeledVehicle.vehicleConstraintSettings = nullptr;
 
-    // TODO: do not hardcode that, store it somewhere and create it through builder
-    wheeledVehicle.vehicleConstraint->SetVehicleCollisionTester(
-        new JPH::VehicleCollisionTesterCastCylinder(ES::Plugin::Physics::Utils::Layers::MOVING, 0.05));
+    wheeledVehicle.vehicleConstraint->SetVehicleCollisionTester(wheeledVehicle.collisionTester.get());
 
     auto &physicsManager = registry.ctx().get<ES::Plugin::Physics::Resource::PhysicsManager>();
     auto &physicsSystem = physicsManager.GetPhysicsSystem();
