@@ -4,6 +4,9 @@
 #include "InitPhysicsManager.hpp"
 #include "PhysicsManager.hpp"
 #include "PhysicsUpdate.hpp"
+#include "PhysicsUpdateRigidBody.hpp"
+#include "PhysicsUpdateSoftBody.hpp"
+#include "PhysicsUpdateWheeledVehicle.hpp"
 #include "ShutdownJoltPhysics.hpp"
 #include "Startup.hpp"
 
@@ -16,10 +19,13 @@ void ES::Plugin::Physics::Plugin::Bind()
         ES::Plugin::Physics::System::OnConstructLinkRigidBodiesToPhysicsSystem);
     RegisterSystems<ES::Engine::Scheduler::Startup>(
         ES::Plugin::Physics::System::OnConstructLinkSoftBodiesToPhysicsSystem);
+    RegisterSystems<ES::Engine::Scheduler::Startup>(
+        ES::Plugin::Physics::System::OnConstructLinkWheeledVehiclesToPhysicsSystem);
 
     RegisterSystems<ES::Engine::Scheduler::FixedTimeUpdate>(
         ES::Plugin::Physics::System::SyncRigidBodiesToTransforms, ES::Plugin::Physics::System::PhysicsUpdate,
-        ES::Plugin::Physics::System::SyncTransformsToRigidBodies, ES::Plugin::Physics::System::SyncSoftBodiesData);
+        ES::Plugin::Physics::System::SyncTransformsToRigidBodies, ES::Plugin::Physics::System::SyncSoftBodiesData,
+        ES::Plugin::Physics::System::SyncWheeledVehicleWheels);
 
     RegisterSystems<ES::Engine::Scheduler::Shutdown>(ES::Plugin::Physics::System::ShutdownJoltPhysics);
 }
