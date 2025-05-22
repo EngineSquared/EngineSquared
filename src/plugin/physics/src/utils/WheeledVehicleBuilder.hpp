@@ -26,7 +26,8 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
             wheelSettings[i] = std::make_unique<JPH::WheelSettingsWV>();
             wheelSettings[i]->SetEmbedded();
         }
-        collisionTester = std::make_shared<JPH::VehicleCollisionTesterCastCylinder>(ES::Plugin::Physics::Utils::Layers::MOVING, 0.05);
+        collisionTester =
+            std::make_shared<JPH::VehicleCollisionTesterCastCylinder>(ES::Plugin::Physics::Utils::Layers::MOVING, 0.05);
         collisionTester->SetEmbedded();
     }
 
@@ -190,8 +191,7 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     /// @return A reference to the vehicle builder.
     /// @note The collision tester should inherit from Jolt's JPH::VehicleCollisionTester.
     /// By default, a cylinder collision tester is used.
-    inline WheeledVehicleBuilder &SetCollisionTester(
-        const std::shared_ptr<JPH::VehicleCollisionTester> &tester)
+    inline WheeledVehicleBuilder &SetCollisionTester(const std::shared_ptr<JPH::VehicleCollisionTester> &tester)
     {
         collisionTester = tester;
         collisionTester->SetEmbedded();
