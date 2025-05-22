@@ -12,6 +12,9 @@
 
 #include <fmt/format.h>
 
+static const JPH::Vec3 wheelRight(1.0f, 0.0f, 0.0f);
+static const JPH::Vec3 wheelUp(0.0f, 1.0f, 0.0f);
+
 // TODO: find a way to have custom signal (so that we can send Core rather than entt::registry)
 void ES::Plugin::Physics::System::LinkWheeledVehicleToPhysicsSystem(entt::registry &registry, entt::entity entity)
 {
@@ -92,10 +95,6 @@ void ES::Plugin::Physics::System::SyncWheeledVehicleWheels(ES::Engine::Core &cor
                 return;
             }
 
-            // TODO: do not hardcode this
-            static const JPH::Vec3 wheelRight(1.0f, 0.0f, 0.0f);
-            static const JPH::Vec3 wheelUp(0.0f, 1.0f, 0.0f);
-
             auto &wheeledVehicle =
                 wheel.parentVehicle.template GetComponents<ES::Plugin::Physics::Component::WheeledVehicle3D>(core);
 
@@ -105,10 +104,6 @@ void ES::Plugin::Physics::System::SyncWheeledVehicleWheels(ES::Engine::Core &cor
             auto wRotation = wTransform.GetRotation().GetQuaternion();
 
             transform.setPosition(glm::vec3(wPosition.GetX(), wPosition.GetY(), wPosition.GetZ()));
-
-            transform.rotation.w = wRotation.GetW();
-            transform.rotation.x = wRotation.GetX();
-            transform.rotation.y = wRotation.GetY();
-            transform.rotation.z = wRotation.GetZ();
+            transform.setRotation(glm::quat(wRotation.GetW(), wRotation.GetX(), wRotation.GetY(), wRotation.GetZ()));
         });
 }
