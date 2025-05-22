@@ -83,9 +83,7 @@ void ES::Plugin::Physics::System::SyncWheeledVehicleWheels(ES::Engine::Core &cor
         .view<ES::Plugin::Physics::Component::WheeledVehicle3D::Wheel, ES::Plugin::Object::Component::Transform>()
         .each([&](auto, auto &wheel, auto &transform) {
             if (wheel.wheelSettings == nullptr)
-            {
                 return;
-            }
 
             if (!wheel.parentVehicle.template HasComponents<ES::Plugin::Physics::Component::WheeledVehicle3D>(core))
             {
