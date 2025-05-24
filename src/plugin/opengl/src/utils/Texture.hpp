@@ -9,7 +9,14 @@ namespace ES::Plugin::OpenGL::Utils {
 class Texture {
   public:
     explicit Texture(const std::string &texturePath);
+    Texture(int width, int height, int channels, GLuint textureID)
+        : _width(width), _height(height), _channels(channels), _textureID(textureID) {}
     ~Texture();
+
+    Texture(const Texture &) = default;
+    Texture(Texture &&) = default;
+    Texture &operator=(const Texture &) = default;
+    Texture &operator=(Texture &&) = default;
 
     void Bind() const;
 
