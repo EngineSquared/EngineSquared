@@ -52,10 +52,7 @@ class SceneManager {
         return *new_scene.get();
     }
 
-    const std::optional<std::string> &GetCurrentScene() const
-    {
-        return _currentScene;
-    }
+    const std::optional<std::string> &GetCurrentScene() const { return _currentScene; }
 
   private:
     void _loadScene(ES::Engine::Core &core, const std::string &name);

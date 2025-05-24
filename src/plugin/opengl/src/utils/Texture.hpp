@@ -10,7 +10,9 @@ class Texture {
   public:
     explicit Texture(const std::string &texturePath);
     Texture(int width, int height, int channels, GLuint textureID)
-        : _width(width), _height(height), _channels(channels), _textureID(textureID) {}
+        : _width(width), _height(height), _channels(channels), _textureID(textureID)
+    {
+    }
     ~Texture();
 
     Texture(const Texture &) = default;
