@@ -1,7 +1,7 @@
 #pragma once
 
-#include <glm/glm.hpp>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 
 namespace ES::Plugin::OpenGL::Resource {
 class DirectionalLight {

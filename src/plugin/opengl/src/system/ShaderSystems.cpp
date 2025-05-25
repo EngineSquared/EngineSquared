@@ -1,10 +1,10 @@
 #include "OpenGL.pch.hpp"
 
+#include "Camera.hpp"
+#include "DirectionalLight.hpp"
 #include "LightInfo.hpp"
 #include "ShaderManager.hpp"
 #include "ShaderSystems.hpp"
-#include "DirectionalLight.hpp"
-#include "Camera.hpp"
 
 void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
 {
@@ -379,37 +379,44 @@ void ES::Plugin::OpenGL::System::SetupDepthMapShader(ES::Engine::Core &core)
     m_shaderProgram.AddUniform("model");
 }
 
-void ES::Plugin::OpenGL::System::UpdateNoTextureLightShadowShader(ES::Engine::Core &core){
-	const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
-	if (!light.enabled)
-		return;
-	auto &shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"noTextureLightShadow"});
-	shaderProgram.Use();
+void ES::Plugin::OpenGL::System::UpdateNoTextureLightShadowShader(ES::Engine::Core &core)
+{
+    const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
+    if (!light.enabled)
+        return;
+    auto &shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(
+        entt::hashed_string{"noTextureLightShadow"});
+    shaderProgram.Use();
 
-	// Link texture to the shader
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, light.depthMap);
-	glUniform1i(shaderProgram.GetUniform("shadowMap"), 1);
+    // Link texture to the shader
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, light.depthMap);
+    glUniform1i(shaderProgram.GetUniform("shadowMap"), 1);
 
-	// Link Light Space Matrix to the shader
-	glUniformMatrix4fv(shaderProgram.GetUniform("lightSpaceMatrix"), 1, GL_FALSE, glm::value_ptr(light.lightSpaceMatrix));
-	
-	// Link Camera Position to the shader
-	glUniform3fv(shaderProgram.GetUniform("CamPos"), 1, glm::value_ptr(core.GetResource<OpenGL::Resource::Camera>().viewer.getViewPoint()));
-	
-	shaderProgram.Disable();
+    // Link Light Space Matrix to the shader
+    glUniformMatrix4fv(shaderProgram.GetUniform("lightSpaceMatrix"), 1, GL_FALSE,
+                       glm::value_ptr(light.lightSpaceMatrix));
+
+    // Link Camera Position to the shader
+    glUniform3fv(shaderProgram.GetUniform("CamPos"), 1,
+                 glm::value_ptr(core.GetResource<OpenGL::Resource::Camera>().viewer.getViewPoint()));
+
+    shaderProgram.Disable();
 }
 
-void ES::Plugin::OpenGL::System::UpdateDepthMapShader(ES::Engine::Core &core){
-	const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
-	if (!light.enabled)
-		return;
-	auto &shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"depthMap"});
-	
-	shaderProgram.Use();
+void ES::Plugin::OpenGL::System::UpdateDepthMapShader(ES::Engine::Core &core)
+{
+    const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
+    if (!light.enabled)
+        return;
+    auto &shaderProgram =
+        core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"depthMap"});
 
-	// Link Light Space Matrix to the shader
-	glUniformMatrix4fv(shaderProgram.GetUniform("lightSpaceMatrix"), 1, GL_FALSE, glm::value_ptr(light.lightSpaceMatrix));
-	
-	shaderProgram.Disable();
+    shaderProgram.Use();
+
+    // Link Light Space Matrix to the shader
+    glUniformMatrix4fv(shaderProgram.GetUniform("lightSpaceMatrix"), 1, GL_FALSE,
+                       glm::value_ptr(light.lightSpaceMatrix));
+
+    shaderProgram.Disable();
 }
