@@ -15,4 +15,8 @@ void LoadMaterialCache(ES::Engine::Core &core);
 void UpdateMatrices(ES::Engine::Core &core);
 void SetupLights(ES::Engine::Core &core);
 void SetupCamera(ES::Engine::Core &core);
+
+void SetupShadowframebuffer(ES::Engine::Core &core);
+void RenderShadowMap(ES::Engine::Core &core);
+void ResetPassStatus(ES::Engine::Core &core);
 } // namespace ES::Plugin::OpenGL::System

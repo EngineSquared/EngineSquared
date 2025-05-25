@@ -22,6 +22,7 @@
 #include "TextHandle.hpp"
 #include "TextureHandle.hpp"
 #include "TextureManager.hpp"
+#include "DirectionalLight.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -180,4 +181,41 @@ void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
     glUniform3fv(shaderProgram.GetUniform("CamPos"), 1,
                  glm::value_ptr(core.GetResource<Resource::Camera>().viewer.getViewPoint()));
     shaderProgram.Disable();
+}
+
+void ES::Plugin::OpenGL::System::SetupShadowframebuffer(ES::Engine::Core &core)
+{
+	const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
+	if (!light.enabled)
+		return;
+	// Setup the framebuffer for shadow mapping
+	glViewport(0, 0, light.SHADOW_WIDTH, light.SHADOW_HEIGHT);
+	glBindFramebuffer(GL_FRAMEBUFFER, light.depthMapFBO);
+	glCullFace(GL_FRONT);
+	glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+void ES::Plugin::OpenGL::System::RenderShadowMap(ES::Engine::Core &core)
+{
+	auto &shad = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"depthMap"});
+	shad.Use();
+	core.GetRegistry()
+		.view<ES::Plugin::OpenGL::Component::ModelHandle, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh>()
+		.each([&](auto entity, ES::Plugin::OpenGL::Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Transform &transform,
+				ES::Plugin::Object::Component::Mesh &mesh) {
+			const auto &glBuffer = core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>().Get(modelHandle.id);
+			glm::mat4 model = transform.getTransformationMatrix();
+			glUniformMatrix4fv(shad.GetUniform("model"), 1, GL_FALSE, glm::value_ptr(model));
+			glBuffer.Draw(mesh);
+		}
+	);
+	shad.Disable();
+}
+
+void ES::Plugin::OpenGL::System::ResetPassStatus(ES::Engine::Core &core)
+{
+	glCullFace(GL_BACK);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	auto cameraSize = core.GetResource<ES::Plugin::OpenGL::Resource::Camera>().size;
+	glViewport(0, 0, static_cast<int>(cameraSize.x), static_cast<int>(cameraSize.y));
 }
