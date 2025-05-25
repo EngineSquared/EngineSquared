@@ -40,10 +40,7 @@ void ES::Plugin::OpenGL::Plugin::Bind()
         ES::Plugin::OpenGL::System::LoadGLTextBuffer, ES::Plugin::OpenGL::System::LoadGLSpriteBuffer);
 
     RegisterSystems<ES::Plugin::RenderingPipeline::ToGPU>(
-        ES::Plugin::OpenGL::System::SetupShadowframebuffer,
-		ES::Plugin::OpenGL::System::RenderShadowMap,
-		ES::Plugin::OpenGL::System::ResetPassStatus,
-        ES::Plugin::OpenGL::System::RenderMeshes,
-                                                          ES::Plugin::OpenGL::System::RenderText,
-                                                          ES::Plugin::OpenGL::System::RenderSprites);
+        ES::Plugin::OpenGL::System::SetupShadowframebuffer, ES::Plugin::OpenGL::System::RenderShadowMap,
+        ES::Plugin::OpenGL::System::ResetPassStatus, ES::Plugin::OpenGL::System::RenderMeshes,
+        ES::Plugin::OpenGL::System::RenderText, ES::Plugin::OpenGL::System::RenderSprites);
 }
