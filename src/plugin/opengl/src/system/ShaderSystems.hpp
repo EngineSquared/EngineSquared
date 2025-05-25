@@ -16,5 +16,7 @@ void SetupNoTextureLightShadowShader(ES::Engine::Core &core);
 
 void LoadDepthMapShader(ES::Engine::Core &core);
 void SetupDepthMapShader(ES::Engine::Core &core);
+void UpdateNoTextureLightShadowShader(ES::Engine::Core &core);
+void UpdateDepthMapShader(ES::Engine::Core &core);
 
 } // namespace ES::Plugin::OpenGL::System

@@ -181,3 +181,4 @@ void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
                  glm::value_ptr(core.GetResource<Resource::Camera>().viewer.getViewPoint()));
     shaderProgram.Disable();
 }
+
