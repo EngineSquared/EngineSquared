@@ -13,4 +13,8 @@ void SetupSpriteShaderUniforms(ES::Engine::Core &core);
 
 void LoadNoTextureLightShadowShader(ES::Engine::Core &core);
 void SetupNoTextureLightShadowShader(ES::Engine::Core &core);
+
+void LoadDepthMapShader(ES::Engine::Core &core);
+void SetupDepthMapShader(ES::Engine::Core &core);
+
 } // namespace ES::Plugin::OpenGL::System

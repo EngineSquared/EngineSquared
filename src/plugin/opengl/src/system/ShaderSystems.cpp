@@ -336,3 +336,42 @@ void ES::Plugin::OpenGL::System::SetupNoTextureLightShadowShader(ES::Engine::Cor
     m_shaderProgram.AddUniform("Material.Shiness");
     m_shaderProgram.AddUniform("CamPos");
 }
+
+void ES::Plugin::OpenGL::System::LoadDepthMapShader(ES::Engine::Core &core)
+{
+    const char *vertexShader = R"(
+        #version 330 core
+        layout (location = 0) in vec4 VertexPosition;
+
+        uniform mat4 lightSpaceMatrix;
+        uniform mat4 model;
+
+        void main()
+        {
+            gl_Position = lightSpaceMatrix * model * VertexPosition;
+        } 
+    )";
+
+    const char *fragmentShader = R"(
+        #version 330 core
+
+        void main()
+        {             
+            // We don't need to output anything for the depth map shader
+            // The depth value will be written to the depth buffer automatically
+            // so we can leave this empty.
+        }  
+    )";
+
+    auto &shaderManager = core.GetResource<Resource::ShaderManager>();
+    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"depthMap"});
+    sp.Create();
+    sp.InitFromStrings(vertexShader, fragmentShader);
+}
+
+void ES::Plugin::OpenGL::System::SetupDepthMapShader(ES::Engine::Core &core)
+{
+    auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"depthMap"});
+   	m_shaderProgram.AddUniform("lightSpaceMatrix");
+	m_shaderProgram.AddUniform("model");
+}

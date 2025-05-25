@@ -19,10 +19,10 @@ void ES::Plugin::OpenGL::Plugin::Bind()
         ES::Plugin::OpenGL::System::LoadMaterialCache, ES::Plugin::OpenGL::System::LoadShaderManager,
         ES::Plugin::OpenGL::System::LoadDefaultShader, ES::Plugin::OpenGL::System::LoadDefaultTextShader,
         ES::Plugin::OpenGL::System::LoadDefaultSpriteShader, ES::Plugin::OpenGL::System::LoadNoTextureLightShadowShader, 
-        ES::Plugin::OpenGL::System::LoadTextureManager,
+        ES::Plugin::OpenGL::System::LoadDepthMapShader, ES::Plugin::OpenGL::System::LoadTextureManager,
         ES::Plugin::OpenGL::System::CreateCamera, ES::Plugin::OpenGL::System::SetupShaderUniforms,
         ES::Plugin::OpenGL::System::SetupTextShaderUniforms, ES::Plugin::OpenGL::System::SetupSpriteShaderUniforms,
-        ES::Plugin::OpenGL::System::SetupNoTextureLightShadowShader,
+        ES::Plugin::OpenGL::System::SetupNoTextureLightShadowShader, ES::Plugin::OpenGL::System::SetupDepthMapShader,
         ES::Plugin::OpenGL::System::LoadGLMeshBufferManager, ES::Plugin::OpenGL::System::LoadGLTextBufferManager,
         ES::Plugin::OpenGL::System::LoadGLSpriteBufferManager, ES::Plugin::OpenGL::System::SetupMouseDragging);
 
