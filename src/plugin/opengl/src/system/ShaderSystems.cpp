@@ -322,10 +322,11 @@ void ES::Plugin::OpenGL::System::LoadNoTextureLightShadowShader(ES::Engine::Core
 
 void ES::Plugin::OpenGL::System::SetupNoTextureLightShadowShader(ES::Engine::Core &core)
 {
-    auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"noTextureLightShadow"});
+    auto &m_shaderProgram =
+        core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"noTextureLightShadow"});
     m_shaderProgram.AddUniform("shadowMap");
-	m_shaderProgram.AddUniform("lightSpaceMatrix");
-	m_shaderProgram.AddUniform("MVP");
+    m_shaderProgram.AddUniform("lightSpaceMatrix");
+    m_shaderProgram.AddUniform("MVP");
     m_shaderProgram.AddUniform("ModelMatrix");
     m_shaderProgram.AddUniform("NormalMatrix");
     m_shaderProgram.AddUniform("NumberLights");

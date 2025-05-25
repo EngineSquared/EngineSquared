@@ -25,6 +25,7 @@
 #include "resource/MouseDragging.hpp"
 #include "resource/ShaderManager.hpp"
 #include "resource/TextureManager.hpp"
+#include "resource/DirectionalLight.hpp"
 
 // Systems
 #include "system/BufferSystems.hpp"
