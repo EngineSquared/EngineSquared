@@ -373,6 +373,6 @@ void ES::Plugin::OpenGL::System::LoadDepthMapShader(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::SetupDepthMapShader(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"depthMap"});
-   	m_shaderProgram.AddUniform("lightSpaceMatrix");
-	m_shaderProgram.AddUniform("model");
+    m_shaderProgram.AddUniform("lightSpaceMatrix");
+    m_shaderProgram.AddUniform("model");
 }
