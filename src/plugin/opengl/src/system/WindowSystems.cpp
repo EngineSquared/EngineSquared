@@ -89,6 +89,6 @@ void ES::Plugin::OpenGL::System::GLEnableDepth(const ES::Engine::Core &) { glEna
 
 void ES::Plugin::OpenGL::System::GLEnableCullFace(const ES::Engine::Core &)
 {
-    // glEnable(GL_CULL_FACE);
-    // glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 }
