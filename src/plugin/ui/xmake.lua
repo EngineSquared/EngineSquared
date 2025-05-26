@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "glfw >=3.4", "glew", "fmt", "spdlog", "glm", "stb")
+add_requires("entt", "glfw >=3.4", "rmlui", "glew", "fmt", "spdlog", "glm", "stb")
 add_requires("gtest", {optional = true})
 
 includes("../../engine/xmake.lua")
@@ -11,13 +11,14 @@ includes("../object/xmake.lua")
 includes("../physics/xmake.lua")
 includes("../opengl/xmake.lua")
 includes("../window/xmake.lua")
+includes("../rendering-pipeline/xmake.lua")
 
 target("PluginUI")
     set_kind("static")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
     set_policy("build.warning", true)
-    add_packages("entt", "glm", "glfw", "fmt", "spdlog", "glew", "stb")
+    add_packages("entt", "glfw", "glm", "rmlui", "fmt", "spdlog", "glew", "stb")
 
     set_pcxxheader("src/UI.pch.hpp")
 
@@ -32,8 +33,10 @@ target("PluginUI")
 
     add_files("src/**.cpp")
     add_includedirs("src/", {public = true})
-    add_includedirs("src/system", {public = true})
     add_includedirs("src/component", {public = true})
+    add_includedirs("src/plugin", {public = true})
+    add_includedirs("src/resource", {public = true})
+    add_includedirs("src/system", {public = true})
     add_includedirs("src/utils", {public = true})
 
 for _, file in ipairs(os.files("tests/**.cpp")) do

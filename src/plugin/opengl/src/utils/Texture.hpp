@@ -9,15 +9,18 @@ namespace ES::Plugin::OpenGL::Utils {
 class Texture {
   public:
     explicit Texture(const std::string &texturePath);
+    explicit Texture(const void *rawData, int width, int height);
     ~Texture();
 
     void Bind() const;
 
     [[nodiscard]] int GetWidth() const { return _width; }
     [[nodiscard]] int GetHeight() const { return _height; }
+    [[nodiscard]] bool IsValid() const { return _textureID != 0; }
 
   private:
     void LoadTexture(const std::string &texturePath);
+    void LoadTexture(const void *rawData);
 
   private:
     int _width = 0;
