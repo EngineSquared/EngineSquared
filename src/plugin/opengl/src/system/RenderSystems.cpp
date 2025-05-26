@@ -201,9 +201,9 @@ void ES::Plugin::OpenGL::System::RenderShadowMap(ES::Engine::Core &core)
     if (light.enabled)
         core.GetRegistry()
             .view<ES::Plugin::OpenGL::Component::ModelHandle, ES::Plugin::Object::Component::Transform,
-                ES::Plugin::Object::Component::Mesh>()
+                  ES::Plugin::Object::Component::Mesh>()
             .each([&](auto entity, ES::Plugin::OpenGL::Component::ModelHandle &modelHandle,
-                    ES::Plugin::Object::Component::Transform &transform, ES::Plugin::Object::Component::Mesh &mesh) {
+                      ES::Plugin::Object::Component::Transform &transform, ES::Plugin::Object::Component::Mesh &mesh) {
                 const auto &glBuffer =
                     core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>().Get(modelHandle.id);
                 glm::mat4 model = transform.getTransformationMatrix();
