@@ -8,8 +8,7 @@ namespace ES::Plugin::OpenGL::Utils {
 
 Texture::Texture(const std::string &texturePath) { LoadTexture(texturePath); }
 
-Texture::Texture(const void *rawData, int width, int height)
-    : _width(width), _height(height), _channels(4)
+Texture::Texture(const void *rawData, int width, int height) : _width(width), _height(height), _channels(4)
 {
     LoadTexture(rawData);
 }
