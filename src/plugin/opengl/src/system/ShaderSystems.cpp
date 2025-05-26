@@ -382,8 +382,6 @@ void ES::Plugin::OpenGL::System::SetupDepthMapShader(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::UpdateNoTextureLightShadowShader(ES::Engine::Core &core)
 {
     const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
-    if (!light.enabled)
-        return;
     auto &shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(
         entt::hashed_string{"noTextureLightShadow"});
     shaderProgram.Use();
@@ -407,8 +405,6 @@ void ES::Plugin::OpenGL::System::UpdateNoTextureLightShadowShader(ES::Engine::Co
 void ES::Plugin::OpenGL::System::UpdateDepthMapShader(ES::Engine::Core &core)
 {
     const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
-    if (!light.enabled)
-        return;
     auto &shaderProgram =
         core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"depthMap"});
 
