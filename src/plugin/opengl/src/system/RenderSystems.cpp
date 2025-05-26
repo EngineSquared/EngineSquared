@@ -186,8 +186,6 @@ void ES::Plugin::OpenGL::System::SetupCamera(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::SetupShadowframebuffer(ES::Engine::Core &core)
 {
     const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
-    if (!light.enabled)
-        return;
     // Setup the framebuffer for shadow mapping
     glViewport(0, 0, light.SHADOW_WIDTH, light.SHADOW_HEIGHT);
     glBindFramebuffer(GL_FRAMEBUFFER, light.depthMapFBO);
@@ -199,17 +197,19 @@ void ES::Plugin::OpenGL::System::RenderShadowMap(ES::Engine::Core &core)
 {
     auto &shad = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"depthMap"});
     shad.Use();
-    core.GetRegistry()
-        .view<ES::Plugin::OpenGL::Component::ModelHandle, ES::Plugin::Object::Component::Transform,
-              ES::Plugin::Object::Component::Mesh>()
-        .each([&](auto entity, ES::Plugin::OpenGL::Component::ModelHandle &modelHandle,
-                  ES::Plugin::Object::Component::Transform &transform, ES::Plugin::Object::Component::Mesh &mesh) {
-            const auto &glBuffer =
-                core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>().Get(modelHandle.id);
-            glm::mat4 model = transform.getTransformationMatrix();
-            glUniformMatrix4fv(shad.GetUniform("model"), 1, GL_FALSE, glm::value_ptr(model));
-            glBuffer.Draw(mesh);
-        });
+    const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
+    if (light.enabled)
+        core.GetRegistry()
+            .view<ES::Plugin::OpenGL::Component::ModelHandle, ES::Plugin::Object::Component::Transform,
+                ES::Plugin::Object::Component::Mesh>()
+            .each([&](auto entity, ES::Plugin::OpenGL::Component::ModelHandle &modelHandle,
+                    ES::Plugin::Object::Component::Transform &transform, ES::Plugin::Object::Component::Mesh &mesh) {
+                const auto &glBuffer =
+                    core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>().Get(modelHandle.id);
+                glm::mat4 model = transform.getTransformationMatrix();
+                glUniformMatrix4fv(shad.GetUniform("model"), 1, GL_FALSE, glm::value_ptr(model));
+                glBuffer.Draw(mesh);
+            });
     shad.Disable();
 }
 
