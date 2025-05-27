@@ -10,8 +10,7 @@
 #include "Object.hpp"
 #include "OpenGL.hpp"
 
-namespace ES::Plugin::UI::Utils
-{
+namespace ES::Plugin::UI::Utils {
 class RenderInterface : public Rml::RenderInterface {
   public:
     explicit RenderInterface(ES::Engine::Core &core) : _core(core) {}
@@ -33,7 +32,7 @@ class RenderInterface : public Rml::RenderInterface {
 
     std::unordered_map<Rml::CompiledGeometryHandle, GeometryRecord> _geometry_map;
     std::unordered_map<Rml::TextureHandle, entt::hashed_string> _texture_handle_map;
-    
+
     uintptr_t _next_geometry_id = 1;
     uintptr_t _next_texture_id = 1;
 
@@ -72,16 +71,20 @@ class RenderInterface : public Rml::RenderInterface {
         return id;
     }
 
-    void RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Vector2f translation, Rml::TextureHandle texture_handle) override {
+    void RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Vector2f translation,
+                        Rml::TextureHandle texture_handle) override
+    {
         const auto it = _geometry_map.find(handle);
-        if (it == _geometry_map.end()) return;
+        if (it == _geometry_map.end())
+            return;
 
         const auto &mesh = it->second.mesh;
         const auto &mesh_handle = it->second.mesh_handle;
 
         auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
         auto tex_it = _texture_handle_map.find(texture_handle);
-        if (tex_it != _texture_handle_map.end()) {
+        if (tex_it != _texture_handle_map.end())
+        {
             auto tex = textureManager.Get(tex_it->second);
             if (tex.IsValid())
             {
@@ -106,9 +109,11 @@ class RenderInterface : public Rml::RenderInterface {
         // glPopMatrix();
     }
 
-    void ReleaseGeometry(Rml::CompiledGeometryHandle handle) override {
+    void ReleaseGeometry(Rml::CompiledGeometryHandle handle) override
+    {
         auto it = _geometry_map.find(handle);
-        if (it != _geometry_map.end()) {
+        if (it != _geometry_map.end())
+        {
             const auto &mesh_handle = it->second.mesh_handle;
             auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
             if (bufferManager.Contains(mesh_handle))
@@ -119,7 +124,8 @@ class RenderInterface : public Rml::RenderInterface {
         }
     }
 
-    Rml::TextureHandle LoadTexture(Rml::Vector2i &texture_dimensions, const Rml::String &source) override {
+    Rml::TextureHandle LoadTexture(Rml::Vector2i &texture_dimensions, const Rml::String &source) override
+    {
         auto texture_id = fmt::format("rml_texture_{}", _next_texture_id);
         entt::hashed_string handle = entt::hashed_string(texture_id.c_str());
 
@@ -144,7 +150,8 @@ class RenderInterface : public Rml::RenderInterface {
         return id;
     }
 
-    Rml::TextureHandle GenerateTexture(Rml::Span<const Rml::byte> source, Rml::Vector2i dimensions) override {
+    Rml::TextureHandle GenerateTexture(Rml::Span<const Rml::byte> source, Rml::Vector2i dimensions) override
+    {
         auto texture_id = fmt::format("rml_dynamic_texture_{}", _next_texture_id);
         entt::hashed_string handle = entt::hashed_string(texture_id.c_str());
 
@@ -167,9 +174,11 @@ class RenderInterface : public Rml::RenderInterface {
         return id;
     }
 
-    void ReleaseTexture(Rml::TextureHandle handle) override {
+    void ReleaseTexture(Rml::TextureHandle handle) override
+    {
         auto it = _texture_handle_map.find(handle);
-        if (it != _texture_handle_map.end()) {
+        if (it != _texture_handle_map.end())
+        {
             auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
             textureManager.Remove(it->second);
             _texture_handle_map.erase(it);

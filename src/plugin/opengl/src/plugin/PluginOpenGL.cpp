@@ -25,7 +25,7 @@ void ES::Plugin::OpenGL::Plugin::Bind()
         ES::Plugin::OpenGL::System::LoadGLSpriteBufferManager, ES::Plugin::OpenGL::System::SetupMouseDragging);
 
     RegisterSystems<ES::Plugin::RenderingPipeline::RenderSetup>(
-        /*ES::Plugin::OpenGL::System::GLClearColor, */ES::Plugin::OpenGL::System::GLClearDepth,
+        /*ES::Plugin::OpenGL::System::GLClearColor, */ ES::Plugin::OpenGL::System::GLClearDepth,
         ES::Plugin::OpenGL::System::GLEnableDepth, ES::Plugin::OpenGL::System::GLEnableCullFace,
         ES::Plugin::OpenGL::System::UpdateMatrices, ES::Plugin::OpenGL::System::SetupCamera,
         ES::Plugin::OpenGL::System::SetupLights, ES::Plugin::OpenGL::System::LoadGLMeshBuffer,
