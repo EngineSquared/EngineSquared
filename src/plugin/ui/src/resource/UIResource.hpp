@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Engine.hpp"
 #include "Backend.hpp"
+#include "Engine.hpp"
 
 namespace ES::Plugin::UI::Resource {
 class UIResource {
@@ -12,36 +12,36 @@ class UIResource {
     std::unique_ptr<ES::Plugin::UI::Utils::RenderInterface> _renderInterface;
 
   public:
-  /**
-   * Constructor.
-   */
-  UIResource() = default;
+    /**
+     * Constructor.
+     */
+    UIResource() = default;
 
-  /**
-   * Copy constructor should not be referenced.
-   */
-  UIResource(const UIResource&) = delete;
-  UIResource& operator=(const UIResource&) = delete;
+    /**
+     * Copy constructor should not be referenced.
+     */
+    UIResource(const UIResource &) = delete;
+    UIResource &operator=(const UIResource &) = delete;
 
-  /**
-   * Move constructor.
-   */
-  UIResource(UIResource&&) noexcept = default;
-  UIResource& operator=(UIResource&&) noexcept = default;
-  
-  /**
-   * Destructor.
-   */
-  ~UIResource() = default;
+    /**
+     * Move constructor.
+     */
+    UIResource(UIResource &&) noexcept = default;
+    UIResource &operator=(UIResource &&) noexcept = default;
 
-  void Init(ES::Engine::Core &core);
-  void Destroy();
+    /**
+     * Destructor.
+     */
+    ~UIResource() = default;
 
-  void Update();
-  void Render();
+    void Init(ES::Engine::Core &core);
+    void Destroy();
 
-  void SetFont(const std::string &fontPath);
+    void Update();
+    void Render();
 
-  void InitDocument(const std::string &docPath);
+    void SetFont(const std::string &fontPath);
+
+    void InitDocument(const std::string &docPath);
 };
 } // namespace ES::Plugin::UI::Resource
