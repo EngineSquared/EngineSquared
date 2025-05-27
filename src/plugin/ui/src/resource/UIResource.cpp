@@ -59,7 +59,27 @@ namespace ES::Plugin::UI::Resource
 
     void UIResource::Render()
     {
+        glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_CULL_FACE);
+
+        // glMatrixMode(GL_PROJECTION);
+        // glPushMatrix();
+        // glLoadIdentity();
+        // glOrtho(0, 800, 800, 0, -1, 1); // TMP
+
+        // glMatrixMode(GL_MODELVIEW);
+        // glPushMatrix();
+        // glLoadIdentity();
+
         _context->Render();
+
+        // glPopMatrix();
+        // glMatrixMode(GL_PROJECTION);
+        // glPopMatrix();
+        // glMatrixMode(GL_MODELVIEW);
     }
 
     void UIResource::SetFont(const std::string &fontPath)
