@@ -76,7 +76,7 @@ void ES::Plugin::OpenGL::System::GenerateDirectionalLightTexture(ES::Engine::Cor
 
     // Setup the texture
     glBindTexture(GL_TEXTURE_2D, light.depthMap);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, light.SHADOW_WIDTH, light.SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, light.shadowWidth, light.shadowHeight, 0, GL_DEPTH_COMPONENT,
                  GL_FLOAT, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -86,7 +86,7 @@ void ES::Plugin::OpenGL::System::GenerateDirectionalLightTexture(ES::Engine::Cor
 
     // Register the texture in the TextureManager, this is only for debug purposes
     core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Add(
-        entt::hashed_string{"depthMap"}, light.SHADOW_WIDTH, light.SHADOW_HEIGHT, 1, light.depthMap);
+        entt::hashed_string{"depthMap"}, light.shadowWidth, light.shadowHeight, 1, light.depthMap);
 }
 
 void ES::Plugin::OpenGL::System::BindDirectionalLightTextureToFramebuffer(ES::Engine::Core &core)

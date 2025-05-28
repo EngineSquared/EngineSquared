@@ -187,7 +187,7 @@ void ES::Plugin::OpenGL::System::SetupShadowframebuffer(ES::Engine::Core &core)
 {
     const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
     // Setup the framebuffer for shadow mapping
-    glViewport(0, 0, light.SHADOW_WIDTH, light.SHADOW_HEIGHT);
+    glViewport(0, 0, light.shadowWidth, light.shadowHeight);
     glBindFramebuffer(GL_FRAMEBUFFER, light.depthMapFBO);
     glCullFace(GL_FRONT);
     glClear(GL_DEPTH_BUFFER_BIT);
