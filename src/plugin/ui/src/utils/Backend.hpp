@@ -11,7 +11,6 @@
 #include "OpenGL.hpp"
 
 namespace ES::Plugin::UI::Utils {
-
 class RenderInterface : public Rml::RenderInterface {
   public:
     explicit RenderInterface(ES::Engine::Core &core) : _core(core) {}
@@ -163,7 +162,9 @@ class RenderInterface : public Rml::RenderInterface {
     void ReleaseGeometry(Rml::CompiledGeometryHandle handle) override
     {
         auto it = _geometry_map.find(handle);
-        if (it != _geometry_map.end()) {
+        if (it != _geometry_map.end())
+        {
+            const auto &mesh_handle = it->second.mesh_handle;
             auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
             if (bufferManager.Contains(it->second.mesh_handle)) {
                 bufferManager.Remove(it->second.mesh_handle);
@@ -221,7 +222,8 @@ class RenderInterface : public Rml::RenderInterface {
     void ReleaseTexture(Rml::TextureHandle handle) override
     {
         auto it = _texture_handle_map.find(handle);
-        if (it != _texture_handle_map.end()) {
+        if (it != _texture_handle_map.end())
+        {
             auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
             textureManager.Remove(it->second);
             _texture_handle_map.erase(it);
