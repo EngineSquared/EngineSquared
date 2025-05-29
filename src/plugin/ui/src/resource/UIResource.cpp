@@ -51,10 +51,7 @@ void UIResource::Destroy()
     Rml::Shutdown();
 }
 
-void UIResource::Render(ES::Engine::Core &core)
-{
-    _context->Render();
-}
+void UIResource::Render(ES::Engine::Core &core) { _context->Render(); }
 
 void UIResource::Update() { _context->Update(); }
 

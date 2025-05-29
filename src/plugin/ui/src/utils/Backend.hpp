@@ -6,9 +6,9 @@
 
 #include "Logger.hpp"
 #include "Mesh.hpp"
-#include "Window.hpp"
 #include "Object.hpp"
 #include "OpenGL.hpp"
+#include "Window.hpp"
 
 namespace ES::Plugin::UI::Utils {
 class RenderInterface : public Rml::RenderInterface {
@@ -24,40 +24,40 @@ class RenderInterface : public Rml::RenderInterface {
     };
 
     // struct GLStateBackup {
-	// 	bool enable_cull_face;
-	// 	bool enable_blend;
-	// 	bool enable_stencil_test;
-	// 	bool enable_scissor_test;
-	// 	bool enable_depth_test;
+    // 	bool enable_cull_face;
+    // 	bool enable_blend;
+    // 	bool enable_stencil_test;
+    // 	bool enable_scissor_test;
+    // 	bool enable_depth_test;
 
-	// 	int viewport[4];
-	// 	int scissor[4];
+    // 	int viewport[4];
+    // 	int scissor[4];
 
-	// 	int active_texture;
+    // 	int active_texture;
 
-	// 	int stencil_clear_value;
-	// 	float color_clear_value[4];
-	// 	unsigned char color_writemask[4];
+    // 	int stencil_clear_value;
+    // 	float color_clear_value[4];
+    // 	unsigned char color_writemask[4];
 
-	// 	int blend_equation_rgb;
-	// 	int blend_equation_alpha;
-	// 	int blend_src_rgb;
-	// 	int blend_dst_rgb;
-	// 	int blend_src_alpha;
-	// 	int blend_dst_alpha;
+    // 	int blend_equation_rgb;
+    // 	int blend_equation_alpha;
+    // 	int blend_src_rgb;
+    // 	int blend_dst_rgb;
+    // 	int blend_src_alpha;
+    // 	int blend_dst_alpha;
 
-	// 	struct Stencil {
-	// 		int func;
-	// 		int ref;
-	// 		int value_mask;
-	// 		int writemask;
-	// 		int fail;
-	// 		int pass_depth_fail;
-	// 		int pass_depth_pass;
-	// 	};
-	// 	Stencil stencil_front;
-	// 	Stencil stencil_back;
-	// };
+    // 	struct Stencil {
+    // 		int func;
+    // 		int ref;
+    // 		int value_mask;
+    // 		int writemask;
+    // 		int fail;
+    // 		int pass_depth_fail;
+    // 		int pass_depth_pass;
+    // 	};
+    // 	Stencil stencil_front;
+    // 	Stencil stencil_back;
+    // };
 
     std::unordered_map<Rml::CompiledGeometryHandle, GeometryRecord> _geometry_map;
     std::unordered_map<Rml::TextureHandle, entt::hashed_string> _texture_handle_map;
@@ -91,7 +91,8 @@ class RenderInterface : public Rml::RenderInterface {
         mesh.normals.resize(vertices.size(), glm::vec3(0.0f));
         mesh.texCoords.reserve(vertices.size());
 
-        for (const auto &v : vertices) {
+        for (const auto &v : vertices)
+        {
             mesh.vertices.emplace_back(v.position.x, v.position.y, 0.0f);
             mesh.texCoords.emplace_back(v.tex_coord.x, v.tex_coord.y);
         }
@@ -101,7 +102,8 @@ class RenderInterface : public Rml::RenderInterface {
         entt::hashed_string mesh_handle = entt::hashed_string(handle_id.c_str());
 
         auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
-        if (!bufferManager.Contains(mesh_handle)) {
+        if (!bufferManager.Contains(mesh_handle))
+        {
             ES::Plugin::OpenGL::Utils::GLMeshBuffer buffer;
             buffer.GenerateGLMeshBuffers(mesh);
             bufferManager.Add(mesh_handle, buffer);
@@ -124,12 +126,14 @@ class RenderInterface : public Rml::RenderInterface {
         auto &mesh_handle = it->second.mesh_handle;
         auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
         entt::hashed_string shaderProgram = "RmlVertexColor";
-        
+
         auto tex_it = _texture_handle_map.find(texture_handle);
-        if (tex_it != _texture_handle_map.end()) {
+        if (tex_it != _texture_handle_map.end())
+        {
             auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
             auto &tex = textureManager.Get(tex_it->second);
-            if (tex.IsValid()) {
+            if (tex.IsValid())
+            {
                 tex.Bind();
                 shaderProgram = "RmlVertexTexture";
                 auto &sp = shaderManager.Get(shaderProgram);
@@ -137,12 +141,16 @@ class RenderInterface : public Rml::RenderInterface {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, tex.GetTexID());
                 glUniform1i(sp.GetUniform("_tex"), 0);
-            } else {
+            }
+            else
+            {
                 glBindTexture(GL_TEXTURE_2D, 0);
                 auto &sp = shaderManager.Get(shaderProgram);
                 sp.Use();
             }
-        } else {
+        }
+        else
+        {
             glBindTexture(GL_TEXTURE_2D, 0);
             auto &sp = shaderManager.Get(shaderProgram);
             sp.Use();
@@ -166,7 +174,8 @@ class RenderInterface : public Rml::RenderInterface {
         {
             const auto &mesh_handle = it->second.mesh_handle;
             auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
-            if (bufferManager.Contains(it->second.mesh_handle)) {
+            if (bufferManager.Contains(it->second.mesh_handle))
+            {
                 bufferManager.Remove(it->second.mesh_handle);
             }
             _geometry_map.erase(it);
@@ -179,13 +188,15 @@ class RenderInterface : public Rml::RenderInterface {
         entt::hashed_string handle = entt::hashed_string(texture_id.c_str());
 
         auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-        if (!textureManager.Contains(handle)) {
+        if (!textureManager.Contains(handle))
+        {
             ES::Plugin::OpenGL::Utils::Texture tex(source.c_str());
             textureManager.Add(handle, tex);
         }
 
         auto &texture = textureManager.Get(handle);
-        if (!texture.IsValid()) {
+        if (!texture.IsValid())
+        {
             ES::Utils::Log::Error(fmt::format("RmlUi: Loaded texture {} is not valid", texture_id));
             return 0;
         }
@@ -203,13 +214,15 @@ class RenderInterface : public Rml::RenderInterface {
         entt::hashed_string handle = entt::hashed_string(texture_id.c_str());
 
         auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-        if (!textureManager.Contains(handle)) {
+        if (!textureManager.Contains(handle))
+        {
             ES::Plugin::OpenGL::Utils::Texture tex(source.data(), dimensions.x, dimensions.y);
             textureManager.Add(handle, tex);
         }
 
         auto &texture = textureManager.Get(handle);
-        if (!texture.IsValid()) {
+        if (!texture.IsValid())
+        {
             ES::Utils::Log::Error(fmt::format("RmlUi: Generated texture {} is not valid", texture_id));
             return 0;
         }
@@ -230,10 +243,7 @@ class RenderInterface : public Rml::RenderInterface {
         }
     }
 
-    void EnableScissorRegion(bool enable) override
-    {
-        enable ? glEnable(GL_SCISSOR_TEST) : glDisable(GL_SCISSOR_TEST);
-    }
+    void EnableScissorRegion(bool enable) override { enable ? glEnable(GL_SCISSOR_TEST) : glDisable(GL_SCISSOR_TEST); }
 
     void SetScissorRegion(Rml::Rectanglei region) override
     {
@@ -303,8 +313,8 @@ class RenderInterface : public Rml::RenderInterface {
     //     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
     // #ifndef RMLUI_PLATFORM_EMSCRIPTEN
-    //     // We do blending in nonlinear sRGB space because that is the common practice and gives results that we are used to.
-    //     glDisable(GL_FRAMEBUFFER_SRGB);
+    //     // We do blending in nonlinear sRGB space because that is the common practice and gives results that we are
+    //     used to. glDisable(GL_FRAMEBUFFER_SRGB);
     // #endif
 
     //     glEnable(GL_STENCIL_TEST);
@@ -328,7 +338,7 @@ class RenderInterface : public Rml::RenderInterface {
     // }
 
     // Draws the result to the backbuffer and restores OpenGL state.
-	// void EndFrame()
+    // void EndFrame()
     // {
     // }
 };
@@ -338,19 +348,13 @@ class SystemInterface : public Rml::SystemInterface {
 
     bool LogMessage(Rml::Log::Type type, const Rml::String &message) override
     {
-        switch (type) {
-            case Rml::Log::Type::LT_ASSERT:
-            case Rml::Log::Type::LT_ERROR:
-                ES::Utils::Log::Error(fmt::format("RmlUi: {}", message));
-                break;
-            case Rml::Log::Type::LT_WARNING:
-                ES::Utils::Log::Warn(fmt::format("RmlUi: {}", message));
-                break;
-            case Rml::Log::Type::LT_INFO:
-                ES::Utils::Log::Info(fmt::format("RmlUi: {}", message));
-                break;
-            default:
-                break;
+        switch (type)
+        {
+        case Rml::Log::Type::LT_ASSERT:
+        case Rml::Log::Type::LT_ERROR: ES::Utils::Log::Error(fmt::format("RmlUi: {}", message)); break;
+        case Rml::Log::Type::LT_WARNING: ES::Utils::Log::Warn(fmt::format("RmlUi: {}", message)); break;
+        case Rml::Log::Type::LT_INFO: ES::Utils::Log::Info(fmt::format("RmlUi: {}", message)); break;
+        default: break;
         }
         return true;
     }
