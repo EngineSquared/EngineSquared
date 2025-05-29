@@ -17,6 +17,7 @@ class Texture {
     [[nodiscard]] int GetWidth() const { return _width; }
     [[nodiscard]] int GetHeight() const { return _height; }
     [[nodiscard]] bool IsValid() const { return _textureID != 0; }
+    [[nodiscard]] GLuint GetTexID() const { return _textureID; }
 
   private:
     void LoadTexture(const std::string &texturePath);

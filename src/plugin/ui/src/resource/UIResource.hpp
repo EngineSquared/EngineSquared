@@ -38,7 +38,7 @@ class UIResource {
     void Destroy();
 
     void Update();
-    void Render();
+    void Render(ES::Engine::Core &core);
 
     void SetFont(const std::string &fontPath);
 
