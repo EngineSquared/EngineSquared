@@ -53,7 +53,23 @@ void UIResource::Destroy()
 
 void UIResource::Render(ES::Engine::Core &core)
 {
+    const auto &windowSize = core.GetResource<ES::Plugin::Window::Resource::Window>().GetSize();
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    _renderInterface.get()->BeginFrame();
     _context->Render();
+    _renderInterface.get()->EndFrame();
+
+    // Draw to backbuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glActiveTexture(GL_TEXTURE0);
+
+    auto &shaderManager = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
+    auto &sp = shaderManager.Get("RmlPassthrough");
+    sp.Use();
+
 }
 
 void UIResource::Update() { _context->Update(); }
