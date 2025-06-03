@@ -10,7 +10,6 @@
 namespace ES::Plugin::UI::Resource {
 void UIResource::Init(ES::Engine::Core &core)
 {
-    std::cout << "init" << std::endl;
     _systemInterface = std::make_unique<ES::Plugin::UI::Utils::SystemInterface>();
     _renderInterface = std::make_unique<ES::Plugin::UI::Utils::RenderInterface>(core);
 
@@ -19,9 +18,7 @@ void UIResource::Init(ES::Engine::Core &core)
     Rml::Initialise();
 
     const auto &windowSize = core.GetResource<ES::Plugin::Window::Resource::Window>().GetSize();
-    // _context.reset(Rml::CreateContext("main", Rml::Vector2i(windowSize.x, windowSize.y)));
     _context = Rml::CreateContext("main", Rml::Vector2i(windowSize.x, windowSize.y));
-    // if (!_context || !_context.get())
     if (!_context)
     {
         Destroy();
@@ -29,23 +26,19 @@ void UIResource::Init(ES::Engine::Core &core)
     }
 
     // Debugger
-    // Rml::Debugger::Initialise(_context.get());
     Rml::Debugger::Initialise(_context);
 }
 
 void UIResource::Destroy()
 {
-    std::cout << "destroy" << std::endl;
     if (_document)
     {
         _document->Close();
-        // _document.reset();
     }
 
     if (_context)
     {
         Rml::RemoveContext(_context->GetName());
-        // _context.reset();
     }
     Rml::Debugger::Shutdown();
     Rml::Shutdown();
@@ -53,30 +46,15 @@ void UIResource::Destroy()
 
 void UIResource::Render(ES::Engine::Core &core)
 {
-    const auto &windowSize = core.GetResource<ES::Plugin::Window::Resource::Window>().GetSize();
-
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     _renderInterface.get()->BeginFrame();
     _context->Render();
-    _renderInterface.get()->EndFrame();
-
-    // Draw to backbuffer
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glActiveTexture(GL_TEXTURE0);
-
-    auto &shaderManager = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
-    auto &sp = shaderManager.Get("RmlPassthrough");
-    sp.Use();
-
+    _renderInterface.get()->EndFrame(core);
 }
 
 void UIResource::Update() { _context->Update(); }
 
 void UIResource::SetFont(const std::string &fontPath)
 {
-    std::cout << "font set" << std::endl;
     if (_context)
     {
         if (!Rml::LoadFontFace(fontPath))
@@ -92,10 +70,7 @@ void UIResource::SetFont(const std::string &fontPath)
 
 void UIResource::InitDocument(const std::string &docPath)
 {
-    std::cout << "document" << std::endl;
-    // _document.reset(_context->LoadDocument(docPath));
     _document = _context->LoadDocument(docPath);
-    // if (!_document || !_document.get())
     if (!_document)
     {
         Destroy();

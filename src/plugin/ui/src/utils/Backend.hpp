@@ -18,20 +18,15 @@
 namespace ES::Plugin::UI::Utils {
 class RenderInterface : public Rml::RenderInterface {
   public:
-    explicit RenderInterface(ES::Engine::Core &core) : _core(core) {}
+    explicit RenderInterface(ES::Engine::Core &core) : _core(core) {};
+    ~RenderInterface() = default;
 
   private:
     ES::Engine::Core &_core;
 
     struct GeometryRecord {
-        Rml::CompiledGeometryHandle id;
         entt::hashed_string mesh_handle;
         ES::Plugin::Object::Component::Mesh mesh;
-    };
-
-    struct TextureRecord {
-        Rml::TextureHandle id;
-        entt::hashed_string texture_handle;
     };
 
     struct GLStateBackup {
@@ -206,16 +201,45 @@ class RenderInterface : public Rml::RenderInterface {
 		Rml::Vector<FramebufferData> fb_postprocess;
 	};
 
-    GeometryRecord _geometry;
-    TextureRecord _texture;
+    std::unordered_map<Rml::CompiledGeometryHandle, GeometryRecord> _geometries;
+    std::unordered_map<Rml::TextureHandle, entt::hashed_string> _textures;
+
+    Rml::CompiledGeometryHandle _next_geom_id = 1u;
+    Rml::TextureHandle _next_tex_id = 1u;
 
     GLStateBackup _glstate_backup = {};
     RenderLayerStack _render_layers;
     Rml::Rectanglei _scissor_state;
-    // Rml::CompiledGeometryHandle fullscreen_quad_geometry = {};
+    entt::hashed_string activeShaderProgram = "";
     enum class FramebufferAttachment { None, DepthStencil };
 
     static constexpr Rml::TextureHandle TexturePostprocess = Rml::TextureHandle(-2);
+
+    void UseShaderProgram(const entt::hashed_string &program_id)
+    {
+        auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
+        
+        if (program_id == entt::hashed_string{""})
+        {
+            if (activeShaderProgram != entt::hashed_string{""})
+                shaderManager.Get(activeShaderProgram).Disable();
+            return;
+        }
+
+        if (activeShaderProgram != program_id)
+        {
+            if (activeShaderProgram != entt::hashed_string{""})
+                shaderManager.Get(activeShaderProgram).Disable();
+            activeShaderProgram = program_id;
+        }
+        shaderManager.Get(program_id).Use();
+    }
+
+    void DisableActiveShaderProgram()
+    {
+        auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
+        shaderManager.Get(activeShaderProgram).Use();
+    }
 
     static bool CreateFramebuffer(FramebufferData& out_fb, int width, int height, int samples, FramebufferAttachment attachment,
 	                                GLuint shared_depth_stencil_buffer)
@@ -321,37 +345,42 @@ class RenderInterface : public Rml::RenderInterface {
     Rml::CompiledGeometryHandle CompileGeometry(Rml::Span<const Rml::Vertex> vertices,
                                                 Rml::Span<const int> indices) override
     {
-        auto &mesh = _geometry.mesh;
-
+        GeometryRecord record;
+        auto &mesh = record.mesh;
+        
+        record.mesh_handle = entt::hashed_string{fmt::format("rml_mesh_{}", _next_geom_id).c_str()};
         mesh.vertices.reserve(vertices.size());
         mesh.normals.resize(vertices.size(), glm::vec3(0.0f));
         mesh.texCoords.reserve(vertices.size());
 
         for (const auto &v : vertices) {
-            std::cout << v.tex_coord.x << " " << v.tex_coord.y << std::endl;
+            ES::Utils::Log::Info(fmt::format("Rmlui: vertex coordinates for {}: [{}:{}]", record.mesh_handle.data(), v.tex_coord.x, v.tex_coord.y));
             mesh.vertices.emplace_back(v.position.x, v.position.y, 0.0f);
             mesh.texCoords.emplace_back(v.tex_coord.x, v.tex_coord.y);
         }
         mesh.indices.assign(indices.begin(), indices.end());
 
-        _geometry.mesh_handle = entt::hashed_string{"rml_mesh"};
-
         auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
-        if (!bufferManager.Contains(_geometry.mesh_handle)) {
+        if (!bufferManager.Contains(record.mesh_handle)) {
             ES::Plugin::OpenGL::Utils::GLMeshBuffer buffer;
             buffer.GenerateGLMeshBuffers(mesh);
-            bufferManager.Add(_geometry.mesh_handle, buffer);
+            bufferManager.Add(record.mesh_handle, buffer);
         }
 
-        _geometry.id = 1; // TO CHANGE ??
-        return _geometry.id;
+        Rml::CompiledGeometryHandle id = _next_geom_id++;
+        _geometries.emplace(id, std::move(record));
+        ES::Utils::Log::Info(fmt::format("Rmlui: Compiled geometry for {}", record.mesh_handle.data()));
+        return id;
     }
 
     void RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Vector2f translation,
                         Rml::TextureHandle texture_handle) override
     {
-        auto &mesh = _geometry.mesh;
-        auto &mesh_handle = _geometry.mesh_handle;
+        const auto it = _geometries.find(handle);
+        if (it == _geometries.end()) return;
+        
+        const auto &mesh = it->second.mesh;
+        const auto &mesh_handle = it->second.mesh_handle;
         auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
         auto &texShaderProg = shaderManager.Get("RmlVertexTexture");
         auto &vertColShaderProg = shaderManager.Get("RmlVertexColor");
@@ -360,14 +389,19 @@ class RenderInterface : public Rml::RenderInterface {
         if (texture_handle != TexturePostprocess)
         {
             auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-            auto &tex = textureManager.Get(_texture.texture_handle);
-            if (tex.IsValid()) {
-                hasTexture = true;
-                texShaderProg.Use();
-                tex.Bind();
-                glUniform1i(texShaderProg.GetUniform("_tex"), 0);
-            } else {
-                vertColShaderProg.Use();
+            auto tex_it = _textures.find(texture_handle);
+            if (tex_it != _textures.end()) {
+                auto &tex = textureManager.Get(tex_it->second);
+                if (tex.IsValid()) {
+                    hasTexture = true;
+                    UseShaderProgram("RmlVertexTexture");
+                    glUniform1i(texShaderProg.GetUniform("_tex"), 0);
+                    tex.Bind();
+                }
+            }
+            if (!hasTexture)
+            {
+                UseShaderProgram("RmlVertexColor");
                 glBindTexture(GL_TEXTURE_2D, 0);
             }
         }
@@ -382,57 +416,82 @@ class RenderInterface : public Rml::RenderInterface {
             glUniform2f(texShaderProg.GetUniform("_translate"), translation.x, translation.y);
             glUniformMatrix4fv(texShaderProg.GetUniform("_transform"), 1, GL_FALSE, glm::value_ptr(projection));
             buffer.Draw(mesh);
-            texShaderProg.Disable();
         }
         else
         {
             glUniform2f(vertColShaderProg.GetUniform("_translate"), translation.x, translation.y);
             glUniformMatrix4fv(vertColShaderProg.GetUniform("_transform"), 1, GL_FALSE, glm::value_ptr(projection));
             buffer.Draw(mesh);
-            vertColShaderProg.Disable();
         }
+        DisableActiveShaderProgram();
     }
 
     void ReleaseGeometry(Rml::CompiledGeometryHandle handle) override
     {
-        const auto &mesh_handle = _geometry.mesh_handle;
-        auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
-        bufferManager.Remove(_geometry.mesh_handle);
+        auto it = _geometries.find(handle);
+        if (it != _geometries.end()) {
+            auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
+            if (bufferManager.Contains(it->second.mesh_handle)) {
+                bufferManager.Remove(it->second.mesh_handle);
+            }
+            _geometries.erase(it);
+        }
     }
 
     Rml::TextureHandle LoadTexture(Rml::Vector2i &texture_dimensions, const Rml::String &source) override
     {
-        _texture.texture_handle = entt::hashed_string{"rml_texture"};
+        entt::hashed_string handle = entt::hashed_string{fmt::format("rml_texture_{}", _next_tex_id).c_str()};
+        // _texture.texture_handle = entt::hashed_string{"rml_texture"};
 
         auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-        if (!textureManager.Contains(_texture.texture_handle)) {
-            ES::Plugin::OpenGL::Utils::Texture tex(source.data());
-            textureManager.Add(_texture.texture_handle, tex);
+        if (!textureManager.Contains(handle)) {
+            textureManager.Add(handle, source.data());
         }
 
-        auto &texture = textureManager.Get(_texture.texture_handle);
+        auto &texture = textureManager.Get(handle);
         if (!texture.IsValid()) {
-            ES::Utils::Log::Error(fmt::format("RmlUi: Loaded texture {} is not valid", _texture.texture_handle.data()));
+            ES::Utils::Log::Error(fmt::format("RmlUi: Loaded texture {} is not valid", handle.data()));
             return 0;
         }
 
         texture_dimensions = {texture.GetWidth(), texture.GetHeight()};
 
-        _texture.id = 1;
-        return _texture.id;
+        Rml::TextureHandle id = _next_tex_id++;
+        _textures[id] = handle;
+        return id;
     }
 
     Rml::TextureHandle GenerateTexture(Rml::Span<const Rml::byte> source, Rml::Vector2i dimensions) override
     {
-        std::cout << "Generate Texture called" << std::endl;
-        // Called if text is used
-        return 0;
+        entt::hashed_string handle = entt::hashed_string{fmt::format("rml_dynamic_texture_{}", _next_tex_id).c_str()};
+        // _texture.texture_handle = entt::hashed_string{"rml_texture"};
+
+        auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
+        if (!textureManager.Contains(handle)) {
+            textureManager.Add(handle, source.data(), dimensions.x, dimensions.y);
+        }
+
+        auto &texture = textureManager.Get(handle);
+        if (!texture.IsValid()) {
+            ES::Utils::Log::Error(fmt::format("RmlUi: Generated texture {} is not valid", handle.data()));
+            return 0;
+        }
+
+        std::cout << dimensions.x << " " << dimensions.y << std::endl;
+
+        Rml::TextureHandle id = _next_tex_id++;
+        _textures[id] = handle;
+        return id;
     }
 
     void ReleaseTexture(Rml::TextureHandle handle) override
     {
-        auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-        textureManager.Remove(_texture.texture_handle);
+        auto it = _textures.find(handle);
+        if (it != _textures.end()) {
+            auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
+            textureManager.Remove(it->second);
+            _textures.erase(it);
+        }
     }
 
     void EnableScissorRegion(bool enable) override { enable ? glEnable(GL_SCISSOR_TEST) : glDisable(GL_SCISSOR_TEST); }
@@ -520,17 +579,14 @@ class RenderInterface : public Rml::RenderInterface {
         glBindFramebuffer(GL_FRAMEBUFFER, _render_layers.GetTopLayer().framebuffer);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
-        auto &sp = shaderManager.Get("RmlVertexTexture");
-        sp.Disable();
-        // UseProgram(ProgramId::None);
+        UseShaderProgram("");
         // program_transform_dirty.set();
         _scissor_state = Rml::Rectanglei::MakeInvalid();
 
         // Gfx::CheckGLError("BeginFrame");
     }
 
-    void EndFrame()
+    void EndFrame(ES::Engine::Core &core)
     {
         const FramebufferData& fb_active = _render_layers.GetTopLayer();
         const FramebufferData& fb_postprocess = _render_layers.GetPostprocessPrimary();
@@ -544,13 +600,13 @@ class RenderInterface : public Rml::RenderInterface {
 
         // Draw to backbuffer
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        // glViewport(viewport_offset_x, viewport_offset_y, windowSize.x, windowSize.y);
+        glViewport(0, 0, windowSize.x, windowSize.y);
 
         // Assuming we have an opaque background, we can just write to it with the premultiplied alpha blend mode and we'll get the correct result.
         // Instead, if we had a transparent destination that didn't use premultiplied alpha, we would need to perform a manual un-premultiplication step.
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, fb_postprocess.color_tex_buffer);
-        // UseProgram(ProgramId::Passthrough);
+        UseShaderProgram("RmlPassthrough");
         DrawFullscreenQuad();
 
         _render_layers.EndFrame();
@@ -610,7 +666,10 @@ class RenderInterface : public Rml::RenderInterface {
 
     void DrawFullscreenQuad()
     {
-        RenderGeometry(_geometry.id, {}, TexturePostprocess);
+        for (auto &[id, hash] : _textures)
+        {
+            RenderGeometry(id, {}, TexturePostprocess);
+        }
     }
 };
 

@@ -11,7 +11,7 @@
 
 void ES::Plugin::UI::System::LoadShaderVertColor(ES::Engine::Core &core)
 {
-    const char *vertexShader = +R"(
+    const char *vertexShader = R"(
         #version 440
 
         uniform vec2 _translate;
