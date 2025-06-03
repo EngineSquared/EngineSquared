@@ -63,13 +63,12 @@ void UIResource::Render(ES::Engine::Core &core)
     _renderInterface.get()->EndFrame();
 
     // Draw to backbuffer
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE0);
 
     auto &shaderManager = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
     auto &sp = shaderManager.Get("RmlPassthrough");
     sp.Use();
-
 }
 
 void UIResource::Update() { _context->Update(); }
