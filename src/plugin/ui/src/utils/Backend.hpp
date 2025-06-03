@@ -10,9 +10,10 @@
 #include "OpenGL.hpp"
 #include "Window.hpp"
 
-// Determines the anti-aliasing quality when creating layers. Enables better-looking visuals, especially when transforms are applied.
+// Determines the anti-aliasing quality when creating layers. Enables better-looking visuals, especially when transforms
+// are applied.
 #ifndef RMLUI_NUM_MSAA_SAMPLES
-	#define RMLUI_NUM_MSAA_SAMPLES 2
+#    define RMLUI_NUM_MSAA_SAMPLES 2
 #endif
 
 namespace ES::Plugin::UI::Utils {
@@ -30,40 +31,40 @@ class RenderInterface : public Rml::RenderInterface {
     };
 
     struct GLStateBackup {
-		bool enable_cull_face;
-		bool enable_blend;
-		bool enable_stencil_test;
-		bool enable_scissor_test;
-		bool enable_depth_test;
+        bool enable_cull_face;
+        bool enable_blend;
+        bool enable_stencil_test;
+        bool enable_scissor_test;
+        bool enable_depth_test;
 
-		int viewport[4];
-		int scissor[4];
+        int viewport[4];
+        int scissor[4];
 
-		int active_texture;
+        int active_texture;
 
-		int stencil_clear_value;
-		float color_clear_value[4];
-		unsigned char color_writemask[4];
+        int stencil_clear_value;
+        float color_clear_value[4];
+        unsigned char color_writemask[4];
 
-		int blend_equation_rgb;
-		int blend_equation_alpha;
-		int blend_src_rgb;
-		int blend_dst_rgb;
-		int blend_src_alpha;
-		int blend_dst_alpha;
+        int blend_equation_rgb;
+        int blend_equation_alpha;
+        int blend_src_rgb;
+        int blend_dst_rgb;
+        int blend_src_alpha;
+        int blend_dst_alpha;
 
-		struct Stencil {
-			int func;
-			int ref;
-			int value_mask;
-			int writemask;
-			int fail;
-			int pass_depth_fail;
-			int pass_depth_pass;
-		};
-		Stencil stencil_front;
-		Stencil stencil_back;
-	};
+        struct Stencil {
+            int func;
+            int ref;
+            int value_mask;
+            int writemask;
+            int fail;
+            int pass_depth_fail;
+            int pass_depth_pass;
+        };
+        Stencil stencil_front;
+        Stencil stencil_back;
+    };
 
     struct FramebufferData {
         int width, height;
@@ -75,81 +76,68 @@ class RenderInterface : public Rml::RenderInterface {
     };
 
     /*
-	 *   Manages render targets, including the layer stack and postprocessing framebuffers.
+     *   Manages render targets, including the layer stack and postprocessing framebuffers.
      *
-	 *   Layers can be pushed and popped, creating new framebuffers as needed. Typically, geometry is rendered to the top
-	 *   layer. The layer framebuffers may have MSAA enabled.
+     *   Layers can be pushed and popped, creating new framebuffers as needed. Typically, geometry is rendered to the
+     * top layer. The layer framebuffers may have MSAA enabled.
      *
-	 *   Postprocessing framebuffers are separate from the layers, and are commonly used to apply texture-wide effects
-	 *   such as filters. They are used both as input and output during rendering, and do not use MSAA.
-	*/
+     *   Postprocessing framebuffers are separate from the layers, and are commonly used to apply texture-wide effects
+     *   such as filters. They are used both as input and output during rendering, and do not use MSAA.
+     */
     class RenderLayerStack {
-	public:
-		RenderLayerStack()
-        {
-            fb_postprocess.resize(4);
-        }
+      public:
+        RenderLayerStack() { fb_postprocess.resize(4); }
 
-		~RenderLayerStack()
-        {
-            DestroyFramebuffers();
-        }
+        ~RenderLayerStack() { DestroyFramebuffers(); }
 
-		// Push a new layer. All references to previously retrieved layers are invalidated.
-		Rml::LayerHandle PushLayer()
+        // Push a new layer. All references to previously retrieved layers are invalidated.
+        Rml::LayerHandle PushLayer()
         {
-            RMLUI_ASSERT(layers_size <= (int)fb_layers.size());
+            RMLUI_ASSERT(layers_size <= (int) fb_layers.size());
 
-            if (layers_size == (int)fb_layers.size())
+            if (layers_size == (int) fb_layers.size())
             {
                 // All framebuffers should share a single stencil buffer.
                 GLuint shared_depth_stencil = (fb_layers.empty() ? 0 : fb_layers.front().depth_stencil_buffer);
 
                 fb_layers.push_back(FramebufferData{});
-                CreateFramebuffer(fb_layers.back(), width, height, RMLUI_NUM_MSAA_SAMPLES, FramebufferAttachment::DepthStencil,
-                    shared_depth_stencil);
+                CreateFramebuffer(fb_layers.back(), width, height, RMLUI_NUM_MSAA_SAMPLES,
+                                  FramebufferAttachment::DepthStencil, shared_depth_stencil);
             }
 
             layers_size += 1;
             return GetTopLayerHandle();
         }
 
-		// Pop the top layer. All references to previously retrieved layers are invalidated.
-		void PopLayer()
+        // Pop the top layer. All references to previously retrieved layers are invalidated.
+        void PopLayer()
         {
             RMLUI_ASSERT(layers_size > 0);
             layers_size -= 1;
         }
 
-
-		const FramebufferData& GetLayer(Rml::LayerHandle layer) const
+        const FramebufferData &GetLayer(Rml::LayerHandle layer) const
         {
-            RMLUI_ASSERT((size_t)layer < (size_t)layers_size);
+            RMLUI_ASSERT((size_t) layer < (size_t) layers_size);
             return fb_layers[layer];
         }
 
-		const FramebufferData& GetTopLayer() const
-        {
-            return GetLayer(GetTopLayerHandle());
-        }
+        const FramebufferData &GetTopLayer() const { return GetLayer(GetTopLayerHandle()); }
 
-		Rml::LayerHandle GetTopLayerHandle() const
+        Rml::LayerHandle GetTopLayerHandle() const
         {
             RMLUI_ASSERT(layers_size > 0);
             return static_cast<Rml::LayerHandle>(layers_size - 1);
         }
 
-		const FramebufferData& GetPostprocessPrimary() { return EnsureFramebufferPostprocess(0); }
-		const FramebufferData& GetPostprocessSecondary() { return EnsureFramebufferPostprocess(1); }
-		const FramebufferData& GetPostprocessTertiary() { return EnsureFramebufferPostprocess(2); }
-		const FramebufferData& GetBlendMask() { return EnsureFramebufferPostprocess(3); }
+        const FramebufferData &GetPostprocessPrimary() { return EnsureFramebufferPostprocess(0); }
+        const FramebufferData &GetPostprocessSecondary() { return EnsureFramebufferPostprocess(1); }
+        const FramebufferData &GetPostprocessTertiary() { return EnsureFramebufferPostprocess(2); }
+        const FramebufferData &GetBlendMask() { return EnsureFramebufferPostprocess(3); }
 
-		void SwapPostprocessPrimarySecondary()
-        {
-            std::swap(fb_postprocess[0], fb_postprocess[1]);
-        }
+        void SwapPostprocessPrimarySecondary() { std::swap(fb_postprocess[0], fb_postprocess[1]); }
 
-		void BeginFrame(int new_width, int new_height)
+        void BeginFrame(int new_width, int new_height)
         {
             RMLUI_ASSERT(layers_size == 0);
 
@@ -164,42 +152,44 @@ class RenderInterface : public Rml::RenderInterface {
             PushLayer();
         }
 
-		void EndFrame()
+        void EndFrame()
         {
             RMLUI_ASSERT(layers_size == 1);
             PopLayer();
         }
 
-	private:
-		void DestroyFramebuffers()
+      private:
+        void DestroyFramebuffers()
         {
-            RMLUI_ASSERTMSG(layers_size == 0, "Do not call this during frame rendering, that is, between BeginFrame() and EndFrame().");
+            RMLUI_ASSERTMSG(layers_size == 0,
+                            "Do not call this during frame rendering, that is, between BeginFrame() and EndFrame().");
 
-            for (FramebufferData& fb : fb_layers)
+            for (FramebufferData &fb : fb_layers)
                 DestroyFramebuffer(fb);
 
             fb_layers.clear();
 
-            for (FramebufferData& fb : fb_postprocess)
+            for (FramebufferData &fb : fb_postprocess)
                 DestroyFramebuffer(fb);
         }
-		const FramebufferData& EnsureFramebufferPostprocess(int index)
+        const FramebufferData &EnsureFramebufferPostprocess(int index)
         {
-            RMLUI_ASSERT(index < (int)fb_postprocess.size())
-            FramebufferData& fb = fb_postprocess[index];
+            RMLUI_ASSERT(index < (int) fb_postprocess.size())
+            FramebufferData &fb = fb_postprocess[index];
             if (!fb.framebuffer)
                 CreateFramebuffer(fb, width, height, 0, FramebufferAttachment::None, 0);
             return fb;
         }
 
-		int width = 0, height = 0;
+        int width = 0, height = 0;
 
-		// The number of active layers is manually tracked since we re-use the framebuffers stored in the fb_layers stack.
-		int layers_size = 0;
+        // The number of active layers is manually tracked since we re-use the framebuffers stored in the fb_layers
+        // stack.
+        int layers_size = 0;
 
-		Rml::Vector<FramebufferData> fb_layers;
-		Rml::Vector<FramebufferData> fb_postprocess;
-	};
+        Rml::Vector<FramebufferData> fb_layers;
+        Rml::Vector<FramebufferData> fb_postprocess;
+    };
 
     std::unordered_map<Rml::CompiledGeometryHandle, GeometryRecord> _geometries;
     std::unordered_map<Rml::TextureHandle, entt::hashed_string> _textures;
@@ -244,11 +234,11 @@ class RenderInterface : public Rml::RenderInterface {
     static bool CreateFramebuffer(FramebufferData& out_fb, int width, int height, int samples, FramebufferAttachment attachment,
 	                                GLuint shared_depth_stencil_buffer)
     {
-    #ifdef RMLUI_PLATFORM_EMSCRIPTEN
+#ifdef RMLUI_PLATFORM_EMSCRIPTEN
         constexpr GLint wrap_mode = GL_CLAMP_TO_EDGE;
-    #else
+#else
         constexpr GLint wrap_mode = GL_CLAMP_TO_BORDER; // GL_REPEAT GL_MIRRORED_REPEAT GL_CLAMP_TO_EDGE
-    #endif
+#endif
 
         constexpr GLenum color_format = GL_RGBA8;   // GL_RGBA8 GL_SRGB8_ALPHA8 GL_RGBA16F
         constexpr GLint min_mag_filter = GL_LINEAR; // GL_NEAREST
@@ -277,9 +267,9 @@ class RenderInterface : public Rml::RenderInterface {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, min_mag_filter);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap_mode);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap_mode);
-    #ifndef RMLUI_PLATFORM_EMSCRIPTEN
+#ifndef RMLUI_PLATFORM_EMSCRIPTEN
             glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, &border_color[0]);
-    #endif
+#endif
 
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, color_tex_buffer, 0);
         }
@@ -302,13 +292,15 @@ class RenderInterface : public Rml::RenderInterface {
                 glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_DEPTH24_STENCIL8, width, height);
             }
 
-            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER,
+                                      depth_stencil_buffer);
         }
 
         const GLuint framebuffer_status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
         if (framebuffer_status != GL_FRAMEBUFFER_COMPLETE)
         {
-            Rml::Log::Message(Rml::Log::LT_ERROR, "OpenGL framebuffer could not be generated. Error code %x.", framebuffer_status);
+            Rml::Log::Message(Rml::Log::LT_ERROR, "OpenGL framebuffer could not be generated. Error code %x.",
+                              framebuffer_status);
             return false;
         }
 
@@ -328,7 +320,7 @@ class RenderInterface : public Rml::RenderInterface {
         return true;
     }
 
-    static void DestroyFramebuffer(FramebufferData& fb)
+    static void DestroyFramebuffer(FramebufferData &fb)
     {
         if (fb.framebuffer)
             glDeleteFramebuffers(1, &fb.framebuffer);
@@ -444,6 +436,7 @@ class RenderInterface : public Rml::RenderInterface {
         // _texture.texture_handle = entt::hashed_string{"rml_texture"};
 
         auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
+
         if (!textureManager.Contains(handle)) {
             textureManager.Add(handle, source.data());
         }
@@ -561,10 +554,11 @@ class RenderInterface : public Rml::RenderInterface {
         glBlendEquation(GL_FUNC_ADD);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-    #ifndef RMLUI_PLATFORM_EMSCRIPTEN
-        // We do blending in nonlinear sRGB space because that is the common practice and gives results that we are used to.
+#ifndef RMLUI_PLATFORM_EMSCRIPTEN
+        // We do blending in nonlinear sRGB space because that is the common practice and gives results that we are used
+        // to.
         glDisable(GL_FRAMEBUFFER_SRGB);
-    #endif
+#endif
 
         glEnable(GL_STENCIL_TEST);
         glStencilFunc(GL_ALWAYS, 1, GLuint(-1));
@@ -588,22 +582,24 @@ class RenderInterface : public Rml::RenderInterface {
 
     void EndFrame(ES::Engine::Core &core)
     {
-        const FramebufferData& fb_active = _render_layers.GetTopLayer();
-        const FramebufferData& fb_postprocess = _render_layers.GetPostprocessPrimary();
+        const FramebufferData &fb_active = _render_layers.GetTopLayer();
+        const FramebufferData &fb_postprocess = _render_layers.GetPostprocessPrimary();
         const auto &windowSize = _core.GetResource<ES::Plugin::Window::Resource::Window>().GetSize();
 
         // Resolve MSAA to postprocess framebuffer.
         glBindFramebuffer(GL_READ_FRAMEBUFFER, fb_active.framebuffer);
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fb_postprocess.framebuffer);
 
-        glBlitFramebuffer(0, 0, fb_active.width, fb_active.height, 0, 0, fb_postprocess.width, fb_postprocess.height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+        glBlitFramebuffer(0, 0, fb_active.width, fb_active.height, 0, 0, fb_postprocess.width, fb_postprocess.height,
+                          GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
         // Draw to backbuffer
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glViewport(0, 0, windowSize.x, windowSize.y);
 
-        // Assuming we have an opaque background, we can just write to it with the premultiplied alpha blend mode and we'll get the correct result.
-        // Instead, if we had a transparent destination that didn't use premultiplied alpha, we would need to perform a manual un-premultiplication step.
+        // Assuming we have an opaque background, we can just write to it with the premultiplied alpha blend mode and
+        // we'll get the correct result. Instead, if we had a transparent destination that didn't use premultiplied
+        // alpha, we would need to perform a manual un-premultiplication step.
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, fb_postprocess.color_tex_buffer);
         UseShaderProgram("RmlPassthrough");
@@ -637,29 +633,34 @@ class RenderInterface : public Rml::RenderInterface {
         else
             glDisable(GL_DEPTH_TEST);
 
-        glViewport(_glstate_backup.viewport[0], _glstate_backup.viewport[1], _glstate_backup.viewport[2], _glstate_backup.viewport[3]);
-        glScissor(_glstate_backup.scissor[0], _glstate_backup.scissor[1], _glstate_backup.scissor[2], _glstate_backup.scissor[3]);
+        glViewport(_glstate_backup.viewport[0], _glstate_backup.viewport[1], _glstate_backup.viewport[2],
+                   _glstate_backup.viewport[3]);
+        glScissor(_glstate_backup.scissor[0], _glstate_backup.scissor[1], _glstate_backup.scissor[2],
+                  _glstate_backup.scissor[3]);
 
         glActiveTexture(_glstate_backup.active_texture);
 
         glClearStencil(_glstate_backup.stencil_clear_value);
-        glClearColor(_glstate_backup.color_clear_value[0], _glstate_backup.color_clear_value[1], _glstate_backup.color_clear_value[2],
-            _glstate_backup.color_clear_value[3]);
-        glColorMask(_glstate_backup.color_writemask[0], _glstate_backup.color_writemask[1], _glstate_backup.color_writemask[2],
-            _glstate_backup.color_writemask[3]);
+        glClearColor(_glstate_backup.color_clear_value[0], _glstate_backup.color_clear_value[1],
+                     _glstate_backup.color_clear_value[2], _glstate_backup.color_clear_value[3]);
+        glColorMask(_glstate_backup.color_writemask[0], _glstate_backup.color_writemask[1],
+                    _glstate_backup.color_writemask[2], _glstate_backup.color_writemask[3]);
 
         glBlendEquationSeparate(_glstate_backup.blend_equation_rgb, _glstate_backup.blend_equation_alpha);
-        glBlendFuncSeparate(_glstate_backup.blend_src_rgb, _glstate_backup.blend_dst_rgb, _glstate_backup.blend_src_alpha, _glstate_backup.blend_dst_alpha);
+        glBlendFuncSeparate(_glstate_backup.blend_src_rgb, _glstate_backup.blend_dst_rgb,
+                            _glstate_backup.blend_src_alpha, _glstate_backup.blend_dst_alpha);
 
-        glStencilFuncSeparate(GL_FRONT, _glstate_backup.stencil_front.func, _glstate_backup.stencil_front.ref, _glstate_backup.stencil_front.value_mask);
+        glStencilFuncSeparate(GL_FRONT, _glstate_backup.stencil_front.func, _glstate_backup.stencil_front.ref,
+                              _glstate_backup.stencil_front.value_mask);
         glStencilMaskSeparate(GL_FRONT, _glstate_backup.stencil_front.writemask);
         glStencilOpSeparate(GL_FRONT, _glstate_backup.stencil_front.fail, _glstate_backup.stencil_front.pass_depth_fail,
-            _glstate_backup.stencil_front.pass_depth_pass);
+                            _glstate_backup.stencil_front.pass_depth_pass);
 
-        glStencilFuncSeparate(GL_BACK, _glstate_backup.stencil_back.func, _glstate_backup.stencil_back.ref, _glstate_backup.stencil_back.value_mask);
+        glStencilFuncSeparate(GL_BACK, _glstate_backup.stencil_back.func, _glstate_backup.stencil_back.ref,
+                              _glstate_backup.stencil_back.value_mask);
         glStencilMaskSeparate(GL_BACK, _glstate_backup.stencil_back.writemask);
         glStencilOpSeparate(GL_BACK, _glstate_backup.stencil_back.fail, _glstate_backup.stencil_back.pass_depth_fail,
-            _glstate_backup.stencil_back.pass_depth_pass);
+                            _glstate_backup.stencil_back.pass_depth_pass);
 
         // CheckGLError("EndFrame");
     }
