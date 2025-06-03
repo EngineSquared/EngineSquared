@@ -6,9 +6,9 @@
 
 #include "Logger.hpp"
 #include "Mesh.hpp"
-#include "Window.hpp"
 #include "Object.hpp"
 #include "OpenGL.hpp"
+#include "Window.hpp"
 
 // Determines the anti-aliasing quality when creating layers. Enables better-looking visuals, especially when transforms are applied.
 #ifndef RMLUI_NUM_MSAA_SAMPLES
@@ -435,10 +435,7 @@ class RenderInterface : public Rml::RenderInterface {
         textureManager.Remove(_texture.texture_handle);
     }
 
-    void EnableScissorRegion(bool enable) override
-    {
-        enable ? glEnable(GL_SCISSOR_TEST) : glDisable(GL_SCISSOR_TEST);
-    }
+    void EnableScissorRegion(bool enable) override { enable ? glEnable(GL_SCISSOR_TEST) : glDisable(GL_SCISSOR_TEST); }
 
     void SetScissorRegion(Rml::Rectanglei region) override
     {
@@ -622,19 +619,13 @@ class SystemInterface : public Rml::SystemInterface {
 
     bool LogMessage(Rml::Log::Type type, const Rml::String &message) override
     {
-        switch (type) {
-            case Rml::Log::Type::LT_ASSERT:
-            case Rml::Log::Type::LT_ERROR:
-                ES::Utils::Log::Error(fmt::format("RmlUi: {}", message));
-                break;
-            case Rml::Log::Type::LT_WARNING:
-                ES::Utils::Log::Warn(fmt::format("RmlUi: {}", message));
-                break;
-            case Rml::Log::Type::LT_INFO:
-                ES::Utils::Log::Info(fmt::format("RmlUi: {}", message));
-                break;
-            default:
-                break;
+        switch (type)
+        {
+        case Rml::Log::Type::LT_ASSERT:
+        case Rml::Log::Type::LT_ERROR: ES::Utils::Log::Error(fmt::format("RmlUi: {}", message)); break;
+        case Rml::Log::Type::LT_WARNING: ES::Utils::Log::Warn(fmt::format("RmlUi: {}", message)); break;
+        case Rml::Log::Type::LT_INFO: ES::Utils::Log::Info(fmt::format("RmlUi: {}", message)); break;
+        default: break;
         }
         return true;
     }

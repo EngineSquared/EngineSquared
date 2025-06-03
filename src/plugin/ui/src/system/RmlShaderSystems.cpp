@@ -6,12 +6,12 @@
 
 #include "OpenGL.pch.hpp"
 
-#include "ShaderManager.hpp"
 #include "RmlShaderSystems.hpp"
+#include "ShaderManager.hpp"
 
 void ES::Plugin::UI::System::LoadShaderVertColor(ES::Engine::Core &core)
 {
-    const char *vertexShader = + R"(
+    const char *vertexShader = +R"(
         #version 440
 
         uniform vec2 _translate;
@@ -105,9 +105,9 @@ void ES::Plugin::UI::System::LoadShaderVertGradient(ES::Engine::Core &core)
 {
     const int maxNumStop = 16;
 
-    std::string shaderHeader =
-        "#version 440\n"
-        "#define MAX_NUM_STOPS " + std::to_string(maxNumStop) + "\n";
+    std::string shaderHeader = "#version 440\n"
+                               "#define MAX_NUM_STOPS " +
+                               std::to_string(maxNumStop) + "\n";
 
     const char *vertexShader = R"(
         #version 440
@@ -133,9 +133,8 @@ void ES::Plugin::UI::System::LoadShaderVertGradient(ES::Engine::Core &core)
         }
     )";
 
-    std::string fragmentShader =
-        shaderHeader +
-        R"(
+    std::string fragmentShader = shaderHeader +
+                                 R"(
         #define LINEAR 0
         #define RADIAL 1
         #define CONIC 2
@@ -383,14 +382,15 @@ void ES::Plugin::UI::System::LoadShaderBlur(ES::Engine::Core &core)
     const int blurSize = 7;
     const int blurNumWeights = (blurSize + 1) / 2;
 
-    std::string shaderHeader =
-        "#version 440\n"
-        "#define BLUR_SIZE " + std::to_string(blurSize) + "\n"
-        "#define BLUR_NUM_WEIGHTS " + std::to_string(blurNumWeights) + "\n";
+    std::string shaderHeader = "#version 440\n"
+                               "#define BLUR_SIZE " +
+                               std::to_string(blurSize) +
+                               "\n"
+                               "#define BLUR_NUM_WEIGHTS " +
+                               std::to_string(blurNumWeights) + "\n";
 
-    const std::string vertexShader =
-        shaderHeader +
-        R"(
+    const std::string vertexShader = shaderHeader +
+                                     R"(
         uniform vec2 _texelOffset;
 
         in vec3 inPosition;
@@ -405,9 +405,8 @@ void ES::Plugin::UI::System::LoadShaderBlur(ES::Engine::Core &core)
         }
     )";
 
-    const std::string fragmentShader =
-        shaderHeader +
-        R"(
+    const std::string fragmentShader = shaderHeader +
+                                       R"(
         uniform sampler2D _tex;
         uniform float _weights[BLUR_NUM_WEIGHTS];
         uniform vec2 _texCoordMin;
@@ -427,8 +426,8 @@ void ES::Plugin::UI::System::LoadShaderBlur(ES::Engine::Core &core)
         }
     )";
 
-    auto& shaderManager = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
-    auto& sp = shaderManager.Add(entt::hashed_string{"RmlBlur"});
+    auto &shaderManager = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
+    auto &sp = shaderManager.Add(entt::hashed_string{"RmlBlur"});
     sp.Create();
     sp.InitFromStrings(vertexShader.c_str(), fragmentShader.c_str());
 }
@@ -474,7 +473,8 @@ void ES::Plugin::UI::System::LoadShaderDropShadow(ES::Engine::Core &core)
 
 void ES::Plugin::UI::System::SetupShaderVertColorUniforms(ES::Engine::Core &core)
 {
-    auto &m_shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlVertexColor"});
+    auto &m_shaderProgram =
+        core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlVertexColor"});
 
     m_shaderProgram.AddUniform("_translate");
     m_shaderProgram.AddUniform("_transform");
@@ -482,7 +482,8 @@ void ES::Plugin::UI::System::SetupShaderVertColorUniforms(ES::Engine::Core &core
 
 void ES::Plugin::UI::System::SetupShaderVertTextureUniforms(ES::Engine::Core &core)
 {
-    auto &m_shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlVertexTexture"});
+    auto &m_shaderProgram =
+        core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlVertexTexture"});
 
     m_shaderProgram.AddUniform("_translate");
     m_shaderProgram.AddUniform("_transform");
@@ -491,7 +492,8 @@ void ES::Plugin::UI::System::SetupShaderVertTextureUniforms(ES::Engine::Core &co
 
 void ES::Plugin::UI::System::SetupShaderVertGradientUniforms(ES::Engine::Core &core)
 {
-    auto &m_shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlVertexGradient"});
+    auto &m_shaderProgram =
+        core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlVertexGradient"});
 
     m_shaderProgram.AddUniform("_translate");
     m_shaderProgram.AddUniform("_transform");
@@ -505,7 +507,8 @@ void ES::Plugin::UI::System::SetupShaderVertGradientUniforms(ES::Engine::Core &c
 
 void ES::Plugin::UI::System::SetupShaderCreationUniforms(ES::Engine::Core &core)
 {
-    auto &m_shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlCreation"});
+    auto &m_shaderProgram =
+        core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlCreation"});
 
     m_shaderProgram.AddUniform("_translate");
     m_shaderProgram.AddUniform("_transform");
@@ -515,14 +518,16 @@ void ES::Plugin::UI::System::SetupShaderCreationUniforms(ES::Engine::Core &core)
 
 void ES::Plugin::UI::System::SetupShaderPassthroughUniform(ES::Engine::Core &core)
 {
-    auto &m_shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlPassthrough"});
+    auto &m_shaderProgram =
+        core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlPassthrough"});
 
     m_shaderProgram.AddUniform("_tex");
 }
 
 void ES::Plugin::UI::System::SetupShaderColorMatrix(ES::Engine::Core &core)
 {
-    auto &m_shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlColorMatrix"});
+    auto &m_shaderProgram =
+        core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlColorMatrix"});
 
     m_shaderProgram.AddUniform("_tex");
     m_shaderProgram.AddUniform("_color_matrix");
@@ -530,7 +535,8 @@ void ES::Plugin::UI::System::SetupShaderColorMatrix(ES::Engine::Core &core)
 
 void ES::Plugin::UI::System::SetupShaderBlendMatrix(ES::Engine::Core &core)
 {
-    auto &m_shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlBlendMatrix"});
+    auto &m_shaderProgram =
+        core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlBlendMatrix"});
 
     m_shaderProgram.AddUniform("_tex");
     m_shaderProgram.AddUniform("_texMask");
@@ -538,7 +544,8 @@ void ES::Plugin::UI::System::SetupShaderBlendMatrix(ES::Engine::Core &core)
 
 void ES::Plugin::UI::System::SetupShaderBlur(ES::Engine::Core &core)
 {
-    auto &m_shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlBlur"});
+    auto &m_shaderProgram =
+        core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlBlur"});
 
     m_shaderProgram.AddUniform("_texelOffset");
     m_shaderProgram.AddUniform("_weights");
@@ -549,7 +556,8 @@ void ES::Plugin::UI::System::SetupShaderBlur(ES::Engine::Core &core)
 
 void ES::Plugin::UI::System::SetupShaderDropShadow(ES::Engine::Core &core)
 {
-    auto &m_shaderProgram = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlDropShadow"});
+    auto &m_shaderProgram =
+        core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"RmlDropShadow"});
 
     m_shaderProgram.AddUniform("_tex");
     m_shaderProgram.AddUniform("_texCoordMin");

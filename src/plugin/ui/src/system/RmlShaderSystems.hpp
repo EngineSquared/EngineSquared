@@ -2,8 +2,7 @@
 
 #include "Core.hpp"
 
-namespace ES::Plugin::UI::System
-{
+namespace ES::Plugin::UI::System {
 void LoadShaderVertColor(ES::Engine::Core &core);
 void LoadShaderVertTexture(ES::Engine::Core &core);
 void LoadShaderVertGradient(ES::Engine::Core &core);
