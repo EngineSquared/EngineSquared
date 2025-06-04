@@ -507,14 +507,14 @@ class RenderInterface : public Rml::RenderInterface {
         glScissor(region.Left(), region.Top(), region.Width(), region.Height());
     }
 
-    Rml::CompiledShaderHandle CompileShader(const Rml::String &/*name*/, const Rml::Dictionary &/*parameters*/)
+    Rml::CompiledShaderHandle CompileShader(const Rml::String & /*name*/, const Rml::Dictionary & /*parameters*/)
     {
         std::cout << "compile shader" << std::endl;
         return 0;
     }
 
     void RenderShader(Rml::CompiledShaderHandle /*shader_handle*/, Rml::CompiledGeometryHandle /*geometry_handle*/,
-	                                        Rml::Vector2f /*translation*/, Rml::TextureHandle /*texture*/)
+                      Rml::Vector2f /*translation*/, Rml::TextureHandle /*texture*/)
     {
         std::cout << "render shader" << std::endl;
     }
