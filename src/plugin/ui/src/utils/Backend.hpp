@@ -93,9 +93,9 @@ class RenderInterface : public Rml::RenderInterface {
         // Push a new layer. All references to previously retrieved layers are invalidated.
         Rml::LayerHandle PushLayer()
         {
-            RMLUI_ASSERT(layers_size <= (int) fb_layers.size());
+            RMLUI_ASSERT(layers_size <= static_cast<int>(fb_layers.size()));
 
-            if (layers_size == (int) fb_layers.size())
+            if (layers_size == static_cast<int>(fb_layers.size()))
             {
                 // All framebuffers should share a single stencil buffer.
                 GLuint shared_depth_stencil = (fb_layers.empty() ? 0 : fb_layers.front().depth_stencil_buffer);
@@ -174,7 +174,7 @@ class RenderInterface : public Rml::RenderInterface {
         }
         const FramebufferData &EnsureFramebufferPostprocess(int index)
         {
-            RMLUI_ASSERT(index < (int) fb_postprocess.size())
+            RMLUI_ASSERT(index < static_cast<int>(fb_postprocess.size()))
             FramebufferData &fb = fb_postprocess[index];
             if (!fb.framebuffer)
                 CreateFramebuffer(fb, width, height, 0, FramebufferAttachment::None, 0);
@@ -342,7 +342,7 @@ class RenderInterface : public Rml::RenderInterface {
         
         record.mesh_handle = entt::hashed_string{fmt::format("rml_mesh_{}", _next_geom_id).c_str()};
         mesh.vertices.reserve(vertices.size());
-        mesh.normals.resize(vertices.size(), glm::vec3(0.0f));
+        mesh.normals.resize(vertices.size(), glm::vec3(0.0f, 0.0f, 1.0f));
         mesh.texCoords.reserve(vertices.size());
 
         for (const auto &v : vertices) {
@@ -457,7 +457,6 @@ class RenderInterface : public Rml::RenderInterface {
     Rml::TextureHandle GenerateTexture(Rml::Span<const Rml::byte> source, Rml::Vector2i dimensions) override
     {
         entt::hashed_string handle = entt::hashed_string{fmt::format("rml_dynamic_texture_{}", _next_tex_id).c_str()};
-        // _texture.texture_handle = entt::hashed_string{"rml_texture"};
 
         auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
         if (!textureManager.Contains(handle)) {
@@ -469,8 +468,6 @@ class RenderInterface : public Rml::RenderInterface {
             ES::Utils::Log::Error(fmt::format("RmlUi: Generated texture {} is not valid", handle.data()));
             return 0;
         }
-
-        std::cout << dimensions.x << " " << dimensions.y << std::endl;
 
         Rml::TextureHandle id = _next_tex_id++;
         _textures[id] = handle;
@@ -492,6 +489,18 @@ class RenderInterface : public Rml::RenderInterface {
     void SetScissorRegion(Rml::Rectanglei region) override
     {
         glScissor(region.Left(), region.Top(), region.Width(), region.Height());
+    }
+
+    Rml::CompiledShaderHandle CompileShader(const Rml::String &/*name*/, const Rml::Dictionary &/*parameters*/)
+    {
+        std::cout << "compile shader" << std::endl;
+        return 0;
+    }
+
+    void RenderShader(Rml::CompiledShaderHandle /*shader_handle*/, Rml::CompiledGeometryHandle /*geometry_handle*/,
+	                                        Rml::Vector2f /*translation*/, Rml::TextureHandle /*texture*/)
+    {
+        std::cout << "render shader" << std::endl;
     }
 
     void BeginFrame()
@@ -580,7 +589,7 @@ class RenderInterface : public Rml::RenderInterface {
         // Gfx::CheckGLError("BeginFrame");
     }
 
-    void EndFrame(ES::Engine::Core &core)
+    void EndFrame(ES::Engine::Core &)
     {
         const FramebufferData &fb_active = _render_layers.GetTopLayer();
         const FramebufferData &fb_postprocess = _render_layers.GetPostprocessPrimary();
@@ -602,7 +611,7 @@ class RenderInterface : public Rml::RenderInterface {
         // alpha, we would need to perform a manual un-premultiplication step.
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, fb_postprocess.color_tex_buffer);
-        UseShaderProgram("RmlPassthrough");
+        // UseShaderProgram("RmlPassthrough");
         DrawFullscreenQuad();
 
         _render_layers.EndFrame();

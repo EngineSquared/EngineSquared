@@ -51,7 +51,12 @@ void UIResource::Render(ES::Engine::Core &core)
     _renderInterface.get()->EndFrame(core);
 }
 
-void UIResource::Update() { _context->Update(); }
+void UIResource::Update()
+{
+    // if (!Rml::Debugger::IsVisible())
+    //     Rml::Debugger::SetVisible(true);
+    _context->Update();
+}
 
 void UIResource::SetFont(const std::string &fontPath)
 {
