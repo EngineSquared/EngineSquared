@@ -19,7 +19,7 @@
 namespace ES::Plugin::UI::Utils {
 class RenderInterface : public Rml::RenderInterface {
   public:
-    explicit RenderInterface(ES::Engine::Core &core) : _core(core) {};
+    explicit RenderInterface(ES::Engine::Core &core) : _core(core){};
     ~RenderInterface() = default;
 
   private:
@@ -201,14 +201,17 @@ class RenderInterface : public Rml::RenderInterface {
     RenderLayerStack _render_layers;
     Rml::Rectanglei _scissor_state;
     entt::hashed_string activeShaderProgram = "";
-    enum class FramebufferAttachment { None, DepthStencil };
+    enum class FramebufferAttachment {
+        None,
+        DepthStencil
+    };
 
     static constexpr Rml::TextureHandle TexturePostprocess = Rml::TextureHandle(-2);
 
     void UseShaderProgram(const entt::hashed_string &program_id)
     {
         auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
-        
+
         if (program_id == entt::hashed_string{""})
         {
             if (activeShaderProgram != entt::hashed_string{""})
@@ -231,8 +234,8 @@ class RenderInterface : public Rml::RenderInterface {
         shaderManager.Get(activeShaderProgram).Use();
     }
 
-    static bool CreateFramebuffer(FramebufferData& out_fb, int width, int height, int samples, FramebufferAttachment attachment,
-	                                GLuint shared_depth_stencil_buffer)
+    static bool CreateFramebuffer(FramebufferData &out_fb, int width, int height, int samples,
+                                  FramebufferAttachment attachment, GLuint shared_depth_stencil_buffer)
     {
 #ifdef RMLUI_PLATFORM_EMSCRIPTEN
         constexpr GLint wrap_mode = GL_CLAMP_TO_EDGE;
@@ -339,21 +342,24 @@ class RenderInterface : public Rml::RenderInterface {
     {
         GeometryRecord record;
         auto &mesh = record.mesh;
-        
+
         record.mesh_handle = entt::hashed_string{fmt::format("rml_mesh_{}", _next_geom_id).c_str()};
         mesh.vertices.reserve(vertices.size());
         mesh.normals.resize(vertices.size(), glm::vec3(0.0f, 0.0f, 1.0f));
         mesh.texCoords.reserve(vertices.size());
 
-        for (const auto &v : vertices) {
-            ES::Utils::Log::Info(fmt::format("Rmlui: vertex coordinates for {}: [{}:{}]", record.mesh_handle.data(), v.tex_coord.x, v.tex_coord.y));
+        for (const auto &v : vertices)
+        {
+            ES::Utils::Log::Info(fmt::format("Rmlui: vertex coordinates for {}: [{}:{}]", record.mesh_handle.data(),
+                                             v.tex_coord.x, v.tex_coord.y));
             mesh.vertices.emplace_back(v.position.x, v.position.y, 0.0f);
             mesh.texCoords.emplace_back(v.tex_coord.x, v.tex_coord.y);
         }
         mesh.indices.assign(indices.begin(), indices.end());
 
         auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
-        if (!bufferManager.Contains(record.mesh_handle)) {
+        if (!bufferManager.Contains(record.mesh_handle))
+        {
             ES::Plugin::OpenGL::Utils::GLMeshBuffer buffer;
             buffer.GenerateGLMeshBuffers(mesh);
             bufferManager.Add(record.mesh_handle, buffer);
@@ -369,8 +375,9 @@ class RenderInterface : public Rml::RenderInterface {
                         Rml::TextureHandle texture_handle) override
     {
         const auto it = _geometries.find(handle);
-        if (it == _geometries.end()) return;
-        
+        if (it == _geometries.end())
+            return;
+
         const auto &mesh = it->second.mesh;
         const auto &mesh_handle = it->second.mesh_handle;
         auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
@@ -382,9 +389,11 @@ class RenderInterface : public Rml::RenderInterface {
         {
             auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
             auto tex_it = _textures.find(texture_handle);
-            if (tex_it != _textures.end()) {
+            if (tex_it != _textures.end())
+            {
                 auto &tex = textureManager.Get(tex_it->second);
-                if (tex.IsValid()) {
+                if (tex.IsValid())
+                {
                     hasTexture = true;
                     UseShaderProgram("RmlVertexTexture");
                     glUniform1i(texShaderProg.GetUniform("_tex"), 0);
@@ -421,9 +430,11 @@ class RenderInterface : public Rml::RenderInterface {
     void ReleaseGeometry(Rml::CompiledGeometryHandle handle) override
     {
         auto it = _geometries.find(handle);
-        if (it != _geometries.end()) {
+        if (it != _geometries.end())
+        {
             auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
-            if (bufferManager.Contains(it->second.mesh_handle)) {
+            if (bufferManager.Contains(it->second.mesh_handle))
+            {
                 bufferManager.Remove(it->second.mesh_handle);
             }
             _geometries.erase(it);
@@ -437,12 +448,14 @@ class RenderInterface : public Rml::RenderInterface {
 
         auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
 
-        if (!textureManager.Contains(handle)) {
+        if (!textureManager.Contains(handle))
+        {
             textureManager.Add(handle, source.data());
         }
 
         auto &texture = textureManager.Get(handle);
-        if (!texture.IsValid()) {
+        if (!texture.IsValid())
+        {
             ES::Utils::Log::Error(fmt::format("RmlUi: Loaded texture {} is not valid", handle.data()));
             return 0;
         }
@@ -459,12 +472,14 @@ class RenderInterface : public Rml::RenderInterface {
         entt::hashed_string handle = entt::hashed_string{fmt::format("rml_dynamic_texture_{}", _next_tex_id).c_str()};
 
         auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-        if (!textureManager.Contains(handle)) {
+        if (!textureManager.Contains(handle))
+        {
             textureManager.Add(handle, source.data(), dimensions.x, dimensions.y);
         }
 
         auto &texture = textureManager.Get(handle);
-        if (!texture.IsValid()) {
+        if (!texture.IsValid())
+        {
             ES::Utils::Log::Error(fmt::format("RmlUi: Generated texture {} is not valid", handle.data()));
             return 0;
         }
@@ -477,7 +492,8 @@ class RenderInterface : public Rml::RenderInterface {
     void ReleaseTexture(Rml::TextureHandle handle) override
     {
         auto it = _textures.find(handle);
-        if (it != _textures.end()) {
+        if (it != _textures.end())
+        {
             auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
             textureManager.Remove(it->second);
             _textures.erase(it);
