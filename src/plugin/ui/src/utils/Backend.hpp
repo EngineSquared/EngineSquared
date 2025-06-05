@@ -399,22 +399,24 @@ class RenderInterface : public Rml::RenderInterface {
         glBindVertexArray(vao);
 
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Rml::Vertex) * vertices.size(), reinterpret_cast<const void *>(vertices.data()), draw_usage);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(Rml::Vertex) * vertices.size(),
+                     reinterpret_cast<const void *>(vertices.data()), draw_usage);
 
         glEnableVertexAttribArray(static_cast<GLuint>(VertexAttribute::Position));
-        glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, sizeof(Rml::Vertex),
-            reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, position)));
+        glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::Position), 2, GL_FLOAT, GL_FALSE,
+                              sizeof(Rml::Vertex), reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, position)));
 
         glEnableVertexAttribArray(static_cast<GLuint>(VertexAttribute::Color0));
-        glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::Color0), 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Rml::Vertex),
-            reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, colour)));
+        glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::Color0), 4, GL_UNSIGNED_BYTE, GL_TRUE,
+                              sizeof(Rml::Vertex), reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, colour)));
 
         glEnableVertexAttribArray(static_cast<GLuint>(VertexAttribute::TexCoord0));
-        glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::TexCoord0), 2, GL_FLOAT, GL_FALSE, sizeof(Rml::Vertex),
-            reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, tex_coord)));
+        glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::TexCoord0), 2, GL_FLOAT, GL_FALSE,
+                              sizeof(Rml::Vertex), reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, tex_coord)));
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), reinterpret_cast<const void *>(indices.data()), draw_usage);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(),
+                     reinterpret_cast<const void *>(indices.data()), draw_usage);
 
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -425,7 +427,7 @@ class RenderInterface : public Rml::RenderInterface {
         geometry.vao = vao;
         geometry.vbo = vbo;
         geometry.ibo = ibo;
-        geometry.draw_count = (GLsizei)indices.size();
+        geometry.draw_count = (GLsizei) indices.size();
         Rml::CompiledGeometryHandle id = _next_geom_id++;
 
         _geometries.emplace(id, std::move(geometry));
@@ -568,7 +570,8 @@ class RenderInterface : public Rml::RenderInterface {
 
         glBindTexture(GL_TEXTURE_2D, texture_id);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, source_dimensions.x, source_dimensions.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, source_data.data());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, source_dimensions.x, source_dimensions.y, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                    source_data.data());
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -597,10 +600,7 @@ class RenderInterface : public Rml::RenderInterface {
             SetScissor(Rml::Rectanglei::MakeInvalid(), false);
     }
 
-    void SetScissorRegion(Rml::Rectanglei region) override
-    {
-        SetScissor(region, true);
-    }
+    void SetScissorRegion(Rml::Rectanglei region) override { SetScissor(region, true); }
 
     void SetScissor(Rml::Rectanglei region, bool vertically_flip)
     {
