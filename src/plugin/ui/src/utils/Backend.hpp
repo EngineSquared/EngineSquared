@@ -459,9 +459,12 @@ class RenderInterface : public Rml::RenderInterface {
                 const auto &texIt = _textures.find(texture_handle);
                 if (texIt != _textures.end())
                 {
-                    auto &tex = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Get(entt::hashed_string{texIt->second.c_str()});
+                    auto &tex = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Get(
+                        entt::hashed_string{texIt->second.c_str()});
                     glBindTexture(GL_TEXTURE_2D, tex.GetTexID());
-                } else {
+                }
+                else
+                {
                     ES::Utils::Log::Error(fmt::format("RmlUi: Texture handle {} not found", texture_handle));
                 }
                 auto &texShaderProg = shaderManager.Get("RmlVertexTexture");
@@ -538,7 +541,7 @@ class RenderInterface : public Rml::RenderInterface {
         std::string key = "rml_raw_texture_" + std::to_string(_next_tex_id);
         const entt::hashed_string handle = entt::hashed_string{key.c_str()};
         auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-        
+
         Rml::TextureHandle texture_id = CreateTexture(source, dimensions);
         if (texture_id == 0)
         {
@@ -571,7 +574,7 @@ class RenderInterface : public Rml::RenderInterface {
         glBindTexture(GL_TEXTURE_2D, texture_id);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, source_dimensions.x, source_dimensions.y, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                    source_data.data());
+                     source_data.data());
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
