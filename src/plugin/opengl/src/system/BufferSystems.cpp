@@ -1,6 +1,7 @@
 #include "OpenGL.pch.hpp"
 
 #include "BufferSystems.hpp"
+#include "DirectionalLight.hpp"
 #include "GLMeshBufferManager.hpp"
 #include "GLSpriteBufferManager.hpp"
 #include "GLTextBufferManager.hpp"
@@ -57,4 +58,45 @@ void ES::Plugin::OpenGL::System::LoadGLTextBuffer(ES::Engine::Core &core)
             buffer.GenerateGLTextBuffers();
             glBufferManager.Add(textHandle.id, std::move(buffer));
         });
+}
+
+void ES::Plugin::OpenGL::System::GenerateDirectionalLightFramebuffer(ES::Engine::Core &core)
+{
+    auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
+
+    glGenFramebuffers(1, &light.depthMapFBO);
+}
+
+void ES::Plugin::OpenGL::System::GenerateDirectionalLightTexture(ES::Engine::Core &core)
+{
+    auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
+
+    // Create a texture for the shadow map
+    glGenTextures(1, &light.depthMap);
+
+    // Setup the texture
+    glBindTexture(GL_TEXTURE_2D, light.depthMap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, light.shadowWidth, light.shadowHeight, 0, GL_DEPTH_COMPONENT,
+                 GL_FLOAT, nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    // Register the texture in the TextureManager, this is only for debug purposes
+    core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Add(
+        entt::hashed_string{"depthMap"}, light.shadowWidth, light.shadowHeight, 1, light.depthMap);
+}
+
+void ES::Plugin::OpenGL::System::BindDirectionalLightTextureToFramebuffer(ES::Engine::Core &core)
+{
+    const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
+
+    // Attach the texture to the framebuffer
+    glBindFramebuffer(GL_FRAMEBUFFER, light.depthMapFBO);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, light.depthMap, 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

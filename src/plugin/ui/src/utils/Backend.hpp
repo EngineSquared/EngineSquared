@@ -219,7 +219,7 @@ class RenderInterface : public Rml::RenderInterface {
     };
 
     std::unordered_map<Rml::CompiledGeometryHandle, CompiledGeometryData> _geometries;
-    std::unordered_map<Rml::TextureHandle, entt::hashed_string> _textures;
+    std::unordered_map<Rml::TextureHandle, std::string> _textures;
 
     Rml::CompiledGeometryHandle _next_geom_id = 1u;
     Rml::TextureHandle _next_tex_id = 1u;
@@ -247,16 +247,16 @@ class RenderInterface : public Rml::RenderInterface {
     {
         auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
 
-        if (program_id == entt::hashed_string{""})
+        if (program_id == entt::hashed_string(""))
         {
-            if (activeShaderProgram != entt::hashed_string{""})
+            if (activeShaderProgram != entt::hashed_string(""))
                 shaderManager.Get(activeShaderProgram).Disable();
             return;
         }
 
         if (activeShaderProgram != program_id)
         {
-            if (activeShaderProgram != entt::hashed_string{""})
+            if (activeShaderProgram != entt::hashed_string(""))
                 shaderManager.Get(activeShaderProgram).Disable();
             activeShaderProgram = program_id;
         }
@@ -387,36 +387,6 @@ class RenderInterface : public Rml::RenderInterface {
     Rml::CompiledGeometryHandle CompileGeometry(Rml::Span<const Rml::Vertex> vertices,
                                                 Rml::Span<const int> indices) override
     {
-        // GeometryRecord record;
-        // auto &mesh = record.mesh;
-
-        // record.mesh_handle = entt::hashed_string{fmt::format("rml_mesh_{}", _next_geom_id).c_str()};
-        // mesh.vertices.reserve(vertices.size());
-        // mesh.normals.resize(vertices.size(), glm::vec3(0.2f, 0.2f, 1.0f));
-        // mesh.texCoords.reserve(vertices.size());
-
-        // for (const auto &v : vertices)
-        // {
-        //     ES::Utils::Log::Info(fmt::format("Rmlui: vertex coordinates for {}: [{}:{}]", record.mesh_handle.data(),
-        //                                      v.tex_coord.x, v.tex_coord.y));
-        //     mesh.vertices.emplace_back(v.position.x, v.position.y, 0.0f);
-        //     mesh.texCoords.emplace_back(v.tex_coord.x, v.tex_coord.y);
-        // }
-        // mesh.indices.assign(indices.begin(), indices.end());
-
-        // auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
-        // if (!bufferManager.Contains(record.mesh_handle))
-        // {
-        //     ES::Plugin::OpenGL::Utils::GLMeshBuffer buffer;
-        //     buffer.GenerateGLMeshBuffers(mesh);
-        //     bufferManager.Add(record.mesh_handle, buffer);
-        // }
-
-        // Rml::CompiledGeometryHandle id = _next_geom_id++;
-        // _geometries.emplace(id, std::move(record));
-        // ES::Utils::Log::Info(fmt::format("Rmlui: Compiled geometry for {}", record.mesh_handle.data()));
-        // return id;
-
         constexpr GLenum draw_usage = GL_STATIC_DRAW;
 
         GLuint vao = 0;
@@ -449,8 +419,9 @@ class RenderInterface : public Rml::RenderInterface {
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+        std::string key = "rml_mesh_" + std::to_string(_next_geom_id);
         CompiledGeometryData geometry;
-        geometry.mesh_handle = entt::hashed_string{fmt::format("rml_mesh_{}", _next_geom_id).c_str()};
+        geometry.mesh_handle = entt::hashed_string{key.c_str()};
         geometry.vao = vao;
         geometry.vbo = vbo;
         geometry.ibo = ibo;
@@ -465,68 +436,14 @@ class RenderInterface : public Rml::RenderInterface {
     void RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Vector2f translation,
                         Rml::TextureHandle texture_handle) override
     {
-        // const auto it = _geometries.find(handle);
-        // if (it == _geometries.end())
-        //     return;
-
-        // const auto &mesh = it->second.mesh;
-        // const auto &mesh_handle = it->second.mesh_handle;
-        // auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
-        // auto &texShaderProg = shaderManager.Get("RmlVertexTexture");
-        // auto &vertColShaderProg = shaderManager.Get("RmlVertexColor");
-        // bool hasTexture = false;
-
-        // if (texture_handle != TexturePostprocess)
-        // {
-        //     auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-        //     auto tex_it = _textures.find(texture_handle);
-        //     if (tex_it != _textures.end())
-        //     {
-        //         auto &tex = textureManager.Get(tex_it->second);
-        //         if (tex.IsValid())
-        //         {
-        //             hasTexture = true;
-        //             UseShaderProgram("RmlVertexTexture");
-        //             glUniform1i(texShaderProg.GetUniform("_tex"), 0);
-        //             tex.Bind();
-        //         }
-        //     }
-        //     if (!hasTexture)
-        //     {
-        //         UseShaderProgram("RmlVertexColor");
-        //         glBindTexture(GL_TEXTURE_2D, 0);
-        //     }
-        // }
-
-        // auto &bufferManager = _core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>();
-        // auto &buffer = bufferManager.Get(mesh_handle);
-
-        // auto &size = _core.GetResource<ES::Plugin::OpenGL::Resource::Camera>().size;
-        // glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
-        // if (hasTexture)
-        // {
-        //     glUniform2f(texShaderProg.GetUniform("_translate"), translation.x, translation.y);
-        //     glUniformMatrix4fv(texShaderProg.GetUniform("_transform"), 1, GL_FALSE, glm::value_ptr(projection));
-        //     buffer.Draw(mesh);
-        // }
-        // else
-        // {
-        //     glUniform2f(vertColShaderProg.GetUniform("_translate"), translation.x, translation.y);
-        //     glUniformMatrix4fv(vertColShaderProg.GetUniform("_transform"), 1, GL_FALSE, glm::value_ptr(projection));
-        //     buffer.Draw(mesh);
-        // }
-        // DisableActiveShaderProgram();
-
         const auto it = _geometries.find(handle);
         if (it == _geometries.end())
             return;
 
-        // CompiledGeometryData *geometry = (CompiledGeometryData*)handle;
-        const auto &mesh_handle = it->second.mesh_handle;
         auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
         auto &size = _core.GetResource<ES::Plugin::OpenGL::Resource::Camera>().size;
         glm::mat4 projection = glm::ortho(0.0f, size.x, 0.0f, size.y, -1.0f, 1.0f);
-        
+
         if (texture_handle == TexturePostprocess)
         {
             // Do nothing.
@@ -537,11 +454,13 @@ class RenderInterface : public Rml::RenderInterface {
             // SubmitTransformUniform(translation);
             if (texture_handle != TextureEnableWithoutBinding)
             {
-                const auto &it = _textures.find(texture_handle);
-                if (it != _textures.end())
+                const auto &texIt = _textures.find(texture_handle);
+                if (texIt != _textures.end())
                 {
-                    auto &tex = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Get(it->second);
-                    glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(tex.GetTexID()));
+                    auto &tex = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Get(entt::hashed_string{texIt->second.c_str()});
+                    glBindTexture(GL_TEXTURE_2D, tex.GetTexID());
+                } else {
+                    ES::Utils::Log::Error(fmt::format("RmlUi: Texture handle {} not found", texture_handle));
                 }
                 auto &texShaderProg = shaderManager.Get("RmlVertexTexture");
                 glUniform1i(texShaderProg.GetUniform("_tex"), 0);
@@ -585,7 +504,8 @@ class RenderInterface : public Rml::RenderInterface {
 
     Rml::TextureHandle LoadTexture(Rml::Vector2i &texture_dimensions, const Rml::String &source) override
     {
-        entt::hashed_string handle = entt::hashed_string{fmt::format("rml_texture_{}", _next_tex_id).c_str()};
+        std::string key = "rml_texture_" + std::to_string(_next_tex_id);
+        const entt::hashed_string handle = entt::hashed_string{key.c_str()};
 
         auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
 
@@ -604,127 +524,59 @@ class RenderInterface : public Rml::RenderInterface {
         texture_dimensions = {texture.GetWidth(), texture.GetHeight()};
 
         Rml::TextureHandle id = _next_tex_id;
-        _textures[id] = handle;
+        _textures[id] = key;
         _next_tex_id += 1;
         return id;
-
-        /*Rml::FileInterface* file_interface = Rml::GetFileInterface();
-        Rml::FileHandle file_handle = file_interface->Open(source);
-        if (!file_handle)
-        {
-            std::cout << "returned" << std::endl;
-            return false;
-        }
-
-        file_interface->Seek(file_handle, 0, SEEK_END);
-        size_t buffer_size = file_interface->Tell(file_handle);
-        file_interface->Seek(file_handle, 0, SEEK_SET);
-
-        if (buffer_size <= sizeof(TGAHeader))
-        {
-            Rml::Log::Message(Rml::Log::LT_ERROR, "Texture file size is smaller than TGAHeader, file is not a valid TGA image.");
-            file_interface->Close(file_handle);
-            return false;
-        }
-
-        using Rml::byte;
-        Rml::UniquePtr<byte[]> buffer(new byte[buffer_size]);
-        file_interface->Read(buffer.get(), buffer_size, file_handle);
-        file_interface->Close(file_handle);
-
-        TGAHeader header;
-        memcpy(&header, buffer.get(), sizeof(TGAHeader));
-
-        int color_mode = header.bitsPerPixel / 8;
-        const size_t image_size = header.width * header.height * 4; // We always make 32bit textures
-
-        if (header.dataType != 2)
-        {
-            Rml::Log::Message(Rml::Log::LT_ERROR, "Only 24/32bit uncompressed TGAs are supported.");
-            return false;
-        }
-
-        // Ensure we have at least 3 colors
-        if (color_mode < 3)
-        {
-            Rml::Log::Message(Rml::Log::LT_ERROR, "Only 24 and 32bit textures are supported.");
-            return false;
-        }
-
-        const byte* image_src = buffer.get() + sizeof(TGAHeader);
-        Rml::UniquePtr<byte[]> image_dest_buffer(new byte[image_size]);
-        byte* image_dest = image_dest_buffer.get();
-
-        // Targa is BGR, swap to RGB, flip Y axis, and convert to premultiplied alpha.
-        for (long y = 0; y < header.height; y++)
-        {
-            long read_index = y * header.width * color_mode;
-            long write_index = ((header.imageDescriptor & 32) != 0) ? read_index : (header.height - y - 1) * header.width * 4;
-            for (long x = 0; x < header.width; x++)
-            {
-                image_dest[write_index] = image_src[read_index + 2];
-                image_dest[write_index + 1] = image_src[read_index + 1];
-                image_dest[write_index + 2] = image_src[read_index];
-                if (color_mode == 4)
-                {
-                    const byte alpha = image_src[read_index + 3];
-                    for (size_t j = 0; j < 3; j++)
-                        image_dest[write_index + j] = byte((image_dest[write_index + j] * alpha) / 255);
-                    image_dest[write_index + 3] = alpha;
-                }
-                else
-                    image_dest[write_index + 3] = 255;
-
-                write_index += 4;
-                read_index += color_mode;
-            }
-        }
-
-        texture_dimensions.x = header.width;
-        texture_dimensions.y = header.height;
-
-        return GenerateTexture({image_dest, image_size}, texture_dimensions);*/
     }
 
     Rml::TextureHandle GenerateTexture(Rml::Span<const Rml::byte> source, Rml::Vector2i dimensions) override
     {
-        entt::hashed_string handle = entt::hashed_string{fmt::format("rml_dynamic_texture_{}", _next_tex_id).c_str()};
+        RMLUI_ASSERT(source.data() && source.size() == size_t(dimensions.x * dimensions.y * 4));
 
-        // auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-        // if (!textureManager.Contains(handle))
-        // {
-        //     textureManager.Add(handle, source.data(), dimensions.x, dimensions.y);
-        // }
+        std::string key = "rml_raw_texture_" + std::to_string(_next_tex_id);
+        const entt::hashed_string handle = entt::hashed_string{key.c_str()};
+        auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
+        
+        Rml::TextureHandle texture_id = CreateTexture(source, dimensions);
+        if (texture_id == 0)
+        {
+            ES::Utils::Log::Error("RmlUi: Failed to create the texture from raw data");
+            return {};
+        }
+        if (!textureManager.Contains(handle))
+        {
+            textureManager.Add(handle, source.data(), dimensions.x, dimensions.y);
+            auto &texture = textureManager.Get(handle);
+            if (!texture.IsValid())
+            {
+                ES::Utils::Log::Error(fmt::format("RmlUi: Loaded texture {} is not valid", handle.data()));
+                return 0;
+            }
+        }
 
-        // auto &texture = textureManager.Get(handle);
-        // if (!texture.IsValid())
-        // {
-        //     ES::Utils::Log::Error(fmt::format("RmlUi: Generated texture {} is not valid", handle.data()));
-        //     return 0;
-        // }
+        _textures[texture_id] = key;
+        _next_tex_id += 1;
+        return texture_id;
+    }
 
-        // Rml::TextureHandle id = _next_tex_id++;
-        // _textures[id] = handle;
-        // return id;
-
-        GLuint texture_id = _next_tex_id;
+    Rml::TextureHandle CreateTexture(Rml::Span<const Rml::byte> source_data, Rml::Vector2i source_dimensions)
+    {
+        GLuint texture_id = static_cast<GLuint>(_next_tex_id);
         glGenTextures(1, &texture_id);
         if (texture_id == 0)
             return 0;
 
         glBindTexture(GL_TEXTURE_2D, texture_id);
-        
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, dimensions.x, dimensions.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, source.data());
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, source_dimensions.x, source_dimensions.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, source_data.data());
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        
+
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        
+
         glBindTexture(GL_TEXTURE_2D, 0);
-        
-        _textures[static_cast<Rml::TextureHandle>(texture_id)] = handle;
-        _next_tex_id += 1;
+
         return static_cast<Rml::TextureHandle>(texture_id);
     }
 
@@ -734,7 +586,7 @@ class RenderInterface : public Rml::RenderInterface {
         if (it != _textures.end())
         {
             auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-            textureManager.Remove(it->second);
+            textureManager.Remove(entt::hashed_string{it->second.c_str()});
             _textures.erase(it);
         }
     }

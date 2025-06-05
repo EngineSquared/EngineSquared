@@ -17,6 +17,7 @@
 
 // Resources
 #include "resource/Camera.hpp"
+#include "resource/DirectionalLight.hpp"
 #include "resource/FontManager.hpp"
 #include "resource/GLMeshBufferManager.hpp"
 #include "resource/GLSpriteBufferManager.hpp"
