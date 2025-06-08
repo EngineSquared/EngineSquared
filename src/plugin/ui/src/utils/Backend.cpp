@@ -523,7 +523,6 @@ void ES::Plugin::UI::Utils::RenderInterface::BeginFrame()
     glClear(GL_COLOR_BUFFER_BIT);
 
     UseShaderProgram("");
-    // program_transform_dirty.set();
     _scissor_state = Rml::Rectanglei::MakeInvalid();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -552,8 +551,6 @@ void ES::Plugin::UI::Utils::RenderInterface::EndFrame(ES::Engine::Core &)
     // alpha, we would need to perform a manual un-premultiplication step.
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, fb_postprocess.color_tex_buffer);
-    // UseShaderProgram("RmlPassthrough");
-    // DrawFullscreenQuad();
 
     _render_layers.EndFrame();
 
