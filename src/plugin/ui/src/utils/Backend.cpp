@@ -222,7 +222,6 @@ ES::Plugin::UI::Utils::RenderInterface::CompileGeometry(Rml::Span<const Rml::Ver
 
     Rml::CompiledGeometryHandle id = _next_geom_id;
     _geometries.emplace(id, std::move(geometry));
-    ES::Utils::Log::Info(fmt::format("Rmlui: Compiled geometry for {}", key));
     _next_geom_id += 1;
     return id;
 }
