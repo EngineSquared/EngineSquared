@@ -84,4 +84,19 @@ void UIResource::InitDocument(const std::string &docPath)
 
     _document->Show();
 }
+
+void UIResource::UpdateInnerContent(const std::string &childId, const std::string &content)
+{
+    Rml::Element *element = _document->GetElementById(childId.c_str());
+    if (element)
+    {
+        if (element->GetInnerRML() != content)
+            element->SetInnerRML(content);
+    }
+    else
+    {
+        ES::Utils::Log::Warn(fmt::format("RmlUi: Could not update node id '{}' with '{}': Not found", childId, content));
+    }
+}
+
 } // namespace ES::Plugin::UI::Resource

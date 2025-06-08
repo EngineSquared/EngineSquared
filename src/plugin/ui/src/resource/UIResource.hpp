@@ -17,15 +17,8 @@ class UIResource {
      */
     UIResource() = default;
 
-    /**
-     * Copy constructor should not be referenced.
-     */
     UIResource(const UIResource &) = delete;
     UIResource &operator=(const UIResource &) = delete;
-
-    /**
-     * Move constructor.
-     */
     UIResource(UIResource &&) noexcept = default;
     UIResource &operator=(UIResource &&) noexcept = default;
 
@@ -34,14 +27,76 @@ class UIResource {
      */
     ~UIResource() = default;
 
+    /**
+     * @brief Initialize the backend
+     *
+     * @param core The core of the engine.
+     *
+     * @return void
+     */
     void Init(ES::Engine::Core &core);
+
+    /**
+     * @brief Destroy the backend and clear its resources
+     *
+     * @return void
+     */
     void Destroy();
 
+    /**
+     * @brief Update the backend
+     * 
+     * This function needs to be called before the Render function
+     *
+     * @return void
+     */
     void Update();
+
+    /**
+     * @brief Render the backend context
+     * 
+     * This function needs to be called after the Update function
+     * 
+     * @param core The core of the engine.
+     *
+     * @return void
+     */
     void Render(ES::Engine::Core &core);
 
+    /**
+     * @brief Add a new font file to the resource
+     * 
+     * Fonts need to be set before rendering any texts
+     * 
+     * @param fontPath The location of the font file.
+     *
+     * @return void
+     */
     void SetFont(const std::string &fontPath);
 
+    /**
+     * @brief Intialize the RML document
+     * 
+     * Fonts need to be set before rendering any texts
+     * 
+     * @param core The location of the RML document file.
+     *
+     * @return void
+     */
     void InitDocument(const std::string &docPath);
+
+    /**
+     * @brief Modify in the loaded RML document `childId` node by `content`
+     * 
+     * A valid document must exist before trying to modify its content.
+     * The `content` parameter will overide the entire child node in specific context.
+     * This is safe to use for simple texts.
+     * 
+     * @param childId The node id to modify
+     * @param content The content to replace the node id by
+     *
+     * @return void
+     */
+    void UpdateInnerContent(const std::string &childId, const std::string &content);
 };
 } // namespace ES::Plugin::UI::Resource
