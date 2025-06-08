@@ -18,27 +18,29 @@
 
 static void CheckGLError(const std::string &operation_name)
 {
-	GLenum errCode = glGetError();
+    GLenum errCode = glGetError();
 
-	if (errCode != GL_NO_ERROR)
-	{
-		const Rml::Pair<GLenum, std::string> errNames[] = {
-            {GL_INVALID_ENUM, "GL_INVALID_ENUM"}, {GL_INVALID_VALUE, "GL_INVALID_VALUE"},
-			{GL_INVALID_OPERATION, "GL_INVALID_OPERATION"}, {GL_OUT_OF_MEMORY, "GL_OUT_OF_MEMORY"}
+    if (errCode != GL_NO_ERROR)
+    {
+        const Rml::Pair<GLenum, std::string> errNames[] = {
+            {GL_INVALID_ENUM,      "GL_INVALID_ENUM"     },
+            {GL_INVALID_VALUE,     "GL_INVALID_VALUE"    },
+            {GL_INVALID_OPERATION, "GL_INVALID_OPERATION"},
+            {GL_OUT_OF_MEMORY,     "GL_OUT_OF_MEMORY"    }
         };
-		std::string message = "''";
-		for (auto &err : errNames)
-		{
-			if (err.first == errCode)
-			{
-				message = err.second;
-				break;
-			}
-		}
-        ES::Utils::Log::Error(fmt::format("OpenGL error during {}. Error code 0x{:x} {}.", operation_name, errCode, message));
-	}
+        std::string message = "''";
+        for (auto &err : errNames)
+        {
+            if (err.first == errCode)
+            {
+                message = err.second;
+                break;
+            }
+        }
+        ES::Utils::Log::Error(
+            fmt::format("OpenGL error during {}. Error code 0x{:x} {}.", operation_name, errCode, message));
+    }
 }
-
 
 namespace ES::Plugin::UI::Utils {
 class RenderInterface : public Rml::RenderInterface {

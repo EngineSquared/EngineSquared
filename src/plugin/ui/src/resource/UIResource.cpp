@@ -12,11 +12,11 @@ void UIResource::Init(ES::Engine::Core &core)
 {
     _systemInterface = std::make_unique<ES::Plugin::UI::Utils::SystemInterface>();
     _renderInterface = std::make_unique<ES::Plugin::UI::Utils::RenderInterface>(core);
-    
+
     Rml::SetSystemInterface(_systemInterface.get());
     Rml::SetRenderInterface(_renderInterface.get());
     Rml::Initialise();
-    
+
     const auto &windowSize = core.GetResource<ES::Plugin::Window::Resource::Window>().GetSize();
     _context = Rml::CreateContext("main", Rml::Vector2i(windowSize.x, windowSize.y));
     if (!_context)
@@ -24,7 +24,7 @@ void UIResource::Init(ES::Engine::Core &core)
         Destroy();
         throw std::runtime_error("Rmlui did not succeed upon initialization");
     }
-    
+
     // Debugger
     Rml::Debugger::Initialise(_context);
 }

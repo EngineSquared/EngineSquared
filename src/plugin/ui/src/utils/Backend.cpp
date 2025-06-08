@@ -1,12 +1,8 @@
 #include "Backend.hpp"
 
-ES::Plugin::UI::Utils::RenderInterface::RenderInterface(ES::Engine::Core &core) : _core(core)
-{
-};
+ES::Plugin::UI::Utils::RenderInterface::RenderInterface(ES::Engine::Core &core) : _core(core){};
 
-ES::Plugin::UI::Utils::RenderInterface::~RenderInterface()
-{
-};
+ES::Plugin::UI::Utils::RenderInterface::~RenderInterface(){};
 
 void ES::Plugin::UI::Utils::RenderInterface::UseShaderProgram(const entt::hashed_string &program_id)
 {
@@ -50,7 +46,7 @@ Rml::Rectanglei ES::Plugin::UI::Utils::RenderInterface::VerticallyFlipped(Rml::R
 void ES::Plugin::UI::Utils::RenderInterface::ScaleGeometryToViewport(Rml::Vector2f &srcScale)
 {
     const auto &viewportSize = _core.GetResource<ES::Plugin::OpenGL::Resource::Camera>().size;
-    
+
     if (srcScale.x == 0.0f || srcScale.y == 0.0f)
     {
         srcScale.x = static_cast<float>(viewportSize.x);
@@ -66,8 +62,9 @@ void ES::Plugin::UI::Utils::RenderInterface::ScaleGeometryToViewport(Rml::Vector
     srcScale.y = srcScale.y * uniformScale;
 }
 
-bool ES::Plugin::UI::Utils::RenderInterface::CreateFramebuffer(FramebufferData &out_fb, int width, int height, int samples,
-                                  FramebufferAttachment attachment, GLuint shared_depth_stencil_buffer)
+bool ES::Plugin::UI::Utils::RenderInterface::CreateFramebuffer(FramebufferData &out_fb, int width, int height,
+                                                               int samples, FramebufferAttachment attachment,
+                                                               GLuint shared_depth_stencil_buffer)
 {
     std::cout << "create frame buffer" << std::endl;
 #ifdef RMLUI_PLATFORM_EMSCRIPTEN
@@ -128,14 +125,14 @@ bool ES::Plugin::UI::Utils::RenderInterface::CreateFramebuffer(FramebufferData &
             glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_DEPTH24_STENCIL8, width, height);
         }
 
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER,
-                                    depth_stencil_buffer);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);
     }
 
     const GLuint framebuffer_status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (framebuffer_status != GL_FRAMEBUFFER_COMPLETE)
     {
-        ES::Utils::Log::Error(fmt::format("OpenGL framebuffer could not be generated. Error code {:x}.", framebuffer_status));
+        ES::Utils::Log::Error(
+            fmt::format("OpenGL framebuffer could not be generated. Error code {:x}.", framebuffer_status));
         return false;
     }
 
@@ -170,8 +167,9 @@ void ES::Plugin::UI::Utils::RenderInterface::DestroyFramebuffer(FramebufferData 
     CheckGLError("DestroyFrameBuffer");
 }
 
-Rml::CompiledGeometryHandle ES::Plugin::UI::Utils::RenderInterface::CompileGeometry(Rml::Span<const Rml::Vertex> vertices,
-                                                Rml::Span<const int> indices)
+Rml::CompiledGeometryHandle
+ES::Plugin::UI::Utils::RenderInterface::CompileGeometry(Rml::Span<const Rml::Vertex> vertices,
+                                                        Rml::Span<const int> indices)
 {
     constexpr GLenum draw_usage = GL_STATIC_DRAW;
 
@@ -186,23 +184,23 @@ Rml::CompiledGeometryHandle ES::Plugin::UI::Utils::RenderInterface::CompileGeome
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Rml::Vertex) * vertices.size(),
-                    reinterpret_cast<const void *>(vertices.data()), draw_usage);
+                 reinterpret_cast<const void *>(vertices.data()), draw_usage);
 
     glEnableVertexAttribArray(static_cast<GLuint>(VertexAttribute::Position));
-    glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::Position), 2, GL_FLOAT, GL_FALSE,
-                            sizeof(Rml::Vertex), reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, position)));
+    glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, sizeof(Rml::Vertex),
+                          reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, position)));
 
     glEnableVertexAttribArray(static_cast<GLuint>(VertexAttribute::Color0));
     glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::Color0), 4, GL_UNSIGNED_BYTE, GL_TRUE,
-                            sizeof(Rml::Vertex), reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, colour)));
+                          sizeof(Rml::Vertex), reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, colour)));
 
     glEnableVertexAttribArray(static_cast<GLuint>(VertexAttribute::TexCoord0));
-    glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::TexCoord0), 2, GL_FLOAT, GL_FALSE,
-                            sizeof(Rml::Vertex), reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, tex_coord)));
+    glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::TexCoord0), 2, GL_FLOAT, GL_FALSE, sizeof(Rml::Vertex),
+                          reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, tex_coord)));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(),
-                    reinterpret_cast<const void *>(indices.data()), draw_usage);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), reinterpret_cast<const void *>(indices.data()),
+                 draw_usage);
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -215,7 +213,7 @@ Rml::CompiledGeometryHandle ES::Plugin::UI::Utils::RenderInterface::CompileGeome
     geometry.vbo = vbo;
     geometry.ibo = ibo;
     geometry.draw_count = (GLsizei) indices.size();
-    
+
     Rml::CompiledGeometryHandle id = _next_geom_id;
     _geometries.emplace(id, std::move(geometry));
     ES::Utils::Log::Info(fmt::format("Rmlui: Compiled geometry for {}", key));
@@ -223,8 +221,9 @@ Rml::CompiledGeometryHandle ES::Plugin::UI::Utils::RenderInterface::CompileGeome
     return id;
 }
 
-void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Vector2f translation,
-                        Rml::TextureHandle texture_handle)
+void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle,
+                                                            Rml::Vector2f translation,
+                                                            Rml::TextureHandle texture_handle)
 {
     auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
     const auto &texIt = _textures.find(texture_handle);
@@ -236,10 +235,12 @@ void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometr
         return;
     }
 
-    auto scaleFactor = Rml::Vector2f(static_cast<float>(texIt->second.size.x), static_cast<float>(texIt->second.size.y));
+    auto scaleFactor =
+        Rml::Vector2f(static_cast<float>(texIt->second.size.x), static_cast<float>(texIt->second.size.y));
     ScaleGeometryToViewport(scaleFactor);
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(scaleFactor.x), 0.0f, static_cast<float>(scaleFactor.y), -1.0f, 1.0f);
-    
+    glm::mat4 projection =
+        glm::ortho(0.0f, static_cast<float>(scaleFactor.x), 0.0f, static_cast<float>(scaleFactor.y), -1.0f, 1.0f);
+
     if (texture_handle)
     {
         UseShaderProgram("RmlVertexTexture");
@@ -247,10 +248,13 @@ void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometr
         {
             if (texIt != _textures.end())
             {
-                auto &tex = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Get(entt::hashed_string{texIt->second.key.c_str()});
+                auto &tex = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Get(
+                    entt::hashed_string{texIt->second.key.c_str()});
                 glBindTexture(GL_TEXTURE_2D, tex.GetTexID());
                 texIt->second.translation = translation;
-            } else {
+            }
+            else
+            {
                 ES::Utils::Log::Error(fmt::format("RmlUi: Texture handle {} not found", texture_handle));
             }
             auto &texShaderProg = shaderManager.Get("RmlVertexTexture");
@@ -286,7 +290,8 @@ void ES::Plugin::UI::Utils::RenderInterface::ReleaseGeometry(Rml::CompiledGeomet
     }
 }
 
-Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::LoadTexture(Rml::Vector2i &texture_dimensions, const Rml::String &source)
+Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::LoadTexture(Rml::Vector2i &texture_dimensions,
+                                                                       const Rml::String &source)
 {
     std::string key = "rml_texture_" + std::to_string(_next_tex_id);
     const entt::hashed_string handle = entt::hashed_string{key.c_str()};
@@ -305,7 +310,7 @@ Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::LoadTexture(Rml::Vect
         return 0;
     }
 
-    texture_dimensions = { texture.GetWidth(), texture.GetHeight() };
+    texture_dimensions = {texture.GetWidth(), texture.GetHeight()};
 
     Rml::TextureHandle tex_handle = static_cast<Rml::TextureHandle>(texture.GetTexID());
     _textures[tex_handle].key = key;
@@ -315,16 +320,18 @@ Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::LoadTexture(Rml::Vect
     return tex_handle;
 }
 
-Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::GenerateTexture(Rml::Span<const Rml::byte> source, Rml::Vector2i dimensions)
+Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::GenerateTexture(Rml::Span<const Rml::byte> source,
+                                                                           Rml::Vector2i dimensions)
 {
     RMLUI_ASSERT(source.data() && source.size() == size_t(dimensions.x * dimensions.y * 4));
 
     std::string key = "rml_raw_texture_" + std::to_string(_next_tex_id);
     const entt::hashed_string handle = entt::hashed_string{key.c_str()};
     auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-    
+
     Rml::TextureHandle texture_id = CreateTexture(source, dimensions);
-    std::cout << "New tex_id: " << texture_id << ", dimensions: [" << dimensions.x << "," << dimensions.y << "]" << std::endl;
+    std::cout << "New tex_id: " << texture_id << ", dimensions: [" << dimensions.x << "," << dimensions.y << "]"
+              << std::endl;
     if (texture_id == 0)
     {
         ES::Utils::Log::Error("RmlUi: Failed to create the texture from raw data");
@@ -348,7 +355,8 @@ Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::GenerateTexture(Rml::
     return texture_id;
 }
 
-Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::CreateTexture(Rml::Span<const Rml::byte> source_data, Rml::Vector2i source_dimensions)
+Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::CreateTexture(Rml::Span<const Rml::byte> source_data,
+                                                                         Rml::Vector2i source_dimensions)
 {
     GLuint texture_id;
     glGenTextures(1, &texture_id);
@@ -360,15 +368,13 @@ Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::CreateTexture(Rml::Sp
     int height = source_dimensions.y;
     int row_size = width * 4; // assuming 4 bytes per pixel (RGBA8)
 
-    for (int y = 0; y < height; ++y) {
-        std::memcpy(
-            &flipped_data[y * row_size],
-            &source_data[(height - 1 - y) * row_size],
-            row_size);
+    for (int y = 0; y < height; ++y)
+    {
+        std::memcpy(&flipped_data[y * row_size], &source_data[(height - 1 - y) * row_size], row_size);
     }
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, flipped_data.data());
-    
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -398,10 +404,7 @@ void ES::Plugin::UI::Utils::RenderInterface::EnableScissorRegion(bool enable)
         SetScissor(Rml::Rectanglei::MakeInvalid(), false);
 }
 
-void ES::Plugin::UI::Utils::RenderInterface::SetScissorRegion(Rml::Rectanglei region)
-{
-    SetScissor(region, true);
-}
+void ES::Plugin::UI::Utils::RenderInterface::SetScissorRegion(Rml::Rectanglei region) { SetScissor(region, true); }
 
 void ES::Plugin::UI::Utils::RenderInterface::SetScissor(Rml::Rectanglei region, bool vertically_flip)
 {
@@ -431,14 +434,16 @@ void ES::Plugin::UI::Utils::RenderInterface::SetScissor(Rml::Rectanglei region, 
     CheckGLError("SetSissor");
 }
 
-Rml::CompiledShaderHandle ES::Plugin::UI::Utils::RenderInterface::CompileShader(const Rml::String & /*name*/, const Rml::Dictionary & /*parameters*/)
+Rml::CompiledShaderHandle ES::Plugin::UI::Utils::RenderInterface::CompileShader(const Rml::String & /*name*/,
+                                                                                const Rml::Dictionary & /*parameters*/)
 {
     std::cout << "compile shader" << std::endl;
     return 0;
 }
 
-void ES::Plugin::UI::Utils::RenderInterface::RenderShader(Rml::CompiledShaderHandle /*shader_handle*/, Rml::CompiledGeometryHandle /*geometry_handle*/,
-                      Rml::Vector2f /*translation*/, Rml::TextureHandle /*texture*/)
+void ES::Plugin::UI::Utils::RenderInterface::RenderShader(Rml::CompiledShaderHandle /*shader_handle*/,
+                                                          Rml::CompiledGeometryHandle /*geometry_handle*/,
+                                                          Rml::Vector2f /*translation*/, Rml::TextureHandle /*texture*/)
 {
     std::cout << "render shader" << std::endl;
 }
@@ -540,7 +545,7 @@ void ES::Plugin::UI::Utils::RenderInterface::EndFrame(ES::Engine::Core &)
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fb_postprocess.framebuffer);
 
     glBlitFramebuffer(0, 0, fb_active.width, fb_active.height, 0, 0, fb_postprocess.width, fb_postprocess.height,
-                        GL_COLOR_BUFFER_BIT, GL_NEAREST);
+                      GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
     // Draw to backbuffer
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -581,30 +586,30 @@ void ES::Plugin::UI::Utils::RenderInterface::EndFrame(ES::Engine::Core &)
         glDisable(GL_DEPTH_TEST);
 
     glViewport(_glstate_backup.viewport[0], _glstate_backup.viewport[1], _glstate_backup.viewport[2],
-                _glstate_backup.viewport[3]);
+               _glstate_backup.viewport[3]);
     glScissor(_glstate_backup.scissor[0], _glstate_backup.scissor[1], _glstate_backup.scissor[2],
-                _glstate_backup.scissor[3]);
+              _glstate_backup.scissor[3]);
 
     glActiveTexture(_glstate_backup.active_texture);
 
     glClearStencil(_glstate_backup.stencil_clear_value);
     glClearColor(_glstate_backup.color_clear_value[0], _glstate_backup.color_clear_value[1],
-                    _glstate_backup.color_clear_value[2], _glstate_backup.color_clear_value[3]);
+                 _glstate_backup.color_clear_value[2], _glstate_backup.color_clear_value[3]);
     glColorMask(_glstate_backup.color_writemask[0], _glstate_backup.color_writemask[1],
                 _glstate_backup.color_writemask[2], _glstate_backup.color_writemask[3]);
 
     glBlendEquationSeparate(_glstate_backup.blend_equation_rgb, _glstate_backup.blend_equation_alpha);
-    glBlendFuncSeparate(_glstate_backup.blend_src_rgb, _glstate_backup.blend_dst_rgb,
-                        _glstate_backup.blend_src_alpha, _glstate_backup.blend_dst_alpha);
+    glBlendFuncSeparate(_glstate_backup.blend_src_rgb, _glstate_backup.blend_dst_rgb, _glstate_backup.blend_src_alpha,
+                        _glstate_backup.blend_dst_alpha);
 
     glStencilFuncSeparate(GL_FRONT, _glstate_backup.stencil_front.func, _glstate_backup.stencil_front.ref,
-                            _glstate_backup.stencil_front.value_mask);
+                          _glstate_backup.stencil_front.value_mask);
     glStencilMaskSeparate(GL_FRONT, _glstate_backup.stencil_front.writemask);
     glStencilOpSeparate(GL_FRONT, _glstate_backup.stencil_front.fail, _glstate_backup.stencil_front.pass_depth_fail,
                         _glstate_backup.stencil_front.pass_depth_pass);
 
     glStencilFuncSeparate(GL_BACK, _glstate_backup.stencil_back.func, _glstate_backup.stencil_back.ref,
-                            _glstate_backup.stencil_back.value_mask);
+                          _glstate_backup.stencil_back.value_mask);
     glStencilMaskSeparate(GL_BACK, _glstate_backup.stencil_back.writemask);
     glStencilOpSeparate(GL_BACK, _glstate_backup.stencil_back.fail, _glstate_backup.stencil_back.pass_depth_fail,
                         _glstate_backup.stencil_back.pass_depth_pass);
