@@ -95,7 +95,8 @@ void UIResource::UpdateInnerContent(const std::string &childId, const std::strin
     }
     else
     {
-        ES::Utils::Log::Warn(fmt::format("RmlUi: Could not update node id '{}' with '{}': Not found", childId, content));
+        ES::Utils::Log::Warn(
+            fmt::format("RmlUi: Could not update node id '{}' with '{}': Not found", childId, content));
     }
 }
 

@@ -45,7 +45,7 @@ class UIResource {
 
     /**
      * @brief Update the backend
-     * 
+     *
      * This function needs to be called before the Render function
      *
      * @return void
@@ -54,9 +54,9 @@ class UIResource {
 
     /**
      * @brief Render the backend context
-     * 
+     *
      * This function needs to be called after the Update function
-     * 
+     *
      * @param core The core of the engine.
      *
      * @return void
@@ -65,9 +65,9 @@ class UIResource {
 
     /**
      * @brief Add a new font file to the resource
-     * 
+     *
      * Fonts need to be set before rendering any texts
-     * 
+     *
      * @param fontPath The location of the font file.
      *
      * @return void
@@ -76,9 +76,9 @@ class UIResource {
 
     /**
      * @brief Intialize the RML document
-     * 
+     *
      * Fonts need to be set before rendering any texts
-     * 
+     *
      * @param core The location of the RML document file.
      *
      * @return void
@@ -87,11 +87,11 @@ class UIResource {
 
     /**
      * @brief Modify in the loaded RML document `childId` node by `content`
-     * 
+     *
      * A valid document must exist before trying to modify its content.
      * The `content` parameter will overide the entire child node in specific context.
      * This is safe to use for simple texts.
-     * 
+     *
      * @param childId The node id to modify
      * @param content The content to replace the node id by
      *
