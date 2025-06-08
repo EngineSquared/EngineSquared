@@ -1,5 +1,31 @@
 #include "Backend.hpp"
 
+static void CheckGLError(const std::string &operation_name)
+{
+    GLenum errCode = glGetError();
+
+    if (errCode != GL_NO_ERROR)
+    {
+        const Rml::Pair<GLenum, std::string> errNames[] = {
+            {GL_INVALID_ENUM,      "GL_INVALID_ENUM"     },
+            {GL_INVALID_VALUE,     "GL_INVALID_VALUE"    },
+            {GL_INVALID_OPERATION, "GL_INVALID_OPERATION"},
+            {GL_OUT_OF_MEMORY,     "GL_OUT_OF_MEMORY"    }
+        };
+        std::string message = "''";
+        for (auto &err : errNames)
+        {
+            if (err.first == errCode)
+            {
+                message = err.second;
+                break;
+            }
+        }
+        ES::Utils::Log::Error(
+            fmt::format("RmlUi: OpenGL error during {}. Error code 0x{:x} {}.", operation_name, errCode, message));
+    }
+}
+
 ES::Plugin::UI::Utils::RenderInterface::RenderInterface(ES::Engine::Core &core) : _core(core){};
 
 ES::Plugin::UI::Utils::RenderInterface::~RenderInterface(){};
@@ -43,30 +69,10 @@ Rml::Rectanglei ES::Plugin::UI::Utils::RenderInterface::VerticallyFlipped(Rml::R
     return flipped_rect;
 }
 
-void ES::Plugin::UI::Utils::RenderInterface::ScaleGeometryToViewport(Rml::Vector2f &srcScale)
-{
-    const auto &viewportSize = _core.GetResource<ES::Plugin::OpenGL::Resource::Camera>().size;
-
-    if (srcScale.x == 0.0f || srcScale.y == 0.0f)
-    {
-        srcScale.x = static_cast<float>(viewportSize.x);
-        srcScale.y = static_cast<float>(viewportSize.y);
-        return;
-    }
-
-    float scaleX = static_cast<float>(viewportSize.x) / srcScale.x;
-    float scaleY = static_cast<float>(viewportSize.y) / srcScale.y;
-    float uniformScale = std::min(scaleX, scaleY);
-
-    srcScale.x = srcScale.x * uniformScale;
-    srcScale.y = srcScale.y * uniformScale;
-}
-
 bool ES::Plugin::UI::Utils::RenderInterface::CreateFramebuffer(FramebufferData &out_fb, int width, int height,
                                                                int samples, FramebufferAttachment attachment,
                                                                GLuint shared_depth_stencil_buffer)
 {
-    std::cout << "create frame buffer" << std::endl;
 #ifdef RMLUI_PLATFORM_EMSCRIPTEN
     constexpr GLint wrap_mode = GL_CLAMP_TO_EDGE;
 #else
@@ -225,6 +231,7 @@ void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometr
                                                             Rml::Vector2f translation,
                                                             Rml::TextureHandle texture_handle)
 {
+    const auto &viewportSize = _core.GetResource<ES::Plugin::OpenGL::Resource::Camera>().size;
     auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
     const auto &texIt = _textures.find(texture_handle);
     const auto it = _geometries.find(handle);
@@ -235,11 +242,8 @@ void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometr
         return;
     }
 
-    auto scaleFactor =
-        Rml::Vector2f(static_cast<float>(texIt->second.size.x), static_cast<float>(texIt->second.size.y));
-    ScaleGeometryToViewport(scaleFactor);
     glm::mat4 projection =
-        glm::ortho(0.0f, static_cast<float>(scaleFactor.x), 0.0f, static_cast<float>(scaleFactor.y), -1.0f, 1.0f);
+        glm::ortho(0.0f, viewportSize.x, viewportSize.y, 0.0f, -1.0f, 1.0f);
 
     if (texture_handle)
     {
@@ -330,8 +334,6 @@ Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::GenerateTexture(Rml::
     auto &textureManager = _core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
 
     Rml::TextureHandle texture_id = CreateTexture(source, dimensions);
-    std::cout << "New tex_id: " << texture_id << ", dimensions: [" << dimensions.x << "," << dimensions.y << "]"
-              << std::endl;
     if (texture_id == 0)
     {
         ES::Utils::Log::Error("RmlUi: Failed to create the texture from raw data");
@@ -362,24 +364,11 @@ Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::CreateTexture(Rml::Sp
     glGenTextures(1, &texture_id);
     glBindTexture(GL_TEXTURE_2D, texture_id);
 
-    // Flip image vertically if needed (OpenGL expects bottom-left origin)
-    std::vector<Rml::byte> flipped_data(source_data.size());
-    int width = source_dimensions.x;
-    int height = source_dimensions.y;
-    int row_size = width * 4; // assuming 4 bytes per pixel (RGBA8)
-
-    for (int y = 0; y < height; ++y)
-    {
-        std::memcpy(&flipped_data[y * row_size], &source_data[(height - 1 - y) * row_size], row_size);
-    }
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, flipped_data.data());
-
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, source_dimensions.x, source_dimensions.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, source_data.data());
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
     glBindTexture(GL_TEXTURE_2D, 0);
 
     CheckGLError("CreateTexture");
@@ -432,20 +421,6 @@ void ES::Plugin::UI::Utils::RenderInterface::SetScissor(Rml::Rectanglei region, 
 
     _scissor_state = region;
     CheckGLError("SetSissor");
-}
-
-Rml::CompiledShaderHandle ES::Plugin::UI::Utils::RenderInterface::CompileShader(const Rml::String & /*name*/,
-                                                                                const Rml::Dictionary & /*parameters*/)
-{
-    std::cout << "compile shader" << std::endl;
-    return 0;
-}
-
-void ES::Plugin::UI::Utils::RenderInterface::RenderShader(Rml::CompiledShaderHandle /*shader_handle*/,
-                                                          Rml::CompiledGeometryHandle /*geometry_handle*/,
-                                                          Rml::Vector2f /*translation*/, Rml::TextureHandle /*texture*/)
-{
-    std::cout << "render shader" << std::endl;
 }
 
 void ES::Plugin::UI::Utils::RenderInterface::BeginFrame()

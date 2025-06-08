@@ -16,32 +16,6 @@
 #    define RMLUI_NUM_MSAA_SAMPLES 2
 #endif
 
-static void CheckGLError(const std::string &operation_name)
-{
-    GLenum errCode = glGetError();
-
-    if (errCode != GL_NO_ERROR)
-    {
-        const Rml::Pair<GLenum, std::string> errNames[] = {
-            {GL_INVALID_ENUM,      "GL_INVALID_ENUM"     },
-            {GL_INVALID_VALUE,     "GL_INVALID_VALUE"    },
-            {GL_INVALID_OPERATION, "GL_INVALID_OPERATION"},
-            {GL_OUT_OF_MEMORY,     "GL_OUT_OF_MEMORY"    }
-        };
-        std::string message = "''";
-        for (auto &err : errNames)
-        {
-            if (err.first == errCode)
-            {
-                message = err.second;
-                break;
-            }
-        }
-        ES::Utils::Log::Error(
-            fmt::format("OpenGL error during {}. Error code 0x{:x} {}.", operation_name, errCode, message));
-    }
-}
-
 namespace ES::Plugin::UI::Utils {
 class RenderInterface : public Rml::RenderInterface {
   public:
@@ -273,8 +247,6 @@ class RenderInterface : public Rml::RenderInterface {
     /// @note The Rectangle::Top and Rectangle::Bottom members will have reverse meaning in the returned rectangle.
     Rml::Rectanglei VerticallyFlipped(Rml::Rectanglei rect, int viewport_height);
 
-    void ScaleGeometryToViewport(Rml::Vector2f &srcScale);
-
     static bool CreateFramebuffer(FramebufferData &out_fb, int width, int height, int samples,
                                   FramebufferAttachment attachment, GLuint shared_depth_stencil_buffer);
     static void DestroyFramebuffer(FramebufferData &fb);
@@ -292,9 +264,6 @@ class RenderInterface : public Rml::RenderInterface {
     void EnableScissorRegion(bool enable) override;
     void SetScissorRegion(Rml::Rectanglei region) override;
     void SetScissor(Rml::Rectanglei region, bool vertically_flip);
-    Rml::CompiledShaderHandle CompileShader(const Rml::String &name, const Rml::Dictionary &parameters);
-    void RenderShader(Rml::CompiledShaderHandle shader_handle, Rml::CompiledGeometryHandle geometry_handle,
-                      Rml::Vector2f translation, Rml::TextureHandle texture);
     void BeginFrame();
     void EndFrame(ES::Engine::Core &);
     void DrawFullscreenQuad();
