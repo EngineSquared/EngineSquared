@@ -268,7 +268,7 @@ class RenderInterface : public Rml::RenderInterface {
     void BeginFrame();
     void EndFrame();
     void DrawFullscreenQuad();
-    void SetTransform(const Rml::Matrix4f* new_transform) override;
+    void SetTransform(const Rml::Matrix4f *new_transform) override;
     const glm::mat4 &GetTransform() const;
 };
 

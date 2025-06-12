@@ -28,9 +28,9 @@ class UIResource {
     ~UIResource() = default;
 
     enum class TransformType {
-      Rotate,
-      TranslateX,
-      TranslateY,
+        Rotate,
+        TranslateX,
+        TranslateY,
     };
 
     struct TransformParam {
@@ -58,7 +58,7 @@ class UIResource {
      * @brief Update the backend
      *
      * This function needs to be called before the Render function
-     * 
+     *
      * @param core The core of the engine.
      *
      * @return void
