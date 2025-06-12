@@ -1,5 +1,6 @@
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "glfw >=3.4", "rmlui", "glew", "fmt", "spdlog", "glm", "stb")
+add_requires("entt", "glfw >=3.4", "glew", "fmt", "spdlog", "glm", "stb")
+add_requires("rmlui >=6.0", { configs = { transform = true } })
 add_requires("gtest", {optional = true})
 
 includes("../../engine/xmake.lua")

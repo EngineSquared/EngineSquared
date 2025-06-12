@@ -3,9 +3,8 @@
 
 #include <RmlUi/Core.h>
 
-// Debugger
+
 #include <RmlUi/Debugger.h>
-// ########
 
 namespace ES::Plugin::UI::Resource {
 void UIResource::Init(ES::Engine::Core &core)
@@ -16,7 +15,7 @@ void UIResource::Init(ES::Engine::Core &core)
     Rml::SetSystemInterface(_systemInterface.get());
     Rml::SetRenderInterface(_renderInterface.get());
     Rml::Initialise();
-
+    
     const auto &windowSize = core.GetResource<ES::Plugin::Window::Resource::Window>().GetSize();
     _context = Rml::CreateContext("main", Rml::Vector2i(windowSize.x, windowSize.y));
     if (!_context)
@@ -24,8 +23,7 @@ void UIResource::Init(ES::Engine::Core &core)
         Destroy();
         throw std::runtime_error("Rmlui did not succeed upon initialization");
     }
-
-    // Debugger
+    _context->SetDimensions(Rml::Vector2i(windowSize.x, windowSize.y));
     Rml::Debugger::Initialise(_context);
 }
 
@@ -40,21 +38,22 @@ void UIResource::Destroy()
     {
         Rml::RemoveContext(_context->GetName());
     }
-    Rml::Debugger::Shutdown();
     Rml::Shutdown();
 }
 
-void UIResource::Render(ES::Engine::Core &core)
+void UIResource::Render()
 {
     _renderInterface.get()->BeginFrame();
     _context->Render();
-    _renderInterface.get()->EndFrame(core);
+    _renderInterface.get()->EndFrame();
 }
 
-void UIResource::Update()
+void UIResource::Update(ES::Engine::Core &core)
 {
-    // if (!Rml::Debugger::IsVisible())
+    // if (Rml::Debugger::IsVisible())
     //     Rml::Debugger::SetVisible(true);
+    const auto &windowSize = core.GetResource<ES::Plugin::Window::Resource::Window>().GetSize();
+    _context->SetDimensions(Rml::Vector2i(windowSize.x, windowSize.y));
     _context->Update();
 }
 
@@ -83,6 +82,8 @@ void UIResource::InitDocument(const std::string &docPath)
     }
 
     _document->Show();
+    _document->SetProperty("width", "100%");
+    _document->SetProperty("height", "100%");
 }
 
 void UIResource::UpdateInnerContent(const std::string &childId, const std::string &content)
@@ -97,6 +98,43 @@ void UIResource::UpdateInnerContent(const std::string &childId, const std::strin
     {
         ES::Utils::Log::Warn(
             fmt::format("RmlUi: Could not update node id '{}' with '{}': Not found", childId, content));
+    }
+}
+
+void UIResource::SetTransformProperty(const std::string &childId, const std::vector<TransformParam> &transforms)
+{
+    // Convert generic TransformParams to RmlUi Transform list
+    std::vector<Rml::TransformPrimitive> rmlTransforms;
+
+    for (const auto& t : transforms)
+    {
+        switch (t.type)
+        {
+            case TransformType::Rotate:
+                rmlTransforms.push_back(Rml::Transforms::Rotate2D{t.value});
+                break;
+            case TransformType::TranslateX:
+                rmlTransforms.push_back(Rml::Transforms::TranslateX{t.value});
+                break;
+            case TransformType::TranslateY:
+                rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value});
+                break;
+            // Add other cases as needed
+        }
+    }
+
+    auto property = Rml::Transform::MakeProperty(rmlTransforms);
+
+    Rml::Element *element = _document->GetElementById(childId.c_str());
+    if (element)
+    {
+        // element->SetProperty(Rml::PropertyId::Transform, property);
+        element->SetProperty(Rml::PropertyId::Transform, property);
+        // element->SetProperty("transform", "rotate(45deg)");
+    }
+    else
+    {
+        ES::Utils::Log::Warn(fmt::format("RmlUi: Could not apply property to node id '{}': Not found", childId));
     }
 }
 

@@ -27,6 +27,17 @@ class UIResource {
      */
     ~UIResource() = default;
 
+    enum class TransformType {
+      Rotate,
+      TranslateX,
+      TranslateY,
+    };
+
+    struct TransformParam {
+        TransformType type;
+        float value;
+    };
+
     /**
      * @brief Initialize the backend
      *
@@ -47,21 +58,21 @@ class UIResource {
      * @brief Update the backend
      *
      * This function needs to be called before the Render function
+     * 
+     * @param core The core of the engine.
      *
      * @return void
      */
-    void Update();
+    void Update(ES::Engine::Core &core);
 
     /**
      * @brief Render the backend context
      *
      * This function needs to be called after the Update function
      *
-     * @param core The core of the engine.
-     *
      * @return void
      */
-    void Render(ES::Engine::Core &core);
+    void Render();
 
     /**
      * @brief Add a new font file to the resource
@@ -98,5 +109,16 @@ class UIResource {
      * @return void
      */
     void UpdateInnerContent(const std::string &childId, const std::string &content);
+
+    /**
+     * @brief Sets a local property override on the element to a pre-parsed value.
+     *
+     * This is useful to add animations efficiently to elements
+     *
+     * @param childId The node id to modify
+     *
+     * @return void
+     */
+    void SetTransformProperty(const std::string &childId, const std::vector<TransformParam> &transforms);
 };
 } // namespace ES::Plugin::UI::Resource

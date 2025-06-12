@@ -1,6 +1,6 @@
 #include "Backend.hpp"
 
-static void CheckGLError(const std::string &operation_name)
+static void CheckGlError(const std::string &operation_name)
 {
     GLenum errCode = glGetError();
 
@@ -155,7 +155,7 @@ bool ES::Plugin::UI::Utils::RenderInterface::CreateFramebuffer(FramebufferData &
     out_fb.depth_stencil_buffer = depth_stencil_buffer;
     out_fb.owns_depth_stencil_buffer = !shared_depth_stencil_buffer;
 
-    CheckGLError("CreateFramebuffer");
+    // CheckGlError("CreateFramebuffer");
     return true;
 }
 
@@ -170,7 +170,7 @@ void ES::Plugin::UI::Utils::RenderInterface::DestroyFramebuffer(FramebufferData 
     if (fb.owns_depth_stencil_buffer && fb.depth_stencil_buffer)
         glDeleteRenderbuffers(1, &fb.depth_stencil_buffer);
     fb = {};
-    CheckGLError("DestroyFrameBuffer");
+    // CheckGlError("DestroyFrameBuffer");
 }
 
 Rml::CompiledGeometryHandle
@@ -211,7 +211,7 @@ ES::Plugin::UI::Utils::RenderInterface::CompileGeometry(Rml::Span<const Rml::Ver
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    CheckGLError("CompileGeometry");
+    // CheckGlError("CompileGeometry");
 
     std::string key = "rml_mesh_" + std::to_string(_next_geom_id);
     CompiledGeometryData geometry;
@@ -241,8 +241,6 @@ void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometr
         return;
     }
 
-    glm::mat4 projection = glm::ortho(0.0f, viewportSize.x, viewportSize.y, 0.0f, -1.0f, 1.0f);
-
     if (texture_handle)
     {
         UseShaderProgram("RmlVertexTexture");
@@ -262,7 +260,7 @@ void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometr
             auto &texShaderProg = shaderManager.Get("RmlVertexTexture");
             glUniform1i(texShaderProg.GetUniform("_tex"), 0);
             glUniform2f(texShaderProg.GetUniform("_translate"), translation.x, translation.y);
-            glUniformMatrix4fv(texShaderProg.GetUniform("_transform"), 1, GL_FALSE, glm::value_ptr(projection));
+            glUniformMatrix4fv(texShaderProg.GetUniform("_transform"), 1, GL_FALSE, glm::value_ptr(_transformMatrix));
         }
     }
     else
@@ -271,7 +269,7 @@ void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometr
         glBindTexture(GL_TEXTURE_2D, 0);
         auto &vertColShaderProg = shaderManager.Get("RmlVertexColor");
         glUniform2f(vertColShaderProg.GetUniform("_translate"), 0.0f, 0.0f);
-        glUniformMatrix4fv(vertColShaderProg.GetUniform("_transform"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(vertColShaderProg.GetUniform("_transform"), 1, GL_FALSE, glm::value_ptr(_transformMatrix));
     }
 
     glBindVertexArray(it->second.vao);
@@ -280,7 +278,31 @@ void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometr
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    CheckGLError("RenderCompileGeometry");
+    // CheckGlError("RenderCompileGeometry");
+}
+
+void ES::Plugin::UI::Utils::RenderInterface::SetTransform(const Rml::Matrix4f *new_transform)
+{
+    const auto &viewportSize = _core.GetResource<ES::Plugin::OpenGL::Resource::Camera>().size;
+    glm::mat4 projection = glm::ortho(0.0f, viewportSize.x, viewportSize.y, 0.0f, -1.0f, 1.0f);
+    glm::mat4 transformMatrix;
+
+    if (new_transform)
+    {
+        transformMatrix = glm::mat4(
+            glm::vec4((*new_transform)[0].x, (*new_transform)[0].y, (*new_transform)[0].z, (*new_transform)[0].w),
+            glm::vec4((*new_transform)[1].x, (*new_transform)[1].y, (*new_transform)[1].z, (*new_transform)[1].w),
+            glm::vec4((*new_transform)[2].x, (*new_transform)[2].y, (*new_transform)[2].z, (*new_transform)[2].w),
+            glm::vec4((*new_transform)[3].x, (*new_transform)[3].y, (*new_transform)[3].z, (*new_transform)[3].w)
+        );
+    }
+
+	_transformMatrix = (new_transform ? (projection * (transformMatrix)) : projection);
+}
+
+const glm::mat4 &ES::Plugin::UI::Utils::RenderInterface::GetTransform() const
+{
+	return _transformMatrix;
 }
 
 void ES::Plugin::UI::Utils::RenderInterface::ReleaseGeometry(Rml::CompiledGeometryHandle handle)
@@ -370,7 +392,7 @@ Rml::TextureHandle ES::Plugin::UI::Utils::RenderInterface::CreateTexture(Rml::Sp
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    CheckGLError("CreateTexture");
+    // CheckGlError("CreateTexture");
 
     return static_cast<Rml::TextureHandle>(texture_id);
 }
@@ -419,7 +441,7 @@ void ES::Plugin::UI::Utils::RenderInterface::SetScissor(Rml::Rectanglei region, 
     }
 
     _scissor_state = region;
-    CheckGLError("SetSissor");
+    // CheckGlError("SetSissor");
 }
 
 void ES::Plugin::UI::Utils::RenderInterface::BeginFrame()
@@ -505,10 +527,10 @@ void ES::Plugin::UI::Utils::RenderInterface::BeginFrame()
     _scissor_state = Rml::Rectanglei::MakeInvalid();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    CheckGLError("BeginFrame");
+    // CheckGlError("BeginFrame");
 }
 
-void ES::Plugin::UI::Utils::RenderInterface::EndFrame(ES::Engine::Core &)
+void ES::Plugin::UI::Utils::RenderInterface::EndFrame()
 {
     const FramebufferData &fb_active = _render_layers.GetTopLayer();
     const FramebufferData &fb_postprocess = _render_layers.GetPostprocessPrimary();
@@ -588,5 +610,5 @@ void ES::Plugin::UI::Utils::RenderInterface::EndFrame(ES::Engine::Core &)
     glStencilOpSeparate(GL_BACK, _glstate_backup.stencil_back.fail, _glstate_backup.stencil_back.pass_depth_fail,
                         _glstate_backup.stencil_back.pass_depth_pass);
 
-    CheckGLError("EndFrame");
+    // CheckGlError("EndFrame");
 }

@@ -12,3 +12,9 @@
 
 // Utils
 #include "CollisionUtils2D.hpp"
+
+// Plugin
+#include "plugin/PluginUI.hpp"
+
+// Resources
+#include "resource/UIResource.hpp"

@@ -214,6 +214,7 @@ class RenderInterface : public Rml::RenderInterface {
 
     ES::Engine::Core &_core;
     // // Rml::CompiledGeometryHandle _fullScreenSquad = {};
+    glm::mat4 _transformMatrix;
     std::unordered_map<Rml::CompiledGeometryHandle, CompiledGeometryData> _geometries;
     std::unordered_map<Rml::TextureHandle, TextureData> _textures;
 
@@ -265,8 +266,10 @@ class RenderInterface : public Rml::RenderInterface {
     void SetScissorRegion(Rml::Rectanglei region) override;
     void SetScissor(Rml::Rectanglei region, bool vertically_flip);
     void BeginFrame();
-    void EndFrame(ES::Engine::Core &);
+    void EndFrame();
     void DrawFullscreenQuad();
+    void SetTransform(const Rml::Matrix4f* new_transform) override;
+    const glm::mat4 &GetTransform() const;
 };
 
 class SystemInterface : public Rml::SystemInterface {
