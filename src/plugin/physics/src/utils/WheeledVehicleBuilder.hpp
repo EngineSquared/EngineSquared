@@ -235,8 +235,8 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     std::array<std::unique_ptr<JPH::WheelSettingsWV>, WheelCount> wheelSettings = {nullptr};
     /// Wheels offset from the vehicle initial position.
     std::array<glm::vec3, WheelCount> wheelOffsets = {glm::vec3(0.0f, 0.0f, 0.0f)};
-    ///Wheel callback function to be called when a wheel is created.
-    /// @note This function is called after a wheel is fully initialized.
+    /// Wheel callback function to be called when a wheel is created.
+    ///  @note This function is called after a wheel is fully initialized.
     std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> wheelCallbackFn = [](ES::Engine::Core &,
                                                                                        ES::Engine::Entity &) {};
     /// Vehicle callback function to be called when a vehicle is created.
