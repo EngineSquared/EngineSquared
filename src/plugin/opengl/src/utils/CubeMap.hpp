@@ -26,50 +26,142 @@
 
 #include <GL/glew.h>
 #include <array>
+#include <memory>
+#include <optional>
+#include <string_view>
 
 #include "Logger.hpp"
 
 namespace ES::Plugin::OpenGL::Utils {
 
 /**
- * @brief CubeMap class.
+ * @brief Modern CubeMap texture loader and manager.
  *
- * This class is used to load .png files for a cube map.
+ * This class provides RAII management for OpenGL cubemap textures.
+ * Supports loading from individual face images or cross-layout images.
+ *
+ * @note This class is non-copyable but movable for performance.
+ *
+ * @example
+ * @code
+ * // Load from cross image
+ * CubeMap cubemap("assets/skybox_cross.png");
+ * if (cubemap.IsValid()) {
+ *     cubemap.Bind();
+ * }
+ *
+ * // Load from individual faces
+ * std::array<std::string, 6> faces = {"right.jpg", "left.jpg", ...};
+ * CubeMap cubemap2(faces);
+ * @endcode
  */
 class CubeMap {
   public:
-    explicit CubeMap(const std::string &cubeMapPath) { loadFromCross(cubeMapPath); }
-    CubeMap(const std::array<std::string, 6> &facesPath) { loadFromFaces(facesPath); }
+    /**
+     * @brief Face enumeration for cubemap faces.
+     */
+    enum class Face : std::uint8_t {
+        PositiveX = 0, ///< Right face
+        NegativeX = 1, ///< Left face
+        PositiveY = 2, ///< Top face
+        NegativeY = 3, ///< Bottom face
+        PositiveZ = 4, ///< Front face
+        NegativeZ = 5, ///< Back face
+        Count = 6
+    };
 
-    ~CubeMap();
+    /**
+     * @brief Create a CubeMap from a cross-layout image.
+     *
+     * @param cubeMapPath Path to the cross-layout image (4:3 aspect ratio)
+     */
+    explicit CubeMap(std::string_view cubeMapPath);
 
-    CubeMap(const CubeMap &) = default;
-    CubeMap(CubeMap &&) = default;
-    CubeMap &operator=(const CubeMap &) = default;
-    CubeMap &operator=(CubeMap &&) = default;
+    /**
+     * @brief Create a CubeMap from individual face images.
+     *
+     * @param facesPath Array of 6 paths in order: +X, -X, +Y, -Y, +Z, -Z
+     */
+    explicit CubeMap(const std::array<std::string, 6> &facesPath);
 
-    void Bind() const;
+    /**
+     * @brief Destructor - automatically cleans up OpenGL resources.
+     */
+    ~CubeMap() noexcept;
+
+    // Non-copyable but movable
+    CubeMap(const CubeMap &) = delete;
+    CubeMap &operator=(const CubeMap &) = delete;
+    CubeMap(CubeMap &&) noexcept;
+    CubeMap &operator=(CubeMap &&) noexcept;
+
+    /**
+     * @brief Bind the cubemap texture to GL_TEXTURE0.
+     *
+     * @note Does nothing if texture is invalid.
+     */
+    void Bind() const noexcept;
+
+    /**
+     * @brief Bind the cubemap texture to a specific texture unit.
+     *
+     * @param textureUnit Texture unit (0-31)
+     */
+    void Bind(std::uint32_t textureUnit) const noexcept;
+
+    /**
+     * @brief Check if the cubemap is valid.
+     *
+     * @return true if texture ID is valid
+     */
+    [[nodiscard]] constexpr bool IsValid() const noexcept { return _textureID != 0; }
+
+    /**
+     * @brief Get the OpenGL texture ID.
+     *
+     * @return GLuint texture ID (0 if invalid)
+     */
+    [[nodiscard]] constexpr GLuint GetTextureID() const noexcept { return _textureID; }
+
+    /**
+     * @brief Get cubemap dimensions.
+     *
+     * @return std::pair<int, int> width and height
+     */
+    [[nodiscard]] constexpr std::pair<int, int> GetDimensions() const noexcept { return {_width, _height}; }
 
   private:
     /**
-     * @brief Load a cube map from individual face images.
+     * @brief Load cubemap from individual face images.
      *
-     * @param path path to the .png files for the cube map faces
+     * @param faces Array of face image paths
+     * @return bool true on success
      */
-    void loadFromFaces(const std::array<std::string, 6> &path);
+    bool LoadFromFaces(const std::array<std::string, 6> &faces) noexcept;
 
     /**
-     * @brief Load a cube map from a cross image.
+     * @brief Load cubemap from cross-layout image.
      *
-     * @param path path to the cross .png file for the cube map
+     * @param path Path to cross image
+     * @return bool true on success
      */
-    void loadFromCross(const std::string &path);
+    bool LoadFromCross(std::string_view path) noexcept;
+
+    /**
+     * @brief Setup texture parameters for the cubemap.
+     */
+    void SetupTextureParameters() noexcept;
+
+    /**
+     * @brief Clean up OpenGL resources.
+     */
+    void Cleanup() noexcept;
 
   private:
-    int _width = 0;
-    int _height = 0;
-    int _channels = 0;
-    GLuint _textureID = 0;
+    int _width{0};        ///< Texture width
+    int _height{0};       ///< Texture height
+    int _channels{0};     ///< Number of color channels
+    GLuint _textureID{0}; ///< OpenGL texture ID
 };
 
 } // namespace ES::Plugin::OpenGL::Utils
