@@ -12,7 +12,7 @@ void UIResource::Init(ES::Engine::Core &core)
     Rml::SetSystemInterface(_systemInterface.get());
     Rml::SetRenderInterface(_renderInterface.get());
     Rml::Initialise();
-    
+
     const auto &windowSize = core.GetResource<ES::Plugin::Window::Resource::Window>().GetSize();
     _context = Rml::CreateContext("main", Rml::Vector2i(windowSize.x, windowSize.y));
     if (!_context)
@@ -119,15 +119,12 @@ void UIResource::SetTransformProperty(const std::string &childId, const std::vec
     {
         switch (t.type)
         {
-            case TransformType::Rotate:
-                rmlTransforms.push_back(Rml::Transforms::Rotate2D{t.value});
-                break;
-            case TransformType::TranslateX:
-                rmlTransforms.push_back(Rml::Transforms::TranslateX{t.value});
-                break;
-            case TransformType::TranslateY:
-                rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value});
-                break;
+        case TransformType::Rotate: rmlTransforms.push_back(Rml::Transforms::Rotate2D{t.value}); break;
+        case TransformType::TranslateX: rmlTransforms.push_back(Rml::Transforms::TranslateX{t.value}); break;
+        case TransformType::TranslateY:
+            rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value});
+            break;
+            // Add other cases as needed
         }
     }
 

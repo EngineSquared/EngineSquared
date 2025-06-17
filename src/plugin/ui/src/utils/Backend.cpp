@@ -292,17 +292,13 @@ void ES::Plugin::UI::Utils::RenderInterface::SetTransform(const Rml::Matrix4f *n
             glm::vec4((*new_transform)[0].x, (*new_transform)[0].y, (*new_transform)[0].z, (*new_transform)[0].w),
             glm::vec4((*new_transform)[1].x, (*new_transform)[1].y, (*new_transform)[1].z, (*new_transform)[1].w),
             glm::vec4((*new_transform)[2].x, (*new_transform)[2].y, (*new_transform)[2].z, (*new_transform)[2].w),
-            glm::vec4((*new_transform)[3].x, (*new_transform)[3].y, (*new_transform)[3].z, (*new_transform)[3].w)
-        );
+            glm::vec4((*new_transform)[3].x, (*new_transform)[3].y, (*new_transform)[3].z, (*new_transform)[3].w));
     }
 
-	_transformMatrix = (new_transform ? (projection * (transformMatrix)) : projection);
+    _transformMatrix = (new_transform ? (projection * (transformMatrix)) : projection);
 }
 
-const glm::mat4 &ES::Plugin::UI::Utils::RenderInterface::GetTransform() const
-{
-	return _transformMatrix;
-}
+const glm::mat4 &ES::Plugin::UI::Utils::RenderInterface::GetTransform() const { return _transformMatrix; }
 
 void ES::Plugin::UI::Utils::RenderInterface::ReleaseGeometry(Rml::CompiledGeometryHandle handle)
 {
