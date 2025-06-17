@@ -51,7 +51,7 @@ bool CubeMap::LoadFromFaces(const std::array<std::string, 6> &faces) noexcept
 
     bool success = true;
 
-    for (std::uint32_t i = 0; i < static_cast<std::uint32_t>(Face::Count); ++i)
+    for (std::uint32_t i = 0; i < static_cast<std::uint32_t>(CubeFace::Count); ++i)
     {
         int width, height, nrChannels;
 
@@ -144,7 +144,7 @@ bool CubeMap::LoadFromCross(std::string_view path) noexcept
 
     bool success = true;
 
-    for (std::uint32_t i = 0; i < static_cast<std::uint32_t>(Face::Count); ++i)
+    for (std::uint32_t i = 0; i < static_cast<std::uint32_t>(CubeFace::Count); ++i)
     {
         const int offsetX = faceOffsets[i][0] * faceSize;
         const int offsetY = faceOffsets[i][1] * faceSize;

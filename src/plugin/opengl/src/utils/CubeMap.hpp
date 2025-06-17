@@ -60,7 +60,7 @@ class CubeMap {
     /**
      * @brief Face enumeration for cubemap faces.
      */
-    enum class Face : std::uint8_t {
+    enum class CubeFace : std::uint8_t {
         PositiveX = 0, ///< Right face
         NegativeX = 1, ///< Left face
         PositiveY = 2, ///< Top face
