@@ -175,6 +175,20 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
         return *this;
     }
 
+    /// @brief Set a wheel offset from the vehicle initial position.
+    /// @param index The index of the wheel to set the offset for.
+    /// @param offset The offset to set.
+    /// @return A reference to the vehicle builder.
+    /// @note The index must be less than the number of wheels.
+    inline WheeledVehicleBuilder &SetWheelOffset(size_t index, const glm::vec3 &offset)
+    {
+        if (index >= WheelCount)
+            throw WheeledVehicleBuilderError("Index out of range");
+
+        wheelOffsets[index] = offset;
+        return *this;
+    }
+
     /// @brief Set a callback to be called when a vehicle is created.
     /// @param fn A callable that takes a reference to the vehicle entity and modifies it.
     /// @return A reference to the vehicle builder.
@@ -219,8 +233,10 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     glm::vec3 offsetCenterOfMassShape = glm::vec3(0.0f, 0.0f, 0.0f);
     /// Wheels settings of the vehicle.
     std::array<std::unique_ptr<JPH::WheelSettingsWV>, WheelCount> wheelSettings = {nullptr};
+    /// Wheels offset from the vehicle initial position.
+    std::array<glm::vec3, WheelCount> wheelOffsets = {glm::vec3(0.0f, 0.0f, 0.0f)};
     /// Wheel callback function to be called when a wheel is created.
-    /// @note This function is called after a wheel is fully initialized.
+    ///  @note This function is called after a wheel is fully initialized.
     std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> wheelCallbackFn = [](ES::Engine::Core &,
                                                                                        ES::Engine::Entity &) {};
     /// Vehicle callback function to be called when a vehicle is created.
