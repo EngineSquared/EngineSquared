@@ -1,6 +1,12 @@
+/*
+ * The RmlUi backend is mostly taken from the official implementation of the RmlUi GLFW GL3 backend
+ * See: https://github.dev/mikke89/RmlUi/blob/master/Backends/RmlUi_Renderer_GL3.h
+ */
+
 #pragma once
 
 #include <RmlUi/Core.h>
+#include <RmlUi/Core/Event.h>
 #include <glfw/glfw3.h>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -9,6 +15,7 @@
 #include "Object.hpp"
 #include "OpenGL.hpp"
 #include "Window.hpp"
+#include "InputManager.hpp"
 
 // Determines the anti-aliasing quality when creating layers. Enables better-looking visuals, especially when transforms
 // are applied.
@@ -19,6 +26,7 @@
 namespace ES::Plugin::UI::Utils {
 class RenderInterface : public Rml::RenderInterface {
   public:
+    RenderInterface() = delete;
     explicit RenderInterface(ES::Engine::Core &core);
     ~RenderInterface();
 
@@ -289,4 +297,62 @@ class SystemInterface : public Rml::SystemInterface {
     }
 };
 
+class RmlEventBackend : public Rml::EventListener {
+public:
+    using EventCallback = std::function<void(const std::string &event_name, const std::string &element_id)>;
+
+private:
+    ES::Engine::Core &_core;
+    Rml::Context *_context;
+    EventCallback _event_callback;
+
+    static int ConvertKeyModifiers(int glfw_mods) {
+        int key_modifier_state = 0;
+        if (GLFW_MOD_SHIFT & glfw_mods) key_modifier_state |= Rml::Input::KM_SHIFT;
+        if (GLFW_MOD_CONTROL & glfw_mods) key_modifier_state |= Rml::Input::KM_CTRL;
+        if (GLFW_MOD_ALT & glfw_mods) key_modifier_state |= Rml::Input::KM_ALT;
+        if (GLFW_MOD_CAPS_LOCK & glfw_mods) key_modifier_state |= Rml::Input::KM_SCROLLLOCK;
+        if (GLFW_MOD_NUM_LOCK & glfw_mods) key_modifier_state |= Rml::Input::KM_NUMLOCK;
+        return key_modifier_state;
+    }
+
+public:
+    RmlEventBackend() = delete;
+    RmlEventBackend(ES::Engine::Core &core, Rml::Context &context) : _core(core), _context(&context) {}
+
+    void SetCallback() {
+        auto &inputManager = _core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+        inputManager.RegisterMouseButtonCallback([this](ES::Engine::Core &cbCore, int key, int action, int mods) {
+            ProcessMouseButton(key, action, mods);
+        });
+    }
+
+    void ProcessMouseButton(int button, int action, int mods) {
+        if (_context) {
+            switch (action) {
+                case GLFW_PRESS:
+                    _context->ProcessMouseButtonDown(button, ConvertKeyModifiers(mods));
+                    break;
+                case GLFW_RELEASE:
+                    _context->ProcessMouseButtonUp(button, ConvertKeyModifiers(mods));
+                    break;
+            }
+        }
+    }
+
+    void ProcessEvent(Rml::Event &event) override {
+        if (_event_callback) {
+            const std::string tag = event.GetCurrentElement()->GetId();
+            _event_callback(event.GetType(), tag);
+        }
+    }
+
+    void AttachEvents(const std::string &eventType, Rml::Element &toElement) {
+        toElement.AddEventListener(eventType, this);
+    }
+
+    void SetEventCallback(EventCallback callback) {
+        _event_callback = std::move(callback);
+    }
+};
 } // namespace ES::Plugin::UI::Utils

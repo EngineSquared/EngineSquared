@@ -3,15 +3,12 @@
 
 #include <RmlUi/Core.h>
 
-
-#include <RmlUi/Debugger.h>
-
 namespace ES::Plugin::UI::Resource {
 void UIResource::Init(ES::Engine::Core &core)
 {
     _systemInterface = std::make_unique<ES::Plugin::UI::Utils::SystemInterface>();
     _renderInterface = std::make_unique<ES::Plugin::UI::Utils::RenderInterface>(core);
-
+    
     Rml::SetSystemInterface(_systemInterface.get());
     Rml::SetRenderInterface(_renderInterface.get());
     Rml::Initialise();
@@ -24,7 +21,21 @@ void UIResource::Init(ES::Engine::Core &core)
         throw std::runtime_error("Rmlui did not succeed upon initialization");
     }
     _context->SetDimensions(Rml::Vector2i(windowSize.x, windowSize.y));
-    Rml::Debugger::Initialise(_context);
+    _event = std::make_unique<ES::Plugin::UI::Utils::RmlEventBackend>(core, *_context);
+}
+
+void UIResource::BindEventCallback()
+{
+    _event->SetCallback();
+}
+
+void UIResource::UpdateMouseMoveEvent(ES::Engine::Core &core)
+{
+    const auto &window = core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow();
+    double x, y;
+
+    glfwGetCursorPos(window, &x, &y);
+    _context->ProcessMouseMove(static_cast<int>(x), static_cast<int>(y), 0);
 }
 
 void UIResource::Destroy()
@@ -50,9 +61,8 @@ void UIResource::Render()
 
 void UIResource::Update(ES::Engine::Core &core)
 {
-    // if (Rml::Debugger::IsVisible())
-    //     Rml::Debugger::SetVisible(true);
     const auto &windowSize = core.GetResource<ES::Plugin::Window::Resource::Window>().GetSize();
+    
     _context->SetDimensions(Rml::Vector2i(windowSize.x, windowSize.y));
     _context->Update();
 }
@@ -103,10 +113,9 @@ void UIResource::UpdateInnerContent(const std::string &childId, const std::strin
 
 void UIResource::SetTransformProperty(const std::string &childId, const std::vector<TransformParam> &transforms)
 {
-    // Convert generic TransformParams to RmlUi Transform list
     std::vector<Rml::TransformPrimitive> rmlTransforms;
 
-    for (const auto& t : transforms)
+    for (const auto &t : transforms)
     {
         switch (t.type)
         {
@@ -119,7 +128,6 @@ void UIResource::SetTransformProperty(const std::string &childId, const std::vec
             case TransformType::TranslateY:
                 rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value});
                 break;
-            // Add other cases as needed
         }
     }
 
@@ -128,14 +136,25 @@ void UIResource::SetTransformProperty(const std::string &childId, const std::vec
     Rml::Element *element = _document->GetElementById(childId.c_str());
     if (element)
     {
-        // element->SetProperty(Rml::PropertyId::Transform, property);
         element->SetProperty(Rml::PropertyId::Transform, property);
-        // element->SetProperty("transform", "rotate(45deg)");
     }
     else
     {
         ES::Utils::Log::Warn(fmt::format("RmlUi: Could not apply property to node id '{}': Not found", childId));
     }
+}
+
+void UIResource::AttachEventHandlers(const std::string &elementId, const std::string &eventType, ES::Plugin::UI::Utils::RmlEventBackend::EventCallback callback)
+{
+    Rml::Element *element = _document->GetElementById(elementId.c_str());
+
+    if (!element)
+    {
+        ES::Utils::Log::Error(fmt::format("RmlUi: Could not attach events to sub elements of {}: Not found.", elementId.c_str()));
+        return;
+    }
+    _event->SetEventCallback(callback);
+    _event->AttachEvents(eventType, *element);
 }
 
 } // namespace ES::Plugin::UI::Resource

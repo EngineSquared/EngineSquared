@@ -218,7 +218,7 @@ ES::Plugin::UI::Utils::RenderInterface::CompileGeometry(Rml::Span<const Rml::Ver
     geometry.vao = vao;
     geometry.vbo = vbo;
     geometry.ibo = ibo;
-    geometry.draw_count = (GLsizei) indices.size();
+    geometry.draw_count = static_cast<GLsizei>(indices.size());
 
     Rml::CompiledGeometryHandle id = _next_geom_id;
     _geometries.emplace(id, std::move(geometry));
@@ -230,7 +230,6 @@ void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometr
                                                             Rml::Vector2f translation,
                                                             Rml::TextureHandle texture_handle)
 {
-    const auto &viewportSize = _core.GetResource<ES::Plugin::OpenGL::Resource::Camera>().size;
     auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
     const auto &texIt = _textures.find(texture_handle);
     const auto it = _geometries.find(handle);

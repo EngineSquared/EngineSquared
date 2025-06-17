@@ -11,5 +11,6 @@ namespace ES::Plugin::UI::System {
  * @return void
  */
 void Init(ES::Engine::Core &core);
+void BindEventCallback(ES::Engine::Core &core);
 void Destroy(ES::Engine::Core &core);
 } // namespace ES::Plugin::UI::System

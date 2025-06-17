@@ -10,6 +10,7 @@ class UIResource {
     Rml::ElementDocument *_document;
     std::unique_ptr<ES::Plugin::UI::Utils::SystemInterface> _systemInterface;
     std::unique_ptr<ES::Plugin::UI::Utils::RenderInterface> _renderInterface;
+    std::unique_ptr<ES::Plugin::UI::Utils::RmlEventBackend> _event;
 
   public:
     /**
@@ -46,6 +47,22 @@ class UIResource {
      * @return void
      */
     void Init(ES::Engine::Core &core);
+
+    /**
+     * @brief Bind the RmlUi event callback to the input manager
+     *
+     * @return void
+     */
+    void BindEventCallback();
+
+    /**
+     * @brief Update the mouse position event
+     *
+     * @param core The core of the engine.
+     *
+     * @return void
+     */
+    void UpdateMouseMoveEvent(ES::Engine::Core &core);
 
     /**
      * @brief Destroy the backend and clear its resources
@@ -120,5 +137,14 @@ class UIResource {
      * @return void
      */
     void SetTransformProperty(const std::string &childId, const std::vector<TransformParam> &transforms);
+
+    /**
+     * @brief Attach the event listener handlers
+     *
+     * @param childId The node id to modify
+     *
+     * @return void
+     */
+    void AttachEventHandlers(const std::string &elementId, const std::string &eventType, ES::Plugin::UI::Utils::RmlEventBackend::EventCallback callback);
 };
 } // namespace ES::Plugin::UI::Resource
