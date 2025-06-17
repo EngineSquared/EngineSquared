@@ -84,6 +84,7 @@ void UIResource::SetFont(const std::string &fontPath)
 
 void UIResource::InitDocument(const std::string &docPath)
 {
+    _context->UnloadAllDocuments();
     _document = _context->LoadDocument(docPath);
     if (!_document)
     {
