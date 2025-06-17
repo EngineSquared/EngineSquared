@@ -127,15 +127,14 @@ bool CubeMap::LoadFromCross(std::string_view path) noexcept
     _height = faceSize;
     _channels = channels;
 
-    // Face offsets in cross layout: left, front, right, back, top, bottom
     constexpr std::array<std::array<int, 2>, 6> faceOffsets{
         {
-         {{0, 1}}, // left   (-X)
-            {{1, 1}}, // front  (+Z)
-            {{2, 1}}, // right  (+X)
-            {{3, 1}}, // back   (-Z)
+         {{2, 1}}, // right  (+X)
+            {{0, 1}}, // left   (-X)
             {{1, 0}}, // top    (+Y)
-            {{1, 2}}  // bottom (-Y)
+            {{1, 2}}, // bottom (-Y)
+            {{1, 1}}, // front  (+Z)
+            {{3, 1}}  // back   (-Z)
         }
     };
 
