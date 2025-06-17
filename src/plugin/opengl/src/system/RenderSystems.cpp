@@ -23,6 +23,8 @@
 #include "TextHandle.hpp"
 #include "TextureHandle.hpp"
 #include "TextureManager.hpp"
+#include "CubeMapHandle.hpp"
+#include "CubeMapManager.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -32,6 +34,14 @@ static void BindTextureIfNeeded(ES::Engine::Core &core, ES::Engine::Entity entit
         ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::OpenGL::Component::TextureHandle>(core);
     if (textureHandle)
         core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Get(textureHandle->id).Bind();
+}
+
+static void BindCubeMapIfNeeded(ES::Engine::Core &core, ES::Engine::Entity entity)
+{
+    ES::Plugin::OpenGL::Component::CubeMapHandle *cubeMapHandle =
+        ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::OpenGL::Component::CubeMapHandle>(core);
+    if (cubeMapHandle)
+        core.GetResource<ES::Plugin::OpenGL::Resource::CubeMapManager>().Get(cubeMapHandle->id).Bind();
 }
 
 static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader,
@@ -66,6 +76,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             glUniformMatrix4fv(shader.GetUniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.GetUniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
             BindTextureIfNeeded(core, entity);
+            BindCubeMapIfNeeded(core, entity);
             glBuffer.Draw(mesh);
             shader.Disable();
         });
