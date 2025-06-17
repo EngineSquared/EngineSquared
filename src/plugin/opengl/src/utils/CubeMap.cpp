@@ -27,7 +27,7 @@ CubeMap::~CubeMap() noexcept { Cleanup(); }
 CubeMap::CubeMap(CubeMap &&other) noexcept
     : _width(other._width), _height(other._height), _channels(other._channels), _textureID(other._textureID)
 {
-    other._textureID = 0; // Transfer ownership
+    other._textureID = 0;
 }
 
 CubeMap &CubeMap::operator=(CubeMap &&other) noexcept
@@ -39,7 +39,7 @@ CubeMap &CubeMap::operator=(CubeMap &&other) noexcept
         _height = other._height;
         _channels = other._channels;
         _textureID = other._textureID;
-        other._textureID = 0; // Transfer ownership
+        other._textureID = 0;
     }
     return *this;
 }
@@ -87,13 +87,9 @@ bool CubeMap::LoadFromFaces(const std::array<std::string, 6> &faces) noexcept
     }
 
     if (success)
-    {
         SetupTextureParameters();
-    }
     else
-    {
         Cleanup();
-    }
 
     return success;
 }
@@ -177,13 +173,9 @@ bool CubeMap::LoadFromCross(std::string_view path) noexcept
     }
 
     if (success)
-    {
         SetupTextureParameters();
-    }
     else
-    {
         Cleanup();
-    }
 
     return success;
 }
@@ -197,8 +189,6 @@ void CubeMap::SetupTextureParameters() noexcept
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 }
 
-void CubeMap::Bind() const noexcept { Bind(0); }
-
 void CubeMap::Bind(std::uint32_t textureUnit) const noexcept
 {
     if (!IsValid())
@@ -210,7 +200,7 @@ void CubeMap::Bind(std::uint32_t textureUnit) const noexcept
 
 void CubeMap::Cleanup() noexcept
 {
-    if (_textureID != 0)
+    if (IsValid())
     {
         glDeleteTextures(1, &_textureID);
         _textureID = 0;

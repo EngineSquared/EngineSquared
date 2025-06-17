@@ -96,18 +96,13 @@ class CubeMap {
     CubeMap &operator=(CubeMap &&) noexcept;
 
     /**
-     * @brief Bind the cubemap texture to GL_TEXTURE0.
+     * @brief Bind the cubemap texture to GL_TEXTURE0 or a specific texture unit.
+     *
+     * @param textureUnit Texture unit (0-31), defaults to 0
      *
      * @note Does nothing if texture is invalid.
      */
-    void Bind() const noexcept;
-
-    /**
-     * @brief Bind the cubemap texture to a specific texture unit.
-     *
-     * @param textureUnit Texture unit (0-31)
-     */
-    void Bind(std::uint32_t textureUnit) const noexcept;
+    void Bind(std::uint32_t textureUnit = 0) const noexcept;
 
     /**
      * @brief Check if the cubemap is valid.
