@@ -148,5 +148,14 @@ class UIResource {
      * @return void
      */
     void AttachEventHandlers(const std::string &elementId, const std::string &eventType, ES::Plugin::UI::Utils::EventListener::EventCallback callback);
+
+    /**
+     * @brief Attach the event listener handlers
+     *
+     * @param childId The node id to modify
+     *
+     * @return bool false if not ready to render, true otherwise
+     */
+    bool IsReady() const;
 };
 } // namespace ES::Plugin::UI::Resource
