@@ -21,7 +21,7 @@ void UIResource::Init(ES::Engine::Core &core)
         throw std::runtime_error("Rmlui did not succeed upon initialization");
     }
     _context->SetDimensions(Rml::Vector2i(windowSize.x, windowSize.y));
-    _event = std::make_unique<ES::Plugin::UI::Utils::RmlEventBackend>(core, *_context);
+    _event = std::make_unique<ES::Plugin::UI::Utils::EventListener>(core, *_context);
 }
 
 void UIResource::BindEventCallback()
@@ -142,7 +142,7 @@ void UIResource::SetTransformProperty(const std::string &childId, const std::vec
     }
 }
 
-void UIResource::AttachEventHandlers(const std::string &elementId, const std::string &eventType, ES::Plugin::UI::Utils::RmlEventBackend::EventCallback callback)
+void UIResource::AttachEventHandlers(const std::string &elementId, const std::string &eventType, ES::Plugin::UI::Utils::EventListener::EventCallback callback)
 {
     Rml::Element *element = _document->GetElementById(elementId.c_str());
 

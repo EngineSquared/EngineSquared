@@ -34,7 +34,6 @@ target("PluginUI")
 
     add_files("src/**.cpp")
     add_includedirs("src/", {public = true})
-    add_includedirs("src/component", {public = true})
     add_includedirs("src/plugin", {public = true})
     add_includedirs("src/resource", {public = true})
     add_includedirs("src/system", {public = true})

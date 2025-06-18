@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Backend.hpp"
+#include "SystemInterface.hpp"
+#include "RenderInterface.hpp"
+#include "EventListener.hpp"
 #include "Engine.hpp"
 
 namespace ES::Plugin::UI::Resource {
@@ -10,7 +12,7 @@ class UIResource {
     Rml::ElementDocument *_document;
     std::unique_ptr<ES::Plugin::UI::Utils::SystemInterface> _systemInterface;
     std::unique_ptr<ES::Plugin::UI::Utils::RenderInterface> _renderInterface;
-    std::unique_ptr<ES::Plugin::UI::Utils::RmlEventBackend> _event;
+    std::unique_ptr<ES::Plugin::UI::Utils::EventListener> _event;
 
   public:
     /**
@@ -145,6 +147,6 @@ class UIResource {
      *
      * @return void
      */
-    void AttachEventHandlers(const std::string &elementId, const std::string &eventType, ES::Plugin::UI::Utils::RmlEventBackend::EventCallback callback);
+    void AttachEventHandlers(const std::string &elementId, const std::string &eventType, ES::Plugin::UI::Utils::EventListener::EventCallback callback);
 };
 } // namespace ES::Plugin::UI::Resource

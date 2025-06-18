@@ -1,17 +1,15 @@
 #pragma once
 
-// Components
-#include "BoxCollider2D.hpp"
-#include "Button.hpp"
-#include "Text.hpp"
-
 // Systems
-#include "ButtonClick.hpp"
-#include "UpdateButtonState.hpp"
-#include "UpdateButtonTexture.hpp"
+#include "system/InitUI.hpp"
+#include "system/EventSystems.hpp"
+#include "system/ShaderSystems.hpp"
+#include "system/UpdateUI.hpp"
 
 // Utils
-#include "CollisionUtils2D.hpp"
+#include "utils/RenderInterface.hpp"
+#include "utils/SystemInterface.hpp"
+#include "utils/EventListener.hpp"
 
 // Plugin
 #include "plugin/PluginUI.hpp"

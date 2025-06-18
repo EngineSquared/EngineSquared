@@ -1,8 +1,8 @@
 #include "PluginUI.hpp"
 #include "InitUI.hpp"
 #include "RenderingPipeline.hpp"
-#include "RmlShaderSystems.hpp"
-#include "RmlEventSystems.hpp"
+#include "ShaderSystems.hpp"
+#include "EventSystems.hpp"
 #include "UIResource.hpp"
 #include "UpdateUI.hpp"
 
@@ -26,7 +26,8 @@ void ES::Plugin::UI::Plugin::Bind()
         ES::Plugin::UI::System::SetupShaderColorMatrix, ES::Plugin::UI::System::SetupShaderBlendMatrix,
         ES::Plugin::UI::System::SetupShaderBlur, ES::Plugin::UI::System::SetupShaderDropShadow);
 
-    RegisterSystems<ES::Plugin::RenderingPipeline::RenderSetup>(ES::Plugin::UI::System::UpdateMouseMoveEvent, ES::Plugin::UI::System::Update);
+    RegisterSystems<ES::Plugin::RenderingPipeline::RenderSetup>(
+        ES::Plugin::UI::System::UpdateMouseMoveEvent, ES::Plugin::UI::System::Update);
     RegisterSystems<ES::Plugin::RenderingPipeline::ToGPU>(ES::Plugin::UI::System::Render);
     RegisterSystems<ES::Engine::Scheduler::Shutdown>(ES::Plugin::UI::System::Destroy);
 }
