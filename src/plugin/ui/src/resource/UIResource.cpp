@@ -1,5 +1,6 @@
 #include "UIResource.hpp"
 #include "Window.hpp"
+#include "UIError.hpp"
 
 #include <RmlUi/Core.h>
 
@@ -18,7 +19,7 @@ void UIResource::Init(ES::Engine::Core &core)
     if (!_context)
     {
         Destroy();
-        throw std::runtime_error("Rmlui did not succeed upon initialization");
+        throw UIError("Rmlui did not succeed upon initialization");
     }
     _context->SetDimensions(Rml::Vector2i(windowSize.x, windowSize.y));
     _event = std::make_unique<ES::Plugin::UI::Utils::EventListener>(core, *_context);
@@ -98,7 +99,7 @@ void UIResource::InitDocument(const std::string &docPath)
     _document = _context->LoadDocument(docPath);
     if (!_document)
     {
-        throw std::runtime_error("Rmlui did not succeed reading document");
+        throw UIError("Rmlui did not succeed reading document");
     }
 
     _document->Show();

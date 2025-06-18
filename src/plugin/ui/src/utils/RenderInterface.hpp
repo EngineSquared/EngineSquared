@@ -49,16 +49,12 @@ private:
 
         std::array<int, 4> viewport;
         std::array<int, 4> scissor;
-        // int viewport[4];
-        // int scissor[4];
 
         int active_texture;
 
         int stencil_clear_value;
         std::array<float, 4> color_clear_value;
         std::array<unsigned char, 4> color_writemask;
-        // float color_clear_value[4];
-        // unsigned char color_writemask[4];
 
         int blend_equation_rgb;
         int blend_equation_alpha;

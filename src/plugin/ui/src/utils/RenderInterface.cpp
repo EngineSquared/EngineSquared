@@ -138,7 +138,7 @@ void ES::Plugin::UI::Utils::RenderInterface::RenderGeometry(Rml::CompiledGeometr
     }
 
     glBindVertexArray(it->second.vao);
-    glDrawElements(GL_TRIANGLES, it->second.draw_count, GL_UNSIGNED_INT, reinterpret_cast<const GLvoid *>(0));
+    glDrawElements(GL_TRIANGLES, it->second.draw_count, GL_UNSIGNED_INT, nullptr);
 
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);

@@ -10,13 +10,13 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glew.h>
 
+#include "Logger.hpp"
+
 // Determines the anti-aliasing quality when creating layers. Enables better-looking visuals, especially when transforms
 // are applied.
 #ifndef RMLUI_NUM_MSAA_SAMPLES
 constexpr int RMLUI_NUM_MSAA_SAMPLES = 2;
 #endif
-
-#include "Logger.hpp"
 
 namespace ES::Plugin::UI::Utils
 {
