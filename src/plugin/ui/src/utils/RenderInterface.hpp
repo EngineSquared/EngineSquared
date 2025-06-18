@@ -26,7 +26,7 @@ class RenderInterface : public Rml::RenderInterface
 public:
     RenderInterface() = delete;
     explicit RenderInterface(ES::Engine::Core &core);
-    ~RenderInterface();
+    ~RenderInterface() = default;
 
 private:
     struct CompiledGeometryData {
@@ -47,14 +47,18 @@ private:
         bool enable_scissor_test;
         bool enable_depth_test;
 
-        int viewport[4];
-        int scissor[4];
+        std::array<int, 4> viewport;
+        std::array<int, 4> scissor;
+        // int viewport[4];
+        // int scissor[4];
 
         int active_texture;
 
         int stencil_clear_value;
-        float color_clear_value[4];
-        unsigned char color_writemask[4];
+        std::array<float, 4> color_clear_value;
+        std::array<unsigned char, 4> color_writemask;
+        // float color_clear_value[4];
+        // unsigned char color_writemask[4];
 
         int blend_equation_rgb;
         int blend_equation_alpha;
@@ -107,7 +111,7 @@ private:
     Rml::Rectanglei _scissor_state;
     entt::hashed_string _activeShaderProgram = "";
 
-    enum class VertexAttribute {
+    enum class VertexAttribute : GLuint {
         Position,
         Color0,
         TexCoord0,

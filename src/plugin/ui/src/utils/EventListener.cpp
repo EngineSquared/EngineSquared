@@ -3,7 +3,7 @@
 void ES::Plugin::UI::Utils::EventListener::SetCallback()
 {
     auto &inputManager = _core.GetResource<ES::Plugin::Input::Resource::InputManager>();
-    inputManager.RegisterMouseButtonCallback([this](ES::Engine::Core &, int key, int action, int mods) {
+    inputManager.RegisterMouseButtonCallback([this](const ES::Engine::Core &, int key, int action, int mods) {
         ProcessMouseButton(key, action, mods);
     });
 }

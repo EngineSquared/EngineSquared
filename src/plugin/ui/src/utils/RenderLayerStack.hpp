@@ -13,7 +13,7 @@
 // Determines the anti-aliasing quality when creating layers. Enables better-looking visuals, especially when transforms
 // are applied.
 #ifndef RMLUI_NUM_MSAA_SAMPLES
-#    define RMLUI_NUM_MSAA_SAMPLES 2
+constexpr int RMLUI_NUM_MSAA_SAMPLES = 2;
 #endif
 
 #include "Logger.hpp"
@@ -31,7 +31,7 @@ namespace ES::Plugin::UI::Utils
  */
 class RenderLayerStack {
 public:
-    RenderLayerStack() : _layersSize(0), _width(0), _height(0) { _fbPostprocess.resize(4); }
+    RenderLayerStack() { _fbPostprocess.resize(4); }
     ~RenderLayerStack() { DestroyFramebuffers(); }
     
     enum class FramebufferAttachment {
@@ -40,7 +40,8 @@ public:
     };
 
     struct FramebufferData {
-        int width, height;
+        int width;
+        int height;
         GLuint framebuffer;
         GLuint color_tex_buffer;
         GLuint color_render_buffer;
@@ -95,10 +96,10 @@ private:
 
     // The number of active layers is manually tracked since we re-use the framebuffers stored in the fb_layers
     // stack.
-    int _layersSize;
+    int _layersSize = 0;
     
-    int _width;
-    int _height;
+    int _width = 0;
+    int _height = 0;
     Rml::Vector<FramebufferData> _fbLayers;
     Rml::Vector<FramebufferData> _fbPostprocess;
 };

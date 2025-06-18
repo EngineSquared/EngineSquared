@@ -105,9 +105,7 @@ void ES::Plugin::UI::System::LoadShaderVertGradient(ES::Engine::Core &core)
 {
     const int maxNumStop = 16;
 
-    std::string shaderHeader = "#version 440\n"
-                               "#define MAX_NUM_STOPS " +
-                               std::to_string(maxNumStop) + "\n";
+    std::string shaderHeader = fmt::format("#version 440\n#define MAX_NUM_STOPS {}\n", std::to_string(maxNumStop));
 
     const char *vertexShader = R"(
         #version 440
@@ -382,12 +380,7 @@ void ES::Plugin::UI::System::LoadShaderBlur(ES::Engine::Core &core)
     const int blurSize = 7;
     const int blurNumWeights = (blurSize + 1) / 2;
 
-    std::string shaderHeader = "#version 440\n"
-                               "#define BLUR_SIZE " +
-                               std::to_string(blurSize) +
-                               "\n"
-                               "#define BLUR_NUM_WEIGHTS " +
-                               std::to_string(blurNumWeights) + "\n";
+    std::string shaderHeader = fmt::format("#version 440\n#define BLUR_SIZE {}\n#define BLUR_NUM_WEIGHTS {}\n", std::to_string(blurSize), std::to_string(blurNumWeights));
 
     const std::string vertexShader = shaderHeader +
                                      R"(

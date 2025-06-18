@@ -32,7 +32,8 @@ void UIResource::BindEventCallback()
 void UIResource::UpdateMouseMoveEvent(ES::Engine::Core &core)
 {
     const auto &window = core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow();
-    double x, y;
+    double x;
+    double y;
 
     glfwGetCursorPos(window, &x, &y);
     _context->ProcessMouseMove(static_cast<int>(x), static_cast<int>(y), 0);
@@ -140,11 +141,13 @@ void UIResource::SetTransformProperty(const std::string &childId, const std::vec
     {
         switch (t.type)
         {
-        case TransformType::Rotate: rmlTransforms.push_back(Rml::Transforms::Rotate2D{t.value}); break;
-        case TransformType::TranslateX: rmlTransforms.push_back(Rml::Transforms::TranslateX{t.value}); break;
-        case TransformType::TranslateY:
-            rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value});
-            break;
+            using enum TransformType;
+
+            case Rotate: rmlTransforms.push_back(Rml::Transforms::Rotate2D{t.value}); break;
+            case TranslateX: rmlTransforms.push_back(Rml::Transforms::TranslateX{t.value}); break;
+            case TranslateY:
+                rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value});
+                break;
             // Add other cases as needed
         }
     }

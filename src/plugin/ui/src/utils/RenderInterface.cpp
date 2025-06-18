@@ -2,8 +2,6 @@
 
 ES::Plugin::UI::Utils::RenderInterface::RenderInterface(ES::Engine::Core &core) : _core(core){};
 
-ES::Plugin::UI::Utils::RenderInterface::~RenderInterface(){};
-
 void ES::Plugin::UI::Utils::RenderInterface::UseShaderProgram(const entt::hashed_string &program_id)
 {
     auto &shaderManager = _core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>();
@@ -60,22 +58,22 @@ ES::Plugin::UI::Utils::RenderInterface::CompileGeometry(Rml::Span<const Rml::Ver
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Rml::Vertex) * vertices.size(),
-                 reinterpret_cast<const void *>(vertices.data()), draw_usage);
+                 std::bit_cast<const void *>(vertices.data()), draw_usage);
 
-    glEnableVertexAttribArray(static_cast<GLuint>(VertexAttribute::Position));
-    glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, sizeof(Rml::Vertex),
-                          reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, position)));
+    glEnableVertexAttribArray(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::Position));
+    glVertexAttribPointer(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, sizeof(Rml::Vertex),
+                          std::bit_cast<const GLvoid *>(offsetof(Rml::Vertex, position)));
 
-    glEnableVertexAttribArray(static_cast<GLuint>(VertexAttribute::Color0));
-    glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::Color0), 4, GL_UNSIGNED_BYTE, GL_TRUE,
-                          sizeof(Rml::Vertex), reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, colour)));
+    glEnableVertexAttribArray(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::Color0));
+    glVertexAttribPointer(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::Color0), 4, GL_UNSIGNED_BYTE, GL_TRUE,
+                          sizeof(Rml::Vertex), std::bit_cast<const GLvoid *>(offsetof(Rml::Vertex, colour)));
 
-    glEnableVertexAttribArray(static_cast<GLuint>(VertexAttribute::TexCoord0));
-    glVertexAttribPointer(static_cast<GLuint>(VertexAttribute::TexCoord0), 2, GL_FLOAT, GL_FALSE, sizeof(Rml::Vertex),
-                          reinterpret_cast<const GLvoid *>(offsetof(Rml::Vertex, tex_coord)));
+    glEnableVertexAttribArray(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::TexCoord0));
+    glVertexAttribPointer(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::TexCoord0), 2, GL_FLOAT, GL_FALSE, sizeof(Rml::Vertex),
+                          std::bit_cast<const GLvoid *>(offsetof(Rml::Vertex, tex_coord)));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), reinterpret_cast<const void *>(indices.data()),
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), std::bit_cast<const void *>(indices.data()),
                  draw_usage);
 
     glBindVertexArray(0);
@@ -161,7 +159,7 @@ void ES::Plugin::UI::Utils::RenderInterface::SetTransform(const Rml::Matrix4f *n
             glm::vec4((*new_transform)[3].x, (*new_transform)[3].y, (*new_transform)[3].z, (*new_transform)[3].w));
     }
 
-    _transformMatrix = (new_transform ? (projection * (transformMatrix)) : projection);
+    _transformMatrix = (new_transform ? (projection * transformMatrix) : projection);
 }
 
 const glm::mat4 &ES::Plugin::UI::Utils::RenderInterface::GetTransform() const { return _transformMatrix; }
@@ -314,14 +312,14 @@ void ES::Plugin::UI::Utils::RenderInterface::BeginFrame()
     _glstate_backup.enable_scissor_test = glIsEnabled(GL_SCISSOR_TEST);
     _glstate_backup.enable_depth_test = glIsEnabled(GL_DEPTH_TEST);
 
-    glGetIntegerv(GL_VIEWPORT, _glstate_backup.viewport);
-    glGetIntegerv(GL_SCISSOR_BOX, _glstate_backup.scissor);
+    glGetIntegerv(GL_VIEWPORT, _glstate_backup.viewport.data());
+    glGetIntegerv(GL_SCISSOR_BOX, _glstate_backup.scissor.data());
 
     glGetIntegerv(GL_ACTIVE_TEXTURE, &_glstate_backup.active_texture);
 
     glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &_glstate_backup.stencil_clear_value);
-    glGetFloatv(GL_COLOR_CLEAR_VALUE, _glstate_backup.color_clear_value);
-    glGetBooleanv(GL_COLOR_WRITEMASK, _glstate_backup.color_writemask);
+    glGetFloatv(GL_COLOR_CLEAR_VALUE, _glstate_backup.color_clear_value.data());
+    glGetBooleanv(GL_COLOR_WRITEMASK, _glstate_backup.color_writemask.data());
 
     glGetIntegerv(GL_BLEND_EQUATION_RGB, &_glstate_backup.blend_equation_rgb);
     glGetIntegerv(GL_BLEND_EQUATION_ALPHA, &_glstate_backup.blend_equation_alpha);

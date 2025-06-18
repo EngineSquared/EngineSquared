@@ -31,7 +31,7 @@ bool ES::Plugin::UI::Utils::RenderLayerStack::CreateFramebuffer(FramebufferData 
     {
         glGenTextures(1, &color_tex_buffer);
         glBindTexture(GL_TEXTURE_2D, color_tex_buffer);
-        glTexImage2D(GL_TEXTURE_2D, 0, color_format, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, color_format, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_mag_filter);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, min_mag_filter);
