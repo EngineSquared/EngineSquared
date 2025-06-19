@@ -1,4 +1,5 @@
 #include "SystemInterface.hpp"
+#include <GLFW/glfw3.h>
 
 double ES::Plugin::UI::Utils::SystemInterface::GetElapsedTime()
 {

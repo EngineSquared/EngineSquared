@@ -10,7 +10,7 @@ void ES::Plugin::UI::Plugin::Bind()
 {
     RequirePlugins<ES::Plugin::RenderingPipeline::Plugin>();
 
-    RegisterResource<ES::Plugin::UI::Resource::UIResource>(ES::Plugin::UI::Resource::UIResource::UIResource());
+    RegisterResource<ES::Plugin::UI::Resource::UIResource>(ES::Plugin::UI::Resource::UIResource());
 
     RegisterSystems<ES::Plugin::RenderingPipeline::Init>(
         ES::Plugin::UI::System::Init);
