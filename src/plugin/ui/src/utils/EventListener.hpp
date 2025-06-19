@@ -7,7 +7,6 @@
 
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Event.h>
-#include <glfw/glfw3.h>
 
 #include "Core.hpp"
 #include "Input.hpp"
