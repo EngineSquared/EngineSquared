@@ -1,10 +1,7 @@
 #include "SystemInterface.hpp"
 #include <GLFW/glfw3.h>
 
-double ES::Plugin::UI::Utils::SystemInterface::GetElapsedTime()
-{
-    return glfwGetTime();
-}
+double ES::Plugin::UI::Utils::SystemInterface::GetElapsedTime() { return glfwGetTime(); }
 
 bool ES::Plugin::UI::Utils::SystemInterface::LogMessage(Rml::Log::Type type, const Rml::String &message)
 {

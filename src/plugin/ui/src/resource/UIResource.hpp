@@ -1,9 +1,9 @@
 #pragma once
 
-#include "SystemInterface.hpp"
-#include "RenderInterface.hpp"
-#include "EventListener.hpp"
 #include "Engine.hpp"
+#include "EventListener.hpp"
+#include "RenderInterface.hpp"
+#include "SystemInterface.hpp"
 
 namespace ES::Plugin::UI::Resource {
 class UIResource {
@@ -147,7 +147,8 @@ class UIResource {
      *
      * @return void
      */
-    void AttachEventHandlers(const std::string &elementId, const std::string &eventType, ES::Plugin::UI::Utils::EventListener::EventCallback callback);
+    void AttachEventHandlers(const std::string &elementId, const std::string &eventType,
+                             ES::Plugin::UI::Utils::EventListener::EventCallback callback);
 
     /**
      * @brief Attach the event listener handlers

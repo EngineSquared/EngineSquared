@@ -1,6 +1,6 @@
 #include "UIResource.hpp"
-#include "Window.hpp"
 #include "UIError.hpp"
+#include "Window.hpp"
 
 #include <RmlUi/Core.h>
 
@@ -9,7 +9,7 @@ void UIResource::Init(ES::Engine::Core &core)
 {
     _systemInterface = std::make_unique<ES::Plugin::UI::Utils::SystemInterface>();
     _renderInterface = std::make_unique<ES::Plugin::UI::Utils::RenderInterface>(core);
-    
+
     Rml::SetSystemInterface(_systemInterface.get());
     Rml::SetRenderInterface(_renderInterface.get());
     Rml::Initialise();
@@ -25,10 +25,7 @@ void UIResource::Init(ES::Engine::Core &core)
     _event = std::make_unique<ES::Plugin::UI::Utils::EventListener>(core, *_context);
 }
 
-void UIResource::BindEventCallback()
-{
-    _event->SetCallback();
-}
+void UIResource::BindEventCallback() { _event->SetCallback(); }
 
 void UIResource::UpdateMouseMoveEvent(ES::Engine::Core &core)
 {
@@ -70,7 +67,7 @@ void UIResource::Update(ES::Engine::Core &core)
         return;
 
     const auto &windowSize = core.GetResource<ES::Plugin::Window::Resource::Window>().GetSize();
-    
+
     _context->SetDimensions(Rml::Vector2i(windowSize.x, windowSize.y));
     _context->Update();
 }
@@ -132,7 +129,8 @@ void UIResource::SetTransformProperty(const std::string &childId, const std::vec
 {
     if (!IsReady())
     {
-        ES::Utils::Log::Error(fmt::format("RmlUi: Could not set transform property on {}: No active document", childId));
+        ES::Utils::Log::Error(
+            fmt::format("RmlUi: Could not set transform property on {}: No active document", childId));
         return;
     }
 
@@ -144,11 +142,11 @@ void UIResource::SetTransformProperty(const std::string &childId, const std::vec
         {
             using enum TransformType;
 
-            case Rotate: rmlTransforms.push_back(Rml::Transforms::Rotate2D{t.value}); break;
-            case TranslateX: rmlTransforms.push_back(Rml::Transforms::TranslateX{t.value}); break;
-            case TranslateY:
-                rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value});
-                break;
+        case Rotate: rmlTransforms.push_back(Rml::Transforms::Rotate2D{t.value}); break;
+        case TranslateX: rmlTransforms.push_back(Rml::Transforms::TranslateX{t.value}); break;
+        case TranslateY:
+            rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value});
+            break;
             // Add other cases as needed
         }
     }
@@ -166,11 +164,13 @@ void UIResource::SetTransformProperty(const std::string &childId, const std::vec
     }
 }
 
-void UIResource::AttachEventHandlers(const std::string &elementId, const std::string &eventType, ES::Plugin::UI::Utils::EventListener::EventCallback callback)
+void UIResource::AttachEventHandlers(const std::string &elementId, const std::string &eventType,
+                                     ES::Plugin::UI::Utils::EventListener::EventCallback callback)
 {
     if (!IsReady())
     {
-        ES::Utils::Log::Error(fmt::format("RmlUi: Could not attach event {} on {}: No active document", eventType, elementId));
+        ES::Utils::Log::Error(
+            fmt::format("RmlUi: Could not attach event {} on {}: No active document", eventType, elementId));
         return;
     }
 
@@ -178,16 +178,14 @@ void UIResource::AttachEventHandlers(const std::string &elementId, const std::st
 
     if (!element)
     {
-        ES::Utils::Log::Error(fmt::format("RmlUi: Could not attach events to sub elements of {}: Not found.", elementId.c_str()));
+        ES::Utils::Log::Error(
+            fmt::format("RmlUi: Could not attach events to sub elements of {}: Not found.", elementId.c_str()));
         return;
     }
     _event->SetEventCallback(callback);
     _event->AttachEvents(eventType, *element);
 }
 
-bool UIResource::IsReady() const
-{
-    return _context && _document;
-}
+bool UIResource::IsReady() const { return _context && _document; }
 
 } // namespace ES::Plugin::UI::Resource

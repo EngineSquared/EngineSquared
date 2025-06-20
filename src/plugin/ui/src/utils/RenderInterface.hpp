@@ -9,25 +9,23 @@
 #include <RmlUi/Core/Event.h>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "InputManager.hpp"
 #include "Logger.hpp"
 #include "Mesh.hpp"
 #include "Object.hpp"
 #include "OpenGL.hpp"
 #include "Window.hpp"
-#include "InputManager.hpp"
 
 #include "RenderLayerStack.hpp"
 
-namespace ES::Plugin::UI::Utils
-{
-class RenderInterface : public Rml::RenderInterface
-{
-public:
+namespace ES::Plugin::UI::Utils {
+class RenderInterface : public Rml::RenderInterface {
+  public:
     RenderInterface() = delete;
     explicit RenderInterface(ES::Engine::Core &core);
     ~RenderInterface() = default;
 
-private:
+  private:
     struct CompiledGeometryData {
         GLuint vao;
         GLuint vbo;

@@ -5,9 +5,9 @@
 
 #pragma once
 
+#include <GL/glew.h>
 #include <RmlUi/Core.h>
 #include <glm/gtc/type_ptr.hpp>
-#include <GL/glew.h>
 
 #include "Logger.hpp"
 
@@ -17,8 +17,7 @@
 constexpr int RMLUI_NUM_MSAA_SAMPLES = 2;
 #endif
 
-namespace ES::Plugin::UI::Utils
-{
+namespace ES::Plugin::UI::Utils {
 /*
  *   Manages render targets, including the layer stack and postprocessing framebuffers.
  *
@@ -29,10 +28,10 @@ namespace ES::Plugin::UI::Utils
  *   such as filters. They are used both as input and output during rendering, and do not use MSAA.
  */
 class RenderLayerStack {
-public:
+  public:
     RenderLayerStack() { _fbPostprocess.resize(4); }
     ~RenderLayerStack() { DestroyFramebuffers(); }
-    
+
     enum class FramebufferAttachment {
         None,
         DepthStencil
@@ -49,7 +48,7 @@ public:
     };
 
     bool CreateFramebuffer(FramebufferData &out_fb, int width, int height, int samples,
-                                  FramebufferAttachment attachment, GLuint shared_depth_stencil_buffer);
+                           FramebufferAttachment attachment, GLuint shared_depth_stencil_buffer);
     void DestroyFramebuffer(FramebufferData &fb);
 
     // Push a new layer. All references to previously retrieved layers are invalidated.
@@ -69,7 +68,7 @@ public:
     void BeginFrame(int new_width, int new_height);
     void EndFrame();
 
-private:
+  private:
     void DestroyFramebuffers()
     {
         RMLUI_ASSERTMSG(_layersSize == 0,
@@ -96,7 +95,7 @@ private:
     // The number of active layers is manually tracked since we re-use the framebuffers stored in the fb_layers
     // stack.
     int _layersSize = 0;
-    
+
     int _width = 0;
     int _height = 0;
     Rml::Vector<FramebufferData> _fbLayers;
