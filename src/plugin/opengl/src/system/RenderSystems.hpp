@@ -9,6 +9,7 @@ const int DEFAULT_HEIGHT = 800;
 void RenderMeshes(ES::Engine::Core &core);
 void RenderText(ES::Engine::Core &core);
 void RenderSprites(ES::Engine::Core &core);
+void RenderSkyBox(ES::Engine::Core &core);
 
 void CreateCamera(ES::Engine::Core &core);
 void LoadMaterialCache(ES::Engine::Core &core);

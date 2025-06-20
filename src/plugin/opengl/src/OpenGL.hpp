@@ -11,6 +11,7 @@
 #include "component/Text.hpp"
 #include "component/TextHandle.hpp"
 #include "component/TextureHandle.hpp"
+#include "component/CubeMapHandle.hpp"
 
 // Plugin
 #include "plugin/PluginOpenGL.hpp"
@@ -26,6 +27,7 @@
 #include "resource/MouseDragging.hpp"
 #include "resource/ShaderManager.hpp"
 #include "resource/TextureManager.hpp"
+#include "resource/CubeMapManager.hpp"
 
 // Systems
 #include "system/BufferSystems.hpp"
@@ -42,4 +44,5 @@
 #include "utils/Loader.hpp"
 #include "utils/Material.hpp"
 #include "utils/Texture.hpp"
+#include "utils/CubeMap.hpp"
 #include "utils/Viewer.hpp"
