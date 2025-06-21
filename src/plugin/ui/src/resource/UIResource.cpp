@@ -192,7 +192,8 @@ std::string UIResource::GetValue(const std::string &elementId) const
 {
     if (!IsReady())
     {
-        ES::Utils::Log::Error(fmt::format("RmlUi: Could not set transform property on {}: No active document", elementId));
+        ES::Utils::Log::Error(
+            fmt::format("RmlUi: Could not set transform property on {}: No active document", elementId));
         return "";
     }
 
