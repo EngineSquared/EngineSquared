@@ -57,19 +57,22 @@ ES::Plugin::UI::Utils::RenderInterface::CompileGeometry(Rml::Span<const Rml::Ver
     glBindVertexArray(vao);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Rml::Vertex) * vertices.size(),
-                 std::bit_cast<const void *>(vertices.data()), draw_usage);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Rml::Vertex) * vertices.size(), std::bit_cast<const void *>(vertices.data()),
+                 draw_usage);
 
     glEnableVertexAttribArray(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::Position));
-    glVertexAttribPointer(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, sizeof(Rml::Vertex),
+    glVertexAttribPointer(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::Position), 2, GL_FLOAT,
+                          GL_FALSE, sizeof(Rml::Vertex),
                           std::bit_cast<const GLvoid *>(offsetof(Rml::Vertex, position)));
 
     glEnableVertexAttribArray(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::Color0));
-    glVertexAttribPointer(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::Color0), 4, GL_UNSIGNED_BYTE, GL_TRUE,
-                          sizeof(Rml::Vertex), std::bit_cast<const GLvoid *>(offsetof(Rml::Vertex, colour)));
+    glVertexAttribPointer(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::Color0), 4,
+                          GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Rml::Vertex),
+                          std::bit_cast<const GLvoid *>(offsetof(Rml::Vertex, colour)));
 
     glEnableVertexAttribArray(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::TexCoord0));
-    glVertexAttribPointer(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::TexCoord0), 2, GL_FLOAT, GL_FALSE, sizeof(Rml::Vertex),
+    glVertexAttribPointer(static_cast<std::underlying_type_t<VertexAttribute>>(VertexAttribute::TexCoord0), 2, GL_FLOAT,
+                          GL_FALSE, sizeof(Rml::Vertex),
                           std::bit_cast<const GLvoid *>(offsetof(Rml::Vertex, tex_coord)));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);

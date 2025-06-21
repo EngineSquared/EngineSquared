@@ -1,8 +1,8 @@
 #include "RenderLayerStack.hpp"
 
 bool ES::Plugin::UI::Utils::RenderLayerStack::CreateFramebuffer(FramebufferData &out_fb, int width, int height,
-                                                               int samples, FramebufferAttachment attachment,
-                                                               GLuint shared_depth_stencil_buffer)
+                                                                int samples, FramebufferAttachment attachment,
+                                                                GLuint shared_depth_stencil_buffer)
 {
 #ifdef RMLUI_PLATFORM_EMSCRIPTEN
     constexpr GLint wrap_mode = GL_CLAMP_TO_EDGE;
@@ -113,7 +113,7 @@ Rml::LayerHandle ES::Plugin::UI::Utils::RenderLayerStack::PushLayer()
 
         _fbLayers.push_back(FramebufferData{});
         CreateFramebuffer(_fbLayers.back(), _width, _height, RMLUI_NUM_MSAA_SAMPLES,
-                            FramebufferAttachment::DepthStencil, shared_depth_stencil);
+                          FramebufferAttachment::DepthStencil, shared_depth_stencil);
     }
 
     _layersSize += 1;
@@ -126,13 +126,15 @@ void ES::Plugin::UI::Utils::RenderLayerStack::PopLayer()
     _layersSize -= 1;
 }
 
-const ES::Plugin::UI::Utils::RenderLayerStack::FramebufferData &ES::Plugin::UI::Utils::RenderLayerStack::GetLayer(Rml::LayerHandle layer) const
+const ES::Plugin::UI::Utils::RenderLayerStack::FramebufferData &
+ES::Plugin::UI::Utils::RenderLayerStack::GetLayer(Rml::LayerHandle layer) const
 {
     RMLUI_ASSERT((size_t) layer < (size_t) _layersSize);
     return _fbLayers[layer];
 }
 
-const ES::Plugin::UI::Utils::RenderLayerStack::FramebufferData &ES::Plugin::UI::Utils::RenderLayerStack::GetTopLayer() const
+const ES::Plugin::UI::Utils::RenderLayerStack::FramebufferData &
+ES::Plugin::UI::Utils::RenderLayerStack::GetTopLayer() const
 {
     return GetLayer(GetTopLayerHandle());
 }
@@ -143,17 +145,20 @@ Rml::LayerHandle ES::Plugin::UI::Utils::RenderLayerStack::GetTopLayerHandle() co
     return static_cast<Rml::LayerHandle>(_layersSize - 1);
 }
 
-const ES::Plugin::UI::Utils::RenderLayerStack::FramebufferData &ES::Plugin::UI::Utils::RenderLayerStack::GetPostprocessPrimary()
+const ES::Plugin::UI::Utils::RenderLayerStack::FramebufferData &
+ES::Plugin::UI::Utils::RenderLayerStack::GetPostprocessPrimary()
 {
     return EnsureFramebufferPostprocess(0);
 }
 
-const ES::Plugin::UI::Utils::RenderLayerStack::FramebufferData &ES::Plugin::UI::Utils::RenderLayerStack::GetPostprocessSecondary()
+const ES::Plugin::UI::Utils::RenderLayerStack::FramebufferData &
+ES::Plugin::UI::Utils::RenderLayerStack::GetPostprocessSecondary()
 {
     return EnsureFramebufferPostprocess(1);
 }
 
-const ES::Plugin::UI::Utils::RenderLayerStack::FramebufferData &ES::Plugin::UI::Utils::RenderLayerStack::GetPostprocessTertiary()
+const ES::Plugin::UI::Utils::RenderLayerStack::FramebufferData &
+ES::Plugin::UI::Utils::RenderLayerStack::GetPostprocessTertiary()
 {
     return EnsureFramebufferPostprocess(2);
 }

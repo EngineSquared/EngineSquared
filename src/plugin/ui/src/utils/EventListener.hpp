@@ -11,28 +11,33 @@
 #include "Core.hpp"
 #include "Input.hpp"
 
-namespace ES::Plugin::UI::Utils
-{
+namespace ES::Plugin::UI::Utils {
 class EventListener : public Rml::EventListener {
-public:
+  public:
     using EventCallback = std::function<void(const std::string &event_name, const std::string &element_id)>;
 
-private:
+  private:
     ES::Engine::Core &_core;
     Rml::Context *_context;
     EventCallback _event_callback;
 
-    static int ConvertKeyModifiers(int glfw_mods) {
+    static int ConvertKeyModifiers(int glfw_mods)
+    {
         int key_modifier_state = 0;
-        if (GLFW_MOD_SHIFT & glfw_mods) key_modifier_state |= Rml::Input::KM_SHIFT;
-        if (GLFW_MOD_CONTROL & glfw_mods) key_modifier_state |= Rml::Input::KM_CTRL;
-        if (GLFW_MOD_ALT & glfw_mods) key_modifier_state |= Rml::Input::KM_ALT;
-        if (GLFW_MOD_CAPS_LOCK & glfw_mods) key_modifier_state |= Rml::Input::KM_SCROLLLOCK;
-        if (GLFW_MOD_NUM_LOCK & glfw_mods) key_modifier_state |= Rml::Input::KM_NUMLOCK;
+        if (GLFW_MOD_SHIFT & glfw_mods)
+            key_modifier_state |= Rml::Input::KM_SHIFT;
+        if (GLFW_MOD_CONTROL & glfw_mods)
+            key_modifier_state |= Rml::Input::KM_CTRL;
+        if (GLFW_MOD_ALT & glfw_mods)
+            key_modifier_state |= Rml::Input::KM_ALT;
+        if (GLFW_MOD_CAPS_LOCK & glfw_mods)
+            key_modifier_state |= Rml::Input::KM_SCROLLLOCK;
+        if (GLFW_MOD_NUM_LOCK & glfw_mods)
+            key_modifier_state |= Rml::Input::KM_NUMLOCK;
         return key_modifier_state;
     }
 
-public:
+  public:
     EventListener() = delete;
     EventListener(ES::Engine::Core &core, Rml::Context &context) : _core(core), _context(&context) {}
 
@@ -42,5 +47,5 @@ public:
     void SetEventCallback(EventCallback callback);
 
     void ProcessEvent(Rml::Event &event) override;
-};    
+};
 } // namespace ES::Plugin::UI::Utils

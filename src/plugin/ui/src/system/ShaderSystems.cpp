@@ -6,8 +6,8 @@
 
 #include "OpenGL.pch.hpp"
 
-#include "ShaderSystems.hpp"
 #include "ShaderManager.hpp"
+#include "ShaderSystems.hpp"
 
 void ES::Plugin::UI::System::LoadShaderVertColor(ES::Engine::Core &core)
 {
@@ -380,7 +380,8 @@ void ES::Plugin::UI::System::LoadShaderBlur(ES::Engine::Core &core)
     const int blurSize = 7;
     const int blurNumWeights = (blurSize + 1) / 2;
 
-    std::string shaderHeader = fmt::format("#version 440\n#define BLUR_SIZE {}\n#define BLUR_NUM_WEIGHTS {}\n", std::to_string(blurSize), std::to_string(blurNumWeights));
+    std::string shaderHeader = fmt::format("#version 440\n#define BLUR_SIZE {}\n#define BLUR_NUM_WEIGHTS {}\n",
+                                           std::to_string(blurSize), std::to_string(blurNumWeights));
 
     const std::string vertexShader = shaderHeader +
                                      R"(

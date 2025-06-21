@@ -11,4 +11,4 @@ namespace ES::Plugin::UI::System {
  * @return void
  */
 void UpdateMouseMoveEvent(ES::Engine::Core &core);
-}
+} // namespace ES::Plugin::UI::System

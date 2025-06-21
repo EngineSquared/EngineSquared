@@ -10,14 +10,13 @@
 
 #include "Core.hpp"
 
-namespace ES::Plugin::UI::Utils
-{
+namespace ES::Plugin::UI::Utils {
 class SystemInterface : public Rml::SystemInterface {
-public:
+  public:
     SystemInterface() = default;
     ~SystemInterface() = default;
 
     double GetElapsedTime() override;
     bool LogMessage(Rml::Log::Type type, const Rml::String &message) override;
-};  
+};
 } // namespace ES::Plugin::UI::Utils
