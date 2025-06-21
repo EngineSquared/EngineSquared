@@ -190,4 +190,20 @@ bool UIResource::IsReady() const
     return _context && _document;
 }
 
+std::string UIResource::GetValue(const std::string &elementId) const
+{
+    if (!IsReady())
+    {
+        ES::Utils::Log::Error(fmt::format("RmlUi: Could not set transform property on {}: No active document", elementId));
+        return "";
+    }
+
+    Rml::Element *element = _document->GetElementById(elementId.c_str());
+
+    if (element)
+        return element->GetInnerRML();
+    ES::Utils::Log::Error(fmt::format("RmlUi: Could not get the value of element {}: Not found", elementId));
+    return "";
+}
+
 } // namespace ES::Plugin::UI::Resource

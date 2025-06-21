@@ -109,7 +109,7 @@ class UIResource {
      *
      * Fonts need to be set before rendering any texts
      *
-     * @param core The location of the RML document file.
+     * @param docPath The location of the RML document file.
      *
      * @return void
      */
@@ -135,6 +135,7 @@ class UIResource {
      * This is useful to add animations efficiently to elements
      *
      * @param childId The node id to modify
+     * @param transforms vector of transform params to apply
      *
      * @return void
      */
@@ -152,10 +153,17 @@ class UIResource {
     /**
      * @brief Attach the event listener handlers
      *
-     * @param childId The node id to modify
-     *
      * @return bool false if not ready to render, true otherwise
      */
     bool IsReady() const;
+
+    /**
+     * @brief Get the element value
+     *
+     * @param elementId The node id to modify
+     *
+     * @return bool false if not ready to render, true otherwise
+     */
+    std::string GetValue(const std::string &elementId) const;
 };
 } // namespace ES::Plugin::UI::Resource

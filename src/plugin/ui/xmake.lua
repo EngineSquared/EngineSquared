@@ -56,7 +56,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_languages("cxx20")
         add_links("gtest")
         add_tests("default")
-        add_packages("glm", "entt", "gtest", "spdlog", "fmt")
+        add_packages("entt", "glfw", "glm", "rmlui", "fmt", "spdlog", "glew", "stb", "gtest")
         
         add_deps("PluginUI")
         add_deps("EngineSquaredCore")

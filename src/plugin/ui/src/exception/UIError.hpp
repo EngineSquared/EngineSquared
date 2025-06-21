@@ -25,7 +25,7 @@ namespace ES::Plugin::UI {
  */
 class UIError : public std::exception {
   public:
-    explicit UIError(const std::string &message) : msg("OpenGL error: " + message){};
+    explicit UIError(const std::string &message) : msg("UI error: " + message){};
 
     const char *what() const throw() override { return this->msg.c_str(); };
 
