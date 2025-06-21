@@ -152,7 +152,7 @@ class UIResource {
                              ES::Plugin::UI::Utils::EventListener::EventCallback callback);
 
     /**
-     * @brief Attach the event listener handlers
+     * @brief Check if the UI plugin is ready
      *
      * @return bool false if not ready to render, true otherwise
      */
