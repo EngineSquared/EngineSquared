@@ -19,8 +19,7 @@ Texture::~Texture()
 
 void Texture::LoadTexture(const std::string &texturePath, bool invertY)
 {
-    if (invertY)
-        stbi_set_flip_vertically_on_load(true);
+    stbi_set_flip_vertically_on_load(invertY);
 
     uint8_t *pixels = stbi_load(texturePath.c_str(), &_width, &_height, &_channels, STBI_rgb_alpha);
 
@@ -45,8 +44,7 @@ void Texture::LoadTexture(const std::string &texturePath, bool invertY)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     stbi_image_free(pixels);
-    if (invertY)
-        stbi_set_flip_vertically_on_load(false);
+    stbi_set_flip_vertically_on_load(!invertY);
     ES::Utils::Log::Info(fmt::format("Texture loaded: {}", texturePath));
 }
 
