@@ -169,6 +169,27 @@ void Viewer::setZoomFraction(float zoomFraction) { m_zoomFraction = zoomFraction
 
 void Viewer::setRotateSpeed(float rotateSpeed) { m_rotateSpeed = rotateSpeed; }
 
+glm::quat Viewer::getRotation() const
+{
+    glm::vec3 viewDir = glm::normalize(m_viewCenter - m_viewPoint);
+    glm::vec3 rightDir = glm::normalize(glm::cross(viewDir, m_upVector));
+    glm::vec3 correctedUp = glm::normalize(glm::cross(rightDir, viewDir));
+
+    glm::mat3 rotationMatrix(
+        rightDir,
+        correctedUp,
+        -viewDir
+    );
+
+    return glm::quat_cast(rotationMatrix);
+}
+
+void Viewer::rotate(const glm::quat &srcRotation, const glm::vec3 &srcOffset)
+{
+    glm::vec3 rotatedOffset = srcRotation * srcOffset;
+    m_viewPoint = m_viewCenter + rotatedOffset;
+}
+
 void Viewer::getFrustrumInfo()
 {
     // Get the viewing direction
