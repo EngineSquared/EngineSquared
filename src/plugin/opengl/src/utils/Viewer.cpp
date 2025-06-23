@@ -175,11 +175,7 @@ glm::quat Viewer::getRotation() const
     glm::vec3 rightDir = glm::normalize(glm::cross(viewDir, m_upVector));
     glm::vec3 correctedUp = glm::normalize(glm::cross(rightDir, viewDir));
 
-    glm::mat3 rotationMatrix(
-        rightDir,
-        correctedUp,
-        -viewDir
-    );
+    glm::mat3 rotationMatrix(rightDir, correctedUp, -viewDir);
 
     return glm::quat_cast(rotationMatrix);
 }
