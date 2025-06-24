@@ -159,6 +159,95 @@ void ES::Plugin::OpenGL::System::LoadDefaultSpriteShader(ES::Engine::Core &core)
     sp.InitFromStrings(vertexShader, fragmentShader);
 }
 
+void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
+{
+    // const char *vertexShader = R"(
+    //     #version 440
+    //     layout (location = 0) in vec4 vertex;
+
+    //     out vec2 TexCoords;
+
+    //     uniform mat4 Projection;
+
+    //     void main() {
+    //         gl_Position = Projection * vec4(vertex.xy, 0.0, 1.0);
+    //         TexCoords = vertex.zw;
+    //     }
+
+    //     #version 330 core
+
+    //     layout(location = 0) in vec4 vertex;  // Position du cube (36 sommets)
+
+    //     uniform mat4 MVP;
+
+    //     out ve3 TexCoords;
+
+    //     void main()
+    //     {
+    //         TexCoords = aPos; // On transmet la direction du rayon (non transformée)
+    //         vec4 pos = MVP * vec4(aPos, 1.0);
+    //         gl_Position = pos.xyww; // ❗️Maintenir w pour avoir un effet de profondeur constant
+    //     }
+
+    // )";
+
+    const char* skyboxVertexShaderSource = R"(
+    #version 330 core
+    layout (location = 0) in vec3 aPos;
+    out vec3 TexCoords;
+
+    uniform mat4 view;
+    uniform mat4 projection;
+
+    void main() {
+        TexCoords = aPos;
+        vec4 pos = projection * view * vec4(aPos, 1.0);
+        gl_Position = pos.xyww;
+    }
+    )";
+
+    const char *vertexShader = R"(
+        #version 440
+
+        layout (location = 0) in vec4 VertexPosition;
+        layout (location = 1) in vec3 VertexNormal;
+
+        out vec3 Position;
+        out vec3 Normal;
+
+        uniform mat4 ModelMatrix;
+        uniform mat3 NormalMatrix;
+        uniform mat4 MVP;
+
+        void main()
+        {
+            Normal = normalize(NormalMatrix * VertexNormal);
+            Position = (ModelMatrix * VertexPosition).xyz;
+            vec4 pos = MVP * VertexPosition;
+            gl_Position = MVP * VertexPosition;
+        }
+    )";
+
+    const char *fragmentShader = R"(
+        #version 440 core
+
+        in vec3 TexCoords;
+        out vec4 FragColor;
+
+        uniform samplerCube skybox;
+
+        void main()
+        {
+            FragColor = texture(skybox, TexCoords);
+        }
+    )";
+
+    auto &shaderManager = core.GetResource<Resource::ShaderManager>();
+    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"textDefault"});
+    sp.Create();
+    sp.InitFromStrings(vertexShader, fragmentShader);
+}
+
 void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});

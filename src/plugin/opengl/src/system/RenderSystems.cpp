@@ -86,26 +86,23 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 
 void ES::Plugin::OpenGL::System::RenderSkyBox(ES::Engine::Core &core)
 {
-    auto &view = core.GetResource<Resource::Camera>().view;
-    auto &projection = core.GetResource<Resource::Camera>().projection;
+    auto &camera = core.GetResource<Resource::Camera>();
+    glm::mat4 view = glm::mat4(glm::mat3(camera.view));
+    glm::mat4 projection = camera.projection;
 
     core.GetRegistry()
-        .view<Component::ModelHandle, ES::Plugin::Object::Component::Transform, ES::Plugin::Object::Component::Mesh,
-              Component::MaterialHandle, Component::ShaderHandle, ES::Plugin::OpenGL::Component::CubeMapHandle>()
-        .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Transform &transform,
-                  ES::Plugin::Object::Component::Mesh &mesh, Component::MaterialHandle &materialHandle,
+        .view<Component::ModelHandle, ES::Plugin::Object::Component::Mesh, Component::ShaderHandle,
+              ES::Plugin::OpenGL::Component::CubeMapHandle>()
+        .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Mesh &mesh,
                   Component::ShaderHandle &shaderHandle, ES::Plugin::OpenGL::Component::CubeMapHandle &cubeMapHandle) {
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
-            const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
             const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
             shader.Use();
-            LoadMaterial(shader, material);
-            glm::mat4 modelmat = transform.getTransformationMatrix();
-            glm::mat4 mvp = projection * view * modelmat;
-            auto nmat = glm::mat3(glm::transpose(glm::inverse(modelmat)));
-            glUniformMatrix3fv(shader.GetUniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
-            glUniformMatrix4fv(shader.GetUniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
+
+            glm::mat4 model = glm::mat4(1.0f);
+            glm::mat4 mvp = projection * view * model;
             glUniformMatrix4fv(shader.GetUniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
+
             BindCubeMapIfNeeded(core, entity);
             glBuffer.Draw(mesh);
             shader.Disable();
