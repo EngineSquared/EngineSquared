@@ -4,6 +4,7 @@
 #include <miniaudio.h>
 
 #include "Engine.hpp"
+#include "Sound.hpp"
 
 namespace ES::Plugin::Sound::Resource {
 class SoundManager {
@@ -12,18 +13,6 @@ class SoundManager {
     ma_decoder _decoder;
     ma_device_config _deviceConfig;
     ma_device _device;
-
-    struct Sound {
-        std::string name;
-        std::string path;
-        ma_decoder decoder;
-        bool loop = false;
-        bool isPlaying = false;
-        bool isPaused = false;
-        float volume = 1.0f;
-        ma_uint64 loopStartFrame = 0;
-        ma_uint64 loopEndFrame = 0;
-    };
 
     struct TransparentHash {
         using is_transparent = void;
@@ -37,7 +26,7 @@ class SoundManager {
         bool operator()(std::string_view lhs, std::string_view rhs) const noexcept { return lhs == rhs; }
     };
 
-    std::unordered_map<std::string, Sound, TransparentHash, TransparentEqual> _soundsToPlay;
+    std::unordered_map<std::string, ES::Plugin::Sound::Utils::Audio, TransparentHash, TransparentEqual> _soundsToPlay;
 
   public:
     /**
@@ -169,7 +158,7 @@ class SoundManager {
             return;
         }
 
-        Sound sound;
+        ES::Plugin::Sound::Utils::Audio sound;
         sound.name = soundName;
         sound.path = filePath;
         sound.loop = loop;
@@ -383,7 +372,7 @@ class SoundManager {
             return -1.0f;
         }
 
-        Sound &sound = it->second;
+        ES::Plugin::Sound::Utils::Audio &sound = it->second;
         if (!sound.isPlaying)
         {
             ES::Utils::Log::Warn(fmt::format("Sound \"{}\" is not currently playing", soundName));
