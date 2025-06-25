@@ -5,10 +5,9 @@
 
 #include "Audio.hpp"
 
-namespace ES::Plugin::Sound::Component
-{
+namespace ES::Plugin::Sound::Component {
 struct AudioSource {
     ES::Plugin::Sound::Utils::Audio &sound;
     glm::vec3 position;
 };
-} // ES::Plugin::Sound::Component
+} // namespace ES::Plugin::Sound::Component
