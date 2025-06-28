@@ -62,9 +62,9 @@ void ES::Plugin::UI::System::LoadShaderVertTexture(ES::Engine::Core &core)
         uniform vec2 _translate;
         uniform mat4 _transform;
 
-        in vec2 inPosition;
-        in vec4 inColor0;
-        in vec2 inTexCoord0;
+        layout(location = 0) in vec2 inPosition;
+        layout(location = 1) in vec4 inColor0;
+        layout(location = 2) in vec2 inTexCoord0;
 
         out vec2 fragTexCoord;
         out vec4 fragColor;
