@@ -159,7 +159,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultSpriteShader(ES::Engine::Core &core)
     sp.InitFromStrings(vertexShader, fragmentShader);
 }
 
-void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
+void ES::Plugin::OpenGL::System::LoadDefaultSkyBoxShader(ES::Engine::Core &core)
 {
     // const char *vertexShader = R"(
     //     #version 440
@@ -191,7 +191,58 @@ void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
 
     // )";
 
-    const char* skyboxVertexShaderSource = R"(
+    // const char* skyboxVertexShaderSource = R"(
+    // #version 330 core
+    // layout (location = 0) in vec3 aPos;
+    // out vec3 TexCoords;
+
+    // uniform mat4 view;
+    // uniform mat4 projection;
+
+    // void main() {
+    //     TexCoords = aPos;
+    //     vec4 pos = projection * view * vec4(aPos, 1.0);
+    //     gl_Position = pos.xyww;
+    // }
+    // )";
+
+    // const char *vertexShader = R"(
+    //     #version 440
+
+    //     layout (location = 0) in vec4 VertexPosition;
+    //     layout (location = 1) in vec3 VertexNormal;
+
+    //     out vec3 Position;
+    //     out vec3 Normal;
+
+    //     uniform mat4 ModelMatrix;
+    //     uniform mat3 NormalMatrix;
+    //     uniform mat4 MVP;
+
+    //     void main()
+    //     {
+    //         Normal = normalize(NormalMatrix * VertexNormal);
+    //         Position = (ModelMatrix * VertexPosition).xyz;
+    //         vec4 pos = MVP * VertexPosition;
+    //         gl_Position = MVP * VertexPosition;
+    //     }
+    // )";
+
+    // const char *fragmentShader = R"(
+    //     #version 440 core
+
+    //     in vec3 TexCoords;
+    //     out vec4 FragColor;
+
+    //     uniform samplerCube skybox;
+
+    //     void main()
+    //     {
+    //         FragColor = texture(skybox, TexCoords);
+    //     }
+    // )";
+
+    const char *vertexShader = R"(
     #version 330 core
     layout (location = 0) in vec3 aPos;
     out vec3 TexCoords;
@@ -243,7 +294,7 @@ void ES::Plugin::OpenGL::System::LoadDefaultTextShader(ES::Engine::Core &core)
     )";
 
     auto &shaderManager = core.GetResource<Resource::ShaderManager>();
-    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"textDefault"});
+    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"skyboxDefault"});
     sp.Create();
     sp.InitFromStrings(vertexShader, fragmentShader);
 }
