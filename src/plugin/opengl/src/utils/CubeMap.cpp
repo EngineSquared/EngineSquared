@@ -55,16 +55,7 @@ bool CubeMap::LoadFromFaces(const std::array<std::string, 6> &faces) noexcept
     {
         int width, height, nrChannels;
 
-        // RAII wrapper for stbi data
-        struct STBIDeleter {
-            void operator()(unsigned char *ptr) const noexcept
-            {
-                if (ptr)
-                    stbi_image_free(ptr);
-            }
-        };
-
-        std::unique_ptr<unsigned char, STBIDeleter> data{stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0)};
+        unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
 
         if (!data)
         {
@@ -73,7 +64,6 @@ bool CubeMap::LoadFromFaces(const std::array<std::string, 6> &faces) noexcept
             continue;
         }
 
-        // Store dimensions from first successful load
         if (_width == 0)
         {
             _width = width;
@@ -82,8 +72,8 @@ bool CubeMap::LoadFromFaces(const std::array<std::string, 6> &faces) noexcept
         }
 
         const GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB;
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE,
-                     data.get());
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        stbi_image_free(data);
     }
 
     if (success)

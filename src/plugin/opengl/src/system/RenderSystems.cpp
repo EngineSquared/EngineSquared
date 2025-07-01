@@ -56,6 +56,10 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
         .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Transform &transform,
                   ES::Plugin::Object::Component::Mesh &mesh, Component::MaterialHandle &materialHandle,
                   Component::ShaderHandle &shaderHandle) {
+            bool cubeMapHandle =
+                !ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::OpenGL::Component::CubeMapHandle>(core);
+            if (!cubeMapHandle)
+                return;
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
             const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
@@ -68,10 +72,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             glUniformMatrix4fv(shader.GetUniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.GetUniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
             BindTextureIfNeeded(core, entity);
-            ES::Plugin::OpenGL::Component::CubeMapHandle *cubeMapHandle =
-                ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::OpenGL::Component::CubeMapHandle>(core);
-            if (!cubeMapHandle)
-                glBuffer.Draw(mesh);
+            glBuffer.Draw(mesh);
             shader.Disable();
         });
 }
@@ -85,8 +86,9 @@ void ES::Plugin::OpenGL::System::RenderSkyBox(ES::Engine::Core &core)
     core.GetRegistry()
         .view<Component::ModelHandle, ES::Plugin::Object::Component::Mesh, Component::ShaderHandle,
               ES::Plugin::OpenGL::Component::CubeMapHandle>()
-        .each([&]([[maybe_unused]] auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Mesh &mesh,
-                  Component::ShaderHandle &shaderHandle, ES::Plugin::OpenGL::Component::CubeMapHandle &cubeMapHandle) {
+        .each([&]([[maybe_unused]] auto entity, Component::ModelHandle &modelHandle,
+                  ES::Plugin::Object::Component::Mesh &mesh, Component::ShaderHandle &shaderHandle,
+                  ES::Plugin::OpenGL::Component::CubeMapHandle &cubeMapHandle) {
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
             shader.Use();
