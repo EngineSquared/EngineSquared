@@ -146,7 +146,7 @@ void ES::Plugin::OpenGL::System::UpdateMatrices(ES::Engine::Core &core)
 {
     auto &cam = core.GetResource<Resource::Camera>();
     cam.view = glm::lookAt(cam.viewer.getViewPoint(), cam.viewer.getViewCenter(), cam.viewer.getUpVector());
-    cam.projection = glm::perspective(glm::radians(45.0f), cam.size.x / cam.size.y, 0.1f, 100.0f);
+    cam.projection = glm::perspective(glm::radians(45.0f), cam.size.x / cam.size.y, 0.1f, 10000.0f);
 }
 
 void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
