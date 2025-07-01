@@ -37,6 +37,7 @@
 #include "system/WindowSystems.hpp"
 
 // Utils
+#include "utils/CreateSkyBox.hpp"
 #include "utils/CubeMap.hpp"
 #include "utils/Font.hpp"
 #include "utils/GLMeshBuffer.hpp"
