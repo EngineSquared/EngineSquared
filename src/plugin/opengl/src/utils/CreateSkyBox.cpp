@@ -9,6 +9,8 @@
 #include <filesystem>
 #include <stdexcept>
 
+namespace ES::Plugin::OpenGL::Utils {
+
 /**
  * @brief Creates a cube mesh for skybox rendering
  *
@@ -30,9 +32,9 @@
  * * mesh.indices.size() == 36
  * @endcode
  */
-static ES::Plugin::Object::Component::Mesh CreateSkyBoxMesh(const glm::vec3 &size) noexcept
+static Object::Component::Mesh CreateSkyBoxMesh(const glm::vec3 &size) noexcept
 {
-    ES::Plugin::Object::Component::Mesh skybox_mesh;
+    Object::Component::Mesh skybox_mesh;
 
     const std::array<glm::vec3, 36> skyboxVertices = {
         {// Back face (Z negative)
@@ -108,7 +110,7 @@ static ES::Plugin::Object::Component::Mesh CreateSkyBoxMesh(const glm::vec3 &siz
  * @param size Physical dimensions of the skybox (must be positive)
  * @return ES::Engine::Entity Base skybox entity with Transform and Mesh components only
  *
- * @throws std::invalid_argument If size contains non-positive values
+ * @throws OpenGLError If size contains non-positive values
  * @note Scale is fixed to (1.0f, 1.0f, 1.0f) - size affects mesh generation, not transform scale
  * @note Entity contains no rendering components at this stage
  */
@@ -116,14 +118,14 @@ static ES::Engine::Entity CreateSkyBoxEntity(ES::Engine::Core &core, const glm::
                                              const glm::quat &rotation, const glm::vec3 &size)
 {
     if (size.x <= 0.0f || size.y <= 0.0f || size.z <= 0.0f)
-        throw std::invalid_argument("Skybox size components must be positive values");
+        throw OpenGLError("Skybox size components must be positive values");
 
     constexpr glm::vec3 box_scale{1.0f};
 
     auto box = core.CreateEntity();
 
-    box.AddComponent<ES::Plugin::Object::Component::Transform>(core, position, box_scale, rotation);
-    box.AddComponent<ES::Plugin::Object::Component::Mesh>(core, CreateSkyBoxMesh(size));
+    box.AddComponent<Object::Component::Transform>(core, position, box_scale, rotation);
+    box.AddComponent<Object::Component::Mesh>(core, CreateSkyBoxMesh(size));
 
     return box;
 }
@@ -143,8 +145,8 @@ static ES::Engine::Entity CreateSkyBoxEntity(ES::Engine::Core &core, const glm::
  */
 static void AddSkyboxRenderingComponents(ES::Engine::Core &core, ES::Engine::Entity &skybox)
 {
-    skybox.AddComponent<ES::Plugin::OpenGL::Component::MaterialHandle>(core, "skyboxDefault");
-    skybox.AddComponent<ES::Plugin::OpenGL::Component::ShaderHandle>(core, "skyboxDefault");
+    skybox.AddComponent<OpenGL::Component::MaterialHandle>(core, "skyboxDefault");
+    skybox.AddComponent<OpenGL::Component::ShaderHandle>(core, "skyboxDefault");
 }
 
 ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, const std::string_view texture_path,
@@ -152,15 +154,15 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, const std::string_view t
                                 const glm::vec3 &skybox_dimensions)
 {
     if (texture_path.empty())
-        throw std::invalid_argument("Texture path cannot be empty");
+        throw OpenGLError("Texture path cannot be empty");
 
     auto skybox_entity = CreateSkyBoxEntity(core, world_position, world_rotation, skybox_dimensions);
 
-    auto &cubemap_resource_manager = core.GetResource<ES::Plugin::OpenGL::Resource::CubeMapManager>();
+    auto &cubemap_resource_manager = core.GetResource<OpenGL::Resource::CubeMapManager>();
 
     const auto texture_file_path = std::filesystem::path(texture_path);
     if (!texture_file_path.has_filename())
-        throw std::invalid_argument("Invalid texture path provided");
+        throw OpenGLError("Invalid texture path provided");
 
     const std::string texture_file_name = texture_file_path.stem().string();
     const std::string unique_resource_id = "cubemap_cross_" + texture_file_name;
@@ -168,14 +170,14 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, const std::string_view t
     try
     {
         cubemap_resource_manager.Add(entt::hashed_string{unique_resource_id.c_str()}, texture_path.data());
-        skybox_entity.AddComponent<ES::Plugin::OpenGL::Component::CubeMapHandle>(core, unique_resource_id.c_str());
-        skybox_entity.AddComponent<ES::Plugin::OpenGL::Component::ModelHandle>(core, unique_resource_id.c_str());
+        skybox_entity.AddComponent<OpenGL::Component::CubeMapHandle>(core, unique_resource_id.c_str());
+        skybox_entity.AddComponent<OpenGL::Component::ModelHandle>(core, unique_resource_id.c_str());
 
         AddSkyboxRenderingComponents(core, skybox_entity);
     }
     catch (const std::exception &loading_error)
     {
-        throw std::runtime_error("Failed to load cross-layout texture: " + std::string(loading_error.what()));
+        throw OpenGLError("Failed to load cross-layout texture: " + std::string(loading_error.what()));
     }
 
     return skybox_entity;
@@ -188,18 +190,18 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, const std::array<std::st
     for (size_t path_index = 0; const auto &current_texture_path : texture_paths)
     {
         if (current_texture_path.empty())
-            throw std::invalid_argument(std::format("Texture path at index {} cannot be empty", path_index));
+            throw OpenGLError(std::format("Texture path at index {} cannot be empty", path_index));
 
         ++path_index;
     }
 
     auto skybox_entity = CreateSkyBoxEntity(core, world_position, world_rotation, skybox_dimensions);
 
-    auto &cubemap_resource_manager = core.GetResource<ES::Plugin::OpenGL::Resource::CubeMapManager>();
+    auto &cubemap_resource_manager = core.GetResource<OpenGL::Resource::CubeMapManager>();
 
     const auto first_texture_file_path = std::filesystem::path(texture_paths[0]);
     if (!first_texture_file_path.has_filename())
-        throw std::invalid_argument("Invalid texture path provided at index 0");
+        throw OpenGLError("Invalid texture path provided at index 0");
 
     const std::string base_file_name = first_texture_file_path.stem().string();
     const std::string unique_resource_id = "cubemap_faces_" + base_file_name;
@@ -207,15 +209,17 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, const std::array<std::st
     try
     {
         cubemap_resource_manager.Add(entt::hashed_string{unique_resource_id.c_str()}, texture_paths);
-        skybox_entity.AddComponent<ES::Plugin::OpenGL::Component::CubeMapHandle>(core, unique_resource_id.c_str());
-        skybox_entity.AddComponent<ES::Plugin::OpenGL::Component::ModelHandle>(core, unique_resource_id.c_str());
+        skybox_entity.AddComponent<OpenGL::Component::CubeMapHandle>(core, unique_resource_id.c_str());
+        skybox_entity.AddComponent<OpenGL::Component::ModelHandle>(core, unique_resource_id.c_str());
 
         AddSkyboxRenderingComponents(core, skybox_entity);
     }
     catch (const std::exception &loading_error)
     {
-        throw std::runtime_error("Failed to load cubemap textures: " + std::string(loading_error.what()));
+        throw OpenGLError("Failed to load cubemap textures: " + std::string(loading_error.what()));
     }
 
     return skybox_entity;
 }
+
+} // namespace ES::Plugin::OpenGL::Utils

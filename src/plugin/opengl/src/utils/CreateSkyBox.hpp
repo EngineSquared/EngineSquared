@@ -34,6 +34,8 @@
 #include <string>
 #include <string_view>
 
+namespace ES::Plugin::OpenGL::Utils {
+
 /**
  * @brief Creates a skybox entity from a cross-layout texture
  *
@@ -48,8 +50,8 @@
  * @return ES::Engine::Entity Skybox entity with Transform, Mesh, CubeMapHandle, ModelHandle, MaterialHandle, and
  * ShaderHandle components
  *
- * @throws std::invalid_argument If texture_path is empty or skybox_dimensions contains non-positive values
- * @throws std::runtime_error If texture loading fails
+ * @throws OpenGLError If texture_path is empty or skybox_dimensions contains non-positive values
+ * @throws OpenGLError If texture loading fails
  * @note Creates a cube mesh with 36 vertices and 36 indices (no face optimization)
  * @note Adds "skyboxDefault" material and shader handles
  * @note Resource ID format: "cubemap_cross_" + filename (without extension)
@@ -57,10 +59,10 @@
  *
  * @code
  * * Basic skybox creation
- * auto skybox = CreateSkyBox(core, "textures/skybox_cross.png");
+ * auto skybox = ES::Plugin::OpenGL::Utils::CreateSkyBox(core, "textures/skybox_cross.png");
  *
  * * Large skybox for outdoor scenes
- * auto skybox = CreateSkyBox(core, "textures/sky.png",
+ * auto skybox = ES::Plugin::OpenGL::Utils::CreateSkyBox(core, "textures/sky.png",
  *                           glm::vec3(0.0f, 0.0f, 0.0f),
  *                           glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
  *                           glm::vec3(100.0f, 100.0f, 100.0f));
@@ -86,8 +88,8 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, std::string_view texture
  * @return ES::Engine::Entity Skybox entity with Transform, Mesh, CubeMapHandle, ModelHandle, MaterialHandle, and
  * ShaderHandle components
  *
- * @throws std::invalid_argument If any texture_path is empty or skybox_dimensions contains non-positive values
- * @throws std::runtime_error If texture loading fails
+ * @throws OpenGLError If any texture_path is empty or skybox_dimensions contains non-positive values
+ * @throws OpenGLError If texture loading fails
  * @note Creates a cube mesh with 36 vertices and 36 indices (no face optimization)
  * @note Adds "skyboxDefault" material and shader handles
  * @note Resource ID format: "cubemap_faces_" + first filename (without extension)
@@ -103,7 +105,7 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, std::string_view texture
  *     "textures/front.jpg",   * Front (+Z)
  *     "textures/back.jpg"     * Back (-Z)
  * };
- * auto skybox = CreateSkyBox(core, skybox_faces);
+ * auto skybox = ES::Plugin::OpenGL::Utils::CreateSkyBox(core, skybox_faces);
  *
  * * Large outdoor environment skybox
  * std::array<std::string, 6> mountain_skybox = {
@@ -111,7 +113,7 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, std::string_view texture
  *     "textures/mountain_up.png", "textures/mountain_dn.png",
  *     "textures/mountain_ft.png", "textures/mountain_bk.png"
  * };
- * auto outdoor_skybox = CreateSkyBox(core, mountain_skybox,
+ * auto outdoor_skybox = ES::Plugin::OpenGL::Utils::CreateSkyBox(core, mountain_skybox,
  *                                   glm::vec3(0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
  *                                   glm::vec3(500.0f));
  * @endcode
@@ -120,3 +122,5 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, const std::array<std::st
                                 const glm::vec3 &world_position = glm::vec3{0.0f},
                                 const glm::quat &world_rotation = glm::quat{1.0f, 0.0f, 0.0f, 0.0f},
                                 const glm::vec3 &skybox_dimensions = glm::vec3{1.0f});
+
+} // namespace ES::Plugin::OpenGL::Utils
