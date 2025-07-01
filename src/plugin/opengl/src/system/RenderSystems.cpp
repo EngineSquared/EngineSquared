@@ -80,7 +80,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::RenderSkyBox(ES::Engine::Core &core)
 {
     auto &camera = core.GetResource<Resource::Camera>();
-    glm::mat4 view = glm::mat4(glm::mat3(camera.view));
+    auto view = glm::mat4(glm::mat3(camera.view));
     glm::mat4 projection = camera.projection;
 
     core.GetRegistry()
@@ -94,7 +94,6 @@ void ES::Plugin::OpenGL::System::RenderSkyBox(ES::Engine::Core &core)
             shader.Use();
 
             glUniformMatrix4fv(shader.GetUniform("View"), 1, GL_FALSE, glm::value_ptr(view));
-
             glUniformMatrix4fv(shader.GetUniform("Projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
             core.GetResource<ES::Plugin::OpenGL::Resource::CubeMapManager>().Get(cubeMapHandle.id).Bind();

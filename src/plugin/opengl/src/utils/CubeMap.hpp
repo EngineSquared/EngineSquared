@@ -44,13 +44,13 @@ namespace ES::Plugin::OpenGL::Utils {
  *
  * @example
  * @code
- * // Load from cross image
+ * Load from cross image
  * CubeMap cubemap("assets/skybox_cross.png");
  * if (cubemap.IsValid()) {
  *     cubemap.Bind();
  * }
  *
- * // Load from individual faces
+ * Load from individual faces
  * std::array<std::string, 6> faces = {"right.jpg", "left.jpg", ...};
  * CubeMap cubemap2(faces);
  * @endcode
