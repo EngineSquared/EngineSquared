@@ -1,5 +1,6 @@
 #include "OpenGL.pch.hpp"
 
+#include "CubeMapManager.hpp"
 #include "FontManager.hpp"
 #include "GLMeshBufferManager.hpp"
 #include "GLSpriteBufferManager.hpp"
@@ -7,7 +8,6 @@
 #include "ManagerSystems.hpp"
 #include "ShaderManager.hpp"
 #include "TextureManager.hpp"
-#include "CubeMapManager.hpp"
 
 void ES::Plugin::OpenGL::System::LoadFontManager(ES::Engine::Core &core)
 {

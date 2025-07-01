@@ -163,8 +163,8 @@ bool CubeMap::LoadFromCross(std::string_view path) noexcept
 
         const GLenum format = (channels == 4) ? GL_RGBA : GL_RGB;
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, faceSize, faceSize, 0, format, GL_UNSIGNED_BYTE,
-                 reinterpret_cast<const unsigned char*>(faceData.data()));
-        }
+                     reinterpret_cast<const unsigned char *>(faceData.data()));
+    }
 
     if (success)
         SetupTextureParameters();

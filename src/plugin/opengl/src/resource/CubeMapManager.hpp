@@ -18,8 +18,8 @@
 
 #pragma once
 
-#include "Object.hpp"
 #include "CubeMap.hpp"
+#include "Object.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {
 
