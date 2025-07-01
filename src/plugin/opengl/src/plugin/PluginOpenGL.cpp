@@ -22,11 +22,13 @@ void ES::Plugin::OpenGL::Plugin::Bind()
         ES::Plugin::OpenGL::System::LoadDefaultShader, ES::Plugin::OpenGL::System::LoadDefaultTextShader,
         ES::Plugin::OpenGL::System::LoadDefaultSpriteShader, ES::Plugin::OpenGL::System::LoadNoTextureLightShadowShader,
         ES::Plugin::OpenGL::System::LoadDepthMapShader, ES::Plugin::OpenGL::System::LoadTextureManager,
-        ES::Plugin::OpenGL::System::CreateCamera, ES::Plugin::OpenGL::System::SetupShaderUniforms,
-        ES::Plugin::OpenGL::System::SetupTextShaderUniforms, ES::Plugin::OpenGL::System::SetupSpriteShaderUniforms,
+        ES::Plugin::OpenGL::System::LoadCubeMapManager, ES::Plugin::OpenGL::System::CreateCamera,
+        ES::Plugin::OpenGL::System::SetupShaderUniforms, ES::Plugin::OpenGL::System::SetupTextShaderUniforms,
+        ES::Plugin::OpenGL::System::SetupSpriteShaderUniforms,
         ES::Plugin::OpenGL::System::SetupNoTextureLightShadowShader, ES::Plugin::OpenGL::System::SetupDepthMapShader,
         ES::Plugin::OpenGL::System::LoadGLMeshBufferManager, ES::Plugin::OpenGL::System::LoadGLTextBufferManager,
-        ES::Plugin::OpenGL::System::LoadGLSpriteBufferManager, ES::Plugin::OpenGL::System::SetupMouseDragging,
+        ES::Plugin::OpenGL::System::LoadGLSpriteBufferManager, ES::Plugin::OpenGL::System::LoadDefaultSkyBoxShader,
+        ES::Plugin::OpenGL::System::SetupSkyBoxhMapShader, ES::Plugin::OpenGL::System::SetupMouseDragging,
         ES::Plugin::OpenGL::System::GenerateDirectionalLightFramebuffer,
         ES::Plugin::OpenGL::System::GenerateDirectionalLightTexture,
         ES::Plugin::OpenGL::System::BindDirectionalLightTextureToFramebuffer);
@@ -42,5 +44,8 @@ void ES::Plugin::OpenGL::Plugin::Bind()
     RegisterSystems<ES::Plugin::RenderingPipeline::ToGPU>(
         ES::Plugin::OpenGL::System::SetupShadowframebuffer, ES::Plugin::OpenGL::System::RenderShadowMap,
         ES::Plugin::OpenGL::System::ResetPassStatus, ES::Plugin::OpenGL::System::RenderMeshes,
-        ES::Plugin::OpenGL::System::RenderText, ES::Plugin::OpenGL::System::RenderSprites);
+        ES::Plugin::OpenGL::System::RenderText, ES::Plugin::OpenGL::System::RenderSprites,
+        ES::Plugin::OpenGL::System::GLEnableDepthLEqual, ES::Plugin::OpenGL::System::GLDisableDepthWrite,
+        ES::Plugin::OpenGL::System::RenderSkyBox, ES::Plugin::OpenGL::System::GLResetDepthFunc,
+        ES::Plugin::OpenGL::System::GLEnableDepthWrite);
 }

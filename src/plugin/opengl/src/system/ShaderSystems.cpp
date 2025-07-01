@@ -159,6 +159,51 @@ void ES::Plugin::OpenGL::System::LoadDefaultSpriteShader(ES::Engine::Core &core)
     sp.InitFromStrings(vertexShader, fragmentShader);
 }
 
+void ES::Plugin::OpenGL::System::LoadDefaultSkyBoxShader(ES::Engine::Core &core)
+{
+    const char *vertexShader = R"(
+        #version 330 core
+        layout (location = 0) in vec3 aPos;
+        out vec3 TexCoords;
+
+        uniform mat4 View;
+        uniform mat4 Projection;
+
+        void main() {
+            TexCoords = aPos;
+            vec4 pos = Projection * View * vec4(aPos, 1.0);
+            gl_Position = pos.xyww;
+        }
+    )";
+
+    const char *fragmentShader = R"(
+        #version 330 core
+
+        in vec3 TexCoords;
+        out vec4 FragColor;
+
+        uniform samplerCube skybox;
+
+        void main()
+        {
+            FragColor = texture(skybox, TexCoords);
+        }
+    )";
+
+    auto &shaderManager = core.GetResource<Resource::ShaderManager>();
+    Utils::ShaderProgram &sp = shaderManager.Add(entt::hashed_string{"skyboxDefault"});
+    sp.Create();
+    sp.InitFromStrings(vertexShader, fragmentShader);
+}
+
+void ES::Plugin::OpenGL::System::SetupSkyBoxhMapShader(ES::Engine::Core &core)
+{
+    auto &shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"skyboxDefault"});
+
+    shaderProgram.AddUniform("View");
+    shaderProgram.AddUniform("Projection");
+}
+
 void ES::Plugin::OpenGL::System::SetupShaderUniforms(ES::Engine::Core &core)
 {
     auto &m_shaderProgram = core.GetResource<Resource::ShaderManager>().Get(entt::hashed_string{"default"});
