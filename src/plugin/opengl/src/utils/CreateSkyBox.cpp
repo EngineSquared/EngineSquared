@@ -190,7 +190,7 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, const std::array<std::st
     for (size_t path_index = 0; const auto &current_texture_path : texture_paths)
     {
         if (current_texture_path.empty())
-            throw OpenGLError(std::format("Texture path at index {} cannot be empty", path_index));
+            throw OpenGLError(fmt::format("Texture path at index {} cannot be empty", path_index));
 
         ++path_index;
     }
