@@ -46,6 +46,9 @@ class Viewer {
     /** The worldspace direction (i.e., normalized vector) of the vertical image axis	*/
     glm::vec3 getImagePlaneVertDir() const;
 
+    /** The rotation quaternion vector */
+    glm::quat getRotation() const;
+
     /**
      * Translate
      *
@@ -95,6 +98,19 @@ class Viewer {
      * is controlled by m_rotateSpeed.
      */
     void rotate(float changeHoriz, float changeVert);
+
+    /**
+     * Rotate
+     *
+     * These methods alter the view based on mouse movement.  The arguments
+     * srcRotation and srcOffset specify, respectively, the object the camera should set its rotation
+     * and the start offset, in case the target object has been rotated.
+     *
+     * rotate: Rotate based on a target quaternion; the first argument is for
+     * rotation about the target quaternion and the second is for
+     * the start offset of the rotation.
+     */
+    void rotate(const glm::quat &srcRotation, const glm::vec3 &srcOffset);
 
     /**
      * Center at
