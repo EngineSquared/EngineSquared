@@ -36,14 +36,6 @@ static void BindTextureIfNeeded(ES::Engine::Core &core, ES::Engine::Entity entit
         core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>().Get(textureHandle->id).Bind();
 }
 
-static void BindCubeMapIfNeeded(ES::Engine::Core &core, ES::Engine::Entity entity)
-{
-    ES::Plugin::OpenGL::Component::CubeMapHandle *cubeMapHandle =
-        ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::OpenGL::Component::CubeMapHandle>(core);
-    if (cubeMapHandle)
-        core.GetResource<ES::Plugin::OpenGL::Resource::CubeMapManager>().Get(cubeMapHandle->id).Bind();
-}
-
 static void LoadMaterial(ES::Plugin::OpenGL::Utils::ShaderProgram &shader,
                          const ES::Plugin::OpenGL::Utils::Material &material)
 {
@@ -93,17 +85,17 @@ void ES::Plugin::OpenGL::System::RenderSkyBox(ES::Engine::Core &core)
     core.GetRegistry()
         .view<Component::ModelHandle, ES::Plugin::Object::Component::Mesh, Component::ShaderHandle,
               ES::Plugin::OpenGL::Component::CubeMapHandle>()
-        .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Mesh &mesh,
+        .each([&]([[maybe_unused]] auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Mesh &mesh,
                   Component::ShaderHandle &shaderHandle, ES::Plugin::OpenGL::Component::CubeMapHandle &cubeMapHandle) {
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
             shader.Use();
 
-            glm::mat4 model = glm::mat4(1.0f);
-            glm::mat4 mvp = projection * view * model;
-            glUniformMatrix4fv(shader.GetUniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
+            glUniformMatrix4fv(shader.GetUniform("View"), 1, GL_FALSE, glm::value_ptr(view));
 
-            BindCubeMapIfNeeded(core, entity);
+            glUniformMatrix4fv(shader.GetUniform("Projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+            core.GetResource<ES::Plugin::OpenGL::Resource::CubeMapManager>().Get(cubeMapHandle.id).Bind();
             glBuffer.Draw(mesh);
             shader.Disable();
         });
