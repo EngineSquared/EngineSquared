@@ -96,8 +96,8 @@ void ES::Plugin::Physics::System::SyncWheeledVehicleWheels(ES::Engine::Core &cor
             auto &wheeledVehicle =
                 wheel.parentVehicle.template GetComponents<ES::Plugin::Physics::Component::WheeledVehicle3D>(core);
 
-            auto wTransform =
-                wheeledVehicle.vehicleConstraint->GetWheelWorldTransform(static_cast<JPH::uint>(wheel.index), wheelRight, wheelUp);
+            auto wTransform = wheeledVehicle.vehicleConstraint->GetWheelWorldTransform(
+                static_cast<JPH::uint>(wheel.index), wheelRight, wheelUp);
             auto wPosition = wTransform.GetTranslation();
             auto wRotation = wTransform.GetRotation().GetQuaternion();
 
