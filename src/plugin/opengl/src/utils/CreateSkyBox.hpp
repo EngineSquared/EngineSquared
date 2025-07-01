@@ -45,7 +45,8 @@
  * @param world_position 3D position of the skybox in world space (default: origin)
  * @param world_rotation Quaternion rotation of the skybox (default: identity)
  * @param skybox_dimensions Skybox cube dimensions (default: unit cube)
- * @return ES::Engine::Entity Skybox entity with Transform, Mesh, CubeMapHandle, ModelHandle, MaterialHandle, and ShaderHandle components
+ * @return ES::Engine::Entity Skybox entity with Transform, Mesh, CubeMapHandle, ModelHandle, MaterialHandle, and
+ * ShaderHandle components
  *
  * @throws std::invalid_argument If texture_path is empty or skybox_dimensions contains non-positive values
  * @throws std::runtime_error If texture loading fails
@@ -82,7 +83,8 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, std::string_view texture
  * @param world_position 3D position of the skybox in world space (default: origin)
  * @param world_rotation Quaternion rotation of the skybox (default: identity)
  * @param skybox_dimensions Skybox cube dimensions (default: unit cube)
- * @return ES::Engine::Entity Skybox entity with Transform, Mesh, CubeMapHandle, ModelHandle, MaterialHandle, and ShaderHandle components
+ * @return ES::Engine::Entity Skybox entity with Transform, Mesh, CubeMapHandle, ModelHandle, MaterialHandle, and
+ * ShaderHandle components
  *
  * @throws std::invalid_argument If any texture_path is empty or skybox_dimensions contains non-positive values
  * @throws std::runtime_error If texture loading fails
