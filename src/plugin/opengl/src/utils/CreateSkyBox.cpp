@@ -24,10 +24,10 @@
  * @note Performance: O(1) with fixed 36 vertices
  *
  * @code
- * // Internal usage for mesh generation
+ * * Internal usage for mesh generation
  * auto mesh = CreateSkyBoxMesh(glm::vec3(10.0f, 10.0f, 10.0f));
- * // mesh.vertices.size() == 36
- * // mesh.indices.size() == 36
+ * * mesh.vertices.size() == 36
+ * * mesh.indices.size() == 36
  * @endcode
  */
 static ES::Plugin::Object::Component::Mesh CreateSkyBoxMesh(const glm::vec3 &size) noexcept
@@ -188,7 +188,7 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, const std::array<std::st
     for (size_t path_index = 0; const auto &current_texture_path : texture_paths)
     {
         if (current_texture_path.empty())
-            throw std::invalid_argument("Texture path at index " + std::to_string(path_index) + " cannot be empty");
+            throw std::invalid_argument(std::format("Texture path at index {} cannot be empty", path_index));
 
         ++path_index;
     }

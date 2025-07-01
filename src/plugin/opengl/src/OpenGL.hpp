@@ -13,6 +13,9 @@
 #include "component/TextHandle.hpp"
 #include "component/TextureHandle.hpp"
 
+// Exception
+#include "exception/OpenGLError.hpp"
+
 // Plugin
 #include "plugin/PluginOpenGL.hpp"
 

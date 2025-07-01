@@ -94,12 +94,12 @@ ES::Engine::Entity CreateSkyBox(ES::Engine::Core &core, std::string_view texture
  * @code
  * * Standard cubemap with 6 separate textures
  * std::array<std::string, 6> skybox_faces = {
- *     "textures/right.jpg",   // Right (+X)
- *     "textures/left.jpg",    // Left (-X)
- *     "textures/top.jpg",     // Top (+Y)
- *     "textures/bottom.jpg",  // Bottom (-Y)
- *     "textures/front.jpg",   // Front (+Z)
- *     "textures/back.jpg"     // Back (-Z)
+ *     "textures/right.jpg",   * Right (+X)
+ *     "textures/left.jpg",    * Left (-X)
+ *     "textures/top.jpg",     * Top (+Y)
+ *     "textures/bottom.jpg",  * Bottom (-Y)
+ *     "textures/front.jpg",   * Front (+Z)
+ *     "textures/back.jpg"     * Back (-Z)
  * };
  * auto skybox = CreateSkyBox(core, skybox_faces);
  *
