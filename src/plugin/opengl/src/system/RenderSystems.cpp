@@ -56,9 +56,7 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
         .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Transform &transform,
                   ES::Plugin::Object::Component::Mesh &mesh, Component::MaterialHandle &materialHandle,
                   Component::ShaderHandle &shaderHandle) {
-            bool cubeMapHandle =
-                !ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::OpenGL::Component::CubeMapHandle>(core);
-            if (!cubeMapHandle)
+            if (ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::OpenGL::Component::CubeMapHandle>(core))
                 return;
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
