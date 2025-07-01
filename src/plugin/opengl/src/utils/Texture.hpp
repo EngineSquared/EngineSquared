@@ -8,8 +8,8 @@ namespace ES::Plugin::OpenGL::Utils {
 
 class Texture {
   public:
-    explicit Texture(const std::string &texturePath);
-    explicit Texture(const void *rawData, int width, int height);
+    explicit Texture(const std::string &texturePath, bool invertY = false);
+    explicit Texture(const void *rawData, int width, int height, bool invertY = false);
     Texture(int width, int height, int channels, GLuint textureID)
         : _width(width), _height(height), _channels(channels), _textureID(textureID)
     {
@@ -29,8 +29,8 @@ class Texture {
     [[nodiscard]] GLuint GetTexID() const { return _textureID; }
 
   private:
-    void LoadTexture(const std::string &texturePath);
-    void LoadTexture(const void *rawData);
+    void LoadTexture(const std::string &texturePath, bool invertY);
+    void LoadTexture(const void *rawData, bool invertY);
 
   private:
     int _width = 0;
