@@ -1,6 +1,8 @@
 #include "OpenGL.pch.hpp"
 
 #include "Camera.hpp"
+#include "CubeMapHandle.hpp"
+#include "CubeMapManager.hpp"
 #include "DirectionalLight.hpp"
 #include "Entity.hpp"
 #include "FontHandle.hpp"
@@ -54,6 +56,8 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
         .each([&](auto entity, Component::ModelHandle &modelHandle, ES::Plugin::Object::Component::Transform &transform,
                   ES::Plugin::Object::Component::Mesh &mesh, Component::MaterialHandle &materialHandle,
                   Component::ShaderHandle &shaderHandle) {
+            if (ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::OpenGL::Component::CubeMapHandle>(core))
+                return;
             auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
             const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);
             const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
@@ -66,6 +70,31 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
             glUniformMatrix4fv(shader.GetUniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
             glUniformMatrix4fv(shader.GetUniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
             BindTextureIfNeeded(core, entity);
+            glBuffer.Draw(mesh);
+            shader.Disable();
+        });
+}
+
+void ES::Plugin::OpenGL::System::RenderSkyBox(ES::Engine::Core &core)
+{
+    auto &camera = core.GetResource<Resource::Camera>();
+    auto view = glm::mat4(glm::mat3(camera.view));
+    glm::mat4 projection = camera.projection;
+
+    core.GetRegistry()
+        .view<Component::ModelHandle, ES::Plugin::Object::Component::Mesh, Component::ShaderHandle,
+              ES::Plugin::OpenGL::Component::CubeMapHandle>()
+        .each([&]([[maybe_unused]] auto entity, Component::ModelHandle &modelHandle,
+                  ES::Plugin::Object::Component::Mesh &mesh, Component::ShaderHandle &shaderHandle,
+                  ES::Plugin::OpenGL::Component::CubeMapHandle &cubeMapHandle) {
+            auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
+            const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
+            shader.Use();
+
+            glUniformMatrix4fv(shader.GetUniform("View"), 1, GL_FALSE, glm::value_ptr(view));
+            glUniformMatrix4fv(shader.GetUniform("Projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+            core.GetResource<ES::Plugin::OpenGL::Resource::CubeMapManager>().Get(cubeMapHandle.id).Bind();
             glBuffer.Draw(mesh);
             shader.Disable();
         });
@@ -146,7 +175,7 @@ void ES::Plugin::OpenGL::System::UpdateMatrices(ES::Engine::Core &core)
 {
     auto &cam = core.GetResource<Resource::Camera>();
     cam.view = glm::lookAt(cam.viewer.getViewPoint(), cam.viewer.getViewCenter(), cam.viewer.getUpVector());
-    cam.projection = glm::perspective(glm::radians(45.0f), cam.size.x / cam.size.y, 0.1f, 100.0f);
+    cam.projection = glm::perspective(glm::radians(45.0f), cam.size.x / cam.size.y, 0.1f, 10000.0f);
 }
 
 void ES::Plugin::OpenGL::System::SetupLights(ES::Engine::Core &core)
@@ -195,21 +224,22 @@ void ES::Plugin::OpenGL::System::SetupShadowframebuffer(ES::Engine::Core &core)
 
 void ES::Plugin::OpenGL::System::RenderShadowMap(ES::Engine::Core &core)
 {
+    if (!core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>().enabled)
+        return;
+
     auto &shad = core.GetResource<ES::Plugin::OpenGL::Resource::ShaderManager>().Get(entt::hashed_string{"depthMap"});
     shad.Use();
-    const auto &light = core.GetResource<ES::Plugin::OpenGL::Resource::DirectionalLight>();
-    if (light.enabled)
-        core.GetRegistry()
-            .view<ES::Plugin::OpenGL::Component::ModelHandle, ES::Plugin::Object::Component::Transform,
-                  ES::Plugin::Object::Component::Mesh>()
-            .each([&](auto entity, ES::Plugin::OpenGL::Component::ModelHandle &modelHandle,
-                      ES::Plugin::Object::Component::Transform &transform, ES::Plugin::Object::Component::Mesh &mesh) {
-                const auto &glBuffer =
-                    core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>().Get(modelHandle.id);
-                glm::mat4 model = transform.getTransformationMatrix();
-                glUniformMatrix4fv(shad.GetUniform("model"), 1, GL_FALSE, glm::value_ptr(model));
-                glBuffer.Draw(mesh);
-            });
+    core.GetRegistry()
+        .view<ES::Plugin::OpenGL::Component::ModelHandle, ES::Plugin::Object::Component::Transform,
+              ES::Plugin::Object::Component::Mesh>()
+        .each([&]([[maybe_unused]] auto entity, ES::Plugin::OpenGL::Component::ModelHandle &modelHandle,
+                  ES::Plugin::Object::Component::Transform &transform, ES::Plugin::Object::Component::Mesh &mesh) {
+            const auto &glBuffer =
+                core.GetResource<ES::Plugin::OpenGL::Resource::GLMeshBufferManager>().Get(modelHandle.id);
+            glm::mat4 model = transform.getTransformationMatrix();
+            glUniformMatrix4fv(shad.GetUniform("model"), 1, GL_FALSE, glm::value_ptr(model));
+            glBuffer.Draw(mesh);
+        });
     shad.Disable();
 }
 

@@ -1,5 +1,6 @@
 #include "OpenGL.pch.hpp"
 
+#include "CubeMapManager.hpp"
 #include "FontManager.hpp"
 #include "GLMeshBufferManager.hpp"
 #include "GLSpriteBufferManager.hpp"
@@ -16,6 +17,11 @@ void ES::Plugin::OpenGL::System::LoadFontManager(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::LoadTextureManager(ES::Engine::Core &core)
 {
     core.RegisterResource<Resource::TextureManager>(Resource::TextureManager());
+}
+
+void ES::Plugin::OpenGL::System::LoadCubeMapManager(ES::Engine::Core &core)
+{
+    core.RegisterResource<Resource::CubeMapManager>(Resource::CubeMapManager());
 }
 
 void ES::Plugin::OpenGL::System::LoadGLMeshBufferManager(ES::Engine::Core &core)
