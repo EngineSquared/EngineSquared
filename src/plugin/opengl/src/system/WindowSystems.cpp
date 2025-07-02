@@ -93,6 +93,8 @@ void ES::Plugin::OpenGL::System::GLEnableCullFace(const ES::Engine::Core &)
     glCullFace(GL_BACK);
 }
 
+void ES::Plugin::OpenGL::System::GlEnableMultiSample(const ES::Engine::Core &) { glEnable(GL_MULTISAMPLE); }
+
 void ES::Plugin::OpenGL::System::GLEnableDepthLEqual(const ES::Engine::Core &) { glDepthFunc(GL_LEQUAL); }
 
 void ES::Plugin::OpenGL::System::GLResetDepthFunc(const ES::Engine::Core &) { glDepthFunc(GL_LESS); }
