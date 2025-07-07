@@ -38,7 +38,7 @@ class EventListener : public Rml::EventListener {
 
   public:
     EventListener() = delete;
-    EventListener(Rml::Context &context) : _context(&context) {}
+    explicit EventListener(Rml::Context &context) : _context(&context) {}
 
     void SetCallback(ES::Engine::Core &core);
     void ProcessMouseButton(int button, int action, int mods);

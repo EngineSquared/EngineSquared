@@ -8,11 +8,23 @@
 namespace ES::Plugin::UI::Resource {
 class UIResource {
   private:
+    struct TransparentHash {
+        using is_transparent = void;
+
+        std::size_t operator()(std::string_view key) const noexcept { return std::hash<std::string_view>{}(key); }
+    };
+
+    struct TransparentEqual {
+        using is_transparent = void;
+
+        bool operator()(std::string_view lhs, std::string_view rhs) const noexcept { return lhs == rhs; }
+    };
+
     Rml::Context *_context;
     Rml::ElementDocument *_document;
     std::unique_ptr<ES::Plugin::UI::Utils::SystemInterface> _systemInterface;
     std::unique_ptr<ES::Plugin::UI::Utils::RenderInterface> _renderInterface;
-    std::unordered_map<std::string, std::unique_ptr<ES::Plugin::UI::Utils::EventListener>> _events;
+    std::unordered_map<std::string, std::unique_ptr<ES::Plugin::UI::Utils::EventListener>, TransparentHash, TransparentEqual> _events;
 
   public:
     /**
