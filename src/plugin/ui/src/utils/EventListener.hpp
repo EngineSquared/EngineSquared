@@ -17,7 +17,6 @@ class EventListener : public Rml::EventListener {
     using EventCallback = std::function<void(const std::string &event_name, const std::string &element_id)>;
 
   private:
-    ES::Engine::Core &_core;
     Rml::Context *_context;
     EventCallback _event_callback;
 
@@ -39,9 +38,9 @@ class EventListener : public Rml::EventListener {
 
   public:
     EventListener() = delete;
-    EventListener(ES::Engine::Core &core, Rml::Context &context) : _core(core), _context(&context) {}
+    EventListener(Rml::Context &context) : _context(&context) {}
 
-    void SetCallback();
+    void SetCallback(ES::Engine::Core &core);
     void ProcessMouseButton(int button, int action, int mods);
     void AttachEvents(const std::string &eventType, Rml::Element &toElement);
     void SetEventCallback(EventCallback callback);

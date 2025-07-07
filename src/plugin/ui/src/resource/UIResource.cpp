@@ -22,10 +22,19 @@ void UIResource::Init(ES::Engine::Core &core)
         throw UIError("Rmlui did not succeed upon initialization");
     }
     _context->SetDimensions(Rml::Vector2i(windowSize.x, windowSize.y));
-    _event = std::make_unique<ES::Plugin::UI::Utils::EventListener>(core, *_context);
 }
 
-void UIResource::BindEventCallback() { _event->SetCallback(); }
+void UIResource::BindEventCallback(ES::Engine::Core &core)
+{
+    const std::string key = "rmlui::mousecallback";
+    
+    auto &listener = _events[key];
+    if (!listener)
+    {
+        listener = std::make_unique<ES::Plugin::UI::Utils::EventListener>(*_context);
+        listener->SetCallback(core);
+    }
+}
 
 void UIResource::UpdateMouseMoveEvent(ES::Engine::Core &core)
 {
@@ -48,6 +57,7 @@ void UIResource::Destroy()
     {
         Rml::RemoveContext(_context->GetName());
     }
+    _events.clear();
     Rml::Shutdown();
 }
 
@@ -147,7 +157,6 @@ void UIResource::SetTransformProperty(const std::string &childId, const std::vec
         case TranslateY:
             rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value});
             break;
-            // Add other cases as needed
         }
     }
 
@@ -182,8 +191,19 @@ void UIResource::AttachEventHandlers(const std::string &elementId, const std::st
             fmt::format("RmlUi: Could not attach events to sub elements of {}: Not found.", elementId.c_str()));
         return;
     }
-    _event->SetEventCallback(callback);
-    _event->AttachEvents(eventType, *element);
+
+    const std::string key = elementId + "::" + eventType;
+    auto &listener = _events[key];
+    if (!listener)
+        listener = std::make_unique<ES::Plugin::UI::Utils::EventListener>(*_context);
+    listener->SetEventCallback(callback);
+    listener->AttachEvents(eventType, *element);
+}
+
+void UIResource::DetachEventHandler(const std::string &elementId, const std::string &eventType)
+{
+    const std::string key = elementId + "::" + eventType;
+    _events.erase(key);
 }
 
 bool UIResource::IsReady() const { return _context && _document; }
