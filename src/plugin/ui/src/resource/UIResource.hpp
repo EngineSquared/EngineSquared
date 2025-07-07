@@ -24,7 +24,9 @@ class UIResource {
     Rml::ElementDocument *_document;
     std::unique_ptr<ES::Plugin::UI::Utils::SystemInterface> _systemInterface;
     std::unique_ptr<ES::Plugin::UI::Utils::RenderInterface> _renderInterface;
-    std::unordered_map<std::string, std::unique_ptr<ES::Plugin::UI::Utils::EventListener>, TransparentHash, TransparentEqual> _events;
+    std::unordered_map<std::string, std::unique_ptr<ES::Plugin::UI::Utils::EventListener>, TransparentHash,
+                       TransparentEqual>
+        _events;
 
   public:
     /**
