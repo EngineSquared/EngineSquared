@@ -27,7 +27,7 @@ void UIResource::Init(ES::Engine::Core &core)
 void UIResource::BindEventCallback(ES::Engine::Core &core)
 {
     const std::string key = "rmlui::mousecallback";
-    
+
     auto &listener = _events[key];
     if (!listener)
     {
@@ -154,9 +154,7 @@ void UIResource::SetTransformProperty(const std::string &childId, const std::vec
 
         case Rotate: rmlTransforms.push_back(Rml::Transforms::Rotate2D{t.value}); break;
         case TranslateX: rmlTransforms.push_back(Rml::Transforms::TranslateX{t.value}); break;
-        case TranslateY:
-            rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value});
-            break;
+        case TranslateY: rmlTransforms.push_back(Rml::Transforms::TranslateY{t.value}); break;
         }
     }
 

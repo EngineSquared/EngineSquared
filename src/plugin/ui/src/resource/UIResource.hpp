@@ -145,7 +145,8 @@ class UIResource {
      * @brief Attach the event listener handlers
      *
      * @param elementId The element to attach the listener on
-     * @param eventType The type of event to apply: [click, dblclick, mouseover, mouseout, mousemove, mouseup, mousedown, mousescroll]
+     * @param eventType The type of event to apply: [click, dblclick, mouseover, mouseout, mousemove, mouseup,
+     * mousedown, mousescroll]
      * @param callback The callback function called when the event is triggered
      *
      * @return void
@@ -157,7 +158,8 @@ class UIResource {
      * @brief Detach the event listener handlers
      *
      * @param elementId The target element to remove the event
-     * @param eventType The type of event to remove: [click, dblclick, mouseover, mouseout, mousemove, mouseup, mousedown, mousescroll]
+     * @param eventType The type of event to remove: [click, dblclick, mouseover, mouseout, mousemove, mouseup,
+     * mousedown, mousescroll]
      *
      * @return void
      */
