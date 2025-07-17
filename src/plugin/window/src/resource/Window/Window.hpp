@@ -85,6 +85,8 @@ class Window {
      *
      * @param userPointer The user pointer.
      * @param callback The callback function.
+     * @todo This function should work like the ES::Plugin::Input::Resource::InputManager class, it
+     *  means that it should be able to set multiple callbacks.
      */
     void SetFramebufferSizeCallback(void *userPointer, GLFWframebuffersizefun callback);
 
@@ -105,6 +107,11 @@ class Window {
         glfwGetCursorPos(_window, &x, &y);
         y = windowSize.y - y;
         return {x, y};
+    }
+
+    inline void SetResizable(bool resizable)
+    {
+        glfwSetWindowAttrib(_window, GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE);
     }
 };
 
