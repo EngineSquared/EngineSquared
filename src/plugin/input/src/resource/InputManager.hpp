@@ -17,8 +17,7 @@ namespace ES::Plugin::Input::Resource {
  */
 class InputManager {
   public:
-    InputManager(ES::Engine::Core &core)
-        : _core(core)
+    InputManager(ES::Engine::Core &core) : _core(core)
     {
         _keyCallbacks = std::make_shared<KeyCallbackContainer>();
         _charCallbacks = std::make_shared<CharCallbackContainer>();
@@ -392,7 +391,10 @@ class InputManager {
         return _dropCallbacks->DeleteFunction(id) != nullptr;
     }
 
-    inline bool IsKeyPressed(int key) noexcept { return glfwGetKey(_core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow(), key) == GLFW_PRESS; }
+    inline bool IsKeyPressed(int key) noexcept
+    {
+        return glfwGetKey(_core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow(), key) == GLFW_PRESS;
+    }
 
   private:
     ES::Engine::Core &_core;
