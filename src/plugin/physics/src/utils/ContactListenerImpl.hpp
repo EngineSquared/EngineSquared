@@ -30,7 +30,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
     JPH::ValidateResult OnContactValidate([[maybe_unused]] const JPH::Body &inBody1,
                                           [[maybe_unused]] const JPH::Body &inBody2,
                                           [[maybe_unused]] JPH::RVec3Arg inBaseOffset,
-                                          [[maybe_unused]] const JPH::CollideShapeResult &inCollisionResult)
+                                          [[maybe_unused]] const JPH::CollideShapeResult &inCollisionResult) override
     {
         return JPH::ValidateResult::AcceptAllContactsForThisBodyPair;
     }
