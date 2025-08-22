@@ -12,23 +12,27 @@ namespace {
 bool validateAndLoadObj(const std::string &path, tinyobj::attrib_t &attrib, std::vector<tinyobj::shape_t> &shapes,
                         std::vector<tinyobj::material_t> &materials)
 {
-    std::string warn, err;
+    std::string warn;
+    std::string err;
 
     if (path.empty())
     {
         ES::Utils::Log::Warn("The path is empty.");
         return false;
     }
+
     if (!path.ends_with(".obj"))
     {
         ES::Utils::Log::Warn("The file is not a .obj file.");
         return false;
     }
+
     if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str()))
     {
         ES::Utils::Log::Warn(warn + err);
         return false;
     }
+
     return true;
 }
 
@@ -45,7 +49,6 @@ inline Component::Vertex buildVertex(const tinyobj::attrib_t &attrib, const tiny
                     attrib.normals[3 * idx.normal_index + 2]};
     }
 
-    // UV (si disponible)
     if (!attrib.texcoords.empty() && idx.texcoord_index >= 0)
     {
         v.texCoord = {attrib.texcoords[2 * idx.texcoord_index + 0],
@@ -83,6 +86,7 @@ void appendShapeFlat(const tinyobj::attrib_t &attrib, const tinyobj::shape_t &in
 void appendShapeSeparated(const tinyobj::attrib_t &attrib, const tinyobj::shape_t &inShape, Shape &outShape)
 {
     std::unordered_map<Component::Vertex, uint32_t> uniqueVertices;
+
     uniqueVertices.reserve(inShape.mesh.indices.size());
 
     for (const auto &idx : inShape.mesh.indices)
@@ -106,7 +110,7 @@ void appendShapeSeparated(const tinyobj::attrib_t &attrib, const tinyobj::shape_
     }
 }
 
-} // anonymous namespace
+}
 
 bool OBJLoader::loadModel(const std::string &path, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals,
                           std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices)
@@ -152,7 +156,7 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Shape> &shape)
     for (const auto &inShape : shapesIn)
     {
         Shape out{};
-        out.vertices.reserve(inShape.mesh.indices.size()); // estimation
+        out.vertices.reserve(inShape.mesh.indices.size());
         appendShapeSeparated(attrib, inShape, out);
         shape.emplace_back(std::move(out));
     }
@@ -160,4 +164,4 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Shape> &shape)
     return true;
 }
 
-} // namespace ES::Plugin::Object::Resource
+}
