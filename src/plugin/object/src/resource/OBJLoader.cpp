@@ -9,10 +9,8 @@ namespace ES::Plugin::Object::Resource {
 
 namespace {
 
-bool validateAndLoadObj(const std::string& path,
-                        tinyobj::attrib_t& attrib,
-                        std::vector<tinyobj::shape_t>& shapes,
-                        std::vector<tinyobj::material_t>& materials)
+bool validateAndLoadObj(const std::string &path, tinyobj::attrib_t &attrib, std::vector<tinyobj::shape_t> &shapes,
+                        std::vector<tinyobj::material_t> &materials)
 {
     std::string warn, err;
 
@@ -34,43 +32,34 @@ bool validateAndLoadObj(const std::string& path,
     return true;
 }
 
-inline Component::Vertex buildVertex(const tinyobj::attrib_t& attrib, const tinyobj::index_t& idx)
+inline Component::Vertex buildVertex(const tinyobj::attrib_t &attrib, const tinyobj::index_t &idx)
 {
     Component::Vertex v{};
 
-    v.pos = {
-        attrib.vertices[3 * idx.vertex_index + 0],
-        attrib.vertices[3 * idx.vertex_index + 1],
-        attrib.vertices[3 * idx.vertex_index + 2]};
+    v.pos = {attrib.vertices[3 * idx.vertex_index + 0], attrib.vertices[3 * idx.vertex_index + 1],
+             attrib.vertices[3 * idx.vertex_index + 2]};
 
     if (!attrib.normals.empty() && idx.normal_index >= 0)
     {
-        v.normal = {
-            attrib.normals[3 * idx.normal_index + 0],
-            attrib.normals[3 * idx.normal_index + 1],
-            attrib.normals[3 * idx.normal_index + 2]};
+        v.normal = {attrib.normals[3 * idx.normal_index + 0], attrib.normals[3 * idx.normal_index + 1],
+                    attrib.normals[3 * idx.normal_index + 2]};
     }
 
     // UV (si disponible)
     if (!attrib.texcoords.empty() && idx.texcoord_index >= 0)
     {
-        v.texCoord = {
-            attrib.texcoords[2 * idx.texcoord_index + 0],
-            VK_REVERSE_Y_TEX attrib.texcoords[2 * idx.texcoord_index + 1]};
+        v.texCoord = {attrib.texcoords[2 * idx.texcoord_index + 0],
+                      VK_REVERSE_Y_TEX attrib.texcoords[2 * idx.texcoord_index + 1]};
     }
 
     return v;
 }
 
-void appendShapeFlat(const tinyobj::attrib_t& attrib,
-                     const tinyobj::shape_t& inShape,
-                     std::unordered_map<Component::Vertex, uint32_t>& uniqueVertices,
-                     std::vector<glm::vec3>& vertices,
-                     std::vector<glm::vec3>& normals,
-                     std::vector<glm::vec2>& texCoords,
-                     std::vector<uint32_t>& indices)
+void appendShapeFlat(const tinyobj::attrib_t &attrib, const tinyobj::shape_t &inShape,
+                     std::unordered_map<Component::Vertex, uint32_t> &uniqueVertices, std::vector<glm::vec3> &vertices,
+                     std::vector<glm::vec3> &normals, std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices)
 {
-    for (const auto& idx : inShape.mesh.indices)
+    for (const auto &idx : inShape.mesh.indices)
     {
         Component::Vertex v = buildVertex(attrib, idx);
 
@@ -91,14 +80,12 @@ void appendShapeFlat(const tinyobj::attrib_t& attrib,
     }
 }
 
-void appendShapeSeparated(const tinyobj::attrib_t& attrib,
-                          const tinyobj::shape_t& inShape,
-                          Shape& outShape)
+void appendShapeSeparated(const tinyobj::attrib_t &attrib, const tinyobj::shape_t &inShape, Shape &outShape)
 {
     std::unordered_map<Component::Vertex, uint32_t> uniqueVertices;
     uniqueVertices.reserve(inShape.mesh.indices.size());
 
-    for (const auto& idx : inShape.mesh.indices)
+    for (const auto &idx : inShape.mesh.indices)
     {
         Component::Vertex v = buildVertex(attrib, idx);
 
@@ -121,11 +108,8 @@ void appendShapeSeparated(const tinyobj::attrib_t& attrib,
 
 } // anonymous namespace
 
-bool OBJLoader::loadModel(const std::string &path,
-                          std::vector<glm::vec3> &vertices,
-                          std::vector<glm::vec3> &normals,
-                          std::vector<glm::vec2> &texCoords,
-                          std::vector<uint32_t> &indices)
+bool OBJLoader::loadModel(const std::string &path, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals,
+                          std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices)
 {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
@@ -134,7 +118,10 @@ bool OBJLoader::loadModel(const std::string &path,
     if (!validateAndLoadObj(path, attrib, shapes, materials))
         return false;
 
-    vertices.clear(); normals.clear(); texCoords.clear(); indices.clear();
+    vertices.clear();
+    normals.clear();
+    texCoords.clear();
+    indices.clear();
 
     vertices.reserve(attrib.vertices.size() / 3);
     normals.reserve(attrib.normals.size() / 3);
@@ -144,7 +131,7 @@ bool OBJLoader::loadModel(const std::string &path,
     std::unordered_map<Component::Vertex, uint32_t> uniqueVertices;
     uniqueVertices.reserve(vertices.capacity());
 
-    for (const auto& s : shapes)
+    for (const auto &s : shapes)
         appendShapeFlat(attrib, s, uniqueVertices, vertices, normals, texCoords, indices);
 
     return true;
@@ -162,7 +149,7 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Shape> &shape)
     shape.clear();
     shape.reserve(shapesIn.size());
 
-    for (const auto& inShape : shapesIn)
+    for (const auto &inShape : shapesIn)
     {
         Shape out{};
         out.vertices.reserve(inShape.mesh.indices.size()); // estimation
