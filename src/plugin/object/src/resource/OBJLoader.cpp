@@ -110,7 +110,7 @@ void appendShapeSeparated(const tinyobj::attrib_t &attrib, const tinyobj::shape_
     }
 }
 
-}
+} // namespace
 
 bool OBJLoader::loadModel(const std::string &path, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals,
                           std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices)
@@ -164,4 +164,4 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Shape> &shape)
     return true;
 }
 
-}
+} // namespace ES::Plugin::Object::Resource
