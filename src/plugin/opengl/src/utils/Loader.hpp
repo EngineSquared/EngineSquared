@@ -317,8 +317,7 @@ class ShaderProgram {
         }
         else
         {
-            std::string msg = "Shader program " + programId;
-            msg += " not initialised - aborting.";
+            std::string msg = fmt::format("Shader program {} not initialised - aborting.", programId);
             throw OpenGLError(msg);
         }
     }
