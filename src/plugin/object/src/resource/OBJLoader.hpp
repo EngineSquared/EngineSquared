@@ -28,6 +28,7 @@
 #include <vector>
 
 #include "component/Vertex.hpp"
+#include "utils/Shape.hpp"
 
 #if defined(VULKAN)
 #    define VK_REVERSE_Y_TEX 1.0f - // NOSONAR
@@ -56,6 +57,8 @@ class OBJLoader {
      */
     static bool loadModel(const std::string &path, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals,
                           std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices);
+
+    static bool loadModel(const std::string &path, std::vector<Shape> &shape);
 };
 
 } // namespace ES::Plugin::Object::Resource

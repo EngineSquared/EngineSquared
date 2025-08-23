@@ -8,11 +8,25 @@
 namespace ES::Plugin::UI::Resource {
 class UIResource {
   private:
+    struct TransparentHash {
+        using is_transparent = void;
+
+        std::size_t operator()(std::string_view key) const noexcept { return std::hash<std::string_view>{}(key); }
+    };
+
+    struct TransparentEqual {
+        using is_transparent = void;
+
+        bool operator()(std::string_view lhs, std::string_view rhs) const noexcept { return lhs == rhs; }
+    };
+
     Rml::Context *_context;
     Rml::ElementDocument *_document;
     std::unique_ptr<ES::Plugin::UI::Utils::SystemInterface> _systemInterface;
     std::unique_ptr<ES::Plugin::UI::Utils::RenderInterface> _renderInterface;
-    std::unique_ptr<ES::Plugin::UI::Utils::EventListener> _event;
+    std::unordered_map<std::string, std::unique_ptr<ES::Plugin::UI::Utils::EventListener>, TransparentHash,
+                       TransparentEqual>
+        _events;
 
   public:
     /**
@@ -55,7 +69,7 @@ class UIResource {
      *
      * @return void
      */
-    void BindEventCallback();
+    void BindEventCallback(ES::Engine::Core &core);
 
     /**
      * @brief Update the mouse position event
@@ -144,12 +158,26 @@ class UIResource {
     /**
      * @brief Attach the event listener handlers
      *
-     * @param childId The node id to modify
+     * @param elementId The element to attach the listener on
+     * @param eventType The type of event to apply: [click, dblclick, mouseover, mouseout, mousemove, mouseup,
+     * mousedown, mousescroll]
+     * @param callback The callback function called when the event is triggered
      *
      * @return void
      */
     void AttachEventHandlers(const std::string &elementId, const std::string &eventType,
                              ES::Plugin::UI::Utils::EventListener::EventCallback callback);
+
+    /**
+     * @brief Detach the event listener handlers
+     *
+     * @param elementId The target element to remove the event
+     * @param eventType The type of event to remove: [click, dblclick, mouseover, mouseout, mousemove, mouseup,
+     * mousedown, mousescroll]
+     *
+     * @return void
+     */
+    void DetachEventHandler(const std::string &elementId, const std::string &eventType);
 
     /**
      * @brief Check if the UI plugin is ready

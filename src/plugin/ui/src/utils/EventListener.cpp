@@ -1,8 +1,8 @@
 #include "EventListener.hpp"
 
-void ES::Plugin::UI::Utils::EventListener::SetCallback()
+void ES::Plugin::UI::Utils::EventListener::SetCallback(ES::Engine::Core &core)
 {
-    auto &inputManager = _core.GetResource<ES::Plugin::Input::Resource::InputManager>();
+    auto &inputManager = core.GetResource<ES::Plugin::Input::Resource::InputManager>();
     inputManager.RegisterMouseButtonCallback(
         [this](const ES::Engine::Core &, int key, int action, int mods) { ProcessMouseButton(key, action, mods); });
 }
