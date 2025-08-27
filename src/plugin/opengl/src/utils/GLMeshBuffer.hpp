@@ -40,6 +40,7 @@ class GLMeshBuffer {
     GLMeshBuffer &operator=(GLMeshBuffer &&) = default;
 
     void Draw(const Object::Component::Mesh &mesh) const noexcept;
+    void DrawFaces(const std::vector<uint32_t> &indices) const noexcept;
 
     void DestroyGLMeshBuffers() const noexcept;
 

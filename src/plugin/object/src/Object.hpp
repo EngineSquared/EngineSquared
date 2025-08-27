@@ -2,6 +2,7 @@
 
 // Components
 #include "Mesh.hpp"
+#include "MeshFaces.hpp"
 #include "MeshID.hpp"
 #include "Transform.hpp"
 #include "Vertex.hpp"

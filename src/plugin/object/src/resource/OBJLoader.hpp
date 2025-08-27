@@ -26,8 +26,10 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <filesystem>
 
 #include "component/Vertex.hpp"
+#include "component/MeshFaces.hpp"
 #include "utils/Shape.hpp"
 
 #if defined(VULKAN)
@@ -59,6 +61,21 @@ class OBJLoader {
                           std::vector<glm::vec2> &texCoords, std::vector<uint32_t> &indices);
 
     static bool loadModel(const std::string &path, std::vector<Shape> &shape);
+
+    /**
+     * Load a model with face materials from a .obj file.
+     *
+     * @param path path to the .obj file
+     * @param vertices vector to store the vertices
+     * @param normals vector to store the normals
+     * @param texCoords vector to store the texture coordinates
+     * @param indices vector to store the indices
+     * @param faces vector to store the faces with material information
+     * @return true if the model was loaded successfully, false otherwise
+     */
+    static bool loadModelWithFaces(const std::string &path, std::vector<glm::vec3> &vertices, 
+                                   std::vector<glm::vec3> &normals, std::vector<glm::vec2> &texCoords, 
+                                   std::vector<uint32_t> &indices, std::vector<Component::Face> &faces);
 };
 
 } // namespace ES::Plugin::Object::Resource

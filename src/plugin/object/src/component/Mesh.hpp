@@ -50,6 +50,24 @@ struct Mesh {
 
     // Move constructor
     Mesh(Mesh &&other) = default;
+
+    /**
+     * @brief Load mesh with face material information
+     * 
+     * @param file Path to the .obj file
+     * @param faces Reference to MeshFaces component to fill
+     * @return true if loading was successful, false otherwise
+     */
+    bool loadWithFaces(const std::string &file, MeshFaces &faces)
+    {
+        std::vector<Face> facesList;
+        bool result = Resource::OBJLoader::loadModelWithFaces(file, vertices, normals, texCoords, indices, facesList);
+        if (result)
+        {
+            faces.faces = std::move(facesList);
+        }
+        return result;
+    }
 };
 
 /**
