@@ -1,10 +1,10 @@
 #include "Shape.hpp"
 
 void ES::Plugin::Object::Utils::CombineShapesIntoMesh(const std::vector<Shape> &shapes,
-                                                          std::vector<glm::vec3> &outVertices,
-                                                          std::vector<glm::vec3> &outNormals,
-                                                          std::vector<glm::vec2> &outTexCoords,
-                                                          std::vector<uint32_t> &outIndices)
+                                                      std::vector<glm::vec3> &outVertices,
+                                                      std::vector<glm::vec3> &outNormals,
+                                                      std::vector<glm::vec2> &outTexCoords,
+                                                      std::vector<uint32_t> &outIndices)
 {
     outVertices.clear();
     outNormals.clear();

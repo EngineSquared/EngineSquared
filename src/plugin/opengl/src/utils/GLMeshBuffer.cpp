@@ -13,21 +13,22 @@ void GLMeshBuffer::Draw(const Object::Component::Mesh &mesh) const noexcept
 
 void GLMeshBuffer::DrawFaces(const std::vector<uint32_t> &indices) const noexcept
 {
-    if (indices.empty()) return;
-    
+    if (indices.empty())
+        return;
+
     glBindVertexArray(VAO);
-    
+
     // Create a temporary buffer for the specific face indices
     GLuint tempIBO;
     glGenBuffers(1, &tempIBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempIBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
-    
+
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, nullptr);
-    
+
     // Clean up temporary buffer
     glDeleteBuffers(1, &tempIBO);
-    
+
     glBindVertexArray(0);
 }
 

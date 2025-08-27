@@ -23,13 +23,13 @@
 #ifndef OBJLOADER_HPP_
 #define OBJLOADER_HPP_
 
+#include <filesystem>
 #include <memory>
 #include <string>
 #include <vector>
-#include <filesystem>
 
-#include "component/Vertex.hpp"
 #include "component/MeshFaces.hpp"
+#include "component/Vertex.hpp"
 #include "utils/Shape.hpp"
 
 #if defined(VULKAN)
@@ -73,8 +73,8 @@ class OBJLoader {
      * @param faces vector to store the faces with material information
      * @return true if the model was loaded successfully, false otherwise
      */
-    static bool loadModelWithFaces(const std::string &path, std::vector<glm::vec3> &vertices, 
-                                   std::vector<glm::vec3> &normals, std::vector<glm::vec2> &texCoords, 
+    static bool loadModelWithFaces(const std::string &path, std::vector<glm::vec3> &vertices,
+                                   std::vector<glm::vec3> &normals, std::vector<glm::vec2> &texCoords,
                                    std::vector<uint32_t> &indices, std::vector<Component::Face> &faces);
 };
 

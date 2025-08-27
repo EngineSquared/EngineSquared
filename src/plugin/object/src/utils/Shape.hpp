@@ -13,9 +13,7 @@ struct Shape {
 };
 
 namespace ES::Plugin::Object::Utils {
-    void CombineShapesIntoMesh(const std::vector<Shape> &shapes,
-                                                          std::vector<glm::vec3> &outVertices,
-                                                          std::vector<glm::vec3> &outNormals,
-                                                          std::vector<glm::vec2> &outTexCoords,
-                                                          std::vector<uint32_t> &outIndices);
+void CombineShapesIntoMesh(const std::vector<Shape> &shapes, std::vector<glm::vec3> &outVertices,
+                           std::vector<glm::vec3> &outNormals, std::vector<glm::vec2> &outTexCoords,
+                           std::vector<uint32_t> &outIndices);
 } // namespace ES::Plugin::Object::Utils

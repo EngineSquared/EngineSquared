@@ -170,8 +170,8 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Shape> &shape)
     return true;
 }
 
-bool OBJLoader::loadModelWithFaces(const std::string &path, std::vector<glm::vec3> &vertices, 
-                                   std::vector<glm::vec3> &normals, std::vector<glm::vec2> &texCoords, 
+bool OBJLoader::loadModelWithFaces(const std::string &path, std::vector<glm::vec3> &vertices,
+                                   std::vector<glm::vec3> &normals, std::vector<glm::vec2> &texCoords,
                                    std::vector<uint32_t> &indices, std::vector<Component::Face> &faces)
 {
     tinyobj::attrib_t attrib;
@@ -200,14 +200,14 @@ bool OBJLoader::loadModelWithFaces(const std::string &path, std::vector<glm::vec
     {
         // Group faces by material
         std::unordered_map<int, std::vector<uint32_t>> materialToIndices;
-        
+
         // Process each face (triangle) in the shape
         size_t index_offset = 0;
         for (size_t f = 0; f < shape.mesh.num_face_vertices.size(); f++)
         {
             int fv = shape.mesh.num_face_vertices[f];
             int material_id = shape.mesh.material_ids[f];
-            
+
             // Process vertices of this face
             std::vector<uint32_t> faceIndices;
             for (size_t v = 0; v < fv; v++)
@@ -232,24 +232,24 @@ bool OBJLoader::loadModelWithFaces(const std::string &path, std::vector<glm::vec
                     indices.emplace_back(it->second);
                 }
             }
-            
+
             // Add face indices to the material group
             if (materialToIndices.find(material_id) == materialToIndices.end())
             {
                 materialToIndices[material_id] = std::vector<uint32_t>();
             }
-            materialToIndices[material_id].insert(materialToIndices[material_id].end(), 
-                                                  faceIndices.begin(), faceIndices.end());
-            
+            materialToIndices[material_id].insert(materialToIndices[material_id].end(), faceIndices.begin(),
+                                                  faceIndices.end());
+
             index_offset += fv;
         }
-        
+
         // Create Face objects from material groups
         for (const auto &materialGroup : materialToIndices)
         {
             int material_id = materialGroup.first;
             const std::vector<uint32_t> &faceIndices = materialGroup.second;
-            
+
             // Get material name (use default if no material or material not found)
             std::string materialName = "default";
             if (material_id >= 0 && material_id < static_cast<int>(materials.size()))
@@ -266,7 +266,7 @@ bool OBJLoader::loadModelWithFaces(const std::string &path, std::vector<glm::vec
                     materialName = material.name.empty() ? "default" : material.name;
                 }
             }
-            
+
             // Create Face with material hash
             Component::Face face;
             face.indices = faceIndices;

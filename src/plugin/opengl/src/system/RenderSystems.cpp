@@ -41,7 +41,8 @@ static void BindTextureByMaterial(ES::Engine::Core &core, const entt::hashed_str
 {
     // Try to find and bind a texture with the same name as the material
     auto &textureManager = core.GetResource<ES::Plugin::OpenGL::Resource::TextureManager>();
-    if (textureManager.Contains(materialId)) {
+    if (textureManager.Contains(materialId))
+    {
         textureManager.Get(materialId).Bind();
     }
 }
@@ -68,35 +69,39 @@ void ES::Plugin::OpenGL::System::RenderMeshes(ES::Engine::Core &core)
                   Component::ShaderHandle &shaderHandle) {
             if (ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::OpenGL::Component::CubeMapHandle>(core))
                 return;
-            
+
             // Check if entity has MeshFaces component for per-face rendering
-            ES::Plugin::Object::Component::MeshFaces *meshFaces = 
+            ES::Plugin::Object::Component::MeshFaces *meshFaces =
                 ES::Engine::Entity(entity).TryGetComponent<ES::Plugin::Object::Component::MeshFaces>(core);
-            
-            if (meshFaces) {
+
+            if (meshFaces)
+            {
                 // Per-face rendering with individual materials
                 const auto &glBuffer = core.GetResource<Resource::GLMeshBufferManager>().Get(modelHandle.id);
                 auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
                 glm::mat4 modelmat = transform.getTransformationMatrix();
                 glm::mat4 mvp = projection * view * modelmat;
                 auto nmat = glm::mat3(glm::transpose(glm::inverse(modelmat))); // normal matrix
-                
+
                 // Set up shader once for all faces
                 shader.Use();
                 glUniformMatrix3fv(shader.GetUniform("NormalMatrix"), 1, GL_FALSE, glm::value_ptr(nmat));
                 glUniformMatrix4fv(shader.GetUniform("ModelMatrix"), 1, GL_FALSE, glm::value_ptr(modelmat));
                 glUniformMatrix4fv(shader.GetUniform("MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
-                
+
                 // Render each face with its material
-                for (const auto &face : meshFaces->faces) {
+                for (const auto &face : meshFaces->faces)
+                {
                     const auto &material = core.GetResource<Resource::MaterialCache>().Get(face.materialId);
                     LoadMaterial(shader, material);
                     BindTextureByMaterial(core, face.materialId);
                     glBuffer.DrawFaces(face.indices);
                 }
-                
+
                 shader.Disable();
-            } else {
+            }
+            else
+            {
                 // Legacy rendering - render the whole mesh with a single material
                 auto &shader = core.GetResource<Resource::ShaderManager>().Get(shaderHandle.id);
                 const auto &material = core.GetResource<Resource::MaterialCache>().Get(materialHandle.id);

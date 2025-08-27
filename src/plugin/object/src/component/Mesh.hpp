@@ -53,7 +53,7 @@ struct Mesh {
 
     /**
      * @brief Load mesh with face material information
-     * 
+     *
      * @param file Path to the .obj file
      * @param faces Reference to MeshFaces component to fill
      * @return true if loading was successful, false otherwise

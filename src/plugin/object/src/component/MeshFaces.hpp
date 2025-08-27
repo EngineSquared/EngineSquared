@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include <vector>
 #include <cstdint>
+#include <vector>
 
 #include <entt/entt.hpp>
 
@@ -40,7 +40,9 @@ struct Face {
 
     explicit Face() = default;
     explicit Face(const std::vector<uint32_t> &indices, const entt::hashed_string &materialId)
-        : indices(indices), materialId(materialId) {}
+        : indices(indices), materialId(materialId)
+    {
+    }
     explicit Face(const Face &face) = default;
     ~Face() = default;
 
