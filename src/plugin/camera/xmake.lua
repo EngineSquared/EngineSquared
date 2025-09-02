@@ -9,4 +9,3 @@ target("PluginCamera")
 
     add_includedirs("src", {public = true})
     add_includedirs("src/component", {public = true})
-    add_installfiles("src/**.hpp", { prefixdir = "include" })

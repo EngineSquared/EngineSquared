@@ -11,5 +11,3 @@ target("UtilsLog")
     add_includedirs("src/", {public = true})
     add_headerfiles("src/**.hpp", { public = true })
 
-    add_installfiles("src/**.hpp", { prefixdir = "include" })
-
