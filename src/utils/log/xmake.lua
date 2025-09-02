@@ -9,3 +9,5 @@ target("UtilsLog")
     add_packages("spdlog", "fmt")
 
     add_includedirs("src/", {public = true})
+    add_headerfiles("src/**.hpp", { public = true })
+
