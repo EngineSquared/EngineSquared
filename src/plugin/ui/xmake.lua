@@ -18,7 +18,7 @@ target("PluginUI")
     set_kind("static")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
-    set_policy("build.warning", true)
+    
     add_packages("entt", "glfw", "glm", "rmlui", "fmt", "spdlog", "glew", "stb")
 
     set_pcxxheader("src/UI.pch.hpp")

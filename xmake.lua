@@ -65,8 +65,6 @@ target("EngineSquared")
     add_headerfiles("src/utils/tools/src/**.h", { public = true })
     add_includedirs("src/utils/tools/src", { public = true })
 
-    set_policy("build.warning", true)
-
     add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "glew", "fmt", "stb", "joltphysics")
 
     if is_mode("debug") then

@@ -23,7 +23,7 @@ target("PluginOpenGL")
     set_kind("static")
     set_languages("cxx20")
     add_packages("entt", "glm", "spdlog", "fmt", "glfw", "glew", "stb")
-    set_policy("build.warning", true)
+    
 
     set_pcxxheader("src/OpenGL.pch.hpp")
 

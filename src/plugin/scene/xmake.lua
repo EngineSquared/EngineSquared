@@ -10,7 +10,7 @@ target("PluginScene")
     set_kind("static")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
-    set_policy("build.warning", true)
+    
     add_packages("entt", "spdlog", "fmt")
 
     add_deps("EngineSquaredCore")

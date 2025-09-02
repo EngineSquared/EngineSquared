@@ -12,7 +12,7 @@ target("PluginPhysics")
     set_kind("static")
     set_languages("cxx20")
     add_packages("glm", "entt", "fmt", "spdlog", "joltphysics")
-    set_policy("build.warning", true)
+    
 
     set_pcxxheader("src/JoltPhysics.pch.hpp")
 

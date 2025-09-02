@@ -8,7 +8,7 @@ target("PluginNativeScripting")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
     add_packages("entt", "spdlog", "fmt")
-    set_policy("build.warning", true)
+    
 
     add_deps("EngineSquaredCore")
 

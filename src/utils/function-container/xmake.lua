@@ -8,6 +8,7 @@ target("UtilsFunctionContainer")
     set_group(UTILS_GROUP_NAME)
 
     add_includedirs("src/", {public = true})
+    add_installfiles("src/**.hpp", { prefixdir = "include" })
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)

@@ -4,7 +4,8 @@ target("PluginColors")
     set_kind("headeronly")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
-    set_policy("build.warning", true)
+    
 
     add_includedirs("src/", {public = true})
     add_includedirs("src/utils", {public = true})
+    add_installfiles("src/**.hpp", { prefixdir = "include" })
