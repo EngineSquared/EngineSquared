@@ -6,6 +6,7 @@ UTILS_GROUP_NAME = "Utils"
 add_rules("mode.debug", "mode.release")
 add_requires("entt", "gtest", "spdlog", "tinyobjloader", "glm >=1.0.1", "glfw >=3.4", "glew", "fmt", "stb", "joltphysics")
 
+includes("src/engine/xmake.lua")
 includes("src/plugin/camera/xmake.lua")
 includes("src/plugin/colors/xmake.lua")
 includes("src/plugin/input/xmake.lua")
