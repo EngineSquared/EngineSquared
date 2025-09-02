@@ -52,6 +52,14 @@ target("EngineSquared")
     add_deps("UtilsLog")
     add_deps("UtilsTools")
 
+    add_headerfiles("src/plugin/colors/src/**.hpp", { public = true })
+    add_headerfiles("src/plugin/camera/src/**.hpp", { public = true })
+    add_headerfiles("src/utils/log/src/**.hpp", { public = true })
+    add_headerfiles("src/utils/function-container/src/**.hpp", { public = true })
+    add_headerfiles("src/utils/function-container/src/**.inl", { public = true })
+    add_headerfiles("src/utils/tools/src/**.hpp", { public = true })
+    add_headerfiles("src/utils/tools/src/**.h", { public = true })
+
     set_policy("build.warning", true)
 
     add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "glew", "fmt", "stb", "joltphysics")
