@@ -53,12 +53,17 @@ target("EngineSquared")
     add_deps("UtilsTools")
 
     add_headerfiles("src/plugin/colors/src/**.hpp", { public = true })
+    add_includedirs("src/plugin/colors/src", { public = true })
     add_headerfiles("src/plugin/camera/src/**.hpp", { public = true })
+    add_includedirs("src/plugin/camera/src", { public = true })
     add_headerfiles("src/utils/log/src/**.hpp", { public = true })
+    add_includedirs("src/utils/log/src", { public = true })
     add_headerfiles("src/utils/function-container/src/**.hpp", { public = true })
     add_headerfiles("src/utils/function-container/src/**.inl", { public = true })
+    add_includedirs("src/utils/function-container/src", { public = true })
     add_headerfiles("src/utils/tools/src/**.hpp", { public = true })
     add_headerfiles("src/utils/tools/src/**.h", { public = true })
+    add_includedirs("src/utils/tools/src", { public = true })
 
     set_policy("build.warning", true)
 
