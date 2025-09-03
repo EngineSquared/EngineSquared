@@ -8,7 +8,7 @@ includes("../utils/function-container/xmake.lua")
 target("EngineSquaredCore")
     set_kind("static")
     set_languages("cxx20")
-    
+
     add_packages("entt", "spdlog", "fmt")
     add_deps("UtilsLog")
     add_deps("UtilsFunctionContainer")
@@ -16,7 +16,10 @@ target("EngineSquaredCore")
     set_pcxxheader("src/Engine.pch.hpp")
 
     add_files("src/**.cpp")
-    add_headerfiles("src/**.hpp", { public = true })
+
+    add_headerfiles("src/**.hpp")
+    add_headerfiles("src/**.inl")
+
     add_includedirs("src", { public = true })
     add_includedirs("src/entity", { public = true })
     add_includedirs("src/core", { public = true })
