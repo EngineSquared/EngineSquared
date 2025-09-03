@@ -19,12 +19,14 @@ target("PluginObject")
     add_headerfiles("src/**.hpp")
 
     add_includedirs("src/", {public = true})
-    add_includedirs("src/component", {public = true})
-    add_includedirs("src/resource", {public = true})
-    add_includedirs("src/exception", {public = true})
-    add_includedirs("src/utils", {public = true})
+    add_includedirs("src/component", {public = true, prefixdir = "component"})
+    add_includedirs("src/resource", {public = true, prefixdir = "resource"})
+    add_includedirs("src/exception", {public = true, prefixdir = "exception"})
+    add_includedirs("src/utils", {public = true, prefixdir = "utils"})
 
     add_files("src/**.cpp")
+
+    
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
