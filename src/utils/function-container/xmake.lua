@@ -7,8 +7,8 @@ target("UtilsFunctionContainer")
     add_deps("UtilsLog")
 
     add_includedirs("src/", {public = true})
-    add_headerfiles("src/**.hpp", { public = true })
-    add_headerfiles("src/**.inl", { public = true })
+    add_headerfiles("src/**.hpp")
+    add_headerfiles("src/**.inl")
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)

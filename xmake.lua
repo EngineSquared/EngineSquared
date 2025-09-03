@@ -49,6 +49,7 @@ target("EngineSquared")
     add_deps("PluginNativeScripting")
     add_deps("PluginRenderingPipeline")
     add_deps("UtilsTools")
+    add_deps("UtilsLog")
 
     add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "glew", "fmt", "stb", "joltphysics")
 
