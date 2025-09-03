@@ -1,17 +1,37 @@
 #pragma once
 
+#include <functional>
 #include <map>
 #include <miniaudio.h>
 
 #include "Engine.hpp"
 
 namespace ES::Plugin::Sound::Resource {
+
+using CustomDataCallback =
+    std::function<void(ma_device *pDevice, void *pOutput, const void *pInput, ma_uint32 frameCount)>;
+
 class SoundManager {
   private:
     ma_result _result;
     ma_decoder _decoder;
     ma_device_config _deviceConfig;
     ma_device _device;
+
+    /**
+     * @brief Enum for the callback mode.
+     *
+     * @details
+     * - DEFAULT: Use internal callback for sounds
+     * - CUSTOM: Use custom callback
+     */
+    enum class CallbackMode {
+        DEFAULT,
+        CUSTOM
+    };
+
+    CallbackMode _callbackMode = CallbackMode::DEFAULT;
+    bool _isInitialized = false;
 
     struct Sound {
         std::string name;
@@ -126,6 +146,12 @@ class SoundManager {
      */
     inline void Init()
     {
+        if (_isInitialized)
+        {
+            ES::Utils::Log::Warn("SoundManager is already initialized");
+            return;
+        }
+
         _deviceConfig = ma_device_config_init(ma_device_type_playback);
         _deviceConfig.playback.format = ma_format_f32;
         _deviceConfig.playback.channels = 2;
@@ -149,6 +175,7 @@ class SoundManager {
         else
         {
             ES::Utils::Log::Info("Audio device started successfully.");
+            _isInitialized = true;
         }
     }
 
@@ -400,6 +427,127 @@ class SoundManager {
         }
         double position = static_cast<double>(currentFrame) / sound.decoder.outputSampleRate;
         return position;
+    }
+
+    /**
+     * @brief Set a custom data callback function.
+     *
+     * This will reinitialize the audio device to use the custom callback.
+     * When in custom callback mode, the built-in sound management is disabled.
+     *
+     * @param callback Custom callback function to handle audio processing.
+     * @param userData User-defined data to pass to the callback.
+     *
+     * @return bool True if successful, false otherwise.
+     */
+    inline bool SetCustomCallback(const CustomDataCallback &callback, std::any userData)
+    {
+        if (!callback)
+        {
+            ES::Utils::Log::Error("Cannot set null custom callback");
+            return false;
+        }
+
+        _callbackMode = CallbackMode::CUSTOM;
+
+        if (_isInitialized)
+            return ReinitializeDevice(callback, userData);
+
+        ES::Utils::Log::Info("Custom callback set. Device will use it on next initialization.");
+        return true;
+    }
+
+    /**
+     * @brief Return to the default callback mode.
+     *
+     * This will reinitialize the audio device to use the built-in sound management.
+     *
+     * @return bool True if successful, false otherwise.
+     */
+    inline bool SetDefaultCallback()
+    {
+        _callbackMode = CallbackMode::DEFAULT;
+
+        if (_isInitialized)
+            return ReinitializeDevice(SoundManager::data_callback, this);
+
+        ES::Utils::Log::Info("Switched to default callback mode.");
+        return true;
+    }
+
+    /**
+     * @brief Check if currently in custom callback mode.
+     *
+     * @return bool True if using custom callback, false if using default.
+     */
+    inline bool IsCustomCallbackMode() const { return _callbackMode == CallbackMode::CUSTOM; }
+
+    /**
+     * @brief Get access to the internal sounds map for custom callback usage.
+     *
+     * This allows custom callbacks to access and manipulate the internal sounds.
+     * Use with caution and only in custom callback functions.
+     *
+     * @return Reference to the internal sounds map.
+     */
+    inline std::unordered_map<std::string, Sound, TransparentHash, TransparentEqual> &GetSoundsMap()
+    {
+        return _soundsToPlay;
+    }
+
+    /**
+     * @brief Get const access to the internal sounds map for custom callback usage.
+     *
+     * @return Const reference to the internal sounds map.
+     */
+    inline const std::unordered_map<std::string, Sound, TransparentHash, TransparentEqual> &GetSoundsMap() const
+    {
+        return _soundsToPlay;
+    }
+
+  private:
+    /**
+     * @brief Reinitialize the audio device with current settings.
+     *
+     * This will stop the current audio device and reinitialize it with the same configuration
+     * except for the user data and callback function if provided.
+     *
+     * @return bool True if successful, false otherwise.
+     */
+    inline bool ReinitializeDevice(const CustomDataCallback &callback, std::any userData)
+    {
+        if (!_isInitialized)
+        {
+            ES::Utils::Log::Warn("Device not initialized, cannot reinitialize");
+            return false;
+        }
+
+        ma_device_stop(&_device);
+        ma_device_uninit(&_device);
+        _isInitialized = false;
+
+        _deviceConfig.pUserData = userData.has_value() ? std::any_cast<void *>(userData) : this;
+        _deviceConfig.dataCallback = callback;
+
+        if ((_result = ma_device_init(NULL, &_deviceConfig, &_device)) != MA_SUCCESS)
+        {
+            ES::Utils::Log::Error(
+                fmt::format("Failed to reinitialize audio device: {}", ma_result_description(_result)));
+            return false;
+        }
+
+        if ((_result = ma_device_start(&_device)) != MA_SUCCESS)
+        {
+            ES::Utils::Log::Error(
+                fmt::format("Failed to start reinitialized audio device: {}", ma_result_description(_result)));
+            ma_device_uninit(&_device);
+            return false;
+        }
+
+        _isInitialized = true;
+        ES::Utils::Log::Info(fmt::format("Audio device reinitialized successfully in {} mode.",
+                                         _callbackMode == CallbackMode::CUSTOM ? "custom" : "default"));
+        return true;
     }
 };
 } // namespace ES::Plugin::Sound::Resource
