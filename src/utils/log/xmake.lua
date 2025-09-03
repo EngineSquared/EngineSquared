@@ -6,6 +6,7 @@ target("UtilsLog")
 
     add_packages("spdlog", "fmt")
 
+    add_headerfiles("src/Logger.hpp")
     add_headerfiles("src/*.hpp")
     add_includedirs("src", {public = true})
 
