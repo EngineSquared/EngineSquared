@@ -25,7 +25,6 @@ includes("src/utils/function-container/xmake.lua")
 includes("src/utils/log/xmake.lua")
 includes("src/utils/string/xmake.lua")
 includes("src/utils/tools/xmake.lua")
-includes("src/engine/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
 target("EngineSquared")
