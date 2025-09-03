@@ -8,7 +8,7 @@ target("PluginObject")
     set_kind("static")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
-    
+
     add_packages("entt", "glm", "tinyobjloader", "spdlog", "fmt")
 
     set_pcxxheader("src/Object.pch.hpp")
@@ -16,7 +16,8 @@ target("PluginObject")
     add_deps("EngineSquaredCore")
     add_deps("UtilsLog")
 
-    add_headerfiles("src/**.hpp", { public = true })
+    add_headerfiles("src/**.hpp")
+
     add_includedirs("src/", {public = true})
     add_includedirs("src/component", {public = true})
     add_includedirs("src/resource", {public = true})
