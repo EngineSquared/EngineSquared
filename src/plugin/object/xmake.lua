@@ -20,6 +20,7 @@ target("PluginObject")
     add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(utils/*.hpp)")
+    add_headerfiles("src/(*.hpp)")
     add_includedirs("src", {public = true})
 
     add_files("src/**.cpp")
