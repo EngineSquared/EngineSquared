@@ -25,7 +25,7 @@
 
 #include "Loader.hpp"
 
-#include "Mesh.hpp"
+#include "component/Mesh.hpp"
 
 namespace ES::Plugin::OpenGL::Utils {
 

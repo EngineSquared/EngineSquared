@@ -11,7 +11,6 @@
 
 #include "InputManager.hpp"
 #include "Logger.hpp"
-#include "Mesh.hpp"
 #include "Object.hpp"
 #include "OpenGL.hpp"
 #include "Window.hpp"

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "ResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 
 using namespace ES::Plugin::Object::Resource;
 

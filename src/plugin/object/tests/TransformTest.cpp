@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "Transform.hpp"
+#include "component/Transform.hpp"
 
 using namespace ES::Plugin::Object;
 

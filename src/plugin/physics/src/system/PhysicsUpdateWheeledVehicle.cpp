@@ -4,10 +4,10 @@
 
 #include "FixedTimeUpdate.hpp"
 #include "Logger.hpp"
-#include "Mesh.hpp"
+#include "component/Mesh.hpp"
 #include "PhysicsManager.hpp"
 #include "RigidBody3D.hpp"
-#include "Transform.hpp"
+#include "component/Transform.hpp"
 #include "WheeledVehicle3D.hpp"
 
 #include <fmt/format.h>
