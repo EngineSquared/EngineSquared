@@ -30,7 +30,6 @@ includes("src/engine/xmake.lua")
 add_rules("plugin.vsxmake.autoupdate")
 target("EngineSquared")
     set_kind("object")
-    set_default(true)
     set_languages("cxx20")
     set_version("0.0.0")
 
@@ -78,7 +77,6 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        set_default(false)
         set_languages("cxx20")
         add_files(file)
         add_files("tests/main.cpp")

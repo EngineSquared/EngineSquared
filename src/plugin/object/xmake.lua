@@ -37,7 +37,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        set_default(false)
+        
         set_languages("cxx20")
         add_packages("entt", "gtest", "glm", "tinyobjloader", "spdlog", "fmt")
         add_links("gtest")
