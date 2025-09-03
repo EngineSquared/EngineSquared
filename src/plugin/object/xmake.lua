@@ -16,7 +16,10 @@ target("PluginObject")
     add_deps("EngineSquaredCore")
     add_deps("UtilsLog")
 
-    add_headerfiles("src/**.hpp")
+    add_headerfiles("src/(component/*.hpp)")
+    add_headerfiles("src/(exception/*.hpp)")
+    add_headerfiles("src/(resource/*.hpp)")
+    add_headerfiles("src/(utils/*.hpp)")
     add_includedirs("src", {public = true})
 
     add_files("src/**.cpp")
