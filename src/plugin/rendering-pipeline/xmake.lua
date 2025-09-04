@@ -12,6 +12,7 @@ target("PluginRenderingPipeline")
     add_files("src/**.cpp")
 
     add_headerfiles("src/(plugin/*.hpp)")
+    add_headerfiles("src/(scheduler/*.hpp)")
     add_headerfiles("src/(*.hpp)")
 
     add_includedirs("src", {public = true})
