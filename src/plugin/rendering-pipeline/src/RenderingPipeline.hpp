@@ -1,14 +1,14 @@
 #pragma once
 
 // Schedulers
-#include "Init.hpp"
-#include "Setup.hpp"
+#include "scheduler/Init.hpp"
+#include "scheduler/Setup.hpp"
 
-#include "PreUpdate.hpp"
+#include "scheduler/PreUpdate.hpp"
 
-#include "Draw.hpp"
-#include "RenderSetup.hpp"
-#include "ToGPU.hpp"
+#include "scheduler/Draw.hpp"
+#include "scheduler/RenderSetup.hpp"
+#include "scheduler/ToGPU.hpp"
 
 // Plugin
-#include "PluginRenderingPipeline.hpp"
+#include "plugin/PluginRenderingPipeline.hpp"

@@ -6,7 +6,7 @@
 #include <Jolt/Jolt.h>
 // clang-format on
 
-#include "ContactListenerImpl.hpp"
+#include "utils/ContactListenerImpl.hpp"
 #include "FunctionContainer.hpp"
 
 #include <Jolt/Core/Factory.h>

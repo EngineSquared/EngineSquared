@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.hpp"
+#include "core/Core.hpp"
 #include "EntityToIDString.hpp"
 #include "Logger.hpp"
 #include <entt/entt.hpp>

@@ -1,14 +1,12 @@
-add_rules("mode.debug", "mode.release")
-add_requires("spdlog")
-set_languages("cxx20")
-
 target("UtilsString")
     set_kind("static")
     set_group(UTILS_GROUP_NAME)
     add_packages("spdlog")
-    
+
     add_files("src/**.cpp")
-    add_headerfiles("src/**.hpp", { public = true })
+
+    add_headerfiles("src/(*.hpp)")
+
     add_includedirs("src/", {public = true})
 
 for _, file in ipairs(os.files("tests/**.cpp")) do

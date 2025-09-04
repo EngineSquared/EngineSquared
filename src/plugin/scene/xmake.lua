@@ -1,7 +1,3 @@
-add_rules("mode.debug", "mode.release")
-add_requires("entt", "spdlog", "fmt")
-add_requires("gtest", {optional = true})
-
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
 includes("../../utils/string/xmake.lua")
@@ -10,7 +6,7 @@ target("PluginScene")
     set_kind("static")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
-    
+
     add_packages("entt", "spdlog", "fmt")
 
     add_deps("EngineSquaredCore")
@@ -18,11 +14,14 @@ target("PluginScene")
     add_deps("UtilsString")
 
     add_files("src/**.cpp")
+
+    add_headerfiles("src/(plugin/*.hpp)")
+    add_headerfiles("src/(resource/*.hpp)")
+    add_headerfiles("src/(system/*.hpp)")
+    add_headerfiles("src/(utils/*.hpp)")
+    add_headerfiles("src/(*.hpp)")
+
     add_includedirs("src/", {public = true})
-    add_includedirs("src/resource", {public = true})
-    add_includedirs("src/system", {public = true})
-    add_includedirs("src/utils", {public = true})
-    add_includedirs("src/plugin", {public = true})
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
@@ -36,7 +35,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        
+
         set_languages("cxx20")
         add_links("gtest")
         add_tests("default")

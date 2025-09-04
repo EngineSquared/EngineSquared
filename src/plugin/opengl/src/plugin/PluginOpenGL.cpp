@@ -1,11 +1,12 @@
 #include "OpenGL.pch.hpp"
 
 #include "Input.hpp"
-#include "OpenGL.hpp"
-#include "PluginWindow.hpp"
+#include "plugin/PluginWindow.hpp"
 #include "RenderingPipeline.hpp"
-#include "Startup.hpp"
-#include "Update.hpp"
+#include "scheduler/Startup.hpp"
+#include "scheduler/Update.hpp"
+
+#include "OpenGL.hpp"
 
 void ES::Plugin::OpenGL::Plugin::Bind()
 {

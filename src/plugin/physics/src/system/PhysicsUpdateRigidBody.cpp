@@ -1,12 +1,12 @@
 #include "JoltPhysics.pch.hpp"
 
-#include "PhysicsUpdateRigidBody.hpp"
+#include "system/PhysicsUpdateRigidBody.hpp"
 
-#include "FixedTimeUpdate.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
 #include "Logger.hpp"
-#include "PhysicsManager.hpp"
-#include "RigidBody3D.hpp"
-#include "SoftBody3D.hpp"
+#include "resource/PhysicsManager.hpp"
+#include "component/RigidBody3D.hpp"
+#include "component/SoftBody3D.hpp"
 #include "component/Mesh.hpp"
 #include "component/Transform.hpp"
 

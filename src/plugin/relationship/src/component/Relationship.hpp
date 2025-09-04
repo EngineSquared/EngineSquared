@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "Entity.hpp"
+#include "entity/Entity.hpp"
 
 namespace ES::Plugin::Relationship::Component {
 /**

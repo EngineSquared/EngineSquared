@@ -1,6 +1,6 @@
-#include "UpdateScene.hpp"
+#include "system/UpdateScene.hpp"
 
-#include "SceneManager.hpp"
+#include "resource/SceneManager.hpp"
 
 void ES::Plugin::Scene::System::UpdateScene(ES::Engine::Core &core)
 {

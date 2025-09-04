@@ -1,6 +1,3 @@
-add_rules("mode.debug", "mode.release")
-add_requires("entt", "gtest", "spdlog", "fmt")
-
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
 
@@ -8,15 +5,17 @@ target("PluginRelationship")
     set_group(PLUGINS_GROUP_NAME)
     set_kind("static")
     set_languages("cxx20")
-    
+
     add_packages("entt", "spdlog", "fmt")
 
     add_deps("EngineSquaredCore")
     add_deps("UtilsLog")
 
-    add_headerfiles("src/**.hpp", { public = true })
+    add_headerfiles("src/(component/*.hpp)")
+    add_headerfiles("src/(utils/*.hpp)")
+    add_headerfiles("src/(*.hpp)")
+
     add_includedirs("src/", {public = true})
-    add_includedirs("src/utils", {public = true})
 
     add_files("src/**.cpp")
 

@@ -1,13 +1,14 @@
-#include "CreateSkyBox.hpp"
-
-#include "OpenGL.hpp"
+#include <array>
+#include <filesystem>
+#include <stdexcept>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include <array>
-#include <filesystem>
-#include <stdexcept>
+#include "utils/CreateSkyBox.hpp"
+
+#include "OpenGL.hpp"
+
 
 namespace ES::Plugin::OpenGL::Utils {
 

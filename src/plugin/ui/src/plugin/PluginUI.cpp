@@ -1,10 +1,6 @@
-#include "PluginUI.hpp"
-#include "EventSystems.hpp"
-#include "InitUI.hpp"
 #include "RenderingPipeline.hpp"
-#include "ShaderSystems.hpp"
-#include "UIResource.hpp"
-#include "UpdateUI.hpp"
+
+#include "UI.hpp"
 
 void ES::Plugin::UI::Plugin::Bind()
 {

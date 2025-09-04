@@ -18,9 +18,8 @@
 
 #pragma once
 
-#include "GLTextBuffer.hpp"
+#include "utils/GLTextBuffer.hpp"
 #include "Object.hpp"
-#include "Text.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {
 

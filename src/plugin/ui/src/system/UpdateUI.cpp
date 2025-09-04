@@ -1,5 +1,5 @@
-#include "UpdateUI.hpp"
-#include "UIResource.hpp"
+#include "system/UpdateUI.hpp"
+#include "resource/UIResource.hpp"
 
 void ES::Plugin::UI::System::Update(ES::Engine::Core &core)
 {

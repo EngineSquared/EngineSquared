@@ -8,7 +8,7 @@
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Event.h>
 
-#include "Core.hpp"
+#include "core/Core.hpp"
 #include "Input.hpp"
 
 namespace ES::Plugin::UI::Utils {

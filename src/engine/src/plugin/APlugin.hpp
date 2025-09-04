@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core.hpp"
-#include "IPlugin.hpp"
+#include "core/Core.hpp"
+#include "plugin/IPlugin.hpp"
 
 namespace ES::Engine {
 class APlugin : public IPlugin {

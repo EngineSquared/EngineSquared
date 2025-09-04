@@ -11,7 +11,7 @@
 #include <glm/glm.hpp>
 #include <memory>
 
-#include "Layers.hpp"
+#include "utils/Layers.hpp"
 
 namespace ES::Plugin::Physics::Component {
 /// @brief A component that represents any 3D rigid body object in the physics world.

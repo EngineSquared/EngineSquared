@@ -4,7 +4,22 @@ UTILS_GROUP_NAME = "Utils"
 -- Set the default group for all targets
 
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "gtest", "spdlog", "tinyobjloader", "glm >=1.0.1", "glfw >=3.4", "glew", "fmt", "stb", "joltphysics")
+add_requires(
+    "entt",
+    "gtest",
+    "spdlog",
+    "tinyobjloader",
+    "glm >=1.0.1",
+    "glfw >=3.4",
+    "glew",
+    "fmt",
+    "stb",
+    "joltphysics",
+    "miniaudio")
+add_requires("rmlui >=6.0", { configs = { transform = true } })
+
+set_languages("c++20")
+set_warnings("allextra")
 
 includes("src/engine/xmake.lua")
 includes("src/plugin/camera/xmake.lua")
@@ -27,9 +42,9 @@ includes("src/utils/string/xmake.lua")
 includes("src/utils/tools/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
+add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
 target("EngineSquared")
     set_kind("object")
-    set_languages("cxx20")
     set_version("0.0.0")
 
     add_deps("EngineSquaredCore")

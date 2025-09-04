@@ -1,13 +1,13 @@
 #include "OpenGL.pch.hpp"
 
-#include "CubeMapManager.hpp"
-#include "FontManager.hpp"
-#include "GLMeshBufferManager.hpp"
-#include "GLSpriteBufferManager.hpp"
-#include "GLTextBufferManager.hpp"
-#include "ManagerSystems.hpp"
-#include "ShaderManager.hpp"
-#include "TextureManager.hpp"
+#include "resource/CubeMapManager.hpp"
+#include "resource/FontManager.hpp"
+#include "resource/GLMeshBufferManager.hpp"
+#include "resource/GLSpriteBufferManager.hpp"
+#include "resource/GLTextBufferManager.hpp"
+#include "system/ManagerSystems.hpp"
+#include "resource/ShaderManager.hpp"
+#include "resource/TextureManager.hpp"
 
 void ES::Plugin::OpenGL::System::LoadFontManager(ES::Engine::Core &core)
 {

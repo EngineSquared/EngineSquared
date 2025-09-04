@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Engine.hpp"
-#include "EventListener.hpp"
-#include "RenderInterface.hpp"
-#include "SystemInterface.hpp"
+#include "utils/EventListener.hpp"
+#include "utils/RenderInterface.hpp"
+#include "utils/SystemInterface.hpp"
 
 namespace ES::Plugin::UI::Resource {
 class UIResource {

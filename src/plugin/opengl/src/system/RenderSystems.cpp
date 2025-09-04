@@ -1,30 +1,31 @@
 #include "OpenGL.pch.hpp"
 
-#include "Camera.hpp"
-#include "CubeMapHandle.hpp"
-#include "CubeMapManager.hpp"
-#include "DirectionalLight.hpp"
-#include "Entity.hpp"
-#include "FontHandle.hpp"
-#include "FontManager.hpp"
-#include "GLMeshBufferManager.hpp"
-#include "GLSpriteBufferManager.hpp"
-#include "GLTextBufferManager.hpp"
-#include "Light.hpp"
-#include "LightInfo.hpp"
-#include "MaterialCache.hpp"
-#include "MaterialHandle.hpp"
-#include "ModelHandle.hpp"
+#include "entity/Entity.hpp"
+
+#include "resource/Camera.hpp"
+#include "component/CubeMapHandle.hpp"
+#include "resource/CubeMapManager.hpp"
+#include "resource/DirectionalLight.hpp"
+#include "component/FontHandle.hpp"
+#include "resource/FontManager.hpp"
+#include "resource/GLMeshBufferManager.hpp"
+#include "resource/GLSpriteBufferManager.hpp"
+#include "resource/GLTextBufferManager.hpp"
+#include "component/Light.hpp"
+#include "utils/LightInfo.hpp"
+#include "resource/MaterialCache.hpp"
+#include "component/MaterialHandle.hpp"
+#include "component/ModelHandle.hpp"
 #include "Object.hpp"
 #include "RenderSystems.hpp"
-#include "ShaderHandle.hpp"
-#include "ShaderManager.hpp"
-#include "Sprite.hpp"
-#include "SpriteHandle.hpp"
-#include "Text.hpp"
-#include "TextHandle.hpp"
-#include "TextureHandle.hpp"
-#include "TextureManager.hpp"
+#include "component/ShaderHandle.hpp"
+#include "resource/ShaderManager.hpp"
+#include "component/Sprite.hpp"
+#include "component/SpriteHandle.hpp"
+#include "component/Text.hpp"
+#include "component/TextHandle.hpp"
+#include "component/TextureHandle.hpp"
+#include "resource/TextureManager.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -168,7 +169,7 @@ void ES::Plugin::OpenGL::System::CreateCamera(ES::Engine::Core &core)
 void ES::Plugin::OpenGL::System::LoadMaterialCache(ES::Engine::Core &core)
 {
     auto &materialCache = core.RegisterResource<Resource::MaterialCache>({});
-    materialCache.Add(entt::hashed_string("default"), std::move(Utils::Material()));
+    materialCache.Add(entt::hashed_string("default"), Utils::Material());
 }
 
 void ES::Plugin::OpenGL::System::UpdateMatrices(ES::Engine::Core &core)

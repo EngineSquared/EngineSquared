@@ -1,10 +1,10 @@
 #include "JoltPhysics.pch.hpp"
 
-#include "PhysicsUpdate.hpp"
+#include "system/PhysicsUpdate.hpp"
 
-#include "FixedTimeUpdate.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
 #include "Logger.hpp"
-#include "PhysicsManager.hpp"
+#include "resource/PhysicsManager.hpp"
 
 #include <fmt/format.h>
 

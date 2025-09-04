@@ -1,8 +1,8 @@
 #include "JoltPhysics.pch.hpp"
 
-#include "InitPhysicsManager.hpp"
+#include "system/InitPhysicsManager.hpp"
 
-#include "PhysicsManager.hpp"
+#include "resource/PhysicsManager.hpp"
 
 namespace ES::Plugin::Physics::System {
 void InitPhysicsManager(ES::Engine::Core &core)

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Update.hpp"
+#include "scheduler/Update.hpp"
 
 namespace ES::Plugin::RenderingPipeline {
 /**

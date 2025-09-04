@@ -1,7 +1,7 @@
 #include "Engine.pch.hpp"
 
-#include "Core.hpp"
-#include "Shutdown.hpp"
+#include "core/Core.hpp"
+#include "scheduler/Shutdown.hpp"
 
 void ES::Engine::Scheduler::Shutdown::RunSystems()
 {

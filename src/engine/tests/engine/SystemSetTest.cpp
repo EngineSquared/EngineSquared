@@ -1,9 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "Core.hpp"
-#include "Entity.hpp"
-
-#include "Update.hpp"
+#include "core/Core.hpp"
 
 using namespace ES::Engine;
 

@@ -1,6 +1,6 @@
 #include "OpenGL.pch.hpp"
 
-#include "Font.hpp"
+#include "utils/Font.hpp"
 #include "Logger.hpp"
 #include <fmt/format.h>
 

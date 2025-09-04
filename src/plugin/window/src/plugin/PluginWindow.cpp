@@ -1,6 +1,8 @@
-#include "PluginWindow.hpp"
 #include "RenderingPipeline.hpp"
-#include "WindowSystem.hpp"
+
+#include "plugin/PluginWindow.hpp"
+#include "resource/Window/Window.hpp"
+#include "system/WindowSystem.hpp"
 
 void ES::Plugin::Window::Plugin::Bind()
 {

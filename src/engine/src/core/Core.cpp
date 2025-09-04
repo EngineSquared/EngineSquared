@@ -1,12 +1,12 @@
 #include "Engine.pch.hpp"
 
-#include "Core.hpp"
-#include "Entity.hpp"
-#include "FixedTimeUpdate.hpp"
-#include "RelativeTimeUpdate.hpp"
-#include "Shutdown.hpp"
-#include "Startup.hpp"
-#include "Time.hpp"
+#include "core/Core.hpp"
+#include "entity/Entity.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
+#include "scheduler/RelativeTimeUpdate.hpp"
+#include "scheduler/Shutdown.hpp"
+#include "scheduler/Startup.hpp"
+#include "resource/Time.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {

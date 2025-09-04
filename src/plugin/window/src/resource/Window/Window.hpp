@@ -6,7 +6,7 @@
 #include <glm/vec2.hpp>
 #include <stdexcept>
 
-#include "WindowError.hpp"
+#include "exception/WindowError.hpp"
 
 namespace ES::Plugin::Window::Resource {
 
@@ -38,8 +38,6 @@ class Window {
   public:
     Window(uint32_t width, uint32_t height, const std::string &title, GLFWmonitor *monitor = nullptr,
            GLFWwindow *share = nullptr);
-
-    Window &operator=(const Window &) = delete;
 
     /**
      * @brief Destroy the window.

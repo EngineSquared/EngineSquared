@@ -1,11 +1,12 @@
 #include <gtest/gtest.h>
 
-#include "Core.hpp"
-#include "Entity.hpp"
-#include "FixedTimeUpdate.hpp"
-#include "RelativeTimeUpdate.hpp"
-#include "Startup.hpp"
-#include "Time.hpp"
+#include "core/Core.hpp"
+#include "entity/Entity.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
+#include "scheduler/RelativeTimeUpdate.hpp"
+#include "scheduler/Startup.hpp"
+#include "scheduler/Shutdown.hpp"
+#include "resource/Time.hpp"
 
 using namespace ES::Engine;
 using namespace std::chrono_literals;

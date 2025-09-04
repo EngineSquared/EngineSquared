@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "Core.hpp"
+#include "core/Core.hpp"
 #include "component/Relationship.hpp"
 #include "utils/Utils.hpp"
 

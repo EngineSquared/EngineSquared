@@ -23,7 +23,7 @@
 
 #include <GL/glew.h>
 
-#include "Loader.hpp"
+#include "utils/Loader.hpp"
 
 #include "component/Mesh.hpp"
 

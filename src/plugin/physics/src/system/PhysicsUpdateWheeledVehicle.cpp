@@ -2,11 +2,11 @@
 
 #include "PhysicsUpdateWheeledVehicle.hpp"
 
-#include "FixedTimeUpdate.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
 #include "Logger.hpp"
-#include "PhysicsManager.hpp"
-#include "RigidBody3D.hpp"
-#include "WheeledVehicle3D.hpp"
+#include "resource/PhysicsManager.hpp"
+#include "component/RigidBody3D.hpp"
+#include "component/WheeledVehicle3D.hpp"
 #include "component/Mesh.hpp"
 #include "component/Transform.hpp"
 

@@ -1,14 +1,15 @@
 #include "OpenGL.pch.hpp"
 
-#include "Camera.hpp"
 #include "Input.hpp"
-#include "MaterialCache.hpp"
-#include "MouseDragging.hpp"
-#include "ShaderManager.hpp"
-#include "TextureHandle.hpp"
-#include "TextureManager.hpp"
-#include "Window.hpp"
-#include "WindowSystems.hpp"
+
+#include "resource/Camera.hpp"
+#include "resource/MaterialCache.hpp"
+#include "resource/MouseDragging.hpp"
+#include "resource/ShaderManager.hpp"
+#include "component/TextureHandle.hpp"
+#include "resource/TextureManager.hpp"
+#include "resource/Window/Window.hpp"
+#include "system/WindowSystems.hpp"
 
 void ES::Plugin::OpenGL::System::InitGLEW(const ES::Engine::Core &)
 {

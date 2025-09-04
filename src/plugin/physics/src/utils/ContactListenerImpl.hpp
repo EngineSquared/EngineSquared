@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ContactCallback.hpp"
-#include "Core.hpp"
-#include "Entity.hpp"
+#include "utils/ContactCallback.hpp"
+#include "core/Core.hpp"
+#include "entity/Entity.hpp"
 #include "FunctionContainer.hpp"
 
 // clang-format off

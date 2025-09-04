@@ -1,5 +1,5 @@
 #pragma once
-#include "Loader.hpp"
+#include "utils/Loader.hpp"
 #include "Object.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {

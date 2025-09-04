@@ -1,6 +1,3 @@
-add_rules("mode.debug", "mode.release")
-add_requires("glm", "glfw", "entt", "spdlog", "fmt")
-
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
 includes("../../utils/function-container/xmake.lua")
@@ -10,21 +7,22 @@ target("PluginInput")
     set_kind("static")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
-    
+
     add_packages("glm", "glfw", "entt", "spdlog", "fmt")
-
-    set_pcxxheader("src/Input.pch.hpp")
-
-    add_files("src/**.cpp")
 
     add_deps("EngineSquaredCore")
     add_deps("PluginWindow")
     add_deps("UtilsLog")
     add_deps("UtilsFunctionContainer")
 
+    set_pcxxheader("src/Input.pch.hpp")
+
+    add_files("src/**.cpp")
+
+    add_headerfiles("src/(exception/*.hpp)")
+    add_headerfiles("src/(plugin/*.hpp)")
+    add_headerfiles("src/(resource/*.hpp)")
+    add_headerfiles("src/(utils/*.hpp)")
+    add_headerfiles("src/(*.hpp)")
+
     add_includedirs("src", {public = true})
-    add_includedirs("src/exception", {public = true})
-    add_includedirs("src/resource", {public = true})
-    add_includedirs("src/utils", {public = true})
-    add_includedirs("src/plugin", {public = true})
-    add_includedirs("src/system", {public = true})

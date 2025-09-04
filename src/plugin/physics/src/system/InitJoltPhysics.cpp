@@ -1,6 +1,6 @@
 #include "JoltPhysics.pch.hpp"
 
-#include "InitJoltPhysics.hpp"
+#include "system/InitJoltPhysics.hpp"
 
 namespace ES::Plugin::Physics::System {
 void InitJoltPhysics([[maybe_unused]] ES::Engine::Core &core)

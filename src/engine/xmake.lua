@@ -17,17 +17,17 @@ target("EngineSquaredCore")
 
     add_files("src/**.cpp")
 
-    add_headerfiles("src/**.hpp")
-    add_headerfiles("src/**.inl")
+    add_headerfiles("src/(core/*.hpp)")
+    add_headerfiles("src/(core/*.inl)")
+    add_headerfiles("src/(entity/*.hpp)")
+    add_headerfiles("src/(plugin/*.hpp)")
+    add_headerfiles("src/(resource/*.hpp)")
+    add_headerfiles("src/(scheduler/*.hpp)")
+    add_headerfiles("src/(scheduler/*.inl)")
+    add_headerfiles("src/(system/*.hpp)")
+    add_headerfiles("src/*.hpp")
 
     add_includedirs("src", { public = true })
-    add_includedirs("src/entity", { public = true })
-    add_includedirs("src/core", { public = true })
-    add_includedirs("src/scheduler", { public = true })
-    add_includedirs("src/resource", { public = true })
-    add_includedirs("src/system", { public = true })
-    add_includedirs("src/plugin", { public = true })
-    add_includedirs("../utils/log/src", { public = true })
 
     if is_mode("debug") then
         add_defines("DEBUG")

@@ -1,5 +1,3 @@
-add_requires("entt", "gtest", "glm", "spdlog", "fmt", "glfw >=3.4", "glew", "stb")
-
 includes("../../engine/xmake.lua")
 includes("../input/xmake.lua")
 includes("../object/xmake.lua")
@@ -13,20 +11,21 @@ target("StbImage")
     set_languages("cxx20")
     add_packages("stb")
     add_files("lib/stb_image/src/**.cpp")
-    
+
+    -- TODO: do we need this in this target or a global one works ?
     if is_mode("debug") then
         add_defines("DEBUG")
     end
 
 target("PluginOpenGL")
-    set_group(PLUGINS_GROUP_NAME)
     set_kind("static")
     set_languages("cxx20")
+    set_group(PLUGINS_GROUP_NAME)
     add_packages("entt", "glm", "spdlog", "fmt", "glfw", "glew", "stb")
-    
 
     set_pcxxheader("src/OpenGL.pch.hpp")
 
+    -- TODO: do we need this in this target or a global one works ?
     if is_mode("debug") then
         add_defines("DEBUG")
     end
@@ -42,14 +41,15 @@ target("PluginOpenGL")
 
     add_files("src/**.cpp")
 
+    add_headerfiles("src/(component/*.hpp)")
+    add_headerfiles("src/(exception/*.hpp)")
+    add_headerfiles("src/(plugin/*.hpp)")
+    add_headerfiles("src/(resource/*.hpp)")
+    add_headerfiles("src/(system/*.hpp)")
+    add_headerfiles("src/(utils/*.hpp)")
+    add_headerfiles("src/(*.hpp)")
+
     add_includedirs("src/", {public = true})
-    add_includedirs("src/exception/", {public = true})
-    add_includedirs("src/utils/", {public = true})
-    add_includedirs("src/component/", {public = true})
-    add_includedirs("src/resource/", {public = true})
-    add_includedirs("src/system/", {public = true})
-    add_includedirs("src/plugin/", {public = true})
-    add_headerfiles("src/**.hpp")
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
@@ -63,7 +63,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        
+
         set_languages("cxx20")
         add_links("gtest")
         add_tests("default")

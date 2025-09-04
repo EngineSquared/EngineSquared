@@ -17,7 +17,7 @@
  **************************************************************************/
 
 #pragma once
-#include "Font.hpp"
+#include "utils/Font.hpp"
 #include "Object.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {

@@ -3,8 +3,8 @@
 #include <GLFW/glfw3.h>
 #include <glm/vec2.hpp>
 
-#include "Core.hpp"
-#include "InputError.hpp"
+#include "core/Core.hpp"
+#include "exception/InputError.hpp"
 #include "Logger.hpp"
 
 namespace ES::Plugin::Input::Utils {

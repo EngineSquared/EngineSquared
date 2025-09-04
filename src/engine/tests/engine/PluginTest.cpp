@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "APlugin.hpp"
-#include "Core.hpp"
+#include "plugin/APlugin.hpp"
+#include "core/Core.hpp"
 
 struct ResourceTest {
     std::vector<std::string> data;
@@ -18,7 +18,7 @@ class PluginTestA : public ES::Engine::APlugin {
     void Bind() final
     {
         RegisterResource<ResourceTest>({});
-        RegisterSystems<ES::Engine::Scheduler::Update>([this](ES::Engine::Core &core) {
+        RegisterSystems<ES::Engine::Scheduler::Update>([](ES::Engine::Core &core) {
             auto &resource = core.GetResource<ResourceTest>();
             resource.data.emplace_back("PluginTestA::Bind");
         });
@@ -36,7 +36,7 @@ class PluginTestB : public ES::Engine::APlugin {
     void Bind() final
     {
         RequirePlugins<PluginTestA>();
-        RegisterSystems<ES::Engine::Scheduler::Update>([this](ES::Engine::Core &core) {
+        RegisterSystems<ES::Engine::Scheduler::Update>([](ES::Engine::Core &core) {
             auto &resource = core.GetResource<ResourceTest>();
             resource.data.emplace_back("PluginTestB::Bind");
         });

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.hpp"
+#include "core/Core.hpp"
 #include <chrono>
 
 namespace ES::Engine::Resource {

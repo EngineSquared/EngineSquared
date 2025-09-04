@@ -8,11 +8,10 @@
 #include <unordered_map>
 #include <vector>
 
-#include "IPlugin.hpp"
+#include "plugin/IPlugin.hpp"
 #include "Logger.hpp"
-#include "SchedulerContainer.hpp"
-#include "Shutdown.hpp"
-#include "Update.hpp"
+#include "scheduler/SchedulerContainer.hpp"
+#include "scheduler/Update.hpp"
 
 namespace ES::Engine {
 /**
@@ -303,4 +302,4 @@ class Core {
 };
 } // namespace ES::Engine
 
-#include "Core.inl"
+#include "core/Core.inl"
