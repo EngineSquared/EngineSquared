@@ -1,7 +1,7 @@
 #include "Engine.pch.hpp"
 
-#include "scheduler/RelativeTimeUpdate.hpp"
 #include "resource/Time.hpp"
+#include "scheduler/RelativeTimeUpdate.hpp"
 
 void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems()
 {

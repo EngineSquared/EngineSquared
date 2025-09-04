@@ -5,9 +5,9 @@
 #include "resource/GLMeshBufferManager.hpp"
 #include "resource/GLSpriteBufferManager.hpp"
 #include "resource/GLTextBufferManager.hpp"
-#include "system/ManagerSystems.hpp"
 #include "resource/ShaderManager.hpp"
 #include "resource/TextureManager.hpp"
+#include "system/ManagerSystems.hpp"
 
 void ES::Plugin::OpenGL::System::LoadFontManager(ES::Engine::Core &core)
 {

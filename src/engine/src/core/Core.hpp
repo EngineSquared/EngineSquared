@@ -8,8 +8,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "plugin/IPlugin.hpp"
 #include "Logger.hpp"
+#include "plugin/IPlugin.hpp"
 #include "scheduler/SchedulerContainer.hpp"
 #include "scheduler/Update.hpp"
 

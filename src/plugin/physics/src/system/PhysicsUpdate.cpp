@@ -2,9 +2,9 @@
 
 #include "system/PhysicsUpdate.hpp"
 
-#include "scheduler/FixedTimeUpdate.hpp"
 #include "Logger.hpp"
 #include "resource/PhysicsManager.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
 
 #include <fmt/format.h>
 

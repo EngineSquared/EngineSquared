@@ -1,7 +1,7 @@
 #include "Engine.pch.hpp"
 
-#include "scheduler/FixedTimeUpdate.hpp"
 #include "resource/Time.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
 
 void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems()
 {

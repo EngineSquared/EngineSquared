@@ -18,8 +18,8 @@
 
 #pragma once
 
-#include "utils/GLSpriteBuffer.hpp"
 #include "Object.hpp"
+#include "utils/GLSpriteBuffer.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {
 

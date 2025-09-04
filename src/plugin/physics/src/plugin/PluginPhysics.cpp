@@ -1,6 +1,6 @@
-#include "scheduler/Startup.hpp"
-#include "scheduler/Shutdown.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
+#include "scheduler/Shutdown.hpp"
+#include "scheduler/Startup.hpp"
 
 #include "plugin/PluginPhysics.hpp"
 

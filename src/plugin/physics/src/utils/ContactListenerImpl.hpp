@@ -1,9 +1,9 @@
 #pragma once
 
-#include "utils/ContactCallback.hpp"
+#include "FunctionContainer.hpp"
 #include "core/Core.hpp"
 #include "entity/Entity.hpp"
-#include "FunctionContainer.hpp"
+#include "utils/ContactCallback.hpp"
 
 // clang-format off
 #include <Jolt/Jolt.h>

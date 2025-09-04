@@ -7,8 +7,8 @@
 #include <vector>
 
 #include "CallableFunction.hpp"
-#include "core/Core.hpp"
 #include "FunctionContainer.hpp"
+#include "core/Core.hpp"
 #include "resource/Window/Window.hpp"
 
 namespace ES::Plugin::Input::Resource {

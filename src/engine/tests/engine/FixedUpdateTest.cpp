@@ -2,8 +2,8 @@
 
 #include "core/Core.hpp"
 #include "entity/Entity.hpp"
-#include "scheduler/FixedTimeUpdate.hpp"
 #include "resource/Time.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
 
 using namespace ES::Engine;
 using namespace std::chrono_literals;

@@ -2,9 +2,9 @@
 
 #include "resource/Camera.hpp"
 #include "resource/DirectionalLight.hpp"
-#include "utils/LightInfo.hpp"
 #include "resource/ShaderManager.hpp"
 #include "system/ShaderSystems.hpp"
+#include "utils/LightInfo.hpp"
 
 void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
 {

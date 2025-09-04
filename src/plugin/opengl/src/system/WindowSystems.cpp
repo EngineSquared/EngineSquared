@@ -2,11 +2,11 @@
 
 #include "Input.hpp"
 
+#include "component/TextureHandle.hpp"
 #include "resource/Camera.hpp"
 #include "resource/MaterialCache.hpp"
 #include "resource/MouseDragging.hpp"
 #include "resource/ShaderManager.hpp"
-#include "component/TextureHandle.hpp"
 #include "resource/TextureManager.hpp"
 #include "resource/Window/Window.hpp"
 #include "system/WindowSystems.hpp"

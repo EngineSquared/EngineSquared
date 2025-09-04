@@ -18,8 +18,8 @@
 
 #pragma once
 
-#include "utils/GLMeshBuffer.hpp"
 #include "Object.hpp"
+#include "utils/GLMeshBuffer.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {
 

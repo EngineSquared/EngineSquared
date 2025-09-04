@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
+#include "NativeScripting.hpp"
 #include "core/Core.hpp"
 #include "entity/Entity.hpp"
-#include "NativeScripting.hpp"
 
 struct ActionHistory {
     std::vector<std::string> actions;

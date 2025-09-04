@@ -1,7 +1,7 @@
 #include "plugin/PluginSound.hpp"
-#include "system/InitSound.hpp"
 #include "resource/SoundManager.hpp"
 #include "scheduler/Startup.hpp"
+#include "system/InitSound.hpp"
 
 void ES::Plugin::Sound::Plugin::Bind()
 {

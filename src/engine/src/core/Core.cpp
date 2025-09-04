@@ -2,11 +2,11 @@
 
 #include "core/Core.hpp"
 #include "entity/Entity.hpp"
+#include "resource/Time.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
 #include "scheduler/RelativeTimeUpdate.hpp"
 #include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
-#include "resource/Time.hpp"
 
 ES::Engine::Core::Core() : _registry(nullptr)
 {

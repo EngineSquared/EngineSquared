@@ -2,13 +2,13 @@
 
 #include "system/PhysicsUpdateRigidBody.hpp"
 
-#include "scheduler/FixedTimeUpdate.hpp"
 #include "Logger.hpp"
-#include "resource/PhysicsManager.hpp"
+#include "component/Mesh.hpp"
 #include "component/RigidBody3D.hpp"
 #include "component/SoftBody3D.hpp"
-#include "component/Mesh.hpp"
 #include "component/Transform.hpp"
+#include "resource/PhysicsManager.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
 
 #include <fmt/format.h>
 

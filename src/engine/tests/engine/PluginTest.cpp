@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "plugin/APlugin.hpp"
 #include "core/Core.hpp"
+#include "plugin/APlugin.hpp"
 
 struct ResourceTest {
     std::vector<std::string> data;

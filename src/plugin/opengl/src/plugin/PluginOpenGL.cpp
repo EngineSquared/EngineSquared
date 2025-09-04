@@ -1,8 +1,8 @@
 #include "OpenGL.pch.hpp"
 
 #include "Input.hpp"
-#include "plugin/PluginWindow.hpp"
 #include "RenderingPipeline.hpp"
+#include "plugin/PluginWindow.hpp"
 #include "scheduler/Startup.hpp"
 #include "scheduler/Update.hpp"
 

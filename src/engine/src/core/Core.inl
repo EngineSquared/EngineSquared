@@ -1,5 +1,5 @@
-#include "core/Core.hpp"
 #include "Logger.hpp"
+#include "core/Core.hpp"
 #include "system/WrappedSystem.hpp"
 
 namespace ES::Engine {

@@ -9,7 +9,6 @@
 
 #include "OpenGL.hpp"
 
-
 namespace ES::Plugin::OpenGL::Utils {
 
 /**

@@ -17,8 +17,8 @@
  **************************************************************************/
 
 #pragma once
-#include "utils/Font.hpp"
 #include "Object.hpp"
+#include "utils/Font.hpp"
 
 namespace ES::Plugin::OpenGL::Resource {
 using FontManager = Object::Resource::ResourceManager<Utils::Font>;

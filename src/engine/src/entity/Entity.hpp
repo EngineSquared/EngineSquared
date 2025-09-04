@@ -1,8 +1,8 @@
 #pragma once
 
-#include "core/Core.hpp"
 #include "EntityToIDString.hpp"
 #include "Logger.hpp"
+#include "core/Core.hpp"
 #include <entt/entt.hpp>
 #include <typeindex>
 
