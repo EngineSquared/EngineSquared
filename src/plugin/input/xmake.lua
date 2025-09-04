@@ -22,6 +22,7 @@ target("PluginInput")
     add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/(plugin/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
+    add_headerfiles("src/(system/*.hpp)")
     add_headerfiles("src/(utils/*.hpp)")
     add_headerfiles("src/(*.hpp)")
 
