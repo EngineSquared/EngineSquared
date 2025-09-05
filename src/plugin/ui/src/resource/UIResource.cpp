@@ -114,6 +114,13 @@ void UIResource::InitDocument(const std::string &docPath)
     _document->SetProperty("height", "100%");
 }
 
+const std::string &UIResource::GetTitle()
+{
+    if (!_context || !_document)
+        return "";
+    return _document->GetTitle();
+}
+
 void UIResource::UpdateInnerContent(const std::string &childId, const std::string &content)
 {
     if (!IsReady())
@@ -211,7 +218,7 @@ std::string UIResource::GetValue(const std::string &elementId) const
     if (!IsReady())
     {
         ES::Utils::Log::Error(
-            fmt::format("RmlUi: Could not set transform property on {}: No active document", elementId));
+            fmt::format("RmlUi: Could not get the value of element {}: No active document", elementId));
         return "";
     }
 
@@ -221,6 +228,50 @@ std::string UIResource::GetValue(const std::string &elementId) const
         return element->GetInnerRML();
     ES::Utils::Log::Error(fmt::format("RmlUi: Could not get the value of element {}: Not found", elementId));
     return "";
+}
+
+std::string UIResource::GetStyle(const std::string &elementId, const std::string &property) const
+{
+    if (!IsReady())
+    {
+        ES::Utils::Log::Error(
+            fmt::format("RmlUi: Could not get the style on {}: No active document", elementId));
+        return "";
+    }
+
+    Rml::Element *element = _document->GetElementById(elementId.c_str());
+
+    if (element)
+    {
+        const Rml::Property *prop = element->GetProperty(property);
+        if (prop)
+        {
+            return prop->ToString();
+        }
+    }
+    ES::Utils::Log::Error(fmt::format("RmlUi: Could not get the style of element {}: Not found", elementId));
+    return "";
+}
+
+bool UIResource::SetStyleProperty(const std::string &elementId, const std::string &property, const std::string &value) const
+{
+    if (!IsReady())
+    {
+        ES::Utils::Log::Error(
+            fmt::format("RmlUi: Could not set the style '{}' on {}: No active document", property, elementId));
+        return false;
+    }
+
+    Rml::Element *element = _document->GetElementById(elementId.c_str());
+    if (!element)
+    {
+        ES::Utils::Log::Error(
+            fmt::format("RmlUi: Could not set the style '{}' on {}: Element not found", property, elementId));
+        return false;
+    }
+
+    element->SetProperty(property, value);
+    return true;
 }
 
 } // namespace ES::Plugin::UI::Resource
