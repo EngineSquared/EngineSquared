@@ -234,8 +234,7 @@ std::string UIResource::GetStyle(const std::string &elementId, const std::string
 {
     if (!IsReady())
     {
-        ES::Utils::Log::Error(
-            fmt::format("RmlUi: Could not get the style on {}: No active document", elementId));
+        ES::Utils::Log::Error(fmt::format("RmlUi: Could not get the style on {}: No active document", elementId));
         return "";
     }
 
@@ -253,7 +252,8 @@ std::string UIResource::GetStyle(const std::string &elementId, const std::string
     return "";
 }
 
-bool UIResource::SetStyleProperty(const std::string &elementId, const std::string &property, const std::string &value) const
+bool UIResource::SetStyleProperty(const std::string &elementId, const std::string &property,
+                                  const std::string &value) const
 {
     if (!IsReady())
     {
