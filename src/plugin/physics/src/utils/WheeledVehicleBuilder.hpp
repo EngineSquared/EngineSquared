@@ -58,6 +58,15 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
         return *this;
     }
 
+    /// @brief Set the mass of the vehicle.
+    /// @param mass The mass to set.
+    /// @return A reference to the vehicle builder.
+    inline WheeledVehicleBuilder &SetMass(float mass)
+    {
+        vehicleMass = mass;
+        return *this;
+    }
+
     /// @brief Set the body mesh of the vehicle.
     /// @param mesh The mesh to set.
     /// @return A reference to the vehicle builder.
@@ -200,6 +209,17 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
         return *this;
     }
 
+    /// @brief Set the function to modify the vehicle controller settings before creating the vehicle.
+    /// @param fn A callable that takes a reference to the vehicle controller settings and modifies it.
+    /// @return A reference to the vehicle builder.
+    /// @note This function is called before the vehicle is created.
+    inline WheeledVehicleBuilder &
+    SetVehicleControllerSettingsFn(const std::function<void(JPH::WheeledVehicleControllerSettings &)> &fn)
+    {
+        vehicleControllerSettingsFn = fn;
+        return *this;
+    }
+
     /// @brief Set the collision tester of the vehicle.
     /// @param tester The collision tester to set.
     /// @return A reference to the vehicle builder.
@@ -225,6 +245,8 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     glm::vec3 upVector = glm::vec3(0.0f, 1.0f, 0.0f);
     /// Initial vehicle position.
     glm::vec3 initialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+    /// Vehicle mass.
+    float vehicleMass = 1500.0f;
     /// Mesh used for the body of the vehicle.
     std::optional<ES::Plugin::Object::Component::Mesh> bodyMesh = std::nullopt;
     /// Mesh used for the wheels of the vehicle.
@@ -243,6 +265,10 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     /// @note This function is called after a vehicle is fully initialized.
     std::function<void(ES::Engine::Core &, ES::Engine::Entity &)> vehicleCallbackFn = [](ES::Engine::Core &,
                                                                                          ES::Engine::Entity &) {};
+    /// Vehicle controller settings modification function to be called before creating the vehicle.
+    /// @note This function is called before the vehicle is created.
+    std::function<void(JPH::WheeledVehicleControllerSettings &)> vehicleControllerSettingsFn = [](JPH::WheeledVehicleControllerSettings &) {
+    };
     /// Differentials settings of the vehicle.
     std::vector<JPH::VehicleDifferentialSettings> differentialSettings;
     /// Anti-roll bar settings of the vehicle.
