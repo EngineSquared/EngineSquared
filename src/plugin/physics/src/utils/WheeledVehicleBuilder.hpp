@@ -246,7 +246,7 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
     /// Initial vehicle position.
     glm::vec3 initialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
     /// Vehicle mass.
-    float vehicleMass = 1500.0f;
+    float vehicleMass = 1000.0f;
     /// Mesh used for the body of the vehicle.
     std::optional<ES::Plugin::Object::Component::Mesh> bodyMesh = std::nullopt;
     /// Mesh used for the wheels of the vehicle.

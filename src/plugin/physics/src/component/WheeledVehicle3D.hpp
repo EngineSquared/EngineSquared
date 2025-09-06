@@ -43,7 +43,7 @@ struct WheeledVehicle3D {
     /// @brief The vehicle constraint itself. This should not be constructed manually.
     std::shared_ptr<JPH::VehicleConstraint> vehicleConstraint;
     /// @brief The vehicle mass.
-    float vehicleMass = 1430.0f;
+    float vehicleMass = 1000.0f;
 
     /// @brief Sub struct for wheels
     struct Wheel {
