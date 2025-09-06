@@ -17,7 +17,7 @@ namespace ES::Plugin::Input::Resource {
  */
 class InputManager {
   public:
-    InputManager(ES::Engine::Core &core) : _core(core)
+    explicit InputManager(ES::Engine::Core &core) : _core(core)
     {
         _keyCallbacks = std::make_shared<KeyCallbackContainer>();
         _charCallbacks = std::make_shared<CharCallbackContainer>();
