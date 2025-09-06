@@ -26,6 +26,7 @@ target("PluginPhysics")
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(system/*.hpp)")
     add_headerfiles("src/(utils/*.hpp)")
+    add_headerfiles("src/(utils/*.inl)")
     add_headerfiles("src/(*.hpp)")
 
     add_includedirs("src/", {public = true})
