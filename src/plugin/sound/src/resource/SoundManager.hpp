@@ -95,6 +95,7 @@ class SoundManager {
                     }
                     else
                     {
+                        ma_decoder_seek_to_pcm_frame(&sound.decoder, 0);
                         sound.isPlaying = false;
                         break;
                     }
