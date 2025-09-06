@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Mesh.hpp"
-#include "WheeledVehicle3D.hpp"
-#include "WheeledVehicleBuilderError.hpp"
+#include "component/Mesh.hpp"
+#include "component/WheeledVehicle3D.hpp"
+#include "exception/WheeledVehicleBuilderError.hpp"
 #include "core/Core.hpp"
 #include <array>
 #include <functional>
