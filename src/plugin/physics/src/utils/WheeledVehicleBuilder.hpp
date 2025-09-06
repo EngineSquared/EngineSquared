@@ -267,8 +267,8 @@ template <size_t WheelCount = 4> class WheeledVehicleBuilder {
                                                                                          ES::Engine::Entity &) {};
     /// Vehicle controller settings modification function to be called before creating the vehicle.
     /// @note This function is called before the vehicle is created.
-    std::function<void(JPH::WheeledVehicleControllerSettings &)> vehicleControllerSettingsFn = [](JPH::WheeledVehicleControllerSettings &) {
-    };
+    std::function<void(JPH::WheeledVehicleControllerSettings &)> vehicleControllerSettingsFn =
+        [](JPH::WheeledVehicleControllerSettings &) {};
     /// Differentials settings of the vehicle.
     std::vector<JPH::VehicleDifferentialSettings> differentialSettings;
     /// Anti-roll bar settings of the vehicle.
