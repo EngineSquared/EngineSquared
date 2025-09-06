@@ -36,12 +36,19 @@ struct RigidBody3D {
     /// and can be used as a trigger volume.
     bool isSensor = false;
 
+    /// @brief A function that will be called on the body creation settings object before it is used to create the body.
+    /// @param bodySettings The body creation settings object.
+    using BodyCreationSettingsCallback = std::function<void(JPH::BodyCreationSettings &)>;
+    BodyCreationSettingsCallback onBodyCreationSettings = nullptr;
+
     /// @brief Construct a rigid body with a shape.
     /// @param shapeSettings
     RigidBody3D(const std::shared_ptr<JPH::ShapeSettings> &_shapeSettings,
                 const JPH::EMotionType _motionType = JPH::EMotionType::Static,
-                const JPH::ObjectLayer _layer = Utils::Layers::NON_MOVING, const bool _isSensor = false)
-        : shapeSettings(_shapeSettings), body(nullptr), motionType(_motionType), layer(_layer), isSensor(_isSensor)
+                const JPH::ObjectLayer _layer = Utils::Layers::NON_MOVING, const bool _isSensor = false,
+                const BodyCreationSettingsCallback &_onBodyCreationSettings = nullptr)
+        : shapeSettings(_shapeSettings), body(nullptr), motionType(_motionType), layer(_layer), isSensor(_isSensor),
+          onBodyCreationSettings(_onBodyCreationSettings)
     {
         // Make sure Jolt doesn't try to free the settings, the shared_ptr will do it.
         shapeSettings->SetEmbedded();

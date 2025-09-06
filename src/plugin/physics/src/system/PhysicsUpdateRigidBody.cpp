@@ -47,6 +47,11 @@ void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry 
 
     bodySettings.mIsSensor = rigidBody.isSensor;
 
+    if (rigidBody.onBodyCreationSettings)
+    {
+        rigidBody.onBodyCreationSettings(bodySettings);
+    }
+
     rigidBody.body = physicsSystem.GetBodyInterface().CreateBody(bodySettings);
 
     if (rigidBody.body == nullptr)
