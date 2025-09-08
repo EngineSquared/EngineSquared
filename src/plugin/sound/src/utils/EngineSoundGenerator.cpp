@@ -63,7 +63,8 @@ static void CalculateEngineTimings(Component::EngineSoundData *data)
     data->cycle_duration = data->sec_between_fires;
 }
 
-static std::vector<float> GenerateCylinderSound(Component::EngineSoundData *data, float cylinder_timing, ma_uint32 sample_rate)
+static std::vector<float> GenerateCylinderSound(Component::EngineSoundData *data, float cylinder_timing,
+                                                ma_uint32 sample_rate)
 {
     float before_fire_duration = (cylinder_timing / 180.0f) / (data->strokes_per_sec / 2.0f);
 
