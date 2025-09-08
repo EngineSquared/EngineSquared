@@ -11,6 +11,7 @@ target("PluginSound")
     set_policy("build.warning", true)
 
     add_deps("EngineSquaredCore")
+    add_deps("PluginPhysics")
 
     add_files("src/**.cpp")
     add_includedirs("src/", {public = true})
@@ -35,6 +36,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_default(false)
         set_languages("cxx20")
         add_deps("EngineSquaredCore")
+        add_deps("PluginPhysics")
         add_files(file)
         add_files("tests/main.cpp")
         add_includedirs("tests/utils", {public = true})

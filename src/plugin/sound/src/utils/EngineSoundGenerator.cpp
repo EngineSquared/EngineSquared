@@ -1,4 +1,5 @@
 #include "EngineSoundGenerator.hpp"
+#include "component/WheeledVehicle3D.hpp"
 
 namespace ES::Plugin::Sound::Utils {
 
