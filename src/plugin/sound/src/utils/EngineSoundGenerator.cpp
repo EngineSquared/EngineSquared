@@ -140,10 +140,12 @@ void EngineDataCallback(ma_device *pDevice, void *pOutput, ma_uint32 frameCount)
     ES::Engine::Core *core = static_cast<ES::Engine::Core *>(pDevice->pUserData);
     float *out = static_cast<float *>(pOutput);
 
-    core.GetRegistry().view<ES::Plugin::Sound::Component::EngineSound, ES::Plugin::Physics::Component::WheeledVehicle3D>().each(
-        [&core, &out](auto entity, ES::Plugin::Sound::Component::EngineSound &engineSound, ES::Plugin::Physics::Component::WheeledVehicle3D &vehicle) {
-
-            auto controller = reinterpret_cast<JPH::WheeledVehicleController *>(vehicle.vehicleConstraint->GetController());
+    core.GetRegistry()
+        .view<ES::Plugin::Sound::Component::EngineSound, ES::Plugin::Physics::Component::WheeledVehicle3D>()
+        .each([&core, &out](auto entity, ES::Plugin::Sound::Component::EngineSound &engineSound,
+                            ES::Plugin::Physics::Component::WheeledVehicle3D &vehicle) {
+            auto controller =
+                reinterpret_cast<JPH::WheeledVehicleController *>(vehicle.vehicleConstraint->GetController());
 
             engineSound.data.rpm = (controller) ? controller->GetEngine().GetCurrentRPM() : 900.0f;
 
