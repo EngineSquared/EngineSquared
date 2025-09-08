@@ -70,13 +70,13 @@ class SoundManager {
     static void data_callback(ma_device *pDevice, void *pOutput, const void * /*pInput*/, ma_uint32 frameCount)
     {
         auto *core = static_cast<ES::Engine::Core *>(pDevice->pUserData);
-        auto *self = core->GetResource<SoundManager>();
+        auto &self = core->GetResource<SoundManager>();
         auto *outputBuffer = static_cast<float *>(pOutput);
         std::memset(outputBuffer, 0, sizeof(float) * frameCount * 2); // stereo clear
 
         ES::Plugin::Sound::Utils::EngineDataCallback(pDevice, pOutput, frameCount);
 
-        for (auto &[name, sound] : self->_soundsToPlay)
+        for (auto &[name, sound] : self._soundsToPlay)
         {
             if (!sound.isPlaying || sound.isPaused)
                 continue;
@@ -101,7 +101,7 @@ class SoundManager {
                 {
                     if (sound.loop)
                     {
-                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame, NULL);
+                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
                         continue;
                     }
                     else
@@ -116,7 +116,7 @@ class SoundManager {
                     ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &currentFrame);
                     if (currentFrame >= sound.loopEndFrame)
                     {
-                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame, NULL);
+                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
                     }
                 }
                 // Mix into output buffer (stereo, interleaved)
@@ -250,7 +250,7 @@ class SoundManager {
         {
             it->second.isPlaying = false;
             it->second.isPaused = false;
-            ma_decoder_seek_to_pcm_frame(&it->second.decoder, 0, NULL);
+            ma_decoder_seek_to_pcm_frame(&it->second.decoder, 0);
         }
         else
         {
