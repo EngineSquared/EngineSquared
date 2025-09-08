@@ -26,7 +26,7 @@
 #pragma once
 
 #include "Engine.hpp"
-#include "EngineSound.hpp"
+#include "EngineSoundData.hpp"
 
 #include <algorithm>
 #include <chrono>

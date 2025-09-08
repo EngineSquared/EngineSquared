@@ -1,7 +1,7 @@
 #pragma once
 
 // Components
-#include "component/EngineSound.hpp"
+#include "component/EngineSoundData.hpp"
 
 // Plugin
 #include "plugin/PluginSound.hpp"
