@@ -10,8 +10,8 @@
  * it under the terms of the GPL-3.0 License as published by the
  * Free Software Foundation. See the GPL-3.0 License for more details.
  *
- * @file EngineSound.hpp
- * @brief EngineSound struct declaration.
+ * @file EngineSoundData.hpp
+ * @brief EngineSoundData struct declaration.
  *
  * This struct is used to represent engine sound data.
  *
@@ -26,7 +26,7 @@
 
 namespace ES::Plugin::Sound::Component {
 
-struct EngineData {
+struct EngineSoundData {
     float t = 0.0f;
     float rpm = 900.0f;
     int strokes = 4;
@@ -46,8 +46,8 @@ struct EngineData {
     int buffer_size = 0;
     bool buffers_ready = false;
 
-    EngineSound() = default;
-    ~EngineSound() = default;
+    EngineSoundData() = default;
+    ~EngineSoundData() = default;
 };
 
 } // namespace ES::Plugin::Sound::Component

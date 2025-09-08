@@ -10,11 +10,8 @@ SoundManager::~SoundManager()
         ma_decoder_uninit(&sound.decoder);
     }
 
-    if (_isInitialized)
-    {
-        ma_device_stop(&_device);
-        ma_device_uninit(&_device);
-    }
+    ma_device_stop(&_device);
+    ma_device_uninit(&_device);
 }
 
 } // namespace ES::Plugin::Sound::Resource

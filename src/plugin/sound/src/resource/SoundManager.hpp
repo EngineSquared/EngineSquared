@@ -2,6 +2,8 @@
 
 #include <functional>
 #include <map>
+#include <unordered_map>
+#include <string_view>
 #include <miniaudio.h>
 
 #include "EngineSoundGenerator.hpp"
@@ -68,7 +70,7 @@ class SoundManager {
     static void data_callback(ma_device *pDevice, void *pOutput, const void * /*pInput*/, ma_uint32 frameCount)
     {
         auto *core = static_cast<ES::Engine::Core *>(pDevice->pUserData);
-        auto *self = core->GetResourceManager<SoundManager>();
+        auto *self = core->GetResource<SoundManager>();
         auto *outputBuffer = static_cast<float *>(pOutput);
         std::memset(outputBuffer, 0, sizeof(float) * frameCount * 2); // stereo clear
 
@@ -99,7 +101,7 @@ class SoundManager {
                 {
                     if (sound.loop)
                     {
-                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
+                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame, NULL);
                         continue;
                     }
                     else
@@ -114,7 +116,7 @@ class SoundManager {
                     ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &currentFrame);
                     if (currentFrame >= sound.loopEndFrame)
                     {
-                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
+                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame, NULL);
                     }
                 }
                 // Mix into output buffer (stereo, interleaved)
@@ -132,14 +134,8 @@ class SoundManager {
      *
      * @return void
      */
-    inline void Init(const ES::Engine::Core &core)
+    inline void Init(ES::Engine::Core &core)
     {
-        if (_isInitialized)
-        {
-            ES::Utils::Log::Warn("SoundManager is already initialized");
-            return;
-        }
-
         _deviceConfig = ma_device_config_init(ma_device_type_playback);
         _deviceConfig.playback.format = ma_format_f32;
         _deviceConfig.playback.channels = 2;
@@ -163,7 +159,6 @@ class SoundManager {
         else
         {
             ES::Utils::Log::Info("Audio device started successfully.");
-            _isInitialized = true;
         }
     }
 
@@ -255,7 +250,7 @@ class SoundManager {
         {
             it->second.isPlaying = false;
             it->second.isPaused = false;
-            ma_decoder_seek_to_pcm_frame(&it->second.decoder, 0);
+            ma_decoder_seek_to_pcm_frame(&it->second.decoder, 0, NULL);
         }
         else
         {

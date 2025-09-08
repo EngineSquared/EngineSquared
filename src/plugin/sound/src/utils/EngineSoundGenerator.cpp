@@ -55,7 +55,7 @@ static std::vector<float> ConcatenateAudio(const std::vector<std::vector<float>>
     return result;
 }
 
-static void CalculateEngineTimings(EngineData *data)
+static void CalculateEngineTimings(Component::EngineSoundData *data)
 {
     data->strokes_per_sec = (data->rpm * 2.0f) / 60.0f;
     data->sec_between_fires = data->strokes / data->strokes_per_sec;
@@ -63,7 +63,7 @@ static void CalculateEngineTimings(EngineData *data)
     data->cycle_duration = data->sec_between_fires;
 }
 
-static std::vector<float> GenerateCylinderSound(EngineData *data, float cylinder_timing, ma_uint32 sample_rate)
+static std::vector<float> GenerateCylinderSound(Component::EngineSoundData *data, float cylinder_timing, ma_uint32 sample_rate)
 {
     float before_fire_duration = (cylinder_timing / 180.0f) / (data->strokes_per_sec / 2.0f);
 
@@ -77,7 +77,7 @@ static std::vector<float> GenerateCylinderSound(EngineData *data, float cylinder
     return ConcatenateAudio(parts);
 }
 
-void PrepareEngineBuffers(EngineData *data, ma_uint32 sample_rate)
+void PrepareEngineBuffers(Component::EngineSoundData *data, ma_uint32 sample_rate)
 {
     CalculateEngineTimings(data);
 
@@ -101,7 +101,7 @@ void PrepareEngineBuffers(EngineData *data, ma_uint32 sample_rate)
     data->buffers_ready = true;
 }
 
-float MixCylinders(EngineData *data, float time_seconds)
+float MixCylinders(Component::EngineSoundData *data, float time_seconds)
 {
     if (!data->buffers_ready || data->buffer_size == 0)
         return 0.0f;

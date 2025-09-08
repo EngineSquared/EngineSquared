@@ -39,9 +39,9 @@ namespace ES::Plugin::Sound::Utils {
 constexpr float AMPLITUDE = 0.15f;
 constexpr float PI = 3.14159265359f;
 
-void PrepareEngineBuffers(EngineData *data, ma_uint32 sample_rate);
+void PrepareEngineBuffers(Component::EngineSoundData *data, ma_uint32 sample_rate);
 
-float MixCylinders(EngineData *data, float time_seconds);
+float MixCylinders(Component::EngineSoundData *data, float time_seconds);
 
 void EngineDataCallback(ma_device *pDevice, void *pOutput, ma_uint32 frameCount);
 
