@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.hpp"
+#include "core/Core.hpp"
 
 namespace ES::Plugin::Physics::System {
 void OnConstructLinkRigidBodiesToPhysicsSystem(ES::Engine::Core &core);

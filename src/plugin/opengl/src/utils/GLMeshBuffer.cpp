@@ -1,6 +1,6 @@
 #include "OpenGL.pch.hpp"
 
-#include "GLMeshBuffer.hpp"
+#include "utils/GLMeshBuffer.hpp"
 
 namespace ES::Plugin::OpenGL::Utils {
 

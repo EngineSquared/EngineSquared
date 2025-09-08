@@ -9,7 +9,6 @@ namespace ES::Plugin::Sound::Resource {
 class SoundManager {
   private:
     ma_result _result;
-    ma_decoder _decoder;
     ma_device_config _deviceConfig;
     ma_device _device;
 

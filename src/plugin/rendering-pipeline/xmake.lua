@@ -1,21 +1,21 @@
-add_rules("mode.debug", "mode.release")
-add_requires("entt", "fmt", "spdlog", "gtest")
-
 includes("../../engine/xmake.lua")
 
 target("PluginRenderingPipeline")
     set_kind("static")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
-    set_policy("build.warning", true)
+
     add_packages("entt", "fmt", "spdlog")
 
     add_deps("EngineSquaredCore")
 
     add_files("src/**.cpp")
+
+    add_headerfiles("src/(plugin/*.hpp)")
+    add_headerfiles("src/(scheduler/*.hpp)")
+    add_headerfiles("src/(*.hpp)")
+
     add_includedirs("src", {public = true})
-    add_includedirs("src/scheduler", {public = true})
-    add_includedirs("src/plugin", {public = true})
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
@@ -29,7 +29,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        set_default(false)
+
         set_languages("cxx20")
         add_links("gtest")
         add_tests("default")

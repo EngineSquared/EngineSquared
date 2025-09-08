@@ -1,8 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "Core.hpp"
-#include "Entity.hpp"
-#include "Startup.hpp"
+#include "core/Core.hpp"
+#include "scheduler/Startup.hpp"
 
 using namespace ES::Engine;
 

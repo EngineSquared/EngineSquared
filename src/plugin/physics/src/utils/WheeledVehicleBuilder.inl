@@ -2,7 +2,7 @@
 
 #include "Object.hpp"
 #include "OpenGL.hpp"
-#include "RigidBody3D.hpp"
+#include "component/RigidBody3D.hpp"
 
 template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::WheeledVehicleBuilder<WheelCount>::Build()
 {

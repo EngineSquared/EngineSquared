@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "Core.hpp"
-#include "Entity.hpp"
+#include "core/Core.hpp"
+#include "entity/Entity.hpp"
 
 using namespace ES::Engine;
 

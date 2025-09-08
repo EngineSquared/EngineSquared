@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "OBJLoader.hpp"
+#include "resource/OBJLoader.hpp"
 
 #include "export.h"
 

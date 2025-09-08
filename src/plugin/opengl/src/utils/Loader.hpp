@@ -11,7 +11,7 @@
 
 #include "Exception.hpp"
 #include "Logger.hpp"
-#include "OpenGLError.hpp"
+#include "exception/OpenGLError.hpp"
 
 #include <GL/glew.h>
 

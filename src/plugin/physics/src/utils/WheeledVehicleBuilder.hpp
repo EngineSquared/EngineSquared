@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Core.hpp"
-#include "Mesh.hpp"
-#include "WheeledVehicle3D.hpp"
-#include "WheeledVehicleBuilderError.hpp"
+#include "component/Mesh.hpp"
+#include "component/WheeledVehicle3D.hpp"
+#include "core/Core.hpp"
+#include "exception/WheeledVehicleBuilderError.hpp"
 #include <array>
 #include <functional>
 #include <glm/glm.hpp>

@@ -1,13 +1,13 @@
 #pragma once
 
 // System
-#include "UpdateScene.hpp"
+#include "system/UpdateScene.hpp"
 
 // Resource
-#include "SceneManager.hpp"
+#include "resource/SceneManager.hpp"
 
 // Utils
-#include "AScene.hpp"
+#include "utils/AScene.hpp"
 
 // Plugin
-#include "PluginScene.hpp"
+#include "plugin/PluginScene.hpp"

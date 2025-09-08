@@ -1,5 +1,5 @@
 #include "EventSystems.hpp"
-#include "UIResource.hpp"
+#include "resource/UIResource.hpp"
 
 void ES::Plugin::UI::System::UpdateMouseMoveEvent(ES::Engine::Core &core)
 {

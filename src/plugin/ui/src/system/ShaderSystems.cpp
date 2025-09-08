@@ -6,8 +6,8 @@
 
 #include "OpenGL.pch.hpp"
 
-#include "ShaderManager.hpp"
-#include "ShaderSystems.hpp"
+#include "resource/ShaderManager.hpp"
+#include "system/ShaderSystems.hpp"
 
 void ES::Plugin::UI::System::LoadShaderVertColor(ES::Engine::Core &core)
 {

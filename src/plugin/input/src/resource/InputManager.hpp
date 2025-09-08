@@ -7,8 +7,9 @@
 #include <vector>
 
 #include "CallableFunction.hpp"
-#include "Core.hpp"
 #include "FunctionContainer.hpp"
+#include "core/Core.hpp"
+#include "resource/Window/Window.hpp"
 
 namespace ES::Plugin::Input::Resource {
 /**
@@ -16,7 +17,7 @@ namespace ES::Plugin::Input::Resource {
  */
 class InputManager {
   public:
-    InputManager()
+    explicit InputManager(ES::Engine::Core &core) : _core(core)
     {
         _keyCallbacks = std::make_shared<KeyCallbackContainer>();
         _charCallbacks = std::make_shared<CharCallbackContainer>();
@@ -390,7 +391,13 @@ class InputManager {
         return _dropCallbacks->DeleteFunction(id) != nullptr;
     }
 
+    inline bool IsKeyPressed(int key) noexcept
+    {
+        return glfwGetKey(_core.GetResource<ES::Plugin::Window::Resource::Window>().GetGLFWWindow(), key) == GLFW_PRESS;
+    }
+
   private:
+    ES::Engine::Core &_core;
     using KeyCallbackContainer =
         ES::Utils::FunctionContainer::FunctionContainer<void, ES::Engine::Core &, int, int, int, int>;
     std::shared_ptr<KeyCallbackContainer> _keyCallbacks;

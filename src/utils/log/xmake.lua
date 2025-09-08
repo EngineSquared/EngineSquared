@@ -1,11 +1,9 @@
-add_rules("mode.debug", "mode.release")
-add_requires("spdlog", "fmt")
-set_languages("cxx20")
-
 target("UtilsLog")
     set_kind("headeronly")
+    add_packages("spdlog", "fmt")
     set_group(UTILS_GROUP_NAME)
 
-    add_packages("spdlog", "fmt")
+    add_headerfiles("src/(*.hpp)")
 
-    add_includedirs("src/", {public = true})
+    add_includedirs("src", {public = true})
+

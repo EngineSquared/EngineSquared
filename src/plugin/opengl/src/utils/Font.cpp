@@ -1,7 +1,7 @@
 #include "OpenGL.pch.hpp"
 
-#include "Font.hpp"
 #include "Logger.hpp"
+#include "utils/Font.hpp"
 #include <fmt/format.h>
 
 #define STB_TRUETYPE_IMPLEMENTATION

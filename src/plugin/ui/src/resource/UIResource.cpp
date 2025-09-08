@@ -1,6 +1,6 @@
-#include "UIResource.hpp"
-#include "UIError.hpp"
-#include "Window.hpp"
+#include "resource/UIResource.hpp"
+#include "exception/UIError.hpp"
+#include "resource/Window/Window.hpp"
 
 #include <RmlUi/Core.h>
 

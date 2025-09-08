@@ -9,7 +9,7 @@
 
 #include "Logger.hpp"
 
-#include "AScene.hpp"
+#include "utils/AScene.hpp"
 
 namespace ES::Plugin::Scene::Resource {
 class SceneManager {

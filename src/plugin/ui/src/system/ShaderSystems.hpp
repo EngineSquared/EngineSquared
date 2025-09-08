@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.hpp"
+#include "core/Core.hpp"
 
 namespace ES::Plugin::UI::System {
 void LoadShaderVertColor(ES::Engine::Core &core);

@@ -24,8 +24,8 @@
 #include <glm/glm.hpp>
 #include <memory>
 
-#include "Entity.hpp"
-#include "Layers.hpp"
+#include "entity/Entity.hpp"
+#include "utils/Layers.hpp"
 
 namespace ES::Plugin::Physics::Component {
 /// @brief A wheeled vehicle component.

@@ -8,7 +8,7 @@ includes("../utils/function-container/xmake.lua")
 target("EngineSquaredCore")
     set_kind("static")
     set_languages("cxx20")
-    set_policy("build.warning", true)
+
     add_packages("entt", "spdlog", "fmt")
     add_deps("UtilsLog")
     add_deps("UtilsFunctionContainer")
@@ -16,15 +16,18 @@ target("EngineSquaredCore")
     set_pcxxheader("src/Engine.pch.hpp")
 
     add_files("src/**.cpp")
-    add_headerfiles("src/**.hpp", { public = true })
+
+    add_headerfiles("src/(core/*.hpp)")
+    add_headerfiles("src/(core/*.inl)")
+    add_headerfiles("src/(entity/*.hpp)")
+    add_headerfiles("src/(plugin/*.hpp)")
+    add_headerfiles("src/(resource/*.hpp)")
+    add_headerfiles("src/(scheduler/*.hpp)")
+    add_headerfiles("src/(scheduler/*.inl)")
+    add_headerfiles("src/(system/*.hpp)")
+    add_headerfiles("src/*.hpp")
+
     add_includedirs("src", { public = true })
-    add_includedirs("src/entity", { public = true })
-    add_includedirs("src/core", { public = true })
-    add_includedirs("src/scheduler", { public = true })
-    add_includedirs("src/resource", { public = true })
-    add_includedirs("src/system", { public = true })
-    add_includedirs("src/plugin", { public = true })
-    add_includedirs("../utils/log/src", { public = true })
 
     if is_mode("debug") then
         add_defines("DEBUG")
@@ -42,7 +45,6 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        set_default(false)
         set_languages("cxx20")
         add_packages("entt", "gtest", "glm", "fmt", "spdlog")
         add_links("gtest")

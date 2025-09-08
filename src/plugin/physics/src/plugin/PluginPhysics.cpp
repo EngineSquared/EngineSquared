@@ -1,14 +1,16 @@
-#include "PluginPhysics.hpp"
-#include "FixedTimeUpdate.hpp"
-#include "InitJoltPhysics.hpp"
-#include "InitPhysicsManager.hpp"
-#include "PhysicsManager.hpp"
-#include "PhysicsUpdate.hpp"
-#include "PhysicsUpdateRigidBody.hpp"
-#include "PhysicsUpdateSoftBody.hpp"
-#include "PhysicsUpdateWheeledVehicle.hpp"
-#include "ShutdownJoltPhysics.hpp"
-#include "Startup.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
+#include "scheduler/Shutdown.hpp"
+#include "scheduler/Startup.hpp"
+
+#include "plugin/PluginPhysics.hpp"
+
+#include "system/InitJoltPhysics.hpp"
+#include "system/InitPhysicsManager.hpp"
+#include "system/PhysicsUpdate.hpp"
+#include "system/PhysicsUpdateRigidBody.hpp"
+#include "system/PhysicsUpdateSoftBody.hpp"
+#include "system/PhysicsUpdateWheeledVehicle.hpp"
+#include "system/ShutdownJoltPhysics.hpp"
 
 void ES::Plugin::Physics::Plugin::Bind()
 {

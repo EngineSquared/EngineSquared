@@ -3,9 +3,9 @@
 #include <GLFW/glfw3.h>
 #include <glm/vec2.hpp>
 
-#include "Core.hpp"
-#include "InputError.hpp"
 #include "Logger.hpp"
+#include "core/Core.hpp"
+#include "exception/InputError.hpp"
 
 namespace ES::Plugin::Input::Utils {
 using JoystickAxes = std::vector<float>;

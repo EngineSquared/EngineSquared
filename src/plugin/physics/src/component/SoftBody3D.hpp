@@ -13,9 +13,9 @@
 #include <glm/glm.hpp>
 #include <memory>
 
-#include "Layers.hpp"
-#include "SoftBodyCreationSettings.hpp"
-#include "SoftBodyVertexSettings.hpp"
+#include "utils/Layers.hpp"
+#include "utils/SoftBodyCreationSettings.hpp"
+#include "utils/SoftBodyVertexSettings.hpp"
 
 namespace ES::Plugin::Physics::Component {
 /// @brief A component that represents any 3D soft body object in the physics world.
