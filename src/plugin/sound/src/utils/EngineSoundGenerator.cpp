@@ -143,9 +143,9 @@ void EngineDataCallback(ma_device *pDevice, void *pOutput, ma_uint32 frameCount)
     ES::Engine::Core *core = static_cast<ES::Engine::Core *>(pDevice->pUserData);
     float *out = static_cast<float *>(pOutput);
 
-    core.GetRegistry()
-        .view<ES::Plugin::Sound::Component::EngineSound, ES::Plugin::Physics::Component::WheeledVehicle3D>()
-        .each([&core, &out](auto entity, ES::Plugin::Sound::Component::EngineSound &engineSound,
+    core->GetRegistry()
+        .view<ES::Plugin::Sound::Component::EngineSoundData, ES::Plugin::Physics::Component::WheeledVehicle3D>()
+        .each([&core, &out](auto entity, ES::Plugin::Sound::Component::EngineSoundData &engineSound,
                             ES::Plugin::Physics::Component::WheeledVehicle3D &vehicle) {
             auto controller =
                 reinterpret_cast<JPH::WheeledVehicleController *>(vehicle.vehicleConstraint->GetController());
