@@ -32,6 +32,7 @@
 #include <chrono>
 #include <math.h>
 #include <random>
+#include <miniaudio.h>
 
 namespace ES::Plugin::Sound::Utils {
 
