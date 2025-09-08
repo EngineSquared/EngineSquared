@@ -4,7 +4,7 @@
 #include <map>
 #include <miniaudio.h>
 
-#include "Engine.hpp"
+#include "EngineSoundGenerator.hpp"
 
 namespace ES::Plugin::Sound::Resource {
 
@@ -82,9 +82,12 @@ class SoundManager {
      */
     static void data_callback(ma_device *pDevice, void *pOutput, const void * /*pInput*/, ma_uint32 frameCount)
     {
-        auto *self = static_cast<SoundManager *>(pDevice->pUserData);
+        auto *core = static_cast<ES::Engine::Core *>(pDevice->pUserData);
+        auto *self = core->GetResourceManager<SoundManager>();
         auto *outputBuffer = static_cast<float *>(pOutput);
         std::memset(outputBuffer, 0, sizeof(float) * frameCount * 2); // stereo clear
+
+        ES::Plugin::Sound::Utils::EngineDataCallback(pDevice, pOutput, frameCount);
 
         for (auto &[name, sound] : self->_soundsToPlay)
         {
@@ -144,7 +147,7 @@ class SoundManager {
      *
      * @return void
      */
-    inline void Init()
+    inline void Init(const ES::Engine::Core &core)
     {
         if (_isInitialized)
         {
@@ -157,7 +160,7 @@ class SoundManager {
         _deviceConfig.playback.channels = 2;
         _deviceConfig.sampleRate = 44100;
         _deviceConfig.dataCallback = SoundManager::data_callback;
-        _deviceConfig.pUserData = this;
+        _deviceConfig.pUserData = &core;
 
         _result = ma_device_init(NULL, &_deviceConfig, &_device);
         if (_result != MA_SUCCESS)

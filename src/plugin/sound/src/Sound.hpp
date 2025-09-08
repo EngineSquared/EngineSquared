@@ -1,5 +1,8 @@
 #pragma once
 
+// Components
+#include "component/EngineSound.hpp"
+
 // Plugin
 #include "plugin/PluginSound.hpp"
 
@@ -8,3 +11,6 @@
 
 // Systems
 #include "system/InitSound.hpp"
+
+// Utils
+#include "utils/EngineSoundGenerator.hpp"
