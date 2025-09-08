@@ -9,6 +9,10 @@ static std::vector<float> GenerateCombustionSound(float base_frequency, float du
 
     float fundamental_freq = 30.0f + (base_frequency * 0.3f);
 
+    static thread_local std::random_device rd;
+    static thread_local std::mt19937 gen(rd());
+    static thread_local std::uniform_real_distribution<float> noise_dist(-0.5f, 0.5f);
+
     for (int i = 0; i < num_samples; ++i)
     {
         float t = static_cast<float>(i) / sample_rate;
@@ -18,7 +22,7 @@ static std::vector<float> GenerateCombustionSound(float base_frequency, float du
         float harmonic3 = 0.4f * sinf(2.0f * PI * fundamental_freq * 2.0f * t);
         float harmonic4 = 0.2f * sinf(2.0f * PI * fundamental_freq * 3.0f * t);
 
-        float noise = (static_cast<float>(rand()) / RAND_MAX - 0.5f) * 0.1f;
+        float noise = noise_dist(gen) * 0.1f;
         float decay = expf(-t * 8.0f);
         float attack = (t < 0.01f) ? (t / 0.01f) : 1.0f;
 

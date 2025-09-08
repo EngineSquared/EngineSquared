@@ -30,8 +30,7 @@
 
 #include <algorithm>
 #include <math.h>
-#include <stdlib.h>
-#include <time.h>
+#include <random>
 
 namespace ES::Plugin::Sound::Utils {
 
