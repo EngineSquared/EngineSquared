@@ -9,8 +9,7 @@ static std::vector<float> GenerateCombustionSound(float base_frequency, float du
 
     float fundamental_freq = 30.0f + (base_frequency * 0.3f);
 
-    static thread_local std::random_device rd;
-    static thread_local std::mt19937 gen(rd());
+    static thread_local std::mt19937 gen(std::chrono::steady_clock::now().time_since_epoch().count());
     static thread_local std::uniform_real_distribution<float> noise_dist(-0.5f, 0.5f);
 
     for (int i = 0; i < num_samples; ++i)
