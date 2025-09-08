@@ -2,9 +2,9 @@
 
 #include <functional>
 #include <map>
-#include <unordered_map>
-#include <string_view>
 #include <miniaudio.h>
+#include <string_view>
+#include <unordered_map>
 
 #include "EngineSoundGenerator.hpp"
 

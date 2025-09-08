@@ -31,8 +31,8 @@
 #include <algorithm>
 #include <chrono>
 #include <math.h>
-#include <random>
 #include <miniaudio.h>
+#include <random>
 
 namespace ES::Plugin::Sound::Utils {
 
