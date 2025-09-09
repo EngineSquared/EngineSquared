@@ -8,7 +8,7 @@ namespace ES::Plugin::RenderingPipeline {
  */
 class Init : public ES::Engine::Scheduler::AScheduler {
   public:
-    Init(ES::Engine::Core &core) : AScheduler(core) {};
+    Init(ES::Engine::Core &core) : AScheduler(core){};
 
     void RunSystems() override;
 };
