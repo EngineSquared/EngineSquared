@@ -18,9 +18,10 @@ namespace ES::Plugin::RenderingPipeline {
  */
 class Plugin : public ES::Engine::APlugin {
   public:
-    explicit Plugin(ES::Engine::Core &core): ES::Engine::APlugin(core){
-        // empty
-    };
+    explicit Plugin(ES::Engine::Core &core)
+        : ES::Engine::APlugin(core){
+              // empty
+          };
     virtual ~Plugin() = default;
 
     void Bind() final;
