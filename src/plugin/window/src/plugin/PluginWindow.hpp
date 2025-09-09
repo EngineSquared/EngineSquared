@@ -5,8 +5,9 @@
 namespace ES::Plugin::Window {
 class Plugin : public ES::Engine::APlugin {
   public:
-    using APlugin::APlugin;
-    ;
+    explicit Plugin(ES::Engine::Core &core): ES::Engine::APlugin(core){
+        // empty
+    };
     ~Plugin() = default;
 
     void Bind() final;
