@@ -6,12 +6,11 @@
 #include <string_view>
 #include <unordered_map>
 
-#include "EngineSoundGenerator.hpp"
+#include "Engine.hpp"
 
 namespace ES::Plugin::Sound::Resource {
 
-using CustomDataCallback =
-    std::function<void(ma_device *pDevice, void *pOutput, const void *pInput, ma_uint32 frameCount)>;
+using CustomDataCallback = std::function<void(ma_device *pDevice, void *pOutput, ma_uint32 frameCount)>;
 
 class SoundManager {
   private:
@@ -46,6 +45,8 @@ class SoundManager {
 
     std::unordered_map<std::string, Sound, TransparentHash, TransparentEqual> _soundsToPlay;
 
+    std::unordered_map<std::string, CustomDataCallback> _customCallbacks;
+
   public:
     /**
      * Constructor.
@@ -74,7 +75,10 @@ class SoundManager {
         auto *outputBuffer = static_cast<float *>(pOutput);
         std::memset(outputBuffer, 0, sizeof(float) * frameCount * 2); // stereo clear
 
-        ES::Plugin::Sound::Utils::EngineDataCallback(pDevice, pOutput, frameCount);
+        for (const auto &[name, callback] : self._customCallbacks)
+        {
+            callback(pDevice, pOutput, frameCount);
+        }
 
         for (auto &[name, sound] : self._soundsToPlay)
         {
@@ -411,5 +415,51 @@ class SoundManager {
         double position = static_cast<double>(currentFrame) / sound.decoder.outputSampleRate;
         return position;
     }
+
+    /**
+     * @brief Add a custom audio callback.
+     *
+     * @param name Unique name for the callback.
+     * @param callback The callback function to add.
+     */
+    inline void AddCustomCallback(const std::string &name, const CustomDataCallback &callback)
+    {
+        if (_customCallbacks.contains(name))
+        {
+            ES::Utils::Log::Warn(fmt::format("Custom callback \"{}\" already exists, replacing it", name));
+        }
+        _customCallbacks[name] = callback;
+    }
+
+    /**
+     * @brief Remove a custom audio callback.
+     *
+     * @param name Name of the callback to remove.
+     */
+    inline void RemoveCustomCallback(const std::string &name)
+    {
+        auto it = _customCallbacks.find(name);
+        if (it != _customCallbacks.end())
+        {
+            _customCallbacks.erase(it);
+        }
+        else
+        {
+            ES::Utils::Log::Error(fmt::format("Could not remove: Custom callback \"{}\" does not exist", name));
+        }
+    }
+
+    /**
+     * @brief Check if a custom callback exists.
+     *
+     * @param name Name of the callback to check.
+     * @return bool True if the callback exists, false otherwise.
+     */
+    inline bool HasCustomCallback(const std::string &name) const { return _customCallbacks.contains(name); }
+
+    /**
+     * @brief Clear all custom callbacks.
+     */
+    inline void ClearCustomCallbacks() { _customCallbacks.clear(); }
 };
 } // namespace ES::Plugin::Sound::Resource
