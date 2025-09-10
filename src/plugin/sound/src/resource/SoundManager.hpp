@@ -1,11 +1,17 @@
 #pragma once
 
+#include <functional>
 #include <map>
 #include <miniaudio.h>
+#include <string_view>
+#include <unordered_map>
 
 #include "Engine.hpp"
 
 namespace ES::Plugin::Sound::Resource {
+
+using CustomDataCallback = std::function<void(ma_device *pDevice, void *pOutput, ma_uint32 frameCount)>;
+
 class SoundManager {
   private:
     ma_result _result;
@@ -38,6 +44,8 @@ class SoundManager {
 
     std::unordered_map<std::string, Sound, TransparentHash, TransparentEqual> _soundsToPlay;
 
+    std::unordered_map<std::string, CustomDataCallback> _customCallbacks;
+
   public:
     /**
      * Constructor.
@@ -61,11 +69,17 @@ class SoundManager {
      */
     static void data_callback(ma_device *pDevice, void *pOutput, const void * /*pInput*/, ma_uint32 frameCount)
     {
-        auto *self = static_cast<SoundManager *>(pDevice->pUserData);
+        auto *core = static_cast<ES::Engine::Core *>(pDevice->pUserData);
+        auto &self = core->GetResource<SoundManager>();
         auto *outputBuffer = static_cast<float *>(pOutput);
         std::memset(outputBuffer, 0, sizeof(float) * frameCount * 2); // stereo clear
 
-        for (auto &[name, sound] : self->_soundsToPlay)
+        for (const auto &[name, callback] : self._customCallbacks)
+        {
+            callback(pDevice, pOutput, frameCount);
+        }
+
+        for (auto &[name, sound] : self._soundsToPlay)
         {
             if (!sound.isPlaying || sound.isPaused)
                 continue;
@@ -124,14 +138,14 @@ class SoundManager {
      *
      * @return void
      */
-    inline void Init()
+    inline void Init(ES::Engine::Core &core)
     {
         _deviceConfig = ma_device_config_init(ma_device_type_playback);
         _deviceConfig.playback.format = ma_format_f32;
         _deviceConfig.playback.channels = 2;
         _deviceConfig.sampleRate = 44100;
         _deviceConfig.dataCallback = SoundManager::data_callback;
-        _deviceConfig.pUserData = this;
+        _deviceConfig.pUserData = &core;
 
         _result = ma_device_init(NULL, &_deviceConfig, &_device);
         if (_result != MA_SUCCESS)
@@ -401,5 +415,51 @@ class SoundManager {
         double position = static_cast<double>(currentFrame) / sound.decoder.outputSampleRate;
         return position;
     }
+
+    /**
+     * @brief Add a custom audio callback.
+     *
+     * @param name Unique name for the callback.
+     * @param callback The callback function to add.
+     */
+    inline void AddCustomCallback(const std::string &name, const CustomDataCallback &callback)
+    {
+        if (_customCallbacks.contains(name))
+        {
+            ES::Utils::Log::Warn(fmt::format("Custom callback \"{}\" already exists, replacing it", name));
+        }
+        _customCallbacks[name] = callback;
+    }
+
+    /**
+     * @brief Remove a custom audio callback.
+     *
+     * @param name Name of the callback to remove.
+     */
+    inline void RemoveCustomCallback(const std::string &name)
+    {
+        auto it = _customCallbacks.find(name);
+        if (it != _customCallbacks.end())
+        {
+            _customCallbacks.erase(it);
+        }
+        else
+        {
+            ES::Utils::Log::Error(fmt::format("Could not remove: Custom callback \"{}\" does not exist", name));
+        }
+    }
+
+    /**
+     * @brief Check if a custom callback exists.
+     *
+     * @param name Name of the callback to check.
+     * @return bool True if the callback exists, false otherwise.
+     */
+    inline bool HasCustomCallback(const std::string &name) const { return _customCallbacks.contains(name); }
+
+    /**
+     * @brief Clear all custom callbacks.
+     */
+    inline void ClearCustomCallbacks() { _customCallbacks.clear(); }
 };
 } // namespace ES::Plugin::Sound::Resource
