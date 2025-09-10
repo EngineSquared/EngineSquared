@@ -57,7 +57,7 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
         wheelSettings[i]->mPosition = JPH::Vec3(wheelPosition.x, wheelPosition.y, wheelPosition.z);
 
         wheelEntity.template AddComponent<ES::Plugin::Object::Component::Transform>(core, wheelPosition);
-        wheelEntity.AddComponent<ES::Plugin::Object::Component::Mesh>(core, wheelMesh.value());
+        wheelEntity.template AddComponent<ES::Plugin::Object::Component::Mesh>(core, wheelMesh.value());
 
         if (wheelCallbackFn)
         {
@@ -101,7 +101,7 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
     vehicleConstraintSettings->mController = vehicleControllerSettings.get();
 
     // Add the component to the entity
-    vehicleEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(
+    vehicleEntity.template AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(
         core, bodySettings, finalShapeSettings, vehicleConstraintSettings, vehicleControllerSettings, collisionTester);
 
     if (vehicleCallbackFn)
