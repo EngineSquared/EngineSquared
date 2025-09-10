@@ -1,10 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "Core.hpp"
-#include "Entity.hpp"
 #include "NativeScripting.hpp"
-#include "PluginNativeScripting.hpp"
-#include "ScriptableEntity.hpp"
+#include "core/Core.hpp"
+#include "entity/Entity.hpp"
 
 struct ActionHistory {
     std::vector<std::string> actions;

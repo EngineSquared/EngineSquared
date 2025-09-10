@@ -1,5 +1,5 @@
-#include "InitUI.hpp"
-#include "UIResource.hpp"
+#include "system/InitUI.hpp"
+#include "resource/UIResource.hpp"
 
 void ES::Plugin::UI::System::Init(ES::Engine::Core &core)
 {

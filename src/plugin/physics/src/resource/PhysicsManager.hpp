@@ -6,8 +6,8 @@
 #include <Jolt/Jolt.h>
 // clang-format on
 
-#include "ContactListenerImpl.hpp"
 #include "FunctionContainer.hpp"
+#include "utils/ContactListenerImpl.hpp"
 
 #include <Jolt/Core/Factory.h>
 #include <Jolt/Core/JobSystemThreadPool.h>

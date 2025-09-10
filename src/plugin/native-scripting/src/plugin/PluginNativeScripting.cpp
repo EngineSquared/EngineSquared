@@ -1,5 +1,5 @@
-#include "PluginNativeScripting.hpp"
-#include "Startup.hpp"
+#include "plugin/PluginNativeScripting.hpp"
+#include "scheduler/Update.hpp"
 #include "system/ScriptingSystem.hpp"
 
 void ES::Plugin::NativeScripting::Plugin::Bind()

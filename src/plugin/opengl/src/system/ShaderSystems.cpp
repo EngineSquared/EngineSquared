@@ -1,10 +1,10 @@
 #include "OpenGL.pch.hpp"
 
-#include "Camera.hpp"
-#include "DirectionalLight.hpp"
-#include "LightInfo.hpp"
-#include "ShaderManager.hpp"
-#include "ShaderSystems.hpp"
+#include "resource/Camera.hpp"
+#include "resource/DirectionalLight.hpp"
+#include "resource/ShaderManager.hpp"
+#include "system/ShaderSystems.hpp"
+#include "utils/LightInfo.hpp"
 
 void ES::Plugin::OpenGL::System::LoadDefaultShader(ES::Engine::Core &core)
 {

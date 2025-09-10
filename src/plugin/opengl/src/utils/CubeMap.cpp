@@ -1,8 +1,10 @@
-#include "CubeMap.hpp"
-#include "OpenGL.pch.hpp"
 #include <cstring>
 #include <memory>
 #include <stb_image.h>
+
+#include "OpenGL.pch.hpp"
+
+#include "utils/CubeMap.hpp"
 
 namespace ES::Plugin::OpenGL::Utils {
 

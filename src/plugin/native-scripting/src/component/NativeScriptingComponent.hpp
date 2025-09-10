@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ScriptableEntity.hpp"
+#include "utils/ScriptableEntity.hpp"
 
 namespace ES::Plugin::NativeScripting::Component {
 /**

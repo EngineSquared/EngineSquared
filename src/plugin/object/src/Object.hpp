@@ -1,17 +1,17 @@
 #pragma once
 
 // Components
-#include "Mesh.hpp"
-#include "MeshID.hpp"
-#include "Transform.hpp"
-#include "Vertex.hpp"
+#include "component/Mesh.hpp"
+#include "component/MeshID.hpp"
+#include "component/Transform.hpp"
+#include "component/Vertex.hpp"
 
 // Exceptions
-#include "ResourceManagerError.hpp"
+#include "exception/ResourceManagerError.hpp"
 
 // Resources
-#include "OBJLoader.hpp"
-#include "ResourceManager.hpp"
+#include "resource/OBJLoader.hpp"
+#include "resource/ResourceManager.hpp"
 
 // Utils
-#include "AssetID.hpp"
+#include "utils/AssetID.hpp"

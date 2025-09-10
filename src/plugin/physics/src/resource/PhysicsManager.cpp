@@ -2,10 +2,10 @@
 
 #include "PhysicsManager.hpp"
 
-#include "BroadPhaseLayerImpl.hpp"
-#include "ContactListenerImpl.hpp"
-#include "ObjectLayerPairFilterImpl.hpp"
-#include "ObjectVsBroadPhaseLayerFilterImpl.hpp"
+#include "utils/BroadPhaseLayerImpl.hpp"
+#include "utils/ContactListenerImpl.hpp"
+#include "utils/ObjectLayerPairFilterImpl.hpp"
+#include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
 
 namespace ES::Plugin::Physics::Resource {
 PhysicsManager::PhysicsManager()

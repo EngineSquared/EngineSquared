@@ -3,10 +3,10 @@
 #include <array>
 #include <chrono>
 
-#include "Core.hpp"
-#include "Entity.hpp"
-#include "RelativeTimeUpdate.hpp"
-#include "Time.hpp"
+#include "core/Core.hpp"
+#include "entity/Entity.hpp"
+#include "resource/Time.hpp"
+#include "scheduler/RelativeTimeUpdate.hpp"
 
 using namespace ES::Engine;
 using namespace std::chrono_literals;

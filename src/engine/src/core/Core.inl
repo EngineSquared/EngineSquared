@@ -1,6 +1,6 @@
-#include "Core.hpp"
 #include "Logger.hpp"
-#include "WrappedSystem.hpp"
+#include "core/Core.hpp"
+#include "system/WrappedSystem.hpp"
 
 namespace ES::Engine {
 

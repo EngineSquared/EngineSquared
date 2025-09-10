@@ -1,6 +1,3 @@
-add_rules("mode.debug", "mode.release")
-add_requires("miniaudio", "entt", "spdlog", "fmt")
-
 includes("../../engine/xmake.lua")
 
 target("PluginSound")
@@ -8,15 +5,17 @@ target("PluginSound")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
     add_packages("miniaudio", "entt", "spdlog", "fmt")
-    set_policy("build.warning", true)
 
     add_deps("EngineSquaredCore")
 
     add_files("src/**.cpp")
+
+    add_headerfiles("src/(plugin/*.hpp)")
+    add_headerfiles("src/(resource/*.hpp)")
+    add_headerfiles("src/(system/*.hpp)")
+    add_headerfiles("src/(*.hpp)")
+
     add_includedirs("src/", {public = true})
-    add_includedirs("src/plugin", {public = true})
-    add_includedirs("src/resource", {public = true})
-    add_includedirs("src/system", {public = true})
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
@@ -30,7 +29,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        set_default(false)
+        
         set_languages("cxx20")
         add_deps("EngineSquaredCore")
         add_files(file)

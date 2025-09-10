@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core.hpp"
-#include "Entity.hpp"
 #include "FunctionContainer.hpp"
+#include "core/Core.hpp"
+#include "entity/Entity.hpp"
 
 #include <functional>
 

@@ -45,7 +45,10 @@ void StopSystems(ES::Engine::Core &core)
     }
 }
 
-void StoreCoreInWindow(ES::Engine::Core &core) { glfwSetWindowUserPointer(glfwGetCurrentContext(), &core); }
+void StoreCoreInWindow(ES::Engine::Core &core)
+{
+    glfwSetWindowUserPointer(core.GetResource<Resource::Window>().GetGLFWWindow(), &core);
+}
 
 void DestroyWindow(ES::Engine::Core &core)
 {

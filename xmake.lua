@@ -4,8 +4,24 @@ UTILS_GROUP_NAME = "Utils"
 -- Set the default group for all targets
 
 add_rules("mode.debug", "mode.release")
-add_requires("entt", "gtest", "spdlog", "tinyobjloader", "glm >=1.0.1", "glfw >=3.4", "glew", "fmt", "stb", "joltphysics")
+add_requires(
+    "entt",
+    "gtest",
+    "spdlog",
+    "tinyobjloader",
+    "glm >=1.0.1",
+    "glfw >=3.4",
+    "glew",
+    "fmt",
+    "stb",
+    "joltphysics",
+    "miniaudio")
+add_requires("rmlui >=6.0", { configs = { transform = true } })
 
+set_languages("c++20")
+set_warnings("allextra")
+
+includes("src/engine/xmake.lua")
 includes("src/plugin/camera/xmake.lua")
 includes("src/plugin/colors/xmake.lua")
 includes("src/plugin/input/xmake.lua")
@@ -24,13 +40,11 @@ includes("src/utils/function-container/xmake.lua")
 includes("src/utils/log/xmake.lua")
 includes("src/utils/string/xmake.lua")
 includes("src/utils/tools/xmake.lua")
-includes("src/engine/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
+add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
 target("EngineSquared")
     set_kind("object")
-    set_default(true)
-    set_languages("cxx20")
     set_version("0.0.0")
 
     add_deps("EngineSquaredCore")
@@ -49,10 +63,8 @@ target("EngineSquared")
     add_deps("PluginRelationship")
     add_deps("PluginNativeScripting")
     add_deps("PluginRenderingPipeline")
-    add_deps("UtilsLog")
     add_deps("UtilsTools")
-
-    set_policy("build.warning", true)
+    add_deps("UtilsLog")
 
     add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "glew", "fmt", "stb", "joltphysics")
 
@@ -80,7 +92,6 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        set_default(false)
         set_languages("cxx20")
         add_files(file)
         add_files("tests/main.cpp")

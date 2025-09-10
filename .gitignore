@@ -13,3 +13,5 @@ docs/
 # sonar
 .sonarlint/*
 sonar-project.properties
+.DS_Store
+src/.DS_Store

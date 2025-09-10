@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "Mesh.hpp"
+#include "component/Mesh.hpp"
 
 #include <entt/core/hashed_string.hpp>
 #include <entt/resource/cache.hpp>

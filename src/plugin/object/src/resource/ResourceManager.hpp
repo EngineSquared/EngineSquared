@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Logger.hpp"
-#include "ResourceManagerError.hpp"
+#include "exception/ResourceManagerError.hpp"
 
 #include <entt/core/hashed_string.hpp>
 #include <entt/resource/cache.hpp>

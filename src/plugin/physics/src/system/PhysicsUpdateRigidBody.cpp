@@ -1,14 +1,14 @@
 #include "JoltPhysics.pch.hpp"
 
-#include "PhysicsUpdateRigidBody.hpp"
+#include "system/PhysicsUpdateRigidBody.hpp"
 
-#include "FixedTimeUpdate.hpp"
 #include "Logger.hpp"
-#include "Mesh.hpp"
-#include "PhysicsManager.hpp"
-#include "RigidBody3D.hpp"
-#include "SoftBody3D.hpp"
-#include "Transform.hpp"
+#include "component/Mesh.hpp"
+#include "component/RigidBody3D.hpp"
+#include "component/SoftBody3D.hpp"
+#include "component/Transform.hpp"
+#include "resource/PhysicsManager.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
 
 #include <fmt/format.h>
 
@@ -46,6 +46,11 @@ void ES::Plugin::Physics::System::LinkRigidBodiesToPhysicsSystem(entt::registry 
         rigidBody.motionType, rigidBody.layer);
 
     bodySettings.mIsSensor = rigidBody.isSensor;
+
+    if (rigidBody.onBodyCreationSettings)
+    {
+        rigidBody.onBodyCreationSettings(bodySettings);
+    }
 
     rigidBody.body = physicsSystem.GetBodyInterface().CreateBody(bodySettings);
 

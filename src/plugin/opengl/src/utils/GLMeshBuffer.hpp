@@ -23,9 +23,9 @@
 
 #include <GL/glew.h>
 
-#include "Loader.hpp"
+#include "utils/Loader.hpp"
 
-#include "Mesh.hpp"
+#include "component/Mesh.hpp"
 
 namespace ES::Plugin::OpenGL::Utils {
 

@@ -168,10 +168,6 @@ class Viewer {
     float m_displayWidth;
     float m_displayHeight;
 
-    /** These are used for tracking */
-
-    std::array<float, 3> m_lastDesired;
-
     /**
      * The following values contain the geometry of our viewing volume: the
      * field of view, the aspect ratio, the height and width of view plane

@@ -1,14 +1,14 @@
 #include "OpenGL.pch.hpp"
 
 #include "BufferSystems.hpp"
-#include "DirectionalLight.hpp"
-#include "GLMeshBufferManager.hpp"
-#include "GLSpriteBufferManager.hpp"
-#include "GLTextBufferManager.hpp"
-#include "ModelHandle.hpp"
-#include "SpriteHandle.hpp"
-#include "TextHandle.hpp"
-#include "TextureManager.hpp"
+#include "component/ModelHandle.hpp"
+#include "component/SpriteHandle.hpp"
+#include "component/TextHandle.hpp"
+#include "resource/DirectionalLight.hpp"
+#include "resource/GLMeshBufferManager.hpp"
+#include "resource/GLSpriteBufferManager.hpp"
+#include "resource/GLTextBufferManager.hpp"
+#include "resource/TextureManager.hpp"
 
 void ES::Plugin::OpenGL::System::LoadGLSpriteBuffer(ES::Engine::Core &core)
 {

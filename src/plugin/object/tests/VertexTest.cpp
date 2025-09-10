@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "Vertex.hpp"
+#include "component/Vertex.hpp"
 
 using namespace ES::Plugin::Object;
 

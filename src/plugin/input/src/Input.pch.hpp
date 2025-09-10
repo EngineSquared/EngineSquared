@@ -10,6 +10,8 @@
 
 // ESQ headers
 #include "Engine.hpp"
-#include "PluginWindow.hpp"
-#include "Startup.hpp"
-#include "Window.hpp"
+
+#include "plugin/PluginWindow.hpp"
+#include "scheduler/Startup.hpp"
+// TODO: put window in resource folder directly rather than putting it in Window subfolder
+#include "resource/Window/Window.hpp"

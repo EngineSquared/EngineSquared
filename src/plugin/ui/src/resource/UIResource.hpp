@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Engine.hpp"
-#include "EventListener.hpp"
-#include "RenderInterface.hpp"
-#include "SystemInterface.hpp"
+#include "utils/EventListener.hpp"
+#include "utils/RenderInterface.hpp"
+#include "utils/SystemInterface.hpp"
 
 namespace ES::Plugin::UI::Resource {
 class UIResource {
@@ -130,6 +130,13 @@ class UIResource {
     void InitDocument(const std::string &docPath);
 
     /**
+     * @brief Get the current loaded document title
+     *
+     * @return The name of the current document title, empty string otherwise
+     */
+    const std::string &GetTitle();
+
+    /**
      * @brief Modify in the loaded RML document `childId` node by `content`
      *
      * A valid document must exist before trying to modify its content.
@@ -160,7 +167,7 @@ class UIResource {
      *
      * @param elementId The element to attach the listener on
      * @param eventType The type of event to apply: [click, dblclick, mouseover, mouseout, mousemove, mouseup,
-     * mousedown, mousescroll]
+     * mousedown, mousescroll, animationend, transitionend]
      * @param callback The callback function called when the event is triggered
      *
      * @return void
@@ -173,7 +180,7 @@ class UIResource {
      *
      * @param elementId The target element to remove the event
      * @param eventType The type of event to remove: [click, dblclick, mouseover, mouseout, mousemove, mouseup,
-     * mousedown, mousescroll]
+     * mousedown, mousescroll, animationend, transitionend]
      *
      * @return void
      */
@@ -191,8 +198,29 @@ class UIResource {
      *
      * @param elementId The node id to modify
      *
-     * @return bool false if not ready to render, true otherwise
+     * @return The target element including its childs, empty string otherwise
      */
     std::string GetValue(const std::string &elementId) const;
+
+    /**
+     * @brief Get the element style associated
+     *
+     * @param elementId The node id target
+     * @param property The style property to get
+     *
+     * @return The target element style, empty string otherwise
+     */
+    std::string GetStyle(const std::string &elementId, const std::string &property) const;
+
+    /**
+     * @brief Set the element style associated
+     *
+     * @param elementId The node id target
+     * @param property The style property to get
+     * @param value The value to set
+     *
+     * @return bool If the operation succeeded or not
+     */
+    bool SetStyleProperty(const std::string &elementId, const std::string &property, const std::string &value) const;
 };
 } // namespace ES::Plugin::UI::Resource

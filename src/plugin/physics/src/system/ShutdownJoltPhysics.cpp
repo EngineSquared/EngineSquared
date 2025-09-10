@@ -1,10 +1,10 @@
 #include "JoltPhysics.pch.hpp"
 
-#include "ShutdownJoltPhysics.hpp"
+#include "system/ShutdownJoltPhysics.hpp"
 
-#include "RigidBody3D.hpp"
-#include "SoftBody3D.hpp"
-#include "WheeledVehicle3D.hpp"
+#include "component/RigidBody3D.hpp"
+#include "component/SoftBody3D.hpp"
+#include "component/WheeledVehicle3D.hpp"
 
 namespace ES::Plugin::Physics::System {
 void ShutdownJoltPhysics(ES::Engine::Core &core)

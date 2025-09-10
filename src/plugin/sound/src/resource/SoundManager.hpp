@@ -15,7 +15,6 @@ using CustomDataCallback = std::function<void(ma_device *pDevice, void *pOutput,
 class SoundManager {
   private:
     ma_result _result;
-    ma_decoder _decoder;
     ma_device_config _deviceConfig;
     ma_device _device;
 
@@ -110,6 +109,7 @@ class SoundManager {
                     }
                     else
                     {
+                        ma_decoder_seek_to_pcm_frame(&sound.decoder, 0);
                         sound.isPlaying = false;
                         break;
                     }

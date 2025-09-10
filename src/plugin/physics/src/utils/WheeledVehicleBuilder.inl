@@ -2,7 +2,7 @@
 
 #include "Object.hpp"
 #include "OpenGL.hpp"
-#include "RigidBody3D.hpp"
+#include "component/RigidBody3D.hpp"
 
 template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::WheeledVehicleBuilder<WheelCount>::Build()
 {
@@ -25,7 +25,7 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
         points.emplace_back(JPH::Vec3(bodyMesh->vertices[i].x, bodyMesh->vertices[i].y, bodyMesh->vertices[i].z));
     }
 
-    std::shared_ptr<JPH::ShapeSettings> bodySettings =
+    std::shared_ptr<JPH::ConvexHullShapeSettings> bodySettings =
         std::make_shared<JPH::ConvexHullShapeSettings>(points.data(), points.size());
     bodySettings->SetEmbedded();
 
@@ -36,7 +36,11 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
 
     // Create a rigid body from the shape
     auto &vehicleRigidBody = vehicleEntity.AddComponent<ES::Plugin::Physics::Component::RigidBody3D>(
-        core, finalShapeSettings, JPH::EMotionType::Dynamic, ES::Plugin::Physics::Utils::Layers::MOVING);
+        core, finalShapeSettings, JPH::EMotionType::Dynamic, ES::Plugin::Physics::Utils::Layers::MOVING, false,
+        [this](JPH::BodyCreationSettings &bodySettings) {
+            bodySettings.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia;
+            bodySettings.mMassPropertiesOverride.mMass = vehicleMass;
+        });
 
     // Create the vehicle constraint settings
     auto vehicleConstraintSettings = std::make_shared<JPH::VehicleConstraintSettings>();
@@ -80,14 +84,17 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
 
     auto vehicleControllerSettings = std::make_shared<JPH::WheeledVehicleControllerSettings>();
     vehicleControllerSettings->SetEmbedded();
-    vehicleControllerSettings->mEngine.mMaxTorque = 500.0f;
-    vehicleControllerSettings->mTransmission.mClutchStrength = 10.0f;
 
     vehicleControllerSettings->mDifferentials.resize(differentialSettings.size());
 
     for (size_t i = 0; i < differentialSettings.size(); ++i)
     {
         vehicleControllerSettings->mDifferentials[i] = differentialSettings[i];
+    }
+
+    if (vehicleControllerSettingsFn)
+    {
+        vehicleControllerSettingsFn(*vehicleControllerSettings);
     }
 
     // Set the controller for the constraint

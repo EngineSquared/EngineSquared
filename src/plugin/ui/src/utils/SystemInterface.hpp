@@ -8,7 +8,7 @@
 #include <RmlUi/Core.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Core.hpp"
+#include "core/Core.hpp"
 
 namespace ES::Plugin::UI::Utils {
 class SystemInterface : public Rml::SystemInterface {

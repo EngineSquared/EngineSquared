@@ -2,9 +2,9 @@
 
 #include "Logger.hpp"
 
-#include "AScene.hpp"
+#include "utils/AScene.hpp"
 
-#include "SceneManager.hpp"
+#include "resource/SceneManager.hpp"
 
 void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Core &core)
 {

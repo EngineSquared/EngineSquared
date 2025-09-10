@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.hpp"
+#include "core/Core.hpp"
 
 namespace ES::Plugin::OpenGL::System {
 void LoadFontManager(ES::Engine::Core &core);

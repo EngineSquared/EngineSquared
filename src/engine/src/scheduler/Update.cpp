@@ -1,7 +1,7 @@
 #include "Engine.pch.hpp"
 
-#include "Time.hpp"
 #include "Update.hpp"
+#include "resource/Time.hpp"
 
 void ES::Engine::Scheduler::Update::RunSystems()
 {

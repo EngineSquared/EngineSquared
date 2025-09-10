@@ -1,5 +1,5 @@
-#include "InitSound.hpp"
-#include "SoundManager.hpp"
+#include "system/InitSound.hpp"
+#include "resource/SoundManager.hpp"
 
 void ES::Plugin::Sound::System::InitSounds(ES::Engine::Core &core)
 {

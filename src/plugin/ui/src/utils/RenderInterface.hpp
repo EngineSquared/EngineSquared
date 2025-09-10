@@ -9,12 +9,11 @@
 #include <RmlUi/Core/Event.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "InputManager.hpp"
+#include "Input.hpp"
 #include "Logger.hpp"
-#include "Mesh.hpp"
 #include "Object.hpp"
 #include "OpenGL.hpp"
-#include "Window.hpp"
+#include "resource/Window/Window.hpp"
 
 #include "RenderLayerStack.hpp"
 

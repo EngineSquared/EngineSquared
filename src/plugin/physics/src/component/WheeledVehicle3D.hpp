@@ -24,8 +24,8 @@
 #include <glm/glm.hpp>
 #include <memory>
 
-#include "Entity.hpp"
-#include "Layers.hpp"
+#include "entity/Entity.hpp"
+#include "utils/Layers.hpp"
 
 namespace ES::Plugin::Physics::Component {
 /// @brief A wheeled vehicle component.
@@ -42,6 +42,8 @@ struct WheeledVehicle3D {
     std::shared_ptr<JPH::VehicleCollisionTester> collisionTester;
     /// @brief The vehicle constraint itself. This should not be constructed manually.
     std::shared_ptr<JPH::VehicleConstraint> vehicleConstraint;
+    /// @brief The vehicle mass.
+    float vehicleMass = 1000.0f;
 
     /// @brief Sub struct for wheels
     struct Wheel {

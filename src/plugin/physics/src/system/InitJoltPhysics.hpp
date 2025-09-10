@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core.hpp"
-#include "RigidBody3D.hpp"
+#include "component/RigidBody3D.hpp"
+#include "core/Core.hpp"
 
 namespace ES::Plugin::Physics::System {
 /**

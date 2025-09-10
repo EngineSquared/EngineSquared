@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "AScheduler.hpp"
-#include "Core.hpp"
-#include "Entity.hpp"
+#include "core/Core.hpp"
+#include "entity/Entity.hpp"
+#include "scheduler/AScheduler.hpp"
 
 using namespace ES::Engine;
 

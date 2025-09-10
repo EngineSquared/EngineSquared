@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AssetID.hpp"
+#include "utils/AssetID.hpp"
 
 namespace ES::Plugin::Object::Component {
 /**

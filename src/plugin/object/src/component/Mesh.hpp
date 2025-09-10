@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "OBJLoader.hpp"
+#include "resource/OBJLoader.hpp"
 
 #include <entt/resource/loader.hpp>
 

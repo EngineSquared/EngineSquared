@@ -1,6 +1,6 @@
 #pragma once
 
-#include "APlugin.hpp"
+#include "plugin/APlugin.hpp"
 
 namespace ES::Plugin::UI {
 class Plugin : public ES::Engine::APlugin {

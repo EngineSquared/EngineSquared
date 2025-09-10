@@ -2,13 +2,13 @@
 
 #include "PhysicsUpdateSoftBody.hpp"
 
-#include "FixedTimeUpdate.hpp"
 #include "Logger.hpp"
-#include "Mesh.hpp"
-#include "PhysicsManager.hpp"
-#include "RigidBody3D.hpp"
-#include "SoftBody3D.hpp"
-#include "Transform.hpp"
+#include "component/Mesh.hpp"
+#include "component/RigidBody3D.hpp"
+#include "component/SoftBody3D.hpp"
+#include "component/Transform.hpp"
+#include "resource/PhysicsManager.hpp"
+#include "scheduler/FixedTimeUpdate.hpp"
 
 #include <fmt/format.h>
 
@@ -190,7 +190,7 @@ static void UpdateSoftBodyEntity(ES::Engine::Core &core, ES::Plugin::Physics::Co
 
     mesh.indices.reserve(mesh.vertices.size());
 
-    for (int i = 0; i < mesh.vertices.size(); i += 3)
+    for (size_t i = 0; i < mesh.vertices.size(); i += 3)
     {
         mesh.indices.push_back(i);
         mesh.indices.push_back(i + 1);

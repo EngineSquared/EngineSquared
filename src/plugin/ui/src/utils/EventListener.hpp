@@ -8,8 +8,8 @@
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Event.h>
 
-#include "Core.hpp"
 #include "Input.hpp"
+#include "core/Core.hpp"
 
 namespace ES::Plugin::UI::Utils {
 class EventListener : public Rml::EventListener {

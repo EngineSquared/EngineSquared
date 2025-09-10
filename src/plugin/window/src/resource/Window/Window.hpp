@@ -6,7 +6,7 @@
 #include <glm/vec2.hpp>
 #include <stdexcept>
 
-#include "WindowError.hpp"
+#include "exception/WindowError.hpp"
 
 namespace ES::Plugin::Window::Resource {
 
@@ -38,8 +38,6 @@ class Window {
   public:
     Window(uint32_t width, uint32_t height, const std::string &title, GLFWmonitor *monitor = nullptr,
            GLFWwindow *share = nullptr);
-
-    Window &operator=(const Window &) = delete;
 
     /**
      * @brief Destroy the window.
@@ -85,6 +83,8 @@ class Window {
      *
      * @param userPointer The user pointer.
      * @param callback The callback function.
+     * @todo This function should work like the ES::Plugin::Input::Resource::InputManager class, it
+     *  means that it should be able to set multiple callbacks.
      */
     void SetFramebufferSizeCallback(void *userPointer, GLFWframebuffersizefun callback);
 
@@ -105,6 +105,11 @@ class Window {
         glfwGetCursorPos(_window, &x, &y);
         y = windowSize.y - y;
         return {x, y};
+    }
+
+    inline void SetResizable(bool resizable)
+    {
+        glfwSetWindowAttrib(_window, GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE);
     }
 };
 
