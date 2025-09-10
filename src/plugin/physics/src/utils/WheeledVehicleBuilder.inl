@@ -13,9 +13,9 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
         throw std::runtime_error("Body mesh not set");
     }
 
-    vehicleEntity.AddComponent<ES::Plugin::Object::Component::Transform>(core, initialPosition);
+    vehicleEntity.template AddComponent<ES::Plugin::Object::Component::Transform>(core, initialPosition);
 
-    vehicleEntity.AddComponent<ES::Plugin::Object::Component::Mesh>(core, bodyMesh.value());
+    vehicleEntity.template AddComponent<ES::Plugin::Object::Component::Mesh>(core, bodyMesh.value());
 
     // Create Jolt's mesh shape from the bodyMesh
     std::vector<JPH::Vec3> points;
@@ -35,7 +35,7 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
     finalShapeSettings->SetEmbedded();
 
     // Create a rigid body from the shape
-    auto &vehicleRigidBody = vehicleEntity.AddComponent<ES::Plugin::Physics::Component::RigidBody3D>(
+    auto &vehicleRigidBody = vehicleEntity.template AddComponent<ES::Plugin::Physics::Component::RigidBody3D>(
         core, finalShapeSettings, JPH::EMotionType::Dynamic, ES::Plugin::Physics::Utils::Layers::MOVING, false,
         [this](JPH::BodyCreationSettings &bodySettings) {
             bodySettings.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia;
@@ -56,8 +56,8 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
 
         wheelSettings[i]->mPosition = JPH::Vec3(wheelPosition.x, wheelPosition.y, wheelPosition.z);
 
-        wheelEntity.AddComponent<ES::Plugin::Object::Component::Transform>(core, wheelPosition);
-        wheelEntity.AddComponent<ES::Plugin::Object::Component::Mesh>(core, wheelMesh.value());
+        wheelEntity.template AddComponent<ES::Plugin::Object::Component::Transform>(core, wheelPosition);
+        wheelEntity.template AddComponent<ES::Plugin::Object::Component::Mesh>(core, wheelMesh.value());
 
         if (wheelCallbackFn)
         {
@@ -101,7 +101,7 @@ template <size_t WheelCount> ES::Engine::Entity ES::Plugin::Physics::Utils::Whee
     vehicleConstraintSettings->mController = vehicleControllerSettings.get();
 
     // Add the component to the entity
-    vehicleEntity.AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(
+    vehicleEntity.template AddComponent<ES::Plugin::Physics::Component::WheeledVehicle3D>(
         core, bodySettings, finalShapeSettings, vehicleConstraintSettings, vehicleControllerSettings, collisionTester);
 
     if (vehicleCallbackFn)
