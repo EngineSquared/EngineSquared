@@ -12,5 +12,5 @@
 #include "Engine.hpp"
 
 #include "plugin/PluginWindow.hpp"
-#include "scheduler/Startup.hpp"
 #include "resource/Window.hpp"
+#include "scheduler/Startup.hpp"
