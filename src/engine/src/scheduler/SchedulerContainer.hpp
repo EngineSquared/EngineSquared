@@ -2,11 +2,11 @@
 
 #include "scheduler/AScheduler.hpp"
 #include <list>
+#include <map>
 #include <memory>
 #include <queue>
 #include <stdexcept>
 #include <typeindex>
-#include <map>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
