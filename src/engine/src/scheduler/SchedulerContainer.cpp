@@ -28,7 +28,7 @@ void Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
 }
 
 void Engine::SchedulerContainer::ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
-                                                         std::unordered_map<std::type_index, size_t> &inDegree) const
+                                                     std::unordered_map<std::type_index, size_t> &inDegree) const
 {
     for (const auto &[after, befores] : _dependencies)
     {
