@@ -6,7 +6,7 @@ namespace Plugin::RenderingPipeline {
 /**
  * @brief This plugin create multiple schedulers that allows to create a rendering pipeline.
  * It will add the following "startup" pipeline:
- * - Init: Init libs like GLFW, GLEW, etc.
+ * - Init: Init libs like GLFW, etc.
  * - Setup: Setup those libs.
  * - Startup: Here for engine's user to add their own startup code.
  * And the following "update" pipeline:
