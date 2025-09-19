@@ -9,7 +9,7 @@
 #include "CallableFunction.hpp"
 #include "FunctionContainer.hpp"
 #include "core/Core.hpp"
-#include "resource/Window/Window.hpp"
+#include "resource/Window.hpp"
 
 namespace Plugin::Input::Resource {
 /**

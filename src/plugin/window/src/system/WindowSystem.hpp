@@ -25,7 +25,7 @@
 #pragma once
 
 #include "Engine.hpp"
-#include "resource/Window/Window.hpp"
+#include "resource/Window.hpp"
 
 #include <iostream>
 

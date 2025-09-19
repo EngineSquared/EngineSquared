@@ -35,7 +35,7 @@ TEST(Core, RelativeTimeUpdateBasic)
             deltaTime2 = core_.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
         }
     });
-    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
+    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0f / 5.0f);
 
     core.RunSystems();
     elapsedTime = 0.05f;
@@ -67,7 +67,7 @@ TEST(Core, RelativeTimeUpdateSubsteps)
             }
         }
     });
-    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
+    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0f / 5.0f);
 
     core.RunSystems();
     elapsedTime = 0.5f;
