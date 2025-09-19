@@ -177,8 +177,7 @@ class SoundManager {
         _result = ma_decoder_init_file(filePath.c_str(), nullptr, &sound.decoder);
         if (_result != MA_SUCCESS)
         {
-            Log::Error(
-                fmt::format("Failed to initialize the audio device: {}", ma_result_description(_result)));
+            Log::Error(fmt::format("Failed to initialize the audio device: {}", ma_result_description(_result)));
             return;
         }
         _soundsToPlay.emplace(soundName, std::move(sound));
@@ -351,8 +350,8 @@ class SoundManager {
 
             if (startFrame >= totalFrames || endFrame > totalFrames || startFrame >= endFrame)
             {
-                Log::Warn(fmt::format("Invalid loop range for \"{}\": {}s to {}s, ignored", soundName,
-                                                 startSeconds, endSeconds));
+                Log::Warn(fmt::format("Invalid loop range for \"{}\": {}s to {}s, ignored", soundName, startSeconds,
+                                      endSeconds));
                 return;
             }
             it->second.loopStartFrame = startFrame;
@@ -378,8 +377,7 @@ class SoundManager {
         auto it = _soundsToPlay.find(soundName);
         if (it == _soundsToPlay.end())
         {
-            Log::Error(
-                fmt::format("Could not get the playback position: Sound \"{}\" does not exist", soundName));
+            Log::Error(fmt::format("Could not get the playback position: Sound \"{}\" does not exist", soundName));
             return -1.0f;
         }
 
@@ -394,8 +392,7 @@ class SoundManager {
         _result = ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &currentFrame);
         if (_result != MA_SUCCESS)
         {
-            Log::Error(
-                fmt::format("Could not get the playback position: {}", ma_result_description(_result)));
+            Log::Error(fmt::format("Could not get the playback position: {}", ma_result_description(_result)));
             return -1.0f;
         }
         double position = static_cast<double>(currentFrame) / sound.decoder.outputSampleRate;

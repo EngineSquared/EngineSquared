@@ -23,15 +23,9 @@ struct NativeScripting {
         Instantiate = [this]() { seInstance = std::make_unique<T>(); };
         DestroyInstance = [this]() { seInstance.reset(); };
 
-        OnCreate = [&core](Utils::ScriptableEntity *instance) {
-            static_cast<T *>(instance)->OnCreate(core);
-        };
-        OnDestroy = [&core](Utils::ScriptableEntity *instance) {
-            static_cast<T *>(instance)->OnDestroy(core);
-        };
-        OnUpdate = [&core](Utils::ScriptableEntity *instance) {
-            static_cast<T *>(instance)->OnUpdate(core);
-        };
+        OnCreate = [&core](Utils::ScriptableEntity *instance) { static_cast<T *>(instance)->OnCreate(core); };
+        OnDestroy = [&core](Utils::ScriptableEntity *instance) { static_cast<T *>(instance)->OnDestroy(core); };
+        OnUpdate = [&core](Utils::ScriptableEntity *instance) { static_cast<T *>(instance)->OnUpdate(core); };
     }
 };
 } // namespace Plugin::NativeScripting::Component

@@ -2,17 +2,16 @@
 
 void Plugin::NativeScripting::System::UpdateScripts(Engine::Core &core)
 {
-    core.GetRegistry().view<Component::NativeScripting>().each(
-        [](auto entity, auto &nsComponent) {
-            if (!nsComponent.seInstance.get())
-            {
-                nsComponent.Instantiate();
-                nsComponent.seInstance->entity = entity;
-                nsComponent.OnCreate(nsComponent.seInstance.get());
-            }
+    core.GetRegistry().view<Component::NativeScripting>().each([](auto entity, auto &nsComponent) {
+        if (!nsComponent.seInstance.get())
+        {
+            nsComponent.Instantiate();
+            nsComponent.seInstance->entity = entity;
+            nsComponent.OnCreate(nsComponent.seInstance.get());
+        }
 
-            nsComponent.OnUpdate(nsComponent.seInstance.get());
-        });
+        nsComponent.OnUpdate(nsComponent.seInstance.get());
+    });
 }
 
 void Plugin::NativeScripting::System::DestroyScript(entt::registry &registry, entt::entity entity)

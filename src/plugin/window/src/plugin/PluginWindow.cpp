@@ -8,10 +8,9 @@ void Plugin::Window::Plugin::Bind()
 {
     RequirePlugins<RenderingPipeline::Plugin>();
 
-    RegisterSystems<RenderingPipeline::Init>(
-        Window::System::InitGLFW, Window::System::SetupGLFWHints,
-        Window::System::CreateWindowSystem, Window::System::LinkGLFWContextToGL,
-        Window::System::StoreCoreInWindow);
+    RegisterSystems<RenderingPipeline::Init>(Window::System::InitGLFW, Window::System::SetupGLFWHints,
+                                             Window::System::CreateWindowSystem, Window::System::LinkGLFWContextToGL,
+                                             Window::System::StoreCoreInWindow);
 
     RegisterSystems<RenderingPipeline::Setup>(Window::System::EnableVSync);
 

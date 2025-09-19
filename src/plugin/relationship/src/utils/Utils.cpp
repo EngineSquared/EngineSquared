@@ -5,14 +5,12 @@
 // Temp
 #include <iostream>
 
-auto Plugin::Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity child,
-                                                 Engine::Entity parent) -> void
+auto Plugin::Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> void
 {
     if (IsChildOf(core, parent, child))
     {
-        Log::Warn(fmt::format("Entity {} is already a child of the parent {}",
-                                         Engine::Entity::entity_id_type(child),
-                                         Engine::Entity::entity_id_type(parent)));
+        Log::Warn(fmt::format("Entity {} is already a child of the parent {}", Engine::Entity::entity_id_type(child),
+                              Engine::Entity::entity_id_type(parent)));
         return;
     }
     auto &parentRS = parent.AddComponentIfNotExists<Plugin::Relationship::Component::Relationship>(core);
@@ -33,8 +31,7 @@ auto Plugin::Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity 
     newChildRS.parent = parent;
 }
 
-auto Plugin::Relationship::Utils::IsChildOf(Engine::Core &core, Engine::Entity child,
-                                                Engine::Entity parent) -> bool
+auto Plugin::Relationship::Utils::IsChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> bool
 {
     const Plugin::Relationship::Component::Relationship *childRS =
         child.TryGetComponent<Plugin::Relationship::Component::Relationship>(core);

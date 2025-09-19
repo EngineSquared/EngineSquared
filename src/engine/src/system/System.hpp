@@ -31,10 +31,7 @@ class SystemContainer : public FunctionUtils::FunctionContainer<void, Core &> {
 
     inline decltype(auto) GetSystems() { return GetFunctions(); }
 
-    inline decltype(auto) DeleteSystem(const FunctionUtils::FunctionID &id)
-    {
-        return DeleteFunction(id);
-    }
+    inline decltype(auto) DeleteSystem(const FunctionUtils::FunctionID &id) { return DeleteFunction(id); }
 
   private:
     template <typename TCallable> void AddSystem(TCallable callable) { AddFunction(callable); }

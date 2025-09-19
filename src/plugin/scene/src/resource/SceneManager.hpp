@@ -41,8 +41,7 @@ class SceneManager {
      */
     template <typename TScene> TScene &RegisterScene(const std::string &name)
     {
-        static_assert(std::is_base_of_v<Utils::AScene, TScene>,
-                      "TScene must inherit from Utils::AScene");
+        static_assert(std::is_base_of_v<Utils::AScene, TScene>, "TScene must inherit from Utils::AScene");
         if (_scenes.contains(name))
         {
             Log::Warn(fmt::format("Scene {} already exists", name));
@@ -67,8 +66,7 @@ class SceneManager {
         std::size_t operator()(std::string_view str) const noexcept { return std::hash<std::string_view>{}(str); }
         std::size_t operator()(const char *str) const noexcept { return std::hash<std::string_view>{}(str); }
     };
-    std::unordered_map<std::string, std::shared_ptr<Utils::AScene>, TransparentHash, std::equal_to<>>
-        _scenes;
+    std::unordered_map<std::string, std::shared_ptr<Utils::AScene>, TransparentHash, std::equal_to<>> _scenes;
 
     std::optional<std::string> _nextScene;
     std::optional<std::string> _currentScene;

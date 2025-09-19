@@ -4,8 +4,7 @@
 
 template <typename TReturn, typename... TArgs>
 template <typename TCallable>
-FunctionUtils::FunctionID
-FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
+FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
 {
     FunctionUtils::FunctionID id;
 
@@ -32,8 +31,7 @@ FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable calla
 }
 
 template <typename TReturn, typename... TArgs>
-FunctionUtils::FunctionID
-FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(
+FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(
     std::unique_ptr<BaseFunction<TReturn, TArgs...>> &&function)
 {
     FunctionUtils::FunctionID id = function->GetID();
@@ -52,8 +50,7 @@ FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(
 
 template <typename TReturn, typename... TArgs>
 std::unique_ptr<typename FunctionUtils::FunctionContainer<TReturn, TArgs...>::FunctionType>
-FunctionUtils::FunctionContainer<TReturn, TArgs...>::DeleteFunction(
-    FunctionUtils::FunctionID id)
+FunctionUtils::FunctionContainer<TReturn, TArgs...>::DeleteFunction(FunctionUtils::FunctionID id)
 {
     auto it = _idToIndex.find(id);
     if (it == _idToIndex.end())
