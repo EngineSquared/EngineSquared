@@ -1,7 +1,7 @@
 #include "RenderingPipeline.hpp"
 
 #include "plugin/PluginWindow.hpp"
-#include "resource/Window/Window.hpp"
+#include "resource/Window.hpp"
 #include "system/WindowSystem.hpp"
 
 void Plugin::Window::Plugin::Bind()
