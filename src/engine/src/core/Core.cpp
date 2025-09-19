@@ -41,15 +41,9 @@ Engine::Core::Core() : _registry(nullptr)
 
 Engine::Core::~Core() { Log::Debug("Destroy Core"); }
 
-Engine::Entity Engine::Core::CreateEntity()
-{
-    return static_cast<Engine::Entity>(this->_registry->create());
-}
+Engine::Entity Engine::Core::CreateEntity() { return static_cast<Engine::Entity>(this->_registry->create()); }
 
-void Engine::Core::KillEntity(Engine::Entity &entity)
-{
-    this->_registry->destroy(static_cast<entt::entity>(entity));
-}
+void Engine::Core::KillEntity(Engine::Entity &entity) { this->_registry->destroy(static_cast<entt::entity>(entity)); }
 
 bool Engine::Core::IsRunning() { return _running; }
 

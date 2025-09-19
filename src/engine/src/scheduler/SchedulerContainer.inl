@@ -47,8 +47,7 @@ template <typename TBefore, typename TAfter> void Engine::SchedulerContainer::Re
     }
     else
     {
-        Log::Warn(
-            fmt::format("Dependency not found: {} -> {}", typeid(TBefore).name(), typeid(TAfter).name()));
+        Log::Warn(fmt::format("Dependency not found: {} -> {}", typeid(TBefore).name(), typeid(TAfter).name()));
     }
 }
 
@@ -71,18 +70,14 @@ inline void Engine::SchedulerContainer::RunSchedulers()
     }
 }
 
-inline bool Engine::SchedulerContainer::Contains(std::type_index id) const
-{
-    return this->_schedulers.contains(id);
-}
+inline bool Engine::SchedulerContainer::Contains(std::type_index id) const { return this->_schedulers.contains(id); }
 
 template <typename TScheduler> inline bool Engine::SchedulerContainer::Contains() const
 {
     return Contains(std::type_index(typeid(TScheduler)));
 }
 
-inline std::shared_ptr<Engine::Scheduler::AScheduler>
-Engine::SchedulerContainer::GetScheduler(std::type_index id)
+inline std::shared_ptr<Engine::Scheduler::AScheduler> Engine::SchedulerContainer::GetScheduler(std::type_index id)
 {
     auto it = this->_schedulers.find(id);
     if (it == this->_schedulers.end())

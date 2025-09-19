@@ -39,10 +39,9 @@ class InputManager {
      */
     template <typename TCallable> inline void RegisterKeyCallback(TCallable callback)
     {
-        using KeyCallback =
-            FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int, int, int, int>;
-        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int, int, int, int>>
-            keyCallback = std::make_unique<KeyCallback>(callback);
+        using KeyCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int, int, int, int>;
+        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int, int, int, int>> keyCallback =
+            std::make_unique<KeyCallback>(callback);
 
         _keyCallbacks->AddFunction(std::move(keyCallback));
     }
@@ -56,10 +55,9 @@ class InputManager {
      */
     template <typename TCallable> inline void RegisterCharCallback(TCallable callback)
     {
-        using CharCallback =
-            FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, unsigned int>;
-        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, unsigned int>>
-            charCallback = std::make_unique<CharCallback>(callback);
+        using CharCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, unsigned int>;
+        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, unsigned int>> charCallback =
+            std::make_unique<CharCallback>(callback);
 
         _charCallbacks->AddFunction(std::move(charCallback));
     }
@@ -73,10 +71,9 @@ class InputManager {
      */
     template <typename TCallable> inline void RegisterCharModsCallback(TCallable callback)
     {
-        using CharModsCallback =
-            FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, unsigned int, int>;
-        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, unsigned int, int>>
-            charModsCallback = std::make_unique<CharModsCallback>(callback);
+        using CharModsCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, unsigned int, int>;
+        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, unsigned int, int>> charModsCallback =
+            std::make_unique<CharModsCallback>(callback);
 
         _charModsCallbacks->AddFunction(std::move(charModsCallback));
     }
@@ -90,10 +87,9 @@ class InputManager {
      */
     template <typename TCallable> inline void RegisterMouseButtonCallback(TCallable callback)
     {
-        using MouseButtonCallback =
-            FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int, int, int>;
-        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int, int, int>>
-            mouseButtonCallback = std::make_unique<MouseButtonCallback>(callback);
+        using MouseButtonCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int, int, int>;
+        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int, int, int>> mouseButtonCallback =
+            std::make_unique<MouseButtonCallback>(callback);
 
         _mouseButtonCallbacks->AddFunction(std::move(mouseButtonCallback));
     }
@@ -107,10 +103,9 @@ class InputManager {
      */
     template <typename TCallable> inline void RegisterCursorPosCallback(TCallable callback)
     {
-        using CursorPosCallback =
-            FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, double, double>;
-        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, double, double>>
-            cursorPosCallback = std::make_unique<CursorPosCallback>(callback);
+        using CursorPosCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, double, double>;
+        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, double, double>> cursorPosCallback =
+            std::make_unique<CursorPosCallback>(callback);
 
         _cursorPosCallbacks->AddFunction(std::move(cursorPosCallback));
     }
@@ -124,8 +119,7 @@ class InputManager {
      */
     template <typename TCallable> inline void RegisterCursorEnterCallback(TCallable callback)
     {
-        using CursorEnterCallback =
-            FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int>;
+        using CursorEnterCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int>;
         std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int>> cursorEnterCallback =
             std::make_unique<CursorEnterCallback>(callback);
 
@@ -141,10 +135,9 @@ class InputManager {
      */
     template <typename TCallable> inline void RegisterScrollCallback(TCallable callback)
     {
-        using ScrollCallback =
-            FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, double, double>;
-        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, double, double>>
-            scrollCallback = std::make_unique<ScrollCallback>(callback);
+        using ScrollCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, double, double>;
+        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, double, double>> scrollCallback =
+            std::make_unique<ScrollCallback>(callback);
 
         _scrollCallbacks->AddFunction(std::move(scrollCallback));
     }
@@ -158,10 +151,9 @@ class InputManager {
      */
     template <typename TCallable> inline void RegisterDropCallback(TCallable callback)
     {
-        using DropCallback =
-            FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int, const char **>;
-        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int, const char **>>
-            dropCallback = std::make_unique<DropCallback>(callback);
+        using DropCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int, const char **>;
+        std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int, const char **>> dropCallback =
+            std::make_unique<DropCallback>(callback);
 
         _dropCallbacks->AddFunction(std::move(dropCallback));
     }
@@ -309,10 +301,7 @@ class InputManager {
      * @param id The ID of the callback to delete.
      * @return True if the callback was deleted, false otherwise.
      */
-    inline bool DeleteKeyCallback(FunctionUtils::FunctionID id)
-    {
-        return _keyCallbacks->DeleteFunction(id) != nullptr;
-    }
+    inline bool DeleteKeyCallback(FunctionUtils::FunctionID id) { return _keyCallbacks->DeleteFunction(id) != nullptr; }
 
     /**
      * @brief Delete a char callback.
@@ -398,28 +387,21 @@ class InputManager {
 
   private:
     Engine::Core &_core;
-    using KeyCallbackContainer =
-        FunctionUtils::FunctionContainer<void, Engine::Core &, int, int, int, int>;
+    using KeyCallbackContainer = FunctionUtils::FunctionContainer<void, Engine::Core &, int, int, int, int>;
     std::shared_ptr<KeyCallbackContainer> _keyCallbacks;
-    using CharCallbackContainer =
-        FunctionUtils::FunctionContainer<void, Engine::Core &, unsigned int>;
+    using CharCallbackContainer = FunctionUtils::FunctionContainer<void, Engine::Core &, unsigned int>;
     std::shared_ptr<CharCallbackContainer> _charCallbacks;
-    using CharModsCallbackContainer =
-        FunctionUtils::FunctionContainer<void, Engine::Core &, unsigned int, int>;
+    using CharModsCallbackContainer = FunctionUtils::FunctionContainer<void, Engine::Core &, unsigned int, int>;
     std::shared_ptr<CharModsCallbackContainer> _charModsCallbacks;
-    using MouseButtonCallbackContainer =
-        FunctionUtils::FunctionContainer<void, Engine::Core &, int, int, int>;
+    using MouseButtonCallbackContainer = FunctionUtils::FunctionContainer<void, Engine::Core &, int, int, int>;
     std::shared_ptr<MouseButtonCallbackContainer> _mouseButtonCallbacks;
-    using CursorPosCallbackContainer =
-        FunctionUtils::FunctionContainer<void, Engine::Core &, double, double>;
+    using CursorPosCallbackContainer = FunctionUtils::FunctionContainer<void, Engine::Core &, double, double>;
     std::shared_ptr<CursorPosCallbackContainer> _cursorPosCallbacks;
     using CursorEnterCallbackContainer = FunctionUtils::FunctionContainer<void, Engine::Core &, int>;
     std::shared_ptr<CursorEnterCallbackContainer> _cursorEnterCallbacks;
-    using ScrollCallbackContainer =
-        FunctionUtils::FunctionContainer<void, Engine::Core &, double, double>;
+    using ScrollCallbackContainer = FunctionUtils::FunctionContainer<void, Engine::Core &, double, double>;
     std::shared_ptr<ScrollCallbackContainer> _scrollCallbacks;
-    using DropCallbackContainer =
-        FunctionUtils::FunctionContainer<void, Engine::Core &, int, const char **>;
+    using DropCallbackContainer = FunctionUtils::FunctionContainer<void, Engine::Core &, int, const char **>;
     std::shared_ptr<DropCallbackContainer> _dropCallbacks;
 };
 } // namespace Plugin::Input::Resource
