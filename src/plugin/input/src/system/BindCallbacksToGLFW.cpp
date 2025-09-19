@@ -1,7 +1,7 @@
 #include "Input.pch.hpp"
 
 #include "Input.hpp"
-#include "resource/window/Window.hpp"
+#include "resource/Window.hpp"
 #include "system/BindCallbacksToGLFW.hpp"
 
 /**
