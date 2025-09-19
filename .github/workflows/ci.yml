@@ -69,6 +69,7 @@ jobs:
         include:
           - os: windows-latest
           - os: ubuntu-latest
+          - os: macos-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
@@ -80,7 +81,7 @@ jobs:
         run: git pull origin ${{ github.ref_name }}
 
       - name: Setup Linux dependencies
-        if: contains(runner.os, 'windows') == false
+        if: contains(runner.os, 'linux')
         run: |
           sudo apt-get update
           sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
@@ -111,6 +112,7 @@ jobs:
         include:
           - os: windows-latest
           - os: ubuntu-latest
+          - os: macos-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
@@ -122,7 +124,7 @@ jobs:
         run: git pull origin ${{ github.ref_name }}
 
       - name: Setup Linux test dependencies
-        if: contains(runner.os, 'windows') == false
+        if: contains(runner.os, 'linux')
         run: |
           sudo apt-get update
           sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
@@ -144,18 +146,24 @@ jobs:
           project-path: '.'
 
       - name: Run tests (Linux)
-        if: runner.os != 'Windows'
+        if: contains(runner.os, 'linux')
         run: |
           xmake test -y -D
         timeout-minutes: 8
 
       - name: Run tests (Windows)
-        if: runner.os == 'Windows'
+        if: contains(runner.os, 'windows')
         shell: pwsh
         run: |
           xmake test -y -D
         timeout-minutes: 8
 
+      - name: Run tests (macOS)
+        if: contains(runner.os, 'macos')
+        run: |
+          xmake test -y -D
+        timeout-minutes: 8
+
       - name: Check test coverage (Linux)
-        if: runner.os != 'Windows'
+        if: contains(runner.os, 'linux')
         uses: threeal/gcovr-action@v1.1.0
