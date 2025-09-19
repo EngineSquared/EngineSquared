@@ -4,7 +4,7 @@
 
 namespace Plugin::RenderingPipeline {
 /**
- * @brief This class is used to setup libraries like GLFW, GLEW, etc.
+ * @brief This class is used to setup libraries like GLFW, etc.
  */
 class Setup : public Engine::Scheduler::AScheduler {
   public:
