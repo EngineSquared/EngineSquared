@@ -8,25 +8,25 @@ struct ActionHistory {
     std::vector<std::string> actions;
 };
 
-class TestScript : public ES::Plugin::NativeScripting::Utils::ScriptableEntity {
+class TestScript : public Plugin::NativeScripting::Utils::ScriptableEntity {
   public:
-    void OnCreate(ES::Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnCreate"); }
+    void OnCreate(Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnCreate"); }
 
-    void OnUpdate(ES::Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnUpdate"); }
+    void OnUpdate(Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnUpdate"); }
 
-    void OnDestroy(ES::Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnDestroy"); }
+    void OnDestroy(Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnDestroy"); }
 };
 
 TEST(NativeScripting, CasualUse)
 {
-    ES::Engine::Core core;
+    Engine::Core core;
 
     core.RegisterResource<ActionHistory>({});
-    core.AddPlugins<ES::Plugin::NativeScripting::Plugin>();
+    core.AddPlugins<Plugin::NativeScripting::Plugin>();
 
     auto e = core.CreateEntity();
 
-    e.AddComponent<ES::Plugin::NativeScripting::Component::NativeScripting>(core).Bind<TestScript>(core);
+    e.AddComponent<Plugin::NativeScripting::Component::NativeScripting>(core).Bind<TestScript>(core);
 
     core.RunSystems();
 

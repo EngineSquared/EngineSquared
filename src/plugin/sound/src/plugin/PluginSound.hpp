@@ -2,15 +2,15 @@
 
 #include "plugin/APlugin.hpp"
 
-namespace ES::Plugin::Sound {
-class Plugin : public ES::Engine::APlugin {
+namespace Plugin::Sound {
+class Plugin : public Engine::APlugin {
   public:
-    explicit Plugin(ES::Engine::Core &core)
-        : ES::Engine::APlugin(core){
+    explicit Plugin(Engine::Core &core)
+        : Engine::APlugin(core){
               // empty
           };
     ~Plugin() = default;
 
     void Bind() final;
 };
-} // namespace ES::Plugin::Sound
+} // namespace Plugin::Sound

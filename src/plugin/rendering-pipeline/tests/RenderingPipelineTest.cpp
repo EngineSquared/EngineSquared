@@ -15,11 +15,11 @@ struct History {
 
 TEST(RenderingPipeline, CasualUse)
 {
-    ES::Engine::Core core;
+    Engine::Core core;
 
     core.RegisterResource<History>(History{});
 
-    core.AddPlugins<ES::Plugin::RenderingPipeline::Plugin>();
+    core.AddPlugins<Plugin::RenderingPipeline::Plugin>();
 
     ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Init)
     ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Setup)

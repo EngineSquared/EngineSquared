@@ -6,7 +6,7 @@
 
 #include "scheduler/AScheduler.hpp"
 
-namespace ES::Engine::Scheduler {
+namespace Engine::Scheduler {
 /**
  * @brief FixedTimeUpdate is a scheduler that runs systems at a fixed rate
  * It is made to only be run a certain amount of times per second, skipping updates when
@@ -42,4 +42,4 @@ class FixedTimeUpdate : public AScheduler {
     float _tickRate;
     float _bufferedTime = 0.0f;
 };
-} // namespace ES::Engine::Scheduler
+} // namespace Engine::Scheduler

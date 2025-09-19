@@ -4,8 +4,8 @@
 
 #include "Logger.hpp"
 
-namespace ES::Engine::Scheduler {
-void AScheduler::Disable(ES::Utils::FunctionContainer::FunctionID id)
+namespace Engine::Scheduler {
+void AScheduler::Disable(FunctionUtils::FunctionID id)
 {
     if (_enabledSystemsList.Contains(id))
     {
@@ -13,15 +13,15 @@ void AScheduler::Disable(ES::Utils::FunctionContainer::FunctionID id)
     }
     else if (_disabledSystemsList.Contains(id))
     {
-        ES::Utils::Log::Warn(fmt::format("System with id {} is already disabled", id));
+        Log::Warn(fmt::format("System with id {} is already disabled", id));
     }
     else
     {
-        ES::Utils::Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
+        Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
     }
 }
 
-void AScheduler::Enable(ES::Utils::FunctionContainer::FunctionID id)
+void AScheduler::Enable(FunctionUtils::FunctionID id)
 {
     if (_disabledSystemsList.Contains(id))
     {
@@ -29,11 +29,11 @@ void AScheduler::Enable(ES::Utils::FunctionContainer::FunctionID id)
     }
     else if (_enabledSystemsList.Contains(id))
     {
-        ES::Utils::Log::Warn(fmt::format("System with id {} is already enabled", id));
+        Log::Warn(fmt::format("System with id {} is already enabled", id));
     }
     else
     {
-        ES::Utils::Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
+        Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
     }
 }
 
@@ -52,11 +52,11 @@ void AScheduler::RunSystem(const SystemBase *system, Core &core)
     {
         if (_errorPolicy != SchedulerErrorPolicy::Silent)
         {
-            ES::Utils::Log::Error(fmt::format("System {} failed: {}", system->GetID(), e.what()));
+            Log::Error(fmt::format("System {} failed: {}", system->GetID(), e.what()));
         }
         else
         {
-            ES::Utils::Log::Debug(fmt::format("System {} failed: {}", system->GetID(), e.what()));
+            Log::Debug(fmt::format("System {} failed: {}", system->GetID(), e.what()));
         }
 
         switch (_errorPolicy)
@@ -73,4 +73,4 @@ void AScheduler::RunSystem(const SystemBase *system, Core &core)
         }
     }
 }
-} // namespace ES::Engine::Scheduler
+} // namespace Engine::Scheduler

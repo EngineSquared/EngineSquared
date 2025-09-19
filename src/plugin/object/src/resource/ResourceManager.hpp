@@ -7,7 +7,7 @@
 #include <entt/resource/cache.hpp>
 #include <fmt/format.h>
 
-namespace ES::Plugin::Object::Resource {
+namespace Plugin::Object::Resource {
 
 /**
  * ResourceManager is a simple class that store resources. It provides methods to add, get, and remove resources.
@@ -55,7 +55,7 @@ template <typename ResourceType> class ResourceManager {
 
         if (!ret.second)
         {
-            ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
+            Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, std::forward<Args>(args)...);
         }
 
@@ -77,7 +77,7 @@ template <typename ResourceType> class ResourceManager {
 
         if (!ret.second)
         {
-            ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
+            Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, resource);
         }
 
@@ -99,7 +99,7 @@ template <typename ResourceType> class ResourceManager {
 
         if (!ret.second)
         {
-            ES::Utils::Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
+            Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, std::move(resource));
         }
 
@@ -161,4 +161,4 @@ template <typename ResourceType> class ResourceManager {
     entt::resource_cache<ResourceType, ResourceLoader> cache{};
 };
 
-} // namespace ES::Plugin::Object::Resource
+} // namespace Plugin::Object::Resource

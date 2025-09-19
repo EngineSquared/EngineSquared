@@ -6,11 +6,11 @@
 
 TEST(Relationship, initialization)
 {
-    ES::Engine::Core core;
+    Engine::Core core;
 
-    ES::Engine::Entity entity = core.CreateEntity();
+    Engine::Entity entity = core.CreateEntity();
 
-    auto &relationship = entity.AddComponent<ES::Plugin::Relationship::Component::Relationship>(core);
+    auto &relationship = entity.AddComponent<Plugin::Relationship::Component::Relationship>(core);
 
     ASSERT_TRUE(relationship.children == 0);
     ASSERT_FALSE(relationship.first.IsValid());
@@ -21,120 +21,120 @@ TEST(Relationship, initialization)
 
 TEST(Relationship, one_child)
 {
-    ES::Engine::Core core;
+    Engine::Core core;
 
-    ES::Engine::Entity child = core.CreateEntity();
-    ES::Engine::Entity parent = core.CreateEntity();
+    Engine::Entity child = core.CreateEntity();
+    Engine::Entity parent = core.CreateEntity();
 
-    child.AddComponent<ES::Plugin::Relationship::Component::Relationship>(core);
-    parent.AddComponent<ES::Plugin::Relationship::Component::Relationship>(core);
+    child.AddComponent<Plugin::Relationship::Component::Relationship>(core);
+    parent.AddComponent<Plugin::Relationship::Component::Relationship>(core);
 
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child, parent));
 
-    ES::Plugin::Relationship::Utils::SetChildOf(core, child, parent);
+    Plugin::Relationship::Utils::SetChildOf(core, child, parent);
 
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child, parent));
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child, parent));
 
-    ES::Plugin::Relationship::Utils::RemoveParent(core, child);
+    Plugin::Relationship::Utils::RemoveParent(core, child);
 
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child, parent));
 }
 
 TEST(Relationship, multiple_children)
 {
-    ES::Engine::Core core;
+    Engine::Core core;
 
-    ES::Engine::Entity child1 = core.CreateEntity();
-    ES::Engine::Entity child2 = core.CreateEntity();
-    ES::Engine::Entity child3 = core.CreateEntity();
-    ES::Engine::Entity parent = core.CreateEntity();
+    Engine::Entity child1 = core.CreateEntity();
+    Engine::Entity child2 = core.CreateEntity();
+    Engine::Entity child3 = core.CreateEntity();
+    Engine::Entity parent = core.CreateEntity();
 
-    child1.AddComponent<ES::Plugin::Relationship::Component::Relationship>(core);
-    child2.AddComponent<ES::Plugin::Relationship::Component::Relationship>(core);
-    child3.AddComponent<ES::Plugin::Relationship::Component::Relationship>(core);
-    parent.AddComponent<ES::Plugin::Relationship::Component::Relationship>(core);
+    child1.AddComponent<Plugin::Relationship::Component::Relationship>(core);
+    child2.AddComponent<Plugin::Relationship::Component::Relationship>(core);
+    child3.AddComponent<Plugin::Relationship::Component::Relationship>(core);
+    parent.AddComponent<Plugin::Relationship::Component::Relationship>(core);
 
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).children, 0);
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first,
-              ES::Engine::Entity::entity_null_id);
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).children, 0);
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).first,
+              Engine::Entity::entity_null_id);
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
 
-    ES::Plugin::Relationship::Utils::SetChildOf(core, child1, parent);
+    Plugin::Relationship::Utils::SetChildOf(core, child1, parent);
 
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).children, 1);
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first, child1);
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).children, 1);
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).first, child1);
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
 
-    ES::Plugin::Relationship::Utils::SetChildOf(core, child2, parent);
+    Plugin::Relationship::Utils::SetChildOf(core, child2, parent);
 
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).children, 2);
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first, child2);
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).children, 2);
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).first, child2);
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
 
-    ES::Plugin::Relationship::Utils::SetChildOf(core, child3, parent);
+    Plugin::Relationship::Utils::SetChildOf(core, child3, parent);
 
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).children, 3);
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first, child3);
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).children, 3);
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).first, child3);
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
 
-    ES::Plugin::Relationship::Utils::RemoveParent(core, child2);
+    Plugin::Relationship::Utils::RemoveParent(core, child2);
 
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).children, 2);
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first, child3);
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).children, 2);
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).first, child3);
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
 
-    ES::Plugin::Relationship::Utils::RemoveParent(core, child3);
+    Plugin::Relationship::Utils::RemoveParent(core, child3);
 
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).children, 1);
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first, child1);
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).children, 1);
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).first, child1);
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
 
-    ES::Plugin::Relationship::Utils::RemoveParent(core, child1);
+    Plugin::Relationship::Utils::RemoveParent(core, child1);
 
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).children, 0);
-    ASSERT_EQ(parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).first,
-              ES::Engine::Entity::entity_null_id);
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).children, 0);
+    ASSERT_EQ(parent.GetComponents<Plugin::Relationship::Component::Relationship>(core).first,
+              Engine::Entity::entity_null_id);
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child1, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child2, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child3, parent));
 }
 
 TEST(Relationship, remove_parent)
 {
-    ES::Engine::Core core;
+    Engine::Core core;
 
-    ES::Engine::Entity child = core.CreateEntity();
-    ES::Engine::Entity parent = core.CreateEntity();
+    Engine::Entity child = core.CreateEntity();
+    Engine::Entity parent = core.CreateEntity();
 
-    child.AddComponent<ES::Plugin::Relationship::Component::Relationship>(core);
-    parent.AddComponent<ES::Plugin::Relationship::Component::Relationship>(core);
+    child.AddComponent<Plugin::Relationship::Component::Relationship>(core);
+    parent.AddComponent<Plugin::Relationship::Component::Relationship>(core);
 
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child, parent));
 
-    ES::Plugin::Relationship::Utils::RemoveParent(core, child);
+    Plugin::Relationship::Utils::RemoveParent(core, child);
 
-    ASSERT_FALSE(ES::Plugin::Relationship::Utils::IsChildOf(core, child, parent));
+    ASSERT_FALSE(Plugin::Relationship::Utils::IsChildOf(core, child, parent));
 
-    ES::Plugin::Relationship::Utils::SetChildOf(core, child, parent);
-    ES::Plugin::Relationship::Utils::SetChildOf(core, child, parent);
+    Plugin::Relationship::Utils::SetChildOf(core, child, parent);
+    Plugin::Relationship::Utils::SetChildOf(core, child, parent);
 
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child, parent));
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child, parent));
 
-    ES::Plugin::Relationship::Utils::RemoveParent(core, parent);
+    Plugin::Relationship::Utils::RemoveParent(core, parent);
 
-    ASSERT_TRUE(ES::Plugin::Relationship::Utils::IsChildOf(core, child, parent));
+    ASSERT_TRUE(Plugin::Relationship::Utils::IsChildOf(core, child, parent));
 
-    ASSERT_EQ(ES::Plugin::Relationship::Utils::GetParent(core, child), parent);
+    ASSERT_EQ(Plugin::Relationship::Utils::GetParent(core, child), parent);
 }

@@ -13,7 +13,7 @@
 #include "scheduler/SchedulerContainer.hpp"
 #include "scheduler/Update.hpp"
 
-namespace ES::Engine {
+namespace Engine {
 /**
  * The registry is used to create, kill and manage entities.
  * It is also used to register and get components. These registered components can be used by systems.
@@ -22,7 +22,7 @@ namespace ES::Engine {
  * you can create entities and add components to them.
  */
 
-/* Forward declaration to the ES::Engine::Entity class
+/* Forward declaration to the Engine::Entity class
  * Required to avoid include loop between Entity and Core headers
  */
 class Entity;
@@ -50,14 +50,14 @@ class Core {
      *
      * @return  The entity created.
      */
-    ES::Engine::Entity CreateEntity();
+    Engine::Entity CreateEntity();
 
     /**
      * Kill an entity. It will remove all components from the entity.
      *
      * @param   entity  The entity to kill.
      */
-    void KillEntity(ES::Engine::Entity &entity);
+    void KillEntity(Engine::Entity &entity);
 
     /**
      * Store a resource instance.
@@ -294,12 +294,12 @@ class Core {
 
   private:
     std::unique_ptr<entt::registry> _registry;
-    ES::Engine::SchedulerContainer _schedulers;
-    std::type_index _defaultScheduler = typeid(ES::Engine::Scheduler::Update);
+    Engine::SchedulerContainer _schedulers;
+    std::type_index _defaultScheduler = typeid(Engine::Scheduler::Update);
     std::vector<std::type_index> _schedulersToDelete;
     std::unordered_map<std::type_index, std::unique_ptr<IPlugin>> _plugins;
     bool _running = false;
 };
-} // namespace ES::Engine
+} // namespace Engine
 
 #include "core/Core.inl"

@@ -2,7 +2,7 @@
 
 #include "component/Transform.hpp"
 
-using namespace ES::Plugin::Object;
+using namespace Plugin::Object;
 
 TEST(Transform, struct_size_comparaison)
 {

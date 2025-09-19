@@ -5,11 +5,9 @@
 
 #include "Engine.hpp"
 
-#include "String.hpp"
-
 #include "Scene.hpp"
 
-using namespace ES::Plugin::Scene;
+using namespace Plugin::Scene;
 
 class SceneTest : public Utils::AScene {
     inline static int _numScenes = 0;
@@ -18,12 +16,12 @@ class SceneTest : public Utils::AScene {
     SceneTest() : Utils::AScene() {}
 
   protected:
-    void _onCreate(ES::Engine::Core &core) final
+    void _onCreate(Engine::Core &core) final
     {
         core.GetResource<std::vector<std::string>>().push_back(fmt::format("Creating scene: {}", _sceneId));
     }
 
-    void _onDestroy(ES::Engine::Core &core) final
+    void _onDestroy(Engine::Core &core) final
     {
         core.GetResource<std::vector<std::string>>().push_back(fmt::format("Destroying scene: {}", _sceneId));
     }
@@ -34,7 +32,7 @@ class SceneTest : public Utils::AScene {
 
 TEST(Scene, SceneManager)
 {
-    ES::Engine::Core core;
+    Engine::Core core;
     core.RegisterResource<std::vector<std::string>>(std::vector<std::string>());
     core.RegisterResource<Resource::SceneManager>(Resource::SceneManager());
     core.RegisterSystem(System::UpdateScene);
@@ -51,7 +49,7 @@ TEST(Scene, SceneManager)
     std::vector<std::string> output = core.GetResource<std::vector<std::string>>();
 
     EXPECT_EQ(output.size(), 3);
-    EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[0], "Creating scene: 0"));
-    EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[1], "Destroying scene: 0"));
-    EXPECT_TRUE(ES::Plugin::Utils::String::EndsWith(output[2], "Creating scene: 1"));
+    EXPECT_TRUE(output[0].ends_with("Creating scene: 0"));
+    EXPECT_TRUE(output[1].ends_with("Destroying scene: 0"));
+    EXPECT_TRUE(output[2].ends_with("Creating scene: 1"));
 }

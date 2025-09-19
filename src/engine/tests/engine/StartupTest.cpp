@@ -3,7 +3,7 @@
 #include "core/Core.hpp"
 #include "scheduler/Startup.hpp"
 
-using namespace ES::Engine;
+using namespace Engine;
 
 TEST(Core, StartupScheduler)
 {

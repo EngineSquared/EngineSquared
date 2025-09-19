@@ -3,7 +3,7 @@
 #include "core/Core.hpp"
 #include "scheduler/Shutdown.hpp"
 
-void ES::Engine::Scheduler::Shutdown::RunSystems()
+void Engine::Scheduler::Shutdown::RunSystems()
 {
     if (_core.IsRunning())
     {

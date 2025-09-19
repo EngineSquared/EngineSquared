@@ -2,7 +2,7 @@
 
 #include "plugin/APlugin.hpp"
 
-namespace ES::Plugin::RenderingPipeline {
+namespace Plugin::RenderingPipeline {
 /**
  * @brief This plugin create multiple schedulers that allows to create a rendering pipeline.
  * It will add the following "startup" pipeline:
@@ -16,11 +16,11 @@ namespace ES::Plugin::RenderingPipeline {
  * - ToGPU: Used to send the data to the GPU, like meshes, text, sprites, etc.
  * - Draw: Used for swapping the buffers and drawing the data on the screen.
  */
-class Plugin : public ES::Engine::APlugin {
+class Plugin : public Engine::APlugin {
   public:
     using APlugin::APlugin;
     virtual ~Plugin() = default;
 
     void Bind() final;
 };
-} // namespace ES::Plugin::RenderingPipeline
+} // namespace Plugin::RenderingPipeline

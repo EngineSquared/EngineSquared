@@ -3,7 +3,7 @@
 #include "core/Core.hpp"
 #include <chrono>
 
-namespace ES::Engine::Resource {
+namespace Engine::Resource {
 struct Time {
     float _elapsedTime = 0.0f;
     std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime = std::chrono::high_resolution_clock::now();
@@ -16,4 +16,4 @@ struct Time {
         time._lastTime = now;
     }
 };
-} // namespace ES::Engine::Resource
+} // namespace Engine::Resource

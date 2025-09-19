@@ -2,7 +2,7 @@
 
 #include "FunctionID.hpp"
 
-namespace ES::Utils::FunctionContainer {
+namespace FunctionUtils {
 /**
  * @brief Base class for all functions contained in a FunctionContainer.
  */
@@ -31,4 +31,4 @@ template <typename TReturn, typename... TArgs> class BaseFunction {
      */
     virtual FunctionID GetID() const = 0;
 };
-} // namespace ES::Utils::FunctionContainer
+} // namespace FunctionUtils

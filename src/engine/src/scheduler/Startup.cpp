@@ -2,7 +2,7 @@
 
 #include "scheduler/Startup.hpp"
 
-void ES::Engine::Scheduler::Startup::RunSystems()
+void Engine::Scheduler::Startup::RunSystems()
 {
     for (auto const &system : this->GetSystems())
     {

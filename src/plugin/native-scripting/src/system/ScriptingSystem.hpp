@@ -4,8 +4,8 @@
 
 #include "NativeScripting.hpp"
 
-namespace ES::Plugin::NativeScripting::System {
-void UpdateScripts(ES::Engine::Core &core);
+namespace Plugin::NativeScripting::System {
+void UpdateScripts(Engine::Core &core);
 
 /**
  * @brief Call OnDestroy function for entity and destroy the script instance.
@@ -25,5 +25,5 @@ void DestroyScript(entt::registry &registry, entt::entity entity);
  *
  * @param core Reference to the core engine instance.
  */
-void SetOnDestroy(ES::Engine::Core &core);
-} // namespace ES::Plugin::NativeScripting::System
+void SetOnDestroy(Engine::Core &core);
+} // namespace Plugin::NativeScripting::System
