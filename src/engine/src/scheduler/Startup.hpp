@@ -2,7 +2,7 @@
 
 #include "scheduler/AScheduler.hpp"
 
-namespace ES::Engine::Scheduler {
+namespace Engine::Scheduler {
 /**
  * @brief Startup scheduler that runs systems only once
  */
@@ -14,4 +14,4 @@ class Startup : public AScheduler {
   private:
     std::function<void()> _callback;
 };
-} // namespace ES::Engine::Scheduler
+} // namespace Engine::Scheduler

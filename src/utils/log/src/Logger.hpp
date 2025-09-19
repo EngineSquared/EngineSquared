@@ -8,7 +8,7 @@
 
 #include "spdlog/spdlog.h"
 
-namespace ES::Utils::Log {
+namespace Log {
 
 using Level = spdlog::level::level_enum;
 
@@ -45,4 +45,4 @@ inline void SetPattern(const std::string &pattern,
 {
     spdlog::set_pattern(pattern, time_type);
 };
-} // namespace ES::Utils::Log
+} // namespace Log

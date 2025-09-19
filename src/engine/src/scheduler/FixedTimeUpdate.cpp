@@ -3,9 +3,9 @@
 #include "resource/Time.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
 
-void ES::Engine::Scheduler::FixedTimeUpdate::RunSystems()
+void Engine::Scheduler::FixedTimeUpdate::RunSystems()
 {
-    _bufferedTime += this->_core.GetResource<ES::Engine::Resource::Time>()._elapsedTime;
+    _bufferedTime += this->_core.GetResource<Engine::Resource::Time>()._elapsedTime;
     auto ticks = static_cast<unsigned int>(_bufferedTime / _tickRate);
     _bufferedTime -= ticks * _tickRate;
 

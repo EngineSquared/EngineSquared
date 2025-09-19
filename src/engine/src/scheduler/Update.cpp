@@ -3,9 +3,9 @@
 #include "Update.hpp"
 #include "resource/Time.hpp"
 
-void ES::Engine::Scheduler::Update::RunSystems()
+void Engine::Scheduler::Update::RunSystems()
 {
-    _elapsedTime = this->_core.GetResource<ES::Engine::Resource::Time>()._elapsedTime;
+    _elapsedTime = this->_core.GetResource<Engine::Resource::Time>()._elapsedTime;
 
     for (auto const &system : this->GetSystems())
     {

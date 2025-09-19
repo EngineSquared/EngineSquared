@@ -29,7 +29,7 @@
 
 #include <iostream>
 
-namespace ES::Plugin::Window::System {
+namespace Plugin::Window::System {
 
 const int DEFAULT_WIDTH = 800;
 const int DEFAULT_HEIGHT = 800;
@@ -41,7 +41,7 @@ const int DEFAULT_HEIGHT = 800;
  *
  * @param core  The Engine² Core.
  */
-void CreateWindowSystem(ES::Engine::Core &core);
+void CreateWindowSystem(Engine::Core &core);
 
 /**
  * @brief Enable VSync.
@@ -50,7 +50,7 @@ void CreateWindowSystem(ES::Engine::Core &core);
  *
  * @param core  The Engine² Core.
  */
-void EnableVSync(ES::Engine::Core &core);
+void EnableVSync(Engine::Core &core);
 
 /**
  * @brief Poll GLFW events.
@@ -59,7 +59,7 @@ void EnableVSync(ES::Engine::Core &core);
  *
  * @param core  The Engine² Core.
  */
-void PollEvents(ES::Engine::Core &core);
+void PollEvents(Engine::Core &core);
 
 /**
  * @brief Initialize the GLFW
@@ -68,7 +68,7 @@ void PollEvents(ES::Engine::Core &core);
  *
  * @param core  The Engine² Core.
  */
-void InitGLFW(const ES::Engine::Core &core);
+void InitGLFW(const Engine::Core &core);
 
 /**
  * @brief Setup GLFW Hints
@@ -77,7 +77,7 @@ void InitGLFW(const ES::Engine::Core &core);
  *
  * @param core  The Engine² Core.
  */
-void SetupGLFWHints(const ES::Engine::Core &core);
+void SetupGLFWHints(const Engine::Core &core);
 
 /**
  * @brief Link the GLFW context to GL
@@ -86,7 +86,7 @@ void SetupGLFWHints(const ES::Engine::Core &core);
  *
  * @param core  The Engine² Core.
  */
-void LinkGLFWContextToGL(ES::Engine::Core &core);
+void LinkGLFWContextToGL(Engine::Core &core);
 
 /**
  * @brief Swap the buffers
@@ -95,7 +95,7 @@ void LinkGLFWContextToGL(ES::Engine::Core &core);
  *
  * @param core  The Engine² Core.
  */
-void SwapBuffers(ES::Engine::Core &core);
+void SwapBuffers(Engine::Core &core);
 
 /**
  * @brief Stop the window systems
@@ -104,7 +104,7 @@ void SwapBuffers(ES::Engine::Core &core);
  *
  * @param core  The Engine² Core.
  */
-void StopSystems(ES::Engine::Core &core);
+void StopSystems(Engine::Core &core);
 
 /**
  * @brief Store a pointer to the currently used Core in the GLFW window
@@ -114,7 +114,7 @@ void StopSystems(ES::Engine::Core &core);
  * @note This can be used later to access the Core from the GLFW window,
  * for example in callbacks where the Core is not directly accessible.
  */
-void StoreCoreInWindow(ES::Engine::Core &core);
+void StoreCoreInWindow(Engine::Core &core);
 
 /**
  * @brief Destroy the GLFW window
@@ -123,6 +123,6 @@ void StoreCoreInWindow(ES::Engine::Core &core);
  *
  * @param core  The Engine² Core.
  */
-void DestroyWindow(ES::Engine::Core &core);
+void DestroyWindow(Engine::Core &core);
 
-} // namespace ES::Plugin::Window::System
+} // namespace Plugin::Window::System

@@ -4,7 +4,7 @@
 #include "entity/Entity.hpp"
 #include "scheduler/AScheduler.hpp"
 
-using namespace ES::Engine;
+using namespace Engine;
 
 TEST(Core, CreateEntity)
 {

@@ -10,7 +10,7 @@
 #include <unordered_set>
 #include <vector>
 
-namespace ES::Engine {
+namespace Engine {
 class Core;
 
 class SchedulerError : public std::exception {
@@ -188,6 +188,6 @@ class SchedulerContainer {
     std::unordered_map<std::type_index, std::unordered_set<std::type_index>> _dependencies;
     std::list<std::shared_ptr<Scheduler::AScheduler>> _orderedSchedulers; ///< Vector to store schedulers in order.
 };
-} // namespace ES::Engine
+} // namespace Engine
 
 #include "SchedulerContainer.inl"

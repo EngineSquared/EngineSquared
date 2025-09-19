@@ -3,8 +3,8 @@
 #include "scheduler/Startup.hpp"
 #include "system/InitSound.hpp"
 
-void ES::Plugin::Sound::Plugin::Bind()
+void Plugin::Sound::Plugin::Bind()
 {
-    RegisterResource<ES::Plugin::Sound::Resource::SoundManager>(ES::Plugin::Sound::Resource::SoundManager());
-    RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::Sound::System::InitSounds);
+    RegisterResource<Resource::SoundManager>(Resource::SoundManager());
+    RegisterSystems<Engine::Scheduler::Startup>(Sound::System::InitSounds);
 }

@@ -2,12 +2,12 @@
 
 #include "scheduler/Update.hpp"
 
-namespace ES::Plugin::RenderingPipeline {
+namespace Plugin::RenderingPipeline {
 /**
  * @brief Used to send the data to the GPU, like meshes, text, sprites, etc.
  */
-class ToGPU : public ES::Engine::Scheduler::Update {
+class ToGPU : public Engine::Scheduler::Update {
   public:
-    using ES::Engine::Scheduler::Update::Update;
+    using Engine::Scheduler::Update::Update;
 };
-} // namespace ES::Plugin::RenderingPipeline
+} // namespace Plugin::RenderingPipeline

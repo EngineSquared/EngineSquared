@@ -3,7 +3,7 @@
 #include "core/Core.hpp"
 #include "plugin/IPlugin.hpp"
 
-namespace ES::Engine {
+namespace Engine {
 class APlugin : public IPlugin {
   public:
     explicit APlugin(Core &core) : _core(core){};
@@ -39,4 +39,4 @@ class APlugin : public IPlugin {
 
     Core &_core;
 };
-} // namespace ES::Engine
+} // namespace Engine

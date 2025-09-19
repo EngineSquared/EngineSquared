@@ -2,7 +2,7 @@
 
 #include <entt/core/hashed_string.hpp>
 
-namespace ES::Plugin::Object::Utils {
+namespace Plugin::Object::Utils {
 
 /**
  * AssetID is a type alias for entt::hashed_string, which is used to represent a unique
@@ -12,4 +12,4 @@ namespace ES::Plugin::Object::Utils {
  */
 using AssetID = entt::hashed_string;
 
-} // namespace ES::Plugin::Object::Utils
+} // namespace Plugin::Object::Utils

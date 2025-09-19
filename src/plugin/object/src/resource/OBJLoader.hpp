@@ -36,7 +36,7 @@
 #    define VK_REVERSE_Y_TEX
 #endif
 
-namespace ES::Plugin::Object::Resource {
+namespace Plugin::Object::Resource {
 
 /**
  * @brief OBJLoader class.
@@ -61,6 +61,6 @@ class OBJLoader {
     static bool loadModel(const std::string &path, std::vector<Shape> &shape);
 };
 
-} // namespace ES::Plugin::Object::Resource
+} // namespace Plugin::Object::Resource
 
 #endif /* !OBJLOADER_HPP_ */

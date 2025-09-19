@@ -28,7 +28,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>
 
-namespace ES::Plugin::Object::Component {
+namespace Plugin::Object::Component {
 
 /**
  * @brief Vertex structure.
@@ -55,21 +55,21 @@ struct Vertex {
     bool operator==(const Vertex &other) const = default;
 };
 
-} // namespace ES::Plugin::Object::Component
+} // namespace Plugin::Object::Component
 
 namespace std {
 
 /**
  * @brief Hash function for the Vertex structure.
  */
-template <> struct hash<ES::Plugin::Object::Component::Vertex> {
+template <> struct hash<Plugin::Object::Component::Vertex> {
     /**
      * @brief Hash function for the Vertex structure.
      *
      * @param vertex Vertex to hash.
      * @return std::size_t Hash value.
      */
-    size_t operator()(ES::Plugin::Object::Component::Vertex const &vertex) const
+    size_t operator()(Plugin::Object::Component::Vertex const &vertex) const
     {
         return ((hash<glm::vec3>()(vertex.pos) ^ (hash<glm::vec3>()(vertex.normal) << 1)) >> 1) ^
                (hash<glm::vec2>()(vertex.texCoord) << 1);

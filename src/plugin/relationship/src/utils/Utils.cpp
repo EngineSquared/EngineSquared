@@ -5,18 +5,18 @@
 // Temp
 #include <iostream>
 
-auto ES::Plugin::Relationship::Utils::SetChildOf(ES::Engine::Core &core, ES::Engine::Entity child,
-                                                 ES::Engine::Entity parent) -> void
+auto Plugin::Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity child,
+                                                 Engine::Entity parent) -> void
 {
     if (IsChildOf(core, parent, child))
     {
-        ES::Utils::Log::Warn(fmt::format("Entity {} is already a child of the parent {}",
-                                         ES::Engine::Entity::entity_id_type(child),
-                                         ES::Engine::Entity::entity_id_type(parent)));
+        Log::Warn(fmt::format("Entity {} is already a child of the parent {}",
+                                         Engine::Entity::entity_id_type(child),
+                                         Engine::Entity::entity_id_type(parent)));
         return;
     }
-    auto &parentRS = parent.AddComponentIfNotExists<ES::Plugin::Relationship::Component::Relationship>(core);
-    auto &newChildRS = child.AddComponentIfNotExists<ES::Plugin::Relationship::Component::Relationship>(core);
+    auto &parentRS = parent.AddComponentIfNotExists<Plugin::Relationship::Component::Relationship>(core);
+    auto &newChildRS = child.AddComponentIfNotExists<Plugin::Relationship::Component::Relationship>(core);
 
     parentRS.children++;
     if (parentRS.children == 1)
@@ -26,64 +26,64 @@ auto ES::Plugin::Relationship::Utils::SetChildOf(ES::Engine::Core &core, ES::Eng
         return;
     }
 
-    auto &firstChildRS = parentRS.first.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core);
+    auto &firstChildRS = parentRS.first.GetComponents<Plugin::Relationship::Component::Relationship>(core);
     firstChildRS.prev = child;
     newChildRS.next = parentRS.first;
     parentRS.first = child;
     newChildRS.parent = parent;
 }
 
-auto ES::Plugin::Relationship::Utils::IsChildOf(ES::Engine::Core &core, ES::Engine::Entity child,
-                                                ES::Engine::Entity parent) -> bool
+auto Plugin::Relationship::Utils::IsChildOf(Engine::Core &core, Engine::Entity child,
+                                                Engine::Entity parent) -> bool
 {
-    const ES::Plugin::Relationship::Component::Relationship *childRS =
-        child.TryGetComponent<ES::Plugin::Relationship::Component::Relationship>(core);
+    const Plugin::Relationship::Component::Relationship *childRS =
+        child.TryGetComponent<Plugin::Relationship::Component::Relationship>(core);
     return childRS && childRS->parent == parent;
 }
 
-auto ES::Plugin::Relationship::Utils::RemoveParent(ES::Engine::Core &core, ES::Engine::Entity child) -> void
+auto Plugin::Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entity child) -> void
 {
-    ES::Engine::Entity parent = GetParent(core, child);
-    if (parent == ES::Engine::Entity::entity_null_id)
+    Engine::Entity parent = GetParent(core, child);
+    if (parent == Engine::Entity::entity_null_id)
         return;
-    auto &childRS = child.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core);
-    auto &parentRS = parent.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core);
+    auto &childRS = child.GetComponents<Plugin::Relationship::Component::Relationship>(core);
+    auto &parentRS = parent.GetComponents<Plugin::Relationship::Component::Relationship>(core);
 
     parentRS.children--;
     if (parentRS.first == child)
     {
-        if (childRS.next == ES::Engine::Entity::entity_null_id)
+        if (childRS.next == Engine::Entity::entity_null_id)
         {
-            parentRS.first = ES::Engine::Entity::entity_null_id;
+            parentRS.first = Engine::Entity::entity_null_id;
         }
         else
         {
-            auto &secondChildRS = childRS.next.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core);
-            secondChildRS.prev = ES::Engine::Entity::entity_null_id;
+            auto &secondChildRS = childRS.next.GetComponents<Plugin::Relationship::Component::Relationship>(core);
+            secondChildRS.prev = Engine::Entity::entity_null_id;
             parentRS.first = childRS.next;
         }
     }
 
-    childRS.parent = ES::Engine::Entity::entity_null_id;
-    if (childRS.prev != ES::Engine::Entity::entity_null_id)
+    childRS.parent = Engine::Entity::entity_null_id;
+    if (childRS.prev != Engine::Entity::entity_null_id)
     {
-        childRS.prev.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).next = childRS.next;
+        childRS.prev.GetComponents<Plugin::Relationship::Component::Relationship>(core).next = childRS.next;
     }
-    if (childRS.next != ES::Engine::Entity::entity_null_id)
+    if (childRS.next != Engine::Entity::entity_null_id)
     {
-        childRS.next.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core).prev = childRS.prev;
+        childRS.next.GetComponents<Plugin::Relationship::Component::Relationship>(core).prev = childRS.prev;
     }
 }
 
-auto ES::Plugin::Relationship::Utils::GetParent(ES::Engine::Core &core, ES::Engine::Entity child) -> ES::Engine::Entity
+auto Plugin::Relationship::Utils::GetParent(Engine::Core &core, Engine::Entity child) -> Engine::Entity
 {
-    const ES::Plugin::Relationship::Component::Relationship &childRS =
-        child.GetComponents<ES::Plugin::Relationship::Component::Relationship>(core);
+    const Plugin::Relationship::Component::Relationship &childRS =
+        child.GetComponents<Plugin::Relationship::Component::Relationship>(core);
 
-    if (childRS.parent == ES::Engine::Entity::entity_null_id)
+    if (childRS.parent == Engine::Entity::entity_null_id)
     {
-        ES::Utils::Log::Warn(fmt::format("Entity {} has no parent", ES::Engine::Entity::entity_id_type(child)));
-        return ES::Engine::Entity::entity_null_id;
+        Log::Warn(fmt::format("Entity {} has no parent", Engine::Entity::entity_id_type(child)));
+        return Engine::Entity::entity_null_id;
     }
     return childRS.parent;
 }

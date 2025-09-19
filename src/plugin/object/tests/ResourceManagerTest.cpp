@@ -2,7 +2,7 @@
 
 #include "resource/ResourceManager.hpp"
 
-using namespace ES::Plugin::Object::Resource;
+using namespace Plugin::Object::Resource;
 
 TEST(ResourceManagerTest, AddGetSetRemove)
 {

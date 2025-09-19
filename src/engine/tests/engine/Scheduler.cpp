@@ -8,14 +8,14 @@
 #include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
 
-using namespace ES::Engine;
+using namespace Engine;
 using namespace std::chrono_literals;
 
 struct ResourceTest {
     std::vector<int> data;
 };
 
-class SchedulerTest1 : public ES::Engine::Scheduler::AScheduler {
+class SchedulerTest1 : public Engine::Scheduler::AScheduler {
   public:
     explicit SchedulerTest1(Core &core) : AScheduler(core){};
     ~SchedulerTest1() final = default;
@@ -23,7 +23,7 @@ class SchedulerTest1 : public ES::Engine::Scheduler::AScheduler {
     void RunSystems() override { _core.GetResource<ResourceTest>().data.push_back(1); }
 };
 
-class SchedulerTest2 : public ES::Engine::Scheduler::AScheduler {
+class SchedulerTest2 : public Engine::Scheduler::AScheduler {
   public:
     explicit SchedulerTest2(Core &core) : AScheduler(core){};
     ~SchedulerTest2() final = default;
@@ -118,7 +118,7 @@ TEST(SchedulerContainer, CurrentScheduler)
     float elapsedTime = 0.f;
 
     core.RegisterSystem<Scheduler::Update>(
-        [&elapsedTime](Core &c) { c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime; });
+        [&elapsedTime](Core &c) { c.GetResource<Engine::Resource::Time>()._elapsedTime = elapsedTime; });
 
     core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(1); });
     core.RegisterSystem<Scheduler::Update>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(2); });

@@ -1,10 +1,10 @@
 #pragma once
 
-namespace ES::Engine {
+namespace Engine {
 class Core;
 }
 
-namespace ES::Engine::Scheduler {
+namespace Engine::Scheduler {
 /**
  * @brief Enum that defines how the scheduler will handle errors
  */
@@ -46,4 +46,4 @@ class IScheduler {
      */
     virtual void SetErrorPolicy(SchedulerErrorPolicy errorPolicy) = 0;
 };
-} // namespace ES::Engine::Scheduler
+} // namespace Engine::Scheduler
