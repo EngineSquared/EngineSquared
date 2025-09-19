@@ -5,7 +5,7 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
-namespace ES::Plugin::Object::Resource {
+namespace Plugin::Object::Resource {
 
 namespace {
 
@@ -17,19 +17,19 @@ bool validateAndLoadObj(const std::string &path, tinyobj::attrib_t &attrib, std:
 
     if (path.empty())
     {
-        ES::Utils::Log::Warn("The path is empty.");
+        Log::Warn("The path is empty.");
         return false;
     }
 
     if (!path.ends_with(".obj"))
     {
-        ES::Utils::Log::Warn("The file is not a .obj file.");
+        Log::Warn("The file is not a .obj file.");
         return false;
     }
 
     if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str()))
     {
-        ES::Utils::Log::Warn(warn + err);
+        Log::Warn(warn + err);
         return false;
     }
 
@@ -164,4 +164,4 @@ bool OBJLoader::loadModel(const std::string &path, std::vector<Shape> &shape)
     return true;
 }
 
-} // namespace ES::Plugin::Object::Resource
+} // namespace Plugin::Object::Resource

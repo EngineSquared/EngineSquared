@@ -2,11 +2,11 @@
 
 #include "SchedulerContainer.hpp"
 
-void ES::Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
+void Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
 {
     if (this->_schedulers.contains(id))
     {
-        ES::Utils::Log::Debug(fmt::format("Deleting scheduler: {}", id.name()));
+        Log::Debug(fmt::format("Deleting scheduler: {}", id.name()));
         this->_schedulers.erase(id);
         this->_dirty = true;
         if (this->_dependencies.contains(id))
@@ -23,11 +23,11 @@ void ES::Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
     }
     else
     {
-        ES::Utils::Log::Warn(fmt::format("Trying to delete Scheduler but it does not exist: {}", id.name()));
+        Log::Warn(fmt::format("Trying to delete Scheduler but it does not exist: {}", id.name()));
     }
 }
 
-void ES::Engine::SchedulerContainer::ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
+void Engine::SchedulerContainer::ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
                                                          std::unordered_map<std::type_index, size_t> &inDegree) const
 {
     for (const auto &[after, befores] : _dependencies)
@@ -43,7 +43,7 @@ void ES::Engine::SchedulerContainer::ProcessDependencies(std::type_index current
     }
 }
 
-void ES::Engine::SchedulerContainer::TopologicalSort()
+void Engine::SchedulerContainer::TopologicalSort()
 {
     _orderedSchedulers.clear();
 
@@ -86,7 +86,7 @@ void ES::Engine::SchedulerContainer::TopologicalSort()
     }
 }
 
-void ES::Engine::SchedulerContainer::Update()
+void Engine::SchedulerContainer::Update()
 {
     if (!_dirty)
         return;

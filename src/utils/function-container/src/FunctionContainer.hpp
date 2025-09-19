@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace ES::Utils::FunctionContainer {
+namespace FunctionUtils {
 /**
  * @brief Container for functions, allowing for dynamic storage and invocation.
  **/
@@ -91,6 +91,6 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
     std::unordered_map<FunctionID, std::size_t> _idToIndex;     ///< Map to store unique ids for each function.
     std::list<std::unique_ptr<FunctionType>> _orderedFunctions; ///< Vector to store functions in order.
 };
-} // namespace ES::Utils::FunctionContainer
+} // namespace FunctionUtils
 
 #include "FunctionContainer.inl"

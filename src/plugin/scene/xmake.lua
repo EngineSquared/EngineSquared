@@ -1,6 +1,5 @@
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
-includes("../../utils/string/xmake.lua")
 
 target("PluginScene")
     set_kind("static")
@@ -11,7 +10,6 @@ target("PluginScene")
 
     add_deps("EngineSquaredCore")
     add_deps("UtilsLog")
-    add_deps("UtilsString")
 
     add_files("src/**.cpp")
 

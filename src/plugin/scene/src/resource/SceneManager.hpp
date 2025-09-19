@@ -11,7 +11,7 @@
 
 #include "utils/AScene.hpp"
 
-namespace ES::Plugin::Scene::Resource {
+namespace Plugin::Scene::Resource {
 class SceneManager {
   public:
     SceneManager() = default;
@@ -30,7 +30,7 @@ class SceneManager {
      *
      * @param core  core that contains all components
      */
-    void Update(ES::Engine::Core &core);
+    void Update(Engine::Core &core);
 
     /**
      * @brief Register a scene using a name as a key.
@@ -41,11 +41,11 @@ class SceneManager {
      */
     template <typename TScene> TScene &RegisterScene(const std::string &name)
     {
-        static_assert(std::is_base_of_v<ES::Plugin::Scene::Utils::AScene, TScene>,
-                      "TScene must inherit from ES::Plugin::Scene::Utils::AScene");
+        static_assert(std::is_base_of_v<Utils::AScene, TScene>,
+                      "TScene must inherit from Utils::AScene");
         if (_scenes.contains(name))
         {
-            ES::Utils::Log::Warn(fmt::format("Scene {} already exists", name));
+            Log::Warn(fmt::format("Scene {} already exists", name));
         }
         std::shared_ptr<TScene> new_scene = std::make_shared<TScene>();
         _scenes[name] = new_scene;
@@ -55,11 +55,11 @@ class SceneManager {
     const std::optional<std::string> &GetCurrentScene() const { return _currentScene; }
 
   private:
-    void _loadScene(ES::Engine::Core &core, const std::string &name);
+    void _loadScene(Engine::Core &core, const std::string &name);
 
-    void _unloadScene(ES::Engine::Core &core, const std::string &name);
+    void _unloadScene(Engine::Core &core, const std::string &name);
 
-    [[nodiscard]] std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> _getScene(const std::string &name);
+    [[nodiscard]] std::optional<std::shared_ptr<Utils::AScene>> _getScene(const std::string &name);
 
     struct TransparentHash {
         using is_transparent = void;
@@ -67,10 +67,10 @@ class SceneManager {
         std::size_t operator()(std::string_view str) const noexcept { return std::hash<std::string_view>{}(str); }
         std::size_t operator()(const char *str) const noexcept { return std::hash<std::string_view>{}(str); }
     };
-    std::unordered_map<std::string, std::shared_ptr<ES::Plugin::Scene::Utils::AScene>, TransparentHash, std::equal_to<>>
+    std::unordered_map<std::string, std::shared_ptr<Utils::AScene>, TransparentHash, std::equal_to<>>
         _scenes;
 
     std::optional<std::string> _nextScene;
     std::optional<std::string> _currentScene;
 };
-} // namespace ES::Plugin::Scene::Resource
+} // namespace Plugin::Scene::Resource

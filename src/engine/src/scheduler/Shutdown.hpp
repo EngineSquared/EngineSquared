@@ -4,7 +4,7 @@
 
 #include "scheduler/AScheduler.hpp"
 
-namespace ES::Engine::Scheduler {
+namespace Engine::Scheduler {
 /**
  * @brief Shutdown scheduler that runs systems only once when engine shuts down
  */
@@ -13,4 +13,4 @@ class Shutdown : public AScheduler {
     explicit Shutdown(Core &core) : AScheduler(core) {}
     void RunSystems() override;
 };
-} // namespace ES::Engine::Scheduler
+} // namespace Engine::Scheduler

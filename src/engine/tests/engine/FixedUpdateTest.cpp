@@ -5,7 +5,7 @@
 #include "resource/Time.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
 
-using namespace ES::Engine;
+using namespace Engine;
 using namespace std::chrono_literals;
 
 TEST(Core, FixedTimeUpdate)
@@ -15,7 +15,7 @@ TEST(Core, FixedTimeUpdate)
     float elapsedTime = 0.f;
 
     core.RegisterSystem<Scheduler::Update>(
-        [&elapsedTime](Core &c) { c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime; });
+        [&elapsedTime](Core &c) { c.GetResource<Engine::Resource::Time>()._elapsedTime = elapsedTime; });
 
     int update_count = 0;
 

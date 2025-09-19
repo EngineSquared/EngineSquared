@@ -2,7 +2,7 @@
 
 #include "BaseFunction.hpp"
 
-namespace ES::Engine {
+namespace Engine {
 // Forward declaration of Core class.
 class Core;
 
@@ -10,7 +10,7 @@ class Core;
  * @brief Wrapper around a system that allows to add an error callback to it.
  */
 template <typename TSystem, typename TErrorCallback>
-class WrappedSystem : public ES::Utils::FunctionContainer::BaseFunction<void, Core &> {
+class WrappedSystem : public FunctionUtils::BaseFunction<void, Core &> {
   public:
     /**
      * @brief Constructor for WrappedSystem.
@@ -33,13 +33,13 @@ class WrappedSystem : public ES::Utils::FunctionContainer::BaseFunction<void, Co
      * @param args Arguments to pass to the system.
      * @return Return value of the system.
      */
-    void operator()(ES::Engine::Core &core) const override
+    void operator()(Engine::Core &core) const override
     {
         try
         {
             return _system(core);
         }
-        catch (const std::exception &e) // NOSONAR
+        catch (const std::exception &) // NOSONAR
         {
             _errorCallback(core);
             throw;
@@ -50,7 +50,7 @@ class WrappedSystem : public ES::Utils::FunctionContainer::BaseFunction<void, Co
      * @brief Returns the unique ID of the system.
      * @return Unique ID of the system.
      */
-    ES::Utils::FunctionContainer::FunctionID GetID() const override { return _id; }
+    FunctionUtils::FunctionID GetID() const override { return _id; }
 
     /**
      * @brief Get the ID of the system.
@@ -58,7 +58,7 @@ class WrappedSystem : public ES::Utils::FunctionContainer::BaseFunction<void, Co
      * @tparam TCallable The type of the system.
      * @return The ID of the system.
      */
-    static ES::Utils::FunctionContainer::FunctionID GetCallableID(TSystem callable)
+    static FunctionUtils::FunctionID GetCallableID(TSystem callable)
     {
         if constexpr (std::is_class_v<TSystem>)
         {
@@ -73,6 +73,6 @@ class WrappedSystem : public ES::Utils::FunctionContainer::BaseFunction<void, Co
   private:
     [[no_unique_address]] TSystem _system;
     [[no_unique_address]] TErrorCallback _errorCallback;
-    ES::Utils::FunctionContainer::FunctionID _id = 0; ///< Unique ID for the function.
+    FunctionUtils::FunctionID _id = 0; ///< Unique ID for the function.
 };
-} // namespace ES::Engine
+} // namespace Engine

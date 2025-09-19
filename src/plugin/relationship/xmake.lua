@@ -48,18 +48,18 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
 
         after_build(function (target)
-            local buildir = path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)")
+            local builddir = path.join("$(builddir)", "$(plat)", "$(arch)", "$(mode)")
             local assets_files = os.files("src/plugin/object/tests/assets/*.*")
 
-            os.mkdir(path.join(buildir, "assets"))
+            os.mkdir(path.join(builddir, "assets"))
 
             for _, assets_file in ipairs(assets_files) do
-                os.cp(assets_file, path.join(buildir, "assets"))
+                os.cp(assets_file, path.join(builddir, "assets"))
             end
         end)
 
         on_clean(function (target)
-            os.rm(path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)", "assets"))
+            os.rm(path.join("$(builddir)", "$(plat)", "$(arch)", "$(mode)", "assets"))
         end)
     ::continue::
 end

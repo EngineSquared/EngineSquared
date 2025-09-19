@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 #include <string>
 
-using namespace ES::Utils::FunctionContainer;
+using namespace FunctionUtils;
 
 // Test fixture
 class FunctionContainerTest : public ::testing::Test {

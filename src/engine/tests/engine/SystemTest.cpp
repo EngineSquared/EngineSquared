@@ -3,7 +3,7 @@
 #include "core/Core.hpp"
 #include "entity/Entity.hpp"
 
-using namespace ES::Engine;
+using namespace Engine;
 
 struct A {
     int value = 0;

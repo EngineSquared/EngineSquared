@@ -2,12 +2,12 @@
 
 #include "scheduler/Update.hpp"
 
-namespace ES::Plugin::RenderingPipeline {
+namespace Plugin::RenderingPipeline {
 /**
  * @brief Setup the rendering pipeline, like clearing the screen, setting up the camera, etc.
  */
-class RenderSetup : public ES::Engine::Scheduler::Update {
+class RenderSetup : public Engine::Scheduler::Update {
   public:
-    using ES::Engine::Scheduler::Update::Update;
+    using Engine::Scheduler::Update::Update;
 };
-} // namespace ES::Plugin::RenderingPipeline
+} // namespace Plugin::RenderingPipeline

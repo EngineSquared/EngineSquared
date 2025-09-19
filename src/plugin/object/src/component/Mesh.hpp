@@ -26,7 +26,7 @@
 
 #include <entt/resource/loader.hpp>
 
-namespace ES::Plugin::Object::Component {
+namespace Plugin::Object::Component {
 
 /**
  * @brief Mesh structure.
@@ -65,4 +65,4 @@ struct MeshLoader final {
     result_type operator()(const Mesh &mesh) const { return std::make_shared<Mesh>(mesh); }
 };
 
-} // namespace ES::Plugin::Object::Component
+} // namespace Plugin::Object::Component

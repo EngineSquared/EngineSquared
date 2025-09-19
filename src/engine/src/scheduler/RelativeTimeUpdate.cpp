@@ -3,9 +3,9 @@
 #include "resource/Time.hpp"
 #include "scheduler/RelativeTimeUpdate.hpp"
 
-void ES::Engine::Scheduler::RelativeTimeUpdate::RunSystems()
+void Engine::Scheduler::RelativeTimeUpdate::RunSystems()
 {
-    _bufferedTime += this->_core.GetResource<ES::Engine::Resource::Time>()._elapsedTime;
+    _bufferedTime += this->_core.GetResource<Engine::Resource::Time>()._elapsedTime;
     auto ticks = static_cast<unsigned int>(_bufferedTime / _tickRate);
     float remainder = _bufferedTime - ticks * _tickRate;
     _bufferedTime -= ticks * _tickRate;

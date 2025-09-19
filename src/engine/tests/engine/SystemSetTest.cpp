@@ -2,7 +2,7 @@
 
 #include "core/Core.hpp"
 
-using namespace ES::Engine;
+using namespace Engine;
 
 static int count = 0;
 static bool first_did_run = false;

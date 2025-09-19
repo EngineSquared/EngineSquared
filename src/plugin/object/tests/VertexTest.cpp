@@ -2,7 +2,7 @@
 
 #include "component/Vertex.hpp"
 
-using namespace ES::Plugin::Object;
+using namespace Plugin::Object;
 
 TEST(VertexTest, component_vertex_struct_size_comparaison)
 {

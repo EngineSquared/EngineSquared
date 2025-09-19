@@ -6,7 +6,7 @@
 
 #include "resource/SceneManager.hpp"
 
-void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Core &core)
+void Plugin::Scene::Resource::SceneManager::Update(Engine::Core &core)
 {
     if (!_nextScene.has_value())
     {
@@ -20,28 +20,28 @@ void ES::Plugin::Scene::Resource::SceneManager::Update(ES::Engine::Core &core)
     _currentScene = _nextScene;
     _nextScene.reset();
 }
-void ES::Plugin::Scene::Resource::SceneManager::_loadScene(ES::Engine::Core &core, const std::string &name)
+void Plugin::Scene::Resource::SceneManager::_loadScene(Engine::Core &core, const std::string &name)
 {
-    ES::Utils::Log::Info("Loading scene: " + _nextScene.value());
-    std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> scene = _getScene(name);
+    Log::Info("Loading scene: " + _nextScene.value());
+    std::optional<std::shared_ptr<Utils::AScene>> scene = _getScene(name);
     if (scene.has_value())
     {
         scene.value()->Load(core);
     }
 }
 
-void ES::Plugin::Scene::Resource::SceneManager::_unloadScene(ES::Engine::Core &core, const std::string &name)
+void Plugin::Scene::Resource::SceneManager::_unloadScene(Engine::Core &core, const std::string &name)
 {
-    ES::Utils::Log::Info("Unloading scene: " + _currentScene.value());
-    std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>> scene = _getScene(name);
+    Log::Info("Unloading scene: " + _currentScene.value());
+    std::optional<std::shared_ptr<Utils::AScene>> scene = _getScene(name);
     if (scene.has_value())
     {
         scene.value()->Unload(core);
     }
 }
 
-std::optional<std::shared_ptr<ES::Plugin::Scene::Utils::AScene>>
-ES::Plugin::Scene::Resource::SceneManager::_getScene(const std::string &name)
+std::optional<std::shared_ptr<Plugin::Scene::Utils::AScene>>
+Plugin::Scene::Resource::SceneManager::_getScene(const std::string &name)
 {
     auto scene = _scenes.find(name);
     if (scene != _scenes.end())
@@ -50,7 +50,7 @@ ES::Plugin::Scene::Resource::SceneManager::_getScene(const std::string &name)
     }
     else
     {
-        ES::Utils::Log::Error("Scene not found: " + name);
+        Log::Error("Scene not found: " + name);
         return std::nullopt;
     }
 }

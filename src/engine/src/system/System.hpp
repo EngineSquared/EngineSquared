@@ -11,18 +11,18 @@
 #include "FunctionContainer.hpp"
 #include "Logger.hpp"
 
-namespace ES::Engine {
+namespace Engine {
 // Forward declaration of Core class.
 class Core;
 
-using SystemBase = ES::Utils::FunctionContainer::BaseFunction<void, Core &>;
+using SystemBase = FunctionUtils::BaseFunction<void, Core &>;
 
-template <typename TCallable> using System = ES::Utils::FunctionContainer::CallableFunction<TCallable, void, Core &>;
+template <typename TCallable> using System = FunctionUtils::CallableFunction<TCallable, void, Core &>;
 
 /**
  * @brief Container class for managing multiple systems.
  */
-class SystemContainer : public ES::Utils::FunctionContainer::FunctionContainer<void, Core &> {
+class SystemContainer : public FunctionUtils::FunctionContainer<void, Core &> {
   public:
     template <typename... TSystem> inline decltype(auto) AddSystems(TSystem... systems)
     {
@@ -31,7 +31,7 @@ class SystemContainer : public ES::Utils::FunctionContainer::FunctionContainer<v
 
     inline decltype(auto) GetSystems() { return GetFunctions(); }
 
-    inline decltype(auto) DeleteSystem(const ES::Utils::FunctionContainer::FunctionID &id)
+    inline decltype(auto) DeleteSystem(const FunctionUtils::FunctionID &id)
     {
         return DeleteFunction(id);
     }
@@ -40,4 +40,4 @@ class SystemContainer : public ES::Utils::FunctionContainer::FunctionContainer<v
     template <typename TCallable> void AddSystem(TCallable callable) { AddFunction(callable); }
 };
 
-} // namespace ES::Engine
+} // namespace Engine
