@@ -11,7 +11,6 @@ add_requires(
     "tinyobjloader",
     "glm >=1.0.1",
     "glfw >=3.4",
-    "glew",
     "fmt",
     "stb",
     "joltphysics",
@@ -53,7 +52,7 @@ target("EngineSquared")
     add_deps("UtilsTools")
     add_deps("UtilsLog")
 
-    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "glew", "fmt", "stb", "joltphysics")
+    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics")
 
     if is_mode("debug") then
         add_defines("DEBUG")
