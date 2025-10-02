@@ -22,6 +22,7 @@
 
 #pragma once
 
+#include <vector>
 #include <glm/glm.hpp>
 
 namespace Plugin::Object::Component {
