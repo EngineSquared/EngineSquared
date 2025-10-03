@@ -8,5 +8,5 @@
 #include "exception/ResourceManagerError.hpp"
 
 // Resources
-#include "resource/ResourceManager.hpp"
 #include "resource/OBJLoader.hpp"
+#include "resource/ResourceManager.hpp"
