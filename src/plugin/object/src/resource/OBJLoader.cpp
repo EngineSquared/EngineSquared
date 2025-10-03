@@ -23,9 +23,6 @@ OBJLoader::OBJLoader(const std::string &filepath, const std::string &mtlSearchPa
 
     if (!_reader.Warning().empty())
         throw OBJLoaderError(_reader.Warning());
-
-    if (_reader.GetAttrib().vertices.empty() && _reader.GetShapes().empty())
-        throw OBJLoaderError("No geometry found in OBJ file.");
 }
 
 Component::Mesh OBJLoader::GetMesh()
