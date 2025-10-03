@@ -18,7 +18,6 @@ target("PluginObject")
     add_headerfiles("src/(component/*.hpp)")
     add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
-    add_headerfiles("src/(utils/*.hpp)")
     add_headerfiles("src/(*.hpp)")
 
     add_includedirs("src", {public = true})
@@ -36,7 +35,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        
+
         set_languages("cxx20")
         add_packages("entt", "gtest", "glm", "tinyobjloader", "spdlog", "fmt")
         add_links("gtest")
