@@ -24,7 +24,7 @@ OBJLoader::OBJLoader(const std::string &filepath, const std::string &mtlSearchPa
     if (!_reader.Warning().empty())
         throw OBJLoaderError(_reader.Warning());
 
-    if (_reader.GetAttrib().vertices.empty() &&  _reader.GetShapes().empty())
+    if (_reader.GetAttrib().vertices.empty() && _reader.GetShapes().empty())
         throw OBJLoaderError("No geometry found in OBJ file.");
 }
 
@@ -58,7 +58,7 @@ Component::Mesh OBJLoader::GetMesh()
 }
 
 void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,
-                 size_t face_vertices, size_t &index_offset) noexcept
+                                size_t face_vertices, size_t &index_offset) noexcept
 {
     const auto &attrib = _reader.GetAttrib();
 

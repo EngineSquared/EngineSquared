@@ -85,7 +85,7 @@ class OBJLoader {
      * @see Component::Mesh
      */
     void ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,
-                 size_t face_vertices, size_t &index_offset) noexcept;
+                         size_t face_vertices, size_t &index_offset) noexcept;
 
   protected:
   private:
