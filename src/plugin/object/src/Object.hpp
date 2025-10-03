@@ -9,3 +9,4 @@
 
 // Resources
 #include "resource/ResourceManager.hpp"
+#include "resource/OBJLoader.hpp"

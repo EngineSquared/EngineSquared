@@ -3,11 +3,12 @@
  *
  * EngineSquared is a software package, part of the Engine².
  *
- * This file is part of the EngineSquared project and is licensed under
- * the MIT License. See the project's LICENSE file for the full license
- * text and details.
+ * This file is part of the EngineSquared project that is under MIT License.
+ * Copyright © 2025-present by @EngineSquared, All rights reserved.
  *
- * SPDX-License-Identifier: MIT
+ * EngineSquared is a free software: you can redistribute it and/or modify
+ * it under the terms of the MIT License. See the project's LICENSE file for
+ * the full license text and details.
  *
  * @file OBJLoader.hpp
  * @brief OBJLoader class declaration.
