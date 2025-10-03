@@ -21,17 +21,8 @@ TEST(OBJLoaderTest, load_obj_file)
     });
 }
 
-TEST(OBJLoaderTest, load_empty_path)
-{
-    EXPECT_THROW(OBJLoader(""), std::exception);
-}
+TEST(OBJLoaderTest, load_empty_path) { EXPECT_THROW(OBJLoader(""), std::exception); }
 
-TEST(OBJLoaderTest, load_not_obj_file)
-{
-    EXPECT_THROW(OBJLoader(OBJ_FILE_PATH "not_obj.txt"), std::exception);
-}
+TEST(OBJLoaderTest, load_not_obj_file) { EXPECT_THROW(OBJLoader(OBJ_FILE_PATH "not_obj.txt"), std::exception); }
 
-TEST(OBJLoaderTest, load_wrong_path)
-{
-    EXPECT_THROW(OBJLoader("wrong_path"), std::exception);
-}
+TEST(OBJLoaderTest, load_wrong_path) { EXPECT_THROW(OBJLoader("wrong_path"), std::exception); }

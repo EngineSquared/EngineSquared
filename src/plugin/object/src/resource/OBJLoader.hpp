@@ -53,32 +53,32 @@ namespace Plugin::Object {
  * @see OBJLoaderError
  */
 class OBJLoader {
-    public:
-        /**
-         * @brief Constructs an OBJLoader for the specified file.
-         *
-         * @param filepath The path to the OBJ file.
-         * @param mtlSearchPath The path to the directory containing material files.
-         *
-         * @throws OBJLoaderError if the file cannot be loaded or parsed.
-         * @see OBJLoaderError
-         */
-        explicit OBJLoader(const std::string &filepath, const std::string &mtlSearchPath = "");
-        ~OBJLoader() = default;
+  public:
+    /**
+     * @brief Constructs an OBJLoader for the specified file.
+     *
+     * @param filepath The path to the OBJ file.
+     * @param mtlSearchPath The path to the directory containing material files.
+     *
+     * @throws OBJLoaderError if the file cannot be loaded or parsed.
+     * @see OBJLoaderError
+     */
+    explicit OBJLoader(const std::string &filepath, const std::string &mtlSearchPath = "");
+    ~OBJLoader() = default;
 
-        /**
-         * @brief Retrieves the loaded mesh data.
-         *
-         * @return Component::Mesh The mesh data extracted from the OBJ file.
-         *
-         * @see Component::Mesh
-         */
-        [[nodiscard]] Component::Mesh GetMesh();
+    /**
+     * @brief Retrieves the loaded mesh data.
+     *
+     * @return Component::Mesh The mesh data extracted from the OBJ file.
+     *
+     * @see Component::Mesh
+     */
+    [[nodiscard]] Component::Mesh GetMesh();
 
-    protected:
-    private:
-        tinyobj::ObjReaderConfig _reader_config;
-        tinyobj::ObjReader _reader;
+  protected:
+  private:
+    tinyobj::ObjReaderConfig _reader_config;
+    tinyobj::ObjReader _reader;
 };
 
 } // namespace Plugin::Object
