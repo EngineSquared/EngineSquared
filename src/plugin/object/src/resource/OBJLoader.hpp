@@ -20,11 +20,8 @@
  **************************************************************************/
 
 #pragma once
-
-#define TINYOBJLOADER_IMPLEMENTATION
-#include "tiny_obj_loader.h"
-
 #include <string>
+#include <tiny_obj_loader.h>
 
 #include "component/Mesh.hpp"
 #include "exception/OBJLoaderError.hpp"
@@ -74,6 +71,21 @@ class OBJLoader {
      * @see Component::Mesh
      */
     [[nodiscard]] Component::Mesh GetMesh();
+
+  private:
+    /**
+     * @brief Processes a single face of the mesh and populates the Mesh object.
+     *
+     * @param mesh The Mesh object to populate.
+     * @param shapes The vector of shapes loaded from the OBJ file.
+     * @param shape The index of the current shape being processed.
+     * @param face_vertices The number of vertices in the current face.
+     * @param index_offset The offset in the index array for the current face.
+     *
+     * @see Component::Mesh
+     */
+    void ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,
+                 size_t face_vertices, size_t &index_offset) noexcept;
 
   protected:
   private:
