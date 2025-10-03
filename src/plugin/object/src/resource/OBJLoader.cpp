@@ -9,9 +9,8 @@ OBJLoader::OBJLoader(const std::string &filepath, const std::string &mtlSearchPa
     if (!_reader.ParseFromFile(filepath, _reader_config))
     {
         if (!_reader.Error().empty())
-        {
             throw OBJLoaderError(_reader.Error());
-        }
+
         throw OBJLoaderError("Failed to load the OBJ file.");
     }
 
