@@ -12,5 +12,8 @@ TEST(Mesh, struct_size_comparaison)
     mesh.texCoords.emplace_back(glm::vec2(7.0f, 8.0f));
     mesh.indices.emplace_back(9);
 
-    EXPECT_EQ((sizeof(glm::vec3(1)) + sizeof(glm::vec3(1)) + sizeof(glm::vec2(1))), sizeof(mesh));
+    EXPECT_EQ(mesh.vertices.size(), 1u);
+    EXPECT_EQ(mesh.normals.size(), 1u);
+    EXPECT_EQ(mesh.texCoords.size(), 1u);
+    EXPECT_EQ(mesh.indices.size(), 1u);
 }

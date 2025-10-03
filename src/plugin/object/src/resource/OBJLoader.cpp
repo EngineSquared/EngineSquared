@@ -5,6 +5,12 @@ namespace Plugin::Object {
 
 OBJLoader::OBJLoader(const std::string &filepath, const std::string &mtlSearchPath)
 {
+    if (filepath.empty())
+        throw OBJLoaderError("The path is empty.");
+
+    if (!filepath.ends_with(".obj"))
+        throw OBJLoaderError("The file is not a .obj file.");
+
     _reader_config.mtl_search_path = mtlSearchPath;
 
     if (!_reader.ParseFromFile(filepath, _reader_config))
@@ -17,14 +23,17 @@ OBJLoader::OBJLoader(const std::string &filepath, const std::string &mtlSearchPa
 
     if (!_reader.Warning().empty())
         throw OBJLoaderError(_reader.Warning());
+
+    if (_reader.GetAttrib().vertices.empty() &&  _reader.GetShapes().empty())
+        throw OBJLoaderError("No geometry found in OBJ file.");
 }
 
 Component::Mesh OBJLoader::GetMesh()
 {
     Component::Mesh mesh{};
 
-    auto &attrib = _reader.GetAttrib();
-    auto &shapes = _reader.GetShapes();
+    const auto &attrib = _reader.GetAttrib();
+    const auto &shapes = _reader.GetShapes();
 
     mesh.vertices.reserve(attrib.vertices.size() / 3u);
     mesh.normals.reserve(attrib.normals.size() / 3u);
@@ -51,7 +60,7 @@ Component::Mesh OBJLoader::GetMesh()
 void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,
                  size_t face_vertices, size_t &index_offset) noexcept
 {
-    auto &attrib = _reader.GetAttrib();
+    const auto &attrib = _reader.GetAttrib();
 
     for (size_t vertex = 0u; vertex < face_vertices; ++vertex)
     {
