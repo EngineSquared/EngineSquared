@@ -27,15 +27,16 @@ OBJLoader::OBJLoader(const std::string &filepath, const std::string &mtlSearchPa
 
 Component::Mesh OBJLoader::GetMesh()
 {
-    Component::Mesh mesh{};
+    if (_mesh.vertices.size() > 0u)
+        return _mesh;
 
     const auto &attrib = _reader.GetAttrib();
     const auto &shapes = _reader.GetShapes();
 
-    mesh.vertices.reserve(attrib.vertices.size() / 3u);
-    mesh.normals.reserve(attrib.normals.size() / 3u);
-    mesh.texCoords.reserve(attrib.texcoords.size() / 2u);
-    mesh.indices.reserve(shapes.size() * 3u);
+    _mesh.vertices.reserve(attrib.vertices.size() / 3u);
+    _mesh.normals.reserve(attrib.normals.size() / 3u);
+    _mesh.texCoords.reserve(attrib.texcoords.size() / 2u);
+    _mesh.indices.reserve(shapes.size() * 3u);
 
     for (size_t shape = 0u; shape < shapes.size(); ++shape)
     {
@@ -45,13 +46,13 @@ Component::Mesh OBJLoader::GetMesh()
         {
             auto face_vertices = static_cast<size_t>(shapes[shape].mesh.num_face_vertices[face]);
 
-            ProcessMeshFace(mesh, shapes, shape, face_vertices, index_offset);
+            ProcessMeshFace(_mesh, shapes, shape, face_vertices, index_offset);
 
             index_offset += face_vertices;
         }
     }
 
-    return mesh;
+    return _mesh;
 }
 
 void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,

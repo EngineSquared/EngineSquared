@@ -48,7 +48,7 @@ struct Mesh {
     Mesh &operator=(Mesh &&other) = default;
 
     // Copy constructor
-    explicit Mesh(const Mesh &mesh) = default;
+    Mesh(const Mesh &mesh) = default;
     // Copy assignment operator
     Mesh &operator=(const Mesh &other) = default;
 };

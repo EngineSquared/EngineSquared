@@ -92,6 +92,7 @@ class OBJLoader {
   private:
     tinyobj::ObjReaderConfig _reader_config;
     tinyobj::ObjReader _reader;
+    Component::Mesh _mesh{};
 };
 
 } // namespace Plugin::Object
