@@ -1,14 +1,14 @@
 /**************************************************************************
- * EngineSquared v0.0.0
+ * EngineSquared v0.1.1
  *
  * EngineSquared is a software package, part of the Engine².
  *
- * This file is part of the EngineSquared project that is under GPL-3.0 License.
- * Copyright © 2024 by @EngineSquared, All rights reserved.
+ * This file is part of the EngineSquared project that is under MIT License.
+ * Copyright © 2024-present by @EngineSquared, All rights reserved.
  *
  * EngineSquared is a free software: you can redistribute it and/or modify
- * it under the terms of the GPL-3.0 License as published by the
- * Free Software Foundation. See the GPL-3.0 License for more details.
+ * it under the terms of the MIT License. See the project's LICENSE file for
+ * the full license text and details.
  *
  * @file Mesh.hpp
  * @brief Mesh struct declaration.
@@ -16,7 +16,7 @@
  * This struct is used to represent a mesh.
  *
  * @author @EngineSquared
- * @version 0.0.0
+ * @version 0.1.1
  * @date 2024-12-06
  **************************************************************************/
 
@@ -48,7 +48,7 @@ struct Mesh {
     Mesh &operator=(Mesh &&other) = default;
 
     // Copy constructor
-    explicit Mesh(const Mesh &mesh) = default;
+    Mesh(const Mesh &mesh) = default;
     // Copy assignment operator
     Mesh &operator=(const Mesh &other) = default;
 };
