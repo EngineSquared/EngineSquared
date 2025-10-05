@@ -18,6 +18,12 @@ TEST(OBJLoaderTest, load_obj_file)
         EXPECT_FALSE(mesh.indices.empty());
         EXPECT_FALSE(mesh.normals.empty());
         EXPECT_FALSE(mesh.texCoords.empty());
+
+        Component::Mesh mesh2 = loader.GetMesh();
+        EXPECT_EQ(mesh.vertices, mesh2.vertices);
+        EXPECT_EQ(mesh.indices, mesh2.indices);
+        EXPECT_EQ(mesh.normals, mesh2.normals);
+        EXPECT_EQ(mesh.texCoords, mesh2.texCoords);
     });
 }
 
