@@ -27,7 +27,7 @@ OBJLoader::OBJLoader(const std::string &filepath, const std::string &mtlSearchPa
 
 Component::Mesh OBJLoader::GetMesh()
 {
-    if (_mesh.vertices.size() > 0u)
+    if (!_mesh.vertices.empty())
         return _mesh;
 
     const auto &attrib = _reader.GetAttrib();
