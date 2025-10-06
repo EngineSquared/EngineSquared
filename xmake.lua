@@ -15,6 +15,7 @@ add_requires(
     "stb",
     "joltphysics",
     "miniaudio")
+add_requires("wgpu-native ^24.0.0", {configs = {shared = false}})
 add_requires("rmlui >=6.0", { configs = { transform = true } })
 
 set_languages("c++20")
@@ -54,7 +55,7 @@ target("EngineSquared")
     add_deps("UtilsTools")
     add_deps("UtilsLog")
 
-    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics")
+    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native")
 
     if is_mode("debug") then
         add_defines("DEBUG")
