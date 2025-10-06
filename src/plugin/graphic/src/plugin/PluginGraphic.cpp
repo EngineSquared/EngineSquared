@@ -1,6 +1,6 @@
 #include "plugin/PluginGraphic.hpp"
-#include "RenderingPipeline.hpp"
 #include "Graphic.hpp"
+#include "RenderingPipeline.hpp"
 
 void Plugin::Graphic::Plugin::Bind()
 {

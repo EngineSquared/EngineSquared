@@ -4,10 +4,10 @@
 
 namespace Plugin::Graphic::Resource {
 class Context {
-    public:
-        Context() = default;
-        ~Context() = default;
+  public:
+    Context() = default;
+    ~Context() = default;
 
-        std::optional<wgpu::Instance> instance;
+    std::optional<wgpu::Instance> instance;
 };
-}
+} // namespace Plugin::Graphic::Resource
