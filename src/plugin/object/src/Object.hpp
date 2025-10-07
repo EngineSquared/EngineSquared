@@ -7,6 +7,7 @@
 
 // Exceptions
 #include "exception/ResourceManagerError.hpp"
+#include "exception/MaterialError.hpp"
 
 // Resources
 #include "resource/OBJLoader.hpp"

@@ -14,6 +14,8 @@
 #include <string>
 #include <type_traits>
 
+#include "exception/MaterialError.hpp"
+
 template <typename T>
 concept CCopyable = std::is_copy_constructible_v<T> && std::is_copy_assignable_v<T>;
 
@@ -27,34 +29,33 @@ class Material {
     inline const static auto EMPTY_DATA = Data();
 
   public:
-    Material(std::map<std::string, Data> defaultData)
+    explicit Material(const std::map<std::string, Data, std::less<>> &defaultData)
     {
         for (const auto &[name, value] : defaultData)
         {
             _data[name] = value;
         }
     }
+
     ~Material() = default;
     Material(const Material &other) = default;
     Material &operator=(const Material &other) = default;
 
     template <CCopyable TDataType> TDataType Get(const std::string &key) const
     {
-        std::optional<std::string> err = ContainsWithError<TDataType>(key);
-        if (err.has_value())
-            throw std::runtime_error("Material::Get: " + err.value());
+        if (!Contains<TDataType>(key))
+            throw MaterialError("Material::Get: Key '" + key + "' is either dont exist or has a different type");
         return UnpackData<TDataType>(key);
     }
 
     template <CCopyable TDataType> void Set(const std::string &key, const TDataType &value)
     {
-        std::optional<std::string> err = ContainsWithError<TDataType>(key, false);
-        if (err.has_value())
-            throw std::runtime_error("Material::Set: " + err.value());
+        if (!Contains<TDataType>(key))
+            throw MaterialError("Material::Set: Key '" + key + "' is either dont exist or has a different type");
         _data[key] = PackData(value);
     }
 
-    template <CCopyable TDataType = DummyType> bool Contains(const std::string &key, bool checkValueInside = true) const
+    template <CCopyable TDataType = DummyType> bool Contains(const std::string &key) const
     {
         auto it = _data.find(key);
         if (it == _data.end())
@@ -64,22 +65,7 @@ class Material {
             if (it->second.type() != typeid(TDataType))
                 return false;
         }
-        if (checkValueInside && !it->second.has_value())
-            return false;
         return true;
-    }
-
-    template <CCopyable TDataType = DummyType>
-    std::optional<std::string> ContainsWithError(const std::string &key, bool checkValueInside = true) const
-    {
-        auto it = _data.find(key);
-        if (it == _data.end())
-            return "key '" + key + "' doesn't exist";
-        if (it->second.type() != typeid(TDataType))
-            return "key '" + key + "' type mismatch";
-        if (checkValueInside && !it->second.has_value())
-            return "key '" + key + "' has no value";
-        return std::nullopt;
     }
 
   private:

@@ -22,14 +22,14 @@ TEST(Material, SetGetData)
 
     EXPECT_EQ(material.Get<float>("roughness"), 0.5f);
     EXPECT_EQ(material.Get<Color>("color"), (Color{1.0f, 0.0f, 0.0f}));
-    EXPECT_THROW(material.Get<int>("roughness"), std::runtime_error);
-    EXPECT_THROW(material.Get<float>("metallic"), std::runtime_error);
+    EXPECT_THROW(material.Get<int>("roughness"), MaterialError);
+    EXPECT_THROW(material.Get<float>("metallic"), MaterialError);
     material.Set("roughness", 1.0f);
     material.Set("color", Color{0.0f, 1.0f, 0.0f});
     EXPECT_EQ(material.Get<float>("roughness"), 1.0f);
     EXPECT_EQ(material.Get<Color>("color"), (Color{0.0f, 1.0f, 0.0f}));
-    EXPECT_THROW(material.Set("unknown", 1.0f), std::runtime_error);
-    EXPECT_THROW(material.Set("color", 1.0f), std::runtime_error);
+    EXPECT_THROW(material.Set("unknown", 1.0f), MaterialError);
+    EXPECT_THROW(material.Set("color", 1.0f), MaterialError);
 }
 
 TEST(Material, ContainsData)
