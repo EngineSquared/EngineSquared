@@ -1,9 +1,9 @@
 #pragma once
 
 // Components
+#include "component/Material.hpp"
 #include "component/Mesh.hpp"
 #include "component/Transform.hpp"
-#include "component/Material.hpp"
 
 // Exceptions
 #include "exception/ResourceManagerError.hpp"

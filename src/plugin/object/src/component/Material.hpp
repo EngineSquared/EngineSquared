@@ -61,8 +61,8 @@ class Material {
             return false;
         if constexpr (!std::is_same_v<TDataType, DummyType>)
         {
-          if (it->second.type() != typeid(TDataType))
-              return false;
+            if (it->second.type() != typeid(TDataType))
+                return false;
         }
         if (checkValueInside && !it->second.has_value())
             return false;
