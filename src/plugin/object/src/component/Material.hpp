@@ -21,11 +21,11 @@ concept CCopyable = std::is_copy_constructible_v<T> && std::is_copy_assignable_v
 
 namespace Plugin::Object::Component {
 class Material {
-  public:
+  private:
     using Data = std::any;
 
-  private:
     struct DummyType {};
+
     inline const static auto EMPTY_DATA = Data();
 
   public:
