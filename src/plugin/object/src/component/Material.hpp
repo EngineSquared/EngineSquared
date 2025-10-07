@@ -92,6 +92,6 @@ class Material {
     template <CCopyable TDataType> Data PackData(const TDataType &data) const { return std::any(data); }
 
   private:
-    std::map<std::string, Data> _data;
+    std::map<std::string, Data, std::less<>> _data;
 };
 } // namespace Plugin::Object::Component
