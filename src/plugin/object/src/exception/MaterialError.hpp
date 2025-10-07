@@ -15,4 +15,4 @@ class MaterialError : public std::exception {
     std::string msg;
 };
 
-}
+} // namespace Plugin::Object

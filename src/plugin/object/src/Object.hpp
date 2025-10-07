@@ -6,8 +6,8 @@
 #include "component/Transform.hpp"
 
 // Exceptions
-#include "exception/ResourceManagerError.hpp"
 #include "exception/MaterialError.hpp"
+#include "exception/ResourceManagerError.hpp"
 
 // Resources
 #include "resource/OBJLoader.hpp"
