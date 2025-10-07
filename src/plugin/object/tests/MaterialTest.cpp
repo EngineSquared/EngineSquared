@@ -1,31 +1,45 @@
 #include <gtest/gtest.h>
 
-#include "resource/Material.hpp"
+#include "utils/MaterialBuilder.hpp"
 
 struct Color {
-    float r, g, b;
-    bool operator==(const Color &other) const { return r == other.r && g == other.g && b == other.b; }
+    float r;
+    float g;
+    float b;
+    bool operator==(const Color &other) const = default;
 };
 
-using namespace Plugin::Object::Resource;
+using namespace Plugin::Object;
 
 TEST(Material, SetGetData)
 {
-    Material material;
+    Utils::MaterialBuilder mb;
 
-    material.Set("color", Color{1.0f, 0.0f, 0.0f});
-    material.Set("roughness", 0.5f);
+    mb.Set("roughness", 0.5f);
+    mb.Set("color", Color{1.0f, 0.0f, 0.0f});
 
-    EXPECT_EQ(material.Get<Color>("color"), (Color{1.0f, 0.0f, 0.0f}));
+    auto material = mb.Build();
+
     EXPECT_EQ(material.Get<float>("roughness"), 0.5f);
+    EXPECT_EQ(material.Get<Color>("color"), (Color{1.0f, 0.0f, 0.0f}));
+    EXPECT_THROW(material.Get<int>("roughness"), std::runtime_error);
+    EXPECT_THROW(material.Get<float>("metallic"), std::runtime_error);
+    material.Set("roughness", 1.0f);
+    material.Set("color", Color{0.0f, 1.0f, 0.0f});
+    EXPECT_EQ(material.Get<float>("roughness"), 1.0f);
+    EXPECT_EQ(material.Get<Color>("color"), (Color{0.0f, 1.0f, 0.0f}));
+    EXPECT_THROW(material.Set("unknown", 1.0f), std::runtime_error);
+    EXPECT_THROW(material.Set("color", 1.0f), std::runtime_error);
 }
 
 TEST(Material, ContainsData)
 {
-    Material material;
+    Utils::MaterialBuilder mb;
 
-    material.Set("color", Color{1.0f, 0.0f, 0.0f});
-    material.Set("roughness", 0.5f);
+    mb.Set("color", Color{1.0f, 0.0f, 0.0f});
+    mb.Set("roughness", 0.5f);
+
+    auto material = mb.Build();
 
     EXPECT_TRUE(material.Contains("color"));
     EXPECT_TRUE(material.Contains<Color>("color"));
