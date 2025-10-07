@@ -36,18 +36,16 @@ class Material {
         _data[key] = PackData<TDataType>(data);
     }
 
-    template <CCopyable TDataType>
-    TDataType Get(const std::string &key) const
-    {
-        return UnpackData<TDataType>(key);
-    }
+    template <CCopyable TDataType> TDataType Get(const std::string &key) const { return UnpackData<TDataType>(key); }
 
-    template <CCopyable TDataType = DummyType>
-    bool Contains(const std::string &key) const
+    template <CCopyable TDataType = DummyType> bool Contains(const std::string &key) const
     {
-        if constexpr (std::is_same_v<TDataType, DummyType>) {
+        if constexpr (std::is_same_v<TDataType, DummyType>)
+        {
             return _data.contains(key);
-        } else {
+        }
+        else
+        {
             auto it = _data.find(key);
             if (it == _data.end())
                 return false;
@@ -57,19 +55,14 @@ class Material {
 
   private:
     // Can throw if key doesn't exist or if the type is wrong
-    template <CCopyable TDataType>
-    TDataType UnpackData(const std::string &key) const
+    template <CCopyable TDataType> TDataType UnpackData(const std::string &key) const
     {
         return std::any_cast<TDataType>(_data.at(key));
     }
 
-    template <CCopyable TDataType>
-    Data PackData(const TDataType &data) const
-    {
-        return std::any(data);
-    }
+    template <CCopyable TDataType> Data PackData(const TDataType &data) const { return std::any(data); }
 
   private:
     std::map<std::string, Data> _data;
 };
-}
+} // namespace Plugin::Object::Resource
