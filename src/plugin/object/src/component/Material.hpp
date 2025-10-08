@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** EngineSquared
-** File description:
-** Material
-*/
-
 #pragma once
 
 #include <any>

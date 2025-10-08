@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** EngineSquared
-** File description:
-** MaterialBuilder
-*/
-
 #pragma once
 
 #include "component/Material.hpp"
@@ -33,11 +26,6 @@ class MaterialBuilder {
     Component::Material Build() const { return Component::Material(_data); }
 
   private:
-    // Can throw if key doesn't exist or if the type is wrong
-    template <CCopyable TDataType> TDataType UnpackData(const std::string &key) const
-    {
-        return std::any_cast<TDataType>(_data.at(key));
-    }
 
     template <CCopyable TDataType> Data PackData(const TDataType &data) const { return std::any(data); }
 
