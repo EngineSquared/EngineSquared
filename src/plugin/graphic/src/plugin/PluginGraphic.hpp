@@ -9,7 +9,7 @@ class Plugin : public Engine::APlugin {
         : Engine::APlugin(core){
               // empty
           };
-    ~Plugin() = default;
+    ~Plugin() override = default;
 
     void Bind() final;
 };
