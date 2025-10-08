@@ -1,6 +1,7 @@
 #include "CreateInstance.hpp"
 #include "resource/Context.hpp"
 #include "utils/webgpu.hpp"
+#include "exception/InstanceCreationError.hpp"
 
 namespace Plugin::Graphic::System {
 
@@ -13,9 +14,8 @@ void CreateInstance(Engine::Core &core)
 
     wgpu::Instance instance(wgpuCreateInstance(&desc));
 
-    // TODO: should we throw a custom exception or a generic one like below?
     if (instance == nullptr)
-        throw std::runtime_error("Could not create WebGPU instance");
+        throw Exception::InstanceCreationError("Could not create WebGPU instance, wgpuCreateInstance returned nullptr");
 
     core.GetResource<Graphic::Resource::Context>().instance = instance;
 

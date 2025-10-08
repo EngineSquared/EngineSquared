@@ -7,6 +7,7 @@
 #include "utils/webgpu.hpp"
 
 // Exceptions
+#include "exception/InstanceCreationError.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"

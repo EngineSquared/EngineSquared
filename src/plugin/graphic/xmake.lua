@@ -24,6 +24,7 @@ target(plugin_name)
 
     add_files("src/**.cpp")
 
+    add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/(plugin/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(system/initialization/*.hpp)")
