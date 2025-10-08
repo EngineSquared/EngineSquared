@@ -26,7 +26,6 @@ class MaterialBuilder {
     Component::Material Build() const { return Component::Material(_data); }
 
   private:
-
     template <CCopyable TDataType> Data PackData(const TDataType &data) const { return std::any(data); }
 
   private:
