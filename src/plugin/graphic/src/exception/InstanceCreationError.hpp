@@ -16,4 +16,4 @@ class InstanceCreationError : public std::exception {
     std::string msg;
 };
 
-} // namespace Plugin::Input
+} // namespace Plugin::Graphic::Exception
