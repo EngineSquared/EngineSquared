@@ -24,6 +24,7 @@
 #include <string>
 #include <tiny_obj_loader.h>
 
+#include "component/Material.hpp"
 #include "component/Mesh.hpp"
 #include "exception/OBJLoaderError.hpp"
 
@@ -73,6 +74,15 @@ class OBJLoader {
      */
     [[nodiscard]] Component::Mesh GetMesh();
 
+    /**
+     * @brief Retrieves the loaded materials data.
+     *
+     * @return std::vector<Component::Material> The materials data extracted from the OBJ file.
+     *
+     * @see Component::Material
+     */
+    [[nodiscard]] std::vector<Component::Material> GetMaterials();
+
   private:
     /**
      * @brief Processes a single face of the mesh and populates the Mesh object.
@@ -93,6 +103,7 @@ class OBJLoader {
     tinyobj::ObjReaderConfig _reader_config;
     tinyobj::ObjReader _reader;
     Component::Mesh _mesh{};
+    std::vector<Component::Material> _materials{};
 };
 
 } // namespace Plugin::Object

@@ -55,6 +55,33 @@ Component::Mesh OBJLoader::GetMesh()
     return _mesh;
 }
 
+std::vector<Component::Material> OBJLoader::GetMaterials()
+{
+    if (!_materials.empty())
+        return _materials;
+
+    const auto &materials = _reader.GetMaterials();
+    _materials.reserve(materials.size());
+
+    for (const auto &mat : materials)
+    {
+        Component::Material material;
+        material.name = mat.name;
+        material.ambient = glm::dvec3(mat.ambient[0], mat.ambient[1], mat.ambient[2]);
+        material.diffuse = glm::dvec3(mat.diffuse[0], mat.diffuse[1], mat.diffuse[2]);
+        material.specular = glm::dvec3(mat.specular[0], mat.specular[1], mat.specular[2]);
+        material.transmittance = glm::dvec3(mat.transmittance[0], mat.transmittance[1], mat.transmittance[2]);
+        material.emission = glm::dvec3(mat.emission[0], mat.emission[1], mat.emission[2]);
+        material.shininess = static_cast<double>(mat.shininess);
+        material.ior = static_cast<double>(mat.ior);
+        material.dissolve = static_cast<double>(mat.dissolve);
+
+        _materials.emplace_back(std::move(material));
+    }
+
+    return _materials;
+}
+
 void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,
                                 size_t face_vertices, size_t &index_offset) noexcept
 {
