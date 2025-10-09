@@ -21,4 +21,4 @@ void CreateInstance(Engine::Core &core)
     Log::Debug(fmt::format("WebGPU instance created: {}", static_cast<void *>(instance)));
 }
 
-} // namespace Plugin::Graphic::System
+}
