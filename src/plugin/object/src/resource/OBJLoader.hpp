@@ -48,6 +48,13 @@ namespace Plugin::Object {
  * }
  * @endcode
  *
+ * @example "Getting materials from an OBJ file"
+ * @code
+ * for (const auto &material : loader.GetMaterials()) {
+ *     std::cout << "Material: " << material.name << std::endl;
+ * }
+ * @endcode
+ *
  * @see Component::Mesh
  * @see OBJLoaderError
  */
