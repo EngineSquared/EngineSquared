@@ -105,6 +105,14 @@ class OBJLoader {
     void ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,
                          size_t face_vertices, size_t &index_offset) noexcept;
 
+    /**
+     * @brief Sets the properties of a material according to the tinyobj::material_t structure.
+     *
+     * @param material  The Material object to populate.
+     * @param mat  The tinyobj::material_t object containing the material properties.
+     */
+    void SetMaterialProperties(Component::Material &material, const tinyobj::material_t &mat) noexcept;
+
   protected:
   private:
     tinyobj::ObjReaderConfig _reader_config;
