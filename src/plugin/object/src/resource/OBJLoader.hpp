@@ -25,6 +25,7 @@
 #include <tiny_obj_loader.h>
 
 #include "component/Mesh.hpp"
+#include "resource/Shape.hpp"
 #include "exception/OBJLoaderError.hpp"
 
 namespace Plugin::Object {
@@ -73,6 +74,15 @@ class OBJLoader {
      */
     [[nodiscard]] Component::Mesh GetMesh();
 
+    /**
+     * @brief Retrieves the loaded shapes data.
+     *
+     * @return std::vector<Resource::Shape> The shapes data extracted from the OBJ file.
+     *
+     * @see Resource::Shape
+     */
+    [[nodiscard]] std::vector<Resource::Shape> GetShapes();
+
   private:
     /**
      * @brief Processes a single face of the mesh and populates the Mesh object.
@@ -93,6 +103,7 @@ class OBJLoader {
     tinyobj::ObjReaderConfig _reader_config;
     tinyobj::ObjReader _reader;
     Component::Mesh _mesh{};
+    std::vector<Resource::Shape> _shapes{};
 };
 
 } // namespace Plugin::Object

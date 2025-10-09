@@ -55,6 +55,44 @@ Component::Mesh OBJLoader::GetMesh()
     return _mesh;
 }
 
+std::vector<Resource::Shape> OBJLoader::GetShapes()
+{
+    if (!_shapes.empty())
+        return _shapes;
+
+    const auto &attrib = _reader.GetAttrib();
+    const auto &shapes = _reader.GetShapes();
+
+    _shapes.reserve(shapes.size());
+
+    for (size_t shape = 0; shape < shapes.size(); ++shape)
+    {
+        Resource::Shape shapeResource;
+        Component::Mesh &mesh = shapeResource.mesh;
+
+        mesh.vertices.reserve(attrib.vertices.size() / 3u);
+        mesh.normals.reserve(attrib.normals.size() / 3u);
+        mesh.texCoords.reserve(attrib.texcoords.size() / 2u);
+        mesh.indices.reserve(shapes[shape].mesh.indices.size());
+
+        size_t index_offset = 0u;
+
+        for (size_t face = 0u; face < shapes[shape].mesh.num_face_vertices.size(); ++face)
+        {
+            size_t face_vertices = static_cast<size_t>(shapes[shape].mesh.num_face_vertices[face]);
+
+            ProcessMeshFace(mesh, shapes, shape, face_vertices, index_offset);
+
+            index_offset += face_vertices;
+        }
+
+        _shapes.emplace_back(std::move(shapeResource));
+    }
+
+    return _shapes;
+}
+
+
 void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,
                                 size_t face_vertices, size_t &index_offset) noexcept
 {
