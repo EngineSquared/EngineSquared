@@ -79,7 +79,7 @@ std::vector<Resource::Shape> OBJLoader::GetShapes()
 
         for (size_t face = 0u; face < shapes[shape].mesh.num_face_vertices.size(); ++face)
         {
-            size_t face_vertices = static_cast<size_t>(shapes[shape].mesh.num_face_vertices[face]);
+            auto face_vertices = static_cast<size_t>(shapes[shape].mesh.num_face_vertices[face]);
 
             ProcessMeshFace(mesh, shapes, shape, face_vertices, index_offset);
 
