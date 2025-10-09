@@ -7,7 +7,6 @@ namespace Plugin::Graphic::System {
 
 void CreateInstance(Engine::Core &core)
 {
-    // TODO: should we print debug info like this? Could it be useful?
     Log::Debug("Creating WebGPU instance...");
 
     wgpu::InstanceDescriptor desc(wgpu::Default);
@@ -19,7 +18,6 @@ void CreateInstance(Engine::Core &core)
 
     core.GetResource<Graphic::Resource::Context>().instance = instance;
 
-    // TODO: same question as above
     Log::Debug(fmt::format("WebGPU instance created: {}", static_cast<void *>(instance)));
 }
 
