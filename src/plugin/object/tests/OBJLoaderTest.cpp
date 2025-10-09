@@ -48,23 +48,22 @@ TEST(OBJLoaderTest, get_materials_loaded_from_mtl)
         if (it != materials.end())
         {
             const auto &mat = *it;
-            constexpr double eps = 1e-6;
 
-            EXPECT_NEAR(mat.ambient.x, 0.2, eps);
-            EXPECT_NEAR(mat.ambient.y, 0.2, eps);
-            EXPECT_NEAR(mat.ambient.z, 0.2, eps);
+            ASSERT_FLOAT_EQ(mat.ambient.x, 0.2f);
+            ASSERT_FLOAT_EQ(mat.ambient.y, 0.2f);
+            ASSERT_FLOAT_EQ(mat.ambient.z, 0.2f);
 
-            EXPECT_NEAR(mat.diffuse.x, 0.8, eps);
-            EXPECT_NEAR(mat.diffuse.y, 0.1, eps);
-            EXPECT_NEAR(mat.diffuse.z, 0.1, eps);
+            ASSERT_FLOAT_EQ(mat.diffuse.x, 0.8f);
+            ASSERT_FLOAT_EQ(mat.diffuse.y, 0.1f);
+            ASSERT_FLOAT_EQ(mat.diffuse.z, 0.1f);
 
-            EXPECT_NEAR(mat.specular.x, 0.5, eps);
-            EXPECT_NEAR(mat.specular.y, 0.5, eps);
-            EXPECT_NEAR(mat.specular.z, 0.5, eps);
+            ASSERT_FLOAT_EQ(mat.specular.x, 0.5f);
+            ASSERT_FLOAT_EQ(mat.specular.y, 0.5f);
+            ASSERT_FLOAT_EQ(mat.specular.z, 0.5f);
 
-            EXPECT_NEAR(mat.shininess, 25.0, eps);
-            EXPECT_NEAR(mat.ior, 1.45, eps);
-            EXPECT_NEAR(mat.dissolve, 1.0, eps);
+            ASSERT_FLOAT_EQ(mat.shininess, 25.0f);
+            ASSERT_FLOAT_EQ(mat.ior, 1.45f);
+            ASSERT_FLOAT_EQ(mat.dissolve, 1.0f);
         }
     });
 }

@@ -39,14 +39,14 @@ namespace Plugin::Object::Component {
 struct Material {
     std::string name;
 
-    glm::dvec3 ambient;
-    glm::dvec3 diffuse;
-    glm::dvec3 specular;
-    glm::dvec3 transmittance;
-    glm::dvec3 emission;
-    double shininess;
-    double ior;      // index of refraction
-    double dissolve; // 1 == opaque; 0 == fully transparent
+    glm::vec3 ambient;
+    glm::vec3 diffuse;
+    glm::vec3 specular;
+    glm::vec3 transmittance;
+    glm::vec3 emission;
+    float shininess;
+    float ior;      // index of refraction
+    float dissolve; // 1 == opaque; 0 == fully transparent
 
     explicit Material() = default;
     ~Material() = default;

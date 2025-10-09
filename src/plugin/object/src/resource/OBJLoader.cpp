@@ -67,14 +67,14 @@ std::vector<Component::Material> OBJLoader::GetMaterials()
     {
         Component::Material material;
         material.name = mat.name;
-        material.ambient = glm::dvec3(mat.ambient[0], mat.ambient[1], mat.ambient[2]);
-        material.diffuse = glm::dvec3(mat.diffuse[0], mat.diffuse[1], mat.diffuse[2]);
-        material.specular = glm::dvec3(mat.specular[0], mat.specular[1], mat.specular[2]);
-        material.transmittance = glm::dvec3(mat.transmittance[0], mat.transmittance[1], mat.transmittance[2]);
-        material.emission = glm::dvec3(mat.emission[0], mat.emission[1], mat.emission[2]);
-        material.shininess = static_cast<double>(mat.shininess);
-        material.ior = static_cast<double>(mat.ior);
-        material.dissolve = static_cast<double>(mat.dissolve);
+        material.ambient = glm::vec3(mat.ambient[0], mat.ambient[1], mat.ambient[2]);
+        material.diffuse = glm::vec3(mat.diffuse[0], mat.diffuse[1], mat.diffuse[2]);
+        material.specular = glm::vec3(mat.specular[0], mat.specular[1], mat.specular[2]);
+        material.transmittance = glm::vec3(mat.transmittance[0], mat.transmittance[1], mat.transmittance[2]);
+        material.emission = glm::vec3(mat.emission[0], mat.emission[1], mat.emission[2]);
+        material.shininess = mat.shininess;
+        material.ior = mat.ior;
+        material.dissolve = mat.dissolve;
 
         _materials.emplace_back(std::move(material));
     }
