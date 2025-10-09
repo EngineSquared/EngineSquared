@@ -48,6 +48,13 @@ namespace Plugin::Object {
  * }
  * @endcode
  *
+ * @example "Getting shapes from an OBJ file"
+ * @code
+ * for (const auto &shape : loader.GetShapes()) {
+ *     const auto &mesh = shape.GetMesh();
+ * }
+ * @endcode
+ *
  * @see Component::Mesh
  * @see OBJLoaderError
  */
