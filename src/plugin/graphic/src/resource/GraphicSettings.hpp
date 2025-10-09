@@ -8,14 +8,14 @@ enum class WindowSystem {
 };
 
 class GraphicSettings {
-    public:
-        GraphicSettings() = default;
-        ~GraphicSettings() = default;
+  public:
+    GraphicSettings() = default;
+    ~GraphicSettings() = default;
 
-        WindowSystem GetWindowSystem() const { return windowSystem; }
-        void SetWindowSystem(WindowSystem system) { windowSystem = system; }
+    WindowSystem GetWindowSystem() const { return windowSystem; }
+    void SetWindowSystem(WindowSystem system) { windowSystem = system; }
 
-    private:
-        WindowSystem windowSystem = WindowSystem::GLFW;
+  private:
+    WindowSystem windowSystem = WindowSystem::GLFW;
 };
 } // namespace Plugin::Graphic::Resource

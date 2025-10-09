@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utils/webgpu.hpp"
 #include "Surface.hpp"
+#include "utils/webgpu.hpp"
 
 namespace Plugin::Graphic::Resource {
 class Context {
