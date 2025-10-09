@@ -20,11 +20,11 @@ class GraphicSettings {
     WindowSystem GetWindowSystem() const { return windowSystem; }
     void SetWindowSystem(WindowSystem system) { windowSystem = system; }
 
-        PowerPreference GetPowerPreference() const { return powerPreference; }
-        void SetPowerPreference(PowerPreference preference) { powerPreference = preference; }
+    PowerPreference GetPowerPreference() const { return powerPreference; }
+    void SetPowerPreference(PowerPreference preference) { powerPreference = preference; }
 
-    private:
-        WindowSystem windowSystem = WindowSystem::GLFW;
-        PowerPreference powerPreference = PowerPreference::HighPerformance;
+  private:
+    WindowSystem windowSystem = WindowSystem::GLFW;
+    PowerPreference powerPreference = PowerPreference::HighPerformance;
 };
 } // namespace Plugin::Graphic::Resource

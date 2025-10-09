@@ -23,7 +23,8 @@ void Plugin::Graphic::System::CreateSurface(Engine::Core &core)
         surface = glfwCreateWindowWGPUSurface(instance, glfwWindow);
     }
 
-    if (surface == nullptr) throw std::runtime_error("Could not create surface");
+    if (surface == nullptr)
+        throw std::runtime_error("Could not create surface");
 
     context.surface = Resource::Surface(surface);
 }

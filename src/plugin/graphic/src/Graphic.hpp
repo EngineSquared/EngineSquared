@@ -15,6 +15,6 @@
 #include "plugin/PluginGraphic.hpp"
 
 // Systems
+#include "system/initialization/CreateAdapter.hpp"
 #include "system/initialization/CreateInstance.hpp"
 #include "system/initialization/CreateSurface.hpp"
-#include "system/initialization/CreateAdapter.hpp"
