@@ -41,7 +41,8 @@ TEST(OBJLoaderTest, get_materials_loaded_from_mtl)
         auto materials = loader.GetMaterials();
         EXPECT_FALSE(materials.empty());
 
-        const auto it = std::find_if(materials.begin(), materials.end(), [](const Component::Material &m) { return m.name == "newmat"; });
+        const auto it = std::find_if(materials.begin(), materials.end(),
+                                     [](const Component::Material &m) { return m.name == "newmat"; });
         EXPECT_NE(it, materials.end());
 
         if (it != materials.end())
