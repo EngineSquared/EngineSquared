@@ -32,3 +32,27 @@ TEST(OBJLoaderTest, load_empty_path) { EXPECT_THROW(OBJLoader(""), std::exceptio
 TEST(OBJLoaderTest, load_not_obj_file) { EXPECT_THROW(OBJLoader(OBJ_FILE_PATH "not_obj.txt"), std::exception); }
 
 TEST(OBJLoaderTest, load_wrong_path) { EXPECT_THROW(OBJLoader("wrong_path"), std::exception); }
+
+TEST(OBJLoaderTest, get_shapes_iterable_and_consistent)
+{
+    ASSERT_NO_THROW({
+        OBJLoader loader(OBJ_FILE_PATH "cube.obj");
+
+        auto shapes = loader.GetShapes();
+        EXPECT_FALSE(shapes.empty());
+
+        for (const auto &shape : shapes)
+        {
+            const auto &mesh = shape.GetMesh();
+            EXPECT_FALSE(mesh.vertices.empty());
+        }
+
+        auto shapes2 = loader.GetShapes();
+        EXPECT_EQ(shapes.size(), shapes2.size());
+        for (size_t i = 0; i < shapes.size(); ++i)
+        {
+            EXPECT_EQ(shapes[i].mesh.vertices, shapes2[i].mesh.vertices);
+            EXPECT_EQ(shapes[i].mesh.indices, shapes2[i].mesh.indices);
+        }
+    });
+}

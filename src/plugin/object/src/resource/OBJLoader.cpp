@@ -65,7 +65,7 @@ std::vector<Resource::Shape> OBJLoader::GetShapes()
 
     _shapes.reserve(shapes.size());
 
-    for (size_t shape = 0; shape < shapes.size(); ++shape)
+    for (size_t shape = 0u; shape < shapes.size(); ++shape)
     {
         Resource::Shape shapeResource;
         Component::Mesh &mesh = shapeResource.mesh;
