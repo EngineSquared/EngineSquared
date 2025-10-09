@@ -7,6 +7,7 @@ void Plugin::Graphic::Plugin::Bind()
     RequirePlugins<RenderingPipeline::Plugin>();
 
     RegisterResource(Graphic::Resource::Context());
+    RegisterResource(Graphic::Resource::GraphicSettings());
 
-    RegisterSystems<RenderingPipeline::Init>(Graphic::System::CreateInstance);
+    RegisterSystems<RenderingPipeline::Setup>(System::CreateInstance, System::CreateSurface);
 }

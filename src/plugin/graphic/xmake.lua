@@ -1,12 +1,16 @@
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
 includes("../rendering-pipeline/xmake.lua")
+includes("../window/xmake.lua")
 
 local required_packages = {
     "entt",
     "spdlog",
     "fmt",
-    "wgpu-native"
+    "wgpu-native",
+    "glfw",
+    "glm",
+    "glfw3webgpu"
 }
 
 local plugin_name = "PluginGraphic"
@@ -20,6 +24,7 @@ target(plugin_name)
 
     add_deps("EngineSquaredCore")
     add_deps("PluginRenderingPipeline")
+    add_deps("PluginWindow")
     add_deps("UtilsLog")
 
     add_files("src/**.cpp")

@@ -15,7 +15,8 @@ add_requires(
     "stb",
     "joltphysics",
     "miniaudio")
-add_requires("wgpu-native ^24.0.0", {configs = {shared = false}})
+add_requires("wgpu-native ^24.0.0")
+add_requires("glfw3webgpu v1.3.0-alpha", {debug = is_mode("debug")})
 add_requires("rmlui >=6.0", { configs = { transform = true } })
 
 set_languages("c++20")

@@ -2,6 +2,8 @@
 
 // Resources
 #include "resource/Context.hpp"
+#include "resource/Surface.hpp"
+#include "resource/GraphicSettings.hpp"
 
 // Utils
 #include "utils/webgpu.hpp"
@@ -14,3 +16,4 @@
 
 // Systems
 #include "system/initialization/CreateInstance.hpp"
+#include "system/initialization/CreateSurface.hpp"
