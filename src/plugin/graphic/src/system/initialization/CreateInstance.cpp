@@ -17,4 +17,4 @@ void CreateInstance(Engine::Core &core)
     core.GetResource<Graphic::Resource::Context>().instance = instance;
 }
 
-}
+} // namespace Plugin::Graphic::System
