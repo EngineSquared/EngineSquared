@@ -45,8 +45,8 @@ struct Material {
     glm::dvec3 transmittance;
     glm::dvec3 emission;
     double shininess;
-    double ior;       // index of refraction
-    double dissolve;  // 1 == opaque; 0 == fully transparent
+    double ior;      // index of refraction
+    double dissolve; // 1 == opaque; 0 == fully transparent
 
     explicit Material() = default;
     ~Material() = default;

@@ -1,8 +1,8 @@
 #pragma once
 
 // Components
-#include "component/Mesh.hpp"
 #include "component/Material.hpp"
+#include "component/Mesh.hpp"
 #include "component/Transform.hpp"
 
 // Exceptions
