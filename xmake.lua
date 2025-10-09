@@ -15,6 +15,7 @@ add_requires(
     "stb",
     "joltphysics",
     "miniaudio")
+add_requires("wgpu-native ^24.0.0", {configs = {shared = false}})
 add_requires("rmlui >=6.0", { configs = { transform = true } })
 
 set_languages("c++20")
@@ -29,6 +30,7 @@ includes("src/plugin/scene/xmake.lua")
 includes("src/plugin/sound/xmake.lua")
 includes("src/plugin/window/xmake.lua")
 includes("src/plugin/rendering-pipeline/xmake.lua")
+includes("src/plugin/graphic/xmake.lua")
 includes("src/utils/function-container/xmake.lua")
 includes("src/utils/log/xmake.lua")
 includes("src/utils/tools/xmake.lua")
@@ -49,10 +51,11 @@ target("EngineSquared")
     add_deps("PluginRelationship")
     add_deps("PluginNativeScripting")
     add_deps("PluginRenderingPipeline")
+    add_deps("PluginGraphic")
     add_deps("UtilsTools")
     add_deps("UtilsLog")
 
-    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics")
+    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native")
 
     if is_mode("debug") then
         add_defines("DEBUG")
