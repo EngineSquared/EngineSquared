@@ -92,7 +92,6 @@ std::vector<Resource::Shape> OBJLoader::GetShapes()
     return _shapes;
 }
 
-
 void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,
                                 size_t face_vertices, size_t &index_offset) noexcept
 {

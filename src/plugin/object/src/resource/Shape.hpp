@@ -22,9 +22,9 @@
 
 #pragma once
 
+#include "component/Mesh.hpp"
 #include <glm/glm.hpp>
 #include <vector>
-#include "component/Mesh.hpp"
 
 namespace Plugin::Object::Resource {
 

@@ -25,8 +25,8 @@
 #include <tiny_obj_loader.h>
 
 #include "component/Mesh.hpp"
-#include "resource/Shape.hpp"
 #include "exception/OBJLoaderError.hpp"
+#include "resource/Shape.hpp"
 
 namespace Plugin::Object {
 
