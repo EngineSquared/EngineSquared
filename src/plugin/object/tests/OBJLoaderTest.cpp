@@ -32,3 +32,38 @@ TEST(OBJLoaderTest, load_empty_path) { EXPECT_THROW(OBJLoader(""), std::exceptio
 TEST(OBJLoaderTest, load_not_obj_file) { EXPECT_THROW(OBJLoader(OBJ_FILE_PATH "not_obj.txt"), std::exception); }
 
 TEST(OBJLoaderTest, load_wrong_path) { EXPECT_THROW(OBJLoader("wrong_path"), std::exception); }
+
+TEST(OBJLoaderTest, get_materials_loaded_from_mtl)
+{
+    ASSERT_NO_THROW({
+        OBJLoader loader(OBJ_FILE_PATH "cube_with_mat.obj");
+
+        auto materials = loader.GetMaterials();
+        EXPECT_FALSE(materials.empty());
+
+        const auto it = std::find_if(materials.begin(), materials.end(), [](const Component::Material &m) { return m.name == "newmat"; });
+        EXPECT_NE(it, materials.end());
+
+        if (it != materials.end())
+        {
+            const auto &mat = *it;
+            constexpr double eps = 1e-6;
+
+            EXPECT_NEAR(mat.ambient.x, 0.2, eps);
+            EXPECT_NEAR(mat.ambient.y, 0.2, eps);
+            EXPECT_NEAR(mat.ambient.z, 0.2, eps);
+
+            EXPECT_NEAR(mat.diffuse.x, 0.8, eps);
+            EXPECT_NEAR(mat.diffuse.y, 0.1, eps);
+            EXPECT_NEAR(mat.diffuse.z, 0.1, eps);
+
+            EXPECT_NEAR(mat.specular.x, 0.5, eps);
+            EXPECT_NEAR(mat.specular.y, 0.5, eps);
+            EXPECT_NEAR(mat.specular.z, 0.5, eps);
+
+            EXPECT_NEAR(mat.shininess, 25.0, eps);
+            EXPECT_NEAR(mat.ior, 1.45, eps);
+            EXPECT_NEAR(mat.dissolve, 1.0, eps);
+        }
+    });
+}
