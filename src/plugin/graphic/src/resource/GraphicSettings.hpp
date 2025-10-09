@@ -7,6 +7,11 @@ enum class WindowSystem {
     GLFW
 };
 
+enum class PowerPreference {
+    LowPower,
+    HighPerformance
+};
+
 class GraphicSettings {
   public:
     GraphicSettings() = default;
@@ -15,7 +20,11 @@ class GraphicSettings {
     WindowSystem GetWindowSystem() const { return windowSystem; }
     void SetWindowSystem(WindowSystem system) { windowSystem = system; }
 
-  private:
-    WindowSystem windowSystem = WindowSystem::GLFW;
+        PowerPreference GetPowerPreference() const { return powerPreference; }
+        void SetPowerPreference(PowerPreference preference) { powerPreference = preference; }
+
+    private:
+        WindowSystem windowSystem = WindowSystem::GLFW;
+        PowerPreference powerPreference = PowerPreference::HighPerformance;
 };
 } // namespace Plugin::Graphic::Resource
