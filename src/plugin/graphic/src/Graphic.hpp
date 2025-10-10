@@ -5,17 +5,17 @@
 #include "resource/Shader.hpp"
 
 // Utils
-#include "utils/webgpu.hpp"
-#include "utils/ShaderBuilder.hpp"
-#include "utils/BindGroupLayout.hpp"
 #include "utils/ABindGroupLayoutEntry.hpp"
+#include "utils/BindGroupLayout.hpp"
 #include "utils/BufferBindGroupLayoutEntry.hpp"
+#include "utils/ShaderBuilder.hpp"
+#include "utils/webgpu.hpp"
 
 // Exceptions
-#include "exception/InstanceCreationError.hpp"
-#include "exception/VertexAttributeOverlappingError.hpp"
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"
 #include "exception/FileReadingError.hpp"
+#include "exception/InstanceCreationError.hpp"
+#include "exception/VertexAttributeOverlappingError.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"
