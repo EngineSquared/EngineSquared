@@ -63,8 +63,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called every frame until the contact is removed.
      */
     template <typename... Components>
-    inline Utils::FunctionContainer::FunctionID
-    AddOnContactPersistedCallback(std::unique_ptr<BaseCallback> &&callback)
+    inline Utils::FunctionContainer::FunctionID AddOnContactPersistedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
         return _onContactPersistedCallbacks.AddFunction(std::move(callback));
     }
@@ -76,8 +75,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called once for each contact removed.
      */
     template <typename... Components>
-    inline Utils::FunctionContainer::FunctionID
-    AddOnContactRemovedCallback(std::unique_ptr<BaseCallback> &&callback)
+    inline Utils::FunctionContainer::FunctionID AddOnContactRemovedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
         return _onContactRemovedCallbacks.AddFunction(std::move(callback));
     }
@@ -114,8 +112,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
 
   private:
     using CallbackContainer =
-        Utils::FunctionContainer::FunctionContainer<void, Engine::Core &, Engine::Entity &,
-                                                        Engine::Entity &>;
+        Utils::FunctionContainer::FunctionContainer<void, Engine::Core &, Engine::Entity &, Engine::Entity &>;
     Engine::Core &_core;
 
     CallbackContainer _onContactAddedCallbacks;     ///< Callbacks for when a contact is added.

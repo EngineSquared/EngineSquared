@@ -20,8 +20,7 @@ namespace Plugin::Physics::Utils {
  * @note If two components are specified, the callback will be called only if one entity has the first component
  * and the other entity has the second component.
  */
-using BaseCallback =
-    Utils::FunctionContainer::BaseFunction<void, Engine::Core &, Engine::Entity &, Engine::Entity &>;
+using BaseCallback = Utils::FunctionContainer::BaseFunction<void, Engine::Core &, Engine::Entity &, Engine::Entity &>;
 template <typename... Components> class ContactCallback : public BaseCallback {
   public:
     using CallbackFunc = std::function<void(Engine::Core &, Engine::Entity &, Engine::Entity &)>;
@@ -52,8 +51,7 @@ template <typename... Components> class ContactCallback : public BaseCallback {
     Utils::FunctionContainer::FunctionID GetID() const final { return _callback.target_type().hash_code(); }
 
   private:
-    template <typename... Cs>
-    inline bool hasAllComponents(Engine::Core &core, const Engine::Entity &entity) const
+    template <typename... Cs> inline bool hasAllComponents(Engine::Core &core, const Engine::Entity &entity) const
     {
         return ((entity.HasComponents<Cs>(core) && ...));
     }
