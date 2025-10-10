@@ -38,18 +38,19 @@ class ShaderBuilder {
         return setShader(buffer.str());
     }
 
-    ShaderBuilder& addVertexBufferLayout(const VertexBufferLayout &layout) {
-            this->vertexBufferLayouts.push_back(layout);
-            return *this;
-        }
+    ShaderBuilder &addVertexBufferLayout(const VertexBufferLayout &layout)
+    {
+        this->vertexBufferLayouts.push_back(layout);
+        return *this;
+    }
 
-        VertexBufferLayout &getVertexBufferLayout(size_t index) {
-            return *std::next(this->vertexBufferLayouts.begin(), index);
-        }
+    VertexBufferLayout &getVertexBufferLayout(size_t index)
+    {
+        return *std::next(this->vertexBufferLayouts.begin(), index);
+    }
 
-    private:
-    
-        std::list<VertexBufferLayout> vertexBufferLayouts;
-        std::string shaderSource;
+  private:
+    std::list<VertexBufferLayout> vertexBufferLayouts;
+    std::string shaderSource;
 };
 } // namespace Plugin::Graphic::Utils
