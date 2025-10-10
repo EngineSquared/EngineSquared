@@ -41,10 +41,23 @@ TEST(OBJLoaderTest, get_shapes_iterable_and_consistent)
         auto shapes = loader.GetShapes();
         EXPECT_FALSE(shapes.empty());
 
+        for (auto [mesh, material] : shapes)
+        {
+            EXPECT_FALSE(mesh.vertices.empty());
+            EXPECT_FALSE(mesh.indices.empty());
+            EXPECT_FALSE(mesh.normals.empty());
+            EXPECT_FALSE(mesh.texCoords.empty());
+            EXPECT_TRUE(material.name.empty());
+        }
+
         for (const auto &shape : shapes)
         {
             const auto &mesh = shape.GetMesh();
             EXPECT_FALSE(mesh.vertices.empty());
+            EXPECT_FALSE(mesh.indices.empty());
+            EXPECT_FALSE(mesh.normals.empty());
+            EXPECT_FALSE(mesh.texCoords.empty());
+            EXPECT_TRUE(shape.GetMaterial().name.empty());
         }
 
         auto shapes2 = loader.GetShapes();
@@ -88,6 +101,42 @@ TEST(OBJLoaderTest, get_materials_loaded_from_mtl)
             ASSERT_FLOAT_EQ(mat.shininess, 25.0f);
             ASSERT_FLOAT_EQ(mat.ior, 1.45f);
             ASSERT_FLOAT_EQ(mat.dissolve, 1.0f);
+        }
+    });
+}
+
+
+TEST(OBJLoaderTest, get_shapes_materials_consistent)
+{
+    ASSERT_NO_THROW({
+        OBJLoader loader(OBJ_FILE_PATH "cube_with_mat.obj");
+
+        auto shapes = loader.GetShapes();
+        EXPECT_FALSE(shapes.empty());
+
+        auto materials = loader.GetMaterials();
+        EXPECT_FALSE(materials.empty());
+
+        for (const auto &[mesh, material] : shapes)
+        {
+            EXPECT_FALSE(mesh.vertices.empty());
+            EXPECT_FALSE(mesh.indices.empty());
+            EXPECT_FALSE(mesh.normals.empty());
+            EXPECT_FALSE(mesh.texCoords.empty());
+            EXPECT_FALSE(material.name.empty());
+
+            const auto it = std::find_if(materials.begin(), materials.end(),
+                                         [&material](const Component::Material &m) { return m.name == material.name; });
+            EXPECT_NE(it, materials.end());
+            if (it != materials.end())
+            {
+                EXPECT_EQ(it->ambient, material.ambient);
+                EXPECT_EQ(it->diffuse, material.diffuse);
+                EXPECT_EQ(it->specular, material.specular);
+                EXPECT_EQ(it->shininess, material.shininess);
+                EXPECT_EQ(it->ior, material.ior);
+                EXPECT_EQ(it->dissolve, material.dissolve);
+            }
         }
     });
 }
