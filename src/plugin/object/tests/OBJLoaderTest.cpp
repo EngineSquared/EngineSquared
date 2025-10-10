@@ -105,7 +105,6 @@ TEST(OBJLoaderTest, get_materials_loaded_from_mtl)
     });
 }
 
-
 TEST(OBJLoaderTest, get_shapes_materials_consistent)
 {
     ASSERT_NO_THROW({
