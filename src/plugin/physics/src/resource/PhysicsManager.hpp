@@ -8,6 +8,7 @@
 
 #include "FunctionContainer.hpp"
 #include "utils/ContactListenerImpl.hpp"
+#include "exception/ContactListenerError.hpp"
 
 #include <Jolt/Core/Factory.h>
 #include <Jolt/Core/JobSystemThreadPool.h>
@@ -121,7 +122,7 @@ class PhysicsManager {
         }
         else
         {
-            Utils::Log::Error(
+            throw ContactListenerError(
                 "PhysicsManager: tried to add contact added callback, but contact listener is not initialized.");
         }
         return Utils::FunctionContainer::FunctionID(); // Should never happen
@@ -162,7 +163,7 @@ class PhysicsManager {
         }
         else
         {
-            Utils::Log::Error(
+            throw ContactListenerError(
                 "PhysicsManager: tried to add contact persisted callback, but contact listener is not initialized.");
         }
         return Utils::FunctionContainer::FunctionID(); // Should never happen
@@ -203,7 +204,7 @@ class PhysicsManager {
         }
         else
         {
-            Utils::Log::Error(
+            throw ContactListenerError(
                 "PhysicsManager: tried to add contact removed callback, but contact listener is not initialized.");
         }
         return Utils::FunctionContainer::FunctionID(); // Should never happen
@@ -241,7 +242,7 @@ class PhysicsManager {
         }
         else
         {
-            Utils::Log::Error(
+            throw ContactListenerError(
                 "PhysicsManager: tried to remove contact added callback, but contact listener is not initialized.");
         }
         return false;
@@ -262,7 +263,7 @@ class PhysicsManager {
         }
         else
         {
-            Utils::Log::Error(
+            throw ContactListenerError(
                 "PhysicsManager: tried to remove contact persisted callback, but contact listener is not initialized.");
         }
         return false;
@@ -283,7 +284,7 @@ class PhysicsManager {
         }
         else
         {
-            Utils::Log::Error(
+            throw ContactListenerError(
                 "PhysicsManager: tried to remove contact removed callback, but contact listener is not initialized.");
         }
         return false;
