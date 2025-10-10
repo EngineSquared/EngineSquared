@@ -22,6 +22,7 @@
 
 #pragma once
 
+#include "component/Material.hpp"
 #include "component/Mesh.hpp"
 #include <glm/glm.hpp>
 #include <vector>
