@@ -9,6 +9,7 @@
 #include "utils/BindGroupLayout.hpp"
 #include "utils/BufferBindGroupLayoutEntry.hpp"
 #include "utils/VertexBufferLayout.hpp"
+#include "utils/ShaderBuilder.hpp"
 
 // Exceptions
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"

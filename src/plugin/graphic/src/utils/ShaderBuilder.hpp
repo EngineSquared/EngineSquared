@@ -38,27 +38,10 @@ class ShaderBuilder {
         return setShader(buffer.str());
     }
 
-        ShaderBuilder& addVertexBufferLayout(const VertexBufferLayout &layout) {
+    ShaderBuilder& addVertexBufferLayout(const VertexBufferLayout &layout) {
             this->vertexBufferLayouts.push_back(layout);
             return *this;
         }
-        else if (auto overlappingAttribute = _getVertexAttributeOverlap(format, offset))
-        {
-            throw Exception::VertexAttributeOverlappingError(
-                "New attribute (format: " + std::to_string(static_cast<uint32_t>(format)) +
-                ", offset: " + std::to_string(offset) + ", shaderLocation: " + std::to_string(shaderLocation) +
-                ") overlaps with existing attribute (format: " +
-                std::to_string(static_cast<uint32_t>(overlappingAttribute->format)) +
-                ", offset: " + std::to_string(overlappingAttribute->offset) +
-                ", shaderLocation: " + std::to_string(overlappingAttribute->shaderLocation) + ")");
-        }
-        wgpu::VertexAttribute attribute;
-        attribute.format = format;
-        attribute.offset = offset;
-        attribute.shaderLocation = shaderLocation;
-        this->vertexAttributes.push_back(attribute);
-        return *this;
-    }
 
         VertexBufferLayout &getVertexBufferLayout(size_t index) {
             return *std::next(this->vertexBufferLayouts.begin(), index);
