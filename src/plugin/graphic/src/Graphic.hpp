@@ -8,9 +8,9 @@
 #include "utils/ABindGroupLayoutEntry.hpp"
 #include "utils/BindGroupLayout.hpp"
 #include "utils/BufferBindGroupLayoutEntry.hpp"
-#include "utils/TextureBindGroupLayoutEntry.hpp"
 #include "utils/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/ShaderBuilder.hpp"
+#include "utils/TextureBindGroupLayoutEntry.hpp"
 #include "utils/VertexBufferLayout.hpp"
 
 // Exceptions

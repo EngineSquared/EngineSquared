@@ -2,10 +2,10 @@
 
 #include "utils/webgpu.hpp"
 
+#include "Logger.hpp"
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"
 #include "exception/FileReadingError.hpp"
 #include "utils/VertexBufferLayout.hpp"
-#include "Logger.hpp"
 
 #include <filesystem>
 #include <fstream>
@@ -70,10 +70,7 @@ class ShaderBuilder {
         return *this;
     }
 
-    BindGroupLayout &getBindGroupLayout(size_t index)
-    {
-        return *std::next(this->bindGroupLayouts.begin(), index);
-    }
+    BindGroupLayout &getBindGroupLayout(size_t index) { return *std::next(this->bindGroupLayouts.begin(), index); }
 
     std::vector<std::string> validate(void) const
     {

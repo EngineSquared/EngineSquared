@@ -34,36 +34,41 @@ class VertexBufferLayout {
         return *this;
     }
 
-    uint32_t getArrayStride() const {
-        return this->arrayStride.value_or(_computeArrayStride());
-    }
+    uint32_t getArrayStride() const { return this->arrayStride.value_or(_computeArrayStride()); }
 
     wgpu::VertexStepMode getStepMode() const { return this->stepMode; }
 
     const std::vector<wgpu::VertexAttribute> &getVertexAttributes() const { return this->vertexAttributes; }
 
-    std::vector<std::string> validate(void) const {
+    std::vector<std::string> validate(void) const
+    {
         std::vector<std::string> errors;
-        if (!this->arrayStride.has_value()) {
+        if (!this->arrayStride.has_value())
+        {
             errors.push_back("Array stride is not set");
         }
-        if (auto duplicatedLocations = this->_getDuplicatedShaderLocation(); !duplicatedLocations.empty()) {
-            for (const auto &[i, j] : duplicatedLocations) {
+        if (auto duplicatedLocations = this->_getDuplicatedShaderLocation(); !duplicatedLocations.empty())
+        {
+            for (const auto &[i, j] : duplicatedLocations)
+            {
                 // TODO: do proper exception kind of thing
                 errors.push_back("Shader location " + std::to_string(this->vertexAttributes[i].shaderLocation) +
-                                    " is duplicated between attributes at index " + std::to_string(i) +
-                                    " and " + std::to_string(j));
+                                 " is duplicated between attributes at index " + std::to_string(i) + " and " +
+                                 std::to_string(j));
             }
         }
-        if (auto overlappingAttribute = this->_getOverlappingVertexAttributes(); !overlappingAttribute.empty()) {
-            for (const auto &[i, j] : overlappingAttribute) {
-                errors.push_back("Attribute at index " + std::to_string(i) + " (format: " + std::to_string(static_cast<uint32_t>(this->vertexAttributes[i].format)) +
-                                    ", offset: " + std::to_string(this->vertexAttributes[i].offset) +
-                                    ", shaderLocation: " + std::to_string(this->vertexAttributes[i].shaderLocation) +
-                                    ") overlaps with attribute at index " + std::to_string(j) + " (format: " +
-                                    std::to_string(static_cast<uint32_t>(this->vertexAttributes[j].format)) +
-                                    ", offset: " + std::to_string(this->vertexAttributes[j].offset) +
-                                    ", shaderLocation: " + std::to_string(this->vertexAttributes[j].shaderLocation) + ")");
+        if (auto overlappingAttribute = this->_getOverlappingVertexAttributes(); !overlappingAttribute.empty())
+        {
+            for (const auto &[i, j] : overlappingAttribute)
+            {
+                errors.push_back("Attribute at index " + std::to_string(i) + " (format: " +
+                                 std::to_string(static_cast<uint32_t>(this->vertexAttributes[i].format)) +
+                                 ", offset: " + std::to_string(this->vertexAttributes[i].offset) +
+                                 ", shaderLocation: " + std::to_string(this->vertexAttributes[i].shaderLocation) +
+                                 ") overlaps with attribute at index " + std::to_string(j) + " (format: " +
+                                 std::to_string(static_cast<uint32_t>(this->vertexAttributes[j].format)) +
+                                 ", offset: " + std::to_string(this->vertexAttributes[j].offset) +
+                                 ", shaderLocation: " + std::to_string(this->vertexAttributes[j].shaderLocation) + ")");
             }
         }
         return errors;
@@ -104,8 +109,7 @@ class VertexBufferLayout {
             {
                 if (this->vertexAttributes[i].shaderLocation == this->vertexAttributes[j].shaderLocation)
                 {
-                    duplicatedIndices.push_back(
-                        std::make_pair(i, j));
+                    duplicatedIndices.push_back(std::make_pair(i, j));
                 }
             }
         }
@@ -128,7 +132,8 @@ class VertexBufferLayout {
         return overlappingIndices;
     }
 
-    inline bool _doVertexAttributeOverlap(const wgpu::VertexAttribute &firstAttribute, const wgpu::VertexAttribute &secondAttribute) const
+    inline bool _doVertexAttributeOverlap(const wgpu::VertexAttribute &firstAttribute,
+                                          const wgpu::VertexAttribute &secondAttribute) const
     {
         const uint32_t firstStart = firstAttribute.offset;
         const uint32_t firstEnd = firstStart + this->_getVertexFormatSize(firstAttribute.format);

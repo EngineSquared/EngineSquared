@@ -9,10 +9,7 @@ class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry {
     SamplerBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {}
     ~SamplerBindGroupLayoutEntry() = default;
 
-    virtual bool isComplete() const override
-    {
-        return ABindGroupLayoutEntry::isComplete() && this->_isSamplerTypeSet;
-    }
+    virtual bool isComplete() const override { return ABindGroupLayoutEntry::isComplete() && this->_isSamplerTypeSet; }
 
     inline SamplerBindGroupLayoutEntry &setSamplerType(const wgpu::SamplerBindingType &type)
     {
