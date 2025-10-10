@@ -112,7 +112,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
 
   private:
     using CallbackContainer =
-        FunctionUtils::FunctionContainer::FunctionContainer<void, Engine::Core &, Engine::Entity &, Engine::Entity &>;
+        FunctionUtils::FunctionContainer<void, Engine::Core &, Engine::Entity &, Engine::Entity &>;
     Engine::Core &_core;
 
     CallbackContainer _onContactAddedCallbacks;     ///< Callbacks for when a contact is added.
