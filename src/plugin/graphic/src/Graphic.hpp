@@ -9,8 +9,8 @@
 #include "utils/webgpu.hpp"
 
 // Exceptions
-#include "exception/InstanceCreationError.hpp"
 #include "exception/AdapterCreationError.hpp"
+#include "exception/InstanceCreationError.hpp"
 #include "exception/SurfaceCreationError.hpp"
 
 // Plugin

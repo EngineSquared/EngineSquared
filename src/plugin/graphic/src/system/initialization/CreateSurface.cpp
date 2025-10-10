@@ -1,9 +1,9 @@
 #include "CreateSurface.hpp"
+#include "exception/SurfaceCreationError.hpp"
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Window.hpp"
-#include "exception/SurfaceCreationError.hpp"
 #include <glfw3webgpu.h>
 
 void Plugin::Graphic::System::CreateSurface(Engine::Core &core)
@@ -24,7 +24,8 @@ void Plugin::Graphic::System::CreateSurface(Engine::Core &core)
         surface = glfwCreateWindowWGPUSurface(instance, glfwWindow);
     }
 
-    if (surface == nullptr) throw Exception::SurfaceCreationError("Could not create surface");
+    if (surface == nullptr)
+        throw Exception::SurfaceCreationError("Could not create surface");
 
     context.surface = Resource::Surface(surface);
 }

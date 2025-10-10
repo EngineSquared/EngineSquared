@@ -1,7 +1,7 @@
 #include "CreateAdapter.hpp"
+#include "exception/AdapterCreationError.hpp"
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
-#include "exception/AdapterCreationError.hpp"
 
 void Plugin::Graphic::System::CreateAdapter(Engine::Core &core)
 {
@@ -24,5 +24,6 @@ void Plugin::Graphic::System::CreateAdapter(Engine::Core &core)
 
     wgpu::Adapter adapter = context.instance->requestAdapter(adapterOpts);
 
-	if (adapter == nullptr) throw Exception::AdapterCreationError("Could not get WebGPU adapter");
+    if (adapter == nullptr)
+        throw Exception::AdapterCreationError("Could not get WebGPU adapter");
 }
