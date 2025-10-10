@@ -8,14 +8,12 @@
 #include "utils/ABindGroupLayoutEntry.hpp"
 #include "utils/BindGroupLayout.hpp"
 #include "utils/BufferBindGroupLayoutEntry.hpp"
-#include "utils/ShaderBuilder.hpp"
-#include "utils/webgpu.hpp"
+#include "utils/VertexBufferLayout.hpp"
 
 // Exceptions
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"
 #include "exception/FileReadingError.hpp"
-#include "exception/InstanceCreationError.hpp"
-#include "exception/VertexAttributeOverlappingError.hpp"
+#include "exception/UnknownFormatType.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"

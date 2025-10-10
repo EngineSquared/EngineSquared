@@ -4,10 +4,11 @@
 
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"
 #include "exception/FileReadingError.hpp"
-#include "exception/VertexAttributeOverlappingError.hpp"
+#include "utils/VertexBufferLayout.hpp"
 
 #include <filesystem>
 #include <fstream>
+#include <list>
 
 namespace Plugin::Graphic::Utils {
 class ShaderBuilder {
@@ -37,12 +38,9 @@ class ShaderBuilder {
         return setShader(buffer.str());
     }
 
-    ShaderBuilder &addVertexAttribute(wgpu::VertexFormat format, uint32_t offset, uint32_t shaderLocation)
-    {
-        if (_doShaderLocationExist(shaderLocation))
-        {
-            throw Exception::DuplicatedVertexAttributeLocationError(
-                "Shader location " + std::to_string(shaderLocation) + " is already used");
+        ShaderBuilder& addVertexBufferLayout(const VertexBufferLayout &layout) {
+            this->vertexBufferLayouts.push_back(layout);
+            return *this;
         }
         else if (auto overlappingAttribute = _getVertexAttributeOverlap(format, offset))
         {
@@ -62,44 +60,13 @@ class ShaderBuilder {
         return *this;
     }
 
-  private:
-    inline uint32_t _getVertexFormatSize(wgpu::VertexFormat format) const
-    {
-        switch (format)
-        {
-        case wgpu::VertexFormat::Float32x2: return 2 * sizeof(float);
-        case wgpu::VertexFormat::Float32x3: return 3 * sizeof(float);
-        case wgpu::VertexFormat::Float32x4: return 4 * sizeof(float);
-        default: throw std::runtime_error("Unknown vertex format");
+        VertexBufferLayout &getVertexBufferLayout(size_t index) {
+            return *std::next(this->vertexBufferLayouts.begin(), index);
         }
-    }
 
-    inline bool _doShaderLocationExist(uint32_t shaderLocation) const
-    {
-        return std::ranges::any_of(this->vertexAttributes, [shaderLocation](const wgpu::VertexAttribute &attr) {
-            return attr.shaderLocation == shaderLocation;
-        });
-    }
-
-    inline std::optional<wgpu::VertexAttribute> _getVertexAttributeOverlap(wgpu::VertexFormat format,
-                                                                           uint32_t offset) const
-    {
-        const uint32_t start = offset;
-        const uint32_t end = start + this->_getVertexFormatSize(format);
-        for (const auto &attr : this->vertexAttributes)
-        {
-            const uint32_t attrStart = attr.offset;
-            const uint32_t attrEnd = attrStart + this->_getVertexFormatSize(attr.format);
-            if ((start < attrEnd) && (end > attrStart))
-            {
-                return attr;
-            }
-        }
-        return std::nullopt;
-    }
-
-    std::string shaderSource;
-
-    std::vector<wgpu::VertexAttribute> vertexAttributes;
+    private:
+    
+        std::list<VertexBufferLayout> vertexBufferLayouts;
+        std::string shaderSource;
 };
 } // namespace Plugin::Graphic::Utils
