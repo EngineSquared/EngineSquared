@@ -1,4 +1,4 @@
-#include "JoltPhysics.pch.hpp"
+#include "Physics.pch.hpp"
 
 #include "utils/ContactListenerImpl.hpp"
 
@@ -74,7 +74,7 @@ void Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH::Su
     JPH::Body *body2 = bodyInterface.TryGetBody(inSubShapePair.GetBody2ID());
     if (body1 == nullptr || body2 == nullptr)
     {
-        Utils::Log::Error("ContactListenerImpl: OnContactRemoved: body1 or body2 is nullptr, skipping callbacks.");
+        Log::Error("ContactListenerImpl: OnContactRemoved: body1 or body2 is nullptr, skipping callbacks.");
         return;
     }
 

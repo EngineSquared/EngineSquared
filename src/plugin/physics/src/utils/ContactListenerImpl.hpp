@@ -50,7 +50,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called once for each contact added.
      */
     template <typename... Components>
-    inline Utils::FunctionContainer::FunctionID AddOnContactAddedCallback(std::unique_ptr<BaseCallback> &&callback)
+    inline FunctionUtils::FunctionID AddOnContactAddedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
         return _onContactAddedCallbacks.AddFunction(std::move(callback));
     }
@@ -63,7 +63,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called every frame until the contact is removed.
      */
     template <typename... Components>
-    inline Utils::FunctionContainer::FunctionID AddOnContactPersistedCallback(std::unique_ptr<BaseCallback> &&callback)
+    inline FunctionUtils::FunctionID AddOnContactPersistedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
         return _onContactPersistedCallbacks.AddFunction(std::move(callback));
     }
@@ -75,7 +75,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @note The callback will be called once for each contact removed.
      */
     template <typename... Components>
-    inline Utils::FunctionContainer::FunctionID AddOnContactRemovedCallback(std::unique_ptr<BaseCallback> &&callback)
+    inline FunctionUtils::FunctionID AddOnContactRemovedCallback(std::unique_ptr<BaseCallback> &&callback)
     {
         return _onContactRemovedCallbacks.AddFunction(std::move(callback));
     }
@@ -85,7 +85,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @param id The ID of the callback to remove.
      * @return True if the callback was removed, false otherwise.
      */
-    inline bool RemoveOnContactAddedCallback(Utils::FunctionContainer::FunctionID id)
+    inline bool RemoveOnContactAddedCallback(FunctionUtils::FunctionID id)
     {
         return _onContactAddedCallbacks.DeleteFunction(id) != nullptr;
     }
@@ -95,7 +95,7 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @param id The ID of the callback to remove.
      * @return True if the callback was removed, false otherwise.
      */
-    inline bool RemoveOnContactPersistedCallback(Utils::FunctionContainer::FunctionID id)
+    inline bool RemoveOnContactPersistedCallback(FunctionUtils::FunctionID id)
     {
         return _onContactPersistedCallbacks.DeleteFunction(id) != nullptr;
     }
@@ -105,14 +105,14 @@ class ContactListenerImpl final : public JPH::ContactListener {
      * @param id The ID of the callback to remove.
      * @return True if the callback was removed, false otherwise.
      */
-    inline bool RemoveOnContactRemovedCallback(Utils::FunctionContainer::FunctionID id)
+    inline bool RemoveOnContactRemovedCallback(FunctionUtils::FunctionID id)
     {
         return _onContactRemovedCallbacks.DeleteFunction(id) != nullptr;
     }
 
   private:
     using CallbackContainer =
-        Utils::FunctionContainer::FunctionContainer<void, Engine::Core &, Engine::Entity &, Engine::Entity &>;
+        FunctionUtils::FunctionContainer::FunctionContainer<void, Engine::Core &, Engine::Entity &, Engine::Entity &>;
     Engine::Core &_core;
 
     CallbackContainer _onContactAddedCallbacks;     ///< Callbacks for when a contact is added.

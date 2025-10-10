@@ -11,19 +11,14 @@ target("PluginPhysics")
 
     add_deps("EngineSquaredCore")
     add_deps("PluginObject")
-    add_deps("PluginMath")
-    add_deps("PluginInput")
-    add_deps("PluginOpenGL")
 
     add_files("src/**.cpp")
 
-    add_headerfiles("src/(component/*.hpp)")
     add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/(plugin/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(system/*.hpp)")
     add_headerfiles("src/(utils/*.hpp)")
-    add_headerfiles("src/(utils/*.inl)")
     add_headerfiles("src/(*.hpp)")
 
     add_includedirs("src/", {public = true})
