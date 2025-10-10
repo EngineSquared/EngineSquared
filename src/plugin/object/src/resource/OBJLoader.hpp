@@ -53,7 +53,9 @@ namespace Plugin::Object {
  * @code
  * for (const auto &shape : loader.GetShapes()) {
  *     const auto &mesh = shape.GetMesh();
+ *     const auto &material = shape.GetMaterial();
  * }
+ * for (auto [mesh, material] : loader.GetShapes()) {}
  * @endcode
  *
  * @example "Getting materials from an OBJ file"

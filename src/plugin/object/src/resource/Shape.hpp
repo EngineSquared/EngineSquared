@@ -36,6 +36,7 @@ namespace Plugin::Object::Resource {
  */
 struct Shape {
     Component::Mesh mesh{};
+    Component::Material material{};
 
     Shape() = default;
     ~Shape() = default;
@@ -63,6 +64,20 @@ struct Shape {
      * @return const Component::Mesh&  Const reference to the mesh object.
      */
     const Component::Mesh &GetMesh() const { return mesh; }
+
+    /**
+     * @brief Get the Material object of the shape.
+     *
+     * @return Component::Material&  Reference to the material object.
+     */
+    Component::Material &GetMaterial() { return material; }
+
+    /**
+     * @brief Get the Material object of the shape (const version).
+     *
+     * @return const Component::Material&  Const reference to the material object.
+     */
+    const Component::Material &GetMaterial() const { return material; }
 };
 
 } // namespace Plugin::Object::Resource

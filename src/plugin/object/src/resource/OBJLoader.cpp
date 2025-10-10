@@ -1,3 +1,5 @@
+// Optional. define TINYOBJLOADER_USE_MAPBOX_EARCUT gives robust triangulation. Requires C++11
+// #define TINYOBJLOADER_USE_MAPBOX_EARCUT
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "OBJLoader.hpp"
 
@@ -84,6 +86,14 @@ std::vector<Resource::Shape> OBJLoader::GetShapes()
             ProcessMeshFace(mesh, shapes, shape, face_vertices, index_offset);
 
             index_offset += face_vertices;
+        }
+
+        int material_id = shapes[shape].mesh.material_ids.empty() ? -1 : shapes[shape].mesh.material_ids[0];
+
+        if (material_id >= 0 && static_cast<size_t>(material_id) < _reader.GetMaterials().size())
+        {
+            const auto &mat = _reader.GetMaterials()[material_id];
+            SetMaterialProperties(shapeResource.material, mat);
         }
 
         _shapes.emplace_back(std::move(shapeResource));
