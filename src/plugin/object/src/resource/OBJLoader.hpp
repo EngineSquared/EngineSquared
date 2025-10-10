@@ -24,6 +24,7 @@
 #include <string>
 #include <tiny_obj_loader.h>
 
+#include "component/Material.hpp"
 #include "component/Mesh.hpp"
 #include "exception/OBJLoaderError.hpp"
 
@@ -44,6 +45,13 @@ namespace Plugin::Object {
  *     Plugin::Object::Component::Mesh mesh = loader.GetMesh();
  * } catch (const Plugin::Object::OBJLoaderError &e) {
  *     std::cerr << e.what() << std::endl;
+ * }
+ * @endcode
+ *
+ * @example "Getting materials from an OBJ file"
+ * @code
+ * for (const auto &material : loader.GetMaterials()) {
+ *     std::cout << "Material: " << material.name << std::endl;
  * }
  * @endcode
  *
@@ -73,6 +81,15 @@ class OBJLoader {
      */
     [[nodiscard]] Component::Mesh GetMesh();
 
+    /**
+     * @brief Retrieves the loaded materials data.
+     *
+     * @return std::vector<Component::Material> The materials data extracted from the OBJ file.
+     *
+     * @see Component::Material
+     */
+    [[nodiscard]] std::vector<Component::Material> GetMaterials();
+
   private:
     /**
      * @brief Processes a single face of the mesh and populates the Mesh object.
@@ -88,11 +105,20 @@ class OBJLoader {
     void ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,
                          size_t face_vertices, size_t &index_offset) noexcept;
 
+    /**
+     * @brief Sets the properties of a material according to the tinyobj::material_t structure.
+     *
+     * @param material  The Material object to populate.
+     * @param mat  The tinyobj::material_t object containing the material properties.
+     */
+    void SetMaterialProperties(Component::Material &material, const tinyobj::material_t &mat) noexcept;
+
   protected:
   private:
     tinyobj::ObjReaderConfig _reader_config;
     tinyobj::ObjReader _reader;
     Component::Mesh _mesh{};
+    std::vector<Component::Material> _materials{};
 };
 
 } // namespace Plugin::Object
