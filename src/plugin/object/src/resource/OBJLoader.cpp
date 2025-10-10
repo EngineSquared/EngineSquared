@@ -55,6 +55,25 @@ Component::Mesh OBJLoader::GetMesh()
     return _mesh;
 }
 
+std::vector<Component::Material> OBJLoader::GetMaterials()
+{
+    if (!_materials.empty())
+        return _materials;
+
+    const auto &materials = _reader.GetMaterials();
+    _materials.reserve(materials.size());
+
+    for (const auto &mat : materials)
+    {
+        Component::Material material;
+        SetMaterialProperties(material, mat);
+
+        _materials.emplace_back(std::move(material));
+    }
+
+    return _materials;
+}
+
 void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj::shape_t> &shapes, size_t shape,
                                 size_t face_vertices, size_t &index_offset) noexcept
 {
@@ -104,6 +123,19 @@ void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj
 
         mesh.indices.emplace_back(static_cast<uint32_t>(mesh.vertices.size() - 1u));
     }
+}
+
+void OBJLoader::SetMaterialProperties(Component::Material &material, const tinyobj::material_t &mat) noexcept
+{
+    material.name = mat.name;
+    material.ambient = glm::vec3(mat.ambient[0], mat.ambient[1], mat.ambient[2]);
+    material.diffuse = glm::vec3(mat.diffuse[0], mat.diffuse[1], mat.diffuse[2]);
+    material.specular = glm::vec3(mat.specular[0], mat.specular[1], mat.specular[2]);
+    material.transmittance = glm::vec3(mat.transmittance[0], mat.transmittance[1], mat.transmittance[2]);
+    material.emission = glm::vec3(mat.emission[0], mat.emission[1], mat.emission[2]);
+    material.shininess = mat.shininess;
+    material.ior = mat.ior;
+    material.dissolve = mat.dissolve;
 }
 
 } // namespace Plugin::Object
