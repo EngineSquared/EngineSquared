@@ -33,4 +33,4 @@ class ContactListenerError : public std::exception {
     std::string msg;
 };
 
-} // namespace Plugin::Object
+} // namespace Plugin::Physics
