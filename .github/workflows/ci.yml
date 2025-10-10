@@ -152,9 +152,10 @@ jobs:
               echo "Building example in $example_dir"
               cd "$example_dir"
               xmake build -y -P .
-              if [ -f ".ci_run" ]; then
+              if [ -f ".ci_run_target" ]; then
                 echo "Running example in $example_dir"
-                xmake run -P .
+                target=$(cat .ci_run_target)
+                xmake run -P . $target
               fi
               cd - > /dev/null
             fi
@@ -171,9 +172,11 @@ jobs:
             Push-Location $exampleDir
             try {
               xmake build -y -P .
-              if (Test-Path ".ci_run") {
+              if (Test-Path ".ci_run_target") {
                 Write-Host "Running example in $exampleDir"
-                xmake run -P .
+                $target = Get-Content ".ci_run_target" -Raw
+                $target = $target.Trim()
+                xmake run -P . $target
               }
             } finally {
               Pop-Location
