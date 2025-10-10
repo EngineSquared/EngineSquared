@@ -1,5 +1,3 @@
-// Optional. define TINYOBJLOADER_USE_MAPBOX_EARCUT gives robust triangulation. Requires C++11
-// #define TINYOBJLOADER_USE_MAPBOX_EARCUT
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "OBJLoader.hpp"
 
