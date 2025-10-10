@@ -6,7 +6,8 @@ local required_packages = {
     "entt",
     "spdlog",
     "fmt",
-    "wgpu-native"
+    "wgpu-native",
+    "glm"
 }
 
 local plugin_name = "PluginGraphic"

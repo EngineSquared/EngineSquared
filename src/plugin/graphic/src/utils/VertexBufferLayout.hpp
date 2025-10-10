@@ -14,21 +14,6 @@ class VertexBufferLayout {
 
     VertexBufferLayout &addVertexAttribute(wgpu::VertexFormat format, uint32_t offset, uint32_t shaderLocation)
     {
-        if (_doShaderLocationExist(shaderLocation))
-        {
-            throw Exception::DuplicatedVertexAttributeLocationError(
-                "Shader location " + std::to_string(shaderLocation) + " is already used");
-        }
-        else if (auto overlappingAttribute = _getVertexAttributeOverlap(format, offset))
-        {
-            throw Exception::VertexAttributeOverlappingError(
-                "New attribute (format: " + std::to_string(static_cast<uint32_t>(format)) +
-                ", offset: " + std::to_string(offset) + ", shaderLocation: " + std::to_string(shaderLocation) +
-                ") overlaps with existing attribute (format: " +
-                std::to_string(static_cast<uint32_t>(overlappingAttribute->format)) +
-                ", offset: " + std::to_string(overlappingAttribute->offset) +
-                ", shaderLocation: " + std::to_string(overlappingAttribute->shaderLocation) + ")");
-        }
         wgpu::VertexAttribute attribute;
         attribute.format = format;
         attribute.offset = offset;
@@ -49,13 +34,56 @@ class VertexBufferLayout {
         return *this;
     }
 
-    const std::optional<uint32_t> &getArrayStride() const { return this->arrayStride; }
+    uint32_t getArrayStride() const {
+        return this->arrayStride.value_or(_computeArrayStride());
+    }
 
     wgpu::VertexStepMode getStepMode() const { return this->stepMode; }
 
     const std::vector<wgpu::VertexAttribute> &getVertexAttributes() const { return this->vertexAttributes; }
 
+    std::vector<std::string> validate(void) const {
+        std::vector<std::string> errors;
+        if (!this->arrayStride.has_value()) {
+            errors.push_back("Array stride is not set");
+        }
+        if (auto duplicatedLocations = this->_getDuplicatedShaderLocation(); !duplicatedLocations.empty()) {
+            for (const auto &[i, j] : duplicatedLocations) {
+                // TODO: do proper exception kind of thing
+                errors.push_back("Shader location " + std::to_string(this->vertexAttributes[i].shaderLocation) +
+                                    " is duplicated between attributes at index " + std::to_string(i) +
+                                    " and " + std::to_string(j));
+            }
+        }
+        if (auto overlappingAttribute = this->_getOverlappingVertexAttributes(); !overlappingAttribute.empty()) {
+            for (const auto &[i, j] : overlappingAttribute) {
+                errors.push_back("Attribute at index " + std::to_string(i) + " (format: " + std::to_string(static_cast<uint32_t>(this->vertexAttributes[i].format)) +
+                                    ", offset: " + std::to_string(this->vertexAttributes[i].offset) +
+                                    ", shaderLocation: " + std::to_string(this->vertexAttributes[i].shaderLocation) +
+                                    ") overlaps with attribute at index " + std::to_string(j) + " (format: " +
+                                    std::to_string(static_cast<uint32_t>(this->vertexAttributes[j].format)) +
+                                    ", offset: " + std::to_string(this->vertexAttributes[j].offset) +
+                                    ", shaderLocation: " + std::to_string(this->vertexAttributes[j].shaderLocation) + ")");
+            }
+        }
+        return errors;
+    }
+
   private:
+    inline uint32_t _computeArrayStride() const
+    {
+        uint32_t maxEnd = 0;
+        for (const auto &attribute : this->vertexAttributes)
+        {
+            const uint32_t attributeEnd = attribute.offset + this->_getVertexFormatSize(attribute.format);
+            if (attributeEnd > maxEnd)
+            {
+                maxEnd = attributeEnd;
+            }
+        }
+        return maxEnd;
+    }
+
     inline uint32_t _getVertexFormatSize(wgpu::VertexFormat format) const
     {
         switch (format)
@@ -67,29 +95,52 @@ class VertexBufferLayout {
         }
     }
 
-    inline bool _doShaderLocationExist(uint32_t shaderLocation) const
+    inline std::vector<std::pair<uint64_t, uint64_t>> _getDuplicatedShaderLocation(void) const
     {
-        return std::ranges::any_of(this->vertexAttributes, [shaderLocation](const wgpu::VertexAttribute &attr) {
-            return attr.shaderLocation == shaderLocation;
-        });
-    }
-
-    inline std::optional<wgpu::VertexAttribute> _getVertexAttributeOverlap(wgpu::VertexFormat format,
-                                                                           uint32_t offset) const
-    {
-        const uint32_t start = offset;
-        const uint32_t end = start + this->_getVertexFormatSize(format);
-        for (const auto &attr : this->vertexAttributes)
+        std::vector<std::pair<uint64_t, uint64_t>> duplicatedIndices;
+        for (size_t i = 0; i < this->vertexAttributes.size(); i++)
         {
-            const uint32_t attrStart = attr.offset;
-            const uint32_t attrEnd = attrStart + this->_getVertexFormatSize(attr.format);
-            if ((start < attrEnd) && (end > attrStart))
+            for (size_t j = i + 1; j < this->vertexAttributes.size(); j++)
             {
-                return attr;
+                if (this->vertexAttributes[i].shaderLocation == this->vertexAttributes[j].shaderLocation)
+                {
+                    duplicatedIndices.push_back(
+                        std::make_pair(i, j));
+                }
             }
         }
-        return std::nullopt;
+        return duplicatedIndices;
     }
+
+    inline std::vector<std::pair<uint64_t, uint64_t>> _getOverlappingVertexAttributes(void) const
+    {
+        std::vector<std::pair<uint64_t, uint64_t>> overlappingIndices;
+        for (size_t i = 0; i < this->vertexAttributes.size(); i++)
+        {
+            for (size_t j = i + 1; j < this->vertexAttributes.size(); j++)
+            {
+                if (this->_doVertexAttributeOverlap(this->vertexAttributes[i], this->vertexAttributes[j]))
+                {
+                    overlappingIndices.push_back(std::make_pair(i, j));
+                }
+            }
+        }
+        return overlappingIndices;
+    }
+
+    inline bool _doVertexAttributeOverlap(const wgpu::VertexAttribute &firstAttribute, const wgpu::VertexAttribute &secondAttribute) const
+    {
+        const uint32_t firstStart = firstAttribute.offset;
+        const uint32_t firstEnd = firstStart + this->_getVertexFormatSize(firstAttribute.format);
+        const uint32_t secondStart = secondAttribute.offset;
+        const uint32_t secondEnd = secondStart + this->_getVertexFormatSize(secondAttribute.format);
+        if ((firstStart < secondEnd) && (firstEnd > secondStart))
+        {
+            return true;
+        }
+        return false;
+    }
+
     std::vector<wgpu::VertexAttribute> vertexAttributes;
     std::optional<uint32_t> arrayStride;
     wgpu::VertexStepMode stepMode = wgpu::VertexStepMode::Vertex;
