@@ -88,7 +88,7 @@ jobs:
 
       - name: Setup Windows dependencies
         if: contains(runner.os, 'windows')
-        uses: ilammy/msvc-dev-cmd@v1
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
 
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
@@ -132,7 +132,7 @@ jobs:
 
       - name: Setup Windows dependencies
         if: contains(runner.os, 'windows')
-        uses: ilammy/msvc-dev-cmd@v1
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
 
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
@@ -213,7 +213,7 @@ jobs:
 
       - name: Setup Windows dependencies
         if: contains(runner.os, 'windows')
-        uses: ilammy/msvc-dev-cmd@v1
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
 
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
