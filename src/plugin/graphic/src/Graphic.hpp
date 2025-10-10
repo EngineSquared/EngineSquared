@@ -10,6 +10,8 @@
 
 // Exceptions
 #include "exception/InstanceCreationError.hpp"
+#include "exception/AdapterCreationError.hpp"
+#include "exception/SurfaceCreationError.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"

@@ -6,7 +6,7 @@ namespace Plugin::Graphic::Resource {
 struct Surface {
     std::optional<wgpu::Surface> value;
 
-    Surface(std::optional<wgpu::Surface> surface = std::nullopt) : value(surface) {}
+    explicit Surface(std::optional<wgpu::Surface> surface = std::nullopt) : value(surface) {}
     ~Surface() = default;
 };
 } // namespace Plugin::Graphic::Resource
