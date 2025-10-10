@@ -106,6 +106,7 @@ jobs:
 
   check_examples:
     name: Build and test examples
+    if: startsWith(github.event.head_commit.message, 'example')
     needs: [check_repository_cleanliness, lint_code]
     strategy:
       matrix:
