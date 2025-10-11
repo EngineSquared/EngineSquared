@@ -8,11 +8,11 @@
 #include "utils/ABindGroupLayoutEntry.hpp"
 #include "utils/BindGroupLayout.hpp"
 #include "utils/BufferBindGroupLayoutEntry.hpp"
+#include "utils/IValidable.hpp"
 #include "utils/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/ShaderBuilder.hpp"
 #include "utils/TextureBindGroupLayoutEntry.hpp"
 #include "utils/VertexBufferLayout.hpp"
-#include "utils/IValidable.hpp"
 
 // Exceptions
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"

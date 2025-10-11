@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utils/webgpu.hpp"
 #include "utils/IValidable.hpp"
+#include "utils/webgpu.hpp"
 
 namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 
@@ -33,11 +33,13 @@ class ABindGroupLayoutEntry : public virtual IValidable {
         std::vector<ValidationError> errors;
         if (!this->isBindingSet)
         {
-            errors.push_back({ "Binding is not set", "BindGroupLayoutEntry: " + this->name, ValidationError::Severity::Error });
+            errors.push_back(
+                {"Binding is not set", "BindGroupLayoutEntry: " + this->name, ValidationError::Severity::Error});
         }
         if (!this->isVisibilitySet)
         {
-            errors.push_back({ "Visibility is not set", "BindGroupLayoutEntry: " + this->name, ValidationError::Severity::Error });
+            errors.push_back(
+                {"Visibility is not set", "BindGroupLayoutEntry: " + this->name, ValidationError::Severity::Error});
         }
         return errors;
     }

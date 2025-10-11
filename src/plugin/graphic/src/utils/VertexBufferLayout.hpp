@@ -46,29 +46,33 @@ class VertexBufferLayout : public IValidable {
         std::vector<ValidationError> errors;
         if (!this->arrayStride.has_value())
         {
-            errors.push_back({ "Array stride is not set (auto computation will be used)", "VertexBufferLayout", ValidationError::Severity::Warning });
+            errors.push_back({"Array stride is not set (auto computation will be used)", "VertexBufferLayout",
+                              ValidationError::Severity::Warning});
         }
         if (auto duplicatedLocations = this->_getDuplicatedShaderLocation(); !duplicatedLocations.empty())
         {
             for (const auto &[i, j] : duplicatedLocations)
             {
-                errors.push_back({ "Shader location " + std::to_string(this->vertexAttributes[i].shaderLocation) +
-                                   " is duplicated between attributes at index " + std::to_string(i) + " and " +
-                                   std::to_string(j), "VertexBufferLayout", ValidationError::Severity::Error });
+                errors.push_back({"Shader location " + std::to_string(this->vertexAttributes[i].shaderLocation) +
+                                      " is duplicated between attributes at index " + std::to_string(i) + " and " +
+                                      std::to_string(j),
+                                  "VertexBufferLayout", ValidationError::Severity::Error});
             }
         }
         if (auto overlappingAttribute = this->_getOverlappingVertexAttributes(); !overlappingAttribute.empty())
         {
             for (const auto &[i, j] : overlappingAttribute)
             {
-                errors.push_back({ "Attribute at index " + std::to_string(i) + " (format: " +
-                                 std::to_string(static_cast<uint32_t>(this->vertexAttributes[i].format)) +
-                                 ", offset: " + std::to_string(this->vertexAttributes[i].offset) +
-                                 ", shaderLocation: " + std::to_string(this->vertexAttributes[i].shaderLocation) +
-                                 ") overlaps with attribute at index " + std::to_string(j) + " (format: " +
-                                 std::to_string(static_cast<uint32_t>(this->vertexAttributes[j].format)) +
-                                 ", offset: " + std::to_string(this->vertexAttributes[j].offset) +
-                                 ", shaderLocation: " + std::to_string(this->vertexAttributes[j].shaderLocation) + ")", "VertexBufferLayout", ValidationError::Severity::Error });
+                errors.push_back(
+                    {"Attribute at index " + std::to_string(i) +
+                         " (format: " + std::to_string(static_cast<uint32_t>(this->vertexAttributes[i].format)) +
+                         ", offset: " + std::to_string(this->vertexAttributes[i].offset) +
+                         ", shaderLocation: " + std::to_string(this->vertexAttributes[i].shaderLocation) +
+                         ") overlaps with attribute at index " + std::to_string(j) +
+                         " (format: " + std::to_string(static_cast<uint32_t>(this->vertexAttributes[j].format)) +
+                         ", offset: " + std::to_string(this->vertexAttributes[j].offset) +
+                         ", shaderLocation: " + std::to_string(this->vertexAttributes[j].shaderLocation) + ")",
+                     "VertexBufferLayout", ValidationError::Severity::Error});
             }
         }
         return errors;
