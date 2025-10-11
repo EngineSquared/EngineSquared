@@ -9,9 +9,18 @@ class TextureBindGroupLayoutEntry : public ABindGroupLayoutEntry {
     TextureBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {}
     ~TextureBindGroupLayoutEntry() = default;
 
-    virtual bool isComplete() const override
+    virtual std::vector<ValidationError> validate(void) const override
     {
-        return ABindGroupLayoutEntry::isComplete() && this->_isSampleTypeSet && this->_isViewDimensionSet;
+        std::vector<ValidationError> errors = ABindGroupLayoutEntry::validate();
+        if (!this->_isSampleTypeSet)
+        {
+            errors.push_back({ "Sample type is not set", fmt::format("TextureBindGroupLayoutEntry({})", this->name), ValidationError::Severity::Error });
+        }
+        if (!this->_isViewDimensionSet)
+        {
+            errors.push_back({ "View dimension is not set", fmt::format("TextureBindGroupLayoutEntry({})", this->name), ValidationError::Severity::Error });
+        }
+        return errors;
     }
 
     inline TextureBindGroupLayoutEntry &setSampleType(wgpu::TextureSampleType type)

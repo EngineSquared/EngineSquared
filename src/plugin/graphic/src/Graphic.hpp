@@ -12,6 +12,7 @@
 #include "utils/ShaderBuilder.hpp"
 #include "utils/TextureBindGroupLayoutEntry.hpp"
 #include "utils/VertexBufferLayout.hpp"
+#include "utils/IValidable.hpp"
 
 // Exceptions
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"

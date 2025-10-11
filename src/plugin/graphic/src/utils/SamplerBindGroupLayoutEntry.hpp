@@ -9,7 +9,15 @@ class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry {
     SamplerBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {}
     ~SamplerBindGroupLayoutEntry() = default;
 
-    virtual bool isComplete() const override { return ABindGroupLayoutEntry::isComplete() && this->_isSamplerTypeSet; }
+    virtual std::vector<ValidationError> validate(void) const override
+    {
+        std::vector<ValidationError> errors = ABindGroupLayoutEntry::validate();
+        if (!this->_isSamplerTypeSet)
+        {
+            errors.push_back({ "Sampler type is not set", fmt::format("SamplerBindGroupLayoutEntry({})", this->name), ValidationError::Severity::Error });
+        }
+        return errors;
+    }
 
     inline SamplerBindGroupLayoutEntry &setSamplerType(const wgpu::SamplerBindingType &type)
     {

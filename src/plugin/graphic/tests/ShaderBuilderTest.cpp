@@ -14,10 +14,15 @@ TEST(GraphicPlugin, GlobalRun)
             Plugin::Graphic::Utils::VertexBufferLayout()
                 .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)
                 .addVertexAttribute(wgpu::VertexFormat::Float32x2, 3 * sizeof(float), 1)
-                .setArrayStride(5 * sizeof(float))         // This can be omitted to test automatic stride calculation
+                .setArrayStride(5 * sizeof(float)) // This can be omitted to test automatic stride calculation (unsafe)
                 .setStepMode(wgpu::VertexStepMode::Vertex) // This is done by default
             )
         .addBindGroupLayout(Plugin::Graphic::Utils::BindGroupLayout("ExampleLayout")
+                                .addEntry(Plugin::Graphic::Utils::BufferBindGroupLayoutEntry("BufferEntry")
+                                              .setHasDynamicOffset(false) // This is done by default
+                                              .setType<glm::mat4>()
+                                              .setVisibility(wgpu::ShaderStage::Vertex)
+                                              .setBinding(0))
                                 .addEntry(Plugin::Graphic::Utils::BufferBindGroupLayoutEntry("BufferEntry")
                                               .setHasDynamicOffset(false) // This is done by default
                                               .setType<glm::mat4>()
@@ -35,6 +40,6 @@ TEST(GraphicPlugin, GlobalRun)
     auto errors = builder.validate();
     for (const auto &error : errors)
     {
-        std::cout << "Error: " << error << std::endl;
+        std::cout << error << std::endl;
     }
 }
