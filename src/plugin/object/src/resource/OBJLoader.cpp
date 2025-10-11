@@ -55,6 +55,51 @@ Component::Mesh OBJLoader::GetMesh()
     return _mesh;
 }
 
+std::vector<Resource::Shape> OBJLoader::GetShapes()
+{
+    if (!_shapes.empty())
+        return _shapes;
+
+    const auto &attrib = _reader.GetAttrib();
+    const auto &shapes = _reader.GetShapes();
+
+    _shapes.reserve(shapes.size());
+
+    for (size_t shape = 0u; shape < shapes.size(); ++shape)
+    {
+        Resource::Shape shapeResource;
+        Component::Mesh &mesh = shapeResource.mesh;
+
+        mesh.vertices.reserve(attrib.vertices.size() / 3u);
+        mesh.normals.reserve(attrib.normals.size() / 3u);
+        mesh.texCoords.reserve(attrib.texcoords.size() / 2u);
+        mesh.indices.reserve(shapes[shape].mesh.indices.size());
+
+        size_t index_offset = 0u;
+
+        for (size_t face = 0u; face < shapes[shape].mesh.num_face_vertices.size(); ++face)
+        {
+            auto face_vertices = static_cast<size_t>(shapes[shape].mesh.num_face_vertices[face]);
+
+            ProcessMeshFace(mesh, shapes, shape, face_vertices, index_offset);
+
+            index_offset += face_vertices;
+        }
+
+        int material_id = shapes[shape].mesh.material_ids.empty() ? -1 : shapes[shape].mesh.material_ids[0];
+
+        if (material_id >= 0 && static_cast<size_t>(material_id) < _reader.GetMaterials().size())
+        {
+            const auto &mat = _reader.GetMaterials()[material_id];
+            SetMaterialProperties(shapeResource.material, mat);
+        }
+
+        _shapes.emplace_back(std::move(shapeResource));
+    }
+
+    return _shapes;
+}
+
 std::vector<Component::Material> OBJLoader::GetMaterials()
 {
     if (!_materials.empty())
