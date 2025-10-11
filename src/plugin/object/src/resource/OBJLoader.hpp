@@ -1,7 +1,7 @@
 /**************************************************************************
  * EngineSquared v0.1.1
  *
- * EngineSquared is a software package, part of the Engine².
+ * EngineSquared is a software package, part of the Engine² organization.
  *
  * This file is part of the EngineSquared project that is under MIT License.
  * Copyright © 2025-present by @EngineSquared, All rights reserved.
@@ -27,6 +27,7 @@
 #include "component/Material.hpp"
 #include "component/Mesh.hpp"
 #include "exception/OBJLoaderError.hpp"
+#include "resource/Shape.hpp"
 
 namespace Plugin::Object {
 
@@ -46,6 +47,15 @@ namespace Plugin::Object {
  * } catch (const Plugin::Object::OBJLoaderError &e) {
  *     std::cerr << e.what() << std::endl;
  * }
+ * @endcode
+ *
+ * @example "Getting shapes from an OBJ file"
+ * @code
+ * for (const auto &shape : loader.GetShapes()) {
+ *     const auto &mesh = shape.GetMesh();
+ *     const auto &material = shape.GetMaterial();
+ * }
+ * for (auto [mesh, material] : loader.GetShapes()) {}
  * @endcode
  *
  * @example "Getting materials from an OBJ file"
@@ -80,6 +90,15 @@ class OBJLoader {
      * @see Component::Mesh
      */
     [[nodiscard]] Component::Mesh GetMesh();
+
+    /**
+     * @brief Retrieves the loaded shapes data.
+     *
+     * @return std::vector<Resource::Shape> The shapes data extracted from the OBJ file.
+     *
+     * @see Resource::Shape
+     */
+    [[nodiscard]] std::vector<Resource::Shape> GetShapes();
 
     /**
      * @brief Retrieves the loaded materials data.
@@ -118,6 +137,7 @@ class OBJLoader {
     tinyobj::ObjReaderConfig _reader_config;
     tinyobj::ObjReader _reader;
     Component::Mesh _mesh{};
+    std::vector<Resource::Shape> _shapes{};
     std::vector<Component::Material> _materials{};
 };
 
