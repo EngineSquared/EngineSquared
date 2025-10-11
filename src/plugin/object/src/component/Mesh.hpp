@@ -1,7 +1,7 @@
 /**************************************************************************
  * EngineSquared v0.1.1
  *
- * EngineSquared is a software package, part of the Engine².
+ * EngineSquared is a software package, part of the Engine² organization.
  *
  * This file is part of the EngineSquared project that is under MIT License.
  * Copyright © 2024-present by @EngineSquared, All rights reserved.
