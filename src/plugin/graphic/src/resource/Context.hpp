@@ -16,5 +16,6 @@ class Context {
     std::optional<Surface> surface;
     std::optional<wgpu::Adapter> adapter;
     DeviceContext deviceContext;
+    std::optional<wgpu::Queue> queue;
 };
 } // namespace Plugin::Graphic::Resource

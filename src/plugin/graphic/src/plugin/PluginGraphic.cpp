@@ -11,5 +11,6 @@ void Plugin::Graphic::Plugin::Bind()
 
     RegisterSystems<RenderingPipeline::Setup>(System::CreateInstance, System::CreateSurface, System::CreateAdapter,
                                               System::ReleaseInstance, System::RequestCapabilities,
-                                              System::CreateDevice);
+                                              System::CreateDevice, System::CreateQueue, System::SetupQueue,
+                                              System::ConfigureSurface, System::ReleaseAdapter);
 }

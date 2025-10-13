@@ -1,15 +1,18 @@
 #pragma once
 
 #include "utils/webgpu.hpp"
+#include "Logger.hpp"
 
 namespace Plugin::Graphic::Resource {
 struct Surface {
     std::optional<wgpu::Surface> value;
     std::optional<wgpu::SurfaceCapabilities> capabilities;
 
-    inline wgpu::Status getCapabilities(wgpu::Adapter &adapter, wgpu::SurfaceCapabilities &capabilities) const
-    {
-        return value->getCapabilities(adapter, &capabilities);
+    inline wgpu::Status updateCapabilities(wgpu::Adapter &adapter) {
+        if (capabilities.has_value()) {
+            Log::Warn("Surface capabilities already requested, overwriting");
+        }
+        return value->getCapabilities(adapter, &(capabilities.value()));
     }
 
     explicit Surface(std::optional<wgpu::Surface> surface = std::nullopt) : value(surface) {}
