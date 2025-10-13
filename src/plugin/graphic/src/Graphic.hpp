@@ -8,14 +8,13 @@
 #include "utils/ABindGroupLayoutEntry.hpp"
 #include "utils/BindGroupLayout.hpp"
 #include "utils/BufferBindGroupLayoutEntry.hpp"
+#include "utils/ColorTargetState.hpp"
+#include "utils/DepthStencilState.hpp"
 #include "utils/IValidable.hpp"
 #include "utils/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/ShaderBuilder.hpp"
 #include "utils/TextureBindGroupLayoutEntry.hpp"
 #include "utils/VertexBufferLayout.hpp"
-#include "utils/IValidable.hpp"
-#include "utils/ColorTargetState.hpp"
-#include "utils/DepthStencilState.hpp"
 
 // Exceptions
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"

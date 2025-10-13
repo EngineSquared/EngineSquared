@@ -5,17 +5,17 @@
 #include "Logger.hpp"
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"
 #include "exception/FileReadingError.hpp"
-#include "utils/BindGroupLayout.hpp"
-#include "utils/IValidable.hpp"
-#include "utils/VertexBufferLayout.hpp"
 #include "spdlog/fmt/fmt.h"
+#include "utils/BindGroupLayout.hpp"
 #include "utils/ColorTargetState.hpp"
 #include "utils/DepthStencilState.hpp"
+#include "utils/IValidable.hpp"
+#include "utils/VertexBufferLayout.hpp"
 
-#include <optional>
 #include <filesystem>
 #include <fstream>
 #include <list>
+#include <optional>
 
 namespace Plugin::Graphic::Utils {
 class ShaderBuilder : public IValidable {
@@ -146,7 +146,8 @@ class ShaderBuilder : public IValidable {
             auto stateErrors = std::next(this->outputColorFormats.begin(), i)->validate();
             for (const auto &error : stateErrors)
             {
-                errors.push_back({ error.message, fmt::format("ShaderBuilder::({}){}", i, error.location), error.severity });
+                errors.push_back(
+                    {error.message, fmt::format("ShaderBuilder::({}){}", i, error.location), error.severity});
             }
         }
         if (this->outputDepthFormat.has_value())
@@ -154,7 +155,8 @@ class ShaderBuilder : public IValidable {
             auto stateErrors = this->outputDepthFormat->validate();
             for (const auto &error : stateErrors)
             {
-                errors.push_back({ error.message, fmt::format("ShaderBuilder::DepthStencil{}", error.location), error.severity });
+                errors.push_back(
+                    {error.message, fmt::format("ShaderBuilder::DepthStencil{}", error.location), error.severity});
             }
         }
         return errors;
