@@ -38,10 +38,6 @@ target(plugin_name)
 
     add_includedirs("src", {public = true})
 
-    if is_plat("macosx", "iphoneos") then
-        add_frameworks("Metal", "Foundation", "QuartzCore")
-    end
-
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
     if name == "main" then
