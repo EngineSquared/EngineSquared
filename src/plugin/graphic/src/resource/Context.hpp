@@ -10,10 +10,7 @@ class Context {
     Context() = default;
     ~Context() = default;
 
-    void RequestDevice(void)
-    {
-      deviceContext.GetDevice() = adapter->requestDevice(deviceContext.GetDescriptor());
-    }
+    void RequestDevice(void) { deviceContext.GetDevice() = adapter->requestDevice(deviceContext.GetDescriptor()); }
 
     std::optional<wgpu::Instance> instance;
     std::optional<Surface> surface;

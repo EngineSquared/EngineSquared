@@ -48,12 +48,17 @@ class GraphicSettings {
 
     GraphicSettings &RemoveRequiredFeature(wgpu::FeatureName feature)
     {
-        if (auto it = std::find(requiredFeatures.begin(), requiredFeatures.end(), feature); it != requiredFeatures.end()) {
+        if (auto it = std::find(requiredFeatures.begin(), requiredFeatures.end(), feature);
+            it != requiredFeatures.end())
+        {
             requiredFeatures.erase(it);
         }
         return *this;
     }
-    bool HasRequiredFeature(wgpu::FeatureName feature) const { return std::find(requiredFeatures.begin(), requiredFeatures.end(), feature) != requiredFeatures.end(); }
+    bool HasRequiredFeature(wgpu::FeatureName feature) const
+    {
+        return std::find(requiredFeatures.begin(), requiredFeatures.end(), feature) != requiredFeatures.end();
+    }
 
   private:
     WindowSystem windowSystem = WindowSystem::GLFW;
