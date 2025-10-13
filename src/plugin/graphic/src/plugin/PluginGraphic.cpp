@@ -9,5 +9,7 @@ void Plugin::Graphic::Plugin::Bind()
     RegisterResource(Graphic::Resource::Context());
     RegisterResource(Graphic::Resource::GraphicSettings());
 
-    RegisterSystems<RenderingPipeline::Setup>(System::CreateInstance, System::CreateSurface, System::CreateAdapter);
+    RegisterSystems<RenderingPipeline::Setup>(System::CreateInstance, System::CreateSurface, System::CreateAdapter,
+                                              System::ReleaseInstance, System::RequestCapabilities,
+                                              System::CreateDevice);
 }

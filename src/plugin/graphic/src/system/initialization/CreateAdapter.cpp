@@ -6,7 +6,7 @@
 void Plugin::Graphic::System::CreateAdapter(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
-    auto &graphicSettings = core.GetResource<Resource::GraphicSettings>();
+    const auto &graphicSettings = core.GetResource<Resource::GraphicSettings>();
 
     wgpu::RequestAdapterOptions adapterOpts(wgpu::Default);
 
@@ -26,4 +26,6 @@ void Plugin::Graphic::System::CreateAdapter(Engine::Core &core)
 
     if (adapter == nullptr)
         throw Exception::AdapterCreationError("Could not get WebGPU adapter");
+
+    context.adapter = adapter;
 }
