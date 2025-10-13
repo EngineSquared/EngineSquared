@@ -8,7 +8,11 @@
 #include "utils/BindGroupLayout.hpp"
 #include "utils/IValidable.hpp"
 #include "utils/VertexBufferLayout.hpp"
+#include "spdlog/fmt/fmt.h"
+#include "utils/ColorTargetState.hpp"
+#include "utils/DepthStencilState.hpp"
 
+#include <optional>
 #include <filesystem>
 #include <fstream>
 #include <list>
@@ -74,6 +78,30 @@ class ShaderBuilder : public IValidable {
 
     BindGroupLayout &getBindGroupLayout(size_t index) { return *std::next(this->bindGroupLayouts.begin(), index); }
 
+    ShaderBuilder &addOutputColorFormat(const ColorTargetState &state)
+    {
+        this->outputColorFormats.push_back(state);
+        return *this;
+    }
+
+    ShaderBuilder &setOutputDepthFormat(const DepthStencilState &state)
+    {
+        this->outputDepthFormat = state;
+        return *this;
+    }
+
+    ShaderBuilder &setCullMode(wgpu::CullMode mode)
+    {
+        this->cullMode = mode;
+        return *this;
+    }
+
+    ShaderBuilder &setPrimitiveTopology(wgpu::PrimitiveTopology topology)
+    {
+        this->primitiveTopology = topology;
+        return *this;
+    }
+
     std::vector<ValidationError> validate(void) const
     {
         std::vector<ValidationError> errors;
@@ -113,14 +141,34 @@ class ShaderBuilder : public IValidable {
                     {error.message, fmt::format("ShaderBuilder::({}){}", i, error.location), error.severity});
             }
         }
+        for (size_t i = 0; i < this->outputColorFormats.size(); i++)
+        {
+            auto stateErrors = std::next(this->outputColorFormats.begin(), i)->validate();
+            for (const auto &error : stateErrors)
+            {
+                errors.push_back({ error.message, fmt::format("ShaderBuilder::({}){}", i, error.location), error.severity });
+            }
+        }
+        if (this->outputDepthFormat.has_value())
+        {
+            auto stateErrors = this->outputDepthFormat->validate();
+            for (const auto &error : stateErrors)
+            {
+                errors.push_back({ error.message, fmt::format("ShaderBuilder::DepthStencil{}", error.location), error.severity });
+            }
+        }
         return errors;
     }
 
   private:
     std::list<BindGroupLayout> bindGroupLayouts;
     std::list<VertexBufferLayout> vertexBufferLayouts;
+    std::list<ColorTargetState> outputColorFormats;
     std::optional<std::string> shaderSource;
     std::optional<std::string> fragmentEntryPoint;
     std::optional<std::string> vertexEntryPoint;
+    std::optional<DepthStencilState> outputDepthFormat;
+    wgpu::PrimitiveTopology primitiveTopology = wgpu::PrimitiveTopology::TriangleList;
+    wgpu::CullMode cullMode = wgpu::CullMode::None;
 };
 } // namespace Plugin::Graphic::Utils
