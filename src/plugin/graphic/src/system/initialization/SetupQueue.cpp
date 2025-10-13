@@ -1,7 +1,7 @@
 #include "system/initialization/SetupQueue.hpp"
-#include "utils/webgpu.hpp"
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "utils/webgpu.hpp"
 
 void Plugin::Graphic::System::SetupQueue(Engine::Core &core)
 {
@@ -12,11 +12,12 @@ void Plugin::Graphic::System::SetupQueue(Engine::Core &core)
 
     auto &context = core.GetResource<Resource::Context>();
 
-	auto onQueueWorkDone = [](WGPUQueueWorkDoneStatus status, WGPU_NULLABLE void* userdata1, WGPU_NULLABLE void* userdata2) {
-		Log::Debug(fmt::format("Queued work finished with status: {:x}", static_cast<uint32_t>(status)));
-	};
+    auto onQueueWorkDone = [](WGPUQueueWorkDoneStatus status, WGPU_NULLABLE void *userdata1,
+                              WGPU_NULLABLE void *userdata2) {
+        Log::Debug(fmt::format("Queued work finished with status: {:x}", static_cast<uint32_t>(status)));
+    };
 
-	wgpu::QueueWorkDoneCallbackInfo callbackInfo(wgpu::Default);
-	callbackInfo.callback = onQueueWorkDone;
-	context.queue->onSubmittedWorkDone(callbackInfo);
+    wgpu::QueueWorkDoneCallbackInfo callbackInfo(wgpu::Default);
+    callbackInfo.callback = onQueueWorkDone;
+    context.queue->onSubmittedWorkDone(callbackInfo);
 }

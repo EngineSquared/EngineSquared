@@ -11,7 +11,8 @@ void RequestCapabilities(Engine::Core &core)
 
     if (settings.GetWindowSystem() == Resource::WindowSystem::None)
         return;
-    if (context.surface->updateCapabilities(context.adapter.value()) == wgpu::Status::Error) {
+    if (context.surface->updateCapabilities(context.adapter.value()) == wgpu::Status::Error)
+    {
         throw Exception::CapabilitiesRequestError("Failed to get surface capabilities");
     }
 }

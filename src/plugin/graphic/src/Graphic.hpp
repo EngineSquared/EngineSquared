@@ -15,21 +15,20 @@
 #include "exception/CapabilitiesRequestError.hpp"
 #include "exception/DeviceCreationError.hpp"
 #include "exception/InstanceCreationError.hpp"
-#include "exception/SurfaceCreationError.hpp"
 #include "exception/QueueCreationError.hpp"
+#include "exception/SurfaceCreationError.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"
 
 // Systems
+#include "system/initialization/ConfigureSurface.hpp"
 #include "system/initialization/CreateAdapter.hpp"
 #include "system/initialization/CreateDevice.hpp"
 #include "system/initialization/CreateInstance.hpp"
+#include "system/initialization/CreateQueue.hpp"
 #include "system/initialization/CreateSurface.hpp"
+#include "system/initialization/ReleaseAdapter.hpp"
 #include "system/initialization/ReleaseInstance.hpp"
 #include "system/initialization/RequestCapabilities.hpp"
-#include "system/initialization/CreateDevice.hpp"
-#include "system/initialization/CreateQueue.hpp"
 #include "system/initialization/SetupQueue.hpp"
-#include "system/initialization/ConfigureSurface.hpp"
-#include "system/initialization/ReleaseAdapter.hpp"
