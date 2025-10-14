@@ -4,7 +4,7 @@
 #include "resource/Window.hpp"
 #include "utils/webgpu.hpp"
 
-void Plugin::Graphic::System::ConfigureSurface(Engine::Core &core)
+void Graphic::System::ConfigureSurface(Engine::Core &core)
 {
     const auto &settings = core.GetResource<Resource::GraphicSettings>();
 
@@ -12,7 +12,7 @@ void Plugin::Graphic::System::ConfigureSurface(Engine::Core &core)
         return;
 
     auto &context = core.GetResource<Resource::Context>();
-    const auto &window = core.GetResource<Plugin::Window::Resource::Window>();
+    const auto &window = core.GetResource<Window::Resource::Window>();
 
     int frameBufferSizeX;
     int frameBufferSizeY;

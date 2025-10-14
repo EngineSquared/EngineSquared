@@ -8,7 +8,7 @@
 
 #include "exception/WindowError.hpp"
 
-namespace Plugin::Window::Resource {
+namespace Window::Resource {
 
 /**
  * The Window class is a singleton to handle the creation and destruction of the game's window.
@@ -83,7 +83,7 @@ class Window {
      *
      * @param userPointer The user pointer.
      * @param callback The callback function.
-     * @todo This function should work like the Plugin::Input::Resource::InputManager class, it
+     * @todo This function should work like the Input::Resource::InputManager class, it
      *  means that it should be able to set multiple callbacks.
      */
     void SetFramebufferSizeCallback(void *userPointer, GLFWframebuffersizefun callback);
@@ -113,4 +113,4 @@ class Window {
     }
 };
 
-} // namespace Plugin::Window::Resource
+} // namespace Window::Resource

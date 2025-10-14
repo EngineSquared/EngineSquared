@@ -13,13 +13,13 @@ TEST(RenderingPipeline, CasualUse)
 
     core.RegisterResource<History>(History{});
 
-    core.AddPlugins<Plugin::RenderingPipeline::Plugin>();
+    core.AddPlugins<RenderingPipeline::Plugin>();
 
-    core.RegisterSystem<Plugin::RenderingPipeline::Init>([](Engine::Core &c) {
+    core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Init");
     });
-    core.RegisterSystem<Plugin::RenderingPipeline::Setup>([](Engine::Core &c) {
+    core.RegisterSystem<RenderingPipeline::Setup>([](Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Setup");
     });
@@ -27,7 +27,7 @@ TEST(RenderingPipeline, CasualUse)
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Startup");
     });
-    core.RegisterSystem<Plugin::RenderingPipeline::PreUpdate>([](Engine::Core &c) {
+    core.RegisterSystem<RenderingPipeline::PreUpdate>([](Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("PreUpdate");
     });
@@ -35,15 +35,15 @@ TEST(RenderingPipeline, CasualUse)
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Update");
     });
-    core.RegisterSystem<Plugin::RenderingPipeline::RenderSetup>([](Engine::Core &c) {
+    core.RegisterSystem<RenderingPipeline::RenderSetup>([](Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("RenderSetup");
     });
-    core.RegisterSystem<Plugin::RenderingPipeline::ToGPU>([](Engine::Core &c) {
+    core.RegisterSystem<RenderingPipeline::ToGPU>([](Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("ToGPU");
     });
-    core.RegisterSystem<Plugin::RenderingPipeline::Draw>([](Engine::Core &c) {
+    core.RegisterSystem<RenderingPipeline::Draw>([](Engine::Core &c) {
         auto &history = c.GetResource<History>();
         history.messages.emplace_back("Draw");
     });

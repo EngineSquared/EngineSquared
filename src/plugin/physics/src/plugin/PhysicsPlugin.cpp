@@ -7,7 +7,7 @@
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
 
-void Plugin::Physics::Plugin::Bind()
+void Physics::Plugin::Plugin::Bind()
 {
     RegisterSystems<Engine::Scheduler::Startup>(System::InitJoltPhysics);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitPhysicsManager);

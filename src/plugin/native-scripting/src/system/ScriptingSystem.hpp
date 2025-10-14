@@ -4,7 +4,7 @@
 
 #include "NativeScripting.hpp"
 
-namespace Plugin::NativeScripting::System {
+namespace NativeScripting::System {
 void UpdateScripts(Engine::Core &core);
 
 /**
@@ -26,4 +26,4 @@ void DestroyScript(entt::registry &registry, entt::entity entity);
  * @param core Reference to the core engine instance.
  */
 void SetOnDestroy(Engine::Core &core);
-} // namespace Plugin::NativeScripting::System
+} // namespace NativeScripting::System

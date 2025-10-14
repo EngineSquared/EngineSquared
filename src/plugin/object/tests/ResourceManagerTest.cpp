@@ -2,7 +2,7 @@
 
 #include "resource/ResourceManager.hpp"
 
-using namespace Plugin::Object::Resource;
+using namespace Object::Resource;
 
 TEST(ResourceManagerTest, AddGetSetRemove)
 {

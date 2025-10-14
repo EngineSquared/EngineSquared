@@ -2,7 +2,7 @@
 
 #include "scheduler/AScheduler.hpp"
 
-namespace Plugin::RenderingPipeline {
+namespace RenderingPipeline {
 /**
  * @brief This class is used to setup libraries like GLFW, etc.
  */
@@ -11,4 +11,4 @@ class Setup : public Engine::Scheduler::AScheduler {
     using AScheduler::AScheduler;
     void RunSystems() override;
 };
-} // namespace Plugin::RenderingPipeline
+} // namespace RenderingPipeline

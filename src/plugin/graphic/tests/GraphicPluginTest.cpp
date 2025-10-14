@@ -7,11 +7,11 @@ TEST(GraphicPlugin, GlobalRun)
 {
     Engine::Core core;
 
-    core.AddPlugins<Plugin::Graphic::Plugin>();
+    core.AddPlugins<Graphic::Plugin>();
 
-    core.RegisterSystem<Plugin::RenderingPipeline::Init>([](Engine::Core &c) {
-        c.GetResource<Plugin::Graphic::Resource::GraphicSettings>().SetWindowSystem(
-            Plugin::Graphic::Resource::WindowSystem::None);
+    core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &c) {
+        c.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Graphic::Resource::WindowSystem::None);
     });
 
     EXPECT_NO_THROW(core.RunSystems());

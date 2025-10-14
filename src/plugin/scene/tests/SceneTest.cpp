@@ -7,7 +7,7 @@
 
 #include "Scene.hpp"
 
-using namespace Plugin::Scene;
+using namespace Scene;
 
 class SceneTest : public Utils::AScene {
     inline static int _numScenes = 0;

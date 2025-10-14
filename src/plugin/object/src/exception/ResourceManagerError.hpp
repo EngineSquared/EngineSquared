@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace Plugin::Object {
+namespace Object {
 
 /**
  * @brief ResourceManagerError is an exception class that should be thrown when an error
@@ -33,4 +33,4 @@ class ResourceManagerError : public std::exception {
     std::string msg;
 };
 
-} // namespace Plugin::Object
+} // namespace Object

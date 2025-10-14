@@ -11,7 +11,7 @@
 
 #include "utils/AScene.hpp"
 
-namespace Plugin::Scene::Resource {
+namespace Scene::Resource {
 class SceneManager {
   public:
     SceneManager() = default;
@@ -71,4 +71,4 @@ class SceneManager {
     std::optional<std::string> _nextScene;
     std::optional<std::string> _currentScene;
 };
-} // namespace Plugin::Scene::Resource
+} // namespace Scene::Resource

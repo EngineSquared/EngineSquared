@@ -23,7 +23,7 @@ static constexpr inline const uint32_t ENTITY_ID_MASK =
             std::popcount(entt::entt_traits<Engine::Entity::entity_id_type>::entity_mask)) |
     entt::entt_traits<Engine::Entity::entity_id_type>::version_mask;
 
-void Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Body &inBody2,
+void Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Body &inBody2,
                                                                  const JPH::ContactManifold &, JPH::ContactSettings &)
 {
     if (_onContactAddedCallbacks.IsEmpty())
@@ -42,7 +42,7 @@ void Plugin::Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::Body
     }
 }
 
-void Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const JPH::Body &inBody1, const JPH::Body &inBody2,
+void Physics::Utils::ContactListenerImpl::OnContactPersisted(const JPH::Body &inBody1, const JPH::Body &inBody2,
                                                                      const JPH::ContactManifold &,
                                                                      JPH::ContactSettings &)
 {
@@ -60,14 +60,14 @@ void Plugin::Physics::Utils::ContactListenerImpl::OnContactPersisted(const JPH::
     }
 }
 
-void Plugin::Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH::SubShapeIDPair &inSubShapePair)
+void Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH::SubShapeIDPair &inSubShapePair)
 {
     if (_onContactRemovedCallbacks.IsEmpty())
     {
         return;
     }
 
-    auto &physicsManager = _core.GetResource<Plugin::Physics::Resource::PhysicsManager>();
+    auto &physicsManager = _core.GetResource<Physics::Resource::PhysicsManager>();
     auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
 
     JPH::Body *body1 = bodyInterface.TryGetBody(inSubShapePair.GetBody1ID());

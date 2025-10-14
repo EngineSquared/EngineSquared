@@ -1,7 +1,7 @@
 #include "Window.hpp"
 #include "Logger.hpp"
 
-namespace Plugin::Window::Resource {
+namespace Window::Resource {
 
 Window::Window(uint32_t width, uint32_t height, const std::string &title, GLFWmonitor *monitor, GLFWwindow *share)
     : _title(title), _window(nullptr), _monitor(monitor), _share(share)
@@ -14,7 +14,7 @@ Window::Window(uint32_t width, uint32_t height, const std::string &title, GLFWmo
 void Window::Destroy()
 {
     if (!_window)
-        throw Plugin::Window::Exception::WindowError("Window is not created");
+        throw Exception::WindowError("Window is not created");
 
     /* To use in a shutdown scheduler */
     glfwDestroyWindow(_window);
@@ -23,7 +23,7 @@ void Window::Destroy()
 glm::ivec2 Window::GetSize()
 {
     if (!_window)
-        throw Plugin::Window::Exception::WindowError("Window is not created");
+        throw Exception::WindowError("Window is not created");
 
     glm::ivec2 size;
     glfwGetWindowSize(_window, &size.x, &size.y);
@@ -33,7 +33,7 @@ glm::ivec2 Window::GetSize()
 void Window::SetFramebufferSizeCallback(void *userPointer, GLFWframebuffersizefun callback)
 {
     if (!_window)
-        throw Plugin::Window::Exception::WindowError("Window is not created");
+        throw Exception::WindowError("Window is not created");
 
     glfwSetWindowUserPointer(_window, userPointer);
     glfwSetFramebufferSizeCallback(_window, callback);
@@ -68,4 +68,4 @@ void Window::ToggleFullscreen()
     _isFullscreen = !_isFullscreen;
 }
 
-} // namespace Plugin::Window::Resource
+} // namespace Window::Resource

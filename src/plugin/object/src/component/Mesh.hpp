@@ -25,7 +25,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-namespace Plugin::Object::Component {
+namespace Object::Component {
 
 /**
  * @brief Mesh structure.
@@ -52,4 +52,4 @@ struct Mesh {
     // Copy assignment operator
     Mesh &operator=(const Mesh &other) = default;
 };
-} // namespace Plugin::Object::Component
+} // namespace Object::Component

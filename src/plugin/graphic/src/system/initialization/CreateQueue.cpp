@@ -4,7 +4,7 @@
 #include "resource/GraphicSettings.hpp"
 #include "utils/webgpu.hpp"
 
-void Plugin::Graphic::System::CreateQueue(Engine::Core &core)
+void Graphic::System::CreateQueue(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
     const auto &settings = core.GetResource<Resource::GraphicSettings>();

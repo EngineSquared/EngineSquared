@@ -6,7 +6,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/quaternion.hpp"
 
-namespace Plugin::Object::Component {
+namespace Object::Component {
 /**
  * Component used to represent a 3D transformation for a game object.
  * It can be used as a 2D transformation.
@@ -70,4 +70,4 @@ struct Transform {
         return translation * rotationMatrix * scaleMatrix;
     }
 };
-} // namespace Plugin::Object::Component
+} // namespace Object::Component

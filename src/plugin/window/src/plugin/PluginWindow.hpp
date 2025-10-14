@@ -2,7 +2,7 @@
 
 #include "plugin/APlugin.hpp"
 
-namespace Plugin::Window {
+namespace Window {
 class Plugin : public Engine::APlugin {
   public:
     using APlugin::APlugin;
@@ -11,4 +11,4 @@ class Plugin : public Engine::APlugin {
 
     void Bind() final;
 };
-} // namespace Plugin::Window
+} // namespace Window

@@ -4,10 +4,10 @@
 
 #include "resource/PhysicsManager.hpp"
 
-namespace Plugin::Physics::System {
+namespace Physics::System {
 void InitPhysicsManager(Engine::Core &core)
 {
-    core.RegisterResource<Plugin::Physics::Resource::PhysicsManager>(Plugin::Physics::Resource::PhysicsManager())
+    core.RegisterResource<Physics::Resource::PhysicsManager>(Physics::Resource::PhysicsManager())
         .Init(core);
 }
-} // namespace Plugin::Physics::System
+} // namespace Physics::System

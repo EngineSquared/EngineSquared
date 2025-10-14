@@ -1,7 +1,7 @@
 #include "system/initialization/ReleaseInstance.hpp"
 #include "resource/Context.hpp"
 
-namespace Plugin::Graphic::System {
+namespace Graphic::System {
 void ReleaseInstance(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
@@ -12,4 +12,4 @@ void ReleaseInstance(Engine::Core &core)
         context.instance.reset();
     }
 }
-} // namespace Plugin::Graphic::System
+} // namespace Graphic::System
