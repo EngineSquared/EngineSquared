@@ -12,8 +12,8 @@ void Plugin::Graphic::System::SetupQueue(Engine::Core &core)
 
     auto &context = core.GetResource<Resource::Context>();
 
-    auto onQueueWorkDone = [](WGPUQueueWorkDoneStatus status, WGPU_NULLABLE void *userdata1,
-                              WGPU_NULLABLE void *userdata2) {
+    auto onQueueWorkDone = [](WGPUQueueWorkDoneStatus status, [[maybe_unused]] WGPU_NULLABLE void *const userdata1,
+                              [[maybe_unused]] WGPU_NULLABLE void *const userdata2) {
         Log::Debug(fmt::format("Queued work finished with status: {:x}", static_cast<uint32_t>(status)));
     };
 

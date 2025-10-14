@@ -1,6 +1,7 @@
 #pragma once
 
 #include "resource/Limits.hpp"
+#include <ranges>
 
 namespace Plugin::Graphic::Resource {
 
@@ -48,8 +49,7 @@ class GraphicSettings {
 
     GraphicSettings &RemoveRequiredFeature(wgpu::FeatureName feature)
     {
-        if (auto it = std::find(requiredFeatures.begin(), requiredFeatures.end(), feature);
-            it != requiredFeatures.end())
+        if (auto it = _GetRequiredFeature(feature); it != requiredFeatures.end())
         {
             requiredFeatures.erase(it);
         }
@@ -57,10 +57,21 @@ class GraphicSettings {
     }
     bool HasRequiredFeature(wgpu::FeatureName feature) const
     {
-        return std::find(requiredFeatures.begin(), requiredFeatures.end(), feature) != requiredFeatures.end();
+        auto it = _GetRequiredFeature(feature);
+        return it != requiredFeatures.end();
     }
 
   private:
+    RequiredFeatureContainer::iterator _GetRequiredFeature(const wgpu::FeatureName &feature)
+    {
+        return std::ranges::find(requiredFeatures, static_cast<WGPUFeatureName>(feature));
+    }
+
+    RequiredFeatureContainer::const_iterator _GetRequiredFeature(const wgpu::FeatureName &feature) const
+    {
+        return _GetRequiredFeature(feature);
+    }
+
     WindowSystem windowSystem = WindowSystem::GLFW;
     PowerPreference powerPreference = PowerPreference::HighPerformance;
     Limits wantedLimits = Limits(wgpu::Default);
