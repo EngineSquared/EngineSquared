@@ -1,13 +1,18 @@
 #pragma once
 
 #include "utils/webgpu.hpp"
+#include "utils/BindGroupLayout.hpp"
+#include "utils/VertexBufferLayout.hpp"
+#include "utils/ColorTargetState.hpp"
+#include "utils/DepthStencilState.hpp"
+#include <vector>
 
 namespace Plugin::Graphic::Resource {
 
 class Shader {
   public:
-    Shader();
-    ~Shader();
+    Shader() = default;
+    virtual ~Shader() = default;
 
   private:
     wgpu::RenderPipeline pipeline;

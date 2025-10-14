@@ -5,7 +5,7 @@
 
 TEST(GraphicPlugin, GlobalRun)
 {
-    Plugin::Graphic::Utils::ShaderBuilder builder;
+    Plugin::Graphic::Utils::ShaderDescriptor shaderDescriptor;
 
     auto vertexLayout =
         Plugin::Graphic::Utils::VertexBufferLayout()
@@ -37,7 +37,7 @@ TEST(GraphicPlugin, GlobalRun)
                                   .setCompareFunction(wgpu::CompareFunction::Less)
                                   .setDepthWriteEnabled(wgpu::OptionalBool::True);
 
-    builder.setShader("void vs_main() { } void fs_main() { }")
+    shaderDescriptor.setShader("void vs_main() { } void fs_main() { }")
         .setVertexEntryPoint("vs_main")   // This is done by default
         .setFragmentEntryPoint("fs_main") // This is done by default
         .addVertexBufferLayout(vertexLayout)
@@ -48,7 +48,7 @@ TEST(GraphicPlugin, GlobalRun)
         .setCullMode(wgpu::CullMode::Back)                            // This is done by default
         .setPrimitiveTopology(wgpu::PrimitiveTopology::TriangleList); // This is done by default
 
-    auto errors = builder.validate();
+    auto errors = shaderDescriptor.validate();
     for (const auto &error : errors)
     {
         std::cout << error << std::endl;

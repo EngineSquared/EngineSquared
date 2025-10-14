@@ -3,6 +3,7 @@
 // Resources
 #include "resource/Context.hpp"
 #include "resource/Shader.hpp"
+#include "resource/ShaderDescriptor.hpp"
 
 // Utils
 #include "utils/ABindGroupLayoutEntry.hpp"
@@ -12,7 +13,6 @@
 #include "utils/DepthStencilState.hpp"
 #include "utils/IValidable.hpp"
 #include "utils/SamplerBindGroupLayoutEntry.hpp"
-#include "utils/ShaderBuilder.hpp"
 #include "utils/TextureBindGroupLayoutEntry.hpp"
 #include "utils/VertexBufferLayout.hpp"
 

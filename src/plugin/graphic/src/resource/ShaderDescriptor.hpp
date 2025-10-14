@@ -18,17 +18,17 @@
 #include <optional>
 
 namespace Plugin::Graphic::Utils {
-class ShaderBuilder : public IValidable {
+class ShaderDescriptor : public IValidable {
   public:
-    ShaderBuilder() = default;
-    ~ShaderBuilder() = default;
+    ShaderDescriptor() = default;
+    ~ShaderDescriptor() = default;
 
-    ShaderBuilder &setShader(const std::string &source)
+    ShaderDescriptor &setShader(const std::string &source)
     {
         this->shaderSource = source;
         return *this;
     }
-    ShaderBuilder &setShaderFromFile(const std::filesystem::path &path)
+    ShaderDescriptor &setShaderFromFile(const std::filesystem::path &path)
     {
         if (!std::filesystem::exists(path))
         {
@@ -47,19 +47,19 @@ class ShaderBuilder : public IValidable {
         return setShader(buffer.str());
     }
 
-    ShaderBuilder &setVertexEntryPoint(const std::string &entryPoint)
+    ShaderDescriptor &setVertexEntryPoint(const std::string &entryPoint)
     {
         this->vertexEntryPoint = entryPoint;
         return *this;
     }
 
-    ShaderBuilder &setFragmentEntryPoint(const std::string &entryPoint)
+    ShaderDescriptor &setFragmentEntryPoint(const std::string &entryPoint)
     {
         this->fragmentEntryPoint = entryPoint;
         return *this;
     }
 
-    ShaderBuilder &addVertexBufferLayout(const VertexBufferLayout &layout)
+    ShaderDescriptor &addVertexBufferLayout(const VertexBufferLayout &layout)
     {
         this->vertexBufferLayouts.push_back(layout);
         return *this;
@@ -70,7 +70,7 @@ class ShaderBuilder : public IValidable {
         return *std::next(this->vertexBufferLayouts.begin(), index);
     }
 
-    ShaderBuilder &addBindGroupLayout(const BindGroupLayout &layout)
+    ShaderDescriptor &addBindGroupLayout(const BindGroupLayout &layout)
     {
         this->bindGroupLayouts.push_back(layout);
         return *this;
@@ -78,25 +78,25 @@ class ShaderBuilder : public IValidable {
 
     BindGroupLayout &getBindGroupLayout(size_t index) { return *std::next(this->bindGroupLayouts.begin(), index); }
 
-    ShaderBuilder &addOutputColorFormat(const ColorTargetState &state)
+    ShaderDescriptor &addOutputColorFormat(const ColorTargetState &state)
     {
         this->outputColorFormats.push_back(state);
         return *this;
     }
 
-    ShaderBuilder &setOutputDepthFormat(const DepthStencilState &state)
+    ShaderDescriptor &setOutputDepthFormat(const DepthStencilState &state)
     {
         this->outputDepthFormat = state;
         return *this;
     }
 
-    ShaderBuilder &setCullMode(wgpu::CullMode mode)
+    ShaderDescriptor &setCullMode(wgpu::CullMode mode)
     {
         this->cullMode = mode;
         return *this;
     }
 
-    ShaderBuilder &setPrimitiveTopology(wgpu::PrimitiveTopology topology)
+    ShaderDescriptor &setPrimitiveTopology(wgpu::PrimitiveTopology topology)
     {
         this->primitiveTopology = topology;
         return *this;
@@ -107,20 +107,20 @@ class ShaderBuilder : public IValidable {
         std::vector<ValidationError> errors;
         if (!this->shaderSource.has_value())
         {
-            errors.push_back({"Shader source is not set", "ShaderBuilder", ValidationError::Severity::Error});
+            errors.push_back({"Shader source is not set", "ShaderDescriptor", ValidationError::Severity::Error});
         }
         if (this->vertexBufferLayouts.empty())
         {
-            errors.push_back({"No vertex buffer layouts added", "ShaderBuilder", ValidationError::Severity::Error});
+            errors.push_back({"No vertex buffer layouts added", "ShaderDescriptor", ValidationError::Severity::Error});
         }
         if (!this->vertexEntryPoint.has_value())
         {
-            errors.push_back({"Vertex entry point is not set ('vs_main' will be used)", "ShaderBuilder",
+            errors.push_back({"Vertex entry point is not set ('vs_main' will be used)", "ShaderDescriptor",
                               ValidationError::Severity::Warning});
         }
         if (!this->fragmentEntryPoint.has_value())
         {
-            errors.push_back({"Fragment entry point is not set ('fs_main' will be used)", "ShaderBuilder",
+            errors.push_back({"Fragment entry point is not set ('fs_main' will be used)", "ShaderDescriptor",
                               ValidationError::Severity::Warning});
         }
         for (size_t i = 0; i < this->vertexBufferLayouts.size(); i++)
@@ -129,7 +129,7 @@ class ShaderBuilder : public IValidable {
             for (const auto &error : layoutErrors)
             {
                 errors.push_back(
-                    {error.message, fmt::format("ShaderBuilder::({}){}", i, error.location), error.severity});
+                    {error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity});
             }
         }
         for (size_t i = 0; i < this->bindGroupLayouts.size(); i++)
@@ -138,7 +138,7 @@ class ShaderBuilder : public IValidable {
             for (const auto &error : layoutErrors)
             {
                 errors.push_back(
-                    {error.message, fmt::format("ShaderBuilder::({}){}", i, error.location), error.severity});
+                    {error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity});
             }
         }
         for (size_t i = 0; i < this->outputColorFormats.size(); i++)
@@ -147,7 +147,7 @@ class ShaderBuilder : public IValidable {
             for (const auto &error : stateErrors)
             {
                 errors.push_back(
-                    {error.message, fmt::format("ShaderBuilder::({}){}", i, error.location), error.severity});
+                    {error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity});
             }
         }
         if (this->outputDepthFormat.has_value())
@@ -156,7 +156,7 @@ class ShaderBuilder : public IValidable {
             for (const auto &error : stateErrors)
             {
                 errors.push_back(
-                    {error.message, fmt::format("ShaderBuilder::DepthStencil{}", error.location), error.severity});
+                    {error.message, fmt::format("ShaderDescriptor::DepthStencil{}", error.location), error.severity});
             }
         }
         return errors;
