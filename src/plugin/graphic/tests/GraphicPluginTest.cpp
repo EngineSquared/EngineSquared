@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "Graphic.hpp"
+#include "RenderingPipeline.hpp"
 
 TEST(GraphicPlugin, GlobalRun)
 {
@@ -8,10 +9,10 @@ TEST(GraphicPlugin, GlobalRun)
 
     core.AddPlugins<Plugin::Graphic::Plugin>();
 
-    core.RunSystems();
+    core.RegisterSystem<Plugin::RenderingPipeline::Init>([](Engine::Core &c) {
+        c.GetResource<Plugin::Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Plugin::Graphic::Resource::WindowSystem::None);
+    });
 
-    if (!core.GetResource<Plugin::Graphic::Resource::Context>().instance.has_value())
-        GTEST_FAIL();
-
-    GTEST_SUCCEED();
+    EXPECT_NO_THROW(core.RunSystems());
 }

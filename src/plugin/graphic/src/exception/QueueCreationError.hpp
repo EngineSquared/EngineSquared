@@ -4,7 +4,7 @@
 
 namespace Plugin::Graphic::Exception {
 
-class InstanceCreationError : public std::runtime_error {
+class QueueCreationError : public std::runtime_error {
     using std::runtime_error::runtime_error;
 };
 
