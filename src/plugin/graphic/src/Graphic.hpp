@@ -32,3 +32,7 @@
 #include "system/initialization/ReleaseInstance.hpp"
 #include "system/initialization/RequestCapabilities.hpp"
 #include "system/initialization/SetupQueue.hpp"
+#include "system/initialization/ConfigureSurface.hpp"
+#include "system/initialization/ReleaseAdapter.hpp"
+
+#include "system/shutdown/ReleaseContext.hpp"

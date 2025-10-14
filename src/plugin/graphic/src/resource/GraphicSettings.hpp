@@ -63,7 +63,7 @@ class GraphicSettings {
   private:
     WindowSystem windowSystem = WindowSystem::GLFW;
     PowerPreference powerPreference = PowerPreference::HighPerformance;
-    Limits wantedLimits;
+    Limits wantedLimits = Limits(wgpu::Default);
     RequiredFeatureContainer requiredFeatures;
 };
 } // namespace Plugin::Graphic::Resource

@@ -5,7 +5,7 @@
 namespace Plugin::Graphic::Resource {
 struct Limits : wgpu::Limits {
   public:
-    Limits(void) = default;
+    using wgpu::Limits::Limits;
     ~Limits() = default;
 
     Limits &setMaxBindGroups(auto value)

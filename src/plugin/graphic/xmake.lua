@@ -33,6 +33,7 @@ target(plugin_name)
     add_headerfiles("src/(plugin/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(system/initialization/*.hpp)")
+    add_headerfiles("src/(system/shutdown/*.hpp)")
     add_headerfiles("src/(utils/*.hpp)")
     add_headerfiles("src/(*.hpp)")
 
