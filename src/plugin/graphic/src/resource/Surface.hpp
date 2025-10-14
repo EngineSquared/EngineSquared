@@ -20,12 +20,15 @@ struct Surface {
         return value->getCapabilities(adapter, &(capabilities.value()));
     }
 
-    inline void Release() noexcept {
-        if (value.has_value()) {
+    inline void Release() noexcept
+    {
+        if (value.has_value())
+        {
             value->release();
             value.reset();
         }
-        if (capabilities.has_value()) {
+        if (capabilities.has_value())
+        {
             capabilities.reset();
         }
     }

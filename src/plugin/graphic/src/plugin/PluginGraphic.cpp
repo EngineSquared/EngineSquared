@@ -1,7 +1,7 @@
 #include "plugin/PluginGraphic.hpp"
 #include "Graphic.hpp"
-#include "scheduler/Shutdown.hpp"
 #include "RenderingPipeline.hpp"
+#include "scheduler/Shutdown.hpp"
 
 void Plugin::Graphic::Plugin::Bind()
 {
