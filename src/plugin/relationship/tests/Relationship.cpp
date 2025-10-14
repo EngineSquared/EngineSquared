@@ -55,8 +55,7 @@ TEST(Relationship, multiple_children)
     parent.AddComponent<Relationship::Component::Relationship>(core);
 
     ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>(core).children, 0);
-    ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>(core).first,
-              Engine::Entity::entity_null_id);
+    ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>(core).first, Engine::Entity::entity_null_id);
     ASSERT_FALSE(Relationship::Utils::IsChildOf(core, child1, parent));
     ASSERT_FALSE(Relationship::Utils::IsChildOf(core, child2, parent));
     ASSERT_FALSE(Relationship::Utils::IsChildOf(core, child3, parent));
@@ -104,8 +103,7 @@ TEST(Relationship, multiple_children)
     Relationship::Utils::RemoveParent(core, child1);
 
     ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>(core).children, 0);
-    ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>(core).first,
-              Engine::Entity::entity_null_id);
+    ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>(core).first, Engine::Entity::entity_null_id);
     ASSERT_FALSE(Relationship::Utils::IsChildOf(core, child1, parent));
     ASSERT_FALSE(Relationship::Utils::IsChildOf(core, child2, parent));
     ASSERT_FALSE(Relationship::Utils::IsChildOf(core, child3, parent));

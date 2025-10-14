@@ -4,8 +4,7 @@
 #include "resource/GraphicSettings.hpp"
 
 namespace Graphic::System {
-static void SetupDeviceDescriptor(wgpu::DeviceDescriptor &deviceDesc,
-                                  Graphic::Resource::GraphicSettings &settings)
+static void SetupDeviceDescriptor(wgpu::DeviceDescriptor &deviceDesc, Graphic::Resource::GraphicSettings &settings)
 {
     deviceDesc.label = wgpu::StringView("Core Device");
     deviceDesc.requiredFeatureCount = settings.GetRequiredFeatures().size();

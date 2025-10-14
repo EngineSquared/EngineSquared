@@ -40,8 +40,7 @@ void Scene::Resource::SceneManager::_unloadScene(Engine::Core &core, const std::
     }
 }
 
-std::optional<std::shared_ptr<Scene::Utils::AScene>>
-Scene::Resource::SceneManager::_getScene(const std::string &name)
+std::optional<std::shared_ptr<Scene::Utils::AScene>> Scene::Resource::SceneManager::_getScene(const std::string &name)
 {
     auto scene = _scenes.find(name);
     if (scene != _scenes.end())

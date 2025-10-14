@@ -24,7 +24,7 @@ static constexpr inline const uint32_t ENTITY_ID_MASK =
     entt::entt_traits<Engine::Entity::entity_id_type>::version_mask;
 
 void Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Body &inBody2,
-                                                                 const JPH::ContactManifold &, JPH::ContactSettings &)
+                                                         const JPH::ContactManifold &, JPH::ContactSettings &)
 {
     if (_onContactAddedCallbacks.IsEmpty())
     {
@@ -43,8 +43,7 @@ void Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::Body &inBody
 }
 
 void Physics::Utils::ContactListenerImpl::OnContactPersisted(const JPH::Body &inBody1, const JPH::Body &inBody2,
-                                                                     const JPH::ContactManifold &,
-                                                                     JPH::ContactSettings &)
+                                                             const JPH::ContactManifold &, JPH::ContactSettings &)
 {
     if (_onContactPersistedCallbacks.IsEmpty())
     {

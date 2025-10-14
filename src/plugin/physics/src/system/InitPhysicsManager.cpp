@@ -7,7 +7,6 @@
 namespace Physics::System {
 void InitPhysicsManager(Engine::Core &core)
 {
-    core.RegisterResource<Physics::Resource::PhysicsManager>(Physics::Resource::PhysicsManager())
-        .Init(core);
+    core.RegisterResource<Physics::Resource::PhysicsManager>(Physics::Resource::PhysicsManager()).Init(core);
 }
 } // namespace Physics::System

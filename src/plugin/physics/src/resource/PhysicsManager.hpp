@@ -113,8 +113,7 @@ class PhysicsManager {
      * @return void
      */
     template <typename... Components>
-    inline FunctionUtils::FunctionID
-    AddContactAddedCallback(std::unique_ptr<Physics::Utils::BaseCallback> &&callback)
+    inline FunctionUtils::FunctionID AddContactAddedCallback(std::unique_ptr<Physics::Utils::BaseCallback> &&callback)
     {
         if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
@@ -193,8 +192,7 @@ class PhysicsManager {
      * @return void
      */
     template <typename... Components>
-    inline FunctionUtils::FunctionID
-    AddContactRemovedCallback(std::unique_ptr<Physics::Utils::BaseCallback> &&callback)
+    inline FunctionUtils::FunctionID AddContactRemovedCallback(std::unique_ptr<Physics::Utils::BaseCallback> &&callback)
     {
         if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
