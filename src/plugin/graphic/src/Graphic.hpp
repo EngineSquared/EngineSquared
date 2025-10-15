@@ -2,11 +2,11 @@
 
 // Resources
 #include "resource/Context.hpp"
-#include "resource/Shader.hpp"
-#include "resource/ShaderDescriptor.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Limits.hpp"
+#include "resource/Shader.hpp"
+#include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
 
 // Utils
@@ -21,15 +21,15 @@
 #include "utils/VertexBufferLayout.hpp"
 
 // Exceptions
-#include "exception/DuplicatedVertexAttributeLocationError.hpp"
-#include "exception/FileReadingError.hpp"
-#include "exception/UnknownFormatType.hpp"
 #include "exception/AdapterCreationError.hpp"
 #include "exception/CapabilitiesRequestError.hpp"
 #include "exception/DeviceCreationError.hpp"
+#include "exception/DuplicatedVertexAttributeLocationError.hpp"
+#include "exception/FileReadingError.hpp"
 #include "exception/InstanceCreationError.hpp"
 #include "exception/QueueCreationError.hpp"
 #include "exception/SurfaceCreationError.hpp"
+#include "exception/UnknownFormatType.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"
