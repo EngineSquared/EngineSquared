@@ -11,12 +11,13 @@
 void Physics::System::PhysicsUpdate(Engine::Core &core)
 {
     auto &physicsManager = core.GetResource<Physics::Resource::PhysicsManager>();
-    if (!physicsManager.ShouldUpdatePhysics()) {
+    if (!physicsManager.ShouldUpdatePhysics())
+    {
         return;
     }
 
     auto dt = core.GetScheduler<Engine::Scheduler::FixedTimeUpdate>().GetTickRate();
-    
+
     physicsManager.GetPhysicsSystem().Update(dt, physicsManager.GetCollisionSteps(), physicsManager.GetTempAllocator(),
                                              physicsManager.GetJobSystem());
 }
