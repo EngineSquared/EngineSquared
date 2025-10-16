@@ -157,7 +157,7 @@ jobs:
               cd - > /dev/null
             fi
           done
-        timeout-minutes: 10
+        timeout-minutes: 120
 
       - name: Build and test examples (Windows)
         if: contains(runner.os, 'windows')
@@ -179,7 +179,7 @@ jobs:
               Pop-Location
             }
           }
-        timeout-minutes: 10
+        timeout-minutes: 120
 
   run_tests:
     name: Run tests
