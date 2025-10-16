@@ -2,7 +2,7 @@
 
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::Resource {
+namespace Graphic::Resource {
 struct Limits : wgpu::Limits {
   public:
     using wgpu::Limits::Limits;
@@ -14,4 +14,4 @@ struct Limits : wgpu::Limits {
         return *this;
     }
 };
-} // namespace Plugin::Graphic::Resource
+} // namespace Graphic::Resource

@@ -2,7 +2,7 @@
 
 #include "plugin/APlugin.hpp"
 
-namespace Plugin::Graphic {
+namespace Graphic {
 class Plugin : public Engine::APlugin {
   public:
     explicit Plugin(Engine::Core &core)
@@ -13,4 +13,4 @@ class Plugin : public Engine::APlugin {
 
     void Bind() final;
 };
-} // namespace Plugin::Graphic
+} // namespace Graphic

@@ -25,7 +25,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-namespace Plugin::Object::Component {
+namespace Object::Component {
 
 /**
  * @brief Material structure.
@@ -62,4 +62,4 @@ struct Material {
     Material &operator=(const Material &other) = default;
 };
 
-} // namespace Plugin::Object::Component
+} // namespace Object::Component

@@ -2,7 +2,7 @@
 
 #include "Engine.hpp"
 
-namespace Plugin::Sound::System {
+namespace Sound::System {
 /**
  * @brief Initialize the sound plugin
  *
@@ -11,4 +11,4 @@ namespace Plugin::Sound::System {
  * @return void
  */
 void InitSounds(Engine::Core &core);
-} // namespace Plugin::Sound::System
+} // namespace Sound::System

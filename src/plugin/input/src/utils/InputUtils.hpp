@@ -7,7 +7,7 @@
 #include "core/Core.hpp"
 #include "exception/InputError.hpp"
 
-namespace Plugin::Input::Utils {
+namespace Input::Utils {
 using JoystickAxes = std::vector<float>;
 using JoystickButtons = std::vector<unsigned char>;
 
@@ -88,4 +88,4 @@ JoystickAxes GetJoystickAxes(int jid);
  * @throw InputError if the joystick is not present or if there is an error retrieving the buttons.
  */
 JoystickButtons GetJoystickButtons(int jid);
-} // namespace Plugin::Input::Utils
+} // namespace Input::Utils

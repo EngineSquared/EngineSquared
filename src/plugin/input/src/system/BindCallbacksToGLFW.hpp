@@ -2,7 +2,7 @@
 
 #include "Engine.hpp"
 
-namespace Plugin::Input::System {
+namespace Input::System {
 /**
  * @brief Bind GLFW callbacks to the InputManager.
  *
@@ -12,4 +12,4 @@ namespace Plugin::Input::System {
  * @param core The Engine² Core.
  */
 void BindCallbacksToGLFW(Engine::Core &core);
-} // namespace Plugin::Input::System
+} // namespace Input::System

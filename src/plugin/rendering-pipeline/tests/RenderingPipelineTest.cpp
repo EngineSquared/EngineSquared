@@ -19,7 +19,7 @@ TEST(RenderingPipeline, CasualUse)
 
     core.RegisterResource<History>(History{});
 
-    core.AddPlugins<Plugin::RenderingPipeline::Plugin>();
+    core.AddPlugins<RenderingPipeline::Plugin>();
 
     ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Init)
     ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Setup)

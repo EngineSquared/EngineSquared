@@ -6,7 +6,7 @@
 #include "resource/Window.hpp"
 #include <glfw3webgpu.h>
 
-void Plugin::Graphic::System::CreateSurface(Engine::Core &core)
+void Graphic::System::CreateSurface(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
     auto &graphicSettings = core.GetResource<Resource::GraphicSettings>();

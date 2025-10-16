@@ -5,7 +5,7 @@
 // Temp
 #include <iostream>
 
-auto Plugin::Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> void
+auto Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> void
 {
     if (IsChildOf(core, parent, child))
     {
@@ -13,8 +13,8 @@ auto Plugin::Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity 
                               Engine::Entity::entity_id_type(parent)));
         return;
     }
-    auto &parentRS = parent.AddComponentIfNotExists<Plugin::Relationship::Component::Relationship>(core);
-    auto &newChildRS = child.AddComponentIfNotExists<Plugin::Relationship::Component::Relationship>(core);
+    auto &parentRS = parent.AddComponentIfNotExists<Relationship::Component::Relationship>(core);
+    auto &newChildRS = child.AddComponentIfNotExists<Relationship::Component::Relationship>(core);
 
     parentRS.children++;
     if (parentRS.children == 1)
@@ -24,27 +24,27 @@ auto Plugin::Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity 
         return;
     }
 
-    auto &firstChildRS = parentRS.first.GetComponents<Plugin::Relationship::Component::Relationship>(core);
+    auto &firstChildRS = parentRS.first.GetComponents<Relationship::Component::Relationship>(core);
     firstChildRS.prev = child;
     newChildRS.next = parentRS.first;
     parentRS.first = child;
     newChildRS.parent = parent;
 }
 
-auto Plugin::Relationship::Utils::IsChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> bool
+auto Relationship::Utils::IsChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> bool
 {
-    const Plugin::Relationship::Component::Relationship *childRS =
-        child.TryGetComponent<Plugin::Relationship::Component::Relationship>(core);
+    const Relationship::Component::Relationship *childRS =
+        child.TryGetComponent<Relationship::Component::Relationship>(core);
     return childRS && childRS->parent == parent;
 }
 
-auto Plugin::Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entity child) -> void
+auto Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entity child) -> void
 {
     Engine::Entity parent = GetParent(core, child);
     if (parent == Engine::Entity::entity_null_id)
         return;
-    auto &childRS = child.GetComponents<Plugin::Relationship::Component::Relationship>(core);
-    auto &parentRS = parent.GetComponents<Plugin::Relationship::Component::Relationship>(core);
+    auto &childRS = child.GetComponents<Relationship::Component::Relationship>(core);
+    auto &parentRS = parent.GetComponents<Relationship::Component::Relationship>(core);
 
     parentRS.children--;
     if (parentRS.first == child)
@@ -55,7 +55,7 @@ auto Plugin::Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entit
         }
         else
         {
-            auto &secondChildRS = childRS.next.GetComponents<Plugin::Relationship::Component::Relationship>(core);
+            auto &secondChildRS = childRS.next.GetComponents<Relationship::Component::Relationship>(core);
             secondChildRS.prev = Engine::Entity::entity_null_id;
             parentRS.first = childRS.next;
         }
@@ -64,18 +64,18 @@ auto Plugin::Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entit
     childRS.parent = Engine::Entity::entity_null_id;
     if (childRS.prev != Engine::Entity::entity_null_id)
     {
-        childRS.prev.GetComponents<Plugin::Relationship::Component::Relationship>(core).next = childRS.next;
+        childRS.prev.GetComponents<Relationship::Component::Relationship>(core).next = childRS.next;
     }
     if (childRS.next != Engine::Entity::entity_null_id)
     {
-        childRS.next.GetComponents<Plugin::Relationship::Component::Relationship>(core).prev = childRS.prev;
+        childRS.next.GetComponents<Relationship::Component::Relationship>(core).prev = childRS.prev;
     }
 }
 
-auto Plugin::Relationship::Utils::GetParent(Engine::Core &core, Engine::Entity child) -> Engine::Entity
+auto Relationship::Utils::GetParent(Engine::Core &core, Engine::Entity child) -> Engine::Entity
 {
-    const Plugin::Relationship::Component::Relationship &childRS =
-        child.GetComponents<Plugin::Relationship::Component::Relationship>(core);
+    const Relationship::Component::Relationship &childRS =
+        child.GetComponents<Relationship::Component::Relationship>(core);
 
     if (childRS.parent == Engine::Entity::entity_null_id)
     {

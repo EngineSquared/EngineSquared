@@ -11,7 +11,7 @@
 #include "core/Core.hpp"
 #include "resource/Window.hpp"
 
-namespace Plugin::Input::Resource {
+namespace Input::Resource {
 /**
  * InputManager is a singleton class that wraps the GLFW callback functions.
  */
@@ -404,4 +404,4 @@ class InputManager {
     using DropCallbackContainer = FunctionUtils::FunctionContainer<void, Engine::Core &, int, const char **>;
     std::shared_ptr<DropCallbackContainer> _dropCallbacks;
 };
-} // namespace Plugin::Input::Resource
+} // namespace Input::Resource

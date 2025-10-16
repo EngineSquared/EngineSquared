@@ -1,7 +1,7 @@
 #include "WindowSystem.hpp"
 #include "Logger.hpp"
 
-namespace Plugin::Window::System {
+namespace Window::System {
 
 void CreateWindowSystem(Engine::Core &core)
 {
@@ -56,4 +56,4 @@ void DestroyWindow(Engine::Core &core)
     glfwTerminate();
 }
 
-} // namespace Plugin::Window::System
+} // namespace Window::System

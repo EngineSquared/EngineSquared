@@ -3,7 +3,7 @@
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
 
-namespace Plugin::Graphic::System {
+namespace Graphic::System {
 void RequestCapabilities(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
@@ -16,4 +16,4 @@ void RequestCapabilities(Engine::Core &core)
         throw Exception::CapabilitiesRequestError("Failed to get surface capabilities");
     }
 }
-} // namespace Plugin::Graphic::System
+} // namespace Graphic::System

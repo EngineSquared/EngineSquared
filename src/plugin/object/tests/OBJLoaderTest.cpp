@@ -6,7 +6,7 @@
 
 #define OBJ_FILE_PATH PROJECT_SOURCE_DIR "assets/"
 
-using namespace Plugin::Object;
+using namespace Object;
 
 TEST(OBJLoaderTest, load_obj_file)
 {

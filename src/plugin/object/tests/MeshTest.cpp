@@ -2,7 +2,7 @@
 
 #include "component/Mesh.hpp"
 
-using namespace Plugin::Object;
+using namespace Object;
 
 TEST(Mesh, struct_size_comparaison)
 {
