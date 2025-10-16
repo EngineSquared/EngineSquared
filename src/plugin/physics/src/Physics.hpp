@@ -13,6 +13,7 @@
 // Systems
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
+#include "system/PhysicsUpdate.hpp"
 
 // Utils
 #include "utils/BroadPhaseLayerImpl.hpp"

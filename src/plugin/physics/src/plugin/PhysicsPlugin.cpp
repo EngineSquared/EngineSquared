@@ -11,4 +11,6 @@ void Physics::Plugin::Bind()
 {
     RegisterSystems<Engine::Scheduler::Startup>(System::InitJoltPhysics);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitPhysicsManager);
+
+    RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::PhysicsUpdate);
 }
