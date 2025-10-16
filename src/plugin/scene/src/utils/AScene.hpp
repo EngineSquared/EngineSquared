@@ -4,7 +4,7 @@
 
 #include "Engine.hpp"
 
-namespace Plugin::Scene::Utils {
+namespace Scene::Utils {
 class AScene {
   public:
     AScene(void) = default;
@@ -29,4 +29,4 @@ class AScene {
 
     virtual void _onDestroy(Engine::Core &core) = 0;
 };
-} // namespace Plugin::Scene::Utils
+} // namespace Scene::Utils

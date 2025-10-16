@@ -7,7 +7,7 @@
 #include <entt/resource/cache.hpp>
 #include <fmt/format.h>
 
-namespace Plugin::Object::Resource {
+namespace Object::Resource {
 
 /**
  * ResourceManager is a simple class that store resources. It provides methods to add, get, and remove resources.
@@ -161,4 +161,4 @@ template <typename ResourceType> class ResourceManager {
     entt::resource_cache<ResourceType, ResourceLoader> cache{};
 };
 
-} // namespace Plugin::Object::Resource
+} // namespace Object::Resource

@@ -24,7 +24,7 @@
 
 #include "component/Relationship.hpp"
 
-namespace Plugin::Relationship::Utils {
+namespace Relationship::Utils {
 /**
  * Set the child of an entity to another entity.
  *
@@ -60,4 +60,4 @@ auto RemoveParent(Engine::Core &core, Engine::Entity child) -> void;
  * @return  parent entity
  */
 auto GetParent(Engine::Core &core, Engine::Entity child) -> Engine::Entity;
-} // namespace Plugin::Relationship::Utils
+} // namespace Relationship::Utils

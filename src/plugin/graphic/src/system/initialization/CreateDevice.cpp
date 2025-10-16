@@ -3,9 +3,8 @@
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
 
-namespace Plugin::Graphic::System {
-static void SetupDeviceDescriptor(wgpu::DeviceDescriptor &deviceDesc,
-                                  Plugin::Graphic::Resource::GraphicSettings &settings)
+namespace Graphic::System {
+static void SetupDeviceDescriptor(wgpu::DeviceDescriptor &deviceDesc, Graphic::Resource::GraphicSettings &settings)
 {
     deviceDesc.label = wgpu::StringView("Core Device");
     deviceDesc.requiredFeatureCount = settings.GetRequiredFeatures().size();
@@ -44,4 +43,4 @@ void CreateDevice(Engine::Core &core)
     if (!context.deviceContext.GetDevice())
         throw Exception::DeviceCreationError("Failed to create WebGPU device");
 }
-} // namespace Plugin::Graphic::System
+} // namespace Graphic::System

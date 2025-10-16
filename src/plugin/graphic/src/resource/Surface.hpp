@@ -3,7 +3,7 @@
 #include "Logger.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::Resource {
+namespace Graphic::Resource {
 struct Surface {
     explicit Surface(std::optional<wgpu::Surface> surface = std::nullopt) : value(surface) {}
     ~Surface() = default;
@@ -33,4 +33,4 @@ struct Surface {
         }
     }
 };
-} // namespace Plugin::Graphic::Resource
+} // namespace Graphic::Resource

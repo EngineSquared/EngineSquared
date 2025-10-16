@@ -3,7 +3,7 @@
 #include "resource/GraphicSettings.hpp"
 #include "utils/webgpu.hpp"
 
-void Plugin::Graphic::System::SetupQueue(Engine::Core &core)
+void Graphic::System::SetupQueue(Engine::Core &core)
 {
     const auto &settings = core.GetResource<Resource::GraphicSettings>();
 

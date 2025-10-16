@@ -2,7 +2,7 @@
 #include "SoundManager.hpp"
 #include <miniaudio.h>
 
-namespace Plugin::Sound::Resource {
+namespace Sound::Resource {
 SoundManager::~SoundManager()
 {
     for (auto &[name, sound] : _soundsToPlay)
@@ -12,4 +12,4 @@ SoundManager::~SoundManager()
     ma_device_uninit(&_device);
 }
 
-} // namespace Plugin::Sound::Resource
+} // namespace Sound::Resource

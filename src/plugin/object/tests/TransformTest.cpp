@@ -2,7 +2,7 @@
 
 #include "component/Transform.hpp"
 
-using namespace Plugin::Object;
+using namespace Object;
 
 TEST(Transform, struct_size_comparaison)
 {

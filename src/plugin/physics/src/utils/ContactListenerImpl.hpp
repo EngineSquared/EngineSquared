@@ -12,11 +12,11 @@
 #include <Jolt/Physics/Body/Body.h>
 #include <Jolt/Physics/Collision/ContactListener.h>
 
-namespace Plugin::Physics::Resource {
+namespace Physics::Resource {
 class PhysicsManager;
 }
 
-namespace Plugin::Physics::Utils {
+namespace Physics::Utils {
 // ContactListener implementation
 // This is used to define callbacks for contact events between bodies.
 // Callbacks will be called with the Core, as well as the two entities that collided.
@@ -119,4 +119,4 @@ class ContactListenerImpl final : public JPH::ContactListener {
     CallbackContainer _onContactPersistedCallbacks; ///< Callbacks for when a contact is persisted.
     CallbackContainer _onContactRemovedCallbacks;   ///< Callbacks for when a contact is removed.
 };
-} // namespace Plugin::Physics::Utils
+} // namespace Physics::Utils
