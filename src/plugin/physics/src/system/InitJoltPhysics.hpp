@@ -2,7 +2,7 @@
 
 #include "core/Core.hpp"
 
-namespace Plugin::Physics::System {
+namespace Physics::System {
 /**
  * @brief Init internal elements needed by JoltPhysics.
  *
@@ -11,4 +11,4 @@ namespace Plugin::Physics::System {
  */
 void InitJoltPhysics(Engine::Core &core);
 
-} // namespace Plugin::Physics::System
+} // namespace Physics::System

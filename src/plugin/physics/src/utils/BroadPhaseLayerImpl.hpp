@@ -12,7 +12,7 @@
 #include <Jolt/Physics/Collision/BroadPhase/BroadPhaseLayer.h>
 #include <Jolt/Physics/Collision/ObjectLayer.h>
 
-namespace Plugin::Physics::Utils {
+namespace Physics::Utils {
 // BroadPhaseLayerInterface implementation
 // This defines a mapping between object and broadphase layers.
 class BPLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface {
@@ -46,4 +46,4 @@ class BPLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface {
     std::array<JPH::BroadPhaseLayer, Layers::NUM_LAYERS> _objectToBroadPhase;
 };
 ;
-} // namespace Plugin::Physics::Utils
+} // namespace Physics::Utils

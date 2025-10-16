@@ -2,7 +2,7 @@
 
 #include "plugin/APlugin.hpp"
 
-namespace Plugin::Physics {
+namespace Physics {
 class Plugin : public Engine::APlugin {
   public:
     explicit Plugin(Engine::Core &core)
@@ -13,4 +13,4 @@ class Plugin : public Engine::APlugin {
 
     void Bind() final;
 };
-} // namespace Plugin::Physics
+} // namespace Physics

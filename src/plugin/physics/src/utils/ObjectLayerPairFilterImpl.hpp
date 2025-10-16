@@ -8,7 +8,7 @@
 
 #include <Jolt/Physics/Collision/ObjectLayer.h>
 
-namespace Plugin::Physics::Utils {
+namespace Physics::Utils {
 class ObjectLayerPairFilterImpl : public JPH::ObjectLayerPairFilter {
   public:
     bool ShouldCollide(JPH::ObjectLayer inObject1, JPH::ObjectLayer inObject2) const override
@@ -21,4 +21,4 @@ class ObjectLayerPairFilterImpl : public JPH::ObjectLayerPairFilter {
         }
     }
 };
-} // namespace Plugin::Physics::Utils
+} // namespace Physics::Utils

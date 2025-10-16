@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace Plugin::Input {
+namespace Input {
 
 /**
  * @brief InputError is an exception class that should be thrown when an error
@@ -33,4 +33,4 @@ class InputError : public std::exception {
     std::string msg;
 };
 
-} // namespace Plugin::Input
+} // namespace Input

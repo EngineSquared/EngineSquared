@@ -6,7 +6,7 @@
 
 #include <functional>
 
-namespace Plugin::Physics::Utils {
+namespace Physics::Utils {
 /**
  * @brief A utility class for handling contact callbacks in a physics engine.
  *
@@ -71,4 +71,4 @@ template <typename... Components> class ContactCallback : public BaseCallback {
 
     CallbackFunc _callback; ///< The callback function to call.
 };
-} // namespace Plugin::Physics::Utils
+} // namespace Physics::Utils

@@ -5,7 +5,7 @@
 
 #include "Engine.hpp"
 
-namespace Plugin::Sound::Resource {
+namespace Sound::Resource {
 class SoundManager {
   private:
     ma_result _result;
@@ -399,4 +399,4 @@ class SoundManager {
         return position;
     }
 };
-} // namespace Plugin::Sound::Resource
+} // namespace Sound::Resource

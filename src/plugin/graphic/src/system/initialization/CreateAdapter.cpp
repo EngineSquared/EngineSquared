@@ -3,7 +3,7 @@
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
 
-void Plugin::Graphic::System::CreateAdapter(Engine::Core &core)
+void Graphic::System::CreateAdapter(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
     const auto &graphicSettings = core.GetResource<Resource::GraphicSettings>();

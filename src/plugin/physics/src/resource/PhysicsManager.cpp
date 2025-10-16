@@ -7,7 +7,7 @@
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
 
-namespace Plugin::Physics::Resource {
+namespace Physics::Resource {
 PhysicsManager::PhysicsManager()
 {
     _tempAllocator = std::make_shared<JPH::TempAllocatorMalloc>();
@@ -27,4 +27,4 @@ void PhysicsManager::Init(Engine::Core &core)
     _contactListener = std::make_shared<Utils::ContactListenerImpl>(core);
     _physicsSystem->SetContactListener(_contactListener.get());
 }
-} // namespace Plugin::Physics::Resource
+} // namespace Physics::Resource

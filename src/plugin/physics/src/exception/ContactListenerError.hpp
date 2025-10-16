@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace Plugin::Physics {
+namespace Physics {
 
 /**
  * @brief ContactListenerError is an exception class that should be thrown when an error
@@ -33,4 +33,4 @@ class ContactListenerError : public std::exception {
     std::string msg;
 };
 
-} // namespace Plugin::Physics
+} // namespace Physics

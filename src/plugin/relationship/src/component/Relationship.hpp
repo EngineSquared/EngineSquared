@@ -24,7 +24,7 @@
 
 #include "entity/Entity.hpp"
 
-namespace Plugin::Relationship::Component {
+namespace Relationship::Component {
 /**
  * Component that represents a relationship between entities
  */
@@ -40,4 +40,4 @@ struct Relationship {
     // @brief parent of the entity
     Engine::Entity parent = Engine::Entity::entity_null_id;
 };
-} // namespace Plugin::Relationship::Component
+} // namespace Relationship::Component
