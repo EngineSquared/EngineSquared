@@ -7,10 +7,7 @@ class TestScript : public NativeScripting::Utils::ScriptableEntity {
 
     void OnUpdate(Engine::Core &core) { std::cout << "Entity Updated" << std::endl; }
 
-    void OnDestroy(Engine::Core &core)
-    {
-        std::cout << "Entity Destroyed" << std::endl;
-    }
+    void OnDestroy(Engine::Core &core) { std::cout << "Entity Destroyed" << std::endl; }
 };
 
 int main(void)
@@ -23,7 +20,8 @@ int main(void)
 
     e.AddComponent<NativeScripting::Component::NativeScripting>(core).Bind<TestScript>(core);
 
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 5; ++i)
+    {
         core.RunSystems();
     }
 

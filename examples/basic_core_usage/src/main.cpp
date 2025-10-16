@@ -7,10 +7,7 @@ struct TestComponent {
 void TestSystem(Engine::Core &core)
 {
     core.GetRegistry().view<TestComponent>().each(
-        [](TestComponent &) {
-            std::cout << "Hello from entity with component" << std::endl;
-        }
-    );
+        [](TestComponent &) { std::cout << "Hello from entity with component" << std::endl; });
 }
 
 int main(void)

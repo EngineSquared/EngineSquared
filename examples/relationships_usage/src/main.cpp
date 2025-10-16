@@ -1,8 +1,7 @@
 #include "Engine.hpp"
 #include "Relationship.hpp"
 
-struct TestComponent
-{
+struct TestComponent {
     int value = 10;
 };
 
@@ -20,11 +19,9 @@ int main(void)
 
     Relationship::Utils::SetChildOf(core, child, parent);
 
-    core.RegisterSystem([](Engine::Core &core)
-    {
+    core.RegisterSystem([](Engine::Core &core) {
         core.GetRegistry().view<TestComponent, Relationship::Component::Relationship>().each(
-            [&core](TestComponent &testComponent, Relationship::Component::Relationship &relationship)
-            {
+            [&core](TestComponent &testComponent, Relationship::Component::Relationship &relationship) {
                 if (relationship.first != Engine::Entity::entity_null_id)
                 {
                     auto child = relationship.first;
