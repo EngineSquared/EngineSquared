@@ -290,7 +290,7 @@ class PhysicsManager {
      *
      * @return true if the physics system should be updated, false otherwise.
      */
-    inline bool ShouldUpdatePhysics() const { return _shouldUpdatePhysics; }
+    inline bool IsPhysicsActivated() const { return _shouldUpdatePhysics; }
 
     /**
      * @brief Set the physics system to be updated.
