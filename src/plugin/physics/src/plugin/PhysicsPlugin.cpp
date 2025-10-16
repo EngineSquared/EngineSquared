@@ -6,6 +6,7 @@
 
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
+#include "system/PhysicsUpdate.hpp"
 
 void Physics::Plugin::Bind()
 {
