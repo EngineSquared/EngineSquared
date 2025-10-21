@@ -6,8 +6,9 @@
 namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry<SamplerBindGroupLayoutEntry> {
   public:
-    SamplerBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {
-      this->entry.sampler.type = wgpu::SamplerBindingType::Undefined;
+    SamplerBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
+    {
+        this->entry.sampler.type = wgpu::SamplerBindingType::Undefined;
     }
     ~SamplerBindGroupLayoutEntry() = default;
 

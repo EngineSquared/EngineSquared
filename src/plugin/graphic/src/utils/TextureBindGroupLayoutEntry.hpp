@@ -6,7 +6,8 @@
 namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 class TextureBindGroupLayoutEntry : public ABindGroupLayoutEntry<TextureBindGroupLayoutEntry> {
   public:
-    TextureBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {
+    TextureBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
+    {
         this->entry.texture.sampleType = wgpu::TextureSampleType::Undefined;
     }
     ~TextureBindGroupLayoutEntry() = default;

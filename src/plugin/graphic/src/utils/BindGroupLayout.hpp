@@ -3,8 +3,8 @@
 #include "spdlog/fmt/fmt.h"
 #include "utils/ABindGroupLayoutEntry.hpp"
 #include "utils/IValidable.hpp"
-#include <vector>
 #include <concepts>
+#include <vector>
 
 template <typename TBindGroupLayoutEntry>
 concept CBindGroupLayoutEntry = std::derived_from<TBindGroupLayoutEntry, Plugin::Graphic::Utils::IBindGroupLayoutEntry>;
@@ -15,8 +15,7 @@ class BindGroupLayout : public IValidable {
     BindGroupLayout(const std::string &name) : name(name) {}
     ~BindGroupLayout() = default;
 
-    template <CBindGroupLayoutEntry TEntry>
-    inline BindGroupLayout &addEntry(const TEntry &entry)
+    template <CBindGroupLayoutEntry TEntry> inline BindGroupLayout &addEntry(const TEntry &entry)
     {
         this->entries.push_back(std::make_shared<TEntry>(entry));
         return *this;
@@ -31,8 +30,8 @@ class BindGroupLayout : public IValidable {
         std::vector<ValidationError> errors;
         if (this->entries.empty())
         {
-            errors.push_back({"No entries in the bind group layout", fmt::format("BindGroupLayout({})", this->getName()),
-                              ValidationError::Severity::Warning});
+            errors.push_back({"No entries in the bind group layout",
+                              fmt::format("BindGroupLayout({})", this->getName()), ValidationError::Severity::Warning});
             return errors;
         }
         for (const auto &entry : this->entries)
@@ -40,7 +39,8 @@ class BindGroupLayout : public IValidable {
             auto entryErrors = entry->validate();
             for (const auto &error : entryErrors)
             {
-                errors.push_back({error.message, fmt::format("BindGroupLayout::{}::{}", error.location, entry->getName()),
+                errors.push_back({error.message,
+                                  fmt::format("BindGroupLayout::{}::{}", error.location, entry->getName()),
                                   error.severity});
             }
         }

@@ -20,7 +20,6 @@
 namespace Plugin::Graphic::Resource {
 class ShaderDescriptor : public Utils::IValidable {
   public:
-
     ShaderDescriptor() = default;
     ~ShaderDescriptor() = default;
 
@@ -77,7 +76,10 @@ class ShaderDescriptor : public Utils::IValidable {
         return *this;
     }
 
-    Utils::BindGroupLayout &getBindGroupLayout(size_t index) { return *std::next(this->bindGroupLayouts.begin(), index); }
+    Utils::BindGroupLayout &getBindGroupLayout(size_t index)
+    {
+        return *std::next(this->bindGroupLayouts.begin(), index);
+    }
 
     ShaderDescriptor &addOutputColorFormat(const Utils::ColorTargetState &state)
     {
@@ -123,7 +125,8 @@ class ShaderDescriptor : public Utils::IValidable {
         }
         if (this->vertexBufferLayouts.empty())
         {
-            errors.push_back({"No vertex buffer layouts added", "ShaderDescriptor", Utils::ValidationError::Severity::Error});
+            errors.push_back(
+                {"No vertex buffer layouts added", "ShaderDescriptor", Utils::ValidationError::Severity::Error});
         }
         if (!this->vertexEntryPoint.has_value())
         {
@@ -174,31 +177,37 @@ class ShaderDescriptor : public Utils::IValidable {
         return errors;
     }
 
-    const std::string& getName() const { return this->name.has_value() ? this->name.value() : DEFAULT_NAME; }
+    const std::string &getName() const { return this->name.has_value() ? this->name.value() : DEFAULT_NAME; }
     const std::list<Utils::BindGroupLayout> &getBindGroupLayouts() const { return this->bindGroupLayouts; }
     const std::list<Utils::VertexBufferLayout> &getVertexBufferLayouts() const { return this->vertexBufferLayouts; }
     const std::list<Utils::ColorTargetState> &getOutputColorFormats() const { return this->outputColorFormats; }
     const std::optional<Utils::DepthStencilState> &getOutputDepthFormat() const { return this->outputDepthFormat; }
     const std::optional<std::string> &getShaderSource() const { return this->shaderSource; }
-    const std::string &getFragmentEntryPoint() const { return this->fragmentEntryPoint.has_value() ? this->fragmentEntryPoint.value() : DEFAULT_FRAGMENT_ENTRY_POINT; }
-    const std::string &getVertexEntryPoint() const { return this->vertexEntryPoint.has_value() ? this->vertexEntryPoint.value() : DEFAULT_VERTEX_ENTRY_POINT; }
+    const std::string &getFragmentEntryPoint() const
+    {
+        return this->fragmentEntryPoint.has_value() ? this->fragmentEntryPoint.value() : DEFAULT_FRAGMENT_ENTRY_POINT;
+    }
+    const std::string &getVertexEntryPoint() const
+    {
+        return this->vertexEntryPoint.has_value() ? this->vertexEntryPoint.value() : DEFAULT_VERTEX_ENTRY_POINT;
+    }
     wgpu::PrimitiveTopology getPrimitiveTopology() const { return this->primitiveTopology; }
     wgpu::CullMode getCullMode() const { return this->cullMode; }
 
-    private:
-        inline const static std::string DEFAULT_FRAGMENT_ENTRY_POINT = "fs_main";
-        inline const static std::string DEFAULT_VERTEX_ENTRY_POINT = "vs_main";
-        inline const static std::string DEFAULT_NAME = "Unnamed";
+  private:
+    inline const static std::string DEFAULT_FRAGMENT_ENTRY_POINT = "fs_main";
+    inline const static std::string DEFAULT_VERTEX_ENTRY_POINT = "vs_main";
+    inline const static std::string DEFAULT_NAME = "Unnamed";
 
-        std::optional<std::string> name;
-        std::list<Utils::BindGroupLayout> bindGroupLayouts;
-        std::list<Utils::VertexBufferLayout> vertexBufferLayouts;
-        std::list<Utils::ColorTargetState> outputColorFormats;
-        std::optional<std::string> shaderSource;
-        std::optional<std::string> fragmentEntryPoint;
-        std::optional<std::string> vertexEntryPoint;
-        std::optional<Utils::DepthStencilState> outputDepthFormat;
-        wgpu::PrimitiveTopology primitiveTopology = wgpu::PrimitiveTopology::TriangleList;
-        wgpu::CullMode cullMode = wgpu::CullMode::None;
+    std::optional<std::string> name;
+    std::list<Utils::BindGroupLayout> bindGroupLayouts;
+    std::list<Utils::VertexBufferLayout> vertexBufferLayouts;
+    std::list<Utils::ColorTargetState> outputColorFormats;
+    std::optional<std::string> shaderSource;
+    std::optional<std::string> fragmentEntryPoint;
+    std::optional<std::string> vertexEntryPoint;
+    std::optional<Utils::DepthStencilState> outputDepthFormat;
+    wgpu::PrimitiveTopology primitiveTopology = wgpu::PrimitiveTopology::TriangleList;
+    wgpu::CullMode cullMode = wgpu::CullMode::None;
 };
-} // namespace Plugin::Graphic::Utils
+} // namespace Plugin::Graphic::Resource

@@ -20,8 +20,6 @@ struct DeviceContext {
         }
     }
 
-    
-
   private:
     wgpu::DeviceDescriptor _descriptor = wgpu::DeviceDescriptor(wgpu::Default);
     std::optional<wgpu::Device> _device = std::nullopt;

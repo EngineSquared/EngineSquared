@@ -5,10 +5,10 @@
 
 namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 
-template <typename TDerived>
-class ABindGroupLayoutEntry : public IBindGroupLayoutEntry {
+template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayoutEntry {
   public:
-    explicit ABindGroupLayoutEntry(const std::string &name_) : name(name_) {
+    explicit ABindGroupLayoutEntry(const std::string &name_) : name(name_)
+    {
         this->entry.buffer.type = wgpu::BufferBindingType::BindingNotUsed;
         this->entry.sampler.type = wgpu::SamplerBindingType::BindingNotUsed;
         this->entry.texture.sampleType = wgpu::TextureSampleType::BindingNotUsed;

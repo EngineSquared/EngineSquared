@@ -1,11 +1,11 @@
 #pragma once
 
+#include "resource/ShaderDescriptor.hpp"
 #include "utils/BindGroupLayout.hpp"
 #include "utils/ColorTargetState.hpp"
 #include "utils/DepthStencilState.hpp"
 #include "utils/VertexBufferLayout.hpp"
 #include "utils/webgpu.hpp"
-#include "resource/ShaderDescriptor.hpp"
 #include <vector>
 
 namespace Plugin::Graphic::Resource {
@@ -15,7 +15,8 @@ class Shader {
     Shader(void) {}
     virtual ~Shader() = default;
 
-    static Shader Create(const ShaderDescriptor &descriptor, Context &context) {
+    static Shader Create(const ShaderDescriptor &descriptor, Context &context)
+    {
         wgpu::Device device = context.deviceContext.GetDevice().value();
         Shader shader;
         shader.descriptor = descriptor;
@@ -86,7 +87,8 @@ class Shader {
     const ShaderDescriptor &getDescriptor() const { return descriptor; }
 
   private:
-    static wgpu::ShaderModule _createShaderModule(std::string_view name, std::string_view source, const wgpu::Device &device)
+    static wgpu::ShaderModule _createShaderModule(std::string_view name, std::string_view source,
+                                                  const wgpu::Device &device)
     {
         wgpu::ShaderSourceWGSL wgslDesc(wgpu::Default);
         wgslDesc.code = wgpu::StringView(source);

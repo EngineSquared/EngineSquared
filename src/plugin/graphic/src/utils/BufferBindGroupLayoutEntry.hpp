@@ -6,7 +6,8 @@
 namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry<BufferBindGroupLayoutEntry> {
   public:
-    BufferBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {
+    BufferBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
+    {
         this->entry.buffer.type = wgpu::BufferBindingType::Undefined;
     }
     ~BufferBindGroupLayoutEntry() = default;

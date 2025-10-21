@@ -82,8 +82,8 @@ class GraphicSettings {
     }
 
     WGPUUncapturedErrorCallback onErrorCallback = [](WGPUDevice const *device, WGPUErrorType type,
-                                                         WGPUStringView message, WGPU_NULLABLE void *userdata1,
-                                                         WGPU_NULLABLE void *userdata2) {
+                                                     WGPUStringView message, WGPU_NULLABLE void *userdata1,
+                                                     WGPU_NULLABLE void *userdata2) {
         Log::Error(fmt::format("Uncaptured device error: type {:x} ({})", static_cast<uint32_t>(type),
                                std::string(message.data, message.length)));
     };
