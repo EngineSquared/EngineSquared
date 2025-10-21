@@ -1,34 +1,40 @@
 #pragma once
 
-#include "utils/IValidable.hpp"
+#include "utils/IBindGroupLayoutEntry.hpp"
 #include "utils/webgpu.hpp"
 
 namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 
-class ABindGroupLayoutEntry : public virtual IValidable {
+template <typename TDerived>
+class ABindGroupLayoutEntry : public IBindGroupLayoutEntry {
   public:
-    std::string name;
-
-    explicit ABindGroupLayoutEntry(const std::string &name) : name(name) {}
+    explicit ABindGroupLayoutEntry(const std::string &name_) : name(name_) {
+        this->entry.buffer.type = wgpu::BufferBindingType::BindingNotUsed;
+        this->entry.sampler.type = wgpu::SamplerBindingType::BindingNotUsed;
+        this->entry.texture.sampleType = wgpu::TextureSampleType::BindingNotUsed;
+        this->entry.storageTexture.access = wgpu::StorageTextureAccess::BindingNotUsed;
+    }
     virtual ~ABindGroupLayoutEntry() = default;
 
-    inline const wgpu::BindGroupLayoutEntry &getEntry() const { return this->entry; }
+    inline const std::string &getName() const override { return this->name; }
 
-    inline ABindGroupLayoutEntry &setBinding(uint32_t binding)
+    inline const wgpu::BindGroupLayoutEntry &getEntry() const override { return this->entry; }
+
+    inline TDerived &setBinding(uint32_t binding)
     {
         this->entry.binding = binding;
         this->isBindingSet = true;
-        return *this;
+        return static_cast<TDerived &>(*this);
     }
 
-    inline ABindGroupLayoutEntry &setVisibility(wgpu::ShaderStage visibility)
+    inline TDerived &setVisibility(wgpu::ShaderStage visibility)
     {
         this->entry.visibility = visibility;
         this->isVisibilitySet = true;
-        return *this;
+        return static_cast<TDerived &>(*this);
     }
 
-    std::vector<ValidationError> validate(void) const override
+    virtual std::vector<ValidationError> validate(void) const override
     {
         std::vector<ValidationError> errors;
         if (!this->isBindingSet)
@@ -45,8 +51,9 @@ class ABindGroupLayoutEntry : public virtual IValidable {
     }
 
   protected:
-    wgpu::BindGroupLayoutEntry entry;
+    wgpu::BindGroupLayoutEntry entry = wgpu::BindGroupLayoutEntry(wgpu::Default);
     bool isBindingSet = false;
     bool isVisibilitySet = false;
+    std::string name;
 };
 } // namespace Plugin::Graphic::Utils

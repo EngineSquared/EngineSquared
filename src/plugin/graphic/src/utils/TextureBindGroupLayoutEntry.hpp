@@ -4,10 +4,15 @@
 #include "utils/webgpu.hpp"
 
 namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
-class TextureBindGroupLayoutEntry : public ABindGroupLayoutEntry {
+class TextureBindGroupLayoutEntry : public ABindGroupLayoutEntry<TextureBindGroupLayoutEntry> {
   public:
-    TextureBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {}
+    TextureBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {
+        this->entry.texture.sampleType = wgpu::TextureSampleType::Undefined;
+    }
     ~TextureBindGroupLayoutEntry() = default;
+
+    TextureBindGroupLayoutEntry(const TextureBindGroupLayoutEntry &other) = default;
+    TextureBindGroupLayoutEntry &operator=(const TextureBindGroupLayoutEntry &other) = default;
 
     virtual std::vector<ValidationError> validate(void) const override
     {

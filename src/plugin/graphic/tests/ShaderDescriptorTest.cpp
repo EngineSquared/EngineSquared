@@ -1,22 +1,63 @@
 #include <gtest/gtest.h>
 
 #include "Graphic.hpp"
+#include "RenderingPipeline.hpp"
+
 #include <glm/glm.hpp>
 
-TEST(GraphicPlugin, GlobalRun)
+const std::string shaderSource = R"(
+struct Uniforms {
+    modelViewProjectionMatrix: mat4x4f,
+};
+
+@group(0) @binding(0) var<uniform> uniforms: Uniforms;
+@group(0) @binding(1) var cubemapTexture: texture_cube<f32>;
+@group(0) @binding(2) var cubemapSampler: sampler;
+
+struct VertexOutput {
+  @builtin(position) position: vec4f,
+  @location(0) uv: vec2f,
+  @location(1) fragPosition: vec3f,
+}
+
+@vertex
+fn vs_main(
+    @location(0) position: vec3f,
+    @location(1) uv: vec2f,
+) -> VertexOutput {
+    var out: VertexOutput;
+    out.position = uniforms.modelViewProjectionMatrix * vec4f(position, 1.0);
+    out.uv = uv;
+    out.fragPosition = 0.5 * (position + vec3(1.0, 1.0, 1.0));
+    return out;
+}
+
+@fragment
+fn fs_main(in: VertexOutput) -> @location(0) vec4f {
+    var cubemapVec = in.fragPosition - vec3(0.5);
+    cubemapVec.z *= -1;
+    return textureSample(cubemapTexture, cubemapSampler, cubemapVec);
+
+}
+
+)";
+
+auto TestSystem(Engine::Core &core) -> void
 {
-    Plugin::Graphic::Utils::ShaderDescriptor shaderDescriptor;
+    Plugin::Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
     auto vertexLayout =
         Plugin::Graphic::Utils::VertexBufferLayout()
             .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)
             .addVertexAttribute(wgpu::VertexFormat::Float32x2, 3 * sizeof(float), 1)
-            .setArrayStride(5 * sizeof(float)) // This can be omitted to test automatic stride calculation (unsafe)
+            .setArrayStride(5 * sizeof(float)) // This can be omitted to test automatic stride calculation (but this is unsafe)
             .setStepMode(wgpu::VertexStepMode::Vertex); // This is done by default
     auto bindGroupLayout = Plugin::Graphic::Utils::BindGroupLayout("ExampleLayout")
                                .addEntry(Plugin::Graphic::Utils::BufferBindGroupLayoutEntry("BufferEntry")
+                                             .setType(wgpu::BufferBindingType::Uniform)
                                              .setHasDynamicOffset(false) // This is done by default
-                                             .setType<glm::mat4>()
+                                             .setMinBindingSize<glm::mat4>() // with will try to compute size with types and align to 16 bytes
+                                             .setMinBindingSize(sizeof(glm::mat4)) // or manually set size, N.B.: you can also dont set it at all and webgpu will try to set it by itself
                                              .setVisibility(wgpu::ShaderStage::Vertex)
                                              .setBinding(0))
                                .addEntry(Plugin::Graphic::Utils::TextureBindGroupLayoutEntry("TextureEntry")
@@ -37,7 +78,8 @@ TEST(GraphicPlugin, GlobalRun)
                                   .setCompareFunction(wgpu::CompareFunction::Less)
                                   .setDepthWriteEnabled(wgpu::OptionalBool::True);
 
-    shaderDescriptor.setShader("void vs_main() { } void fs_main() { }")
+    shaderDescriptor.setShader(shaderSource)
+        .setName("ExampleShader")
         .setVertexEntryPoint("vs_main")   // This is done by default
         .setFragmentEntryPoint("fs_main") // This is done by default
         .addVertexBufferLayout(vertexLayout)
@@ -53,4 +95,35 @@ TEST(GraphicPlugin, GlobalRun)
     {
         std::cout << error << std::endl;
     }
+
+    Plugin::Graphic::Resource::Shader shader =
+        Plugin::Graphic::Resource::Shader::Create(shaderDescriptor, core.GetResource<Plugin::Graphic::Resource::Context>());
+}
+
+TEST(ShaderTest, GlobalRun)
+{
+    Engine::Core core;
+
+    core.AddPlugins<Plugin::Graphic::Plugin>();
+
+    core.RegisterSystem<Plugin::RenderingPipeline::Init>([](Engine::Core &c) {
+        c.GetResource<Plugin::Graphic::Resource::GraphicSettings>()
+            .SetWindowSystem(Plugin::Graphic::Resource::WindowSystem::None)
+            .SetOnErrorCallback([](WGPUDevice const *device, WGPUErrorType type,
+                                                         WGPUStringView message, WGPU_NULLABLE void *userdata1,
+                                                         WGPU_NULLABLE void *userdata2) {
+                Log::Error(
+                    fmt::format("Custom uncaptured device error: type {:x} ({})",
+                                static_cast<uint32_t>(type),
+                                std::string(message.data, message.length)
+                    )
+                );
+                throw std::runtime_error("Custom uncaptured device error occurred");
+            })
+            .GetWantedLimits().maxBindGroups = 8;
+    });
+
+    core.RegisterSystem(TestSystem);
+
+    core.RunSystems();
 }

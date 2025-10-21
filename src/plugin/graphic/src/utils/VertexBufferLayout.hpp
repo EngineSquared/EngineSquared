@@ -35,11 +35,11 @@ class VertexBufferLayout : public IValidable {
         return *this;
     }
 
-    uint32_t getArrayStride() const { return this->arrayStride.value_or(_computeArrayStride()); }
+    inline uint32_t getArrayStride() const { return this->arrayStride.value_or(_computeArrayStride()); }
 
-    wgpu::VertexStepMode getStepMode() const { return this->stepMode; }
+    inline wgpu::VertexStepMode getStepMode() const { return this->stepMode; }
 
-    const std::vector<wgpu::VertexAttribute> &getVertexAttributes() const { return this->vertexAttributes; }
+    inline const std::vector<wgpu::VertexAttribute> &getVertexAttributes() const { return this->vertexAttributes; }
 
     std::vector<ValidationError> validate(void) const override
     {

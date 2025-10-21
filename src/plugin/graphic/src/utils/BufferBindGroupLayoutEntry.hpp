@@ -4,10 +4,15 @@
 #include "utils/webgpu.hpp"
 
 namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
-class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry {
+class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry<BufferBindGroupLayoutEntry> {
   public:
-    BufferBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {}
+    BufferBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {
+        this->entry.buffer.type = wgpu::BufferBindingType::Undefined;
+    }
     ~BufferBindGroupLayoutEntry() = default;
+
+    BufferBindGroupLayoutEntry(const BufferBindGroupLayoutEntry &other) = default;
+    BufferBindGroupLayoutEntry &operator=(const BufferBindGroupLayoutEntry &other) = default;
 
     virtual std::vector<ValidationError> validate(void) const override
     {
@@ -32,7 +37,7 @@ class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry {
         return *this;
     }
 
-    template <typename... TBuffer> inline BufferBindGroupLayoutEntry &setType(void)
+    template <typename... TBuffer> inline BufferBindGroupLayoutEntry &setMinBindingSize(void)
     {
         uint64_t size = 0;
         (computeMinBindingSize<TBuffer>(size), ...);

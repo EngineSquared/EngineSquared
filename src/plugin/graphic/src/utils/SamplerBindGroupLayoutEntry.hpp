@@ -4,10 +4,15 @@
 #include "utils/webgpu.hpp"
 
 namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
-class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry {
+class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry<SamplerBindGroupLayoutEntry> {
   public:
-    SamplerBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {}
+    SamplerBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name) {
+      this->entry.sampler.type = wgpu::SamplerBindingType::Undefined;
+    }
     ~SamplerBindGroupLayoutEntry() = default;
+
+    SamplerBindGroupLayoutEntry(const SamplerBindGroupLayoutEntry &other) = default;
+    SamplerBindGroupLayoutEntry &operator=(const SamplerBindGroupLayoutEntry &other) = default;
 
     virtual std::vector<ValidationError> validate(void) const override
     {

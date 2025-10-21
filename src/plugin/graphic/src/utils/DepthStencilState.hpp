@@ -44,6 +44,8 @@ class DepthStencilState : public virtual IValidable {
         return *this;
     }
 
+    inline const wgpu::DepthStencilState &getValue() const { return this->value; }
+
   private:
     wgpu::DepthStencilState value = wgpu::DepthStencilState(wgpu::Default);
     std::string name;
