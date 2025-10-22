@@ -6,11 +6,11 @@
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"
 #include "exception/FileReadingError.hpp"
 #include "spdlog/fmt/fmt.h"
-#include "utils/BindGroupLayout.hpp"
-#include "utils/ColorTargetState.hpp"
-#include "utils/DepthStencilState.hpp"
+#include "utils/shader/BindGroupLayout.hpp"
+#include "utils/shader/ColorTargetState.hpp"
+#include "utils/shader/DepthStencilState.hpp"
 #include "utils/IValidable.hpp"
-#include "utils/VertexBufferLayout.hpp"
+#include "utils/shader/VertexBufferLayout.hpp"
 
 #include <filesystem>
 #include <fstream>
@@ -116,36 +116,35 @@ class ShaderDescriptor : public Utils::IValidable {
         std::vector<Utils::ValidationError> errors;
         if (!this->_shaderSource.has_value())
         {
-            errors.emplace_back(Utils::ValidationError("Shader source is not set", "ShaderDescriptor",
-                                                       Utils::ValidationError::Severity::Error));
+            errors.emplace_back("Shader source is not set", "ShaderDescriptor", Utils::ValidationError::Severity::Error);
         }
         if (!this->_name.has_value())
         {
-            errors.emplace_back(Utils::ValidationError("Shader name is not set ('Unnamed' will be used)",
-                                                       "ShaderDescriptor", Utils::ValidationError::Severity::Warning));
+            errors.emplace_back("Shader name is not set ('Unnamed' will be used)",
+                                                       "ShaderDescriptor", Utils::ValidationError::Severity::Warning);
         }
         if (this->_vertexBufferLayouts.empty())
         {
-            errors.emplace_back(Utils::ValidationError("No vertex buffer layouts added", "ShaderDescriptor",
-                                                       Utils::ValidationError::Severity::Error));
+            errors.emplace_back("No vertex buffer layouts added", "ShaderDescriptor",
+                                                       Utils::ValidationError::Severity::Error);
         }
         if (!this->_vertexEntryPoint.has_value())
         {
-            errors.emplace_back(Utils::ValidationError("Vertex entry point is not set ('vs_main' will be used)",
-                                                       "ShaderDescriptor", Utils::ValidationError::Severity::Warning));
+            errors.emplace_back("Vertex entry point is not set ('vs_main' will be used)",
+                                                       "ShaderDescriptor", Utils::ValidationError::Severity::Warning);
         }
         if (!this->_fragmentEntryPoint.has_value())
         {
-            errors.emplace_back(Utils::ValidationError("Fragment entry point is not set ('fs_main' will be used)",
-                                                       "ShaderDescriptor", Utils::ValidationError::Severity::Warning));
+            errors.emplace_back("Fragment entry point is not set ('fs_main' will be used)",
+                                                       "ShaderDescriptor", Utils::ValidationError::Severity::Warning);
         }
         for (size_t i = 0; i < this->_vertexBufferLayouts.size(); i++)
         {
             auto layoutErrors = std::next(this->_vertexBufferLayouts.begin(), i)->validate();
             for (const auto &error : layoutErrors)
             {
-                errors.emplace_back(Utils::ValidationError(
-                    error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity));
+                errors.emplace_back(
+                    error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity);
             }
         }
         for (size_t i = 0; i < this->_bindGroupLayouts.size(); i++)
@@ -153,8 +152,8 @@ class ShaderDescriptor : public Utils::IValidable {
             auto layoutErrors = std::next(this->_bindGroupLayouts.begin(), i)->validate();
             for (const auto &error : layoutErrors)
             {
-                errors.emplace_back(Utils::ValidationError(
-                    error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity));
+                errors.emplace_back(
+                    error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity);
             }
         }
         for (size_t i = 0; i < this->_outputColorFormats.size(); i++)
@@ -162,8 +161,8 @@ class ShaderDescriptor : public Utils::IValidable {
             auto stateErrors = std::next(this->_outputColorFormats.begin(), i)->validate();
             for (const auto &error : stateErrors)
             {
-                errors.emplace_back(Utils::ValidationError(
-                    error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity));
+                errors.emplace_back(
+                    error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity);
             }
         }
         if (this->_outputDepthFormat.has_value())
@@ -171,8 +170,8 @@ class ShaderDescriptor : public Utils::IValidable {
             auto stateErrors = this->_outputDepthFormat->validate();
             for (const auto &error : stateErrors)
             {
-                errors.emplace_back(Utils::ValidationError(
-                    error.message, fmt::format("ShaderDescriptor::DepthStencil{}", error.location), error.severity));
+                errors.emplace_back(
+                    error.message, fmt::format("ShaderDescriptor::DepthStencil{}", error.location), error.severity);
             }
         }
         return errors;

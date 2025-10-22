@@ -1,9 +1,9 @@
 #pragma once
 
-#include "utils/IBindGroupLayoutEntry.hpp"
+#include "utils/shader/IBindGroupLayoutEntry.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
+namespace Graphic::Utils {
 
 template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayoutEntry {
   public:
@@ -14,7 +14,7 @@ template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayo
         this->entry.texture.sampleType = wgpu::TextureSampleType::BindingNotUsed;
         this->entry.storageTexture.access = wgpu::StorageTextureAccess::BindingNotUsed;
     }
-    virtual ~ABindGroupLayoutEntry() = default;
+    virtual ~ABindGroupLayoutEntry() override = default;
 
     inline const std::string &getName() const override { return this->name; }
 
@@ -34,7 +34,7 @@ template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayo
         return static_cast<TDerived &>(*this);
     }
 
-    virtual std::vector<ValidationError> validate(void) const override
+    std::vector<ValidationError> validate(void) const override
     {
         std::vector<ValidationError> errors;
         if (!this->isBindingSet)
@@ -50,7 +50,10 @@ template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayo
         return errors;
     }
 
-  protected:
+    protected:
+        inline wgpu::BindGroupLayoutEntry &getEntry() { return this->entry; }
+
+  private:
     wgpu::BindGroupLayoutEntry entry = wgpu::BindGroupLayoutEntry(wgpu::Default);
     bool isBindingSet = false;
     bool isVisibilitySet = false;

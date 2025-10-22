@@ -1,10 +1,10 @@
 #pragma once
 
 #include "resource/ShaderDescriptor.hpp"
-#include "utils/BindGroupLayout.hpp"
-#include "utils/ColorTargetState.hpp"
-#include "utils/DepthStencilState.hpp"
-#include "utils/VertexBufferLayout.hpp"
+#include "utils/shader/BindGroupLayout.hpp"
+#include "utils/shader/ColorTargetState.hpp"
+#include "utils/shader/DepthStencilState.hpp"
+#include "utils/shader/VertexBufferLayout.hpp"
 #include "utils/webgpu.hpp"
 #include <vector>
 

@@ -1,26 +1,26 @@
 #pragma once
 
-#include "utils/ABindGroupLayoutEntry.hpp"
+#include "utils/shader/ABindGroupLayoutEntry.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
+namespace Graphic::Utils {
 class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry<SamplerBindGroupLayoutEntry> {
   public:
     SamplerBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
     {
-        this->entry.sampler.type = wgpu::SamplerBindingType::Undefined;
+        this->getEntry().sampler.type = wgpu::SamplerBindingType::Undefined;
     }
     ~SamplerBindGroupLayoutEntry() = default;
 
     SamplerBindGroupLayoutEntry(const SamplerBindGroupLayoutEntry &other) = default;
     SamplerBindGroupLayoutEntry &operator=(const SamplerBindGroupLayoutEntry &other) = default;
 
-    virtual std::vector<ValidationError> validate(void) const override
+    std::vector<ValidationError> validate(void) const override
     {
         std::vector<ValidationError> errors = ABindGroupLayoutEntry::validate();
         if (!this->_isSamplerTypeSet)
         {
-            errors.push_back({"Sampler type is not set", fmt::format("SamplerBindGroupLayoutEntry({})", this->name),
+            errors.push_back({"Sampler type is not set", fmt::format("SamplerBindGroupLayoutEntry({})", this->getName()),
                               ValidationError::Severity::Error});
         }
         return errors;
@@ -28,7 +28,7 @@ class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry<SamplerBindGrou
 
     inline SamplerBindGroupLayoutEntry &setSamplerType(const wgpu::SamplerBindingType &type)
     {
-        this->entry.sampler.type = type;
+        this->getEntry().sampler.type = type;
         this->_isSamplerTypeSet = true;
         return *this;
     }

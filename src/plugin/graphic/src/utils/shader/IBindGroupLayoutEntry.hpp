@@ -3,7 +3,7 @@
 #include "utils/IValidable.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
+namespace Graphic::Utils {
 
 class IBindGroupLayoutEntry : public virtual IValidable {
   public:

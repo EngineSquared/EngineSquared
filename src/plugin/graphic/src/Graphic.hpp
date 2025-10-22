@@ -10,15 +10,15 @@
 #include "resource/Surface.hpp"
 
 // Utils
-#include "utils/ABindGroupLayoutEntry.hpp"
-#include "utils/BindGroupLayout.hpp"
-#include "utils/BufferBindGroupLayoutEntry.hpp"
-#include "utils/ColorTargetState.hpp"
-#include "utils/DepthStencilState.hpp"
 #include "utils/IValidable.hpp"
-#include "utils/SamplerBindGroupLayoutEntry.hpp"
-#include "utils/TextureBindGroupLayoutEntry.hpp"
-#include "utils/VertexBufferLayout.hpp"
+#include "utils/shader/ABindGroupLayoutEntry.hpp"
+#include "utils/shader/BindGroupLayout.hpp"
+#include "utils/shader/BufferBindGroupLayoutEntry.hpp"
+#include "utils/shader/ColorTargetState.hpp"
+#include "utils/shader/DepthStencilState.hpp"
+#include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
+#include "utils/shader/TextureBindGroupLayoutEntry.hpp"
+#include "utils/shader/VertexBufferLayout.hpp"
 
 // Exceptions
 #include "exception/AdapterCreationError.hpp"
