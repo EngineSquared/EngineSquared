@@ -4,9 +4,9 @@
 
 namespace ES::Plugin::RenderingPipeline {
 /**
- * @brief Used to send the data to the GPU, like meshes, text, sprites, etc.
+ * @brief This class is used to swap the buffers and draw the data on the screen.
  */
-class ToGPU : public ES::Engine::Scheduler::Update {
+class Submission : public ES::Engine::Scheduler::Update {
   public:
     using ES::Engine::Scheduler::Update::Update;
 };

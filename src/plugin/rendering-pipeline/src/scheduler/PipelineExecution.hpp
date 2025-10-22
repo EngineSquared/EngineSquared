@@ -6,7 +6,7 @@ namespace ES::Plugin::RenderingPipeline {
 /**
  * @brief This class is used to swap the buffers and draw the data on the screen.
  */
-class PreUpdate : public ES::Engine::Scheduler::Update {
+class PipelineExecution : public ES::Engine::Scheduler::Update {
   public:
     using ES::Engine::Scheduler::Update::Update;
 };

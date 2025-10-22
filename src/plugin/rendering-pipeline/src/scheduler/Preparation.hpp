@@ -4,9 +4,9 @@
 
 namespace ES::Plugin::RenderingPipeline {
 /**
- * @brief Setup the rendering pipeline, like clearing the screen, setting up the camera, etc.
+ * @brief This class is used to swap the buffers and draw the data on the screen.
  */
-class RenderSetup : public ES::Engine::Scheduler::Update {
+class Preparation : public ES::Engine::Scheduler::Update {
   public:
     using ES::Engine::Scheduler::Update::Update;
 };

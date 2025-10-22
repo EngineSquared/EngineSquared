@@ -7,6 +7,12 @@ struct History {
     std::vector<std::string> messages;
 };
 
+#define ADD_SCHEDULER_TO_HISTORY(scheduler) \
+    core.RegisterSystem<scheduler>([](ES::Engine::Core &c) { \
+        auto &history = c.GetResource<History>(); \
+        history.messages.emplace_back(#scheduler); \
+    }); \
+
 TEST(RenderingPipeline, CasualUse)
 {
     ES::Engine::Core core;
@@ -15,56 +21,37 @@ TEST(RenderingPipeline, CasualUse)
 
     core.AddPlugins<ES::Plugin::RenderingPipeline::Plugin>();
 
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::Init>([](ES::Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Init");
-    });
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::Setup>([](ES::Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Setup");
-    });
-    core.RegisterSystem<ES::Engine::Scheduler::Startup>([](ES::Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Startup");
-    });
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::PreUpdate>([](ES::Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("PreUpdate");
-    });
-    core.RegisterSystem<ES::Engine::Scheduler::Update>([](ES::Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Update");
-    });
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::RenderSetup>([](ES::Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("RenderSetup");
-    });
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::ToGPU>([](ES::Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("ToGPU");
-    });
-    core.RegisterSystem<ES::Plugin::RenderingPipeline::Draw>([](ES::Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Draw");
-    });
-    core.RegisterSystem<ES::Engine::Scheduler::Shutdown>([](ES::Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Shutdown");
-    });
+    ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Init)
+    ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Setup)
+    ADD_SCHEDULER_TO_HISTORY(ES::Engine::Scheduler::Startup)
+    ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::PreUpdate)
+    ADD_SCHEDULER_TO_HISTORY(ES::Engine::Scheduler::Update)
+    ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Preparation)
+    ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Extraction)
+    ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::PipelineCreation)
+    ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Batching)
+    ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::PipelineExecution)
+    ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Submission)
+    ADD_SCHEDULER_TO_HISTORY(ES::Plugin::RenderingPipeline::Presentation)
+    ADD_SCHEDULER_TO_HISTORY(ES::Engine::Scheduler::Shutdown)
 
     core.RunSystems();
 
     auto &history = core.GetResource<History>();
-    EXPECT_EQ(history.messages.size(), 9);
-    EXPECT_EQ(history.messages[0], "Init");
-    EXPECT_EQ(history.messages[1], "Setup");
-    EXPECT_EQ(history.messages[2], "Startup");
+    EXPECT_EQ(history.messages.size(), 13);
+    EXPECT_EQ(history.messages[0], "ES::Plugin::RenderingPipeline::Init");
+    EXPECT_EQ(history.messages[1], "ES::Plugin::RenderingPipeline::Setup");
+    EXPECT_EQ(history.messages[2], "ES::Engine::Scheduler::Startup");
 
-    EXPECT_EQ(history.messages[3], "PreUpdate");
-    EXPECT_EQ(history.messages[4], "Update");
-    EXPECT_EQ(history.messages[5], "RenderSetup");
-    EXPECT_EQ(history.messages[6], "ToGPU");
-    EXPECT_EQ(history.messages[7], "Draw");
+    EXPECT_EQ(history.messages[3], "ES::Plugin::RenderingPipeline::PreUpdate");
+    EXPECT_EQ(history.messages[4], "ES::Engine::Scheduler::Update");
+    EXPECT_EQ(history.messages[5], "ES::Plugin::RenderingPipeline::Preparation");
+    EXPECT_EQ(history.messages[6], "ES::Plugin::RenderingPipeline::Extraction");
+    EXPECT_EQ(history.messages[7], "ES::Plugin::RenderingPipeline::PipelineCreation");
+    EXPECT_EQ(history.messages[8], "ES::Plugin::RenderingPipeline::Batching");
+    EXPECT_EQ(history.messages[9], "ES::Plugin::RenderingPipeline::PipelineExecution");
+    EXPECT_EQ(history.messages[10], "ES::Plugin::RenderingPipeline::Submission");
+    EXPECT_EQ(history.messages[11], "ES::Plugin::RenderingPipeline::Presentation");
 
-    EXPECT_EQ(history.messages[8], "Shutdown");
+    EXPECT_EQ(history.messages[12], "ES::Engine::Scheduler::Shutdown");
 }
