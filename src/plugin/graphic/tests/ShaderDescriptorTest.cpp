@@ -73,10 +73,8 @@ auto TestSystem(Engine::Core &core) -> void
                           .setSamplerType(wgpu::SamplerBindingType::Filtering)
                           .setVisibility(wgpu::ShaderStage::Fragment)
                           .setBinding(2));
-    auto normalColorOutput =
-        Graphic::Utils::ColorTargetState("NormalColor").setFormat(wgpu::TextureFormat::BGRA8Unorm);
-    auto albedoColorOutput =
-        Graphic::Utils::ColorTargetState("AlbedoColor").setFormat(wgpu::TextureFormat::BGRA8Unorm);
+    auto normalColorOutput = Graphic::Utils::ColorTargetState("NormalColor").setFormat(wgpu::TextureFormat::BGRA8Unorm);
+    auto albedoColorOutput = Graphic::Utils::ColorTargetState("AlbedoColor").setFormat(wgpu::TextureFormat::BGRA8Unorm);
     auto depthStencilOutput = Graphic::Utils::DepthStencilState("DepthStencil")
                                   .setFormat(wgpu::TextureFormat::Depth24PlusStencil8)
                                   .setCompareFunction(wgpu::CompareFunction::Less)
@@ -100,8 +98,8 @@ auto TestSystem(Engine::Core &core) -> void
         std::cout << error << std::endl;
     }
 
-    Graphic::Resource::Shader shader = Graphic::Resource::Shader::Create(
-        shaderDescriptor, core.GetResource<Graphic::Resource::Context>());
+    Graphic::Resource::Shader shader =
+        Graphic::Resource::Shader::Create(shaderDescriptor, core.GetResource<Graphic::Resource::Context>());
 }
 
 TEST(ShaderTest, GlobalRun)
