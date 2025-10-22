@@ -6,11 +6,11 @@
 namespace Graphic::Utils {
 class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry<BufferBindGroupLayoutEntry> {
   public:
-    BufferBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
+    explicit BufferBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
     {
         this->getEntry().buffer.type = wgpu::BufferBindingType::Undefined;
     }
-    ~BufferBindGroupLayoutEntry() = default;
+    ~BufferBindGroupLayoutEntry() override = default;
 
     BufferBindGroupLayoutEntry(const BufferBindGroupLayoutEntry &other) = default;
     BufferBindGroupLayoutEntry &operator=(const BufferBindGroupLayoutEntry &other) = default;
@@ -20,14 +20,13 @@ class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry<BufferBindGroupL
         std::vector<ValidationError> errors = ABindGroupLayoutEntry::validate();
         if (!this->isTypeSet)
         {
-            errors.push_back({"Type is not set", fmt::format("BufferBindGroupLayoutEntry({})", this->getName()),
-                              ValidationError::Severity::Error});
+            errors.emplace_back("Type is not set", fmt::format("BufferBindGroupLayoutEntry({})", this->getName()),
+                              ValidationError::Severity::Error);
         }
         if (!this->isMinBindingSizeSet)
         {
-            errors.push_back({"Min binding size is not set",
-                              fmt::format("BufferBindGroupLayoutEntry({})", this->getName()),
-                              ValidationError::Severity::Warning});
+            errors.emplace_back("Min binding size is not set", fmt::format("BufferBindGroupLayoutEntry({})", this->getName()),
+                              ValidationError::Severity::Warning);
         }
         return errors;
     }

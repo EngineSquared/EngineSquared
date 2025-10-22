@@ -14,14 +14,14 @@ struct ValidationError {
         Error
     };
     Severity severity;
-};
 
-inline std::ostream &operator<<(std::ostream &stream, const ValidationError &error)
-{
-    stream << "[" << (error.severity == ValidationError::Severity::Error ? "Error" : "Warning") << "] "
-           << error.location << ": " << error.message;
-    return stream;
-}
+    friend inline std::ostream &operator<<(std::ostream &stream, const ValidationError &error)
+    {
+        stream << "[" << (error.severity == ValidationError::Severity::Error ? "Error" : "Warning") << "] "
+            << error.location << ": " << error.message;
+        return stream;
+    }
+};
 
 class IValidable {
   public:

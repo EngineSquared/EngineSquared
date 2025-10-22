@@ -14,7 +14,7 @@ template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayo
         this->entry.texture.sampleType = wgpu::TextureSampleType::BindingNotUsed;
         this->entry.storageTexture.access = wgpu::StorageTextureAccess::BindingNotUsed;
     }
-    virtual ~ABindGroupLayoutEntry() override = default;
+    ~ABindGroupLayoutEntry() override = default;
 
     inline const std::string &getName() const override { return this->name; }
 
@@ -39,13 +39,13 @@ template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayo
         std::vector<ValidationError> errors;
         if (!this->isBindingSet)
         {
-            errors.push_back(
-                {"Binding is not set", "BindGroupLayoutEntry: " + this->name, ValidationError::Severity::Error});
+            errors.emplace_back(
+                "Binding is not set", "BindGroupLayoutEntry: " + this->name, ValidationError::Severity::Error);
         }
         if (!this->isVisibilitySet)
         {
-            errors.push_back(
-                {"Visibility is not set", "BindGroupLayoutEntry: " + this->name, ValidationError::Severity::Error});
+            errors.emplace_back(
+                "Visibility is not set", "BindGroupLayoutEntry: " + this->name, ValidationError::Severity::Error);
         }
         return errors;
     }

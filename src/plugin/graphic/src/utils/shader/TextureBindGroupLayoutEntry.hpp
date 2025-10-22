@@ -6,11 +6,11 @@
 namespace Graphic::Utils {
 class TextureBindGroupLayoutEntry : public ABindGroupLayoutEntry<TextureBindGroupLayoutEntry> {
   public:
-    TextureBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
+    explicit TextureBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
     {
         this->getEntry().texture.sampleType = wgpu::TextureSampleType::Undefined;
     }
-    ~TextureBindGroupLayoutEntry() = default;
+    ~TextureBindGroupLayoutEntry() override = default;
 
     TextureBindGroupLayoutEntry(const TextureBindGroupLayoutEntry &other) = default;
     TextureBindGroupLayoutEntry &operator=(const TextureBindGroupLayoutEntry &other) = default;

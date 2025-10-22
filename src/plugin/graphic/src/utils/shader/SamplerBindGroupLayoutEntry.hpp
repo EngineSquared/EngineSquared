@@ -6,11 +6,11 @@
 namespace Graphic::Utils {
 class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry<SamplerBindGroupLayoutEntry> {
   public:
-    SamplerBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
+    explicit SamplerBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
     {
         this->getEntry().sampler.type = wgpu::SamplerBindingType::Undefined;
     }
-    ~SamplerBindGroupLayoutEntry() = default;
+    ~SamplerBindGroupLayoutEntry() override = default;
 
     SamplerBindGroupLayoutEntry(const SamplerBindGroupLayoutEntry &other) = default;
     SamplerBindGroupLayoutEntry &operator=(const SamplerBindGroupLayoutEntry &other) = default;
@@ -20,9 +20,8 @@ class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry<SamplerBindGrou
         std::vector<ValidationError> errors = ABindGroupLayoutEntry::validate();
         if (!this->_isSamplerTypeSet)
         {
-            errors.push_back({"Sampler type is not set",
-                              fmt::format("SamplerBindGroupLayoutEntry({})", this->getName()),
-                              ValidationError::Severity::Error});
+            errors.emplace_back("Sampler type is not set", fmt::format("SamplerBindGroupLayoutEntry({})", this->getName()),
+                              ValidationError::Severity::Error);
         }
         return errors;
     }

@@ -53,17 +53,16 @@ class BindGroupLayout : public IValidable {
                 const auto &otherEntry = this->entries[j];
                 if (entry->getEntry().binding == otherEntry->getEntry().binding)
                 {
-                    errors.emplace_back(
-                        "Binding " + std::to_string(entry->getEntry().binding) + " is duplicated between entries '" +
-                            entry->getName() + "' and '" + otherEntry->getName() + "'",
-                        fmt::format("BindGroupLayout({})", this->getName()), ValidationError::Severity::Error);
+                    errors.emplace_back(fmt::format("Binding {} is duplicated between entries '{}' and '{}'",
+                                                     entry->getEntry().binding, entry->getName(), otherEntry->getName()),
+                                         fmt::format("BindGroupLayout({})", this->getName()), ValidationError::Severity::Error);
                 }
                 if (entry->getName() == otherEntry->getName())
                 {
-                    errors.emplace_back(
-                        "Entry name '" + entry->getName() + "' is duplicated between entries at index " +
-                            std::to_string(i) + " and " + std::to_string(j),
-                        fmt::format("BindGroupLayout({})", this->getName()), ValidationError::Severity::Warning);
+                    errors.emplace_back(fmt::format("Entry name '{}' is duplicated between entries at index {} and {}",
+                                                     entry->getName(), i, j),
+                                      fmt::format("BindGroupLayout({})", this->getName()),
+                                      ValidationError::Severity::Warning);
                 }
             }
         }

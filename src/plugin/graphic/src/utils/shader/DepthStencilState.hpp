@@ -5,23 +5,23 @@
 #include "utils/webgpu.hpp"
 
 namespace Graphic::Utils {
-class DepthStencilState : public virtual IValidable {
+class DepthStencilState : public IValidable {
   public:
-    DepthStencilState(const std::string &name) : name(name) {}
-    ~DepthStencilState() = default;
+    explicit DepthStencilState(const std::string &name) : name(name) {}
+    ~DepthStencilState() override = default;
 
     std::vector<ValidationError> validate(void) const override
     {
         std::vector<ValidationError> errors;
         if (this->value.format == wgpu::TextureFormat::Undefined)
         {
-            errors.push_back({"Format is not set", fmt::format("DepthStencilState({})", this->name),
-                              ValidationError::Severity::Error});
+            errors.emplace_back("Format is not set", fmt::format("DepthStencilState({})", this->name),
+                              ValidationError::Severity::Error);
         }
         if (this->value.depthWriteEnabled && this->value.depthCompare == wgpu::CompareFunction::Undefined)
         {
-            errors.push_back({"Depth compare function is not set while depth write is enabled",
-                              fmt::format("DepthStencilState({})", this->name), ValidationError::Severity::Error});
+            errors.emplace_back("Depth compare function is not set while depth write is enabled",
+                              fmt::format("DepthStencilState({})", this->name), ValidationError::Severity::Error);
         }
         return errors;
     }
