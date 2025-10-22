@@ -7,6 +7,12 @@ struct History {
     std::vector<std::string> messages;
 };
 
+#define LOG_SYSTEM_EXECUTION(systemName)                                    \
+    core.RegisterSystem<systemName>([](Engine::Core &c) {                   \
+        auto &history = c.GetResource<History>();                           \
+        history.messages.emplace_back(#systemName);                         \
+    });
+
 TEST(RenderingPipeline, CasualUse)
 {
     Engine::Core core;
@@ -15,56 +21,39 @@ TEST(RenderingPipeline, CasualUse)
 
     core.AddPlugins<RenderingPipeline::Plugin>();
 
-    core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Init");
-    });
-    core.RegisterSystem<RenderingPipeline::Setup>([](Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Setup");
-    });
-    core.RegisterSystem<Engine::Scheduler::Startup>([](Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Startup");
-    });
-    core.RegisterSystem<RenderingPipeline::PreUpdate>([](Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("PreUpdate");
-    });
-    core.RegisterSystem<Engine::Scheduler::Update>([](Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Update");
-    });
-    core.RegisterSystem<RenderingPipeline::RenderSetup>([](Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("RenderSetup");
-    });
-    core.RegisterSystem<RenderingPipeline::ToGPU>([](Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("ToGPU");
-    });
-    core.RegisterSystem<RenderingPipeline::Draw>([](Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Draw");
-    });
-    core.RegisterSystem<Engine::Scheduler::Shutdown>([](Engine::Core &c) {
-        auto &history = c.GetResource<History>();
-        history.messages.emplace_back("Shutdown");
-    });
+    LOG_SYSTEM_EXECUTION(RenderingPipeline::Init);
+    LOG_SYSTEM_EXECUTION(RenderingPipeline::Setup);
+    LOG_SYSTEM_EXECUTION(Engine::Scheduler::Startup);
+
+    LOG_SYSTEM_EXECUTION(RenderingPipeline::PreUpdate);
+    LOG_SYSTEM_EXECUTION(Engine::Scheduler::Update);
+    LOG_SYSTEM_EXECUTION(RenderingPipeline::Preparation);
+    LOG_SYSTEM_EXECUTION(RenderingPipeline::Extraction);
+    LOG_SYSTEM_EXECUTION(RenderingPipeline::PipelineCreation);
+    LOG_SYSTEM_EXECUTION(RenderingPipeline::Batching);
+    LOG_SYSTEM_EXECUTION(RenderingPipeline::CommandCreation);
+    LOG_SYSTEM_EXECUTION(RenderingPipeline::Submission);
+    LOG_SYSTEM_EXECUTION(RenderingPipeline::Presentation);
+
+    LOG_SYSTEM_EXECUTION(Engine::Scheduler::Shutdown);
 
     core.RunSystems();
 
     auto &history = core.GetResource<History>();
-    EXPECT_EQ(history.messages.size(), 9);
-    EXPECT_EQ(history.messages[0], "Init");
-    EXPECT_EQ(history.messages[1], "Setup");
-    EXPECT_EQ(history.messages[2], "Startup");
+    EXPECT_EQ(history.messages.size(), 13);
+    EXPECT_EQ(history.messages[0], "RenderingPipeline::Init");
+    EXPECT_EQ(history.messages[1], "RenderingPipeline::Setup");
+    EXPECT_EQ(history.messages[2], "Engine::Scheduler::Startup");
 
-    EXPECT_EQ(history.messages[3], "PreUpdate");
-    EXPECT_EQ(history.messages[4], "Update");
-    EXPECT_EQ(history.messages[5], "RenderSetup");
-    EXPECT_EQ(history.messages[6], "ToGPU");
-    EXPECT_EQ(history.messages[7], "Draw");
+    EXPECT_EQ(history.messages[3], "RenderingPipeline::PreUpdate");
+    EXPECT_EQ(history.messages[4], "Engine::Scheduler::Update");
+    EXPECT_EQ(history.messages[5], "RenderingPipeline::Preparation");
+    EXPECT_EQ(history.messages[6], "RenderingPipeline::Extraction");
+    EXPECT_EQ(history.messages[7], "RenderingPipeline::PipelineCreation");
+    EXPECT_EQ(history.messages[8], "RenderingPipeline::Batching");
+    EXPECT_EQ(history.messages[9], "RenderingPipeline::CommandCreation");
+    EXPECT_EQ(history.messages[10], "RenderingPipeline::Submission");
+    EXPECT_EQ(history.messages[11], "RenderingPipeline::Presentation");
 
-    EXPECT_EQ(history.messages[8], "Shutdown");
+    EXPECT_EQ(history.messages[12], "Engine::Scheduler::Shutdown");
 }
