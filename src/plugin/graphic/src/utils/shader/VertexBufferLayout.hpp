@@ -53,9 +53,8 @@ class VertexBufferLayout : public IValidable {
         {
             for (const auto &[i, j] : duplicatedLocations)
             {
-                errors.emplace_back("Shader location " + std::to_string(this->vertexAttributes[i].shaderLocation) +
-                                        " is duplicated between attributes at index " + std::to_string(i) + " and " +
-                                        std::to_string(j),
+                errors.emplace_back(fmt::format("Shader location {} is duplicated between attributes at index {} and {}",
+                                        this->vertexAttributes[i].shaderLocation, i, j),
                                     "VertexBufferLayout", ValidationError::Severity::Error);
             }
         }
