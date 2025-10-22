@@ -53,9 +53,10 @@ class VertexBufferLayout : public IValidable {
         {
             for (const auto &[i, j] : duplicatedLocations)
             {
-                errors.emplace_back(fmt::format("Shader location {} is duplicated between attributes at index {} and {}",
-                                        this->vertexAttributes[i].shaderLocation, i, j),
-                                    "VertexBufferLayout", ValidationError::Severity::Error);
+                errors.emplace_back(
+                    fmt::format("Shader location {} is duplicated between attributes at index {} and {}",
+                                this->vertexAttributes[i].shaderLocation, i, j),
+                    "VertexBufferLayout", ValidationError::Severity::Error);
             }
         }
         if (auto overlappingAttribute = this->_getOverlappingVertexAttributes(); !overlappingAttribute.empty())
