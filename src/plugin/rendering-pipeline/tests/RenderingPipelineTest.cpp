@@ -7,11 +7,11 @@ struct History {
     std::vector<std::string> messages;
 };
 
-#define ADD_SCHEDULER_TO_HISTORY(scheduler) \
-    core.RegisterSystem<scheduler>([](ES::Engine::Core &c) { \
-        auto &history = c.GetResource<History>(); \
-        history.messages.emplace_back(#scheduler); \
-    }); \
+#define ADD_SCHEDULER_TO_HISTORY(scheduler)                                                                            \
+    core.RegisterSystem<scheduler>([](ES::Engine::Core &c) {                                                           \
+        auto &history = c.GetResource<History>();                                                                      \
+        history.messages.emplace_back(#scheduler);                                                                     \
+    });
 
 TEST(RenderingPipeline, CasualUse)
 {
