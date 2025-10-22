@@ -17,7 +17,7 @@
 #include <list>
 #include <optional>
 
-namespace Plugin::Graphic::Resource {
+namespace Graphic::Resource {
 class ShaderDescriptor : public Utils::IValidable {
   public:
     ShaderDescriptor() = default;
@@ -210,4 +210,4 @@ class ShaderDescriptor : public Utils::IValidable {
     wgpu::PrimitiveTopology primitiveTopology = wgpu::PrimitiveTopology::TriangleList;
     wgpu::CullMode cullMode = wgpu::CullMode::None;
 };
-} // namespace Plugin::Graphic::Resource
+} // namespace Graphic::Resource

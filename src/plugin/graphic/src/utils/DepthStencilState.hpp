@@ -4,7 +4,7 @@
 #include "utils/IValidable.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::Utils {
+namespace Graphic::Utils {
 class DepthStencilState : public virtual IValidable {
   public:
     DepthStencilState(const std::string &name) : name(name) {}
@@ -50,4 +50,4 @@ class DepthStencilState : public virtual IValidable {
     wgpu::DepthStencilState value = wgpu::DepthStencilState(wgpu::Default);
     std::string name;
 };
-} // namespace Plugin::Graphic::Utils
+} // namespace Graphic::Utils

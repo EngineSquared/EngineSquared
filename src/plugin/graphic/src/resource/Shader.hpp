@@ -8,11 +8,11 @@
 #include "utils/webgpu.hpp"
 #include <vector>
 
-namespace Plugin::Graphic::Resource {
+namespace Graphic::Resource {
 
 class Shader {
   public:
-    Shader(void) {}
+    Shader(void) = default;
     virtual ~Shader() = default;
 
     static Shader Create(const ShaderDescriptor &descriptor, Context &context)
@@ -118,4 +118,4 @@ class Shader {
     wgpu::RenderPipeline pipeline;
 };
 
-} // namespace Plugin::Graphic::Resource
+} // namespace Graphic::Resource

@@ -3,7 +3,7 @@
 #include "utils/ABindGroupLayoutEntry.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
+namespace Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry<SamplerBindGroupLayoutEntry> {
   public:
     SamplerBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
@@ -36,4 +36,4 @@ class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry<SamplerBindGrou
   private:
     bool _isSamplerTypeSet = false;
 };
-} // namespace Plugin::Graphic::Utils
+} // namespace Graphic::Utils

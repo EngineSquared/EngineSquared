@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace Plugin::Graphic::Exception {
+namespace Graphic::Exception {
 
 class FileReadingError : public std::exception {
   public:
@@ -16,4 +16,4 @@ class FileReadingError : public std::exception {
     std::string msg;
 };
 
-} // namespace Plugin::Graphic::Exception
+} // namespace Graphic::Exception

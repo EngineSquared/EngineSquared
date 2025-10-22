@@ -44,19 +44,19 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4f {
 
 auto TestSystem(Engine::Core &core) -> void
 {
-    Plugin::Graphic::Resource::ShaderDescriptor shaderDescriptor;
+    Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
     auto vertexLayout =
-        Plugin::Graphic::Utils::VertexBufferLayout()
+        Graphic::Utils::VertexBufferLayout()
             .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)
             .addVertexAttribute(wgpu::VertexFormat::Float32x2, 3 * sizeof(float), 1)
             .setArrayStride(
                 5 * sizeof(float)) // This can be omitted to test automatic stride calculation (but this is unsafe)
             .setStepMode(wgpu::VertexStepMode::Vertex); // This is done by default
     auto bindGroupLayout =
-        Plugin::Graphic::Utils::BindGroupLayout("ExampleLayout")
+        Graphic::Utils::BindGroupLayout("ExampleLayout")
             .addEntry(
-                Plugin::Graphic::Utils::BufferBindGroupLayoutEntry("BufferEntry")
+                Graphic::Utils::BufferBindGroupLayoutEntry("BufferEntry")
                     .setType(wgpu::BufferBindingType::Uniform)
                     .setHasDynamicOffset(false)     // This is done by default
                     .setMinBindingSize<glm::mat4>() // with will try to compute size with types and align to 16 bytes
@@ -64,20 +64,20 @@ auto TestSystem(Engine::Core &core) -> void
                                                           // and webgpu will try to set it by itself
                     .setVisibility(wgpu::ShaderStage::Vertex)
                     .setBinding(0))
-            .addEntry(Plugin::Graphic::Utils::TextureBindGroupLayoutEntry("TextureEntry")
+            .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("TextureEntry")
                           .setSampleType(wgpu::TextureSampleType::Float)
                           .setViewDimension(wgpu::TextureViewDimension::Cube)
                           .setVisibility(wgpu::ShaderStage::Fragment)
                           .setBinding(1))
-            .addEntry(Plugin::Graphic::Utils::SamplerBindGroupLayoutEntry("SamplerEntry")
+            .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("SamplerEntry")
                           .setSamplerType(wgpu::SamplerBindingType::Filtering)
                           .setVisibility(wgpu::ShaderStage::Fragment)
                           .setBinding(2));
     auto normalColorOutput =
-        Plugin::Graphic::Utils::ColorTargetState("NormalColor").setFormat(wgpu::TextureFormat::BGRA8Unorm);
+        Graphic::Utils::ColorTargetState("NormalColor").setFormat(wgpu::TextureFormat::BGRA8Unorm);
     auto albedoColorOutput =
-        Plugin::Graphic::Utils::ColorTargetState("AlbedoColor").setFormat(wgpu::TextureFormat::BGRA8Unorm);
-    auto depthStencilOutput = Plugin::Graphic::Utils::DepthStencilState("DepthStencil")
+        Graphic::Utils::ColorTargetState("AlbedoColor").setFormat(wgpu::TextureFormat::BGRA8Unorm);
+    auto depthStencilOutput = Graphic::Utils::DepthStencilState("DepthStencil")
                                   .setFormat(wgpu::TextureFormat::Depth24PlusStencil8)
                                   .setCompareFunction(wgpu::CompareFunction::Less)
                                   .setDepthWriteEnabled(wgpu::OptionalBool::True);
@@ -100,19 +100,19 @@ auto TestSystem(Engine::Core &core) -> void
         std::cout << error << std::endl;
     }
 
-    Plugin::Graphic::Resource::Shader shader = Plugin::Graphic::Resource::Shader::Create(
-        shaderDescriptor, core.GetResource<Plugin::Graphic::Resource::Context>());
+    Graphic::Resource::Shader shader = Graphic::Resource::Shader::Create(
+        shaderDescriptor, core.GetResource<Graphic::Resource::Context>());
 }
 
 TEST(ShaderTest, GlobalRun)
 {
     Engine::Core core;
 
-    core.AddPlugins<Plugin::Graphic::Plugin>();
+    core.AddPlugins<Graphic::Plugin>();
 
-    core.RegisterSystem<Plugin::RenderingPipeline::Init>([](Engine::Core &c) {
-        c.GetResource<Plugin::Graphic::Resource::GraphicSettings>()
-            .SetWindowSystem(Plugin::Graphic::Resource::WindowSystem::None)
+    core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &c) {
+        c.GetResource<Graphic::Resource::GraphicSettings>()
+            .SetWindowSystem(Graphic::Resource::WindowSystem::None)
             .SetOnErrorCallback([](WGPUDevice const *device, WGPUErrorType type, WGPUStringView message,
                                    WGPU_NULLABLE void *userdata1, WGPU_NULLABLE void *userdata2) {
                 Log::Error(fmt::format("Custom uncaptured device error: type {:x} ({})", static_cast<uint32_t>(type),

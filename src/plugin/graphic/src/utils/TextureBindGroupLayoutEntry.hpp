@@ -3,7 +3,7 @@
 #include "utils/ABindGroupLayoutEntry.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
+namespace Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 class TextureBindGroupLayoutEntry : public ABindGroupLayoutEntry<TextureBindGroupLayoutEntry> {
   public:
     TextureBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
@@ -55,4 +55,4 @@ class TextureBindGroupLayoutEntry : public ABindGroupLayoutEntry<TextureBindGrou
     bool _isSampleTypeSet = false;
     bool _isViewDimensionSet = false;
 };
-} // namespace Plugin::Graphic::Utils
+} // namespace Graphic::Utils

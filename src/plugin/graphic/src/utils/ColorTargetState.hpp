@@ -4,7 +4,7 @@
 #include "utils/IValidable.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::Utils {
+namespace Graphic::Utils {
 class ColorTargetState : public virtual IValidable {
   public:
     ColorTargetState(const std::string &name) : name(name) {}
@@ -33,4 +33,4 @@ class ColorTargetState : public virtual IValidable {
     wgpu::TextureFormat format = wgpu::TextureFormat::Undefined;
     std::string name;
 };
-} // namespace Plugin::Graphic::Utils
+} // namespace Graphic::Utils

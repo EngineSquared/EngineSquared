@@ -3,7 +3,7 @@
 #include "utils/ABindGroupLayoutEntry.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
+namespace Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry<BufferBindGroupLayoutEntry> {
   public:
     BufferBindGroupLayoutEntry(const std::string &name) : ABindGroupLayoutEntry(name)
@@ -77,4 +77,4 @@ class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry<BufferBindGroupL
         }
     }
 };
-} // namespace Plugin::Graphic::Utils
+} // namespace Graphic::Utils

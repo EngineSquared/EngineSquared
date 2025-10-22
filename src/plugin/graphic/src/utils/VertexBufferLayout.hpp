@@ -7,7 +7,7 @@
 #include "exception/VertexAttributeOverlappingError.hpp"
 #include "utils/IValidable.hpp"
 
-namespace Plugin::Graphic::Utils {
+namespace Graphic::Utils {
 class VertexBufferLayout : public IValidable {
   public:
     VertexBufferLayout() = default;
@@ -154,4 +154,4 @@ class VertexBufferLayout : public IValidable {
     std::optional<uint32_t> arrayStride;
     wgpu::VertexStepMode stepMode = wgpu::VertexStepMode::Vertex;
 };
-} // namespace Plugin::Graphic::Utils
+} // namespace Graphic::Utils

@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace Plugin::Graphic::Exception {
+namespace Graphic::Exception {
 
 class DuplicatedVertexAttributeLocationError : public std::exception {
   public:
@@ -17,4 +17,4 @@ class DuplicatedVertexAttributeLocationError : public std::exception {
     std::string msg;
 };
 
-} // namespace Plugin::Graphic::Exception
+} // namespace Graphic::Exception

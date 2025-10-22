@@ -3,7 +3,7 @@
 #include "utils/IBindGroupLayoutEntry.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
+namespace Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 
 template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayoutEntry {
   public:
@@ -56,4 +56,4 @@ template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayo
     bool isVisibilitySet = false;
     std::string name;
 };
-} // namespace Plugin::Graphic::Utils
+} // namespace Graphic::Utils

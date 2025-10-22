@@ -7,9 +7,9 @@
 #include <vector>
 
 template <typename TBindGroupLayoutEntry>
-concept CBindGroupLayoutEntry = std::derived_from<TBindGroupLayoutEntry, Plugin::Graphic::Utils::IBindGroupLayoutEntry>;
+concept CBindGroupLayoutEntry = std::derived_from<TBindGroupLayoutEntry, Graphic::Utils::IBindGroupLayoutEntry>;
 
-namespace Plugin::Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
+namespace Graphic::Utils { // TODO: put this file in the correct forder and update its namespace
 class BindGroupLayout : public IValidable {
   public:
     BindGroupLayout(const std::string &name) : name(name) {}
@@ -73,4 +73,4 @@ class BindGroupLayout : public IValidable {
     std::vector<std::shared_ptr<IBindGroupLayoutEntry>> entries;
     std::string name;
 };
-} // namespace Plugin::Graphic::Utils
+} // namespace Graphic::Utils

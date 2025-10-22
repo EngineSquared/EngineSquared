@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace Plugin::Graphic::Utils {
+namespace Graphic::Utils {
 
 struct ValidationError {
     std::string message;
@@ -28,4 +28,4 @@ class IValidable {
     virtual ~IValidable() = default;
     virtual std::vector<ValidationError> validate() const = 0;
 };
-} // namespace Plugin::Graphic::Utils
+} // namespace Graphic::Utils
