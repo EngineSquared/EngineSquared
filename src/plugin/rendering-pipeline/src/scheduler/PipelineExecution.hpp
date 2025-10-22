@@ -2,12 +2,12 @@
 
 #include "scheduler/Update.hpp"
 
-namespace ES::Plugin::RenderingPipeline {
+namespace RenderingPipeline {
 /**
  * @brief This class is used to swap the buffers and draw the data on the screen.
  */
-class PipelineExecution : public ES::Engine::Scheduler::Update {
+class PipelineExecution : public Engine::Scheduler::Update {
   public:
-    using ES::Engine::Scheduler::Update::Update;
+    using Engine::Scheduler::Update::Update;
 };
-} // namespace ES::Plugin::RenderingPipeline
+} // namespace RenderingPipeline
