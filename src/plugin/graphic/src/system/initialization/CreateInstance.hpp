@@ -2,7 +2,7 @@
 
 #include "core/Core.hpp"
 
-namespace Plugin::Graphic::System {
+namespace Graphic::System {
 
 void CreateInstance(Engine::Core &core);
 

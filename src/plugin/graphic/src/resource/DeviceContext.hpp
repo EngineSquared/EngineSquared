@@ -2,7 +2,7 @@
 
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::Resource {
+namespace Graphic::Resource {
 struct DeviceContext {
   public:
     DeviceContext(void) = default;
@@ -24,4 +24,4 @@ struct DeviceContext {
     wgpu::DeviceDescriptor _descriptor = wgpu::DeviceDescriptor(wgpu::Default);
     std::optional<wgpu::Device> _device = std::nullopt;
 };
-} // namespace Plugin::Graphic::Resource
+} // namespace Graphic::Resource

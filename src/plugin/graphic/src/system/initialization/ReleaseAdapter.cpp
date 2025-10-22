@@ -3,7 +3,7 @@
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
 
-void Plugin::Graphic::System::ReleaseAdapter(Engine::Core &core)
+void Graphic::System::ReleaseAdapter(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
     context.adapter->release();

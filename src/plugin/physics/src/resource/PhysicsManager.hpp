@@ -20,7 +20,7 @@
 #include <Jolt/Physics/PhysicsSystem.h>
 #include <Jolt/RegisterTypes.h>
 
-namespace Plugin::Physics::Resource {
+namespace Physics::Resource {
 /**
  * PhysicsManager is a resource that wraps necessary JoltPhysics components.
  */
@@ -113,8 +113,7 @@ class PhysicsManager {
      * @return void
      */
     template <typename... Components>
-    inline FunctionUtils::FunctionID
-    AddContactAddedCallback(std::unique_ptr<Plugin::Physics::Utils::BaseCallback> &&callback)
+    inline FunctionUtils::FunctionID AddContactAddedCallback(std::unique_ptr<Physics::Utils::BaseCallback> &&callback)
     {
         if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
@@ -154,7 +153,7 @@ class PhysicsManager {
      */
     template <typename... Components>
     inline FunctionUtils::FunctionID
-    AddContactPersistedCallback(std::unique_ptr<Plugin::Physics::Utils::BaseCallback> &&callback)
+    AddContactPersistedCallback(std::unique_ptr<Physics::Utils::BaseCallback> &&callback)
     {
         if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
@@ -193,8 +192,7 @@ class PhysicsManager {
      * @return void
      */
     template <typename... Components>
-    inline FunctionUtils::FunctionID
-    AddContactRemovedCallback(std::unique_ptr<Plugin::Physics::Utils::BaseCallback> &&callback)
+    inline FunctionUtils::FunctionID AddContactRemovedCallback(std::unique_ptr<Physics::Utils::BaseCallback> &&callback)
     {
         if (auto contactListener = GetContactListener(); contactListener != nullptr)
         {
@@ -300,4 +298,4 @@ class PhysicsManager {
 
     int _collisionSteps = 1;
 };
-} // namespace Plugin::Physics::Resource
+} // namespace Physics::Resource

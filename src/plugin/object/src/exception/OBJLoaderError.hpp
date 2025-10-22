@@ -26,7 +26,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace Plugin::Object {
+namespace Object {
 
 /**
  * @brief OBJLoaderError is an exception class that should be thrown when an error
@@ -55,4 +55,4 @@ class OBJLoaderError : public std::exception {
     std::string _msg;
 };
 
-} // namespace Plugin::Object
+} // namespace Object

@@ -2,7 +2,7 @@
 
 #include "utils/ScriptableEntity.hpp"
 
-namespace Plugin::NativeScripting::Component {
+namespace NativeScripting::Component {
 /**
  * Component used to allow native scripting for entities.
  * Implementation is well explained and inspired from this Youtube video made by @TheCherno
@@ -28,4 +28,4 @@ struct NativeScripting {
         OnUpdate = [&core](Utils::ScriptableEntity *instance) { static_cast<T *>(instance)->OnUpdate(core); };
     }
 };
-} // namespace Plugin::NativeScripting::Component
+} // namespace NativeScripting::Component

@@ -3,7 +3,7 @@
 #include "resource/Limits.hpp"
 #include <ranges>
 
-namespace Plugin::Graphic::Resource {
+namespace Graphic::Resource {
 
 enum class WindowSystem {
     None,
@@ -55,7 +55,6 @@ class GraphicSettings {
         }
         return *this;
     }
-
     bool HasRequiredFeature(wgpu::FeatureName feature) const
     {
         auto it = _GetRequiredFeature(feature);
@@ -92,4 +91,4 @@ class GraphicSettings {
     Limits wantedLimits = Limits(wgpu::Default);
     RequiredFeatureContainer requiredFeatures;
 };
-} // namespace Plugin::Graphic::Resource
+} // namespace Graphic::Resource

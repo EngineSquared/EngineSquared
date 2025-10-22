@@ -1,7 +1,7 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "OBJLoader.hpp"
 
-namespace Plugin::Object {
+namespace Object {
 
 OBJLoader::OBJLoader(const std::string &filepath, const std::string &mtlSearchPath)
 {
@@ -183,4 +183,4 @@ void OBJLoader::SetMaterialProperties(Component::Material &material, const tinyo
     material.dissolve = mat.dissolve;
 }
 
-} // namespace Plugin::Object
+} // namespace Object

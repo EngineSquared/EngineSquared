@@ -29,7 +29,7 @@
 #include "exception/OBJLoaderError.hpp"
 #include "resource/Shape.hpp"
 
-namespace Plugin::Object {
+namespace Object {
 
 /**
  * @brief OBJLoader is a class that loads and parses OBJ files.
@@ -42,9 +42,9 @@ namespace Plugin::Object {
  * @example "Loading an OBJ file"
  * @code
  * try {
- *     Plugin::Object::OBJLoader loader("path/to/model.obj");
- *     Plugin::Object::Component::Mesh mesh = loader.GetMesh();
- * } catch (const Plugin::Object::OBJLoaderError &e) {
+ *     Object::OBJLoader loader("path/to/model.obj");
+ *     Object::Component::Mesh mesh = loader.GetMesh();
+ * } catch (const Object::OBJLoaderError &e) {
  *     std::cerr << e.what() << std::endl;
  * }
  * @endcode
@@ -141,4 +141,4 @@ class OBJLoader {
     std::vector<Component::Material> _materials{};
 };
 
-} // namespace Plugin::Object
+} // namespace Object

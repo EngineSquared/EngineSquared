@@ -2,12 +2,12 @@
 #include "Engine.hpp"
 #include <entt/entt.hpp>
 
-void Plugin::RenderingPipeline::Setup::RunSystems()
+void RenderingPipeline::Setup::RunSystems()
 {
     for (auto const &system : this->GetSystems())
     {
         RunSystem(system.get(), _core);
     }
 
-    _core.DeleteScheduler<Plugin::RenderingPipeline::Setup>();
+    _core.DeleteScheduler<RenderingPipeline::Setup>();
 }

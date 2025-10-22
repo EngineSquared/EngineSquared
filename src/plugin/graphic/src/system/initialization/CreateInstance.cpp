@@ -3,7 +3,7 @@
 #include "resource/Context.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::System {
+namespace Graphic::System {
 
 void CreateInstance(Engine::Core &core)
 {
@@ -17,4 +17,4 @@ void CreateInstance(Engine::Core &core)
     core.GetResource<Graphic::Resource::Context>().instance = instance;
 }
 
-} // namespace Plugin::Graphic::System
+} // namespace Graphic::System

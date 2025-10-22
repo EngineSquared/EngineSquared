@@ -4,7 +4,7 @@
 #include "resource/InputManager.hpp"
 #include "system/BindCallbacksToGLFW.hpp"
 
-void Plugin::Input::Plugin::Bind()
+void Input::Plugin::Bind()
 {
     RequirePlugins<Window::Plugin>();
 

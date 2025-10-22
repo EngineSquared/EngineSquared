@@ -3,7 +3,7 @@
 #include "RenderingPipeline.hpp"
 #include "scheduler/Shutdown.hpp"
 
-void Plugin::Graphic::Plugin::Bind()
+void Graphic::Plugin::Bind()
 {
     RequirePlugins<RenderingPipeline::Plugin>();
 

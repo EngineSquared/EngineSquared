@@ -8,7 +8,7 @@ struct ActionHistory {
     std::vector<std::string> actions;
 };
 
-class TestScript : public Plugin::NativeScripting::Utils::ScriptableEntity {
+class TestScript : public NativeScripting::Utils::ScriptableEntity {
   public:
     void OnCreate(Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnCreate"); }
 
@@ -22,11 +22,11 @@ TEST(NativeScripting, CasualUse)
     Engine::Core core;
 
     core.RegisterResource<ActionHistory>({});
-    core.AddPlugins<Plugin::NativeScripting::Plugin>();
+    core.AddPlugins<NativeScripting::Plugin>();
 
     auto e = core.CreateEntity();
 
-    e.AddComponent<Plugin::NativeScripting::Component::NativeScripting>(core).Bind<TestScript>(core);
+    e.AddComponent<NativeScripting::Component::NativeScripting>(core).Bind<TestScript>(core);
 
     core.RunSystems();
 

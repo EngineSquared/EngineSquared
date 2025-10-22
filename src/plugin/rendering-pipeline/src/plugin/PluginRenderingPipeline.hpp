@@ -2,7 +2,7 @@
 
 #include "plugin/APlugin.hpp"
 
-namespace Plugin::RenderingPipeline {
+namespace RenderingPipeline {
 /**
  * @brief This plugin create multiple schedulers that allows to create a rendering pipeline.
  * It will add the following "startup" pipeline:
@@ -23,4 +23,4 @@ class Plugin : public Engine::APlugin {
 
     void Bind() final;
 };
-} // namespace Plugin::RenderingPipeline
+} // namespace RenderingPipeline

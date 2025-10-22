@@ -27,7 +27,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-namespace Plugin::Object::Resource {
+namespace Object::Resource {
 
 /**
  * @brief Shape structure.
@@ -81,4 +81,4 @@ struct Shape {
     const Component::Material &GetMaterial() const { return material; }
 };
 
-} // namespace Plugin::Object::Resource
+} // namespace Object::Resource

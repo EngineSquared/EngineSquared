@@ -29,7 +29,7 @@
 
 #include <iostream>
 
-namespace Plugin::Window::System {
+namespace Window::System {
 
 const int DEFAULT_WIDTH = 800;
 const int DEFAULT_HEIGHT = 800;
@@ -125,4 +125,4 @@ void StoreCoreInWindow(Engine::Core &core);
  */
 void DestroyWindow(Engine::Core &core);
 
-} // namespace Plugin::Window::System
+} // namespace Window::System

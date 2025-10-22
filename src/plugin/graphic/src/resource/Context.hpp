@@ -4,7 +4,7 @@
 #include "resource/Surface.hpp"
 #include "utils/webgpu.hpp"
 
-namespace Plugin::Graphic::Resource {
+namespace Graphic::Resource {
 class Context {
   public:
     Context() = default;
@@ -43,4 +43,4 @@ class Context {
     DeviceContext deviceContext;
     std::optional<wgpu::Queue> queue;
 };
-} // namespace Plugin::Graphic::Resource
+} // namespace Graphic::Resource
