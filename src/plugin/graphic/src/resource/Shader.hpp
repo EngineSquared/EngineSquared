@@ -27,7 +27,7 @@ class Shader {
 
         wgpu::RenderPipelineDescriptor pipelineDescriptor(wgpu::Default);
         const std::string pipelineLabel = fmt::format("{} Render Pipeline", name);
-        pipelineDescriptor.label = wgpu::StringView(pipelineLabel.c_str());
+        pipelineDescriptor.label = wgpu::StringView(pipelineLabel);
 
         std::vector<wgpu::VertexBufferLayout> vertexBufferLayouts = _createVertexBufferLayouts(descriptor);
         pipelineDescriptor.vertex.bufferCount = vertexBufferLayouts.size();
@@ -54,7 +54,7 @@ class Shader {
 
         wgpu::PipelineLayoutDescriptor pipelineLayoutDescriptor(wgpu::Default);
         const std::string pipelineLayoutLabel = fmt::format("{} Pipeline Layout", name);
-        pipelineLayoutDescriptor.label = wgpu::StringView(pipelineLayoutLabel.c_str());
+        pipelineLayoutDescriptor.label = wgpu::StringView(pipelineLayoutLabel);
         std::vector<WGPUBindGroupLayout> bindGroupLayouts;
         for (const auto &layout : descriptor.getBindGroupLayouts())
         {
@@ -65,7 +65,7 @@ class Shader {
             }
             wgpu::BindGroupLayoutDescriptor bindGroupLayoutDescriptor(wgpu::Default);
             const std::string layoutLabel = fmt::format("{} Bind Group Layout of pipeline {}", layout.getName(), name);
-            bindGroupLayoutDescriptor.label = wgpu::StringView(layoutLabel.c_str());
+            bindGroupLayoutDescriptor.label = wgpu::StringView(layoutLabel);
             bindGroupLayoutDescriptor.entryCount = entries.size();
             bindGroupLayoutDescriptor.entries = entries.data();
             bindGroupLayouts.push_back(device.createBindGroupLayout(bindGroupLayoutDescriptor));
@@ -111,7 +111,7 @@ class Shader {
             vertexBufferLayout.attributes = layout.getVertexAttributes().data();
             layouts.push_back(vertexBufferLayout);
         }
-        return std::move(layouts);
+        return layouts;
     }
 
     ShaderDescriptor descriptor;

@@ -21,11 +21,11 @@ namespace Graphic::Resource {
 class ShaderDescriptor : public Utils::IValidable {
   public:
     ShaderDescriptor() = default;
-    ~ShaderDescriptor() = default;
+    ~ShaderDescriptor() override = default;
 
-    ShaderDescriptor &setShader(const std::string &source)
+    ShaderDescriptor &setShader(std::string_view source)
     {
-        this->shaderSource = source;
+        this->_shaderSource = source;
         return *this;
     }
     ShaderDescriptor &setShaderFromFile(const std::filesystem::path &path)
@@ -47,167 +47,162 @@ class ShaderDescriptor : public Utils::IValidable {
         return setShader(buffer.str());
     }
 
-    ShaderDescriptor &setVertexEntryPoint(const std::string &entryPoint)
+    ShaderDescriptor &setVertexEntryPoint(std::string_view entryPoint)
     {
-        this->vertexEntryPoint = entryPoint;
+        this->_vertexEntryPoint = entryPoint;
         return *this;
     }
 
-    ShaderDescriptor &setFragmentEntryPoint(const std::string &entryPoint)
+    ShaderDescriptor &setFragmentEntryPoint(std::string_view entryPoint)
     {
-        this->fragmentEntryPoint = entryPoint;
+        this->_fragmentEntryPoint = entryPoint;
         return *this;
     }
 
     ShaderDescriptor &addVertexBufferLayout(const Utils::VertexBufferLayout &layout)
     {
-        this->vertexBufferLayouts.push_back(layout);
+        this->_vertexBufferLayouts.push_back(layout);
         return *this;
     }
 
     Utils::VertexBufferLayout &getVertexBufferLayout(size_t index)
     {
-        return *std::next(this->vertexBufferLayouts.begin(), index);
+        return *std::next(this->_vertexBufferLayouts.begin(), index);
     }
 
     ShaderDescriptor &addBindGroupLayout(const Utils::BindGroupLayout &layout)
     {
-        this->bindGroupLayouts.push_back(layout);
+        this->_bindGroupLayouts.push_back(layout);
         return *this;
     }
 
     Utils::BindGroupLayout &getBindGroupLayout(size_t index)
     {
-        return *std::next(this->bindGroupLayouts.begin(), index);
+        return *std::next(this->_bindGroupLayouts.begin(), index);
     }
 
     ShaderDescriptor &addOutputColorFormat(const Utils::ColorTargetState &state)
     {
-        this->outputColorFormats.push_back(state);
+        this->_outputColorFormats.push_back(state);
         return *this;
     }
 
     ShaderDescriptor &setOutputDepthFormat(const Utils::DepthStencilState &state)
     {
-        this->outputDepthFormat = state;
+        this->_outputDepthFormat = state;
         return *this;
     }
 
     ShaderDescriptor &setCullMode(wgpu::CullMode mode)
     {
-        this->cullMode = mode;
+        this->_cullMode = mode;
         return *this;
     }
 
     ShaderDescriptor &setPrimitiveTopology(wgpu::PrimitiveTopology topology)
     {
-        this->primitiveTopology = topology;
+        this->_primitiveTopology = topology;
         return *this;
     }
 
-    ShaderDescriptor &setName(const std::string &name)
+    ShaderDescriptor &setName(std::string_view name)
     {
-        this->name = name;
+        this->_name = name;
         return *this;
     }
 
-    std::vector<Utils::ValidationError> validate(void) const
+    std::vector<Utils::ValidationError> validate(void) const override
     {
         std::vector<Utils::ValidationError> errors;
-        if (!this->shaderSource.has_value())
+        if (!this->_shaderSource.has_value())
         {
-            errors.push_back({"Shader source is not set", "ShaderDescriptor", Utils::ValidationError::Severity::Error});
+            errors.emplace_back(Utils::ValidationError("Shader source is not set", "ShaderDescriptor", Utils::ValidationError::Severity::Error));
         }
-        if (!this->name.has_value())
+        if (!this->_name.has_value())
         {
-            errors.push_back({"Shader name is not set ('Unnamed' will be used)", "ShaderDescriptor",
-                              Utils::ValidationError::Severity::Warning});
+            errors.emplace_back(Utils::ValidationError("Shader name is not set ('Unnamed' will be used)", "ShaderDescriptor",
+                                 Utils::ValidationError::Severity::Warning));
         }
-        if (this->vertexBufferLayouts.empty())
+        if (this->_vertexBufferLayouts.empty())
         {
-            errors.push_back(
-                {"No vertex buffer layouts added", "ShaderDescriptor", Utils::ValidationError::Severity::Error});
+            errors.emplace_back(Utils::ValidationError("No vertex buffer layouts added", "ShaderDescriptor", Utils::ValidationError::Severity::Error));
         }
-        if (!this->vertexEntryPoint.has_value())
+        if (!this->_vertexEntryPoint.has_value())
         {
-            errors.push_back({"Vertex entry point is not set ('vs_main' will be used)", "ShaderDescriptor",
-                              Utils::ValidationError::Severity::Warning});
+            errors.emplace_back(Utils::ValidationError("Vertex entry point is not set ('vs_main' will be used)", "ShaderDescriptor",
+                                 Utils::ValidationError::Severity::Warning));
         }
-        if (!this->fragmentEntryPoint.has_value())
+        if (!this->_fragmentEntryPoint.has_value())
         {
-            errors.push_back({"Fragment entry point is not set ('fs_main' will be used)", "ShaderDescriptor",
-                              Utils::ValidationError::Severity::Warning});
+            errors.emplace_back(Utils::ValidationError("Fragment entry point is not set ('fs_main' will be used)", "ShaderDescriptor",
+                                 Utils::ValidationError::Severity::Warning));
         }
-        for (size_t i = 0; i < this->vertexBufferLayouts.size(); i++)
+        for (size_t i = 0; i < this->_vertexBufferLayouts.size(); i++)
         {
-            auto layoutErrors = std::next(this->vertexBufferLayouts.begin(), i)->validate();
+            auto layoutErrors = std::next(this->_vertexBufferLayouts.begin(), i)->validate();
             for (const auto &error : layoutErrors)
             {
-                errors.push_back(
-                    {error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity});
+                errors.emplace_back(Utils::ValidationError(error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity));
             }
         }
-        for (size_t i = 0; i < this->bindGroupLayouts.size(); i++)
+        for (size_t i = 0; i < this->_bindGroupLayouts.size(); i++)
         {
-            auto layoutErrors = std::next(this->bindGroupLayouts.begin(), i)->validate();
+            auto layoutErrors = std::next(this->_bindGroupLayouts.begin(), i)->validate();
             for (const auto &error : layoutErrors)
             {
-                errors.push_back(
-                    {error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity});
+                errors.emplace_back(Utils::ValidationError(error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity));
             }
         }
-        for (size_t i = 0; i < this->outputColorFormats.size(); i++)
+        for (size_t i = 0; i < this->_outputColorFormats.size(); i++)
         {
-            auto stateErrors = std::next(this->outputColorFormats.begin(), i)->validate();
+            auto stateErrors = std::next(this->_outputColorFormats.begin(), i)->validate();
             for (const auto &error : stateErrors)
             {
-                errors.push_back(
-                    {error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity});
+                errors.emplace_back(Utils::ValidationError(error.message, fmt::format("ShaderDescriptor::({}){}", i, error.location), error.severity));
             }
         }
-        if (this->outputDepthFormat.has_value())
+        if (this->_outputDepthFormat.has_value())
         {
-            auto stateErrors = this->outputDepthFormat->validate();
+            auto stateErrors = this->_outputDepthFormat->validate();
             for (const auto &error : stateErrors)
             {
-                errors.push_back(
-                    {error.message, fmt::format("ShaderDescriptor::DepthStencil{}", error.location), error.severity});
+                errors.emplace_back(Utils::ValidationError(error.message, fmt::format("ShaderDescriptor::DepthStencil{}", error.location), error.severity));
             }
         }
         return errors;
     }
 
-    const std::string &getName() const { return this->name.has_value() ? this->name.value() : DEFAULT_NAME; }
-    const std::list<Utils::BindGroupLayout> &getBindGroupLayouts() const { return this->bindGroupLayouts; }
-    const std::list<Utils::VertexBufferLayout> &getVertexBufferLayouts() const { return this->vertexBufferLayouts; }
-    const std::list<Utils::ColorTargetState> &getOutputColorFormats() const { return this->outputColorFormats; }
-    const std::optional<Utils::DepthStencilState> &getOutputDepthFormat() const { return this->outputDepthFormat; }
-    const std::optional<std::string> &getShaderSource() const { return this->shaderSource; }
+    const std::string &getName() const { return this->_name.has_value() ? this->_name.value() : _DEFAULT_NAME; }
+    const std::list<Utils::BindGroupLayout> &getBindGroupLayouts() const { return this->_bindGroupLayouts; }
+    const std::list<Utils::VertexBufferLayout> &getVertexBufferLayouts() const { return this->_vertexBufferLayouts; }
+    const std::list<Utils::ColorTargetState> &getOutputColorFormats() const { return this->_outputColorFormats; }
+    const std::optional<Utils::DepthStencilState> &getOutputDepthFormat() const { return this->_outputDepthFormat; }
+    const std::optional<std::string> &getShaderSource() const { return this->_shaderSource; }
     const std::string &getFragmentEntryPoint() const
     {
-        return this->fragmentEntryPoint.has_value() ? this->fragmentEntryPoint.value() : DEFAULT_FRAGMENT_ENTRY_POINT;
+        return this->_fragmentEntryPoint.has_value() ? this->_fragmentEntryPoint.value() : _DEFAULT_FRAGMENT_ENTRY_POINT;
     }
     const std::string &getVertexEntryPoint() const
     {
-        return this->vertexEntryPoint.has_value() ? this->vertexEntryPoint.value() : DEFAULT_VERTEX_ENTRY_POINT;
+        return this->_vertexEntryPoint.has_value() ? this->_vertexEntryPoint.value() : _DEFAULT_VERTEX_ENTRY_POINT;
     }
-    wgpu::PrimitiveTopology getPrimitiveTopology() const { return this->primitiveTopology; }
-    wgpu::CullMode getCullMode() const { return this->cullMode; }
+    wgpu::PrimitiveTopology getPrimitiveTopology() const { return this->_primitiveTopology; }
+    wgpu::CullMode getCullMode() const { return this->_cullMode; }
 
   private:
-    inline const static std::string DEFAULT_FRAGMENT_ENTRY_POINT = "fs_main";
-    inline const static std::string DEFAULT_VERTEX_ENTRY_POINT = "vs_main";
-    inline const static std::string DEFAULT_NAME = "Unnamed";
+    inline const static std::string _DEFAULT_FRAGMENT_ENTRY_POINT = "fs_main";
+    inline const static std::string _DEFAULT_VERTEX_ENTRY_POINT = "vs_main";
+    inline const static std::string _DEFAULT_NAME = "Unnamed";
 
-    std::optional<std::string> name;
-    std::list<Utils::BindGroupLayout> bindGroupLayouts;
-    std::list<Utils::VertexBufferLayout> vertexBufferLayouts;
-    std::list<Utils::ColorTargetState> outputColorFormats;
-    std::optional<std::string> shaderSource;
-    std::optional<std::string> fragmentEntryPoint;
-    std::optional<std::string> vertexEntryPoint;
-    std::optional<Utils::DepthStencilState> outputDepthFormat;
-    wgpu::PrimitiveTopology primitiveTopology = wgpu::PrimitiveTopology::TriangleList;
-    wgpu::CullMode cullMode = wgpu::CullMode::None;
+    std::optional<std::string> _name;
+    std::list<Utils::BindGroupLayout> _bindGroupLayouts;
+    std::list<Utils::VertexBufferLayout> _vertexBufferLayouts;
+    std::list<Utils::ColorTargetState> _outputColorFormats;
+    std::optional<std::string> _shaderSource;
+    std::optional<std::string> _fragmentEntryPoint;
+    std::optional<std::string> _vertexEntryPoint;
+    std::optional<Utils::DepthStencilState> _outputDepthFormat;
+    wgpu::PrimitiveTopology _primitiveTopology = wgpu::PrimitiveTopology::TriangleList;
+    wgpu::CullMode _cullMode = wgpu::CullMode::None;
 };
 } // namespace Graphic::Resource
