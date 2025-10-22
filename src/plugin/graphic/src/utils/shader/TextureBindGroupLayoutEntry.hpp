@@ -20,13 +20,15 @@ class TextureBindGroupLayoutEntry : public ABindGroupLayoutEntry<TextureBindGrou
         std::vector<ValidationError> errors = ABindGroupLayoutEntry::validate();
         if (!this->_isSampleTypeSet)
         {
-            errors.emplace_back("Sample type is not set", fmt::format("TextureBindGroupLayoutEntry({})", this->getName()),
-                              ValidationError::Severity::Error);
+            errors.emplace_back("Sample type is not set",
+                                fmt::format("TextureBindGroupLayoutEntry({})", this->getName()),
+                                ValidationError::Severity::Error);
         }
         if (!this->_isViewDimensionSet)
         {
-            errors.emplace_back("View dimension is not set", fmt::format("TextureBindGroupLayoutEntry({})", this->getName()),
-                              ValidationError::Severity::Error);
+            errors.emplace_back("View dimension is not set",
+                                fmt::format("TextureBindGroupLayoutEntry({})", this->getName()),
+                                ValidationError::Severity::Error);
         }
         return errors;
     }

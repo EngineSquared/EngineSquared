@@ -50,8 +50,8 @@ template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayo
         return errors;
     }
 
-    protected:
-        inline wgpu::BindGroupLayoutEntry &getEntry() { return this->entry; }
+  protected:
+    inline wgpu::BindGroupLayoutEntry &getEntry() { return this->entry; }
 
   private:
     wgpu::BindGroupLayoutEntry entry = wgpu::BindGroupLayoutEntry(wgpu::Default);

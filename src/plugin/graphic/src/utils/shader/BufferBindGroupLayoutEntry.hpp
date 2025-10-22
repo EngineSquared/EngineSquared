@@ -25,7 +25,8 @@ class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry<BufferBindGroupL
         }
         if (!this->isMinBindingSizeSet)
         {
-            errors.push_back({"Min binding size is not set", fmt::format("BufferBindGroupLayoutEntry({})", this->getName()),
+            errors.push_back({"Min binding size is not set",
+                              fmt::format("BufferBindGroupLayoutEntry({})", this->getName()),
                               ValidationError::Severity::Warning});
         }
         return errors;

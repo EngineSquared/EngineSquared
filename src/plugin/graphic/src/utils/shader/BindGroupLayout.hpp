@@ -1,8 +1,8 @@
 #pragma once
 
 #include "spdlog/fmt/fmt.h"
-#include "utils/shader/ABindGroupLayoutEntry.hpp"
 #include "utils/IValidable.hpp"
+#include "utils/shader/ABindGroupLayoutEntry.hpp"
 #include <concepts>
 #include <vector>
 
@@ -31,7 +31,8 @@ class BindGroupLayout : public IValidable {
         if (this->entries.empty())
         {
             errors.emplace_back("No entries in the bind group layout",
-                              fmt::format("BindGroupLayout({})", this->getName()), ValidationError::Severity::Warning);
+                                fmt::format("BindGroupLayout({})", this->getName()),
+                                ValidationError::Severity::Warning);
             return errors;
         }
         for (const auto &entry : this->entries)
@@ -40,8 +41,8 @@ class BindGroupLayout : public IValidable {
             for (const auto &error : entryErrors)
             {
                 errors.emplace_back(error.message,
-                                fmt::format("BindGroupLayout::{}::{}", error.location, entry->getName()),
-                                  error.severity);
+                                    fmt::format("BindGroupLayout::{}::{}", error.location, entry->getName()),
+                                    error.severity);
             }
         }
         for (uint32_t i = 0; i < this->entries.size(); i++)
@@ -54,15 +55,15 @@ class BindGroupLayout : public IValidable {
                 {
                     errors.emplace_back(
                         "Binding " + std::to_string(entry->getEntry().binding) + " is duplicated between entries '" +
-                             entry->getName() + "' and '" + otherEntry->getName() + "'",
-                         fmt::format("BindGroupLayout({})", this->getName()), ValidationError::Severity::Error);
+                            entry->getName() + "' and '" + otherEntry->getName() + "'",
+                        fmt::format("BindGroupLayout({})", this->getName()), ValidationError::Severity::Error);
                 }
                 if (entry->getName() == otherEntry->getName())
                 {
-                    errors.emplace_back("Entry name '" + entry->getName() + "' is duplicated between entries at index " +
-                                          std::to_string(i) + " and " + std::to_string(j),
-                                      fmt::format("BindGroupLayout({})", this->getName()),
-                                      ValidationError::Severity::Warning);
+                    errors.emplace_back(
+                        "Entry name '" + entry->getName() + "' is duplicated between entries at index " +
+                            std::to_string(i) + " and " + std::to_string(j),
+                        fmt::format("BindGroupLayout({})", this->getName()), ValidationError::Severity::Warning);
                 }
             }
         }
