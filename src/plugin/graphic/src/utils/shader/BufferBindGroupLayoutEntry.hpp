@@ -21,12 +21,13 @@ class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry<BufferBindGroupL
         if (!this->isTypeSet)
         {
             errors.emplace_back("Type is not set", fmt::format("BufferBindGroupLayoutEntry({})", this->getName()),
-                              ValidationError::Severity::Error);
+                                ValidationError::Severity::Error);
         }
         if (!this->isMinBindingSizeSet)
         {
-            errors.emplace_back("Min binding size is not set", fmt::format("BufferBindGroupLayoutEntry({})", this->getName()),
-                              ValidationError::Severity::Warning);
+            errors.emplace_back("Min binding size is not set",
+                                fmt::format("BufferBindGroupLayoutEntry({})", this->getName()),
+                                ValidationError::Severity::Warning);
         }
         return errors;
     }

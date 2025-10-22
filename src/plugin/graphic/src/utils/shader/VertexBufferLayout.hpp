@@ -47,15 +47,15 @@ class VertexBufferLayout : public IValidable {
         if (!this->arrayStride.has_value())
         {
             errors.emplace_back("Array stride is not set (auto computation will be used)", "VertexBufferLayout",
-                              ValidationError::Severity::Warning);
+                                ValidationError::Severity::Warning);
         }
         if (auto duplicatedLocations = this->_getDuplicatedShaderLocation(); !duplicatedLocations.empty())
         {
             for (const auto &[i, j] : duplicatedLocations)
             {
                 errors.emplace_back("Shader location " + std::to_string(this->vertexAttributes[i].shaderLocation) +
-                                    " is duplicated between attributes at index " + std::to_string(i) + " and " +
-                                    std::to_string(j),
+                                        " is duplicated between attributes at index " + std::to_string(i) + " and " +
+                                        std::to_string(j),
                                     "VertexBufferLayout", ValidationError::Severity::Error);
             }
         }
@@ -63,19 +63,17 @@ class VertexBufferLayout : public IValidable {
         {
             for (const auto &[i, j] : overlappingAttribute)
             {
-                errors.emplace_back(fmt::format(
-                     "Attribute at index {} (format: {}, offset: {}, shaderLocation: {}) overlaps with attribute at index {} (format: {}, offset: {}, shaderLocation: {})",
+                errors.emplace_back(
+                    fmt::format("Attribute at index {} (format: {}, offset: {}, shaderLocation: {}) overlaps with "
+                                "attribute at index {} (format: {}, offset: {}, shaderLocation: {})",
 
-                          i,
-                          this->vertexAttributes[i].offset,
-                          static_cast<uint32_t>(this->vertexAttributes[i].format),
-                          this->vertexAttributes[i].shaderLocation,
-                          j,
-                          static_cast<uint32_t>(this->vertexAttributes[j].format),
-                          this->vertexAttributes[j].offset,
-                          this->vertexAttributes[j].shaderLocation),
+                                i, this->vertexAttributes[i].offset,
+                                static_cast<uint32_t>(this->vertexAttributes[i].format),
+                                this->vertexAttributes[i].shaderLocation, j,
+                                static_cast<uint32_t>(this->vertexAttributes[j].format),
+                                this->vertexAttributes[j].offset, this->vertexAttributes[j].shaderLocation),
 
-                     "VertexBufferLayout", ValidationError::Severity::Error);
+                    "VertexBufferLayout", ValidationError::Severity::Error);
             }
         }
         return errors;

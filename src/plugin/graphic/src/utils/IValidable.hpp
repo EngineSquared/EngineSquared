@@ -18,7 +18,7 @@ struct ValidationError {
     friend inline std::ostream &operator<<(std::ostream &stream, const ValidationError &error)
     {
         stream << "[" << (error.severity == ValidationError::Severity::Error ? "Error" : "Warning") << "] "
-            << error.location << ": " << error.message;
+               << error.location << ": " << error.message;
         return stream;
     }
 };

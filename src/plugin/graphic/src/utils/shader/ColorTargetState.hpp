@@ -24,7 +24,7 @@ class ColorTargetState : public IValidable {
         if (this->_format == wgpu::TextureFormat::Undefined)
         {
             errors.emplace_back("Format is not set", fmt::format("ColorTargetState({})", this->_name),
-                              ValidationError::Severity::Error);
+                                ValidationError::Severity::Error);
         }
         return errors;
     }

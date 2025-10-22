@@ -39,13 +39,13 @@ template <typename TDerived> class ABindGroupLayoutEntry : public IBindGroupLayo
         std::vector<ValidationError> errors;
         if (!this->isBindingSet)
         {
-            errors.emplace_back(
-                "Binding is not set", "BindGroupLayoutEntry: " + this->name, ValidationError::Severity::Error);
+            errors.emplace_back("Binding is not set", "BindGroupLayoutEntry: " + this->name,
+                                ValidationError::Severity::Error);
         }
         if (!this->isVisibilitySet)
         {
-            errors.emplace_back(
-                "Visibility is not set", "BindGroupLayoutEntry: " + this->name, ValidationError::Severity::Error);
+            errors.emplace_back("Visibility is not set", "BindGroupLayoutEntry: " + this->name,
+                                ValidationError::Severity::Error);
         }
         return errors;
     }

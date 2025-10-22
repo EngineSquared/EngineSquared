@@ -16,12 +16,12 @@ class DepthStencilState : public IValidable {
         if (this->value.format == wgpu::TextureFormat::Undefined)
         {
             errors.emplace_back("Format is not set", fmt::format("DepthStencilState({})", this->name),
-                              ValidationError::Severity::Error);
+                                ValidationError::Severity::Error);
         }
         if (this->value.depthWriteEnabled && this->value.depthCompare == wgpu::CompareFunction::Undefined)
         {
             errors.emplace_back("Depth compare function is not set while depth write is enabled",
-                              fmt::format("DepthStencilState({})", this->name), ValidationError::Severity::Error);
+                                fmt::format("DepthStencilState({})", this->name), ValidationError::Severity::Error);
         }
         return errors;
     }

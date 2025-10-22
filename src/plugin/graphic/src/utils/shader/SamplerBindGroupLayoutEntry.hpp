@@ -20,8 +20,9 @@ class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry<SamplerBindGrou
         std::vector<ValidationError> errors = ABindGroupLayoutEntry::validate();
         if (!this->_isSamplerTypeSet)
         {
-            errors.emplace_back("Sampler type is not set", fmt::format("SamplerBindGroupLayoutEntry({})", this->getName()),
-                              ValidationError::Severity::Error);
+            errors.emplace_back("Sampler type is not set",
+                                fmt::format("SamplerBindGroupLayoutEntry({})", this->getName()),
+                                ValidationError::Severity::Error);
         }
         return errors;
     }
