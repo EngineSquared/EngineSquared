@@ -7,10 +7,10 @@ struct History {
     std::vector<std::string> messages;
 };
 
-#define LOG_SYSTEM_EXECUTION(systemName)                                    \
-    core.RegisterSystem<systemName>([](Engine::Core &c) {                   \
-        auto &history = c.GetResource<History>();                           \
-        history.messages.emplace_back(#systemName);                         \
+#define LOG_SYSTEM_EXECUTION(systemName)                                                                               \
+    core.RegisterSystem<systemName>([](Engine::Core &c) {                                                              \
+        auto &history = c.GetResource<History>();                                                                      \
+        history.messages.emplace_back(#systemName);                                                                    \
     });
 
 TEST(RenderingPipeline, CasualUse)

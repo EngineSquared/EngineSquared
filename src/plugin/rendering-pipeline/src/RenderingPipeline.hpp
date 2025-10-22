@@ -6,13 +6,13 @@
 
 #include "scheduler/PreUpdate.hpp"
 
-#include "scheduler/Preparation.hpp"
-#include "scheduler/Extraction.hpp"
-#include "scheduler/PipelineCreation.hpp"
 #include "scheduler/Batching.hpp"
 #include "scheduler/CommandCreation.hpp"
-#include "scheduler/Submission.hpp"
+#include "scheduler/Extraction.hpp"
+#include "scheduler/PipelineCreation.hpp"
+#include "scheduler/Preparation.hpp"
 #include "scheduler/Presentation.hpp"
+#include "scheduler/Submission.hpp"
 
 // Plugin
 #include "plugin/PluginRenderingPipeline.hpp"
