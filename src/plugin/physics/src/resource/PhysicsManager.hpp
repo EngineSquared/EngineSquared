@@ -285,6 +285,23 @@ class PhysicsManager {
         return false;
     }
 
+    /**
+     * @brief Check if the physics system should be updated.
+     *
+     * @return true if the physics system should be updated, false otherwise.
+     */
+    inline bool IsPhysicsActivated() const { return _shouldUpdatePhysics; }
+
+    /**
+     * @brief Set the physics system to be updated.
+     */
+    inline void ActivatePhysics() { _shouldUpdatePhysics = true; }
+
+    /**
+     * @brief Set the physics system to not be updated.
+     */
+    inline void DeactivatePhysics() { _shouldUpdatePhysics = false; }
+
   private:
     std::shared_ptr<JPH::Factory> _factory;
     std::shared_ptr<JPH::PhysicsSystem> _physicsSystem;
@@ -295,6 +312,8 @@ class PhysicsManager {
     std::shared_ptr<JPH::TempAllocator> _tempAllocator;
     std::shared_ptr<JPH::JobSystem> _jobSystem;
     std::shared_ptr<JPH::ContactListener> _contactListener;
+
+    bool _shouldUpdatePhysics = true;
 
     int _collisionSteps = 1;
 };
