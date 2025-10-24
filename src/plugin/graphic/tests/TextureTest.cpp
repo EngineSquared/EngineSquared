@@ -3,15 +3,13 @@
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
 
-
 void TextureTest(Engine::Core &core)
 {
     auto &context = core.GetResource<Graphic::Resource::Context>();
 
-    
-    auto texture = Graphic::Resource::Texture::Create(context, Graphic::Resource::FileTextureDescriptor("textureName")
-                                                        .LoadFile(std::filesystem::current_path().string() + "/assets/test_texture.png"));
-
+    auto texture = Graphic::Resource::Texture::Create(
+        context, Graphic::Resource::FileTextureDescriptor("textureName")
+                     .LoadFile(std::filesystem::current_path().string() + "/assets/test_texture.png"));
 }
 
 TEST(Texture, GlobalRun)

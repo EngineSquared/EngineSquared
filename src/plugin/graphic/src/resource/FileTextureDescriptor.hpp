@@ -9,11 +9,8 @@ namespace Graphic::Resource {
 class FileTextureDescriptor : public ITextureDescriptor {
   public:
     FileTextureDescriptor(void) = default;
-    FileTextureDescriptor(const std::string &name) : _name(name) {};
-    virtual ~FileTextureDescriptor()
-    {
-        UnloadFile();
-    }
+    FileTextureDescriptor(const std::string &name) : _name(name){};
+    virtual ~FileTextureDescriptor() { UnloadFile(); }
 
     FileTextureDescriptor(const FileTextureDescriptor &other) = delete;
     FileTextureDescriptor &operator=(const FileTextureDescriptor &other) = delete;
@@ -23,16 +20,20 @@ class FileTextureDescriptor : public ITextureDescriptor {
         _name = name;
         return *this;
     }
-    FileTextureDescriptor &LoadFile(const std::filesystem::path &filepath) {
+    FileTextureDescriptor &LoadFile(const std::filesystem::path &filepath)
+    {
         int width, height, channels;
 
         // If filePath don't exist, throw an error
-        if (!std::filesystem::exists(filepath)) {
-            throw std::runtime_error("Texture file does not exist: " + filepath.string()); //TODO: Custom exception
+        if (!std::filesystem::exists(filepath))
+        {
+            throw std::runtime_error("Texture file does not exist: " + filepath.string()); // TODO: Custom exception
         }
 
-	    unsigned char *pixelData = stbi_load(filepath.string().c_str(), &width, &height, &channels, 4 /* force 4 channels */);
-		if (!pixelData) throw std::runtime_error("Failed to load texture data.");
+        unsigned char *pixelData =
+            stbi_load(filepath.string().c_str(), &width, &height, &channels, 4 /* force 4 channels */);
+        if (!pixelData)
+            throw std::runtime_error("Failed to load texture data.");
 
         _size = glm::ivec3(width, height, 1);
         _dimension = wgpu::TextureDimension::_2D;
@@ -49,8 +50,10 @@ class FileTextureDescriptor : public ITextureDescriptor {
         return *this;
     }
 
-    void UnloadFile() {
-        if (_imageData.has_value() && _imageData->pixels) {
+    void UnloadFile()
+    {
+        if (_imageData.has_value() && _imageData->pixels)
+        {
             stbi_image_free(_imageData->pixels);
             _imageData.reset();
         }
@@ -94,11 +97,7 @@ class FileTextureDescriptor : public ITextureDescriptor {
         return _usage.value();
     }
 
-    const std::optional<ImageData> &GetImageData(void) const override
-    {
-        return _imageData;
-    }
-
+    const std::optional<ImageData> &GetImageData(void) const override { return _imageData; }
 
   private:
     inline const static std::string _DEFAULT_NAME = "UnnamedTexture";
