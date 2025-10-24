@@ -6,6 +6,9 @@
 #include "resource/GraphicSettings.hpp"
 #include "resource/Limits.hpp"
 #include "resource/Surface.hpp"
+#include "resource/Texture.hpp"
+#include "resource/ITextureDescriptor.hpp"
+#include "resource/FileTextureDescriptor.hpp"
 
 // Utils
 #include "utils/webgpu.hpp"
@@ -17,6 +20,7 @@
 #include "exception/InstanceCreationError.hpp"
 #include "exception/QueueCreationError.hpp"
 #include "exception/SurfaceCreationError.hpp"
+#include "exception/UnsetAttributeTextureDescriptor.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"
