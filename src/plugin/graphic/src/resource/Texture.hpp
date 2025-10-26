@@ -71,7 +71,7 @@ class Texture {
         texture._name = std::string(name.data(), name.length());
 
         wgpu::TextureDescriptor textureDesc;
-        textureDesc.label = wgpu::StringView(name.data());
+        textureDesc.label = wgpu::StringView(name);
         textureDesc.size = {image.width, image.height, 1};
         textureDesc.dimension = wgpu::TextureDimension::_2D;
         textureDesc.mipLevelCount = 1;
@@ -95,7 +95,7 @@ class Texture {
         Texture texture;
 
         wgpu::TextureDescriptor textureDesc;
-        textureDesc.label = wgpu::StringView(name.data());
+        textureDesc.label = wgpu::StringView(name);
         textureDesc.size = {size.x, size.y, 1};
         textureDesc.dimension = wgpu::TextureDimension::_2D;
         textureDesc.mipLevelCount = 1;
