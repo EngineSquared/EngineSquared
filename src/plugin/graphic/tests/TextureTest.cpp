@@ -18,8 +18,10 @@ void TextureTest(Engine::Core &core)
     EXPECT_EQ(data.width, image.width);
     EXPECT_EQ(data.height, image.height);
 
-    for (uint32_t y = 0; y < data.height; ++y) {
-        for (uint32_t x = 0; x < data.width; ++x) {
+    for (uint32_t y = 0; y < data.height; ++y)
+    {
+        for (uint32_t x = 0; x < data.width; ++x)
+        {
             size_t index = y * data.width + x;
             EXPECT_EQ(data.pixels[index], image.pixels[index]);
         }
