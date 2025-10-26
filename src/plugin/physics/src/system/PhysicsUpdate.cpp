@@ -11,7 +11,7 @@
 void Physics::System::PhysicsUpdate(Engine::Core &core)
 {
     auto &physicsManager = core.GetResource<Physics::Resource::PhysicsManager>();
-    if (!physicsManager.ShouldUpdatePhysics())
+    if (!physicsManager.IsPhysicsActivated())
     {
         return;
     }
