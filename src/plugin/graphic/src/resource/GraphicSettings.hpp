@@ -61,6 +61,14 @@ class GraphicSettings {
         return it != requiredFeatures.end();
     }
 
+    GraphicSettings &SetOnErrorCallback(WGPUUncapturedErrorCallback callback)
+    {
+        onErrorCallback = callback;
+        return *this;
+    }
+
+    WGPUUncapturedErrorCallback GetOnErrorCallback() const { return onErrorCallback; }
+
   private:
     RequiredFeatureContainer::iterator _GetRequiredFeature(const wgpu::FeatureName &feature)
     {
@@ -72,6 +80,12 @@ class GraphicSettings {
         return _GetRequiredFeature(feature);
     }
 
+    WGPUUncapturedErrorCallback onErrorCallback = [](WGPUDevice const *device, WGPUErrorType type,
+                                                     WGPUStringView message, WGPU_NULLABLE void *userdata1,
+                                                     WGPU_NULLABLE void *userdata2) {
+        Log::Error(fmt::format("Uncaptured device error: type {:x} ({})", static_cast<uint32_t>(type),
+                               std::string(message.data, message.length)));
+    };
     WindowSystem windowSystem = WindowSystem::GLFW;
     PowerPreference powerPreference = PowerPreference::HighPerformance;
     Limits wantedLimits = Limits(wgpu::Default);
