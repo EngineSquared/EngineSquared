@@ -1,9 +1,9 @@
 #pragma once
 
+#include "exception/UnsupportedTextureFormatError.hpp"
 #include "resource/Context.hpp"
 #include "resource/Image.hpp"
 #include "utils/webgpu.hpp"
-#include "exception/UnsupportedTextureFormatError.hpp"
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 

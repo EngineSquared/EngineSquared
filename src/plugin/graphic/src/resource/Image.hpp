@@ -1,9 +1,9 @@
 #pragma once
 
+#include "exception/FileReadingError.hpp"
+#include "exception/UnknownFileError.hpp"
 #include "lodepng.h"
 #include "stb_image.h"
-#include "exception/UnknownFileError.hpp"
-#include "exception/FileReadingError.hpp"
 #include <filesystem>
 #include <glm/vec4.hpp>
 #include <stdexcept>
