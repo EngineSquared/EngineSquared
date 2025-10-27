@@ -1,15 +1,15 @@
 #pragma once
 
 // Resources
+#include "resource/AGPUBuffer.hpp"
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Limits.hpp"
+#include "resource/PointGPUBuffer.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
-#include "resource/AGPUBuffer.hpp"
-#include "resource/PointGPUBuffer.hpp"
 
 // Utils
 #include "utils/IValidable.hpp"

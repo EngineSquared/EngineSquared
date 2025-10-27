@@ -8,9 +8,21 @@ void TestSystem(Engine::Core &core)
     auto entity = core.CreateEntity();
     auto meshComponent = entity.AddComponent<Object::Component::Mesh>(core);
 
-    meshComponent.vertices = { {0.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f} };
-    meshComponent.normals = { {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f} };
-    meshComponent.texCoords = { {0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f} };
+    meshComponent.vertices = {
+        {0.0f, 0.0f, 0.0f},
+        {1.0f, 0.0f, 0.0f},
+        {0.0f, 1.0f, 0.0f}
+    };
+    meshComponent.normals = {
+        {0.0f, 0.0f, 1.0f},
+        {0.0f, 0.0f, 1.0f},
+        {0.0f, 0.0f, 1.0f}
+    };
+    meshComponent.texCoords = {
+        {0.0f, 0.0f},
+        {1.0f, 0.0f},
+        {0.0f, 1.0f}
+    };
 
     auto pointBuffer = Graphic::Resource::PointGPUBuffer(entity);
 
