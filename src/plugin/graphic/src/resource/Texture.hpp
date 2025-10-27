@@ -3,6 +3,7 @@
 #include "resource/Context.hpp"
 #include "resource/Image.hpp"
 #include "utils/webgpu.hpp"
+#include "exception/UnsupportedTextureFormatError.hpp"
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 
@@ -216,7 +217,7 @@ class Texture {
         case wgpu::TextureFormat::R8Sint: return 1;
         // Add more formats as needed
         default:
-            throw std::runtime_error("Unsupported texture format for byte size calculation."); // TODO: Custom exception
+            throw Exception::UnsupportedTextureFormatError("Unsupported texture format for byte size calculation.");
         }
     }
 

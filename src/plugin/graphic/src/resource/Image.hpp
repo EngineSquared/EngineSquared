@@ -2,6 +2,8 @@
 
 #include "lodepng.h"
 #include "stb_image.h"
+#include "exception/UnknownFileError.hpp"
+#include "exception/FileReadingError.hpp"
 #include <filesystem>
 #include <glm/vec4.hpp>
 #include <stdexcept>
@@ -21,10 +23,14 @@ struct Image {
     {
         Image image;
         int width_, height_, channels_;
+
+        if (std::filesystem::exists(filepath) == false)
+            throw Exception::UnknownFileError("File not found at: " + filepath.string());
+
         unsigned char *data = stbi_load(filepath.string().c_str(), &width_, &height_, &channels_, 4);
+
         if (!data)
-            throw std::runtime_error("Failed to load image data from file: " +
-                                     filepath.string()); // TODO: Custom exception
+            throw Exception::FileReadingError("Failed to load image data from file: " + filepath.string());
 
         image.width = static_cast<uint32_t>(width_);
         image.height = static_cast<uint32_t>(height_);
