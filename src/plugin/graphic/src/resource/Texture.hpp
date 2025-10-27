@@ -90,7 +90,7 @@ class Texture {
         image.width = size.x;
         image.height = size.y;
         image.channels = 4;
-        image.pixels.resize(size.x * size.y * image.channels);
+        image.pixels.resize(size.x * size.y);
 
         for (uint32_t y = 0; y < size.y; ++y)
         {
