@@ -13,7 +13,7 @@ void TextureTest(Engine::Core &core)
 
     auto texture = Graphic::Resource::Texture::Create(context, testAssetPath, image);
 
-    auto data = texture.GetDataTexture(context);
+    auto data = texture.RetrieveImage(context);
 
     EXPECT_EQ(data.width, image.width);
     EXPECT_EQ(data.height, image.height);

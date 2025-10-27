@@ -1,57 +1,13 @@
 #pragma once
 
-#include "ITextureDescriptor.hpp"
+#include "utils/webgpu.hpp"
 #include "resource/Context.hpp"
-#include "stb_image.h"
+#include "resource/Image.hpp"
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
-#include <lodepng.h>
 
 namespace Graphic::Resource {
-struct Image {
-    uint32_t width;
-    uint32_t height;
-    int channels;
-    std::vector<glm::u8vec4> pixels;
 
-    static Image LoadFromFile(const std::filesystem::path &filepath)
-    {
-        Image image;
-        int width_, height_, channels_;
-        unsigned char *data = stbi_load(filepath.string().c_str(), &width_, &height_, &channels_, 4);
-        if (!data)
-            throw std::runtime_error("Failed to load image data from file: " +
-                                     filepath.string()); // TODO: Custom exception
-
-        image.width = static_cast<uint32_t>(width_);
-        image.height = static_cast<uint32_t>(height_);
-        image.channels = 4;
-
-        image.pixels.resize(width_ * height_);
-
-        for (uint32_t y = 0; y < image.height; ++y)
-        {
-            for (uint32_t x = 0; x < image.width; ++x)
-            {
-                size_t index = y * image.width + x;
-                image.pixels[index] =
-                    glm::u8vec4(data[index * 4 + 0], data[index * 4 + 1], data[index * 4 + 2], data[index * 4 + 3]);
-            }
-        }
-
-        stbi_image_free(data);
-        return image;
-    }
-
-    int ToPng(std::string_view filename)
-    {
-        return lodepng::encode(filename.data(), reinterpret_cast<const unsigned char *>(pixels.data()), width, height);
-    }
-};
-
-struct ImageFile : public Image {
-    std::filesystem::path filepath;
-};
 
 class Texture {
   public:
@@ -84,7 +40,7 @@ class Texture {
 
         texture = Create(context, textureDesc);
 
-        texture.WriteTexture(context, image);
+        texture.Write(context, image);
 
         return texture;
     }
@@ -121,13 +77,13 @@ class Texture {
             }
         }
 
-        texture.WriteTexture(context, image);
+        texture.Write(context, image);
 
         return texture;
     }
 
     // We assume the image is correctly formatted (width * height = pixels.size())
-    void WriteTexture(Context &context, const Image &image)
+    void Write(Context &context, const Image &image)
     {
         if (image.width != this->_webgpuTexture.getWidth() || image.height != this->_webgpuTexture.getHeight())
         {
@@ -150,7 +106,7 @@ class Texture {
                            textureSize);
     }
 
-    auto GetDataTexture(Context &context) const -> Image
+    auto RetrieveImage(Context &context) const -> Image
     {
         wgpu::Queue &queue = context.queue.value();
 
@@ -158,7 +114,7 @@ class Texture {
 
         wgpu::CommandEncoder encoder = context.deviceContext.GetDevice()->createCommandEncoder();
 
-        const uint32_t bytesPerRow = (copySize.width * getBytesPerPixel() + 255) / 256 * 256;
+        const uint32_t bytesPerRow = (copySize.width * _GetBytesPerPixel() + 255) / 256 * 256;
         wgpu::BufferDescriptor bufDesc(wgpu::Default);
         bufDesc.size = copySize.height * bytesPerRow;
         bufDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
@@ -187,9 +143,10 @@ class Texture {
             wgpu::Buffer buffer;
             Image data;
             uint32_t bytesPerRow;
+            wgpu::TextureFormat format;
             bool done = false;
         };
-        CallbackData cbData = {readbackBuffer, {}, bytesPerRow, false};
+        CallbackData cbData = {readbackBuffer, {}, bytesPerRow, _webgpuTexture.getFormat(), false};
         cbData.data.width = copySize.width;
         cbData.data.height = copySize.height;
         cbData.data.channels = 4;
@@ -206,14 +163,15 @@ class Texture {
             }
             auto &buf = data->buffer;
             uint8_t *mapped = static_cast<uint8_t *>(buf.getMappedRange(0, buf.getSize()));
-            uint32_t size = (data->bytesPerRow / 4) * data->data.height;
+            uint32_t size = (data->bytesPerRow / _GetBytesPerPixel(data->format)) * data->data.height;
             for (size_t i = 0; i < size; i++)
             {
-                if (i % (data->bytesPerRow / 4) >= data->data.width)
+                if (i % (data->bytesPerRow / _GetBytesPerPixel(data->format)) >= data->data.width)
                 {
                     continue; // Skip padding bytes
                 }
                 glm::u8vec4 pixel;
+                // Here we assume the texture format is RGBA8Unorm (4 bytes per pixel)
                 pixel.r = mapped[i * 4 + 0];
                 pixel.g = mapped[i * 4 + 1];
                 pixel.b = mapped[i * 4 + 2];
@@ -235,16 +193,16 @@ class Texture {
     }
 
   private:
-    uint32_t getBytesPerPixel() const
+    static uint32_t _GetBytesPerPixel(wgpu::TextureFormat format)
     {
-        switch (_webgpuTexture.getFormat())
+        switch (format)
         {
         case wgpu::TextureFormat::RGBA8Unorm:
         case wgpu::TextureFormat::RGBA8UnormSrgb:
         case wgpu::TextureFormat::BGRA8Unorm:
         case wgpu::TextureFormat::BGRA8UnormSrgb:
         case wgpu::TextureFormat::RGBA8Uint:
-        case wgpu::TextureFormat::RGBA8Sint: return 4;
+        case wgpu::TextureFormat::RGBA8Sint:
         case wgpu::TextureFormat::RGB10A2Uint:
         case wgpu::TextureFormat::RGB10A2Unorm: return 4;
         case wgpu::TextureFormat::RG8Unorm:
@@ -256,8 +214,13 @@ class Texture {
         case wgpu::TextureFormat::R8Uint:
         case wgpu::TextureFormat::R8Sint: return 1;
         // Add more formats as needed
-        default: throw std::runtime_error("Unsupported texture format for byte size calculation.");
+        default: throw std::runtime_error("Unsupported texture format for byte size calculation."); // TODO: Custom exception
         }
+    }
+
+    uint32_t _GetBytesPerPixel() const
+    {
+        return _GetBytesPerPixel(_webgpuTexture.getFormat());
     }
 
     wgpu::Texture _webgpuTexture;
