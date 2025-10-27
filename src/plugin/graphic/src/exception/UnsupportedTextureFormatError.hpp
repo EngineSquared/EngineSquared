@@ -6,15 +6,8 @@
 
 namespace Graphic::Exception {
 
-class UnsupportedTextureFormatError : public std::exception {
-  public:
-    explicit UnsupportedTextureFormatError(const std::string &message)
-        : msg("Unsupported texture format: " + message){};
-
-    const char *what() const throw() override { return this->msg.c_str(); };
-
-  private:
-    std::string msg;
+class UnsupportedTextureFormatError : public std::runtime_error {
+  using std::runtime_error::runtime_error;
 };
 
 } // namespace Graphic::Exception

@@ -6,14 +6,8 @@
 
 namespace Graphic::Exception {
 
-class UnknownFileError : public std::exception {
-  public:
-    explicit UnknownFileError(const std::string &message) : msg("Unknown file error: " + message){};
-
-    const char *what() const throw() override { return this->msg.c_str(); };
-
-  private:
-    std::string msg;
+class UnknownFileError : public std::runtime_error {
+  using std::runtime_error::runtime_error;
 };
 
 } // namespace Graphic::Exception
