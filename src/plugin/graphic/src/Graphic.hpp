@@ -31,8 +31,8 @@
 #include "exception/InstanceCreationError.hpp"
 #include "exception/QueueCreationError.hpp"
 #include "exception/SurfaceCreationError.hpp"
-#include "exception/UnsetAttributeTextureDescriptor.hpp"
 #include "exception/UnknownFormatType.hpp"
+#include "exception/UnsetAttributeTextureDescriptor.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"
