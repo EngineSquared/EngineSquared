@@ -51,8 +51,4 @@ struct Image {
         return lodepng::encode(filename.data(), reinterpret_cast<const unsigned char *>(pixels.data()), width, height);
     }
 };
-
-struct ImageFile : public Image {
-    std::filesystem::path filepath;
-};
 }; // namespace Graphic::Resource
