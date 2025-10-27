@@ -14,22 +14,24 @@
 namespace Graphic::Resource {
 
 struct Image {
-    uint32_t width;
-    uint32_t height;
-    int channels;
+    uint32_t width = 0;
+    uint32_t height = 0;
+    int channels = 0;
     std::vector<glm::u8vec4> pixels;
 
     static Image LoadFromFile(const std::filesystem::path &filepath)
     {
         Image image;
-        int width_, height_, channels_;
+        int width_ = -1;
+        int height_ = -1;
+        int channels_ = -1;
 
         if (std::filesystem::exists(filepath) == false)
             throw Exception::UnknownFileError("File not found at: " + filepath.string());
 
         unsigned char *data = stbi_load(filepath.string().c_str(), &width_, &height_, &channels_, 4);
 
-        if (!data)
+        if (!data || width_ <= 0 || height_ <= 0 || channels_ <= 0)
             throw Exception::FileReadingError("Failed to load image data from file: " + filepath.string());
 
         image.width = static_cast<uint32_t>(width_);

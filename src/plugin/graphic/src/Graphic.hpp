@@ -21,6 +21,7 @@
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include "utils/shader/VertexBufferLayout.hpp"
+#include "utils/GetBytesPerPixel.hpp"
 
 // Exceptions
 #include "exception/AdapterCreationError.hpp"
