@@ -10,7 +10,6 @@
 
 namespace Graphic::Resource {
 
-namespace {
 struct CallbackData {
     wgpu::Buffer buffer;
     Image data;
@@ -21,7 +20,7 @@ struct CallbackData {
 
 static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView message, void *userdata1, void *userdata2)
 {
-    CallbackData *data = reinterpret_cast<CallbackData *>(userdata1);
+    auto data = static_cast<CallbackData *>(userdata1);
     if (status != wgpu::MapAsyncStatus::Success)
     {
         Log::Error(fmt::format("Failed to map buffer: {}", std::string_view(message.data, message.length)));
@@ -29,7 +28,7 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
         return;
     }
     auto &buf = data->buffer;
-    uint8_t *mapped = static_cast<uint8_t *>(buf.getMappedRange(0, buf.getSize()));
+    auto mapped = static_cast<uint8_t *>(buf.getMappedRange(0, buf.getSize()));
     uint32_t size = (data->bytesPerRow / Graphic::Utils::GetBytesPerPixel(data->format)) * data->data.height;
     for (size_t i = 0; i < size; i++)
     {
@@ -48,8 +47,6 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
     buf.unmap();
     data->done = true;
 };
-} // namespace
-
 class Texture {
   public:
     static Texture Create(Context &context, const wgpu::TextureDescriptor &descriptor)
