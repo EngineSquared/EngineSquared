@@ -57,10 +57,12 @@ struct Image {
 
     void ToPng(std::string_view filename)
     {
-        unsigned int error = lodepng::encode(filename.data(), reinterpret_cast<const unsigned char *>(pixels.data()), width, height);
+        unsigned int error =
+            lodepng::encode(filename.data(), reinterpret_cast<const unsigned char *>(pixels.data()), width, height);
 
         if (error != 0)
-            throw Exception::FileWritingError(fmt::format("Failed to write PNG file '{}': {}", filename, lodepng_error_text(error)));
+            throw Exception::FileWritingError(
+                fmt::format("Failed to write PNG file '{}': {}", filename, lodepng_error_text(error)));
     }
 };
 }; // namespace Graphic::Resource
