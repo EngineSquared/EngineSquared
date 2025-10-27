@@ -1,12 +1,12 @@
 #pragma once
 
 #include "exception/FileReadingError.hpp"
+#include "exception/FileWritingError.hpp"
 #include "exception/UnknownFileError.hpp"
 #include "lodepng.h"
 #include "stb_image.h"
 #include <filesystem>
 #include <glm/vec4.hpp>
-#include <stdexcept>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -21,13 +21,14 @@ struct Image {
 
     static Image LoadFromFile(const std::filesystem::path &filepath)
     {
+        // Should we assume the file exists before calling this function?
+        if (std::filesystem::exists(filepath) == false)
+            throw Exception::UnknownFileError("File not found at: " + filepath.string());
+
         Image image;
         int width_ = -1;
         int height_ = -1;
         int channels_ = -1;
-
-        if (std::filesystem::exists(filepath) == false)
-            throw Exception::UnknownFileError("File not found at: " + filepath.string());
 
         unsigned char *data = stbi_load(filepath.string().c_str(), &width_, &height_, &channels_, 4);
 
@@ -54,9 +55,12 @@ struct Image {
         return image;
     }
 
-    int ToPng(std::string_view filename)
+    void ToPng(std::string_view filename)
     {
-        return lodepng::encode(filename.data(), reinterpret_cast<const unsigned char *>(pixels.data()), width, height);
+        unsigned int error = lodepng::encode(filename.data(), reinterpret_cast<const unsigned char *>(pixels.data()), width, height);
+
+        if (error != 0)
+            throw Exception::FileWritingError(fmt::format("Failed to write PNG file '{}': {}", filename, lodepng_error_text(error)));
     }
 };
 }; // namespace Graphic::Resource
