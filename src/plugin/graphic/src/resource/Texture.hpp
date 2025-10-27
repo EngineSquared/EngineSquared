@@ -86,20 +86,6 @@ class Texture {
     static Texture Create(Context &context, std::string_view name, const glm::uvec2 &size,
                           const std::function<glm::u8vec4(glm::uvec2 pos)> &callback)
     {
-        Texture texture;
-
-        wgpu::TextureDescriptor textureDesc;
-        textureDesc.label = wgpu::StringView(name);
-        textureDesc.size = {size.x, size.y, 1};
-        textureDesc.dimension = wgpu::TextureDimension::_2D;
-        textureDesc.mipLevelCount = 1;
-        textureDesc.sampleCount = 1;
-        textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
-        textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::CopyDst;
-        textureDesc.viewFormats = nullptr;
-        textureDesc.viewFormatCount = 0;
-
-        texture = Create(context, textureDesc);
         Image image;
         image.width = size.x;
         image.height = size.y;
@@ -115,7 +101,7 @@ class Texture {
             }
         }
 
-        texture.Write(context, image);
+        Texture texture = Create(context, name, image);
 
         return texture;
     }
