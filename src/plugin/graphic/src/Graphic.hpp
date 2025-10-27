@@ -8,6 +8,8 @@
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
+#include "resource/AGPUBuffer.hpp"
+#include "resource/PointGPUBuffer.hpp"
 
 // Utils
 #include "utils/IValidable.hpp"

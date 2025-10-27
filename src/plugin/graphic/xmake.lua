@@ -1,6 +1,7 @@
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
 includes("../rendering-pipeline/xmake.lua")
+includes("../object/xmake.lua")
 includes("../window/xmake.lua")
 
 local required_packages = {
@@ -25,6 +26,7 @@ target(plugin_name)
     add_deps("EngineSquaredCore")
     add_deps("PluginRenderingPipeline")
     add_deps("PluginWindow")
+    add_deps("PluginObject")
     add_deps("UtilsLog")
 
     add_files("src/**.cpp")
