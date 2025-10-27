@@ -4,10 +4,10 @@
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/Image.hpp"
 #include "resource/Limits.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
-#include "resource/Image.hpp"
 
 // Utils
 #include "utils/webgpu.hpp"

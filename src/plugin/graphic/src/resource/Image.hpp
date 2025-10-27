@@ -1,17 +1,17 @@
 #pragma once
 
+#include "lodepng.h"
+#include "stb_image.h"
 #include <filesystem>
+#include <glm/vec4.hpp>
+#include <stdexcept>
 #include <string>
 #include <string_view>
 #include <vector>
-#include <stdexcept>
-#include <glm/vec4.hpp>
-#include "stb_image.h"
-#include "lodepng.h"
 
 namespace Graphic::Resource {
 
-    struct Image {
+struct Image {
     uint32_t width;
     uint32_t height;
     int channels;
@@ -55,4 +55,4 @@ namespace Graphic::Resource {
 struct ImageFile : public Image {
     std::filesystem::path filepath;
 };
-};
+}; // namespace Graphic::Resource
