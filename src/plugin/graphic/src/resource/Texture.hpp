@@ -41,7 +41,7 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
         pixel.r = mapped[i * 4 + 0];
         pixel.g = mapped[i * 4 + 1];
         pixel.b = mapped[i * 4 + 2];
-        pixel.a = 255;
+        pixel.a = mapped[i * 4 + 3];
         data->data.pixels.push_back(pixel);
     }
     buf.unmap();
