@@ -3,51 +3,52 @@
 #include "exception/UnsupportedTextureFormatError.hpp"
 #include "resource/Context.hpp"
 #include "resource/Image.hpp"
+#include "utils/GetBytesPerPixel.hpp"
 #include "utils/webgpu.hpp"
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
-#include "utils/GetBytesPerPixel.hpp"
 
 namespace Graphic::Resource {
 
 namespace {
-    struct CallbackData {
-        wgpu::Buffer buffer;
-        Image data;
-        uint32_t bytesPerRow;
-        wgpu::TextureFormat format;
-        bool done = false;
-    };
-    
-    static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView message, void *userdata1, void *userdata2) {
-            CallbackData *data = reinterpret_cast<CallbackData *>(userdata1);
-            if (status != wgpu::MapAsyncStatus::Success)
-            {
-                Log::Error(fmt::format("Failed to map buffer: {}", std::string_view(message.data, message.length)));
-                data->done = true;
-                return;
-            }
-            auto &buf = data->buffer;
-            uint8_t *mapped = static_cast<uint8_t *>(buf.getMappedRange(0, buf.getSize()));
-            uint32_t size = (data->bytesPerRow / Graphic::Utils::GetBytesPerPixel(data->format)) * data->data.height;
-            for (size_t i = 0; i < size; i++)
-            {
-                if (i % (data->bytesPerRow / Graphic::Utils::GetBytesPerPixel(data->format)) >= data->data.width)
-                {
-                    continue; // Skip padding bytes
-                }
-                glm::u8vec4 pixel;
-                // Here we assume the texture format is RGBA8Unorm (4 bytes per pixel)
-                pixel.r = mapped[i * 4 + 0];
-                pixel.g = mapped[i * 4 + 1];
-                pixel.b = mapped[i * 4 + 2];
-                pixel.a = 255;
-                data->data.pixels.push_back(pixel);
-            }
-            buf.unmap();
-            data->done = true;
-    };
-}
+struct CallbackData {
+    wgpu::Buffer buffer;
+    Image data;
+    uint32_t bytesPerRow;
+    wgpu::TextureFormat format;
+    bool done = false;
+};
+
+static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView message, void *userdata1, void *userdata2)
+{
+    CallbackData *data = reinterpret_cast<CallbackData *>(userdata1);
+    if (status != wgpu::MapAsyncStatus::Success)
+    {
+        Log::Error(fmt::format("Failed to map buffer: {}", std::string_view(message.data, message.length)));
+        data->done = true;
+        return;
+    }
+    auto &buf = data->buffer;
+    uint8_t *mapped = static_cast<uint8_t *>(buf.getMappedRange(0, buf.getSize()));
+    uint32_t size = (data->bytesPerRow / Graphic::Utils::GetBytesPerPixel(data->format)) * data->data.height;
+    for (size_t i = 0; i < size; i++)
+    {
+        if (i % (data->bytesPerRow / Graphic::Utils::GetBytesPerPixel(data->format)) >= data->data.width)
+        {
+            continue; // Skip padding bytes
+        }
+        glm::u8vec4 pixel;
+        // Here we assume the texture format is RGBA8Unorm (4 bytes per pixel)
+        pixel.r = mapped[i * 4 + 0];
+        pixel.g = mapped[i * 4 + 1];
+        pixel.b = mapped[i * 4 + 2];
+        pixel.a = 255;
+        data->data.pixels.push_back(pixel);
+    }
+    buf.unmap();
+    data->done = true;
+};
+} // namespace
 
 class Texture {
   public:

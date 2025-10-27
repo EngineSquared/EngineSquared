@@ -12,6 +12,7 @@
 #include "resource/Texture.hpp"
 
 // Utils
+#include "utils/GetBytesPerPixel.hpp"
 #include "utils/IValidable.hpp"
 #include "utils/shader/ABindGroupLayoutEntry.hpp"
 #include "utils/shader/BindGroupLayout.hpp"
@@ -21,7 +22,6 @@
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include "utils/shader/VertexBufferLayout.hpp"
-#include "utils/GetBytesPerPixel.hpp"
 
 // Exceptions
 #include "exception/AdapterCreationError.hpp"
