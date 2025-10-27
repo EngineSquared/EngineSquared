@@ -6,6 +6,7 @@
 #include "resource/GraphicSettings.hpp"
 #include "resource/Limits.hpp"
 #include "resource/Shader.hpp"
+#include "resource/ShaderContainer.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
 
