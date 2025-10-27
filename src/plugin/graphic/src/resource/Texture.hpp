@@ -192,6 +192,8 @@ class Texture {
     }
 
   private:
+    Texture(void) = default;
+
     static uint32_t _GetBytesPerPixel(wgpu::TextureFormat format)
     {
         switch (format)
