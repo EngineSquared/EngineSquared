@@ -1,19 +1,11 @@
 #pragma once
 
-#include <cstring>
 #include <stdexcept>
-#include <string>
 
 namespace Graphic::Exception {
 
-class UnknownFormatType : public std::exception {
-  public:
-    explicit UnknownFormatType(const std::string &message) : msg("Unknown format type: " + message){};
-
-    const char *what() const throw() override { return this->msg.c_str(); };
-
-  private:
-    std::string msg;
+class UnknownFormatType : public std::runtime_error {
+  using std::runtime_error::runtime_error;
 };
 
 } // namespace Graphic::Exception

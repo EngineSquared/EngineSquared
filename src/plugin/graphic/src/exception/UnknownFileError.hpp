@@ -1,8 +1,6 @@
 #pragma once
 
-#include <cstring>
 #include <stdexcept>
-#include <string>
 
 namespace Graphic::Exception {
 
