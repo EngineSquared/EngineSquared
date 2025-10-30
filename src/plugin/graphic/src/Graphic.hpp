@@ -5,18 +5,31 @@
 #include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Limits.hpp"
+#include "resource/Shader.hpp"
+#include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
 
 // Utils
-#include "utils/webgpu.hpp"
+#include "utils/IValidable.hpp"
+#include "utils/shader/ABindGroupLayoutEntry.hpp"
+#include "utils/shader/BindGroupLayout.hpp"
+#include "utils/shader/BufferBindGroupLayoutEntry.hpp"
+#include "utils/shader/ColorTargetState.hpp"
+#include "utils/shader/DepthStencilState.hpp"
+#include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
+#include "utils/shader/TextureBindGroupLayoutEntry.hpp"
+#include "utils/shader/VertexBufferLayout.hpp"
 
 // Exceptions
 #include "exception/AdapterCreationError.hpp"
 #include "exception/CapabilitiesRequestError.hpp"
 #include "exception/DeviceCreationError.hpp"
+#include "exception/DuplicatedVertexAttributeLocationError.hpp"
+#include "exception/FileReadingError.hpp"
 #include "exception/InstanceCreationError.hpp"
 #include "exception/QueueCreationError.hpp"
 #include "exception/SurfaceCreationError.hpp"
+#include "exception/UnknownFormatType.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"

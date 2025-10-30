@@ -1,0 +1,13 @@
+#pragma once
+
+#include "utils/IValidable.hpp"
+#include "utils/webgpu.hpp"
+
+namespace Graphic::Utils {
+
+class IBindGroupLayoutEntry : public IValidable {
+  public:
+    virtual const wgpu::BindGroupLayoutEntry &getEntry() const = 0;
+    virtual const std::string &getName() const = 0;
+};
+} // namespace Graphic::Utils
