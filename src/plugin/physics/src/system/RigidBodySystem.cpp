@@ -115,8 +115,8 @@ static void OnRigidBodyConstruct(entt::registry &registry, entt::entity entity)
         }
 
         JPH::BodyCreationSettings bodySettings(shape, Resource::ToJoltVec3(transform->position),
-                                               Resource::ToJoltQuat(transform->rotation),
-                                               ToJoltMotionType(rigidBody.motionType), rigidBody.objectLayer);
+                                               Resource::ToJoltQuat(transform->rotation), rigidBody.motionType,
+                                               rigidBody.objectLayer);
 
         bodySettings.mFriction = rigidBody.friction;
         bodySettings.mRestitution = rigidBody.restitution;
@@ -141,7 +141,7 @@ static void OnRigidBodyConstruct(entt::registry &registry, entt::entity entity)
         }
 
         JPH::BodyID bodyID = body->GetID();
-        bodyInterface.AddBody(bodyID, ToJoltActivation(rigidBody.activation));
+        bodyInterface.AddBody(bodyID, rigidBody.activation);
 
         registry.emplace<Component::RigidBodyInternal>(entity, bodyID);
 
