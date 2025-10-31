@@ -7,7 +7,14 @@
 // Exceptions
 #include "exception/ContactListenerError.hpp"
 
+// Components
+#include "component/BoxCollider.hpp"
+#include "component/DefaultCollider.hpp"
+#include "component/RigidBody.hpp"
+#include "component/RigidBodyInternal.hpp"
+
 // Resource
+#include "resource/JoltConversions.hpp"
 #include "resource/PhysicsManager.hpp"
 
 // Systems

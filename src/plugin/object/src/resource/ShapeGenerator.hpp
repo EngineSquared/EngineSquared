@@ -92,9 +92,11 @@ Component::Mesh GenerateCylinderMesh(float radiusTop = 0.5f, float radiusBottom 
  * @param scale Scale factor (default: 1.0)
  * @return Engine::Entity The created entity with mesh and transform
  *
- * @example
+ * @example "Creating a cube entity:"
+ * @code
  * auto cube = Object::CreateCube(core, 2.0f, glm::vec3(0, 5, 0));
  * cube.AddComponent<Physics::RigidBody>(core, Physics::RigidBody::CreateDynamic());
+ * @endcode
  */
 Engine::Entity CreateCube(Engine::Core &core, float size = 1.0f, const glm::vec3 &position = glm::vec3(0.0f),
                           const glm::quat &rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
@@ -110,9 +112,11 @@ Engine::Entity CreateCube(Engine::Core &core, float size = 1.0f, const glm::vec3
  * @param rings Number of vertical rings (default: 16)
  * @return Engine::Entity The created entity with mesh and transform
  *
- * @example
+ * @example "Creating a sphere entity:"
+ * @code
  * auto sphere = Object::CreateSphere(core, 0.5f, glm::vec3(0, 10, 0));
  * sphere.AddComponent<Physics::RigidBody>(core, Physics::RigidBody::CreateDynamic());
+ * @endcode
  */
 Engine::Entity CreateSphere(Engine::Core &core, float radius = 0.5f, const glm::vec3 &position = glm::vec3(0.0f),
                             uint32_t segments = 32u, uint32_t rings = 16u);
@@ -128,9 +132,11 @@ Engine::Entity CreateSphere(Engine::Core &core, float radius = 0.5f, const glm::
  * @param subdivisionsZ Number of subdivisions along Z (default: 1)
  * @return Engine::Entity The created entity with mesh and transform
  *
- * @example
+ * @example "Creating a plane entity:"
+ * @code
  * auto floor = Object::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0, 0, 0));
  * floor.AddComponent<Physics::RigidBody>(core, Physics::RigidBody::CreateStatic());
+ * @endcode
  */
 Engine::Entity CreatePlane(Engine::Core &core, float width = 1.0f, float depth = 1.0f,
                            const glm::vec3 &position = glm::vec3(0.0f), uint32_t subdivisionsX = 1u,
@@ -147,11 +153,14 @@ Engine::Entity CreatePlane(Engine::Core &core, float width = 1.0f, float depth =
  * @param segments Number of radial segments (default: 32)
  * @return Engine::Entity The created entity with mesh and transform
  *
- * @example
+ * @example "Creating a cylinder entity:"
+ * @code
  * auto cylinder = Object::CreateCylinder(core, 0.5f, 0.5f, 2.0f, glm::vec3(0, 1, 0));
  * cylinder.AddComponent<Physics::RigidBody>(core, Physics::RigidBody::CreateDynamic());
+ * @endcode
  */
 Engine::Entity CreateCylinder(Engine::Core &core, float radiusTop = 0.5f, float radiusBottom = 0.5f,
-                              float height = 1.0f, const glm::vec3 &position = glm::vec3(0.0f), uint32_t segments = 32u);
+                              float height = 1.0f, const glm::vec3 &position = glm::vec3(0.0f),
+                              uint32_t segments = 32u);
 
 } // namespace Object::Resource
