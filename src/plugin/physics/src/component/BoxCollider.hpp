@@ -32,10 +32,10 @@ namespace Physics::Component {
  * Explicit box collider that users can add to customize collision shape.
  * If present on an entity with RigidBody, prevents DefaultCollider auto-creation.
  *
- * @example Basic usage:
+ * @example "Basic usage for a 1x2x1 box"
  * @code
  * Physics::Component::BoxCollider collider;
- * collider.halfExtents = glm::vec3(0.5f, 1.0f, 0.5f); // 1x2x1 box
+ * collider.halfExtents = glm::vec3(0.5f, 1.0f, 0.5f);
  * entity.AddComponent<Physics::BoxCollider>(core, collider);
  * @endcode
  */

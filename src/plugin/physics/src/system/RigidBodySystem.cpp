@@ -18,33 +18,6 @@
 
 namespace Physics::System {
 
-/**
- * @brief Convert RigidBody::MotionType to JPH::EMotionType
- */
-static inline JPH::EMotionType ToJoltMotionType(Component::MotionType type)
-{
-    switch (type)
-    {
-    case Component::MotionType::Static: return JPH::EMotionType::Static;
-    case Component::MotionType::Kinematic: return JPH::EMotionType::Kinematic;
-    case Component::MotionType::Dynamic: return JPH::EMotionType::Dynamic;
-    default: return JPH::EMotionType::Dynamic;
-    }
-}
-
-/**
- * @brief Convert RigidBody::Activation to JPH::EActivation
- */
-static inline JPH::EActivation ToJoltActivation(Component::Activation activation)
-{
-    switch (activation)
-    {
-    case Component::Activation::Activate: return JPH::EActivation::Activate;
-    case Component::Activation::DontActivate: return JPH::EActivation::DontActivate;
-    default: return JPH::EActivation::Activate;
-    }
-}
-
 //=============================================================================
 // Collider shape creation
 //=============================================================================

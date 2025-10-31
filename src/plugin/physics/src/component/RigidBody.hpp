@@ -24,6 +24,7 @@
 #pragma once
 
 #include <Jolt/Physics/Body/MotionType.h>
+#include <Jolt/Physics/EActivation.h>
 #include <cstdint>
 
 namespace Physics::Component {
@@ -31,19 +32,12 @@ namespace Physics::Component {
 /**
  * @brief Motion type for rigid bodies
  */
-enum class MotionType : uint8_t {
-    Static = 0,    ///< Non-moving body
-    Kinematic = 1, ///< Moving but not affected by forces
-    Dynamic = 2    ///< Fully simulated, affected by forces
-};
+using MotionType = JPH::EMotionType;
 
 /**
  * @brief Activation mode for bodies when added to the physics world
  */
-enum class Activation : uint8_t {
-    Activate = 0,    ///< Activate the body immediately
-    DontActivate = 1 ///< Don't activate (will sleep)
-};
+using Activation = JPH::EActivation;
 
 /**
  * @brief Public RigidBody component
