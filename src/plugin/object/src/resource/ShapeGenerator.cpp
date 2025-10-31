@@ -310,7 +310,7 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
     // Generate top cap (if radius > 0)
     if (radiusTop > 0.0f)
     {
-        uint32_t centerTop = static_cast<uint32_t>(mesh.vertices.size());
+        auto centerTop = static_cast<uint32_t>(mesh.vertices.size());
         mesh.vertices.emplace_back(0.0f, halfHeight, 0.0f);
         mesh.normals.emplace_back(0.0f, 1.0f, 0.0f);
         mesh.texCoords.emplace_back(0.5f, 0.5f);
@@ -338,7 +338,7 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
     if (radiusBottom <= 0.0f)
         return mesh;
 
-    uint32_t centerBottom = static_cast<uint32_t>(mesh.vertices.size());
+    auto centerBottom = static_cast<uint32_t>(mesh.vertices.size());
     mesh.vertices.emplace_back(0.0f, -halfHeight, 0.0f);
     mesh.normals.emplace_back(0.0f, -1.0f, 0.0f);
     mesh.texCoords.emplace_back(0.5f, 0.5f);
