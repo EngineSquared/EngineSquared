@@ -21,6 +21,7 @@
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
+#include "system/RigidBodySystem.hpp"
 
 // Utils
 #include "utils/BroadPhaseLayerImpl.hpp"
