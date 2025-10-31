@@ -22,6 +22,7 @@
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
 #include "system/RigidBodySystem.hpp"
+#include "system/SyncTransformSystem.hpp"
 
 // Utils
 #include "utils/BroadPhaseLayerImpl.hpp"
