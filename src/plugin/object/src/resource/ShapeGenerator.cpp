@@ -272,7 +272,7 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
     {
         float y = -halfHeight + (static_cast<float>(h) / static_cast<float>(heightSegments)) * height;
         float t = static_cast<float>(h) / static_cast<float>(heightSegments);
-        float radius = radiusBottom + t * (radiusTop - radiusBottom);
+        float radius = std::lerp(radiusBottom, radiusTop, t);
 
         for (uint32_t seg = 0; seg <= segments; ++seg)
         {
