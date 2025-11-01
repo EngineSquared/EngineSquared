@@ -15,17 +15,18 @@
 
 /**
  * @brief Create a static floor plane using Object::CreatePlane helper
+ *
+ * Use the helper function to create a plane entity with mesh and transform.
+ * Add Large flat box collider (20x1x20 meters) component for collision and
+ * Static rigid body (immovable) component.
  */
 void CreateFloor(Engine::Core &core)
 {
-    // Use the helper function to create a plane entity with mesh and transform
     auto floor = Object::Resource::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
-    // Large flat box collider (20x1x20 meters)
     auto boxCollider = Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f));
     floor.AddComponent<Physics::Component::BoxCollider>(core, boxCollider);
 
-    // Static rigid body (immovable)
     floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
 
     std::cout << "- Floor created (static body with mesh)" << std::endl;
@@ -33,19 +34,19 @@ void CreateFloor(Engine::Core &core)
 
 /**
  * @brief Create a dynamic cube that will fall using Object::CreateCube helper
+ *
+ * Use the helper function to create a cube entity with mesh and transform.
+ * Add RigidBody component with dynamic motion type and specified mass.
+ * The DefaultCollider is created automatically!
  */
 void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass)
 {
-    // Use the helper function to create a cube entity with mesh and transform
     auto cube = Object::Resource::CreateCube(core, 1.0f, glm::vec3(x, y, z));
 
-    // Physics properties
     auto rigidBody = Physics::Component::RigidBody::CreateDynamic(mass);
     rigidBody.friction = 0.5f;
     rigidBody.restitution = 0.3f; // Some bounce
     cube.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
-
-    // DefaultCollider is created automatically!
 
     std::cout << "- Cube created at (" << x << ", " << y << ", " << z << ") with mass " << mass << "kg (with mesh)"
               << std::endl;
@@ -53,17 +54,18 @@ void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass
 
 /**
  * @brief Create a bouncy ball with high restitution using Object::CreateSphere helper
+ *
+ * Use the helper function to create a sphere entity with mesh and transform.
+ * Add Sphere-like collider (using small cube for now as approximation),
+ * then Very bouncy properties
  */
 void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
 {
-    // Use the helper function to create a sphere entity with mesh and transform
     auto ball = Object::Resource::CreateSphere(core, 0.5f, glm::vec3(x, y, z));
 
-    // Sphere-like collider (using small cube for now as approximation)
     auto collider = Physics::Component::BoxCollider(glm::vec3(0.5f, 0.5f, 0.5f));
     ball.AddComponent<Physics::Component::BoxCollider>(core, collider);
 
-    // Very bouncy properties
     auto rigidBody = Physics::Component::RigidBody::CreateDynamic(1.0f);
     rigidBody.restitution = 0.8f; // 80% bounce
     rigidBody.friction = 0.2f;    // Low friction
@@ -74,19 +76,18 @@ void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
 
 /**
  * @brief Create a kinematic platform that can be moved programmatically
+ *
+ * Use the helper function to create a cube entity (flattened for platform shape)
  */
 void CreateMovingPlatform(Engine::Core &core)
 {
-    // Use the helper function to create a cube entity (flattened for platform shape)
     auto platform =
         Object::Resource::CreateCube(core, 1.0f, glm::vec3(0.0f, 5.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
                                      glm::vec3(3.0f, 0.3f, 3.0f)); // Scale to make it flat
 
-    // Platform collider
     auto collider = Physics::Component::BoxCollider(glm::vec3(3.0f, 0.3f, 3.0f));
     platform.AddComponent<Physics::Component::BoxCollider>(core, collider);
 
-    // Kinematic body (can be moved programmatically)
     platform.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateKinematic());
 
     std::cout << "- Kinematic platform created with mesh" << std::endl;
@@ -95,14 +96,13 @@ void CreateMovingPlatform(Engine::Core &core)
 /**
  * @brief Display simulation statistics
  */
-void PrintSimulationStep(int step, Engine::Core &core)
+void PrintSimulationStep(uint32_t step, Engine::Core &core)
 {
     auto &registry = core.GetRegistry();
 
-    // Count active bodies
-    int dynamicBodies = 0;
-    int staticBodies = 0;
-    int kinematicBodies = 0;
+    uint32_t dynamicBodies = 0;
+    uint32_t staticBodies = 0;
+    uint32_t kinematicBodies = 0;
 
     registry.view<Physics::Component::RigidBody>().each([&](const Physics::Component::RigidBody &rb) {
         switch (rb.motionType)
@@ -126,6 +126,9 @@ struct CounterComponent {
     CounterComponent(uint32_t initialCount) : counter(initialCount) {}
 };
 
+/**
+ * @brief Runs the physics simulation system and prints info every 10 steps
+ */
 void RunningPhysicsSimulationSystem(Engine::Core &core)
 {
     core.GetRegistry().view<CounterComponent>().each([&](CounterComponent &counter) {
@@ -137,13 +140,11 @@ void RunningPhysicsSimulationSystem(Engine::Core &core)
 
         counter.counter++;
 
-        // Print info every 10 steps
         if (counter.counter % 10 != 0)
             return;
 
         PrintSimulationStep(counter.counter, core);
 
-        // Sample: Show positions of all dynamic cubes
         std::cout << "  - Dynamic body positions:" << std::endl;
         core.GetRegistry().view<Physics::Component::RigidBody, Object::Component::Transform>().each(
             [&](Engine::Entity entity, const Physics::Component::RigidBody &rb,
@@ -157,22 +158,26 @@ void RunningPhysicsSimulationSystem(Engine::Core &core)
     });
 }
 
+/**
+ * @brief Create the physics world with several entities
+ *
+ * 1. Static floor
+ * 2. Several falling cubes with different properties
+ * 3. Bouncy ball
+ * 4. Kinematic platform
+ */
 void CreatePhysicsWorldSystem(Engine::Core &core)
 {
     std::cout << "Creating physics scene..." << std::endl;
 
-    // 1. Static floor
     CreateFloor(core);
 
-    // 2. Several falling cubes with different properties
     CreateFallingCube(core, 0.0f, 10.0f, 0.0f, 5.0f);   // Center, 5kg
     CreateFallingCube(core, 2.0f, 15.0f, 2.0f, 10.0f);  // Right, 10kg
     CreateFallingCube(core, -2.0f, 12.0f, -2.0f, 2.0f); // Left, 2kg
 
-    // 3. Bouncy ball
     CreateBouncyBall(core, 3.0f, 20.0f, 0.0f);
 
-    // 4. Kinematic platform
     CreateMovingPlatform(core);
 
     std::cout << "\n✓ Scene setup complete!\n" << std::endl;
@@ -181,6 +186,9 @@ void CreatePhysicsWorldSystem(Engine::Core &core)
     counter.AddComponent<CounterComponent>(core, 0u);
 }
 
+/**
+ * @brief Cleanup all created entities in the physics demonstration
+ */
 void CleanupDemonstrationSystem(Engine::Core &core)
 {
     std::cout << "\nCleaning up entities..." << std::endl;
@@ -206,9 +214,7 @@ int main(void)
 
     Engine::Core core;
 
-    std::cout << "Registering plugins..." << std::endl;
     core.AddPlugins<Physics::Plugin>();
-    std::cout << "- Plugins registered\n" << std::endl;
 
     core.RegisterSystem<Engine::Scheduler::Startup>(CreatePhysicsWorldSystem);
     core.RegisterSystem<Engine::Scheduler::FixedTimeUpdate>(RunningPhysicsSimulationSystem);
