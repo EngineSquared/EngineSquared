@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/Core.hpp"
+#include "utils/webgpu.hpp"
 
 namespace Graphic::Resource {
 class AGPUBuffer {

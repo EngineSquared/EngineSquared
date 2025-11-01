@@ -9,9 +9,9 @@
 namespace Graphic::Resource {
 class PointGPUBuffer : public AGPUBuffer {
   public:
-    PointGPUBuffer(Engine::Entity entity) : _entity(entity) {}
-    ~PointGPUBuffer() = default;
-    void Create(Engine::Core &core)
+    explicit PointGPUBuffer(Engine::Entity entity) : _entity(entity) {}
+    ~PointGPUBuffer() override = default;
+    void Create(Engine::Core &core) override
     {
 
         auto meshComponent = _entity.TryGetComponent<Object::Component::Mesh>(core);
@@ -45,7 +45,7 @@ class PointGPUBuffer : public AGPUBuffer {
 
         _isCreated = true;
     };
-    void Destroy(Engine::Core &core)
+    void Destroy(Engine::Core &core) override
     {
         if (_isCreated)
         {
@@ -54,8 +54,8 @@ class PointGPUBuffer : public AGPUBuffer {
         }
     };
 
-    bool IsCreated(Engine::Core &core) const { return _isCreated; };
-    void Update(Engine::Core &core)
+    bool IsCreated(Engine::Core &core) const override { return _isCreated; };
+    void Update(Engine::Core &core) override
     {
         if (!_isCreated)
         {
@@ -67,8 +67,6 @@ class PointGPUBuffer : public AGPUBuffer {
         // For now, we will not implement dynamic resizing of the buffer. As we should have a way to know if the size
         // changed. And it would be so heavy to check every frame every vertex position, normal and texCoord.
     };
-
-    const wgpu::Buffer &GetBuffer() const { return _buffer; }
 
   private:
     wgpu::Buffer _buffer;
