@@ -44,6 +44,9 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
     if name == "main" then
         goto continue
     end
+    if path.filename(path.directory(file)) == "utils" then
+        goto continue
+    end
     target(name)
         set_group(TEST_GROUP_NAME)
         set_kind("binary")
@@ -58,6 +61,12 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_packages(required_packages, "gtest")
 
         add_deps(plugin_name)
+
+        add_files("tests/utils/**.cpp")
+
+        add_headerfiles("tests/(utils/*.hpp)")
+
+        add_includedirs("tests", {public = true})
 
         add_files(file)
         add_files("tests/main.cpp")

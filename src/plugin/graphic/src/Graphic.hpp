@@ -8,6 +8,8 @@
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
+#include "resource/ARenderPass.hpp"
+#include "resource/SingleExecutionRenderPass.hpp"
 
 // Utils
 #include "utils/IValidable.hpp"
