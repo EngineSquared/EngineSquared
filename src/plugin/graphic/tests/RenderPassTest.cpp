@@ -10,7 +10,8 @@ void TestSystem(Engine::Core &core)
 
     Graphic::Resource::SingleExecutionRenderPass renderPass("TestRenderPass");
 
-    std::shared_ptr<Graphic::Resource::Shader> shader = std::make_shared<Graphic::Resource::Shader>(Graphic::Tests::Utils::CreateDefaultTestShader(context));
+    std::shared_ptr<Graphic::Resource::Shader> shader =
+        std::make_shared<Graphic::Resource::Shader>(Graphic::Tests::Utils::CreateDefaultTestShader(context));
 
     renderPass.BindShader(shader);
     renderPass.SetGetClearColorCallback([](Engine::Core &core, glm::vec4 &color) {

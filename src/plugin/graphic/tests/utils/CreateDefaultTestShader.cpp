@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Graphic.hpp"
-#include <glm/mat4x4.hpp>
 #include "core/Core.hpp"
+#include <glm/mat4x4.hpp>
 
 namespace Graphic::Tests::Utils {
 Graphic::Resource::Shader CreateDefaultTestShader(Graphic::Resource::Context &graphicContext)
@@ -100,4 +100,4 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4f {
 
     return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
 }
-}
+} // namespace Graphic::Tests::Utils

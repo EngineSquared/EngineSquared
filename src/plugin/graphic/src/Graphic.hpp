@@ -1,15 +1,15 @@
 #pragma once
 
 // Resources
+#include "resource/ARenderPass.hpp"
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Limits.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
-#include "resource/Surface.hpp"
-#include "resource/ARenderPass.hpp"
 #include "resource/SingleExecutionRenderPass.hpp"
+#include "resource/Surface.hpp"
 
 // Utils
 #include "utils/IValidable.hpp"
