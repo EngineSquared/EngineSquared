@@ -2,14 +2,12 @@
 
 #include "core/Core.hpp"
 #include "resource/Shader.hpp"
-#include <glm/vec4.hpp>
 #include "utils/IValidable.hpp"
-#include "core/Core.hpp"
+#include <glm/vec4.hpp>
 
 namespace Graphic::Resource {
 
-template <typename TDerived>
-class ARenderPass : public Utils::IValidable {
+template <typename TDerived> class ARenderPass : public Utils::IValidable {
   public:
     ARenderPass(std::string_view name) : _name(name) {}
 
@@ -39,23 +37,23 @@ class ARenderPass : public Utils::IValidable {
         return static_cast<TDerived &>(*this);
     }
 
-    virtual std::vector<Utils::ValidationError> validate() const override {
+    virtual std::vector<Utils::ValidationError> validate() const override
+    {
         std::vector<Utils::ValidationError> errors;
         const std::string location = fmt::format("RenderPass({})", _name);
 
-        if (!_boundShader.has_value()) {
-            errors.push_back(Utils::ValidationError{
-                .message = "No shader bound to render pass",
-                .location = location,
-                .severity = Utils::ValidationError::Severity::Error
-            });
+        if (!_boundShader.has_value())
+        {
+            errors.push_back(Utils::ValidationError{.message = "No shader bound to render pass",
+                                                    .location = location,
+                                                    .severity = Utils::ValidationError::Severity::Error});
         }
-        if (!_getClearColorCallback.has_value()) {
+        if (!_getClearColorCallback.has_value())
+        {
             errors.push_back(Utils::ValidationError{
                 .message = "No clear color callback set for render pass, using default clear color (black)",
                 .location = location,
-                .severity = Utils::ValidationError::Severity::Warning
-            });
+                .severity = Utils::ValidationError::Severity::Warning});
         }
 
         /**
@@ -70,7 +68,8 @@ class ARenderPass : public Utils::IValidable {
   private:
     std::optional<std::function<bool(Engine::Core &, glm::vec4 &)>> _getClearColorCallback;
     std::optional<std::string> _boundShader = std::nullopt;
-    std::map<uint32_t /* index inside shader */, std::string /* bind group name */> _inputs; // TODO: put this in a dedicated container
+    std::map<uint32_t /* index inside shader */, std::string /* bind group name */>
+        _inputs; // TODO: put this in a dedicated container
     std::string _name;
 };
 } // namespace Graphic::Resource

@@ -21,8 +21,10 @@ void TestSystem(Engine::Core &core)
 
     auto validationErrors = renderPass.validate();
 
-    if (!validationErrors.empty()) {
-        for (const auto &error : validationErrors) {
+    if (!validationErrors.empty())
+    {
+        for (const auto &error : validationErrors)
+        {
             std::cout << error << std::endl;
         }
         FAIL() << "RenderPass validation failed with errors.";
