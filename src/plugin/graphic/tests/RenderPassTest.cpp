@@ -10,10 +10,7 @@ void TestSystem(Engine::Core &core)
 
     Graphic::Resource::SingleExecutionRenderPass renderPass("TestRenderPass");
 
-    std::shared_ptr<Graphic::Resource::Shader> shader =
-        std::make_shared<Graphic::Resource::Shader>(Graphic::Tests::Utils::CreateDefaultTestShader(context));
-
-    renderPass.BindShader(shader);
+    renderPass.BindShader("DefaultTestShader");
     renderPass.SetGetClearColorCallback([](Engine::Core &core, glm::vec4 &color) {
         color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
         return true;
@@ -21,6 +18,15 @@ void TestSystem(Engine::Core &core)
     renderPass.AddInput(0, "TestInput");
 
     EXPECT_NO_THROW(renderPass.Execute(core));
+
+    auto validationErrors = renderPass.validate();
+
+    if (!validationErrors.empty()) {
+        for (const auto &error : validationErrors) {
+            std::cout << error << std::endl;
+        }
+        FAIL() << "RenderPass validation failed with errors.";
+    }
 }
 
 TEST(GraphicPlugin, GlobalRun)
@@ -32,6 +38,8 @@ TEST(GraphicPlugin, GlobalRun)
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &c) {
         c.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
     });
+
+    core.RegisterSystem(TestSystem);
 
     EXPECT_NO_THROW(core.RunSystems());
 }

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Graphic.hpp"
 #include "core/Core.hpp"
 #include <glm/mat4x4.hpp>
