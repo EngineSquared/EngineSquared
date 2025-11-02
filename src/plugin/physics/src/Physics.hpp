@@ -6,6 +6,7 @@
 
 // Exceptions
 #include "exception/ContactListenerError.hpp"
+#include "exception/RigidBodyError.hpp"
 
 // Components
 #include "component/BoxCollider.hpp"

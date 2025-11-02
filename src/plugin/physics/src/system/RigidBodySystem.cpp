@@ -9,6 +9,7 @@
 #include "component/RigidBodyInternal.hpp"
 #include "resource/JoltConversions.hpp"
 #include "resource/PhysicsManager.hpp"
+#include "exception/RigidBodyError.hpp"
 #include <fmt/format.h>
 
 #include "Object.hpp"
@@ -148,9 +149,9 @@ static void OnRigidBodyConstruct(entt::registry &registry, entt::entity entity)
         Log::Debug(fmt::format("Created RigidBody for entity {} with BodyID {}", static_cast<uint32_t>(entity),
                                bodyID.GetIndexAndSequenceNumber()));
     }
-    catch (const std::exception &e)
+    catch (const Exception::RigidBodyError &e)
     {
-        Log::Error(fmt::format("Exception in OnRigidBodyConstruct: {}", e.what()));
+        Log::Error(fmt::format("RigidBodyError in OnRigidBodyConstruct: {}", e.what()));
     }
 }
 
@@ -186,9 +187,9 @@ static void OnRigidBodyDestroy(entt::registry &registry, entt::entity entity)
 
         registry.remove<Component::RigidBodyInternal>(entity);
     }
-    catch (const std::exception &e)
+    catch (const Exception::RigidBodyError &e)
     {
-        Log::Error(fmt::format("Exception in OnRigidBodyDestroy: {}", e.what()));
+        Log::Error(fmt::format("RigidBodyError in OnRigidBodyDestroy: {}", e.what()));
     }
 }
 

@@ -121,7 +121,7 @@ struct CounterComponent {
     uint32_t counter;
     const uint32_t NUM_STEPS = 100u;
 
-    CounterComponent(uint32_t initialCount) : counter(initialCount) {}
+    explicit CounterComponent(uint32_t initialCount) : counter(initialCount) {}
 };
 
 /**
