@@ -11,7 +11,9 @@ local required_packages = {
     "wgpu-native",
     "glfw",
     "glm",
-    "glfw3webgpu"
+    "glfw3webgpu",
+    "stb",
+    "lodepng"
 }
 
 local plugin_name = "PluginGraphic"
@@ -57,9 +59,37 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_languages("cxx20")
         add_links("gtest")
         add_tests("default")
-        add_packages(required_packages, "gtest")
+        add_packages(required_packages, "gtest", "lodepng")
 
         add_deps(plugin_name)
+
+        after_build(function (target)
+            import("core.project.config")
+
+            local builddir = config.get("builddir")
+            if not builddir then
+                builddir = config.get("buildir")
+            end
+            local targetdir = path.join(builddir, "$(plat)", "$(arch)", "$(mode)")
+            local assets_files = os.files("$(scriptdir)" .. "/tests/assets/*")
+
+            os.mkdir(path.join(targetdir, "assets"))
+
+            for _, assets_file in ipairs(assets_files) do
+                os.cp(assets_file, path.join(targetdir, "assets"))
+            end
+        end)
+
+        on_clean(function (target)
+            import("core.project.config")
+
+            local builddir = config.get("builddir")
+            if not builddir then
+                builddir = config.get("buildir")
+            end
+            local targetdir = path.join(builddir, "$(plat)", "$(arch)", "$(mode)")
+            os.rm(path.join(targetdir, "assets"))
+        end)
 
         add_files(file)
         add_files("tests/main.cpp")

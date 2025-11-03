@@ -5,13 +5,16 @@
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/Image.hpp"
 #include "resource/Limits.hpp"
 #include "resource/PointGPUBuffer.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
+#include "resource/Texture.hpp"
 
 // Utils
+#include "utils/GetBytesPerPixel.hpp"
 #include "utils/IValidable.hpp"
 #include "utils/shader/ABindGroupLayoutEntry.hpp"
 #include "utils/shader/BindGroupLayout.hpp"
@@ -31,7 +34,11 @@
 #include "exception/InstanceCreationError.hpp"
 #include "exception/QueueCreationError.hpp"
 #include "exception/SurfaceCreationError.hpp"
+#include "exception/UnknownFileError.hpp"
 #include "exception/UnknownFormatType.hpp"
+#include "exception/UnsetAttributeTextureDescriptor.hpp"
+#include "exception/UnsupportedTextureFormatError.hpp"
+#include "exception/VertexAttributeOverlappingError.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"

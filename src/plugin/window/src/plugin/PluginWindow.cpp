@@ -18,7 +18,7 @@ void Window::Plugin::Bind()
 
     RegisterSystems<Engine::Scheduler::Update>(Window::System::StopSystems);
 
-    RegisterSystems<RenderingPipeline::Draw>(Window::System::SwapBuffers);
+    RegisterSystems<RenderingPipeline::Presentation>(Window::System::SwapBuffers);
 
     RegisterSystems<Engine::Scheduler::Shutdown>(Window::System::DestroyWindow);
 }
