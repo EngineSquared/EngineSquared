@@ -9,9 +9,6 @@ void Graphic::System::CreateQueue(Engine::Core &core)
     auto &context = core.GetResource<Resource::Context>();
     const auto &settings = core.GetResource<Resource::GraphicSettings>();
 
-    if (settings.GetWindowSystem() == Resource::WindowSystem::None)
-        return;
-
     auto queue = context.deviceContext.GetDevice()->getQueue();
 
     if (queue == nullptr)

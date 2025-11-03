@@ -4,7 +4,7 @@
 
 namespace Graphic::Exception {
 
-class FileReadingError : public std::runtime_error {
+class UnsetAttributeTextureDescriptor : public std::runtime_error {
     using std::runtime_error::runtime_error;
 };
 
