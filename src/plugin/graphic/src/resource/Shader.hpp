@@ -1,6 +1,7 @@
 #pragma once
 
 #include "resource/ShaderDescriptor.hpp"
+#include "resource/Context.hpp"
 #include "utils/shader/BindGroupLayout.hpp"
 #include "utils/shader/ColorTargetState.hpp"
 #include "utils/shader/DepthStencilState.hpp"
