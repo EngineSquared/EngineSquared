@@ -82,8 +82,8 @@ auto TestShaderContainerSystem(Engine::Core &core) -> void
     auto shader1 = CreateTestShader("TestShader1", core);
     auto shader2 = CreateTestShader("TestShader2", core);
 
-    shaderContainer.Add(shader1Id, std::move(shader1));
-    shaderContainer.Add(shader2Id, std::move(shader2));
+    auto &shaderRef1 = shaderContainer.Add(shader1Id, std::move(shader1));
+    auto &shaderRef2 = shaderContainer.Add(shader2Id, std::move(shader2));
 
     // Test 2: Check that shaders exist
     EXPECT_TRUE(shaderContainer.Contains(shader1Id));
@@ -102,7 +102,7 @@ auto TestShaderContainerSystem(Engine::Core &core) -> void
     EXPECT_TRUE(shaderContainer.Contains(shader2Id));
 
     // Test 5: Verify that getting a non-existent shader throws an exception
-    EXPECT_THROW(shaderContainer.Get(shader1Id), Object::Resource::ResourceManagerError);
+    EXPECT_THROW(shaderContainer.Get(shader1Id), Object::ResourceManagerError);
 }
 
 TEST(ShaderContainerTest, GlobalRun)
