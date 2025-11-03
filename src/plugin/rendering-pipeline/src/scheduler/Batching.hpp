@@ -4,9 +4,9 @@
 
 namespace RenderingPipeline {
 /**
- * @brief This class is used to swap the buffers and draw the data on the screen.
+ * @brief Used for player's event handling like updating mouse position, buttons'state, etc.
  */
-class Draw : public Engine::Scheduler::Update {
+class Batching : public Engine::Scheduler::Update {
   public:
     using Engine::Scheduler::Update::Update;
 };
