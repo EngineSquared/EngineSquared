@@ -4,9 +4,9 @@
 
 namespace RenderingPipeline {
 /**
- * @brief Used to send the data to the GPU, like meshes, text, sprites, etc.
+ * @brief Used for player's event handling like updating mouse position, buttons'state, etc.
  */
-class ToGPU : public Engine::Scheduler::Update {
+class PipelineCreation : public Engine::Scheduler::Update {
   public:
     using Engine::Scheduler::Update::Update;
 };
