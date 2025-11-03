@@ -4,9 +4,9 @@
 
 namespace RenderingPipeline {
 /**
- * @brief Setup the rendering pipeline, like clearing the screen, setting up the camera, etc.
+ * @brief Used for player's event handling like updating mouse position, buttons'state, etc.
  */
-class RenderSetup : public Engine::Scheduler::Update {
+class Extraction : public Engine::Scheduler::Update {
   public:
     using Engine::Scheduler::Update::Update;
 };
