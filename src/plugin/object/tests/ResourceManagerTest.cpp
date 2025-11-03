@@ -6,16 +6,26 @@ using namespace Object::Resource;
 
 TEST(ResourceManagerTest, AddGetSetRemove)
 {
+    // This struct is a basic class with no copy constructor/assignment and default move constructor/assignment because we want the default behavior to not be copyable but movable.
     struct TestResource {
         int value;
+        TestResource(int v) : value(v) {}
+
+        TestResource(const TestResource &) = delete;
+        TestResource &operator=(const TestResource &) = delete;
+
+        TestResource(TestResource &&) = default;
+        TestResource &operator=(TestResource &&) = default;
     };
 
     ResourceManager<TestResource> resource_manager;
-    TestResource asset{42};
+    TestResource asset = TestResource(42);
 
     entt::hashed_string id = "ok";
 
-    resource_manager.Add(id, asset);
+    auto resourceRef = resource_manager.Add(id, std::move(asset));
+
+    EXPECT_EQ(resourceRef->value, 42);
 
     EXPECT_EQ(resource_manager.Get(id).value, 42);
     EXPECT_EQ(resource_manager.Contains(id), true);
