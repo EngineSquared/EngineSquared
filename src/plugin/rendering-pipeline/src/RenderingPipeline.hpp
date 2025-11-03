@@ -6,9 +6,13 @@
 
 #include "scheduler/PreUpdate.hpp"
 
-#include "scheduler/Draw.hpp"
-#include "scheduler/RenderSetup.hpp"
-#include "scheduler/ToGPU.hpp"
+#include "scheduler/Batching.hpp"
+#include "scheduler/CommandCreation.hpp"
+#include "scheduler/Extraction.hpp"
+#include "scheduler/PipelineCreation.hpp"
+#include "scheduler/Preparation.hpp"
+#include "scheduler/Presentation.hpp"
+#include "scheduler/Submission.hpp"
 
 // Plugin
 #include "plugin/PluginRenderingPipeline.hpp"
