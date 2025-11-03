@@ -6,7 +6,7 @@
 void TestSystem(Engine::Core &core)
 {
     auto entity = core.CreateEntity();
-    auto meshComponent = entity.AddComponent<Object::Component::Mesh>(core);
+    auto &meshComponent = entity.AddComponent<Object::Component::Mesh>(core);
 
     meshComponent.vertices = {
         {0.0f, 0.0f, 0.0f},

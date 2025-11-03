@@ -13,10 +13,6 @@ class AGPUBuffer {
     virtual bool IsCreated(Engine::Core &core) const = 0;
     virtual void Update(Engine::Core &core) = 0;
 
-    const wgpu::Buffer &GetBuffer() const { return _buffer; }
-
-  private:
-    wgpu::Buffer _buffer;
-    bool _isCreated = false;
+    virtual const wgpu::Buffer &GetBuffer() const = 0;
 };
 } // namespace Graphic::Resource

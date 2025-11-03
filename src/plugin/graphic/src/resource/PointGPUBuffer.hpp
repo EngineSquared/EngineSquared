@@ -68,6 +68,8 @@ class PointGPUBuffer : public AGPUBuffer {
         // changed. And it would be so heavy to check every frame every vertex position, normal and texCoord.
     };
 
+    const wgpu::Buffer &GetBuffer() const override { return _buffer; };
+
   private:
     wgpu::Buffer _buffer;
     bool _isCreated = false;
