@@ -10,7 +10,7 @@ TEST(ResourceManagerTest, AddGetSetRemove)
     // we want the default behavior to not be copyable but movable.
     struct TestResource {
         int value;
-        TestResource(int v) : value(v) {}
+        explicit TestResource(int v) : value(v) {}
 
         TestResource(const TestResource &) = delete;
         TestResource &operator=(const TestResource &) = delete;
@@ -20,7 +20,7 @@ TEST(ResourceManagerTest, AddGetSetRemove)
     };
 
     ResourceManager<TestResource> resource_manager;
-    TestResource asset = TestResource(42);
+    auto asset = TestResource(42);
 
     entt::hashed_string id = "ok";
 
