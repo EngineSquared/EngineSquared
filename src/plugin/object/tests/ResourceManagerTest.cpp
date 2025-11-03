@@ -6,7 +6,8 @@ using namespace Object::Resource;
 
 TEST(ResourceManagerTest, AddGetSetRemove)
 {
-    // This struct is a basic class with no copy constructor/assignment and default move constructor/assignment because we want the default behavior to not be copyable but movable.
+    // This struct is a basic class with no copy constructor/assignment and default move constructor/assignment because
+    // we want the default behavior to not be copyable but movable.
     struct TestResource {
         int value;
         TestResource(int v) : value(v) {}
