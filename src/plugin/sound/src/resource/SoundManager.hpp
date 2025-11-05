@@ -7,6 +7,7 @@
 #include <unordered_map>
 
 #include "Engine.hpp"
+#include "FunctionContainer.hpp"
 
 namespace Sound::Resource {
 
@@ -44,7 +45,7 @@ class SoundManager {
 
     std::unordered_map<std::string, Sound, TransparentHash, TransparentEqual> _soundsToPlay;
 
-    std::unordered_map<std::string, CustomDataCallback> _customCallbacks;
+    FunctionUtils::FunctionContainer<void, ma_device *, void *, ma_uint32> _customCallbacks;
 
   public:
     /**
@@ -56,6 +57,26 @@ class SoundManager {
      * Destructor.
      */
     ~SoundManager();
+
+    /**
+     * Deleted copy constructor (contains non-copyable FunctionContainer).
+     */
+    SoundManager(const SoundManager &) = delete;
+
+    /**
+     * Deleted copy assignment operator (contains non-copyable FunctionContainer).
+     */
+    SoundManager &operator=(const SoundManager &) = delete;
+
+    /**
+     * Default move constructor.
+     */
+    SoundManager(SoundManager &&) noexcept = default;
+
+    /**
+     * Default move assignment operator.
+     */
+    SoundManager &operator=(SoundManager &&) noexcept = default;
 
     /**
      * @brief Audio data callback used by the playback device to fill the output buffer.
@@ -74,9 +95,10 @@ class SoundManager {
         auto *outputBuffer = static_cast<float *>(pOutput);
         std::memset(outputBuffer, 0, sizeof(float) * frameCount * 2); // stereo clear
 
-        for (const auto &[name, callback] : self._customCallbacks)
+        const auto &callbacks = self._customCallbacks.GetFunctions();
+        for (const auto &callback : callbacks)
         {
-            callback(pDevice, pOutput, frameCount);
+            (*callback)(pDevice, pOutput, frameCount);
         }
 
         for (auto &[name, sound] : self._soundsToPlay)
@@ -416,48 +438,58 @@ class SoundManager {
     /**
      * @brief Add a custom audio callback.
      *
-     * @param name Unique name for the callback.
      * @param callback The callback function to add.
+     * @return FunctionUtils::FunctionID Unique ID of the added callback.
+     *
+     * @example
+     * auto callbackID = soundManager.AddCustomCallback([](ma_device* device, void* output, ma_uint32 frameCount) {});
      */
-    inline void AddCustomCallback(const std::string &name, const CustomDataCallback &callback)
+    inline FunctionUtils::FunctionID AddCustomCallback(const CustomDataCallback &callback)
     {
-        if (_customCallbacks.contains(name))
-        {
-            ES::Utils::Log::Warn(fmt::format("Custom callback \"{}\" already exists, replacing it", name));
-        }
-        _customCallbacks[name] = callback;
+        return _customCallbacks.AddFunction(callback);
     }
 
     /**
-     * @brief Remove a custom audio callback.
+     * @brief Remove a custom audio callback by its ID.
      *
-     * @param name Name of the callback to remove.
+     * @param id ID of the callback to remove.
+     * @return bool True if the callback was removed, false if it didn't exist.
      */
-    inline void RemoveCustomCallback(const std::string &name)
+    inline bool RemoveCustomCallback(FunctionUtils::FunctionID id)
     {
-        auto it = _customCallbacks.find(name);
-        if (it != _customCallbacks.end())
+        if (!_customCallbacks.Contains(id))
         {
-            _customCallbacks.erase(it);
+            Log::Error(fmt::format("Could not remove: Custom callback with ID {} does not exist", id));
+            return false;
         }
-        else
-        {
-            ES::Utils::Log::Error(fmt::format("Could not remove: Custom callback \"{}\" does not exist", name));
-        }
+        _customCallbacks.DeleteFunction(id);
+        return true;
     }
 
     /**
-     * @brief Check if a custom callback exists.
+     * @brief Check if a custom callback exists by its ID.
      *
-     * @param name Name of the callback to check.
+     * @param id ID of the callback to check.
      * @return bool True if the callback exists, false otherwise.
      */
-    inline bool HasCustomCallback(const std::string &name) const { return _customCallbacks.contains(name); }
+    inline bool HasCustomCallback(FunctionUtils::FunctionID id) const { return _customCallbacks.Contains(id); }
 
     /**
      * @brief Clear all custom callbacks.
      */
-    inline void ClearCustomCallbacks() { _customCallbacks.clear(); }
+    inline void ClearCustomCallbacks()
+    {
+        // Delete all callbacks by iterating and collecting IDs first
+        std::vector<FunctionUtils::FunctionID> ids;
+        for (const auto &func : _customCallbacks.GetFunctions())
+        {
+            ids.push_back(func->GetID());
+        }
+        for (auto id : ids)
+        {
+            _customCallbacks.DeleteFunction(id);
+        }
+    }
 };
 
 } // namespace Sound::Resource

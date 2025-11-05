@@ -17,16 +17,18 @@ FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::A
         id = CallableFunction<TCallable, TReturn, TArgs...>::GetCallableID(callable);
     }
 
-    if (_idToIndex.contains(id))
+    if (_idToIterator.contains(id))
     {
         Log::Warn("Function already exists"); // TODO: be able to change container thing name
         return id;
     }
 
-    std::size_t index = _orderedFunctions.size();
     auto function = std::make_unique<CallableFunction<TCallable, TReturn, TArgs...>>(callable);
-    _idToIndex[id] = index;
     _orderedFunctions.push_back(std::move(function));
+
+    auto it = std::prev(_orderedFunctions.end());
+    _idToIterator[id] = it;
+
     return id;
 }
 
@@ -36,15 +38,17 @@ FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::A
 {
     FunctionUtils::FunctionID id = function->GetID();
 
-    if (_idToIndex.contains(id))
+    if (_idToIterator.contains(id))
     {
         Log::Warn("Function already exists"); // TODO: be able to change container thing name
         return id;
     }
 
-    std::size_t index = _orderedFunctions.size();
     _orderedFunctions.push_back(std::move(function));
-    _idToIndex[id] = index;
+
+    auto it = std::prev(_orderedFunctions.end());
+    _idToIterator[id] = it;
+
     return id;
 }
 
@@ -52,24 +56,18 @@ template <typename TReturn, typename... TArgs>
 std::unique_ptr<typename FunctionUtils::FunctionContainer<TReturn, TArgs...>::FunctionType>
 FunctionUtils::FunctionContainer<TReturn, TArgs...>::DeleteFunction(FunctionUtils::FunctionID id)
 {
-    auto it = _idToIndex.find(id);
-    if (it == _idToIndex.end())
+    auto mapIt = _idToIterator.find(id);
+    if (mapIt == _idToIterator.end())
     {
         Log::Warn("Function not found");
         return nullptr;
     }
 
-    std::size_t index = it->second;
-    auto funcIterator = std::next(_orderedFunctions.begin(), index);
-    auto func = std::move(*funcIterator);
-    _orderedFunctions.erase(funcIterator);
-    _idToIndex.erase(it);
-    for (auto &[first, second] : _idToIndex)
-    {
-        if (second > index)
-        {
-            second--;
-        }
-    }
+    auto listIt = mapIt->second;
+    auto func = std::move(*listIt);
+
+    _orderedFunctions.erase(listIt);
+    _idToIterator.erase(mapIt);
+
     return func;
 }
