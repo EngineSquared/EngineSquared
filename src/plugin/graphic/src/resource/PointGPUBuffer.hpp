@@ -23,16 +23,19 @@ class PointGPUBuffer : public AGPUBuffer {
         }
 
         std::vector<float> pointData;
+
+        pointData.reserve(meshComponent->vertices.size() * 8);
+
         for (uint64_t i = 0; i < meshComponent->vertices.size(); ++i)
         {
-            pointData.push_back(meshComponent->vertices[i].x);
-            pointData.push_back(meshComponent->vertices[i].y);
-            pointData.push_back(meshComponent->vertices[i].z);
-            pointData.push_back(meshComponent->normals[i].x);
-            pointData.push_back(meshComponent->normals[i].y);
-            pointData.push_back(meshComponent->normals[i].z);
-            pointData.push_back(meshComponent->texCoords[i].x);
-            pointData.push_back(meshComponent->texCoords[i].y);
+            pointData.emplace_back(meshComponent->vertices[i].x);
+            pointData.emplace_back(meshComponent->vertices[i].y);
+            pointData.emplace_back(meshComponent->vertices[i].z);
+            pointData.emplace_back(meshComponent->normals[i].x);
+            pointData.emplace_back(meshComponent->normals[i].y);
+            pointData.emplace_back(meshComponent->normals[i].z);
+            pointData.emplace_back(meshComponent->texCoords[i].x);
+            pointData.emplace_back(meshComponent->texCoords[i].y);
         }
 
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
