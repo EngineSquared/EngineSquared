@@ -1,8 +1,8 @@
 #pragma once
 
 // Resources
-#include "resource/ARenderPass.hpp"
 #include "resource/AGPUBuffer.hpp"
+#include "resource/ARenderPass.hpp"
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
