@@ -69,7 +69,7 @@ class SoundManager {
      */
     static void data_callback(ma_device *pDevice, void *pOutput, const void * /*pInput*/, ma_uint32 frameCount)
     {
-        auto *core = static_cast<ES::Engine::Core *>(pDevice->pUserData);
+        auto *core = static_cast<Engine::Core *>(pDevice->pUserData);
         auto &self = core->GetResource<SoundManager>();
         auto *outputBuffer = static_cast<float *>(pOutput);
         std::memset(outputBuffer, 0, sizeof(float) * frameCount * 2); // stereo clear
@@ -138,7 +138,7 @@ class SoundManager {
      *
      * @return void
      */
-    inline void Init(ES::Engine::Core &core)
+    inline void Init(Engine::Core &core)
     {
         _deviceConfig = ma_device_config_init(ma_device_type_playback);
         _deviceConfig.playback.format = ma_format_f32;
