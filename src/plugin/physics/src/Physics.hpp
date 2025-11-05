@@ -14,6 +14,7 @@
 #include "component/RigidBodyInternal.hpp"
 
 // Resource
+#include "resource/ForceApplicator.hpp"
 #include "resource/JoltConversions.hpp"
 #include "resource/PhysicsManager.hpp"
 

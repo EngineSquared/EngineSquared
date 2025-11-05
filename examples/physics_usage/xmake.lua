@@ -23,7 +23,8 @@ target("PhysicsUsage")
     add_deps("PluginObject")
     add_deps("PluginEvent")
 
-    add_files("src/**.cpp")
+    add_files("src/main.cpp")
+    add_files("src/examples/**.cpp")
     add_includedirs("$(projectdir)/src/")
 
     add_packages("entt", "glm", "glfw", "spdlog", "fmt", "joltphysics", "stb", "tinyobjloader")
