@@ -11,11 +11,6 @@ Component::Mesh GenerateCubeMesh(float size)
 
     float halfSize = size * 0.5f;
 
-    mesh.vertices.reserve(24);
-    mesh.normals.reserve(24);
-    mesh.texCoords.reserve(24);
-    mesh.indices.reserve(36);
-
     mesh.vertices = {
         // Front face (+Z)
         {-halfSize, -halfSize, halfSize },
@@ -414,7 +409,7 @@ Engine::Entity CreateCylinder(Engine::Core &core, float radiusTop, float radiusB
     auto transform = Component::Transform(position);
     entity.AddComponent<Component::Transform>(core, transform);
 
-    auto mesh = GenerateCylinderMesh(radiusTop, radiusBottom, height, segments, 1);
+    auto mesh = GenerateCylinderMesh(radiusTop, radiusBottom, height, segments);
     entity.AddComponent<Component::Mesh>(core, std::move(mesh));
 
     return entity;
