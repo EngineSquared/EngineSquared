@@ -8,9 +8,9 @@
 #include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
 
-ES::Engine::Core::Core() : _registry(nullptr)
+Engine::Core::Core() : _registry(nullptr)
 {
-    ES::Utils::Log::Debug("Create Core");
+    Log::Debug("Create Core");
     this->_registry = std::make_unique<entt::registry>();
 
     this->RegisterResource<Resource::Time>(Resource::Time());
@@ -39,31 +39,25 @@ ES::Engine::Core::Core() : _registry(nullptr)
     this->SetSchedulerAfter<Scheduler::Shutdown, Scheduler::RelativeTimeUpdate>();
 }
 
-ES::Engine::Core::~Core() { ES::Utils::Log::Debug("Destroy Core"); }
+Engine::Core::~Core() { Log::Debug("Destroy Core"); }
 
-ES::Engine::Entity ES::Engine::Core::CreateEntity()
-{
-    return static_cast<ES::Engine::Entity>(this->_registry->create());
-}
+Engine::Entity Engine::Core::CreateEntity() { return static_cast<Engine::Entity>(this->_registry->create()); }
 
-void ES::Engine::Core::KillEntity(ES::Engine::Entity &entity)
-{
-    this->_registry->destroy(static_cast<entt::entity>(entity));
-}
+void Engine::Core::KillEntity(Engine::Entity &entity) { this->_registry->destroy(static_cast<entt::entity>(entity)); }
 
-bool ES::Engine::Core::IsRunning() { return _running; }
+bool Engine::Core::IsRunning() { return _running; }
 
-void ES::Engine::Core::Stop()
+void Engine::Core::Stop()
 {
     if (!_running)
     {
-        ES::Utils::Log::Warn("The core is already shutted down");
+        Log::Warn("The core is already shutted down");
         return;
     }
     _running = false;
 }
 
-void ES::Engine::Core::RunCore()
+void Engine::Core::RunCore()
 {
     _running = true;
     while (_running)
@@ -72,7 +66,7 @@ void ES::Engine::Core::RunCore()
     }
 }
 
-void ES::Engine::Core::RunSystems()
+void Engine::Core::RunSystems()
 {
     this->_schedulers.RunSchedulers();
 
@@ -84,8 +78,8 @@ void ES::Engine::Core::RunSystems()
     this->_schedulersToDelete.clear();
 }
 
-bool ES::Engine::Core::IsEntityValid(entt::entity entity) { return GetRegistry().valid(entity); }
+bool Engine::Core::IsEntityValid(entt::entity entity) { return GetRegistry().valid(entity); }
 
-void ES::Engine::Core::ClearEntities() { this->_registry->clear(); }
+void Engine::Core::ClearEntities() { this->_registry->clear(); }
 
-bool ES::Engine::Core::HasPlugin(std::type_index type) const { return this->_plugins.contains(type); }
+bool Engine::Core::HasPlugin(std::type_index type) const { return this->_plugins.contains(type); }

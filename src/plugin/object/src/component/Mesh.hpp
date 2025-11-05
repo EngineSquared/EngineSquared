@@ -1,32 +1,31 @@
 /**************************************************************************
- * EngineSquared v0.0.0
+ * EngineSquared v0.1.1
  *
- * EngineSquared is a software package, part of the Engine².
+ * EngineSquared is a software package, part of the Engine² organization.
  *
- * This file is part of the EngineSquared project that is under GPL-3.0 License.
- * Copyright © 2024 by @EngineSquared, All rights reserved.
+ * This file is part of the EngineSquared project that is under MIT License.
+ * Copyright © 2024-present by @EngineSquared, All rights reserved.
  *
  * EngineSquared is a free software: you can redistribute it and/or modify
- * it under the terms of the GPL-3.0 License as published by the
- * Free Software Foundation. See the GPL-3.0 License for more details.
+ * it under the terms of the MIT License. See the project's LICENSE file for
+ * the full license text and details.
  *
  * @file Mesh.hpp
  * @brief Mesh struct declaration.
  *
  * This struct is used to represent a mesh.
  *
- * @author @MasterLaplace
- * @version 0.0.0
+ * @author @EngineSquared
+ * @version 0.1.1
  * @date 2024-12-06
  **************************************************************************/
 
 #pragma once
 
-#include "resource/OBJLoader.hpp"
+#include <glm/glm.hpp>
+#include <vector>
 
-#include <entt/resource/loader.hpp>
-
-namespace ES::Plugin::Object::Component {
+namespace Object::Component {
 
 /**
  * @brief Mesh structure.
@@ -41,28 +40,16 @@ struct Mesh {
     std::vector<uint32_t> indices{};
 
     explicit Mesh() = default;
-    explicit Mesh(const std::string &file)
-    {
-        Resource::OBJLoader::loadModel(file, vertices, normals, texCoords, indices);
-    }
-    explicit Mesh(const Mesh &mesh) = default;
     ~Mesh() = default;
 
     // Move constructor
     Mesh(Mesh &&other) = default;
+    // Move assignment operator
+    Mesh &operator=(Mesh &&other) = default;
+
+    // Copy constructor
+    Mesh(const Mesh &mesh) = default;
+    // Copy assignment operator
+    Mesh &operator=(const Mesh &other) = default;
 };
-
-/**
- * @brief MeshLoader structure.
- *
- * This structure is used to load a mesh from a file.
- * @note This structure is used by the entt resource cache.
- */
-struct MeshLoader final {
-    using result_type = std::shared_ptr<Mesh>;
-
-    result_type operator()(const std::string &file) const { return std::make_shared<Mesh>(file); }
-    result_type operator()(const Mesh &mesh) const { return std::make_shared<Mesh>(mesh); }
-};
-
-} // namespace ES::Plugin::Object::Component
+} // namespace Object::Component

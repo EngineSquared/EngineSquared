@@ -2,13 +2,13 @@
 
 #include "scheduler/AScheduler.hpp"
 
-namespace ES::Plugin::RenderingPipeline {
+namespace RenderingPipeline {
 /**
- * @brief This class is used to initialize libraries like GLFW, GLEW, etc.
+ * @brief This class is used to initialize libraries like GLFW, etc.
  */
-class Init : public ES::Engine::Scheduler::AScheduler {
+class Init : public Engine::Scheduler::AScheduler {
   public:
     using AScheduler::AScheduler;
     void RunSystems() override;
 };
-} // namespace ES::Plugin::RenderingPipeline
+} // namespace RenderingPipeline

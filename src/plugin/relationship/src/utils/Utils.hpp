@@ -24,7 +24,7 @@
 
 #include "component/Relationship.hpp"
 
-namespace ES::Plugin::Relationship::Utils {
+namespace Relationship::Utils {
 /**
  * Set the child of an entity to another entity.
  *
@@ -32,7 +32,7 @@ namespace ES::Plugin::Relationship::Utils {
  * @param   parent  parent entity
  * @param   child   child entity
  */
-auto SetChildOf(ES::Engine::Core &core, ES::Engine::Entity child, ES::Engine::Entity parent) -> void;
+auto SetChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> void;
 
 /**
  * Check if an entity is a child of another entity.
@@ -42,7 +42,7 @@ auto SetChildOf(ES::Engine::Core &core, ES::Engine::Entity child, ES::Engine::En
  * @param   child   child entity
  * @return  true if the child is a child of the parent
  */
-auto IsChildOf(ES::Engine::Core &core, ES::Engine::Entity child, ES::Engine::Entity parent) -> bool;
+auto IsChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> bool;
 
 /**
  * Remove the parent of an entity.
@@ -50,7 +50,7 @@ auto IsChildOf(ES::Engine::Core &core, ES::Engine::Entity child, ES::Engine::Ent
  * @param   core    core of the engine
  * @param   child   child entity
  */
-auto RemoveParent(ES::Engine::Core &core, ES::Engine::Entity child) -> void;
+auto RemoveParent(Engine::Core &core, Engine::Entity child) -> void;
 
 /**
  * Get the parent of an entity.
@@ -59,5 +59,5 @@ auto RemoveParent(ES::Engine::Core &core, ES::Engine::Entity child) -> void;
  * @param   child   child entity
  * @return  parent entity
  */
-auto GetParent(ES::Engine::Core &core, ES::Engine::Entity child) -> ES::Engine::Entity;
-} // namespace ES::Plugin::Relationship::Utils
+auto GetParent(Engine::Core &core, Engine::Entity child) -> Engine::Entity;
+} // namespace Relationship::Utils

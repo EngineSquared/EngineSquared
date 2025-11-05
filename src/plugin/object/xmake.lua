@@ -18,7 +18,6 @@ target("PluginObject")
     add_headerfiles("src/(component/*.hpp)")
     add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
-    add_headerfiles("src/(utils/*.hpp)")
     add_headerfiles("src/(*.hpp)")
 
     add_includedirs("src", {public = true})
@@ -36,7 +35,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        
+
         set_languages("cxx20")
         add_packages("entt", "gtest", "glm", "tinyobjloader", "spdlog", "fmt")
         add_links("gtest")
@@ -53,18 +52,31 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
 
         after_build(function (target)
-            local buildir = path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)")
-            local assets_files = os.files("$(scriptdir)" .. "/tests/assets/*.*")
+            import("core.project.config")
 
-            os.mkdir(path.join(buildir, "assets"))
+            local builddir = config.get("builddir")
+            if not builddir then
+                builddir = config.get("buildir")
+            end
+            local targetdir = path.join(builddir, "$(plat)", "$(arch)", "$(mode)")
+            local assets_files = os.files("$(scriptdir)" .. "/tests/assets/*")
+
+            os.mkdir(path.join(targetdir, "assets"))
 
             for _, assets_file in ipairs(assets_files) do
-                os.cp(assets_file, path.join(buildir, "assets"))
+                os.cp(assets_file, path.join(targetdir, "assets"))
             end
         end)
 
         on_clean(function (target)
-            os.rm(path.join("$(buildir)", "$(plat)", "$(arch)", "$(mode)", "assets"))
+            import("core.project.config")
+
+            local builddir = config.get("builddir")
+            if not builddir then
+                builddir = config.get("buildir")
+            end
+            local targetdir = path.join(builddir, "$(plat)", "$(arch)", "$(mode)")
+            os.rm(path.join(targetdir, "assets"))
         end)
     ::continue::
 end

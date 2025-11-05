@@ -2,6 +2,7 @@
 
 #include "scheduler/AScheduler.hpp"
 #include <list>
+#include <map>
 #include <memory>
 #include <queue>
 #include <stdexcept>
@@ -10,7 +11,7 @@
 #include <unordered_set>
 #include <vector>
 
-namespace ES::Engine {
+namespace Engine {
 class Core;
 
 class SchedulerError : public std::exception {
@@ -179,15 +180,15 @@ class SchedulerContainer {
     void TopologicalSort();
 
     void ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
-                             std::unordered_map<std::type_index, size_t> &inDegree) const;
+                             std::map<std::type_index, size_t> &inDegree) const;
 
   private:
     bool _dirty = false;
-    std::unordered_map<std::type_index, std::shared_ptr<Scheduler::AScheduler>>
+    std::map<std::type_index, std::shared_ptr<Scheduler::AScheduler>>
         _schedulers; ///< Vector to store schedulers in order.
     std::unordered_map<std::type_index, std::unordered_set<std::type_index>> _dependencies;
     std::list<std::shared_ptr<Scheduler::AScheduler>> _orderedSchedulers; ///< Vector to store schedulers in order.
 };
-} // namespace ES::Engine
+} // namespace Engine
 
 #include "SchedulerContainer.inl"

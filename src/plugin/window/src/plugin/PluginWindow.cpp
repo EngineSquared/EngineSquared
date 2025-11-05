@@ -1,25 +1,24 @@
 #include "RenderingPipeline.hpp"
 
 #include "plugin/PluginWindow.hpp"
-#include "resource/Window/Window.hpp"
+#include "resource/Window.hpp"
 #include "system/WindowSystem.hpp"
 
-void ES::Plugin::Window::Plugin::Bind()
+void Window::Plugin::Bind()
 {
-    RequirePlugins<ES::Plugin::RenderingPipeline::Plugin>();
+    RequirePlugins<RenderingPipeline::Plugin>();
 
-    RegisterSystems<ES::Plugin::RenderingPipeline::Init>(
-        ES::Plugin::Window::System::InitGLFW, ES::Plugin::Window::System::SetupGLFWHints,
-        ES::Plugin::Window::System::CreateWindowSystem, ES::Plugin::Window::System::LinkGLFWContextToGL,
-        ES::Plugin::Window::System::StoreCoreInWindow);
+    RegisterSystems<RenderingPipeline::Init>(Window::System::InitGLFW, Window::System::SetupGLFWHints,
+                                             Window::System::CreateWindowSystem, Window::System::LinkGLFWContextToGL,
+                                             Window::System::StoreCoreInWindow);
 
-    RegisterSystems<ES::Plugin::RenderingPipeline::Setup>(ES::Plugin::Window::System::EnableVSync);
+    RegisterSystems<RenderingPipeline::Setup>(Window::System::EnableVSync);
 
-    RegisterSystems<ES::Plugin::RenderingPipeline::PreUpdate>(ES::Plugin::Window::System::PollEvents);
+    RegisterSystems<RenderingPipeline::PreUpdate>(Window::System::PollEvents);
 
-    RegisterSystems<ES::Engine::Scheduler::Update>(ES::Plugin::Window::System::StopSystems);
+    RegisterSystems<Engine::Scheduler::Update>(Window::System::StopSystems);
 
-    RegisterSystems<ES::Plugin::RenderingPipeline::Draw>(ES::Plugin::Window::System::SwapBuffers);
+    RegisterSystems<RenderingPipeline::Presentation>(Window::System::SwapBuffers);
 
-    RegisterSystems<ES::Engine::Scheduler::Shutdown>(ES::Plugin::Window::System::DestroyWindow);
+    RegisterSystems<Engine::Scheduler::Shutdown>(Window::System::DestroyWindow);
 }

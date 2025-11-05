@@ -1,28 +1,28 @@
 #include "WindowSystem.hpp"
 #include "Logger.hpp"
 
-namespace ES::Plugin::Window::System {
+namespace Window::System {
 
-void CreateWindowSystem(ES::Engine::Core &core)
+void CreateWindowSystem(Engine::Core &core)
 {
     core.RegisterResource<Resource::Window>(
         Resource::Window(DEFAULT_WIDTH, DEFAULT_HEIGHT, "EngineSquared", nullptr, nullptr));
 }
 
-void EnableVSync(ES::Engine::Core &) { glfwSwapInterval(1); }
+void EnableVSync(Engine::Core &) { glfwSwapInterval(1); }
 
-void PollEvents(ES::Engine::Core &) { glfwPollEvents(); }
+void PollEvents(Engine::Core &) { glfwPollEvents(); }
 
-void InitGLFW(const ES::Engine::Core &)
+void InitGLFW(const Engine::Core &)
 {
     if (!glfwInit())
     {
-        ES::Utils::Log::Error("Failed to initialize GLFW");
+        Log::Error("Failed to initialize GLFW");
         return;
     }
 }
 
-void SetupGLFWHints(const ES::Engine::Core &)
+void SetupGLFWHints(const Engine::Core &)
 {
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -30,14 +30,14 @@ void SetupGLFWHints(const ES::Engine::Core &)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
-void LinkGLFWContextToGL(ES::Engine::Core &core)
+void LinkGLFWContextToGL(Engine::Core &core)
 {
     glfwMakeContextCurrent(core.GetResource<Resource::Window>().GetGLFWWindow());
 }
 
-void SwapBuffers(ES::Engine::Core &core) { glfwSwapBuffers(core.GetResource<Resource::Window>().GetGLFWWindow()); }
+void SwapBuffers(Engine::Core &core) { glfwSwapBuffers(core.GetResource<Resource::Window>().GetGLFWWindow()); }
 
-void StopSystems(ES::Engine::Core &core)
+void StopSystems(Engine::Core &core)
 {
     if (core.GetResource<Resource::Window>().ShouldClose())
     {
@@ -45,15 +45,15 @@ void StopSystems(ES::Engine::Core &core)
     }
 }
 
-void StoreCoreInWindow(ES::Engine::Core &core)
+void StoreCoreInWindow(Engine::Core &core)
 {
     glfwSetWindowUserPointer(core.GetResource<Resource::Window>().GetGLFWWindow(), &core);
 }
 
-void DestroyWindow(ES::Engine::Core &core)
+void DestroyWindow(Engine::Core &core)
 {
     core.GetResource<Resource::Window>().Destroy();
     glfwTerminate();
 }
 
-} // namespace ES::Plugin::Window::System
+} // namespace Window::System

@@ -1,14 +1,12 @@
-#include "JoltPhysics.pch.hpp"
+#include "Physics.pch.hpp"
 
 #include "system/InitPhysicsManager.hpp"
 
 #include "resource/PhysicsManager.hpp"
 
-namespace ES::Plugin::Physics::System {
-void InitPhysicsManager(ES::Engine::Core &core)
+namespace Physics::System {
+void InitPhysicsManager(Engine::Core &core)
 {
-    core.RegisterResource<ES::Plugin::Physics::Resource::PhysicsManager>(
-            ES::Plugin::Physics::Resource::PhysicsManager())
-        .Init(core);
+    core.RegisterResource<Physics::Resource::PhysicsManager>(Physics::Resource::PhysicsManager()).Init(core);
 }
-} // namespace ES::Plugin::Physics::System
+} // namespace Physics::System

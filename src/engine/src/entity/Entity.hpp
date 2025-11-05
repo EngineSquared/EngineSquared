@@ -6,7 +6,7 @@
 #include <entt/entt.hpp>
 #include <typeindex>
 
-namespace ES::Engine {
+namespace Engine {
 /**
  * Contains a single value which must correspond to an index in a registry.
  *
@@ -43,8 +43,7 @@ class Entity {
     static Entity Create(Core &core)
     {
         Entity entity = core.CreateEntity();
-        ES::Utils::Log::Debug(
-            fmt::format("[EntityID:{}] Create Entity", ES::Utils::Log::EntityToDebugString(entity_id_type(entity))));
+        Log::Debug(fmt::format("[EntityID:{}] Create Entity", Log::EntityToDebugString(entity_id_type(entity))));
         return entity;
     }
 
@@ -56,8 +55,7 @@ class Entity {
      */
     void Destroy(Core &core)
     {
-        ES::Utils::Log::Debug(
-            fmt::format("[EntityID:{}] Destroy Entity", ES::Utils::Log::EntityToDebugString(_entity)));
+        Log::Debug(fmt::format("[EntityID:{}] Destroy Entity", Log::EntityToDebugString(_entity)));
         core.KillEntity(*this);
     }
 
@@ -88,8 +86,8 @@ class Entity {
 
     template <typename TComponent> inline decltype(auto) AddComponent(Core &core, TComponent &&component)
     {
-        ES::Utils::Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}",
-                                          ES::Utils::Log::EntityToDebugString(_entity), typeid(TComponent).name()));
+        Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}", Log::EntityToDebugString(_entity),
+                               typeid(TComponent).name()));
         return core.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TComponent>(component));
     }
 
@@ -104,8 +102,8 @@ class Entity {
      */
     template <typename TComponent, typename... TArgs> inline decltype(auto) AddComponent(Core &core, TArgs &&...args)
     {
-        ES::Utils::Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}",
-                                          ES::Utils::Log::EntityToDebugString(_entity), typeid(TComponent).name()));
+        Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}", Log::EntityToDebugString(_entity),
+                               typeid(TComponent).name()));
         return core.GetRegistry().emplace<TComponent>(ToEnttEntity(this->_entity), std::forward<TArgs>(args)...);
     }
 
@@ -145,7 +143,7 @@ class Entity {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
             temporaryComponent[std::type_index(typeid(TTempComponent))] = [](Core &c) {
-                ES::Utils::Log::Debug(fmt::format("RemoveTemporaryComponent: {}", typeid(TTempComponent).name()));
+                Log::Debug(fmt::format("RemoveTemporaryComponent: {}", typeid(TTempComponent).name()));
                 c.GetRegistry().clear<TTempComponent>();
             };
         }
@@ -181,8 +179,8 @@ class Entity {
      */
     template <typename TComponent> inline void RemoveComponent(Core &core)
     {
-        ES::Utils::Log::Debug(fmt::format("[EntityID:{}] RemoveComponent: {}",
-                                          ES::Utils::Log::EntityToDebugString(_entity), typeid(TComponent).name()));
+        Log::Debug(fmt::format("[EntityID:{}] RemoveComponent: {}", Log::EntityToDebugString(_entity),
+                               typeid(TComponent).name()));
         core.GetRegistry().remove<TComponent>(ToEnttEntity(this->_entity));
     }
 
@@ -246,4 +244,4 @@ class Entity {
     inline static std::unordered_map<std::type_index, std::function<void(Core &)>> temporaryComponent = {};
 };
 
-} // namespace ES::Engine
+} // namespace Engine

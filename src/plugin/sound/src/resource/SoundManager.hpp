@@ -8,7 +8,7 @@
 
 #include "Engine.hpp"
 
-namespace ES::Plugin::Sound::Resource {
+namespace Sound::Resource {
 
 using CustomDataCallback = std::function<void(ma_device *pDevice, void *pOutput, ma_uint32 frameCount)>;
 
@@ -97,7 +97,7 @@ class SoundManager {
 
                 if (result != MA_SUCCESS)
                 {
-                    ES::Utils::Log::Error(fmt::format("Could not read PCM frames: {}", ma_result_description(result)));
+                    Log::Error(fmt::format("Could not read PCM frames: {}", ma_result_description(result)));
                 }
 
                 if (framesRead < framesToRead)
@@ -150,19 +150,19 @@ class SoundManager {
         _result = ma_device_init(NULL, &_deviceConfig, &_device);
         if (_result != MA_SUCCESS)
         {
-            ES::Utils::Log::Error(fmt::format("Failed to init audio device: {}", ma_result_description(_result)));
+            Log::Error(fmt::format("Failed to init audio device: {}", ma_result_description(_result)));
             return;
         }
 
         _result = ma_device_start(&_device);
         if (_result != MA_SUCCESS)
         {
-            ES::Utils::Log::Error(fmt::format("Failed to start audio device: {}", ma_result_description(_result)));
+            Log::Error(fmt::format("Failed to start audio device: {}", ma_result_description(_result)));
             ma_device_uninit(&_device);
         }
         else
         {
-            ES::Utils::Log::Info("Audio device started successfully.");
+            Log::Info("Audio device started successfully.");
         }
     }
 
@@ -179,7 +179,7 @@ class SoundManager {
     {
         if (_soundsToPlay.contains(soundName))
         {
-            ES::Utils::Log::Warn(fmt::format("Could not register: Sound \"{}\" already exists", soundName));
+            Log::Warn(fmt::format("Could not register: Sound \"{}\" already exists", soundName));
             return;
         }
 
@@ -191,8 +191,7 @@ class SoundManager {
         _result = ma_decoder_init_file(filePath.c_str(), nullptr, &sound.decoder);
         if (_result != MA_SUCCESS)
         {
-            ES::Utils::Log::Error(
-                fmt::format("Failed to initialize the audio device: {}", ma_result_description(_result)));
+            Log::Error(fmt::format("Failed to initialize the audio device: {}", ma_result_description(_result)));
             return;
         }
         _soundsToPlay.emplace(soundName, std::move(sound));
@@ -215,7 +214,7 @@ class SoundManager {
         }
         else
         {
-            ES::Utils::Log::Error(fmt::format("Could not unregister: Sound \"{}\" does not exist", soundName));
+            Log::Error(fmt::format("Could not unregister: Sound \"{}\" does not exist", soundName));
         }
     }
 
@@ -236,7 +235,7 @@ class SoundManager {
         }
         else
         {
-            ES::Utils::Log::Error(fmt::format("Could not play: Sound \"{}\" does not exist", soundName));
+            Log::Error(fmt::format("Could not play: Sound \"{}\" does not exist", soundName));
         }
     }
 
@@ -258,7 +257,7 @@ class SoundManager {
         }
         else
         {
-            ES::Utils::Log::Error(fmt::format("Could not stop: Sound \"{}\" does not exist", soundName));
+            Log::Error(fmt::format("Could not stop: Sound \"{}\" does not exist", soundName));
         }
     }
 
@@ -278,7 +277,7 @@ class SoundManager {
         }
         else
         {
-            ES::Utils::Log::Error(fmt::format("Could not pause: Sound \"{}\" does not exist", soundName));
+            Log::Error(fmt::format("Could not pause: Sound \"{}\" does not exist", soundName));
         }
     }
 
@@ -296,7 +295,7 @@ class SoundManager {
         {
             return it->second.isPlaying && !it->second.isPaused;
         }
-        ES::Utils::Log::Error(fmt::format("Could not verify playing status: Sound \"{}\" does not exist", soundName));
+        Log::Error(fmt::format("Could not verify playing status: Sound \"{}\" does not exist", soundName));
         return false;
     }
 
@@ -315,7 +314,7 @@ class SoundManager {
         }
         else
         {
-            ES::Utils::Log::Error(fmt::format("Could not set volume: Sound \"{}\" does not exist", soundName));
+            Log::Error(fmt::format("Could not set volume: Sound \"{}\" does not exist", soundName));
         }
     }
 
@@ -334,7 +333,7 @@ class SoundManager {
         }
         else
         {
-            ES::Utils::Log::Error(fmt::format("Could not set loop: Sound \"{}\" does not exist", soundName));
+            Log::Error(fmt::format("Could not set loop: Sound \"{}\" does not exist", soundName));
         }
     }
 
@@ -355,7 +354,7 @@ class SoundManager {
             ma_uint64 totalFrames;
             if (ma_decoder_get_length_in_pcm_frames(&decoder, &totalFrames) != MA_SUCCESS)
             {
-                ES::Utils::Log::Error(
+                Log::Error(
                     fmt::format("Something went wrong while computing PCM frames length of sound \"{}\"", soundName));
                 return;
             }
@@ -365,8 +364,8 @@ class SoundManager {
 
             if (startFrame >= totalFrames || endFrame > totalFrames || startFrame >= endFrame)
             {
-                ES::Utils::Log::Warn(fmt::format("Invalid loop range for \"{}\": {}s to {}s, ignored", soundName,
-                                                 startSeconds, endSeconds));
+                Log::Warn(fmt::format("Invalid loop range for \"{}\": {}s to {}s, ignored", soundName, startSeconds,
+                                      endSeconds));
                 return;
             }
             it->second.loopStartFrame = startFrame;
@@ -374,7 +373,7 @@ class SoundManager {
         }
         else
         {
-            ES::Utils::Log::Error(fmt::format("Could not set loop points: Sound \"{}\" does not exist", soundName));
+            Log::Error(fmt::format("Could not set loop points: Sound \"{}\" does not exist", soundName));
         }
     }
 
@@ -392,15 +391,14 @@ class SoundManager {
         auto it = _soundsToPlay.find(soundName);
         if (it == _soundsToPlay.end())
         {
-            ES::Utils::Log::Error(
-                fmt::format("Could not get the playback position: Sound \"{}\" does not exist", soundName));
+            Log::Error(fmt::format("Could not get the playback position: Sound \"{}\" does not exist", soundName));
             return -1.0f;
         }
 
         Sound &sound = it->second;
         if (!sound.isPlaying)
         {
-            ES::Utils::Log::Warn(fmt::format("Sound \"{}\" is not currently playing", soundName));
+            Log::Warn(fmt::format("Sound \"{}\" is not currently playing", soundName));
             return 0.0f;
         }
 
@@ -408,8 +406,7 @@ class SoundManager {
         _result = ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &currentFrame);
         if (_result != MA_SUCCESS)
         {
-            ES::Utils::Log::Error(
-                fmt::format("Could not get the playback position: {}", ma_result_description(_result)));
+            Log::Error(fmt::format("Could not get the playback position: {}", ma_result_description(_result)));
             return -1.0f;
         }
         double position = static_cast<double>(currentFrame) / sound.decoder.outputSampleRate;
@@ -462,4 +459,5 @@ class SoundManager {
      */
     inline void ClearCustomCallbacks() { _customCallbacks.clear(); }
 };
-} // namespace ES::Plugin::Sound::Resource
+
+} // namespace Sound::Resource

@@ -4,10 +4,9 @@
 
 template <typename TReturn, typename... TArgs>
 template <typename TCallable>
-ES::Utils::FunctionContainer::FunctionID
-ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
+FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
 {
-    ES::Utils::FunctionContainer::FunctionID id;
+    FunctionUtils::FunctionID id;
 
     if constexpr (is_derived_from_function_type<TCallable>::value)
     {
@@ -20,7 +19,7 @@ ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
 
     if (_idToIndex.contains(id))
     {
-        ES::Utils::Log::Warn("Function already exists"); // TODO: be able to change container thing name
+        Log::Warn("Function already exists"); // TODO: be able to change container thing name
         return id;
     }
 
@@ -32,15 +31,14 @@ ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
 }
 
 template <typename TReturn, typename... TArgs>
-ES::Utils::FunctionContainer::FunctionID
-ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
+FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(
     std::unique_ptr<BaseFunction<TReturn, TArgs...>> &&function)
 {
-    ES::Utils::FunctionContainer::FunctionID id = function->GetID();
+    FunctionUtils::FunctionID id = function->GetID();
 
     if (_idToIndex.contains(id))
     {
-        ES::Utils::Log::Warn("Function already exists"); // TODO: be able to change container thing name
+        Log::Warn("Function already exists"); // TODO: be able to change container thing name
         return id;
     }
 
@@ -51,14 +49,13 @@ ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::AddFunction(
 }
 
 template <typename TReturn, typename... TArgs>
-std::unique_ptr<typename ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::FunctionType>
-ES::Utils::FunctionContainer::FunctionContainer<TReturn, TArgs...>::DeleteFunction(
-    ES::Utils::FunctionContainer::FunctionID id)
+std::unique_ptr<typename FunctionUtils::FunctionContainer<TReturn, TArgs...>::FunctionType>
+FunctionUtils::FunctionContainer<TReturn, TArgs...>::DeleteFunction(FunctionUtils::FunctionID id)
 {
     auto it = _idToIndex.find(id);
     if (it == _idToIndex.end())
     {
-        ES::Utils::Log::Warn("Function not found");
+        Log::Warn("Function not found");
         return nullptr;
     }
 

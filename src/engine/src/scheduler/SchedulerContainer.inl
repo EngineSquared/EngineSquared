@@ -1,20 +1,20 @@
 #include "SchedulerContainer.hpp"
 
 template <typename TScheduler, typename... Args>
-void ES::Engine::SchedulerContainer::AddScheduler(Core &core, Args &&...args)
+void Engine::SchedulerContainer::AddScheduler(Core &core, Args &&...args)
 {
     if (this->_schedulers.contains(std::type_index(typeid(TScheduler))))
     {
-        ES::Utils::Log::Warn(fmt::format("Scheduler already exists: {}", typeid(TScheduler).name()));
+        Log::Warn(fmt::format("Scheduler already exists: {}", typeid(TScheduler).name()));
         return;
     }
-    ES::Utils::Log::Debug(fmt::format("Adding scheduler: {}", typeid(TScheduler).name()));
+    Log::Debug(fmt::format("Adding scheduler: {}", typeid(TScheduler).name()));
     std::shared_ptr<TScheduler> scheduler = std::make_shared<TScheduler>(core, std::forward<Args>(args)...);
     this->_schedulers[std::type_index(typeid(TScheduler))] = scheduler;
     this->_orderedSchedulers.push_back(scheduler);
 }
 
-template <typename TScheduler> inline TScheduler &ES::Engine::SchedulerContainer::GetScheduler()
+template <typename TScheduler> inline TScheduler &Engine::SchedulerContainer::GetScheduler()
 {
     auto it = this->_schedulers.find(std::type_index(typeid(TScheduler)));
     if (it == this->_schedulers.end())
@@ -24,18 +24,18 @@ template <typename TScheduler> inline TScheduler &ES::Engine::SchedulerContainer
     return *static_cast<TScheduler *>(it->second.get());
 }
 
-template <typename TBefore, typename TAfter> inline void ES::Engine::SchedulerContainer::Before()
+template <typename TBefore, typename TAfter> inline void Engine::SchedulerContainer::Before()
 {
     _dirty = true;
     _dependencies[std::type_index(typeid(TAfter))].insert(std::type_index(typeid(TBefore)));
 }
 
-template <typename TAfter, typename TBefore> inline void ES::Engine::SchedulerContainer::After()
+template <typename TAfter, typename TBefore> inline void Engine::SchedulerContainer::After()
 {
     Before<TBefore, TAfter>();
 }
 
-template <typename TBefore, typename TAfter> void ES::Engine::SchedulerContainer::RemoveDependencyBefore()
+template <typename TBefore, typename TAfter> void Engine::SchedulerContainer::RemoveDependencyBefore()
 {
     _dirty = true;
     auto it = _dependencies.find(std::type_index(typeid(TAfter)));
@@ -47,17 +47,16 @@ template <typename TBefore, typename TAfter> void ES::Engine::SchedulerContainer
     }
     else
     {
-        ES::Utils::Log::Warn(
-            fmt::format("Dependency not found: {} -> {}", typeid(TBefore).name(), typeid(TAfter).name()));
+        Log::Warn(fmt::format("Dependency not found: {} -> {}", typeid(TBefore).name(), typeid(TAfter).name()));
     }
 }
 
-template <typename TAfter, typename TBefore> void ES::Engine::SchedulerContainer::RemoveDependencyAfter()
+template <typename TAfter, typename TBefore> void Engine::SchedulerContainer::RemoveDependencyAfter()
 {
     RemoveDependencyBefore<TBefore, TAfter>();
 }
 
-inline void ES::Engine::SchedulerContainer::RunSchedulers()
+inline void Engine::SchedulerContainer::RunSchedulers()
 {
     Update();
     for (const auto &scheduler : _orderedSchedulers)
@@ -71,18 +70,14 @@ inline void ES::Engine::SchedulerContainer::RunSchedulers()
     }
 }
 
-inline bool ES::Engine::SchedulerContainer::Contains(std::type_index id) const
-{
-    return this->_schedulers.contains(id);
-}
+inline bool Engine::SchedulerContainer::Contains(std::type_index id) const { return this->_schedulers.contains(id); }
 
-template <typename TScheduler> inline bool ES::Engine::SchedulerContainer::Contains() const
+template <typename TScheduler> inline bool Engine::SchedulerContainer::Contains() const
 {
     return Contains(std::type_index(typeid(TScheduler)));
 }
 
-inline std::shared_ptr<ES::Engine::Scheduler::AScheduler>
-ES::Engine::SchedulerContainer::GetScheduler(std::type_index id)
+inline std::shared_ptr<Engine::Scheduler::AScheduler> Engine::SchedulerContainer::GetScheduler(std::type_index id)
 {
     auto it = this->_schedulers.find(id);
     if (it == this->_schedulers.end())

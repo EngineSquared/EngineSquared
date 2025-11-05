@@ -4,11 +4,11 @@
 #include "resource/InputManager.hpp"
 #include "system/BindCallbacksToGLFW.hpp"
 
-void ES::Plugin::Input::Plugin::Bind()
+void Input::Plugin::Bind()
 {
-    RequirePlugins<ES::Plugin::Window::Plugin>();
+    RequirePlugins<Window::Plugin>();
 
-    RegisterResource<ES::Plugin::Input::Resource::InputManager>(ES::Plugin::Input::Resource::InputManager(GetCore()));
+    RegisterResource<Resource::InputManager>(Resource::InputManager(GetCore()));
 
-    RegisterSystems<ES::Engine::Scheduler::Startup>(ES::Plugin::Input::System::BindCallbacksToGLFW);
+    RegisterSystems<Engine::Scheduler::Startup>(System::BindCallbacksToGLFW);
 }

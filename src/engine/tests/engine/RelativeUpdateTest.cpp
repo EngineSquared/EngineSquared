@@ -8,7 +8,7 @@
 #include "resource/Time.hpp"
 #include "scheduler/RelativeTimeUpdate.hpp"
 
-using namespace ES::Engine;
+using namespace Engine;
 using namespace std::chrono_literals;
 
 TEST(Core, RelativeTimeUpdateBasic)
@@ -18,7 +18,7 @@ TEST(Core, RelativeTimeUpdateBasic)
     float elapsedTime = 0.f;
 
     core.RegisterSystem<Scheduler::Update>(
-        [&elapsedTime](Core &c) { c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime; });
+        [&elapsedTime](Core &c) { c.GetResource<Engine::Resource::Time>()._elapsedTime = elapsedTime; });
 
     float deltaTime1 = 0.0f;
     float deltaTime2 = 0.0f;
@@ -35,7 +35,7 @@ TEST(Core, RelativeTimeUpdateBasic)
             deltaTime2 = core_.GetScheduler<Scheduler::RelativeTimeUpdate>().GetCurrentDeltaTime();
         }
     });
-    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
+    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0f / 5.0f);
 
     core.RunSystems();
     elapsedTime = 0.05f;
@@ -52,7 +52,7 @@ TEST(Core, RelativeTimeUpdateSubsteps)
     float elapsedTime = 0.f;
 
     core.RegisterSystem<Scheduler::Update>(
-        [&elapsedTime](Core &c) { c.GetResource<ES::Engine::Resource::Time>()._elapsedTime = elapsedTime; });
+        [&elapsedTime](Core &c) { c.GetResource<Engine::Resource::Time>()._elapsedTime = elapsedTime; });
 
     std::array<float, 5> deltaTimes = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
@@ -67,7 +67,7 @@ TEST(Core, RelativeTimeUpdateSubsteps)
             }
         }
     });
-    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0 / 5.0);
+    core.GetScheduler<Scheduler::RelativeTimeUpdate>().SetTargetTickRate(1.0f / 5.0f);
 
     core.RunSystems();
     elapsedTime = 0.5f;

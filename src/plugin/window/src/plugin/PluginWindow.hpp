@@ -2,8 +2,8 @@
 
 #include "plugin/APlugin.hpp"
 
-namespace ES::Plugin::Window {
-class Plugin : public ES::Engine::APlugin {
+namespace Window {
+class Plugin : public Engine::APlugin {
   public:
     using APlugin::APlugin;
     ;
@@ -11,4 +11,4 @@ class Plugin : public ES::Engine::APlugin {
 
     void Bind() final;
 };
-} // namespace ES::Plugin::Window
+} // namespace Window

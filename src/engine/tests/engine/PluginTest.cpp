@@ -7,10 +7,10 @@ struct ResourceTest {
     std::vector<std::string> data;
 };
 
-class PluginTestA : public ES::Engine::APlugin {
+class PluginTestA : public Engine::APlugin {
   public:
-    explicit PluginTestA(ES::Engine::Core &core)
-        : ES::Engine::APlugin(core){
+    explicit PluginTestA(Engine::Core &core)
+        : Engine::APlugin(core){
               // empty
           };
     ~PluginTestA() = default;
@@ -18,17 +18,17 @@ class PluginTestA : public ES::Engine::APlugin {
     void Bind() final
     {
         RegisterResource<ResourceTest>({});
-        RegisterSystems<ES::Engine::Scheduler::Update>([](ES::Engine::Core &core) {
+        RegisterSystems<Engine::Scheduler::Update>([](Engine::Core &core) {
             auto &resource = core.GetResource<ResourceTest>();
             resource.data.emplace_back("PluginTestA::Bind");
         });
     }
 };
 
-class PluginTestB : public ES::Engine::APlugin {
+class PluginTestB : public Engine::APlugin {
   public:
-    explicit PluginTestB(ES::Engine::Core &core)
-        : ES::Engine::APlugin(core){
+    explicit PluginTestB(Engine::Core &core)
+        : Engine::APlugin(core){
               // empty
           };
     ~PluginTestB() = default;
@@ -36,7 +36,7 @@ class PluginTestB : public ES::Engine::APlugin {
     void Bind() final
     {
         RequirePlugins<PluginTestA>();
-        RegisterSystems<ES::Engine::Scheduler::Update>([](ES::Engine::Core &core) {
+        RegisterSystems<Engine::Scheduler::Update>([](Engine::Core &core) {
             auto &resource = core.GetResource<ResourceTest>();
             resource.data.emplace_back("PluginTestB::Bind");
         });
@@ -45,7 +45,7 @@ class PluginTestB : public ES::Engine::APlugin {
 
 TEST(Plugin, CasualUse)
 {
-    ES::Engine::Core core;
+    Engine::Core core;
     core.AddPlugins<PluginTestB>();
     core.RunSystems();
 

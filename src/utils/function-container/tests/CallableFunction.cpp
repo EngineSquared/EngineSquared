@@ -11,7 +11,7 @@ struct Functor {
     int operator()(int x) const { return x + 2; }
 };
 
-namespace ES::Utils::FunctionContainer {
+namespace FunctionUtils {
 
 // Test fixture for CallableFunction
 class CallableFunctionTest : public ::testing::Test {
@@ -58,4 +58,4 @@ TEST_F(CallableFunctionTest, StdFunctionCallable)
     EXPECT_EQ(func(3), 7);
 }
 
-} // namespace ES::Utils::FunctionContainer
+} // namespace FunctionUtils

@@ -4,7 +4,7 @@
 #include <cstring>
 #include <string>
 
-namespace ES::Utils::Log {
+namespace Log {
 // Platform-safe strerror wrapper
 inline std::string GetErrnoMessage()
 {
@@ -17,4 +17,4 @@ inline std::string GetErrnoMessage()
     return std::string(strerror(errno));
 #endif
 }
-} // namespace ES::Utils::Log
+} // namespace Log

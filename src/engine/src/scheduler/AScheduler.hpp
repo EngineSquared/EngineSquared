@@ -7,7 +7,7 @@
 #include <set>
 #include <typeindex>
 
-namespace ES::Engine::Scheduler {
+namespace Engine::Scheduler {
 /**
  * @brief Interface to be implemented for every schedulers.
  */
@@ -34,7 +34,7 @@ class AScheduler : public IScheduler {
      * @brief Disable a system. It will remove the system from the "main" system list, and it will not be returned by
      * the GetSystems function.
      */
-    void Disable(ES::Utils::FunctionContainer::FunctionID id);
+    void Disable(FunctionUtils::FunctionID id);
 
     /**
      * @brief Enable a system. It will add the system to the "main" system list, and it will be returned by the
@@ -42,7 +42,7 @@ class AScheduler : public IScheduler {
      *
      * @param id The system to enable
      */
-    void Enable(ES::Utils::FunctionContainer::FunctionID id);
+    void Enable(FunctionUtils::FunctionID id);
 
     /**
      * @brief Execute a system according to the scheduler policy
@@ -83,4 +83,4 @@ class AScheduler : public IScheduler {
     bool _shouldRunNextScheduler = true;
     SchedulerErrorPolicy _errorPolicy = SchedulerErrorPolicy::LogAndContinue;
 };
-} // namespace ES::Engine::Scheduler
+} // namespace Engine::Scheduler

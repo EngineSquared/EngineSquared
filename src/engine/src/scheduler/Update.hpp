@@ -2,7 +2,7 @@
 
 #include "scheduler/AScheduler.hpp"
 
-namespace ES::Engine::Scheduler {
+namespace Engine::Scheduler {
 /**
  * @brief Update scheduler that runs systems every time it is called
  */
@@ -22,4 +22,4 @@ class Update : public AScheduler {
   private:
     float _elapsedTime = 0.0f;
 };
-} // namespace ES::Engine::Scheduler
+} // namespace Engine::Scheduler

@@ -2,31 +2,18 @@
 
 #include "component/Mesh.hpp"
 
-#include <entt/core/hashed_string.hpp>
-#include <entt/resource/cache.hpp>
+using namespace Object;
 
-#include "export.h"
-
-#define OBJ_FILE_PATH PROJECT_SOURCE_DIR "assets/"
-
-using namespace ES::Plugin::Object;
-
-/**
- * @brief Load a mesh from a file using the entt resource cache.
- *        The mesh is loaded from a file and stored in the cache.
- *        The mesh is then retrieved from the cache and its vertices are checked.
- */
-TEST(MeshTest, component_mesh_entt_cache_loader)
+TEST(Mesh, struct_size_comparaison)
 {
-    entt::resource_cache<Component::Mesh, Component::MeshLoader> cache{};
+    Component::Mesh mesh{};
+    mesh.vertices.emplace_back(glm::vec3(1.0f, 2.0f, 3.0f));
+    mesh.normals.emplace_back(glm::vec3(4.0f, 5.0f, 6.0f));
+    mesh.texCoords.emplace_back(glm::vec2(7.0f, 8.0f));
+    mesh.indices.emplace_back(9);
 
-    std::string something_else("mesh_id");
-    auto ret = cache.load(entt::hashed_string{something_else.c_str()}, std::string(OBJ_FILE_PATH "cube.obj"));
-
-    EXPECT_EQ(ret.second, true);
-
-    entt::resource<Component::Mesh> res = ret.first->second;
-
-    EXPECT_EQ(res->vertices.empty(), false);
-    EXPECT_EQ(res->indices.empty(), false);
+    EXPECT_EQ(mesh.vertices.size(), 1u);
+    EXPECT_EQ(mesh.normals.size(), 1u);
+    EXPECT_EQ(mesh.texCoords.size(), 1u);
+    EXPECT_EQ(mesh.indices.size(), 1u);
 }

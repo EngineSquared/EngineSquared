@@ -1,4 +1,4 @@
-#include "JoltPhysics.pch.hpp"
+#include "Physics.pch.hpp"
 
 #include "system/PhysicsUpdate.hpp"
 
@@ -8,10 +8,15 @@
 
 #include <fmt/format.h>
 
-void ES::Plugin::Physics::System::PhysicsUpdate(ES::Engine::Core &core)
+void Physics::System::PhysicsUpdate(Engine::Core &core)
 {
-    auto dt = core.GetScheduler<ES::Engine::Scheduler::FixedTimeUpdate>().GetTickRate();
-    auto &physicsManager = core.GetResource<ES::Plugin::Physics::Resource::PhysicsManager>();
+    auto &physicsManager = core.GetResource<Physics::Resource::PhysicsManager>();
+    if (!physicsManager.IsPhysicsActivated())
+    {
+        return;
+    }
+
+    auto dt = core.GetScheduler<Engine::Scheduler::FixedTimeUpdate>().GetTickRate();
 
     physicsManager.GetPhysicsSystem().Update(dt, physicsManager.GetCollisionSteps(), physicsManager.GetTempAllocator(),
                                              physicsManager.GetJobSystem());

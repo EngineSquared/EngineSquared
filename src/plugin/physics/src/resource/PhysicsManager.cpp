@@ -1,4 +1,4 @@
-#include "JoltPhysics.pch.hpp"
+#include "Physics.pch.hpp"
 
 #include "PhysicsManager.hpp"
 
@@ -7,7 +7,7 @@
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
 
-namespace ES::Plugin::Physics::Resource {
+namespace Physics::Resource {
 PhysicsManager::PhysicsManager()
 {
     _tempAllocator = std::make_shared<JPH::TempAllocatorMalloc>();
@@ -19,7 +19,7 @@ PhysicsManager::PhysicsManager()
     _contactListener = nullptr;
 }
 
-void PhysicsManager::Init(ES::Engine::Core &core)
+void PhysicsManager::Init(Engine::Core &core)
 {
     // Default values from Jolt Physics samples
     _physicsSystem->Init(10240, 0, 65536, 20480, *_broadPhaseLayerInterface, *_objectVsBroadPhaseLayerFilter,
@@ -27,4 +27,4 @@ void PhysicsManager::Init(ES::Engine::Core &core)
     _contactListener = std::make_shared<Utils::ContactListenerImpl>(core);
     _physicsSystem->SetContactListener(_contactListener.get());
 }
-} // namespace ES::Plugin::Physics::Resource
+} // namespace Physics::Resource

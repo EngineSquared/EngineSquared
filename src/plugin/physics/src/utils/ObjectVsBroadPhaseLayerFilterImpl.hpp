@@ -3,7 +3,7 @@
 #include "BroadPhaseLayers.hpp"
 #include "Layers.hpp"
 
-namespace ES::Plugin::Physics::Utils {
+namespace Physics::Utils {
 class ObjectVsBroadPhaseLayerFilterImpl : public JPH::ObjectVsBroadPhaseLayerFilter {
   public:
     bool ShouldCollide(JPH::ObjectLayer inLayer1, JPH::BroadPhaseLayer inLayer2) const override
@@ -16,4 +16,4 @@ class ObjectVsBroadPhaseLayerFilterImpl : public JPH::ObjectVsBroadPhaseLayerFil
         }
     }
 };
-} // namespace ES::Plugin::Physics::Utils
+} // namespace Physics::Utils

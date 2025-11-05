@@ -1,8 +1,5 @@
 includes("../../engine/xmake.lua")
 includes("../object/xmake.lua")
-includes("../math/xmake.lua")
-includes("../input/xmake.lua")
-includes("../opengl/xmake.lua")
 
 target("PluginPhysics")
     set_group(PLUGINS_GROUP_NAME)
@@ -10,23 +7,18 @@ target("PluginPhysics")
     set_languages("cxx20")
     add_packages("glm", "entt", "fmt", "spdlog", "joltphysics")
 
-    set_pcxxheader("src/JoltPhysics.pch.hpp")
+    set_pcxxheader("src/Physics.pch.hpp")
 
     add_deps("EngineSquaredCore")
     add_deps("PluginObject")
-    add_deps("PluginMath")
-    add_deps("PluginInput")
-    add_deps("PluginOpenGL")
 
     add_files("src/**.cpp")
 
-    add_headerfiles("src/(component/*.hpp)")
     add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/(plugin/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(system/*.hpp)")
     add_headerfiles("src/(utils/*.hpp)")
-    add_headerfiles("src/(utils/*.inl)")
     add_headerfiles("src/(*.hpp)")
 
     add_includedirs("src/", {public = true})

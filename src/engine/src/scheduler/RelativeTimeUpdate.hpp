@@ -6,7 +6,7 @@
 
 #include "scheduler/AScheduler.hpp"
 
-namespace ES::Engine::Scheduler {
+namespace Engine::Scheduler {
 /**
  * @brief RelativeTimeUpdate is a scheduler that runs systems at a rate that is not fixed
  * It is made to run systems at a rate relative to the time
@@ -54,4 +54,4 @@ class RelativeTimeUpdate : public AScheduler {
     float _deltaTime = 0.0f;
     float _bufferedTime = 0.0f;
 };
-} // namespace ES::Engine::Scheduler
+} // namespace Engine::Scheduler

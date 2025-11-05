@@ -1,12 +1,12 @@
-#include "JoltPhysics.pch.hpp"
+#include "Physics.pch.hpp"
 
 #include "system/InitJoltPhysics.hpp"
 
-namespace ES::Plugin::Physics::System {
-void InitJoltPhysics([[maybe_unused]] ES::Engine::Core &core)
+namespace Physics::System {
+void InitJoltPhysics([[maybe_unused]] Engine::Core &core)
 {
     JPH::RegisterDefaultAllocator();
     JPH::Factory::sInstance = new JPH::Factory();
     JPH::RegisterTypes();
 }
-} // namespace ES::Plugin::Physics::System
+} // namespace Physics::System

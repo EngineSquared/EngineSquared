@@ -6,7 +6,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/quaternion.hpp"
 
-namespace ES::Plugin::Object::Component {
+namespace Object::Component {
 /**
  * Component used to represent a 3D transformation for a game object.
  * It can be used as a 2D transformation.
@@ -45,24 +45,24 @@ struct Transform {
     Transform &operator=(Transform &&) = default;
 
     // Getters
-    inline const glm::vec3 &getPosition() const { return position; }
-    inline const glm::vec3 &getScale() const { return scale; }
-    inline const glm::quat &getRotation() const { return rotation; }
+    inline const glm::vec3 &GetPosition() const { return position; }
+    inline const glm::vec3 &GetScale() const { return scale; }
+    inline const glm::quat &GetRotation() const { return rotation; }
 
     // Setters
-    void setPosition(const glm::vec3 &newPosition) { position = newPosition; }
-    void setPosition(float x, float y, float z) { position = glm::vec3(x, y, z); }
-    void setScale(const glm::vec3 &newScale) { scale = newScale; }
-    void setScale(float x, float y, float z) { scale = glm::vec3(x, y, z); }
-    void setRotation(const glm::quat &newRotation) { rotation = newRotation; }
-    void setRotation(float x, float y, float z, float w) { rotation = glm::quat(w, x, y, z); }
+    void SetPosition(const glm::vec3 &newPosition) { position = newPosition; }
+    void SetPosition(float x, float y, float z) { position = glm::vec3(x, y, z); }
+    void SetScale(const glm::vec3 &newScale) { scale = newScale; }
+    void SetScale(float x, float y, float z) { scale = glm::vec3(x, y, z); }
+    void SetRotation(const glm::quat &newRotation) { rotation = newRotation; }
+    void SetRotation(float x, float y, float z, float w) { rotation = glm::quat(w, x, y, z); }
 
     /**
      * Create the transformation matrix for this transform component.
      *
      * \return  transformation matrix that combines the position, scale, and rotation of the entity.
      */
-    glm::mat4 getTransformationMatrix() const
+    glm::mat4 GetTransformationMatrix() const
     {
         glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);
         glm::mat4 rotationMatrix = glm::mat4_cast(rotation);
@@ -70,4 +70,4 @@ struct Transform {
         return translation * rotationMatrix * scaleMatrix;
     }
 };
-} // namespace ES::Plugin::Object::Component
+} // namespace Object::Component
