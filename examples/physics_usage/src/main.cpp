@@ -12,6 +12,7 @@
 
 #include "examples/FallingObjectsExample.hpp"
 #include "examples/ForcesImpulsesExample.hpp"
+#include "examples/VelocityControlExample.hpp"
 
 #include <iostream>
 #include <string>
@@ -34,7 +35,11 @@ void PrintMenu()
     std::cout << "     - AddForce, AddTorque, AddImpulse, etc." << std::endl;
     std::cout << "     - Demonstrates Force Applicator API\n" << std::endl;
 
-    std::cout << "  3. Run All Examples" << std::endl;
+    std::cout << "  3. Velocity Control Example (Issue #002)" << std::endl;
+    std::cout << "     - SetLinearVelocity, SetAngularVelocity, etc." << std::endl;
+    std::cout << "     - Demonstrates Velocity Control API\n" << std::endl;
+
+    std::cout << "  4. Run All Examples" << std::endl;
     std::cout << "     - Execute all examples sequentially\n" << std::endl;
 
     std::cout << "  0. Exit\n" << std::endl;
@@ -42,7 +47,7 @@ void PrintMenu()
 
 int GetUserChoice()
 {
-    std::cout << "Select example (0-3): ";
+    std::cout << "Select example (0-4): ";
     std::string input;
     std::getline(std::cin, input);
 
@@ -71,9 +76,15 @@ void RunExample(int choice)
         break;
 
     case 3:
+        std::cout << "\n→ Running Velocity Control Example...\n" << std::endl;
+        core.AddPlugins<Examples::VelocityControlExample>();
+        break;
+
+    case 4:
         std::cout << "\n→ Running All Examples...\n" << std::endl;
         core.AddPlugins<Examples::FallingObjectsExample>();
         core.AddPlugins<Examples::ForcesImpulsesExample>();
+        core.AddPlugins<Examples::VelocityControlExample>();
         break;
 
     default:
@@ -104,15 +115,18 @@ int main(int argc, char** argv)
             RunExample(1);
         } else if (arg == "2" || arg == "forces") {
             RunExample(2);
-        } else if (arg == "3" || arg == "all") {
+        } else if (arg == "3" || arg == "velocity") {
             RunExample(3);
+        } else if (arg == "4" || arg == "all") {
+            RunExample(4);
         } else if (arg == "--help" || arg == "-h") {
             std::cout << "Usage: " << argv[0] << " [option]" << std::endl;
             std::cout << "\nOptions:" << std::endl;
-            std::cout << "  1, falling  : Run Falling Objects Example" << std::endl;
-            std::cout << "  2, forces   : Run Forces & Impulses Example" << std::endl;
-            std::cout << "  3, all      : Run All Examples" << std::endl;
-            std::cout << "  --help, -h  : Show this help\n" << std::endl;
+            std::cout << "  1, falling   : Run Falling Objects Example" << std::endl;
+            std::cout << "  2, forces    : Run Forces & Impulses Example" << std::endl;
+            std::cout << "  3, velocity  : Run Velocity Control Example" << std::endl;
+            std::cout << "  4, all       : Run All Examples" << std::endl;
+            std::cout << "  --help, -h   : Show this help\n" << std::endl;
             std::cout << "If no option is provided, interactive menu will be shown." << std::endl;
         } else {
             std::cout << "Unknown option: " << arg << std::endl;
@@ -132,8 +146,8 @@ int main(int argc, char** argv)
             break;
         }
 
-        if (choice < 0 || choice > 3) {
-            std::cout << "\nInvalid choice! Please select 0-3.\n" << std::endl;
+        if (choice < 0 || choice > 4) {
+            std::cout << "\nInvalid choice! Please select 0-4.\n" << std::endl;
             continue;
         }
 
