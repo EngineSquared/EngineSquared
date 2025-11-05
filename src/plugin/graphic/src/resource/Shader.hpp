@@ -12,9 +12,13 @@ namespace Graphic::Resource {
 
 class Shader {
   public:
+    virtual ~Shader() = default;
+
     Shader(Shader &&) = default;
     Shader &operator=(Shader &&) = default;
-    virtual ~Shader() = default;
+
+    Shader(const Shader &) = delete;
+    Shader &operator=(const Shader &) = delete;
 
     static Shader Create(const ShaderDescriptor &descriptor, Context &context)
     {
