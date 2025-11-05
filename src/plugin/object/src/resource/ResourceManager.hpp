@@ -49,7 +49,7 @@ template <typename ResourceType> class ResourceManager {
      * @param args  arguments to create the resource
      * @return the added resource
      */
-    template <typename... Args> ResourceType &Add(const entt::hashed_string &id, Args &&...args)
+    template <typename... Args> entt::resource<ResourceType> Add(const entt::hashed_string &id, Args &&...args)
     {
         auto ret = cache.load(id, std::forward<Args>(args)...);
 
@@ -59,7 +59,7 @@ template <typename ResourceType> class ResourceManager {
             ret = cache.force_load(id, std::forward<Args>(args)...);
         }
 
-        return *ret.first->second;
+        return ret.first->second;
     }
 
     /**
@@ -71,7 +71,7 @@ template <typename ResourceType> class ResourceManager {
      * @param resource  resource to add
      * @return the added resource
      */
-    ResourceType Add(const entt::hashed_string &id, const ResourceType &resource)
+    entt::resource<ResourceType> Add(const entt::hashed_string &id, const ResourceType &resource)
     {
         auto ret = cache.load(id, resource);
 
@@ -81,7 +81,7 @@ template <typename ResourceType> class ResourceManager {
             ret = cache.force_load(id, resource);
         }
 
-        return *(ret.first->second);
+        return ret.first->second;
     }
 
     /**
@@ -93,7 +93,7 @@ template <typename ResourceType> class ResourceManager {
      * @param resource  resource to add
      * @return the added resource
      */
-    ResourceType Add(const entt::hashed_string &id, ResourceType &&resource)
+    entt::resource<ResourceType> Add(const entt::hashed_string &id, ResourceType &&resource)
     {
         auto ret = cache.load(id, std::move(resource));
 
@@ -103,7 +103,7 @@ template <typename ResourceType> class ResourceManager {
             ret = cache.force_load(id, std::move(resource));
         }
 
-        return *(ret.first->second);
+        return ret.first->second;
     }
 
     /**
