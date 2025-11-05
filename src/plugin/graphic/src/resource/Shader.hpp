@@ -14,7 +14,7 @@ class Shader {
   public:
     virtual ~Shader() = default;
 
-    Shader(Shader &&) = default;
+    Shader(Shader &&) noexcept = default;
     Shader &operator=(Shader &&) = default;
 
     Shader(const Shader &) = delete;
