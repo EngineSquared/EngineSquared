@@ -108,8 +108,9 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
     inline bool Contains(FunctionID id) const { return _idToIterator.contains(id); }
 
   private:
-    std::list<std::unique_ptr<FunctionType>> _orderedFunctions;                                          ///< List to store functions in order.
-    std::unordered_map<FunctionID, typename std::list<std::unique_ptr<FunctionType>>::iterator> _idToIterator; ///< Map to store iterators for O(1) deletion.
+    std::list<std::unique_ptr<FunctionType>> _orderedFunctions; ///< List to store functions in order.
+    std::unordered_map<FunctionID, typename std::list<std::unique_ptr<FunctionType>>::iterator>
+        _idToIterator; ///< Map to store iterators for O(1) deletion.
 };
 } // namespace FunctionUtils
 
