@@ -2,11 +2,13 @@
 
 // Resources
 #include "resource/ARenderPass.hpp"
+#include "resource/AGPUBuffer.hpp"
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
+#include "resource/PointGPUBuffer.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/SingleExecutionRenderPass.hpp"
