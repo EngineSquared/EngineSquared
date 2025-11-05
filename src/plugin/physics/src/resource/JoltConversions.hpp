@@ -68,4 +68,16 @@ inline glm::vec3 FromJoltRVec3(const JPH::RVec3 &v)
  */
 inline glm::quat FromJoltQuat(const JPH::Quat &q) { return glm::quat(q.GetW(), q.GetX(), q.GetY(), q.GetZ()); }
 
+//=============================================================================
+// GLM Experimental Utility Functions
+//=============================================================================
+
+/**
+ * @brief Helper to check if a quaternion is finite (not NaN, not Inf)
+ */
+inline bool IsFinite(const glm::quat& q)
+{
+    return std::isfinite(q.w) && std::isfinite(q.x) && std::isfinite(q.y) && std::isfinite(q.z);
+}
+
 } // namespace Physics::Resource

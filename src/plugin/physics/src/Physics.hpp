@@ -16,6 +16,7 @@
 // Resource
 #include "resource/ForceApplicator.hpp"
 #include "resource/VelocityController.hpp"
+#include "resource/KinematicMover.hpp"
 #include "resource/JoltConversions.hpp"
 #include "resource/PhysicsManager.hpp"
 

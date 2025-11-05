@@ -13,6 +13,7 @@
 #include "examples/FallingObjectsExample.hpp"
 #include "examples/ForcesImpulsesExample.hpp"
 #include "examples/VelocityControlExample.hpp"
+#include "examples/KinematicMovementExample.hpp"
 
 #include <iostream>
 #include <string>
@@ -39,7 +40,11 @@ void PrintMenu()
     std::cout << "     - SetLinearVelocity, SetAngularVelocity, etc." << std::endl;
     std::cout << "     - Demonstrates Velocity Control API\n" << std::endl;
 
-    std::cout << "  4. Run All Examples" << std::endl;
+    std::cout << "  4. Kinematic Movement Example (Issue #003)" << std::endl;
+    std::cout << "     - MoveKinematic, SetKinematicVelocity" << std::endl;
+    std::cout << "     - Demonstrates moving platforms, elevators, doors\n" << std::endl;
+
+    std::cout << "  5. Run All Examples" << std::endl;
     std::cout << "     - Execute all examples sequentially\n" << std::endl;
 
     std::cout << "  0. Exit\n" << std::endl;
@@ -47,7 +52,7 @@ void PrintMenu()
 
 int GetUserChoice()
 {
-    std::cout << "Select example (0-4): ";
+    std::cout << "Select example (0-5): ";
     std::string input;
     std::getline(std::cin, input);
 
@@ -81,10 +86,16 @@ void RunExample(int choice)
         break;
 
     case 4:
+        std::cout << "\n→ Running Kinematic Movement Example...\n" << std::endl;
+        core.AddPlugins<Examples::KinematicMovementExample>();
+        break;
+
+    case 5:
         std::cout << "\n→ Running All Examples...\n" << std::endl;
         core.AddPlugins<Examples::FallingObjectsExample>();
         core.AddPlugins<Examples::ForcesImpulsesExample>();
         core.AddPlugins<Examples::VelocityControlExample>();
+        core.AddPlugins<Examples::KinematicMovementExample>();
         break;
 
     default:
@@ -117,15 +128,18 @@ int main(int argc, char** argv)
             RunExample(2);
         } else if (arg == "3" || arg == "velocity") {
             RunExample(3);
-        } else if (arg == "4" || arg == "all") {
+        } else if (arg == "4" || arg == "kinematic") {
             RunExample(4);
+        } else if (arg == "5" || arg == "all") {
+            RunExample(5);
         } else if (arg == "--help" || arg == "-h") {
             std::cout << "Usage: " << argv[0] << " [option]" << std::endl;
             std::cout << "\nOptions:" << std::endl;
             std::cout << "  1, falling   : Run Falling Objects Example" << std::endl;
             std::cout << "  2, forces    : Run Forces & Impulses Example" << std::endl;
             std::cout << "  3, velocity  : Run Velocity Control Example" << std::endl;
-            std::cout << "  4, all       : Run All Examples" << std::endl;
+            std::cout << "  4, kinematic : Run Kinematic Movement Example" << std::endl;
+            std::cout << "  5, all       : Run All Examples" << std::endl;
             std::cout << "  --help, -h   : Show this help\n" << std::endl;
             std::cout << "If no option is provided, interactive menu will be shown." << std::endl;
         } else {
@@ -146,8 +160,8 @@ int main(int argc, char** argv)
             break;
         }
 
-        if (choice < 0 || choice > 4) {
-            std::cout << "\nInvalid choice! Please select 0-4.\n" << std::endl;
+        if (choice < 0 || choice > 5) {
+            std::cout << "\nInvalid choice! Please select 0-5.\n" << std::endl;
             continue;
         }
 
