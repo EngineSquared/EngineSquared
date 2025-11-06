@@ -27,7 +27,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-namespace Physics::Resource {
+namespace Physics::Utils {
 
 //=============================================================================
 // GLM → Jolt conversions
@@ -68,4 +68,4 @@ inline glm::vec3 FromJoltRVec3(const JPH::RVec3 &v)
  */
 inline glm::quat FromJoltQuat(const JPH::Quat &q) { return glm::quat(q.GetW(), q.GetX(), q.GetY(), q.GetZ()); }
 
-} // namespace Physics::Resource
+} // namespace Physics::Utils

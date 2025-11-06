@@ -15,7 +15,6 @@
 #include "component/RigidBodyInternal.hpp"
 
 // Resource
-#include "resource/JoltConversions.hpp"
 #include "resource/PhysicsManager.hpp"
 
 // Systems
@@ -29,6 +28,7 @@
 #include "utils/BroadPhaseLayerImpl.hpp"
 #include "utils/BroadPhaseLayers.hpp"
 #include "utils/ContactListenerImpl.hpp"
+#include "utils/JoltConversions.hpp"
 #include "utils/Layers.hpp"
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"

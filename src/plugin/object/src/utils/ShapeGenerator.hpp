@@ -31,7 +31,7 @@
 
 #include <glm/glm.hpp>
 
-namespace Object::Resource {
+namespace Object::Utils {
 
 /**
  * @brief Generate a cube mesh with specified size
@@ -163,4 +163,4 @@ Engine::Entity CreateCylinder(Engine::Core &core, float radiusTop = 0.5f, float 
                               float height = 1.0f, const glm::vec3 &position = glm::vec3(0.0f),
                               uint32_t segments = 32u);
 
-} // namespace Object::Resource
+} // namespace Object::Utils

@@ -1,9 +1,9 @@
-#include "resource/ShapeGenerator.hpp"
+#include "ShapeGenerator.hpp"
 #include "Object.pch.hpp"
 
 #include <cmath>
 
-namespace Object::Resource {
+namespace Object::Utils {
 
 Component::Mesh GenerateCubeMesh(float size)
 {
@@ -135,7 +135,6 @@ Component::Mesh GenerateSphereMesh(float radius, uint32_t segments, uint32_t rin
 {
     Component::Mesh mesh;
 
-    // Ensure minimum subdivisions
     segments = std::max(3u, segments);
     rings = std::max(2u, rings);
 
@@ -192,7 +191,6 @@ Component::Mesh GeneratePlaneMesh(float width, float depth, uint32_t subdivision
 {
     Component::Mesh mesh;
 
-    // Ensure minimum subdivisions
     subdivisionsX = std::max(1u, subdivisionsX);
     subdivisionsZ = std::max(1u, subdivisionsZ);
 
@@ -250,7 +248,6 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
 {
     Component::Mesh mesh;
 
-    // Ensure minimum subdivisions
     segments = std::max(3u, segments);
     heightSegments = std::max(1u, heightSegments);
 
@@ -415,4 +412,4 @@ Engine::Entity CreateCylinder(Engine::Core &core, float radiusTop, float radiusB
     return entity;
 }
 
-} // namespace Object::Resource
+} // namespace Object::Utils
