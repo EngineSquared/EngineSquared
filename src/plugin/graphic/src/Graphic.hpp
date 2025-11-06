@@ -9,6 +9,7 @@
 #include "resource/Limits.hpp"
 #include "resource/PointGPUBuffer.hpp"
 #include "resource/Shader.hpp"
+#include "resource/ShaderContainer.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
