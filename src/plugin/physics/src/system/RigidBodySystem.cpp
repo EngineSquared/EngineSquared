@@ -8,8 +8,8 @@
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
 #include "exception/RigidBodyError.hpp"
-#include "utils/JoltConversions.hpp"
 #include "resource/PhysicsManager.hpp"
+#include "utils/JoltConversions.hpp"
 #include <fmt/format.h>
 
 #include "Object.hpp"
