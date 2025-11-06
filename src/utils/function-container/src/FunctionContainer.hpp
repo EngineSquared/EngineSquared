@@ -35,6 +35,26 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
     ~FunctionContainer() = default;
 
     /**
+     * @brief Deleted copy constructor (FunctionContainer is not copyable due to unique_ptr).
+     */
+    FunctionContainer(const FunctionContainer &) = delete;
+
+    /**
+     * @brief Deleted copy assignment (FunctionContainer is not copyable due to unique_ptr).
+     */
+    FunctionContainer &operator=(const FunctionContainer &) = delete;
+
+    /**
+     * @brief Move constructor.
+     */
+    FunctionContainer(FunctionContainer &&) noexcept = default;
+
+    /**
+     * @brief Move assignment.
+     */
+    FunctionContainer &operator=(FunctionContainer &&) noexcept = default;
+
+    /**
      * @brief Adds a function to the container.
      * @tparam TCallable Type of the callable function.
      * @param callable The callable function to be added.
@@ -85,11 +105,12 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      */
     std::unique_ptr<FunctionType> DeleteFunction(FunctionID id);
 
-    inline bool Contains(FunctionID id) const { return _idToIndex.contains(id); }
+    inline bool Contains(FunctionID id) const { return _idToIterator.contains(id); }
 
   private:
-    std::unordered_map<FunctionID, std::size_t> _idToIndex;     ///< Map to store unique ids for each function.
-    std::list<std::unique_ptr<FunctionType>> _orderedFunctions; ///< Vector to store functions in order.
+    std::list<std::unique_ptr<FunctionType>> _orderedFunctions; ///< List to store functions in order.
+    std::unordered_map<FunctionID, typename std::list<std::unique_ptr<FunctionType>>::iterator>
+        _idToIterator; ///< Map to store iterators for O(1) deletion.
 };
 } // namespace FunctionUtils
 
