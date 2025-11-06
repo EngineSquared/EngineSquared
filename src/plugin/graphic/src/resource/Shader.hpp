@@ -12,8 +12,13 @@ namespace Graphic::Resource {
 
 class Shader {
   public:
-    Shader(void) = default;
     virtual ~Shader() = default;
+
+    Shader(Shader &&) noexcept = default;
+    Shader &operator=(Shader &&) = default;
+
+    Shader(const Shader &) = delete;
+    Shader &operator=(const Shader &) = delete;
 
     static Shader Create(const ShaderDescriptor &descriptor, Context &context)
     {
@@ -87,6 +92,8 @@ class Shader {
     const ShaderDescriptor &getDescriptor() const { return descriptor; }
 
   private:
+    Shader(void) = default;
+
     static wgpu::ShaderModule _createShaderModule(std::string_view name, std::string_view source,
                                                   const wgpu::Device &device)
     {
