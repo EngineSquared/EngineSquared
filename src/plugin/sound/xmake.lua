@@ -1,4 +1,5 @@
 includes("../../engine/xmake.lua")
+includes("../../utils/function-container/xmake.lua")
 
 target("PluginSound")
     set_kind("static")
@@ -7,6 +8,7 @@ target("PluginSound")
     add_packages("miniaudio", "entt", "spdlog", "fmt")
 
     add_deps("EngineSquaredCore")
+    add_deps("UtilsFunctionContainer")
 
     add_files("src/**.cpp")
 
@@ -29,7 +31,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-        
+
         set_languages("cxx20")
         add_deps("EngineSquaredCore")
         add_files(file)
