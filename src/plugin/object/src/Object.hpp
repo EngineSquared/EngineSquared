@@ -12,3 +12,9 @@
 #include "resource/OBJLoader.hpp"
 #include "resource/ResourceManager.hpp"
 #include "resource/Shape.hpp"
+
+// Helpers
+#include "helper/CreateShape.hpp"
+
+// Utils
+#include "utils/ShapeGenerator.hpp"

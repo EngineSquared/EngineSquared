@@ -6,6 +6,13 @@
 
 // Exceptions
 #include "exception/ContactListenerError.hpp"
+#include "exception/RigidBodyError.hpp"
+
+// Components
+#include "component/BoxCollider.hpp"
+#include "component/DefaultCollider.hpp"
+#include "component/RigidBody.hpp"
+#include "component/RigidBodyInternal.hpp"
 
 // Resource
 #include "resource/PhysicsManager.hpp"
@@ -14,11 +21,14 @@
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
+#include "system/RigidBodySystem.hpp"
+#include "system/SyncTransformSystem.hpp"
 
 // Utils
 #include "utils/BroadPhaseLayerImpl.hpp"
 #include "utils/BroadPhaseLayers.hpp"
 #include "utils/ContactListenerImpl.hpp"
+#include "utils/JoltConversions.hpp"
 #include "utils/Layers.hpp"
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"

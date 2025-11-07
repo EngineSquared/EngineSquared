@@ -20,3 +20,4 @@
 #include <Jolt/RegisterTypes.h>
 #include <entt/entity/entity.hpp>
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>

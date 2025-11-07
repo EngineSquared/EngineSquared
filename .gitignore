@@ -8,6 +8,7 @@ vs*/*
 vsxmake*/*
 build/
 docs/
+.Test/
 *.spv
 
 # sonar
