@@ -1,6 +1,6 @@
 #include "CreateShape.hpp"
-#include "utils/ShapeGenerator.hpp"
 #include "Object.pch.hpp"
+#include "utils/ShapeGenerator.hpp"
 
 #include <cmath>
 
