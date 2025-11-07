@@ -22,7 +22,7 @@
  */
 void CreateFloor(Engine::Core &core)
 {
-    auto floor = Object::Utils::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
     auto boxCollider = Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f));
     floor.AddComponent<Physics::Component::BoxCollider>(core, boxCollider);
@@ -41,7 +41,7 @@ void CreateFloor(Engine::Core &core)
  */
 void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass)
 {
-    auto cube = Object::Utils::CreateCube(core, 1.0f, glm::vec3(x, y, z));
+    auto cube = Object::Helper::CreateCube(core, 1.0f, glm::vec3(x, y, z));
 
     auto rigidBody = Physics::Component::RigidBody::CreateDynamic(mass);
     rigidBody.friction = 0.5f;
@@ -61,7 +61,7 @@ void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass
  */
 void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
 {
-    auto ball = Object::Utils::CreateSphere(core, 0.5f, glm::vec3(x, y, z));
+    auto ball = Object::Helper::CreateSphere(core, 0.5f, glm::vec3(x, y, z));
 
     auto collider = Physics::Component::BoxCollider(glm::vec3(0.5f, 0.5f, 0.5f));
     ball.AddComponent<Physics::Component::BoxCollider>(core, collider);
@@ -82,8 +82,8 @@ void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
 void CreateMovingPlatform(Engine::Core &core)
 {
     auto platform =
-        Object::Utils::CreateCube(core, 1.0f, glm::vec3(0.0f, 5.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
-                                  glm::vec3(3.0f, 0.3f, 3.0f)); // Scale to make it flat
+        Object::Helper::CreateCube(core, 1.0f, glm::vec3(0.0f, 5.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
+                                     glm::vec3(3.0f, 0.3f, 3.0f)); // Scale to make it flat
 
     auto collider = Physics::Component::BoxCollider(glm::vec3(3.0f, 0.3f, 3.0f));
     platform.AddComponent<Physics::Component::BoxCollider>(core, collider);

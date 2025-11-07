@@ -37,13 +37,13 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(entt::registry &regist
 {
     if (auto *boxCollider = registry.try_get<Component::BoxCollider>(entity))
     {
-        auto boxShape = new JPH::BoxShape(Resource::ToJoltVec3(boxCollider->halfExtents), boxCollider->convexRadius);
+        auto boxShape = new JPH::BoxShape(Utils::ToJoltVec3(boxCollider->halfExtents), boxCollider->convexRadius);
         return boxShape;
     }
 
     if (auto *defaultCollider = registry.try_get<Component::DefaultCollider>(entity))
     {
-        auto boxShape = new JPH::BoxShape(Resource::ToJoltVec3(defaultCollider->halfExtents));
+        auto boxShape = new JPH::BoxShape(Utils::ToJoltVec3(defaultCollider->halfExtents));
         return boxShape;
     }
 
@@ -115,8 +115,8 @@ static void OnRigidBodyConstruct(entt::registry &registry, entt::entity entity)
             return;
         }
 
-        JPH::BodyCreationSettings bodySettings(shape, Resource::ToJoltVec3(transform->position),
-                                               Resource::ToJoltQuat(transform->rotation), rigidBody.motionType,
+        JPH::BodyCreationSettings bodySettings(shape, Utils::ToJoltVec3(transform->position),
+                                               Utils::ToJoltQuat(transform->rotation), rigidBody.motionType,
                                                rigidBody.objectLayer);
 
         bodySettings.mFriction = rigidBody.friction;
