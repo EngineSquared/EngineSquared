@@ -8,11 +8,15 @@ class SingleExecutionRenderPass : public ARenderPass<SingleExecutionRenderPass> 
   public:
     SingleExecutionRenderPass(std::string_view name) : ARenderPass(name) {}
 
-    SingleExecutionRenderPass &Execute(Engine::Core &core) override
-    {
-        // Implementation of the single execution render pass logic goes here.
-        // This is a placeholder for demonstration purposes.
-        return *this;
-    }
+    void Execute(Engine::Core &core) override {}
+
+  private:
+    // wgpu::RenderPassEncoder _CreateRenderPass(Engine::Core &core)
+    // {
+
+    // }
+
+    std::optional<std::function<void(wgpu::RenderPassEncoder &renderPass, Engine::Core &core)>> uniqueRenderCallback =
+        std::nullopt;
 };
 } // namespace Graphic::Resource

@@ -7,13 +7,34 @@
 
 namespace Graphic::Resource {
 
+struct ColorOutput {
+    std::optional<std::string> textureViewName = std::nullopt;
+    std::optional<std::string> textureResolveTargetName = std::nullopt;
+    uint32_t depthSlice;
+    wgpu::LoadOp loadOp;
+    wgpu::StoreOp storeOp;
+    std::function<bool(Engine::Core &, glm::vec4 &)> getClearColorCallback;
+};
+
+struct DepthOutput {
+    std::string textureName;
+};
+
+struct OutputContainer {
+    std::unordered_map<uint32_t, wgpu::RenderPassColorAttachment> colorBuffers;
+    std::optional<wgpu::RenderPassDepthStencilAttachment> depthBuffer;
+};
+
+struct InputContainer : public std::map<uint32_t /* index inside shader */, std::string /* bind group name */>
+{
+    using std::map<uint32_t, std::string>::map;
+};
+
 template <typename TDerived> class ARenderPass : public Utils::IValidable {
   public:
     ARenderPass(std::string_view name) : _name(name) {}
 
-    virtual TDerived &Execute(Engine::Core &core) = 0;
-
-    const std::string &GetName() const { return _name; }
+    virtual void Execute(Engine::Core &core) = 0;
 
     TDerived &BindShader(std::string_view shaderName)
     {
@@ -34,6 +55,22 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable {
             Log::Warn(fmt::format("RenderPass {}: Overwriting existing bind group at index {}", _name, groupIndex));
         }
         _inputs[groupIndex] = bindGroupName;
+        return static_cast<TDerived &>(*this);
+    }
+
+    TDerived &AddOutput(uint32_t id, wgpu::RenderPassColorAttachment output) {
+        if (_outputs.colorBuffers.contains(id)) {
+            Log::Warn(fmt::format("RenderPass {}: Overwriting existing color buffer at index {}", _name, id));
+        }
+        _outputs.colorBuffers[id] = output;
+        return static_cast<TDerived &>(*this);
+    }
+
+    TDerived &AddOutput(wgpu::RenderPassDepthStencilAttachment output) {
+        if (_outputs.depthBuffer.has_value()) {
+            Log::Warn(fmt::format("RenderPass {}: Overwriting existing depth buffer", _name));
+        }
+        _outputs.depthBuffer = output;
         return static_cast<TDerived &>(*this);
     }
 
@@ -65,11 +102,17 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable {
         return errors;
     };
 
+    const auto &GetGetClearColorCallback(void) const { return _getClearColorCallback; }
+    const auto &GetBoundShader(void) const { return _boundShader; }
+    const auto &GetInputs(void) const { return _inputs; }
+    const auto &GetName(void) const { return _name; }
+    const auto &GetOutputs(void) const { return _outputs; }
+
   private:
-    std::optional<std::function<bool(Engine::Core &, glm::vec4 &)>> _getClearColorCallback;
+    std::optional<std::function<bool(Engine::Core &, glm::vec4 &)>> _getClearColorCallback = std::nullopt;
     std::optional<std::string> _boundShader = std::nullopt;
-    std::map<uint32_t /* index inside shader */, std::string /* bind group name */>
-        _inputs; // TODO: put this in a dedicated container
+    InputContainer _inputs;
     std::string _name;
+    OutputContainer _outputs;
 };
 } // namespace Graphic::Resource
