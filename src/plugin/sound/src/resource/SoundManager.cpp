@@ -9,6 +9,8 @@ SoundManager::~SoundManager()
     {
         ma_decoder_uninit(&sound.decoder);
     }
+
+    ma_device_stop(&_device);
     ma_device_uninit(&_device);
 }
 
