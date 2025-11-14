@@ -25,8 +25,7 @@ struct OutputContainer {
     std::optional<wgpu::RenderPassDepthStencilAttachment> depthBuffer;
 };
 
-struct InputContainer : public std::map<uint32_t /* index inside shader */, std::string /* bind group name */>
-{
+struct InputContainer : public std::map<uint32_t /* index inside shader */, std::string /* bind group name */> {
     using std::map<uint32_t, std::string>::map;
 };
 
@@ -58,16 +57,20 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable {
         return static_cast<TDerived &>(*this);
     }
 
-    TDerived &AddOutput(uint32_t id, wgpu::RenderPassColorAttachment output) {
-        if (_outputs.colorBuffers.contains(id)) {
+    TDerived &AddOutput(uint32_t id, wgpu::RenderPassColorAttachment output)
+    {
+        if (_outputs.colorBuffers.contains(id))
+        {
             Log::Warn(fmt::format("RenderPass {}: Overwriting existing color buffer at index {}", _name, id));
         }
         _outputs.colorBuffers[id] = output;
         return static_cast<TDerived &>(*this);
     }
 
-    TDerived &AddOutput(wgpu::RenderPassDepthStencilAttachment output) {
-        if (_outputs.depthBuffer.has_value()) {
+    TDerived &AddOutput(wgpu::RenderPassDepthStencilAttachment output)
+    {
+        if (_outputs.depthBuffer.has_value())
+        {
             Log::Warn(fmt::format("RenderPass {}: Overwriting existing depth buffer", _name));
         }
         _outputs.depthBuffer = output;
