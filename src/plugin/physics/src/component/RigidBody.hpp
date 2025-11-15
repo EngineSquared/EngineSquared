@@ -23,10 +23,10 @@
 
 #pragma once
 
+#include "utils/Layers.hpp"
 #include <Jolt/Physics/Body/MotionType.h>
 #include <Jolt/Physics/EActivation.h>
 #include <cstdint>
-#include "utils/Layers.hpp"
 
 namespace Physics::Component {
 
