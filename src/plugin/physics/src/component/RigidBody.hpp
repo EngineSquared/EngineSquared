@@ -26,6 +26,7 @@
 #include <Jolt/Physics/Body/MotionType.h>
 #include <Jolt/Physics/EActivation.h>
 #include <cstdint>
+#include "utils/Layers.hpp"
 
 namespace Physics::Component {
 
@@ -123,6 +124,7 @@ struct RigidBody {
         RigidBody rb;
         rb.motionType = MotionType::Static;
         rb.activation = Activation::DontActivate;
+        rb.objectLayer = Utils::Layers::NON_MOVING;
         rb.mass = 0.0f;
         return rb;
     }
@@ -134,6 +136,8 @@ struct RigidBody {
     {
         RigidBody rb;
         rb.motionType = MotionType::Kinematic;
+        rb.activation = Activation::Activate;
+        rb.objectLayer = Utils::Layers::MOVING;
         rb.mass = 0.0f;
         return rb;
     }
@@ -146,6 +150,8 @@ struct RigidBody {
     {
         RigidBody rb;
         rb.motionType = MotionType::Dynamic;
+        rb.activation = Activation::Activate;
+        rb.objectLayer = Utils::Layers::MOVING;
         rb.mass = bodyMass;
         return rb;
     }
