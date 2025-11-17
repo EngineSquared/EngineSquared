@@ -2,6 +2,7 @@
 
 #include "core/Core.hpp"
 #include "resource/Shader.hpp"
+#include "resource/ShaderContainer.hpp"
 #include "utils/IValidable.hpp"
 #include <glm/vec4.hpp>
 
@@ -97,10 +98,23 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable<Engine
         }
 
         /**
-         * TODO: Check if shader exists in resource manager
          * TODO: Check if all inputs match shader bind groups
          * TODO: Check if inputs exists in resource manager
          */
+
+        // Check if shader exists in resource manager
+        if (_boundShader.has_value())
+        {
+            auto &shaderContainer = core.GetResource<ShaderContainer>();
+            if (!shaderContainer.Contains(_boundShader.value()))
+            {
+                errors.push_back(
+                    Utils::ValidationError{.message = fmt::format("Shader with id '{}' not found in resource manager",
+                                                                  _boundShader.value().data()),
+                                           .location = location,
+                                           .severity = Utils::ValidationError::Severity::Error});
+            }
+        }
 
         return errors;
     };

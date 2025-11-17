@@ -37,6 +37,36 @@ void TestSystem(Engine::Core &core)
     }
 }
 
+void TestShaderNotFoundValidation(Engine::Core &core)
+{
+    const entt::hashed_string nonExistentShaderId = "NonExistentShader";
+
+    Graphic::Resource::SingleExecutionRenderPass renderPass("TestRenderPassWithMissingShader");
+
+    renderPass.BindShader(nonExistentShaderId);
+    renderPass.SetGetClearColorCallback([](Engine::Core &core, glm::vec4 &color) {
+        color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        return true;
+    });
+
+    auto validationErrors = renderPass.validate(core);
+
+    // Should have at least one error for missing shader
+    EXPECT_FALSE(validationErrors.empty());
+
+    // Check that we have a specific error about the shader not being found
+    bool foundShaderError = false;
+    for (const auto &error : validationErrors)
+    {
+        if (error.message.find("not found in resource manager") != std::string::npos)
+        {
+            foundShaderError = true;
+            EXPECT_EQ(error.severity, Graphic::Utils::ValidationError::Severity::Error);
+        }
+    }
+    EXPECT_TRUE(foundShaderError) << "Expected validation error for missing shader";
+}
+
 TEST(GraphicPlugin, GlobalRun)
 {
     Engine::Core core;
@@ -48,6 +78,21 @@ TEST(GraphicPlugin, GlobalRun)
     });
 
     core.RegisterSystem(TestSystem);
+
+    EXPECT_NO_THROW(core.RunSystems());
+}
+
+TEST(GraphicPlugin, RenderPassShaderValidation)
+{
+    Engine::Core core;
+
+    core.AddPlugins<Graphic::Plugin>();
+
+    core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &c) {
+        c.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
+    });
+
+    core.RegisterSystem(TestShaderNotFoundValidation);
 
     EXPECT_NO_THROW(core.RunSystems());
 }
