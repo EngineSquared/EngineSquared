@@ -8,12 +8,14 @@ class SingleExecutionRenderPass : public ARenderPass<SingleExecutionRenderPass> 
   public:
     SingleExecutionRenderPass(std::string_view name) : ARenderPass(name) {}
 
-    void Execute(Engine::Core &core) override {
+    void Execute(Engine::Core &core) override
+    {
         Resource::DeviceContext &deviceContext = core.GetResource<Resource::DeviceContext>();
 
         wgpu::RenderPassEncoder renderPass = this->_CreateRenderPass(deviceContext);
 
-        for (auto &[index, name] : this->GetInputs()) {
+        for (auto &[index, name] : this->GetInputs())
+        {
             Resource::BindGroup &bindGroup = core.GetResource<Resource::BindGroupManager>().Get(name);
             renderPass.setBindGroup(index, bindGroup.GetBindGroup(), 0, nullptr);
         }
