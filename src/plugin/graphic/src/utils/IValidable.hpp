@@ -23,8 +23,7 @@ struct ValidationError {
     }
 };
 
-template <typename... Params>
-class IValidable {
+template <typename... Params> class IValidable {
   public:
     virtual ~IValidable() = default;
     virtual std::vector<ValidationError> validate(Params... params) const = 0;
