@@ -16,3 +16,6 @@ docs/
 sonar-project.properties
 .DS_Store
 src/.DS_Store
+
+# codeql
+_codeql_detected_source_root
