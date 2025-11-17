@@ -5,7 +5,7 @@
 #include "utils/webgpu.hpp"
 
 namespace Graphic::Utils {
-class DepthStencilState : public IValidable {
+class DepthStencilState : public IValidable<> {
   public:
     explicit DepthStencilState(const std::string &name) : name(name) {}
     ~DepthStencilState() override = default;

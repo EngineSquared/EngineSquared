@@ -5,7 +5,7 @@
 
 namespace Graphic::Utils {
 
-class IBindGroupLayoutEntry : public IValidable {
+class IBindGroupLayoutEntry : public IValidable<> {
   public:
     virtual const wgpu::BindGroupLayoutEntry &getEntry() const = 0;
     virtual const std::string &getName() const = 0;

@@ -18,7 +18,7 @@
 #include <optional>
 
 namespace Graphic::Resource {
-class ShaderDescriptor : public Utils::IValidable {
+class ShaderDescriptor : public Utils::IValidable<> {
   public:
     ShaderDescriptor() = default;
     ~ShaderDescriptor() override = default;

@@ -5,7 +5,7 @@
 #include "utils/webgpu.hpp"
 
 namespace Graphic::Utils {
-class ColorTargetState : public IValidable {
+class ColorTargetState : public IValidable<> {
   public:
     explicit ColorTargetState(const std::string &name) : _name(name) {}
     ~ColorTargetState() override = default;

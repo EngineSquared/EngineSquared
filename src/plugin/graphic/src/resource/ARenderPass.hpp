@@ -29,15 +29,15 @@ struct InputContainer : public std::map<uint32_t /* index inside shader */, std:
     using std::map<uint32_t, std::string>::map;
 };
 
-template <typename TDerived> class ARenderPass : public Utils::IValidable {
+template <typename TDerived> class ARenderPass : public Utils::IValidable<Engine::Core &> {
   public:
     ARenderPass(std::string_view name) : _name(name) {}
 
     virtual void Execute(Engine::Core &core) = 0;
 
-    TDerived &BindShader(std::string_view shaderName)
+    TDerived &BindShader(const entt::hashed_string &shaderId)
     {
-        _boundShader = shaderName;
+        _boundShader = shaderId;
         return static_cast<TDerived &>(*this);
     }
 
@@ -77,7 +77,7 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable {
         return static_cast<TDerived &>(*this);
     }
 
-    virtual std::vector<Utils::ValidationError> validate() const override
+    virtual std::vector<Utils::ValidationError> validate(Engine::Core &core) const override
     {
         std::vector<Utils::ValidationError> errors;
         const std::string location = fmt::format("RenderPass({})", _name);
@@ -113,7 +113,7 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable {
 
   private:
     std::optional<std::function<bool(Engine::Core &, glm::vec4 &)>> _getClearColorCallback = std::nullopt;
-    std::optional<std::string> _boundShader = std::nullopt;
+    std::optional<entt::hashed_string> _boundShader = std::nullopt;
     InputContainer _inputs;
     std::string _name;
     OutputContainer _outputs;

@@ -10,7 +10,7 @@ template <typename TBindGroupLayoutEntry>
 concept CBindGroupLayoutEntry = std::derived_from<TBindGroupLayoutEntry, Graphic::Utils::IBindGroupLayoutEntry>;
 
 namespace Graphic::Utils {
-class BindGroupLayout : public IValidable {
+class BindGroupLayout : public IValidable<> {
   public:
     explicit BindGroupLayout(const std::string &name) : name(name) {}
     ~BindGroupLayout() override = default;

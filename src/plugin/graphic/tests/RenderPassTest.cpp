@@ -8,9 +8,15 @@ void TestSystem(Engine::Core &core)
 {
     auto &context = core.GetResource<Graphic::Resource::Context>();
 
+    const entt::hashed_string shaderId = "DefaultTestShader";
+
+    auto shader = Graphic::Tests::Utils::CreateDefaultTestShader(context);
+
+    core.GetResource<Graphic::Resource::ShaderContainer>().Add(shaderId, std::move(shader));
+
     Graphic::Resource::SingleExecutionRenderPass renderPass("TestRenderPass");
 
-    renderPass.BindShader("DefaultTestShader");
+    renderPass.BindShader(shaderId);
     renderPass.SetGetClearColorCallback([](Engine::Core &core, glm::vec4 &color) {
         color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
         return true;
@@ -19,7 +25,7 @@ void TestSystem(Engine::Core &core)
 
     EXPECT_NO_THROW(renderPass.Execute(core));
 
-    auto validationErrors = renderPass.validate();
+    auto validationErrors = renderPass.validate(core);
 
     if (!validationErrors.empty())
     {

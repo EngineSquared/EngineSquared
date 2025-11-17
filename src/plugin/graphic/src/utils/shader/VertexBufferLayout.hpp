@@ -8,7 +8,7 @@
 #include "utils/IValidable.hpp"
 
 namespace Graphic::Utils {
-class VertexBufferLayout : public IValidable {
+class VertexBufferLayout : public IValidable<> {
   public:
     VertexBufferLayout() = default;
     ~VertexBufferLayout() override = default;

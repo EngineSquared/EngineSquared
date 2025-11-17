@@ -23,9 +23,10 @@ struct ValidationError {
     }
 };
 
+template <typename... Params>
 class IValidable {
   public:
     virtual ~IValidable() = default;
-    virtual std::vector<ValidationError> validate() const = 0;
+    virtual std::vector<ValidationError> validate(Params... params) const = 0;
 };
 } // namespace Graphic::Utils
