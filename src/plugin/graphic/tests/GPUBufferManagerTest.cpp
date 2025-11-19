@@ -56,7 +56,7 @@ auto TestGPUBufferContainerSystem(Engine::Core &core) -> void
 
     EXPECT_FALSE(gpuBufferManager.Contains(buffer1Id));
     EXPECT_TRUE(gpuBufferManager.Contains(buffer2Id));
-    EXPECT_THROW((void)gpuBufferManager.Get(buffer1Id), Object::ResourceManagerError);
+    EXPECT_THROW((void) gpuBufferManager.Get(buffer1Id), Object::ResourceManagerError);
 }
 } // namespace
 
@@ -64,8 +64,8 @@ TEST(GPUBufferManagerTest, BasicOperations)
 {
     Engine::Core core;
 
-  [[maybe_unused]] auto &containerResource =
-    core.RegisterResource<Graphic::Resource::GPUBufferContainer>(Graphic::Resource::GPUBufferContainer());
+    [[maybe_unused]] auto &containerResource =
+        core.RegisterResource<Graphic::Resource::GPUBufferContainer>(Graphic::Resource::GPUBufferContainer());
 
     core.RegisterSystem(TestGPUBufferContainerSystem);
 
