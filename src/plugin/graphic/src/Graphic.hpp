@@ -13,6 +13,7 @@
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
+#include "resource/GPUBufferManager.hpp"
 
 // Utils
 #include "utils/GetBytesPerPixel.hpp"
