@@ -4,7 +4,6 @@
 #include "RenderingPipeline.hpp"
 
 #include <glm/glm.hpp>
-#include <utility>
 
 namespace {
 
