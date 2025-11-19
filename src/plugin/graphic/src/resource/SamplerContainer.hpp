@@ -1,7 +1,7 @@
 #pragma once
 
-#include "resource/ResourceManager.hpp"
 #include "Sampler.hpp"
+#include "resource/ResourceManager.hpp"
 
 namespace Graphic::Resource {
 
