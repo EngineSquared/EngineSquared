@@ -5,6 +5,7 @@
 #include "utils/shader/ColorTargetState.hpp"
 #include "utils/shader/DepthStencilState.hpp"
 #include "utils/shader/VertexBufferLayout.hpp"
+#include "resource/Context.hpp"
 #include "utils/webgpu.hpp"
 #include <vector>
 
