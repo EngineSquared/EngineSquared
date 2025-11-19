@@ -91,8 +91,8 @@ auto TestShaderContainerSystem(Engine::Core &core) -> void
     auto &retrievedShader1 = shaderContainer.Get(shader1Id);
     auto &retrievedShader2 = shaderContainer.Get(shader2Id);
 
-    EXPECT_EQ(retrievedShader1.getDescriptor().getName(), "TestShader1");
-    EXPECT_EQ(retrievedShader2.getDescriptor().getName(), "TestShader2");
+    EXPECT_EQ(retrievedShader1.GetDescriptor().getName(), "TestShader1");
+    EXPECT_EQ(retrievedShader2.GetDescriptor().getName(), "TestShader2");
 
     shaderContainer.Remove(shader1Id);
     EXPECT_FALSE(shaderContainer.Contains(shader1Id));
