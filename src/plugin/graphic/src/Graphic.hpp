@@ -2,6 +2,7 @@
 
 // Resources
 #include "resource/AGPUBuffer.hpp"
+#include "resource/BindGroup.hpp"
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
@@ -13,7 +14,6 @@
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
-#include "resource/BindGroup.hpp"
 #include "resource/TextureContainer.hpp"
 
 // Utils

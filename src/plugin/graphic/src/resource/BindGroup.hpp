@@ -26,7 +26,7 @@ class BindGroup {
     };
 
     BindGroup(Engine::Core &core, entt::hashed_string shaderId, uint32_t layoutIndex,
-            std::initializer_list<Asset> assets)
+              std::initializer_list<Asset> assets)
         : _shaderId(shaderId), _layoutIndex(layoutIndex), _assets(assets)
     {
         _entries = _CreateBindGroupEntries(core);

@@ -33,9 +33,9 @@ Graphic::Resource::Shader CreateShader(Engine::Core &core)
     Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
     auto vertexLayout = Graphic::Utils::VertexBufferLayout()
-                             .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)
-                             .setArrayStride(3 * sizeof(float))
-                             .setStepMode(wgpu::VertexStepMode::Vertex);
+                            .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)
+                            .setArrayStride(3 * sizeof(float))
+                            .setStepMode(wgpu::VertexStepMode::Vertex);
 
     auto bindGroupLayout = Graphic::Utils::BindGroupLayout("BindGroupTextureLayout")
                                .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("TextureEntry")
@@ -84,11 +84,14 @@ TEST(BindGroupTest, CreatesEntriesForTextureAssets)
 
         auto &context = core.GetResource<Graphic::Resource::Context>();
         auto &textures = core.GetResource<Graphic::Resource::TextureContainer>();
-        auto image = Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2){ return glm::u8vec4(255, 0, 0, 255); });
+        auto image = Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(255, 0, 0, 255); });
         textures.Add(textureId, context, "BindGroupTextureA", image);
 
-        Graphic::Resource::BindGroup bindGroup(core, shaderId, 0,
-                                              {{0, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0}});
+        Graphic::Resource::BindGroup bindGroup(
+            core, shaderId, 0,
+            {
+                {0, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0}
+        });
 
         const auto &entries = bindGroup.GetEntries();
         ASSERT_EQ(entries.size(), 1u);
@@ -115,14 +118,21 @@ TEST(BindGroupTest, RefreshUpdatesTextureBindings)
 
         auto &context = core.GetResource<Graphic::Resource::Context>();
         auto &textures = core.GetResource<Graphic::Resource::TextureContainer>();
-        textures.Add(textureId, context, "BindGroupTextureA", Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2){ return glm::u8vec4(10, 20, 30, 255); }));
+        textures.Add(
+            textureId, context, "BindGroupTextureA",
+            Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(10, 20, 30, 255); }));
 
-        Graphic::Resource::BindGroup bindGroup(core, shaderId, 0,
-                                              {{0, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0}});
+        Graphic::Resource::BindGroup bindGroup(
+            core, shaderId, 0,
+            {
+                {0, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0}
+        });
 
         auto initialView = bindGroup.GetEntries().front().textureView;
 
-        textures.Add(textureId, context, "BindGroupTextureB", Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2){ return glm::u8vec4(200, 100, 50, 255); }));
+        textures.Add(
+            textureId, context, "BindGroupTextureB",
+            Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(200, 100, 50, 255); }));
         auto updatedView = textures.Get(textureId).GetDefaultView();
         EXPECT_NE(initialView, updatedView);
 
