@@ -5,6 +5,7 @@
 #include "resource/Image.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/webgpu.hpp"
+#include <functional>
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 
@@ -49,61 +50,24 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
 };
 class Texture {
   public:
-    static Texture Create(Context &context, const wgpu::TextureDescriptor &descriptor)
+    Texture(Context &context, const wgpu::TextureDescriptor &descriptor)
     {
-        Texture texture;
-
-        texture._webgpuTexture = context.deviceContext.GetDevice()->createTexture(descriptor);
-        texture._name = std::string(descriptor.label.data, descriptor.label.length);
-
-        return texture;
+        _webgpuTexture = context.deviceContext.GetDevice()->createTexture(descriptor);
+        _name = std::string(descriptor.label.data, descriptor.label.length);
+        _defaultView = _webgpuTexture.createView();
     }
 
-    static Texture Create(Context &context, std::string_view name, const Image &image)
+    Texture(Context &context, std::string_view name, const Image &image)
+        : Texture(context, _BuildDescriptor(name, image))
     {
-        Texture texture;
-        texture._name = std::string(name.data(), name.length());
-
-        wgpu::TextureDescriptor textureDesc;
-        textureDesc.label = wgpu::StringView(name);
-        textureDesc.size = {image.width, image.height, 1};
-        textureDesc.dimension = wgpu::TextureDimension::_2D;
-        textureDesc.mipLevelCount = 1;
-        textureDesc.sampleCount = 1;
-        textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
-        textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
-                            wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
-        textureDesc.viewFormats = nullptr;
-        textureDesc.viewFormatCount = 0;
-
-        texture = Create(context, textureDesc);
-
-        texture.Write(context, image);
-
-        return texture;
+        _name = std::string(name.data(), name.length());
+        Write(context, image);
     }
 
-    static Texture Create(Context &context, std::string_view name, const glm::uvec2 &size,
-                          const std::function<glm::u8vec4(glm::uvec2 pos)> &callback)
+    Texture(Context &context, std::string_view name, const glm::uvec2 &size,
+            const std::function<glm::u8vec4(glm::uvec2 pos)> &callback)
+        : Texture(context, name, Image(size, callback))
     {
-        Image image;
-        image.width = size.x;
-        image.height = size.y;
-        image.channels = 4;
-        image.pixels.resize(size.x * size.y);
-
-        for (uint32_t y = 0; y < size.y; ++y)
-        {
-            for (uint32_t x = 0; x < size.x; ++x)
-            {
-                glm::uvec2 pos{x, y};
-                image.pixels[y * size.x + x] = callback(pos);
-            }
-        }
-
-        Texture texture = Create(context, name, image);
-
-        return texture;
     }
 
     // We assume the image is correctly formatted (width * height = pixels.size())
@@ -130,7 +94,7 @@ class Texture {
                            textureSize);
     }
 
-    auto RetrieveImage(Context &context) const -> Image
+    Image RetrieveImage(Context &context) const
     {
         wgpu::Queue &queue = context.queue.value();
 
@@ -182,12 +146,31 @@ class Texture {
         return cbData.data;
     }
 
+    wgpu::TextureView GetDefaultView() const { return _defaultView; }
+
   private:
     Texture(void) = default;
+
+    static wgpu::TextureDescriptor _BuildDescriptor(std::string_view name, const Image &image)
+    {
+        wgpu::TextureDescriptor textureDesc(wgpu::Default);
+        textureDesc.label = wgpu::StringView(name);
+        textureDesc.size = {image.width, image.height, 1};
+        textureDesc.dimension = wgpu::TextureDimension::_2D;
+        textureDesc.mipLevelCount = 1;
+        textureDesc.sampleCount = 1;
+        textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+        textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
+                            wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
+        textureDesc.viewFormats = nullptr;
+        textureDesc.viewFormatCount = 0;
+        return textureDesc;
+    }
 
     uint32_t _GetBytesPerPixel() const { return Utils::GetBytesPerPixel(_webgpuTexture.getFormat()); }
 
     wgpu::Texture _webgpuTexture;
+    wgpu::TextureView _defaultView;
     std::string _name;
 };
 } // namespace Graphic::Resource

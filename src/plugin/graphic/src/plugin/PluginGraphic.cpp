@@ -9,6 +9,8 @@ void Graphic::Plugin::Bind()
 
     RegisterResource(Graphic::Resource::Context());
     RegisterResource(Graphic::Resource::GraphicSettings());
+    RegisterResource(Graphic::Resource::ShaderContainer());
+    RegisterResource(Graphic::Resource::TextureContainer());
 
     RegisterSystems<RenderingPipeline::Setup>(System::CreateInstance, System::CreateSurface, System::CreateAdapter,
                                               System::ReleaseInstance, System::RequestCapabilities,

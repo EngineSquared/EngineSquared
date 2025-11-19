@@ -9,9 +9,9 @@ void TextureTest(Engine::Core &core)
 
     std::string testAssetPath = std::filesystem::current_path().string() + "/assets/test_texture.png";
 
-    auto image = Graphic::Resource::Image::LoadFromFile(testAssetPath);
+    auto image = Graphic::Resource::Image(testAssetPath);
 
-    auto texture = Graphic::Resource::Texture::Create(context, testAssetPath, image);
+    Graphic::Resource::Texture texture(context, testAssetPath, image);
 
     auto data = texture.RetrieveImage(context);
 

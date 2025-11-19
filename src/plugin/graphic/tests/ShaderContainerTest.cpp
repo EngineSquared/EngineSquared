@@ -98,7 +98,7 @@ auto TestShaderContainerSystem(Engine::Core &core) -> void
     EXPECT_FALSE(shaderContainer.Contains(shader1Id));
     EXPECT_TRUE(shaderContainer.Contains(shader2Id));
 
-    EXPECT_THROW(shaderContainer.Get(shader1Id), Object::ResourceManagerError);
+    EXPECT_THROW((void)shaderContainer.Get(shader1Id), Object::ResourceManagerError);
 }
 
 TEST(ShaderContainerTest, GlobalRun)

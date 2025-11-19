@@ -13,6 +13,8 @@
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
+#include "resource/BindGroup.hpp"
+#include "resource/TextureContainer.hpp"
 
 // Utils
 #include "utils/GetBytesPerPixel.hpp"
