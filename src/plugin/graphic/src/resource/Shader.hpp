@@ -1,11 +1,11 @@
 #pragma once
 
+#include "resource/Context.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "utils/shader/BindGroupLayout.hpp"
 #include "utils/shader/ColorTargetState.hpp"
 #include "utils/shader/DepthStencilState.hpp"
 #include "utils/shader/VertexBufferLayout.hpp"
-#include "resource/Context.hpp"
 #include "utils/webgpu.hpp"
 #include <vector>
 
