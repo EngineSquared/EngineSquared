@@ -60,7 +60,6 @@ class Texture {
     Texture(Context &context, std::string_view name, const Image &image)
         : Texture(context, _BuildDescriptor(name, image))
     {
-        _name = std::string(name.data(), name.length());
         Write(context, image);
     }
 
