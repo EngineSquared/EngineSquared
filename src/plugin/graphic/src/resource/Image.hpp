@@ -6,12 +6,12 @@
 #include "lodepng.h"
 #include "stb_image.h"
 #include <filesystem>
+#include <functional>
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 #include <string>
 #include <string_view>
 #include <vector>
-#include <functional>
 
 namespace Graphic::Resource {
 
