@@ -43,6 +43,7 @@
 #include "exception/UnsetAttributeTextureDescriptor.hpp"
 #include "exception/UnsupportedTextureFormatError.hpp"
 #include "exception/VertexAttributeOverlappingError.hpp"
+#include "exception/BindGroupCreationError.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"

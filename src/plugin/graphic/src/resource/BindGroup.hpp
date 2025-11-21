@@ -8,6 +8,7 @@
 #include "resource/GPUBufferManager.hpp"
 #include "resource/ShaderContainer.hpp"
 #include "resource/TextureContainer.hpp"
+#include "exception/BindGroupCreationError.hpp"
 #include "utils/webgpu.hpp"
 
 namespace Graphic::Resource {
@@ -15,12 +16,14 @@ namespace Graphic::Resource {
 class BindGroup {
   public:
     struct Asset {
-        uint32_t binding;
         enum class Type {
             Buffer,
             Sampler,
             Texture,
-        } type;
+        };
+
+        uint32_t binding;
+        Type type;
         entt::hashed_string name;
         uint64_t size; // For buffer type
     };
@@ -82,7 +85,7 @@ class BindGroup {
         auto bindGroup = deviceContext.deviceContext.GetDevice()->createBindGroup(descriptor);
 
         if (!bindGroup)
-            throw std::runtime_error("Failed to create BindGroup"); // TODO: throw a dedicated error
+            throw Exception::BindGroupCreationError("Failed to create BindGroup"); // TODO: throw a dedicated error
         return bindGroup;
     }
 

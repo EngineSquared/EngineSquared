@@ -23,10 +23,9 @@ struct Image {
 
     Image() = default;
 
-    Image(const glm::uvec2 &size, const std::function<glm::u8vec4(glm::uvec2 pos)> &callback)
+    template <typename Callback>
+    explicit Image(const glm::uvec2 &size, Callback callback) : width(size.x), height(size.y)
     {
-        this->width = size.x;
-        this->height = size.y;
         this->channels = 4;
         this->pixels.resize(size.x * size.y);
         for (uint32_t y = 0; y < size.y; ++y)
