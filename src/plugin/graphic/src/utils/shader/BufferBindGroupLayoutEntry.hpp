@@ -64,14 +64,7 @@ class BufferBindGroupLayoutEntry : public ABindGroupLayoutEntry<BufferBindGroupL
   private:
     template <typename T> void computeMinBindingSize(uint64_t &size)
     {
-        if (sizeof(T) < 16)
-        {
-            size += 16;
-        }
-        else
-        {
-            size += sizeof(T);
-        }
+        size += sizeof(T);
     }
 
     bool isTypeSet = false;

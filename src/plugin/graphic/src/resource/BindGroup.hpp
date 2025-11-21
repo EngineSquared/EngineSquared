@@ -7,6 +7,7 @@
 #include "resource/DeviceContext.hpp"
 #include "resource/ShaderContainer.hpp"
 #include "resource/TextureContainer.hpp"
+#include "resource/GPUBufferManager.hpp"
 #include "utils/webgpu.hpp"
 
 namespace Graphic::Resource {
@@ -98,7 +99,10 @@ class BindGroup {
         switch (asset.type)
         {
         case Asset::Type::Buffer: {
-            // TODO: Implement buffer binding
+            auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
+            auto &buffer = gpuBufferContainer.Get(asset.name);
+            entry.buffer = buffer->GetBuffer();
+            entry.size = asset.size;
             break;
         }
         case Asset::Type::Sampler: {
