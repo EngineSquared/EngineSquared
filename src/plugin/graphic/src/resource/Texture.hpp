@@ -50,7 +50,8 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
 };
 class Texture {
   public:
-    Texture(Context &context, const wgpu::TextureDescriptor &descriptor) : _name(std::string(descriptor.label.data, descriptor.label.length))
+    Texture(Context &context, const wgpu::TextureDescriptor &descriptor)
+        : _name(std::string(descriptor.label.data, descriptor.label.length))
     {
         _webgpuTexture = context.deviceContext.GetDevice()->createTexture(descriptor);
         _defaultView = _webgpuTexture.createView();
