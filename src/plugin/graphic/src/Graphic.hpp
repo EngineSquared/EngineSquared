@@ -5,6 +5,7 @@
 #include "resource/BindGroup.hpp"
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
+#include "resource/GPUBufferManager.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
