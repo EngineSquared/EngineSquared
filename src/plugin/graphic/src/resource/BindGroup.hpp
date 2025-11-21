@@ -5,9 +5,9 @@
 
 #include "core/Core.hpp"
 #include "resource/DeviceContext.hpp"
+#include "resource/GPUBufferManager.hpp"
 #include "resource/ShaderContainer.hpp"
 #include "resource/TextureContainer.hpp"
-#include "resource/GPUBufferManager.hpp"
 #include "utils/webgpu.hpp"
 
 namespace Graphic::Resource {
