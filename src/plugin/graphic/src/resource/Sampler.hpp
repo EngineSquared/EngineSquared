@@ -32,6 +32,8 @@ class Sampler {
 
     virtual ~Sampler() { _sampler.release(); }
 
+    const wgpu::Sampler &getSampler() const noexcept { return _sampler; }
+
   private:
     wgpu::Sampler _sampler;
 };
