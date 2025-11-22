@@ -7,14 +7,13 @@
 namespace Graphic::Resource {
 class Sampler {
   public:
-    Sampler(Engine::Core &core, const wgpu::AddressMode &addressMode = wgpu::AddressMode::ClampToEdge)
-        : _device(core.GetResource<DeviceContext>().GetDevice().value())
+    Sampler(wgpu::Device &device)
     {
-        wgpu::SamplerDescriptor samplerDesc;
+        wgpu::SamplerDescriptor samplerDesc(wgpu::Default);
 
-        samplerDesc.addressModeU = addressMode;
-        samplerDesc.addressModeV = addressMode;
-        samplerDesc.addressModeW = addressMode;
+        samplerDesc.addressModeU = wgpu::AddressMode::ClampToEdge;
+        samplerDesc.addressModeV = wgpu::AddressMode::ClampToEdge;
+        samplerDesc.addressModeW = wgpu::AddressMode::ClampToEdge;
         samplerDesc.magFilter = wgpu::FilterMode::Linear;
         samplerDesc.minFilter = wgpu::FilterMode::Linear;
         samplerDesc.mipmapFilter = wgpu::MipmapFilterMode::Linear;
@@ -23,18 +22,20 @@ class Sampler {
         samplerDesc.compare = wgpu::CompareFunction::Undefined;
         samplerDesc.maxAnisotropy = 1;
 
-        _sampler = _device.createSampler(samplerDesc);
-    }
-    Sampler(Engine::Core &core, const wgpu::SamplerDescriptor &samplerDesc)
-        : _device(core.GetResource<DeviceContext>().GetDevice().value())
-    {
-        _device.createSampler(samplerDesc);
+        _sampler = device.createSampler(samplerDesc);
     }
 
-    virtual ~Sampler() = default;
+    Sampler(wgpu::Device &device, const wgpu::SamplerDescriptor &samplerDesc)
+    {
+        _sampler = device.createSampler(samplerDesc);
+    }
+
+    virtual ~Sampler()
+    {
+        _sampler.release();
+    }
 
   private:
-    wgpu::Device &_device;
     wgpu::Sampler _sampler;
 };
 } // namespace Graphic::Resource
