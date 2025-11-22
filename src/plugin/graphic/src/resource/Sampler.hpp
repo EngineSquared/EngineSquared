@@ -30,10 +30,7 @@ class Sampler {
         _sampler = device.createSampler(samplerDesc);
     }
 
-    virtual ~Sampler()
-    {
-        _sampler.release();
-    }
+    virtual ~Sampler() { _sampler.release(); }
 
   private:
     wgpu::Sampler _sampler;
