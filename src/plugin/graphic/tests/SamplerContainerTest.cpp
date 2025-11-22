@@ -8,7 +8,8 @@ Graphic::Resource::Sampler CreateTestSampler(Engine::Core &core)
 {
     auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
 
-    if (!device.has_value()) {
+    if (!device.has_value())
+    {
         throw Object::ResourceManagerError("Device is not available in the context");
     }
 
@@ -19,10 +20,11 @@ Graphic::Resource::Sampler CreateTestSamplerWithDescriptor(Engine::Core &core)
 {
     auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
 
-    if (!device.has_value()) {
+    if (!device.has_value())
+    {
         throw Object::ResourceManagerError("Device is not available in the context");
     }
-    
+
     wgpu::SamplerDescriptor samplerDesc(wgpu::Default);
     samplerDesc.addressModeU = wgpu::AddressMode::Repeat;
     samplerDesc.addressModeV = wgpu::AddressMode::Repeat;
@@ -34,7 +36,7 @@ Graphic::Resource::Sampler CreateTestSamplerWithDescriptor(Engine::Core &core)
     samplerDesc.lodMaxClamp = 1.0f;
     samplerDesc.compare = wgpu::CompareFunction::Undefined;
     samplerDesc.maxAnisotropy = 1;
-    
+
     return Graphic::Resource::Sampler(device.value(), samplerDesc);
 }
 
@@ -64,10 +66,9 @@ auto TestSamplerContainerSystem(Engine::Core &core) -> void
     EXPECT_THROW(
         [&]() {
             auto &unused = samplerContainer.Get(sampler1Id);
-            (void)unused;
+            (void) unused;
         }(),
-        Object::ResourceManagerError
-    );
+        Object::ResourceManagerError);
 }
 
 TEST(SamplerContainerTest, GlobalRun)
