@@ -49,6 +49,26 @@ TEST(Core, Resources)
     ASSERT_EQ(core.GetResource<Res>().x, 69);
 }
 
+TEST(Core, DeleteResource)
+{
+    Core core;
+
+    struct TempRes {
+        int value;
+    };
+
+    // Register a resource
+    core.RegisterResource<TempRes>({100});
+    ASSERT_EQ(core.GetResource<TempRes>().value, 100);
+
+    // Delete the resource
+    core.DeleteResource<TempRes>();
+
+    // After deletion, the resource should no longer exist in the context
+    // Attempting to get it should throw or fail
+    ASSERT_THROW(core.GetResource<TempRes>(), std::exception);
+}
+
 class TestSchedulerA : public Scheduler::AScheduler {
   public:
     using Scheduler::AScheduler::AScheduler;
