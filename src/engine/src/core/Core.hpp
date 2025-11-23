@@ -81,7 +81,7 @@ class Core {
     template <typename TResource> TResource &GetResource();
 
     /**
-     * Get a const reference's resource.
+     * Get a const reference to a resource.
      * Resources are unique struct or class (like a singleton) that contains global informations.
      * Example: ResourceManager, TimeProvider, WindowResource, SceneManager, InputManager or NetworkManager.
      *
