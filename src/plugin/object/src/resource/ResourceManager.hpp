@@ -185,7 +185,7 @@ template <typename ResourceType> class ResourceManager {
      */
     [[nodiscard]] ResourceType &GetOrDefault(const entt::hashed_string &id)
     {
-        auto resource = cache[id];
+        auto &resource = cache[id];
 
         if (!resource)
         {
@@ -193,7 +193,7 @@ template <typename ResourceType> class ResourceManager {
                 throw ResourceManagerError(
                     fmt::format("Resource with id {} not found and no default resource is set.", id.data()));
 
-            auto defaultResource = cache[defaultResourceId.value()];
+            auto &defaultResource = cache[defaultResourceId.value()];
             if (!defaultResource)
                 throw ResourceManagerError(fmt::format("Default resource with id {} not found.",
                                                        entt::hashed_string::to_value(defaultResourceId.value())));
