@@ -11,6 +11,8 @@ template <typename TResource> inline TResource &Core::RegisterResource(TResource
 
 template <typename TResource> inline TResource &Core::GetResource() { return this->_registry->ctx().get<TResource>(); }
 
+template <typename TResource> inline const TResource &Core::GetResource() const { return this->_registry->ctx().get<TResource>(); }
+
 template <CScheduler TScheduler, typename... Args> inline TScheduler &Core::RegisterScheduler(Args &&...args)
 {
     this->_schedulers.AddScheduler<TScheduler>(*this, std::forward<Args>(args)...);

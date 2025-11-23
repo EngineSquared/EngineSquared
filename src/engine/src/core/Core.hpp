@@ -81,6 +81,16 @@ class Core {
     template <typename TResource> TResource &GetResource();
 
     /**
+     * Get a const reference's resource.
+     * Resources are unique struct or class (like a singleton) that contains global informations.
+     * Example: ResourceManager, TimeProvider, WindowResource, SceneManager, InputManager or NetworkManager.
+     *
+     * @tparam  TResource   type of the resource to get
+     * @return  const reference of the resource
+     */
+    template <typename TResource> const TResource &GetResource() const;
+
+    /**
      * Add a new scheduler to the registry.
      * A scheduler is a class that inherit from IScheduler and that will be called by the registry.
      *
