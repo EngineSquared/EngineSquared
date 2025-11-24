@@ -32,7 +32,7 @@ class EventManager {
             _events.try_emplace(typeID, std::make_shared<CallBackContainer<TEvent>>());
         }
         auto callbacks = std::any_cast<std::shared_ptr<CallBackContainer<TEvent>>>(_events[typeID]);
-        return callbacks->AddFunction(callback);
+        return callbacks->AddFunction(std::forward<TCallBack>(callback));
     }
 
     template <typename TEvent> void TriggerEvent(Engine::Core &core, const TEvent &event)
