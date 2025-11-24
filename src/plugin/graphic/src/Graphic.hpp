@@ -36,10 +36,10 @@
 #include "exception/InstanceCreationError.hpp"
 #include "exception/QueueCreationError.hpp"
 #include "exception/SurfaceCreationError.hpp"
+#include "exception/UncapturedDeviceError.hpp"
 #include "exception/UnknownFileError.hpp"
 #include "exception/UnknownFormatType.hpp"
 #include "exception/UnsetAttributeTextureDescriptor.hpp"
-#include "exception/UncapturedDeviceError.hpp"
 #include "exception/UnsupportedTextureFormatError.hpp"
 #include "exception/VertexAttributeOverlappingError.hpp"
 

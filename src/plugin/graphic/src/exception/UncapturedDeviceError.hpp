@@ -9,4 +9,3 @@ class UncapturedDeviceError : public std::runtime_error {
 };
 
 } // namespace Graphic::Exception
-

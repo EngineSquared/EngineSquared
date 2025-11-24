@@ -101,10 +101,9 @@ auto TestShaderContainerSystem(Engine::Core &core) -> void
     EXPECT_THROW(
         [&]() {
             auto &unused = shaderContainer.Get(shader1Id);
-            (void)unused;
+            (void) unused;
         }(),
-        Object::ResourceManagerError
-    );
+        Object::ResourceManagerError);
 }
 
 TEST(ShaderContainerTest, GlobalRun)

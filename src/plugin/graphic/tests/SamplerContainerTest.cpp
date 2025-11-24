@@ -77,8 +77,8 @@ TEST(SamplerContainerTest, GlobalRun)
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &c) {
         c.GetResource<Graphic::Resource::GraphicSettings>()
             .SetWindowSystem(Graphic::Resource::WindowSystem::None)
-            .SetOnErrorCallback([](WGPUDevice const *, WGPUErrorType type, WGPUStringView message,
-                                   WGPU_NULLABLE void *, WGPU_NULLABLE void *) {
+            .SetOnErrorCallback([](WGPUDevice const *, WGPUErrorType type, WGPUStringView message, WGPU_NULLABLE void *,
+                                   WGPU_NULLABLE void *) {
                 Log::Error(fmt::format("Custom uncaptured device error: type {:x} ({})", static_cast<uint32_t>(type),
                                        std::string(message.data, message.length)));
                 throw Graphic::Exception::UncapturedDeviceError("Custom uncaptured device error occurred");
