@@ -7,10 +7,6 @@
 #include "FunctionContainer.hpp"
 #include "core/Core.hpp"
 
-template <typename TEventCallback, typename TEvent>
-concept CEventCallback = requires(TEventCallback callback, const TEvent &&event, Engine::Core core) {
-    { callback(core, event) } -> std::same_as<void>;
-};
 
 namespace Event::Resource {
 class EventManager {
@@ -24,7 +20,7 @@ class EventManager {
     EventManager() = default;
     ~EventManager() = default;
 
-    template <typename TEvent, CEventCallback<TEvent> TCallBack> EventCallbackID RegisterCallback(TCallBack &&callback)
+    template <typename TEvent, typename TCallBack> EventCallbackID RegisterCallback(TCallBack &&callback)
     {
         EventTypeID typeID = _GetId<TEvent>();
         if (!_events.contains(typeID))
