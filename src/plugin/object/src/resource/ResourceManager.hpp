@@ -41,6 +41,12 @@ template <typename ResourceType> class ResourceManager {
 
     ~ResourceManager() = default;
 
+    ResourceManager(const ResourceManager &) = delete;
+    ResourceManager &operator=(const ResourceManager &) = delete;
+
+    ResourceManager(ResourceManager &&) noexcept = default;
+    ResourceManager &operator=(ResourceManager &&) noexcept = default;
+
     /**
      * @brief Adds a resource to the manager.
      *
@@ -167,12 +173,15 @@ template <typename ResourceType> class ResourceManager {
      *
      * @param id  id of the resource to use as default
      */
-    void SetDefault(const entt::hashed_string &id)
+    void SetDefault(ResourceType &&resource)
     {
-        if (!cache.contains(id))
-            throw ResourceManagerError(fmt::format("Cannot set default: Resource with id {} not found.", id.data()));
+        defaultResource = std::move(resource);
+    }
 
-        defaultResourceId = id;
+    template <typename... Args>
+    void SetDefault(Args &&...args)
+    {
+        defaultResource = ResourceType(std::forward<Args>(args)...);
     }
 
     /**
@@ -185,23 +194,16 @@ template <typename ResourceType> class ResourceManager {
      */
     [[nodiscard]] ResourceType &GetOrDefault(const entt::hashed_string &id)
     {
-        auto &resource = cache[id];
+        auto resource = cache[id];
 
-        if (!resource)
-        {
-            if (!defaultResourceId.has_value())
-                throw ResourceManagerError(
-                    fmt::format("Resource with id {} not found and no default resource is set.", id.data()));
+        if (resource)
+            return *resource;
 
-            auto &defaultResource = cache[defaultResourceId.value()];
-            if (!defaultResource)
-                throw ResourceManagerError(fmt::format("Default resource with id {} not found.",
-                                                       entt::hashed_string::to_value(defaultResourceId.value())));
+        if (!defaultResource.has_value())
+            throw ResourceManagerError(
+                fmt::format("Resource with id {} not found and no default resource is set.", id.data()));
 
-            return *defaultResource;
-        }
-
-        return *resource;
+        return *defaultResource;
     }
 
     /**
@@ -214,23 +216,16 @@ template <typename ResourceType> class ResourceManager {
      */
     [[nodiscard]] const ResourceType &GetOrDefault(const entt::hashed_string &id) const
     {
-        auto &resource = cache[id];
+        const auto &resource = cache[id];
 
-        if (!resource)
-        {
-            if (!defaultResourceId.has_value())
-                throw ResourceManagerError(
-                    fmt::format("Resource with id {} not found and no default resource is set.", id.data()));
+        if (resource)
+            return *resource;
 
-            auto &defaultResource = cache[defaultResourceId.value()];
-            if (!defaultResource)
-                throw ResourceManagerError(fmt::format("Default resource with id {} not found.",
-                                                       entt::hashed_string::to_value(defaultResourceId.value())));
+        if (!defaultResource.has_value())
+            throw ResourceManagerError(
+                fmt::format("Resource with id {} not found and no default resource is set.", id.data()));
 
-            return *defaultResource;
-        }
-
-        return *resource;
+        return *defaultResource;
     }
 
     /**
@@ -238,11 +233,11 @@ template <typename ResourceType> class ResourceManager {
      *
      * @return true if a default resource is set, false otherwise
      */
-    [[nodiscard]] bool HasDefault() const { return defaultResourceId.has_value(); }
+    [[nodiscard]] bool HasDefault() const { return defaultResource.has_value(); }
 
   private:
     entt::resource_cache<ResourceType, ResourceLoader> cache{};
-    std::optional<entt::hashed_string::hash_type> defaultResourceId{};
+    std::optional<ResourceType> defaultResource = std::nullopt;
 };
 
 } // namespace Object::Resource
