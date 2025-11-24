@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "resource/EventManager.hpp"
 #include "core/Core.hpp"
+#include "resource/EventManager.hpp"
 
 TEST(Event, casual_use_of_EventManager)
 {
