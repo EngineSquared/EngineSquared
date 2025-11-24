@@ -1,5 +1,6 @@
 #include "Logger.hpp"
 #include "core/Core.hpp"
+#include "exception/MissingResourceError.hpp"
 #include "system/WrappedSystem.hpp"
 
 namespace Engine {
@@ -9,7 +10,17 @@ template <typename TResource> inline TResource &Core::RegisterResource(TResource
     return this->_registry->ctx().insert_or_assign<TResource>(std::forward<TResource>(resource));
 }
 
-template <typename TResource> inline TResource &Core::GetResource() { return this->_registry->ctx().get<TResource>(); }
+template <typename TResource> inline TResource &Core::GetResource()
+{
+    if (!this->_registry->ctx().contains<TResource>())
+    {
+        throw Exception::MissingResourceError(
+            fmt::format("Resource not found in the core registry: {}", typeid(TResource).name()));
+    }
+    return this->_registry->ctx().get<TResource>();
+}
+
+template <typename TResource> inline void Core::DeleteResource() { this->_registry->ctx().erase<TResource>(); }
 
 template <CScheduler TScheduler, typename... Args> inline TScheduler &Core::RegisterScheduler(Args &&...args)
 {

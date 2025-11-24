@@ -49,6 +49,23 @@ TEST(Core, Resources)
     ASSERT_EQ(core.GetResource<Res>().x, 69);
 }
 
+TEST(Core, DeleteResource)
+{
+    Core core;
+
+    struct TempRes {
+        int value;
+    };
+
+    core.RegisterResource<TempRes>({100});
+
+    ASSERT_EQ(core.GetResource<TempRes>().value, 100);
+
+    core.DeleteResource<TempRes>();
+
+    ASSERT_THROW(core.GetResource<TempRes>(), std::exception);
+}
+
 class TestSchedulerA : public Scheduler::AScheduler {
   public:
     using Scheduler::AScheduler::AScheduler;

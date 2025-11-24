@@ -23,6 +23,7 @@ target("EngineSquaredCore")
     add_headerfiles("src/(scheduler/*.hpp)")
     add_headerfiles("src/(scheduler/*.inl)")
     add_headerfiles("src/(system/*.hpp)")
+    add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/*.hpp")
 
     add_includedirs("src", { public = true })
