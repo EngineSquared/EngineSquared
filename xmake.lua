@@ -36,6 +36,7 @@ includes("src/plugin/physics/xmake.lua")
 includes("src/utils/function-container/xmake.lua")
 includes("src/utils/log/xmake.lua")
 includes("src/utils/tools/xmake.lua")
+includes("src/plugin/event/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
