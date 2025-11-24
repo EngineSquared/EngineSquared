@@ -24,7 +24,12 @@ Graphic::Resource::Sampler::Sampler(const wgpu::Device &device, const wgpu::Samp
 {
 }
 
-Graphic::Resource::Sampler::~Sampler() { _sampler.release(); }
+Graphic::Resource::Sampler::~Sampler()
+{
+    if (_sampler != nullptr) {
+        _sampler.release();
+    }
+}
 
 Graphic::Resource::Sampler::Sampler(Sampler &&other) noexcept
     : _sampler(std::exchange(other._sampler, {}))
@@ -34,7 +39,9 @@ Graphic::Resource::Sampler::Sampler(Sampler &&other) noexcept
 Graphic::Resource::Sampler &Graphic::Resource::Sampler::operator=(Sampler &&other) noexcept
 {
     if (this != &other) {
-        _sampler.release();
+        if (_sampler != nullptr) {
+            _sampler.release();
+        }
         _sampler = std::exchange(other._sampler, {});
     }
     return *this;
