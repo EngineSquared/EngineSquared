@@ -89,6 +89,14 @@ class Core {
      * @return  const reference of the resource
      */
     template <typename TResource> const TResource &GetResource() const;
+  
+    /**
+     * Delete a resource from the core.
+     * Removes a previously registered resource from the registry context.
+     *
+     * @tparam  TResource   type of the resource to delete
+     */
+    template <typename TResource> void DeleteResource();
 
     /**
      * Add a new scheduler to the registry.
