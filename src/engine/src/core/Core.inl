@@ -7,7 +7,7 @@ namespace Engine {
 
 template <typename TResource> inline TResource &Core::RegisterResource(TResource &&resource)
 {
-    return this->_registry->ctx().emplace<TResource>(std::forward<TResource>(resource));
+    return this->_registry->ctx().insert_or_assign<TResource>(std::forward<TResource>(resource));
 }
 
 template <typename TResource> inline TResource &Core::GetResource()
