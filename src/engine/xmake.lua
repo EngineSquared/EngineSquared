@@ -1,7 +1,5 @@
 add_rules("mode.debug", "mode.release")
 
-add_requires("entt", "fmt", "spdlog", "gtest")
-
 includes("../utils/log/xmake.lua")
 includes("../utils/function-container/xmake.lua")
 
