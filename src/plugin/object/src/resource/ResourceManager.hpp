@@ -173,13 +173,9 @@ template <typename ResourceType> class ResourceManager {
      *
      * @param id  id of the resource to use as default
      */
-    void SetDefault(ResourceType &&resource)
-    {
-        defaultResource = std::move(resource);
-    }
+    void SetDefault(ResourceType &&resource) { defaultResource = std::move(resource); }
 
-    template <typename... Args>
-    void SetDefault(Args &&...args)
+    template <typename... Args> void SetDefault(Args &&...args)
     {
         defaultResource = ResourceType(std::forward<Args>(args)...);
     }

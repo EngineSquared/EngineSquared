@@ -77,7 +77,6 @@ TEST(ResourceManagerTest, SetDefaultAndGetOrDefault)
     EXPECT_EQ(resource_manager.Get(resourceId).value, 200);
 }
 
-
 TEST(ResourceManagerTest, GetOrDefaultWithoutDefaultSet)
 {
     struct TestResource {
@@ -96,7 +95,7 @@ TEST(ResourceManagerTest, GetOrDefaultWithoutDefaultSet)
     entt::hashed_string missingId = "missing";
 
     // GetOrDefault without a default set should throw
-    EXPECT_THROW((void)resource_manager.GetOrDefault(missingId), Object::ResourceManagerError);
+    EXPECT_THROW((void) resource_manager.GetOrDefault(missingId), Object::ResourceManagerError);
 }
 
 TEST(ResourceManagerTest, GetOrDefaultConst)
