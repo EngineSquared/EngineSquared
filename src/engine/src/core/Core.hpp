@@ -89,7 +89,7 @@ class Core {
      * @return  const reference of the resource
      */
     template <typename TResource> const TResource &GetResource() const;
-  
+
     /**
      * Delete a resource from the core.
      * Removes a previously registered resource from the registry context.
