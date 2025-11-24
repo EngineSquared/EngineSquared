@@ -7,7 +7,6 @@
 #include "FunctionContainer.hpp"
 #include "core/Core.hpp"
 
-
 namespace Event::Resource {
 class EventManager {
   public:
