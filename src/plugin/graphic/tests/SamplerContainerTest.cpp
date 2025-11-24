@@ -54,9 +54,6 @@ auto TestSamplerContainerSystem(Engine::Core &core) -> void
     EXPECT_TRUE(samplerContainer.Contains(sampler1Id));
     EXPECT_TRUE(samplerContainer.Contains(sampler2Id));
 
-    auto &retrievedSampler1 = samplerContainer.Get(sampler1Id);
-    auto &retrievedSampler2 = samplerContainer.Get(sampler2Id);
-
     samplerContainer.Remove(sampler1Id);
     EXPECT_FALSE(samplerContainer.Contains(sampler1Id));
     EXPECT_TRUE(samplerContainer.Contains(sampler2Id));
@@ -79,11 +76,11 @@ TEST(SamplerContainerTest, GlobalRun)
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &c) {
         c.GetResource<Graphic::Resource::GraphicSettings>()
             .SetWindowSystem(Graphic::Resource::WindowSystem::None)
-            .SetOnErrorCallback([](WGPUDevice const *device, WGPUErrorType type, WGPUStringView message,
-                                   WGPU_NULLABLE void *userdata1, WGPU_NULLABLE void *userdata2) {
+            .SetOnErrorCallback([](WGPUDevice const *, WGPUErrorType type, WGPUStringView message,
+                                   WGPU_NULLABLE void *, WGPU_NULLABLE void *) {
                 Log::Error(fmt::format("Custom uncaptured device error: type {:x} ({})", static_cast<uint32_t>(type),
                                        std::string(message.data, message.length)));
-                throw std::runtime_error("Custom uncaptured device error occurred");
+                throw Graphic::Exception::UncapturedDeviceError("Custom uncaptured device error occurred");
             })
             .GetWantedLimits()
             .maxBindGroups = 8;

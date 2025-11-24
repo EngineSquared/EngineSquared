@@ -7,9 +7,16 @@
 namespace Graphic::Resource {
 class Sampler {
   public:
-    Sampler(wgpu::Device &device);
-    Sampler(wgpu::Device &device, const wgpu::SamplerDescriptor &samplerDesc);
+    explicit Sampler(const wgpu::Device &device);
+    Sampler(const wgpu::Device &device, const wgpu::SamplerDescriptor &samplerDesc);
+
     virtual ~Sampler();
+
+    Sampler(const Sampler &) = delete;
+    Sampler &operator=(const Sampler &) = delete;
+
+    Sampler(Sampler &&other) noexcept;
+    Sampler &operator=(Sampler &&other) noexcept;
 
     const wgpu::Sampler &getSampler() const noexcept;
 

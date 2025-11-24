@@ -1,6 +1,7 @@
 #include "Sampler.hpp"
+#include <utility>
 
-Graphic::Resource::Sampler::Sampler(wgpu::Device &device)
+Graphic::Resource::Sampler::Sampler(const wgpu::Device &device)
 {
     wgpu::SamplerDescriptor samplerDesc(wgpu::Default);
 
@@ -18,12 +19,26 @@ Graphic::Resource::Sampler::Sampler(wgpu::Device &device)
     _sampler = device.createSampler(samplerDesc);
 }
 
-Graphic::Resource::Sampler::Sampler(wgpu::Device &device, const wgpu::SamplerDescriptor &samplerDesc)
+Graphic::Resource::Sampler::Sampler(const wgpu::Device &device, const wgpu::SamplerDescriptor &samplerDesc)
+ : _sampler(device.createSampler(samplerDesc))
 {
-    _sampler = device.createSampler(samplerDesc);
 }
 
 Graphic::Resource::Sampler::~Sampler() { _sampler.release(); }
+
+Graphic::Resource::Sampler::Sampler(Sampler &&other) noexcept
+    : _sampler(std::exchange(other._sampler, {}))
+{
+}
+
+Graphic::Resource::Sampler &Graphic::Resource::Sampler::operator=(Sampler &&other) noexcept
+{
+    if (this != &other) {
+        _sampler.release();
+        _sampler = std::exchange(other._sampler, {});
+    }
+    return *this;
+}
 
 const wgpu::Sampler &Graphic::Resource::Sampler::getSampler() const noexcept
 {
