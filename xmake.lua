@@ -5,20 +5,23 @@ UTILS_GROUP_NAME = "Utils"
 
 add_rules("mode.debug", "mode.release")
 add_requires(
-    "entt",
-    "gtest",
-    "spdlog",
-    "tinyobjloader",
-    "glm >=1.0.1",
-    "glfw >=3.4",
-    "fmt",
-    "stb",
-    "joltphysics",
-    "miniaudio",
-    "lodepng")
-add_requires("wgpu-native ^24.0.0")
-add_requires("glfw3webgpu v1.3.0-alpha", {debug = is_mode("debug")})
-add_requires("rmlui >=6.0", { configs = { transform = true } })
+    "entt v3.15.0",
+    "gtest v1.17.0",
+    "spdlog v1.16.0",
+    "tinyobjloader v2.0.0rc13",
+    "glm 1.0.1",
+    "glfw 3.4",
+    "fmt 12.1.0",
+    "stb 2025.03.14",
+    "joltphysics v5.4.0",
+    "miniaudio 0.11.23",
+    "lodepng 2025.05.06",
+    "wgpu-native ^24.0.0",
+    "glfw3webgpu v1.3.0-alpha",
+    { debug = is_mode("debug") }
+)
+add_requires("rmlui 6.0", { configs = { transform = true }, debug = is_mode("debug") })
+
 
 set_languages("c++20")
 
