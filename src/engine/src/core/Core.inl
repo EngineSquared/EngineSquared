@@ -1,7 +1,7 @@
 #include "Logger.hpp"
 #include "core/Core.hpp"
-#include "system/WrappedSystem.hpp"
 #include "exception/MissingResourceError.hpp"
+#include "system/WrappedSystem.hpp"
 
 namespace Engine {
 
@@ -10,8 +10,10 @@ template <typename TResource> inline TResource &Core::RegisterResource(TResource
     return this->_registry->ctx().emplace<TResource>(std::forward<TResource>(resource));
 }
 
-template <typename TResource> inline TResource &Core::GetResource() {
-    if (!this->_registry->ctx().contains<TResource>()) {
+template <typename TResource> inline TResource &Core::GetResource()
+{
+    if (!this->_registry->ctx().contains<TResource>())
+    {
         throw Exception::MissingResourceError(
             fmt::format("Resource not found in the core registry: {}", typeid(TResource).name()));
     }
