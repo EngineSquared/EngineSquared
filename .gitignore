@@ -10,6 +10,8 @@ build/
 docs/
 .Test/
 *.spv
+.clangd
+compile_commands.json
 
 # sonar
 .sonarlint/*
