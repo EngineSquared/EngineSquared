@@ -1,7 +1,5 @@
 add_rules("mode.debug", "mode.release")
 
-add_requires("entt", "fmt", "spdlog", "gtest")
-
 includes("../utils/log/xmake.lua")
 includes("../utils/function-container/xmake.lua")
 
@@ -25,6 +23,7 @@ target("EngineSquaredCore")
     add_headerfiles("src/(scheduler/*.hpp)")
     add_headerfiles("src/(scheduler/*.inl)")
     add_headerfiles("src/(system/*.hpp)")
+    add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/*.hpp")
 
     add_includedirs("src", { public = true })
