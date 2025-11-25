@@ -159,7 +159,7 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
                                         {
                                             {0, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0            },
                                             {1, Graphic::Resource::BindGroup::Asset::Type::Buffer,
-                                             entt::hashed_string("bindgroup_buffer_asset"),                    sizeof(float)}
+                                             entt::hashed_string{"bindgroup_buffer_asset"},                    sizeof(float)}
     });
 }
 
