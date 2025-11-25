@@ -155,11 +155,11 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
         gpuBuffers.Get(bufferId)->Create(core);
     }
 
-    return Graphic::Resource::BindGroup(core, shaderId, 0,
-                                        {
-                                            {0, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0            },
-                                            {1, Graphic::Resource::BindGroup::Asset::Type::Buffer, bufferId,
-                                             sizeof(float)}
+    return Graphic::Resource::BindGroup(
+        core, shaderId, 0,
+        {
+            {0, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0            },
+            {1, Graphic::Resource::BindGroup::Asset::Type::Buffer,  bufferId,  sizeof(float)}
     });
 }
 
