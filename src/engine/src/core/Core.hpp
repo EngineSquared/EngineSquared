@@ -81,6 +81,14 @@ class Core {
     template <typename TResource> TResource &GetResource();
 
     /**
+     * Delete a resource from the core.
+     * Removes a previously registered resource from the registry context.
+     *
+     * @tparam  TResource   type of the resource to delete
+     */
+    template <typename TResource> void DeleteResource();
+
+    /**
      * Add a new scheduler to the registry.
      * A scheduler is a class that inherit from IScheduler and that will be called by the registry.
      *
