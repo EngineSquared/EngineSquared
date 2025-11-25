@@ -138,6 +138,7 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
 {
     auto shaderId = entt::hashed_string("bindgroup_texture_shader");
     auto textureId = entt::hashed_string("bindgroup_texture_asset");
+    auto bufferId = entt::hashed_string("bindgroup_buffer_asset");
 
     core.GetResource<Graphic::Resource::ShaderContainer>().Add(shaderId, CreateShader(core));
 
@@ -149,7 +150,6 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
     }
 
     { // Create buffer asset
-        auto bufferId = entt::hashed_string("bindgroup_buffer_asset");
         auto &gpuBuffers = core.GetResource<Graphic::Resource::GPUBufferContainer>();
         gpuBuffers.Add(bufferId, std::make_unique<ArrayOfFloatGPUBuffer>(std::vector<float>{0.5f}));
         gpuBuffers.Get(bufferId)->Create(core);
@@ -158,8 +158,8 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
     return Graphic::Resource::BindGroup(core, shaderId, 0,
                                         {
                                             {0, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0            },
-                                            {1, Graphic::Resource::BindGroup::Asset::Type::Buffer,
-                                             entt::hashed_string{"bindgroup_buffer_asset"},                    sizeof(float)}
+                                            {1, Graphic::Resource::BindGroup::Asset::Type::Buffer, bufferId,
+                                             sizeof(float)}
     });
 }
 
