@@ -16,6 +16,8 @@
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
+#include "resource/Sampler.hpp"
+#include "resource/SamplerContainer.hpp"
 
 // Utils
 #include "utils/GetBytesPerPixel.hpp"

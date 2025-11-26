@@ -12,6 +12,8 @@ const std::string bindGroupShaderSource = R"(
 @group(0) @binding(0) var testTexture: texture_2d<f32>;
 // Buffer
 @group(0) @binding(1) var<storage, read> testBuffer: array<f32>;
+// Sampler
+@group(0) @binding(2) var testSampler: sampler;
 
 struct VertexOutput {
   @builtin(position) position: vec4f,
@@ -26,7 +28,7 @@ fn vs_main(@location(0) position: vec3f) -> VertexOutput {
 
 @fragment
 fn fs_main(input: VertexOutput) -> @location(0) vec4f {
-    let texColor = textureLoad(testTexture, vec2i(0, 0), 0);
+    let texColor = textureSample(testTexture, testSampler, vec2f(0.0, 0.0));
     let bufferValue = testBuffer[0];
     return vec4f(texColor.r + bufferValue, texColor.g, texColor.b, texColor.a);
 }
@@ -97,7 +99,11 @@ Graphic::Resource::Shader CreateShader(Engine::Core &core)
                                              .setMinBindingSize<float>()
                                              .setType(wgpu::BufferBindingType::ReadOnlyStorage)
                                              .setVisibility(wgpu::ShaderStage::Fragment)
-                                             .setBinding(1));
+                                             .setBinding(1))
+                               .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("SamplerEntry")
+                                             .setSamplerType(wgpu::SamplerBindingType::Filtering)
+                                             .setVisibility(wgpu::ShaderStage::Fragment)
+                                             .setBinding(2));
 
     auto colorOutput = Graphic::Utils::ColorTargetState("Color").setFormat(wgpu::TextureFormat::BGRA8Unorm);
     auto depthState = Graphic::Utils::DepthStencilState("Depth")
@@ -139,6 +145,7 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
     auto shaderId = entt::hashed_string("bindgroup_texture_shader");
     auto textureId = entt::hashed_string("bindgroup_texture_asset");
     auto bufferId = entt::hashed_string("bindgroup_buffer_asset");
+    auto samplerId = entt::hashed_string("bindgroup_sampler_asset");
 
     core.GetResource<Graphic::Resource::ShaderContainer>().Add(shaderId, CreateShader(core));
 
@@ -154,12 +161,18 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
         gpuBuffers.Add(bufferId, std::make_unique<ArrayOfFloatGPUBuffer>(std::vector<float>{0.5f}));
         gpuBuffers.Get(bufferId)->Create(core);
     }
+    { // Create sampler asset
+        auto &samplers = core.GetResource<Graphic::Resource::SamplerContainer>();
+        auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice().value();
+        samplers.Add(samplerId, Graphic::Resource::Sampler(device));
+    }
 
     return Graphic::Resource::BindGroup(
         core, shaderId, 0,
         {
             {0, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0            },
-            {1, Graphic::Resource::BindGroup::Asset::Type::Buffer,  bufferId,  sizeof(float)}
+            {1, Graphic::Resource::BindGroup::Asset::Type::Buffer,  bufferId,  sizeof(float)},
+            {2, Graphic::Resource::BindGroup::Asset::Type::Sampler, samplerId, 0            }
     });
 }
 
@@ -205,6 +218,7 @@ TEST(BindGroupTest, RefreshUpdatesTextureBindings)
         auto &context = core.GetResource<Graphic::Resource::Context>();
         auto initialView = bindGroup.GetEntries().front().textureView;
 
+        textures.Remove(textureId);
         textures.Add(
             textureId, context, "BindGroupTextureB",
             Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(200, 100, 50, 255); }));
@@ -233,6 +247,7 @@ TEST(BindGroupTest, RefreshUpdatesBufferBindings)
         auto &gpuBuffers = core.GetResource<Graphic::Resource::GPUBufferContainer>();
         auto initialBuffer = gpuBuffers.Get(bufferId)->GetBuffer();
 
+        gpuBuffers.Remove(bufferId);
         gpuBuffers.Add(bufferId, std::make_unique<ArrayOfFloatGPUBuffer>(std::vector<float>{1.0f}));
         gpuBuffers.Get(bufferId)->Create(core);
         auto updatedBuffer = gpuBuffers.Get(bufferId)->GetBuffer();
@@ -241,6 +256,34 @@ TEST(BindGroupTest, RefreshUpdatesBufferBindings)
         bindGroup.Refresh(core);
 
         EXPECT_EQ(bindGroup.GetEntries().at(1).buffer, updatedBuffer);
+    });
+
+    EXPECT_NO_THROW(core.RunSystems());
+}
+
+TEST(BindGroupTest, RefreshUpdatesSamplerBindings)
+{
+    Engine::Core core;
+    core.AddPlugins<Graphic::Plugin>();
+
+    core.RegisterSystem<RenderingPipeline::Init>(ConfigureHeadlessGraphics, ThrowErrorIfGraphicalErrorHappened);
+
+    core.RegisterSystem([](Engine::Core &core) {
+        auto bindGroup = CreateBindGroup(core);
+
+        auto samplerId = entt::hashed_string("bindgroup_sampler_asset");
+        auto &samplers = core.GetResource<Graphic::Resource::SamplerContainer>();
+        auto initialSampler = bindGroup.GetEntries().at(2).sampler;
+
+        auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice().value();
+        samplers.Remove(samplerId);
+        samplers.Add(samplerId, Graphic::Resource::Sampler(device));
+        auto updatedSampler = samplers.Get(samplerId).getSampler();
+        EXPECT_NE(initialSampler, updatedSampler);
+
+        bindGroup.Refresh(core);
+
+        EXPECT_EQ(bindGroup.GetEntries().at(2).sampler, updatedSampler);
     });
 
     EXPECT_NO_THROW(core.RunSystems());
