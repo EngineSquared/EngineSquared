@@ -202,7 +202,7 @@ TEST(BindGroupTest, CreatesEntriesForTextureAssets)
         EXPECT_EQ(entries.at(2).binding, 2u);
         EXPECT_EQ(entries.at(2).sampler, core.GetResource<Graphic::Resource::SamplerContainer>()
                                              .Get(entt::hashed_string("bindgroup_sampler_asset"))
-                                             .getSampler());
+                                             .GetSampler());
         EXPECT_TRUE(bindGroup.GetBindGroup());
     });
 
@@ -291,7 +291,7 @@ TEST(BindGroupTest, RefreshUpdatesSamplerBindings)
             samplers.Remove(samplerId);
             samplers.Add(samplerId, std::move(newSampler));
         }
-        auto &updatedSampler = samplers.Get(samplerId).getSampler();
+        auto &updatedSampler = samplers.Get(samplerId).GetSampler();
         EXPECT_NE(bindGroup.GetEntries().at(2).sampler, updatedSampler);
 
         bindGroup.Refresh(core);

@@ -18,7 +18,7 @@ class Sampler {
     Sampler(Sampler &&other) noexcept;
     Sampler &operator=(Sampler &&other) noexcept;
 
-    const wgpu::Sampler &getSampler() const noexcept;
+    const wgpu::Sampler &GetSampler() const noexcept;
 
   private:
     wgpu::Sampler _sampler;
