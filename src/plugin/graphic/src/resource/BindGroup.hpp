@@ -121,8 +121,7 @@ class BindGroup {
             entry.textureView = texture.GetDefaultView();
             break;
         }
-        default:
-            throw Exception::BindGroupCreationError("Unexpected Asset::Type value in _CreateBindGroupEntry");
+        default: throw Exception::BindGroupCreationError("Unexpected Asset::Type value in _CreateBindGroupEntry");
         }
 
         return entry;
