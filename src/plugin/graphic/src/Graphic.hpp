@@ -10,14 +10,14 @@
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
 #include "resource/PointGPUBuffer.hpp"
+#include "resource/Sampler.hpp"
+#include "resource/SamplerContainer.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderContainer.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
-#include "resource/Sampler.hpp"
-#include "resource/SamplerContainer.hpp"
 
 // Utils
 #include "utils/GetBytesPerPixel.hpp"
