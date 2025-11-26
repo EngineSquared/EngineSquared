@@ -85,7 +85,7 @@ class BindGroup {
         auto bindGroup = deviceContext.deviceContext.GetDevice()->createBindGroup(descriptor);
 
         if (!bindGroup)
-            throw Exception::BindGroupCreationError("Failed to create BindGroup"); // TODO: throw a dedicated error
+            throw Exception::BindGroupCreationError("Failed to create BindGroup");
         return bindGroup;
     }
 

@@ -197,6 +197,9 @@ TEST(BindGroupTest, CreatesEntriesForTextureAssets)
         EXPECT_EQ(entries.at(1).buffer, core.GetResource<Graphic::Resource::GPUBufferContainer>()
                                             .Get(entt::hashed_string("bindgroup_buffer_asset"))
                                             ->GetBuffer());
+        EXPECT_EQ(entries.at(2).binding, 2u);
+        EXPECT_EQ(entries.at(2).sampler, core.GetResource<Graphic::Resource::SamplerContainer>()
+                                             .Get(entt::hashed_string("bindgroup_sampler_asset")).getSampler());
         EXPECT_TRUE(bindGroup.GetBindGroup());
     });
 
@@ -220,14 +223,14 @@ TEST(BindGroupTest, RefreshUpdatesTextureBindings)
 
         textures.Remove(textureId);
         textures.Add(
-            textureId, context, "BindGroupTextureB",
+            textureId, context, "bindgroup_texture_asset_name",
             Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(200, 100, 50, 255); }));
         auto updatedView = textures.Get(textureId).GetDefaultView();
-        EXPECT_NE(initialView, updatedView);
+        EXPECT_NE(bindGroup.GetEntries().at(0).textureView, updatedView);
 
         bindGroup.Refresh(core);
 
-        EXPECT_EQ(bindGroup.GetEntries().front().textureView, updatedView);
+        EXPECT_EQ(bindGroup.GetEntries().at(0).textureView, updatedView);
     });
 
     EXPECT_NO_THROW(core.RunSystems());
@@ -245,13 +248,12 @@ TEST(BindGroupTest, RefreshUpdatesBufferBindings)
 
         auto bufferId = entt::hashed_string("bindgroup_buffer_asset");
         auto &gpuBuffers = core.GetResource<Graphic::Resource::GPUBufferContainer>();
-        auto initialBuffer = gpuBuffers.Get(bufferId)->GetBuffer();
 
         gpuBuffers.Remove(bufferId);
         gpuBuffers.Add(bufferId, std::make_unique<ArrayOfFloatGPUBuffer>(std::vector<float>{1.0f}));
         gpuBuffers.Get(bufferId)->Create(core);
         auto updatedBuffer = gpuBuffers.Get(bufferId)->GetBuffer();
-        EXPECT_NE(initialBuffer, updatedBuffer);
+        EXPECT_NE(bindGroup.GetEntries().at(1).buffer, updatedBuffer);
 
         bindGroup.Refresh(core);
 
@@ -279,7 +281,7 @@ TEST(BindGroupTest, RefreshUpdatesSamplerBindings)
         samplers.Remove(samplerId);
         samplers.Add(samplerId, Graphic::Resource::Sampler(device));
         auto updatedSampler = samplers.Get(samplerId).getSampler();
-        EXPECT_NE(initialSampler, updatedSampler);
+        EXPECT_NE(bindGroup.GetEntries().at(2).sampler, updatedSampler);
 
         bindGroup.Refresh(core);
 

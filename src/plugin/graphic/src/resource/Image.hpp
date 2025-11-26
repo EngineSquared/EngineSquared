@@ -24,9 +24,8 @@ struct Image {
     Image() = default;
 
     template <typename Callback>
-    explicit Image(const glm::uvec2 &size, Callback callback) : width(size.x), height(size.y)
+    explicit Image(const glm::uvec2 &size, Callback callback) : width(size.x), height(size.y), channels(4)
     {
-        this->channels = 4;
         this->pixels.resize(size.x * size.y);
         for (uint32_t y = 0; y < size.y; ++y)
         {
@@ -38,7 +37,7 @@ struct Image {
         }
     }
 
-    Image(const std::filesystem::path &filepath)
+    explicit Image(const std::filesystem::path &filepath)
     {
         // Should we assume the file exists before calling this function?
         if (std::filesystem::exists(filepath) == false)
