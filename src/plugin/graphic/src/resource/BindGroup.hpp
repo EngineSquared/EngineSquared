@@ -109,7 +109,9 @@ class BindGroup {
             break;
         }
         case Asset::Type::Sampler: {
-            // TODO: Implement sampler binding
+            auto &samplerContainer = core.GetResource<Graphic::Resource::SamplerContainer>();
+            auto &sampler = samplerContainer.Get(asset.name);
+            entry.sampler = sampler.getSampler();
             break;
         }
         case Asset::Type::Texture: {
