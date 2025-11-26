@@ -181,6 +181,8 @@ TEST(BindGroupTest, CreatesEntriesForTextureAssets)
     Engine::Core core;
     core.AddPlugins<Graphic::Plugin>();
 
+    core.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
+
     core.RegisterSystem<RenderingPipeline::Init>(ConfigureHeadlessGraphics, ThrowErrorIfGraphicalErrorHappened);
 
     core.RegisterSystem([](Engine::Core &core) {
@@ -189,7 +191,7 @@ TEST(BindGroupTest, CreatesEntriesForTextureAssets)
         auto bindGroup = CreateBindGroup(core);
 
         const auto &entries = bindGroup.GetEntries();
-        ASSERT_EQ(entries.size(), 2u);
+        ASSERT_EQ(entries.size(), 3u);
         EXPECT_EQ(entries.at(0).binding, 0u);
         EXPECT_EQ(entries.at(0).textureView,
                   core.GetResource<Graphic::Resource::TextureContainer>().Get(textureId).GetDefaultView());
@@ -211,6 +213,8 @@ TEST(BindGroupTest, RefreshUpdatesTextureBindings)
 {
     Engine::Core core;
     core.AddPlugins<Graphic::Plugin>();
+
+    core.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
 
     core.RegisterSystem<RenderingPipeline::Init>(ConfigureHeadlessGraphics, ThrowErrorIfGraphicalErrorHappened);
 
@@ -242,6 +246,8 @@ TEST(BindGroupTest, RefreshUpdatesBufferBindings)
     Engine::Core core;
     core.AddPlugins<Graphic::Plugin>();
 
+    core.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
+
     core.RegisterSystem<RenderingPipeline::Init>(ConfigureHeadlessGraphics, ThrowErrorIfGraphicalErrorHappened);
 
     core.RegisterSystem([](Engine::Core &core) {
@@ -269,6 +275,8 @@ TEST(BindGroupTest, RefreshUpdatesSamplerBindings)
     Engine::Core core;
     core.AddPlugins<Graphic::Plugin>();
 
+    core.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
+
     core.RegisterSystem<RenderingPipeline::Init>(ConfigureHeadlessGraphics, ThrowErrorIfGraphicalErrorHappened);
 
     core.RegisterSystem([](Engine::Core &core) {
@@ -276,12 +284,14 @@ TEST(BindGroupTest, RefreshUpdatesSamplerBindings)
 
         auto samplerId = entt::hashed_string("bindgroup_sampler_asset");
         auto &samplers = core.GetResource<Graphic::Resource::SamplerContainer>();
-        auto initialSampler = bindGroup.GetEntries().at(2).sampler;
 
         auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice().value();
-        samplers.Remove(samplerId);
-        samplers.Add(samplerId, Graphic::Resource::Sampler(device));
-        auto updatedSampler = samplers.Get(samplerId).getSampler();
+        {
+            auto newSampler = Graphic::Resource::Sampler(device);
+            samplers.Remove(samplerId);
+            samplers.Add(samplerId, std::move(newSampler));
+        }
+        auto &updatedSampler = samplers.Get(samplerId).getSampler();
         EXPECT_NE(bindGroup.GetEntries().at(2).sampler, updatedSampler);
 
         bindGroup.Refresh(core);
