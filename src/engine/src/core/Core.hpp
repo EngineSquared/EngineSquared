@@ -289,6 +289,16 @@ class Core {
      */
     void SetDefaultScheduler(std::type_index scheduler);
 
+    /**
+     * @brief Sets the error policy for all schedulers in the core engine.
+     *
+     * This function allows setting a uniform error handling policy across all
+     * schedulers managed by the core engine.
+     *
+     * @param policy The error policy to be applied to all schedulers.
+     */
+    void SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy policy);
+
   private:
     /**
      * @brief Adds a plugin of type TPlugin to the engine.

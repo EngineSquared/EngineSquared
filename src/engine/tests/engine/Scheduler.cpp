@@ -173,6 +173,24 @@ TEST(SchedulerErrorPolicy, Silent)
     ASSERT_TRUE(error.empty());
 }
 
+TEST(SchedulerErrorPolicy, Nothing)
+{
+    Core core;
+    core.RegisterResource<ResourceTest>(ResourceTest());
+    auto &data = core.GetResource<ResourceTest>().data;
+    auto &startup = core.GetScheduler<Scheduler::Startup>();
+    startup.SetErrorPolicy(Scheduler::SchedulerErrorPolicy::Nothing);
+    core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(1); });
+    core.RegisterSystem<Scheduler::Startup>([](const Core &) { throw std::runtime_error("Error"); }); // NOSONAR
+    core.RegisterSystem<Scheduler::Startup>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(3); });
+    core.RegisterSystem<Scheduler::Update>([](Core &c) { c.GetResource<ResourceTest>().data.push_back(4); });
+
+    ASSERT_THROW(core.RunSystems(), std::runtime_error);
+
+    ASSERT_EQ(data.size(), 1);
+    ASSERT_EQ(data[0], 1);
+}
+
 TEST(SchedulerErrorPolicy, LogAndContinue)
 {
     Core core;

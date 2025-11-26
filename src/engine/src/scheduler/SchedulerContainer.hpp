@@ -174,6 +174,16 @@ class SchedulerContainer {
      */
     bool Contains(std::type_index id) const;
 
+    /**
+     * @brief Sets the error policy for all schedulers in the container.
+     *
+     * This function iterates through all schedulers in the container and sets
+     * their error policy to the specified value.
+     *
+     * @param policy The error policy to be applied to all schedulers.
+     */
+    void SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy policy);
+
   private:
     void Update();
 
