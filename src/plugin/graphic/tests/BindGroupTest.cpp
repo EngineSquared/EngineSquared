@@ -199,7 +199,8 @@ TEST(BindGroupTest, CreatesEntriesForTextureAssets)
                                             ->GetBuffer());
         EXPECT_EQ(entries.at(2).binding, 2u);
         EXPECT_EQ(entries.at(2).sampler, core.GetResource<Graphic::Resource::SamplerContainer>()
-                                             .Get(entt::hashed_string("bindgroup_sampler_asset")).getSampler());
+                                             .Get(entt::hashed_string("bindgroup_sampler_asset"))
+                                             .getSampler());
         EXPECT_TRUE(bindGroup.GetBindGroup());
     });
 
