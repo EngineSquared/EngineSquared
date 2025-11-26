@@ -67,8 +67,9 @@ class BindGroup {
 
     void _RefreshBindGroup(Engine::Core &core)
     {
+        auto newBindGroup = _CreateBindGroup(core);
         _bindGroup.release();
-        _bindGroup = _CreateBindGroup(core);
+        _bindGroup = newBindGroup;
     }
 
     wgpu::BindGroup _CreateBindGroup(Engine::Core &core)

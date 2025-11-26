@@ -11,7 +11,7 @@ namespace Engine::Scheduler {
 enum class SchedulerErrorPolicy {
     /// Fail silently
     Silent,
-    // Let the exception propagate
+    /// Let the exception propagate
     Nothing,
     /// Just log the error and resume execution
     LogAndContinue,
