@@ -20,11 +20,13 @@ TEST(Event, casual_use_of_EventManager)
 
     Engine::Core core;
 
-    eventManager.TriggerEvent(core, TestEvent{42});
+    eventManager.PushEvent(TestEvent{42});
+    eventManager.ProcessEvents(core);
     EXPECT_EQ(testVar, 42);
 
     testVar = 0;
     eventManager.UnregisterCallback<TestEvent>(callbackID);
-    eventManager.TriggerEvent(core, TestEvent{42});
+    eventManager.PushEvent(TestEvent{42});
+    eventManager.ProcessEvents(core);
     EXPECT_EQ(testVar, 0);
 }
