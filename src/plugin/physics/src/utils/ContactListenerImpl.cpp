@@ -2,9 +2,9 @@
 
 #include "utils/ContactListenerImpl.hpp"
 
-#include "resource/PhysicsManager.hpp"
-#include "resource/EventManager.hpp"
 #include "event/CollisionEvent.hpp"
+#include "resource/EventManager.hpp"
+#include "resource/PhysicsManager.hpp"
 
 /**
  * EnTT divides the entity ID into two parts: the entity index and the version.
