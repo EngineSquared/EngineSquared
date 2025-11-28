@@ -8,6 +8,8 @@
 #include "Engine.hpp"
 #include "Object.hpp"
 #include "Physics.hpp"
+#include "Event.hpp"
+#include "event/CollisionEvent.hpp"
 
 #include "resource/Time.hpp"
 
@@ -91,6 +93,18 @@ void CreateMovingPlatform(Engine::Core &core)
     platform.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateKinematic());
 
     std::cout << "- Kinematic platform created with mesh" << std::endl;
+}
+
+void OnCollisionAdded(Engine::Core &core, const Physics::Event::CollisionAddedEvent &event)
+{
+    std::cout << "Collision detected between Entity " << static_cast<uint32_t>(event.entity1)
+              << " and Entity " << static_cast<uint32_t>(event.entity2) << std::endl;
+}
+
+void RegisterCollisionLoggerSystem(Engine::Core &core)
+{
+    auto &eventManager = core.GetResource<Event::Resource::EventManager>();
+    eventManager.RegisterCallback<Physics::Event::CollisionAddedEvent>(OnCollisionAdded);
 }
 
 /**
@@ -212,9 +226,10 @@ int main(void)
 
     Engine::Core core;
 
-    core.AddPlugins<Physics::Plugin>();
+    core.AddPlugins<Physics::Plugin, Event::Plugin>();
 
     core.RegisterSystem<Engine::Scheduler::Startup>(CreatePhysicsWorldSystem);
+    core.RegisterSystem<Engine::Scheduler::Startup>(RegisterCollisionLoggerSystem);
     core.RegisterSystem<Engine::Scheduler::FixedTimeUpdate>(RunningPhysicsSimulationSystem);
     core.RegisterSystem<Engine::Scheduler::Shutdown>(CleanupDemonstrationSystem);
 
