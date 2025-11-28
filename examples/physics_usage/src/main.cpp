@@ -6,9 +6,9 @@
  **************************************************************************/
 
 #include "Engine.hpp"
+#include "Event.hpp"
 #include "Object.hpp"
 #include "Physics.hpp"
-#include "Event.hpp"
 #include "event/CollisionEvent.hpp"
 
 #include "resource/Time.hpp"
@@ -97,8 +97,8 @@ void CreateMovingPlatform(Engine::Core &core)
 
 void OnCollisionAdded(Engine::Core &core, const Physics::Event::CollisionAddedEvent &event)
 {
-    std::cout << "Collision detected between Entity " << static_cast<uint32_t>(event.entity1)
-              << " and Entity " << static_cast<uint32_t>(event.entity2) << std::endl;
+    std::cout << "Collision detected between Entity " << static_cast<uint32_t>(event.entity1) << " and Entity "
+              << static_cast<uint32_t>(event.entity2) << std::endl;
 }
 
 void RegisterCollisionLoggerSystem(Engine::Core &core)
