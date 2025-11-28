@@ -226,7 +226,7 @@ int main(void)
 
     Engine::Core core;
 
-    core.AddPlugins<Physics::Plugin, Event::Plugin>();
+    core.AddPlugins<Physics::Plugin>();
 
     core.RegisterSystem<Engine::Scheduler::Startup>(CreatePhysicsWorldSystem);
     core.RegisterSystem<Engine::Scheduler::Startup>(RegisterCollisionLoggerSystem);
