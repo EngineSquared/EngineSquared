@@ -119,6 +119,7 @@ static void OnRigidBodyConstruct(entt::registry &registry, entt::entity entity)
                                                Utils::ToJoltQuat(transform->rotation), rigidBody.motionType,
                                                rigidBody.objectLayer);
 
+        bodySettings.mUserData = static_cast<uint64_t>(entity);
         bodySettings.mFriction = rigidBody.friction;
         bodySettings.mRestitution = rigidBody.restitution;
         bodySettings.mLinearDamping = rigidBody.linearDamping;
