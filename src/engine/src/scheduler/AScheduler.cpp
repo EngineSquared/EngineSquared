@@ -44,6 +44,11 @@ void AScheduler::RunSystem(const SystemBase *system, Core &core)
         return;
     }
 
+    if (_errorPolicy == SchedulerErrorPolicy::Nothing)
+    {
+        (*system)(core);
+        return;
+    }
     try
     {
         (*system)(core);

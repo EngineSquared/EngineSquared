@@ -93,3 +93,11 @@ void Engine::SchedulerContainer::Update()
     TopologicalSort();
     _dirty = false;
 }
+
+void Engine::SchedulerContainer::SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy policy)
+{
+    for (const auto &[_, scheduler] : _schedulers)
+    {
+        scheduler->SetErrorPolicy(policy);
+    }
+}
