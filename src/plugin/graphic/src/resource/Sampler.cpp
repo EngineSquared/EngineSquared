@@ -47,4 +47,4 @@ Graphic::Resource::Sampler &Graphic::Resource::Sampler::operator=(Sampler &&othe
     return *this;
 }
 
-const wgpu::Sampler &Graphic::Resource::Sampler::getSampler() const noexcept { return _sampler; }
+const wgpu::Sampler &Graphic::Resource::Sampler::GetSampler() const noexcept { return _sampler; }

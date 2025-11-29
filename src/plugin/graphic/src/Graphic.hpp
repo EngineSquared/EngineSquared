@@ -2,6 +2,7 @@
 
 // Resources
 #include "resource/AGPUBuffer.hpp"
+#include "resource/BindGroup.hpp"
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/GPUBufferManager.hpp"
@@ -9,11 +10,14 @@
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
 #include "resource/PointGPUBuffer.hpp"
+#include "resource/Sampler.hpp"
+#include "resource/SamplerContainer.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderContainer.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
+#include "resource/TextureContainer.hpp"
 
 // Utils
 #include "utils/GetBytesPerPixel.hpp"
@@ -29,6 +33,7 @@
 
 // Exceptions
 #include "exception/AdapterCreationError.hpp"
+#include "exception/BindGroupCreationError.hpp"
 #include "exception/CapabilitiesRequestError.hpp"
 #include "exception/DeviceCreationError.hpp"
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"
