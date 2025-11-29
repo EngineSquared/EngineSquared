@@ -71,14 +71,24 @@ class Core {
     template <typename TResource> TResource &RegisterResource(TResource &&resource);
 
     /**
-     * Get a reference's resource.
-     * Resources are unique struct or class (like a singleton) that contains global informations.
+     * Get a reference of a resource.
+     * Resources are unique struct or class (like a singleton) that contains global information.
      * Example: ResourceManager, TimeProvider, WindowResource, SceneManager, InputManager or NetworkManager.
      *
      * @tparam  TResource   type of the resource to get
      * @return  reference of the resource
      */
     template <typename TResource> TResource &GetResource();
+
+    /**
+     * Get a const reference of a resource.
+     * Resources are unique struct or class (like a singleton) that contains global information.
+     * Example: ResourceManager, TimeProvider, WindowResource, SceneManager, InputManager or NetworkManager.
+     *
+     * @tparam  TResource   type of the resource to get
+     * @return  const reference of the resource
+     */
+    template <typename TResource> const TResource &GetResource() const;
 
     /**
      * Delete a resource from the core.
