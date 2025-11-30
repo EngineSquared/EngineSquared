@@ -5,7 +5,6 @@
 // clang-format on
 
 // Exceptions
-#include "exception/ContactListenerError.hpp"
 #include "exception/RigidBodyError.hpp"
 
 // Components
