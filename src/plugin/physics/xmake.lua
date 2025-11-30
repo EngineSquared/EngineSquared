@@ -1,5 +1,6 @@
 includes("../../engine/xmake.lua")
 includes("../object/xmake.lua")
+includes("../event/xmake.lua")
 
 target("PluginPhysics")
     set_group(PLUGINS_GROUP_NAME)
@@ -11,6 +12,7 @@ target("PluginPhysics")
 
     add_deps("EngineSquaredCore")
     add_deps("PluginObject")
+    add_deps("PluginEvent")
 
     add_files("src/**.cpp")
 
