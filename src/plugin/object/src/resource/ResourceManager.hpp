@@ -6,6 +6,7 @@
 #include <entt/core/hashed_string.hpp>
 #include <entt/resource/cache.hpp>
 #include <fmt/format.h>
+#include <optional>
 
 namespace Object::Resource {
 
@@ -39,6 +40,12 @@ template <typename ResourceType> class ResourceManager {
     ResourceManager() = default;
 
     ~ResourceManager() = default;
+
+    ResourceManager(const ResourceManager &) = delete;
+    ResourceManager &operator=(const ResourceManager &) = delete;
+
+    ResourceManager(ResourceManager &&) noexcept = default;
+    ResourceManager &operator=(ResourceManager &&) noexcept = default;
 
     /**
      * @brief Adds a resource to the manager.
@@ -157,8 +164,76 @@ template <typename ResourceType> class ResourceManager {
      */
     [[nodiscard]] bool Contains(const entt::hashed_string &id) { return cache.contains(id); }
 
+    /**
+     * @brief Set the default resource that will be used as fallback.
+     *
+     * @note The resource with the given id must already exist in the manager.
+     *
+     * @exception ResourceManagerError if the resource with given id doesn't exist.
+     *
+     * @param id  id of the resource to use as default
+     */
+    void SetDefault(ResourceType &&resource) { defaultResource = std::move(resource); }
+
+    template <typename... Args> void SetDefault(Args &&...args)
+    {
+        defaultResource = ResourceType(std::forward<Args>(args)...);
+    }
+
+    /**
+     * @brief Get the reference to a stored resource, or the default resource if it doesn't exist.
+     *
+     * @exception ResourceManagerError if the resource with given id doesn't exist and no default is set.
+     *
+     * @param id  id of the resource to get
+     * @return the wanted resource, or the default resource if the requested one doesn't exist
+     */
+    [[nodiscard]] ResourceType &GetOrDefault(const entt::hashed_string &id)
+    {
+        auto resource = cache[id];
+
+        if (resource)
+            return *resource;
+
+        if (!defaultResource.has_value())
+            throw ResourceManagerError(
+                fmt::format("Resource with id {} not found and no default resource is set.", id.data()));
+
+        return *defaultResource;
+    }
+
+    /**
+     * @brief Get the reference to a stored resource, or the default resource if it doesn't exist.
+     *
+     * @exception ResourceManagerError if the resource with given id doesn't exist and no default is set.
+     *
+     * @param id  id of the resource to get
+     * @return the wanted resource, or the default resource if the requested one doesn't exist
+     */
+    [[nodiscard]] const ResourceType &GetOrDefault(const entt::hashed_string &id) const
+    {
+        const auto &resource = cache[id];
+
+        if (resource)
+            return *resource;
+
+        if (!defaultResource.has_value())
+            throw ResourceManagerError(
+                fmt::format("Resource with id {} not found and no default resource is set.", id.data()));
+
+        return *defaultResource;
+    }
+
+    /**
+     * @brief Check if a default resource has been set.
+     *
+     * @return true if a default resource is set, false otherwise
+     */
+    [[nodiscard]] bool HasDefault() const { return defaultResource.has_value(); }
+
   private:
     entt::resource_cache<ResourceType, ResourceLoader> cache{};
+    std::optional<ResourceType> defaultResource = std::nullopt;
 };
 
 } // namespace Object::Resource

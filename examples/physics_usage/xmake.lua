@@ -21,6 +21,7 @@ target("PhysicsUsage")
     add_deps("EngineSquaredCore")
     add_deps("PluginPhysics")
     add_deps("PluginObject")
+    add_deps("PluginEvent")
 
     add_files("src/**.cpp")
     add_includedirs("$(projectdir)/src/")

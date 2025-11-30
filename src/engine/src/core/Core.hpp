@@ -71,14 +71,32 @@ class Core {
     template <typename TResource> TResource &RegisterResource(TResource &&resource);
 
     /**
-     * Get a reference's resource.
-     * Resources are unique struct or class (like a singleton) that contains global informations.
+     * Get a reference of a resource.
+     * Resources are unique struct or class (like a singleton) that contains global information.
      * Example: ResourceManager, TimeProvider, WindowResource, SceneManager, InputManager or NetworkManager.
      *
      * @tparam  TResource   type of the resource to get
      * @return  reference of the resource
      */
     template <typename TResource> TResource &GetResource();
+
+    /**
+     * Get a const reference of a resource.
+     * Resources are unique struct or class (like a singleton) that contains global information.
+     * Example: ResourceManager, TimeProvider, WindowResource, SceneManager, InputManager or NetworkManager.
+     *
+     * @tparam  TResource   type of the resource to get
+     * @return  const reference of the resource
+     */
+    template <typename TResource> const TResource &GetResource() const;
+
+    /**
+     * Delete a resource from the core.
+     * Removes a previously registered resource from the registry context.
+     *
+     * @tparam  TResource   type of the resource to delete
+     */
+    template <typename TResource> void DeleteResource();
 
     /**
      * Add a new scheduler to the registry.
@@ -280,6 +298,16 @@ class Core {
      * @param scheduler The type index of the scheduler to be set as default.
      */
     void SetDefaultScheduler(std::type_index scheduler);
+
+    /**
+     * @brief Sets the error policy for all schedulers in the core engine.
+     *
+     * This function allows setting a uniform error handling policy across all
+     * schedulers managed by the core engine.
+     *
+     * @param policy The error policy to be applied to all schedulers.
+     */
+    void SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy policy);
 
   private:
     /**
