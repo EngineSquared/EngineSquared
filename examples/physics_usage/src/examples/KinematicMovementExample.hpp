@@ -22,10 +22,10 @@ namespace Examples {
  * - Different movement patterns (linear, elevator, rotating)
  */
 class KinematicMovementExample : public Engine::APlugin {
-public:
-    explicit KinematicMovementExample(Engine::Core& core) : APlugin(core) {}
+  public:
+    explicit KinematicMovementExample(Engine::Core &core) : APlugin(core) {}
 
     void Bind() override;
 };
 
-}  // namespace Examples
+} // namespace Examples

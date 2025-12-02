@@ -10,9 +10,9 @@
 #include "Object.hpp"
 #include "Physics.hpp"
 
-#include <iostream>
 #include <glm/gtc/constants.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <iostream>
 
 namespace Examples {
 
@@ -29,13 +29,13 @@ struct PassengerTag {};
 // Systems
 // ============================================================================
 
-static void SetupSceneSystem(Engine::Core& core)
+static void SetupSceneSystem(Engine::Core &core)
 {
     std::cout << "\n=================================================" << std::endl;
     std::cout << "  Kinematic Movement Example (Issue #003)" << std::endl;
     std::cout << "=================================================\n" << std::endl;
 
-    auto& registry = core.GetRegistry();
+    auto &registry = core.GetRegistry();
 
     // Example 1: Moving Platform (Back and Forth)
     // ============================================================
@@ -88,7 +88,8 @@ static void SetupSceneSystem(Engine::Core& core)
     std::cout << "  ✓ Created elevator platform" << std::endl;
 
     // Multiple passengers on elevator
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 3; ++i)
+    {
         auto passenger = core.CreateEntity();
 
         auto passengerTransform = Object::Component::Transform();
@@ -126,17 +127,17 @@ static void SetupSceneSystem(Engine::Core& core)
     std::cout << "✓ All 3 kinematic examples created!\n" << std::endl;
 }
 
-static void KinematicMovementSystem(Engine::Core& core)
+static void KinematicMovementSystem(Engine::Core &core)
 {
     static uint32_t frame = 0;
     frame++;
 
-    float time = frame / 60.0f;  // Assuming 60 FPS
+    float time = frame / 60.0f; // Assuming 60 FPS
     float deltaTime = 1.0f / 60.0f;
 
     // Example 1: Moving Platform (linear back-and-forth)
     core.GetRegistry().view<MovingPlatformTag, Physics::Component::RigidBody>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody& rb) {
+        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             // Oscillate between x = -5 and x = 5
             float progress = std::sin(time * 0.5f) * 0.5f + 0.5f; // 0 to 1
             float xPosition = -5.0f + progress * 10.0f;
@@ -144,13 +145,12 @@ static void KinematicMovementSystem(Engine::Core& core)
             glm::vec3 targetPosition(xPosition, 1.0f, 0.0f);
             glm::quat targetRotation = glm::quat(1, 0, 0, 0);
 
-            Physics::Resource::MoveKinematic(core, entity, targetPosition, targetRotation,
-                                              deltaTime);
+            Physics::Resource::MoveKinematic(core, entity, targetPosition, targetRotation, deltaTime);
         });
 
     // Example 2: Elevator (vertical movement)
     core.GetRegistry().view<ElevatorTag, Physics::Component::RigidBody>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody& rb) {
+        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             // Move between y = 0 and y = 8
             float progress = std::sin(time * 0.3f) * 0.5f + 0.5f; // 0 to 1
             float yPosition = progress * 8.0f;
@@ -158,26 +158,24 @@ static void KinematicMovementSystem(Engine::Core& core)
             glm::vec3 targetPosition(5.0f, yPosition, 0.0f);
             glm::quat targetRotation = glm::quat(1, 0, 0, 0);
 
-            Physics::Resource::MoveKinematic(core, entity, targetPosition, targetRotation,
-                                              deltaTime);
+            Physics::Resource::MoveKinematic(core, entity, targetPosition, targetRotation, deltaTime);
         });
 
     // Example 3: Rotating Door (rotation around Y axis)
     core.GetRegistry().view<RotatingDoorTag, Physics::Component::RigidBody>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody& rb) {
+        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             // Rotate between 0° and 90°
             float progress = std::sin(time * 0.4f) * 0.5f + 0.5f; // 0 to 1
-            float angle = progress * glm::half_pi<float>(); // 0 to 90 degrees
+            float angle = progress * glm::half_pi<float>();       // 0 to 90 degrees
 
             glm::vec3 targetPosition(0.0f, 1.5f, -5.0f);
             glm::quat targetRotation = glm::angleAxis(angle, glm::vec3(0, 1, 0));
 
-            Physics::Resource::MoveKinematic(core, entity, targetPosition, targetRotation,
-                                              deltaTime);
+            Physics::Resource::MoveKinematic(core, entity, targetPosition, targetRotation, deltaTime);
         });
 }
 
-static void PrintSummarySystem(Engine::Core& core)
+static void PrintSummarySystem(Engine::Core &core)
 {
     static int updateCount = 0;
     updateCount++;
@@ -201,26 +199,21 @@ static void PrintSummarySystem(Engine::Core& core)
 
     // Count entities
     int platformCount = 0;
-    core.GetRegistry().view<MovingPlatformTag>().each(
-        [&]([[maybe_unused]] const auto entity) { platformCount++; });
+    core.GetRegistry().view<MovingPlatformTag>().each([&]([[maybe_unused]] const auto entity) { platformCount++; });
 
     int elevatorCount = 0;
-    core.GetRegistry().view<ElevatorTag>().each(
-        [&]([[maybe_unused]] const auto entity) { elevatorCount++; });
+    core.GetRegistry().view<ElevatorTag>().each([&]([[maybe_unused]] const auto entity) { elevatorCount++; });
 
     int doorCount = 0;
-    core.GetRegistry().view<RotatingDoorTag>().each(
-        [&]([[maybe_unused]] const auto entity) { doorCount++; });
+    core.GetRegistry().view<RotatingDoorTag>().each([&]([[maybe_unused]] const auto entity) { doorCount++; });
 
     int passengerCount = 0;
-    core.GetRegistry().view<PassengerTag>().each(
-        [&]([[maybe_unused]] const auto entity) { passengerCount++; });
+    core.GetRegistry().view<PassengerTag>().each([&]([[maybe_unused]] const auto entity) { passengerCount++; });
 
     std::cout << "  Moving Platforms: " << platformCount << std::endl;
     std::cout << "  Elevators: " << elevatorCount << std::endl;
     std::cout << "  Rotating Doors: " << doorCount << std::endl;
-    std::cout << "  Dynamic Passengers: " << passengerCount << " (carried by kinematics)"
-              << std::endl;
+    std::cout << "  Dynamic Passengers: " << passengerCount << " (carried by kinematics)" << std::endl;
 
     std::cout << std::endl;
 
@@ -228,7 +221,7 @@ static void PrintSummarySystem(Engine::Core& core)
     core.Stop();
 }
 
-static void CleanupSystem(Engine::Core& core)
+static void CleanupSystem(Engine::Core &core)
 {
     std::cout << "\nCleaning up Kinematic Movement example..." << std::endl;
 
@@ -236,7 +229,7 @@ static void CleanupSystem(Engine::Core& core)
 
     // Clean all entities with RigidBody
     core.GetRegistry().view<Physics::Component::RigidBody>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody& rb) {
+        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             core.KillEntity(entity);
             removedCount++;
         });
@@ -253,9 +246,8 @@ void KinematicMovementExample::Bind()
     RequirePlugins<Physics::Plugin>();
 
     RegisterSystems<Engine::Scheduler::Startup>(SetupSceneSystem);
-    RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(KinematicMovementSystem,
-                                                         PrintSummarySystem);
+    RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(KinematicMovementSystem, PrintSummarySystem);
     RegisterSystems<Engine::Scheduler::Shutdown>(CleanupSystem);
 }
 
-}  // namespace Examples
+} // namespace Examples

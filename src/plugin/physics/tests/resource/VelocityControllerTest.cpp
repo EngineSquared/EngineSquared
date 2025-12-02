@@ -8,15 +8,16 @@
 #include <gtest/gtest.h>
 #define GLM_ENABLE_EXPERIMENTAL
 #include "Engine.hpp"
-#include "Physics.hpp"
 #include "Object.hpp"
+#include "Physics.hpp"
 
 using namespace Physics::Resource;
 using namespace Physics::Component;
 
 class VelocityControllerTest : public ::testing::Test {
-protected:
-    void SetUp() override {
+  protected:
+    void SetUp() override
+    {
         // Create engine core with Physics plugin
         core.AddPlugins<Physics::Plugin>();
 
@@ -29,12 +30,12 @@ protected:
         core.GetRegistry().emplace<Object::Component::Transform>(testEntity, transform);
 
         // Add RigidBody (Dynamic)
-        auto& rb = core.GetRegistry().emplace<RigidBody>(testEntity);
+        auto &rb = core.GetRegistry().emplace<RigidBody>(testEntity);
         rb.motionType = MotionType::Dynamic;
         rb.mass = 2.0f;
         rb.friction = 0.5f;
         rb.restitution = 0.3f;
-        rb.linearDamping = 0.0f;  // No damping for predictable tests
+        rb.linearDamping = 0.0f; // No damping for predictable tests
         rb.angularDamping = 0.0f;
 
         // Create static entity for negative tests
@@ -44,7 +45,7 @@ protected:
         staticTransform.SetPosition(0.0f, 0.0f, 0.0f);
         core.GetRegistry().emplace<Object::Component::Transform>(staticEntity, staticTransform);
 
-        auto& staticRb = core.GetRegistry().emplace<RigidBody>(staticEntity);
+        auto &staticRb = core.GetRegistry().emplace<RigidBody>(staticEntity);
         staticRb.motionType = MotionType::Static;
 
         // Note: In real usage, RigidBodyInternal would be created by the physics system
@@ -60,14 +61,16 @@ protected:
 // API Existence Tests - Verify functions compile and don't crash
 //============================================================================
 
-TEST_F(VelocityControllerTest, SetLinearVelocity_CompileAndExecute) {
+TEST_F(VelocityControllerTest, SetLinearVelocity_CompileAndExecute)
+{
     glm::vec3 velocity(5.0f, 0.0f, 0.0f);
 
     // Should compile and not crash (may log warning about missing RigidBodyInternal)
     EXPECT_NO_THROW(SetLinearVelocity(core, testEntity, velocity));
 }
 
-TEST_F(VelocityControllerTest, GetLinearVelocity_CompileAndExecute) {
+TEST_F(VelocityControllerTest, GetLinearVelocity_CompileAndExecute)
+{
     // Should compile and not crash
     glm::vec3 velocity;
     EXPECT_NO_THROW(velocity = GetLinearVelocity(core, testEntity));
@@ -76,19 +79,22 @@ TEST_F(VelocityControllerTest, GetLinearVelocity_CompileAndExecute) {
     EXPECT_EQ(velocity, glm::vec3(0.0f));
 }
 
-TEST_F(VelocityControllerTest, AddLinearVelocity_CompileAndExecute) {
+TEST_F(VelocityControllerTest, AddLinearVelocity_CompileAndExecute)
+{
     glm::vec3 deltaVelocity(2.0f, 0.0f, 0.0f);
 
     EXPECT_NO_THROW(AddLinearVelocity(core, testEntity, deltaVelocity));
 }
 
-TEST_F(VelocityControllerTest, SetAngularVelocity_CompileAndExecute) {
+TEST_F(VelocityControllerTest, SetAngularVelocity_CompileAndExecute)
+{
     glm::vec3 angularVelocity(0.0f, 2.0f, 0.0f);
 
     EXPECT_NO_THROW(SetAngularVelocity(core, testEntity, angularVelocity));
 }
 
-TEST_F(VelocityControllerTest, GetAngularVelocity_CompileAndExecute) {
+TEST_F(VelocityControllerTest, GetAngularVelocity_CompileAndExecute)
+{
     // Should compile and not crash
     glm::vec3 angularVelocity;
     EXPECT_NO_THROW(angularVelocity = GetAngularVelocity(core, testEntity));
@@ -97,7 +103,8 @@ TEST_F(VelocityControllerTest, GetAngularVelocity_CompileAndExecute) {
     EXPECT_EQ(angularVelocity, glm::vec3(0.0f));
 }
 
-TEST_F(VelocityControllerTest, AddAngularVelocity_CompileAndExecute) {
+TEST_F(VelocityControllerTest, AddAngularVelocity_CompileAndExecute)
+{
     glm::vec3 deltaAngularVelocity(0.0f, 1.0f, 0.0f);
 
     EXPECT_NO_THROW(AddAngularVelocity(core, testEntity, deltaAngularVelocity));
@@ -107,7 +114,8 @@ TEST_F(VelocityControllerTest, AddAngularVelocity_CompileAndExecute) {
 // ERROR HANDLING Tests
 //============================================================================
 
-TEST_F(VelocityControllerTest, InvalidEntity_DoesNotCrash) {
+TEST_F(VelocityControllerTest, InvalidEntity_DoesNotCrash)
+{
     Engine::Entity invalidEntity = Engine::Entity(entt::entity(999999));
 
     EXPECT_NO_THROW(SetLinearVelocity(core, invalidEntity, glm::vec3(1.0f, 0.0f, 0.0f)));
@@ -125,7 +133,8 @@ TEST_F(VelocityControllerTest, InvalidEntity_DoesNotCrash) {
     EXPECT_NO_THROW(AddAngularVelocity(core, invalidEntity, glm::vec3(0.0f, 1.0f, 0.0f)));
 }
 
-TEST_F(VelocityControllerTest, NaNVector_DoesNotCrash) {
+TEST_F(VelocityControllerTest, NaNVector_DoesNotCrash)
+{
     glm::vec3 nanVelocity(std::numeric_limits<float>::quiet_NaN(), 0.0f, 0.0f);
 
     // Should handle gracefully (log error and return)
@@ -133,14 +142,16 @@ TEST_F(VelocityControllerTest, NaNVector_DoesNotCrash) {
     EXPECT_NO_THROW(SetAngularVelocity(core, testEntity, nanVelocity));
 }
 
-TEST_F(VelocityControllerTest, InfVector_DoesNotCrash) {
+TEST_F(VelocityControllerTest, InfVector_DoesNotCrash)
+{
     glm::vec3 infVelocity(std::numeric_limits<float>::infinity(), 0.0f, 0.0f);
 
     EXPECT_NO_THROW(SetLinearVelocity(core, testEntity, infVelocity));
     EXPECT_NO_THROW(SetAngularVelocity(core, testEntity, infVelocity));
 }
 
-TEST_F(VelocityControllerTest, StaticBody_RejectsVelocityChange) {
+TEST_F(VelocityControllerTest, StaticBody_RejectsVelocityChange)
+{
     glm::vec3 velocity(5.0f, 0.0f, 0.0f);
 
     // Should log warning and not crash

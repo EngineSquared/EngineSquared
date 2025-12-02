@@ -15,10 +15,10 @@
 
 // Resource
 #include "resource/ForceApplicator.hpp"
-#include "resource/VelocityController.hpp"
-#include "resource/KinematicMover.hpp"
 #include "resource/JoltConversions.hpp"
+#include "resource/KinematicMover.hpp"
 #include "resource/PhysicsManager.hpp"
+#include "resource/VelocityController.hpp"
 
 // Systems
 #include "system/InitJoltPhysics.hpp"

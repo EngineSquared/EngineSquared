@@ -20,10 +20,10 @@ namespace Examples {
  * - GetAngularVelocity / SetAngularVelocity / AddAngularVelocity
  */
 class VelocityControlExample : public Engine::APlugin {
-public:
-    explicit VelocityControlExample(Engine::Core& core) : APlugin(core) {}
+  public:
+    explicit VelocityControlExample(Engine::Core &core) : APlugin(core) {}
 
     void Bind() override;
 };
 
-}  // namespace Examples
+} // namespace Examples

@@ -54,9 +54,8 @@ namespace Physics::Resource {
  *
  * @see SetKinematicVelocity, GetKinematicTarget
  */
-void MoveKinematic(Engine::Core& core, Engine::Entity entity,
-                   const glm::vec3& targetPosition, const glm::quat& targetRotation,
-                   float deltaTime);
+void MoveKinematic(Engine::Core &core, Engine::Entity entity, const glm::vec3 &targetPosition,
+                   const glm::quat &targetRotation, float deltaTime);
 
 /**
  * @brief Set kinematic body to move with constant velocity
@@ -88,8 +87,7 @@ void MoveKinematic(Engine::Core& core, Engine::Entity entity,
  *
  * @see MoveKinematic
  */
-void SetKinematicVelocity(Engine::Core& core, Engine::Entity entity,
-                          const glm::vec3& velocity, float deltaTime);
+void SetKinematicVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &velocity, float deltaTime);
 
 // ============================================================================
 // KINEMATIC STATE QUERY (Optional - for debugging)
@@ -99,7 +97,7 @@ void SetKinematicVelocity(Engine::Core& core, Engine::Entity entity,
  * @brief Information about a kinematic body's current movement target
  */
 struct KinematicTarget {
-    glm::vec3 position{0.0f};      ///< Target position (world space)
+    glm::vec3 position{0.0f};       ///< Target position (world space)
     glm::quat rotation{1, 0, 0, 0}; ///< Target rotation (world space)
     bool hasTarget = false;         ///< Whether a target is currently set
 };
@@ -119,6 +117,6 @@ struct KinematicTarget {
  *
  * @see MoveKinematic
  */
-KinematicTarget GetKinematicTarget(Engine::Core& core, Engine::Entity entity);
+KinematicTarget GetKinematicTarget(Engine::Core &core, Engine::Entity entity);
 
-}  // namespace Physics::Resource
+} // namespace Physics::Resource

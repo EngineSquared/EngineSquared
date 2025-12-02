@@ -8,15 +8,16 @@
 #include <gtest/gtest.h>
 #define GLM_ENABLE_EXPERIMENTAL
 #include "Engine.hpp"
-#include "Physics.hpp"
 #include "Object.hpp"
+#include "Physics.hpp"
 
 using namespace Physics::Resource;
 using namespace Physics::Component;
 
 class KinematicMoverTest : public ::testing::Test {
-protected:
-    void SetUp() override {
+  protected:
+    void SetUp() override
+    {
         // Create engine core with Physics plugin
         core.AddPlugins<Physics::Plugin>();
 
@@ -29,7 +30,7 @@ protected:
         core.GetRegistry().emplace<Object::Component::Transform>(kinematicEntity, transform);
 
         // Add RigidBody (Kinematic)
-        auto& rb = core.GetRegistry().emplace<RigidBody>(kinematicEntity);
+        auto &rb = core.GetRegistry().emplace<RigidBody>(kinematicEntity);
         rb.motionType = MotionType::Kinematic;
         rb.mass = 1.0f;
 
@@ -40,7 +41,7 @@ protected:
         dynamicTransform.SetPosition(0.0f, 10.0f, 0.0f);
         core.GetRegistry().emplace<Object::Component::Transform>(dynamicEntity, dynamicTransform);
 
-        auto& dynamicRb = core.GetRegistry().emplace<RigidBody>(dynamicEntity);
+        auto &dynamicRb = core.GetRegistry().emplace<RigidBody>(dynamicEntity);
         dynamicRb.motionType = MotionType::Dynamic;
         dynamicRb.mass = 2.0f;
 
@@ -57,7 +58,8 @@ protected:
 // API Existence Tests - Verify functions compile and don't crash
 //============================================================================
 
-TEST_F(KinematicMoverTest, MoveKinematic_CompileAndExecute) {
+TEST_F(KinematicMoverTest, MoveKinematic_CompileAndExecute)
+{
     glm::vec3 targetPosition(5.0f, 2.0f, 3.0f);
     glm::quat targetRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     float deltaTime = 1.0f / 60.0f;
@@ -66,14 +68,16 @@ TEST_F(KinematicMoverTest, MoveKinematic_CompileAndExecute) {
     EXPECT_NO_THROW(MoveKinematic(core, kinematicEntity, targetPosition, targetRotation, deltaTime));
 }
 
-TEST_F(KinematicMoverTest, SetKinematicVelocity_CompileAndExecute) {
+TEST_F(KinematicMoverTest, SetKinematicVelocity_CompileAndExecute)
+{
     glm::vec3 velocity(2.0f, 0.0f, 0.0f);
     float deltaTime = 1.0f / 60.0f;
 
     EXPECT_NO_THROW(SetKinematicVelocity(core, kinematicEntity, velocity, deltaTime));
 }
 
-TEST_F(KinematicMoverTest, GetKinematicTarget_CompileAndExecute) {
+TEST_F(KinematicMoverTest, GetKinematicTarget_CompileAndExecute)
+{
     // Should compile and not crash
     KinematicTarget target;
     EXPECT_NO_THROW(target = GetKinematicTarget(core, kinematicEntity));
@@ -86,7 +90,8 @@ TEST_F(KinematicMoverTest, GetKinematicTarget_CompileAndExecute) {
 // ERROR HANDLING Tests
 //============================================================================
 
-TEST_F(KinematicMoverTest, MoveKinematic_WarnsOnNonKinematicBody) {
+TEST_F(KinematicMoverTest, MoveKinematic_WarnsOnNonKinematicBody)
+{
     glm::vec3 targetPosition(5.0f, 2.0f, 3.0f);
     glm::quat targetRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     float deltaTime = 1.0f / 60.0f;
@@ -95,7 +100,8 @@ TEST_F(KinematicMoverTest, MoveKinematic_WarnsOnNonKinematicBody) {
     EXPECT_NO_THROW(MoveKinematic(core, dynamicEntity, targetPosition, targetRotation, deltaTime));
 }
 
-TEST_F(KinematicMoverTest, MoveKinematic_RejectsInvalidDeltaTime) {
+TEST_F(KinematicMoverTest, MoveKinematic_RejectsInvalidDeltaTime)
+{
     glm::vec3 targetPosition(5.0f, 2.0f, 3.0f);
     glm::quat targetRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 
@@ -106,7 +112,8 @@ TEST_F(KinematicMoverTest, MoveKinematic_RejectsInvalidDeltaTime) {
     EXPECT_NO_THROW(MoveKinematic(core, kinematicEntity, targetPosition, targetRotation, -0.016f));
 }
 
-TEST_F(KinematicMoverTest, MoveKinematic_RejectsInvalidPosition) {
+TEST_F(KinematicMoverTest, MoveKinematic_RejectsInvalidPosition)
+{
     glm::quat targetRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     float deltaTime = 1.0f / 60.0f;
 
@@ -119,7 +126,8 @@ TEST_F(KinematicMoverTest, MoveKinematic_RejectsInvalidPosition) {
     EXPECT_NO_THROW(MoveKinematic(core, kinematicEntity, infPosition, targetRotation, deltaTime));
 }
 
-TEST_F(KinematicMoverTest, SetKinematicVelocity_RejectsInvalidVelocity) {
+TEST_F(KinematicMoverTest, SetKinematicVelocity_RejectsInvalidVelocity)
+{
     float deltaTime = 1.0f / 60.0f;
 
     // NaN velocity
@@ -131,15 +139,17 @@ TEST_F(KinematicMoverTest, SetKinematicVelocity_RejectsInvalidVelocity) {
     EXPECT_NO_THROW(SetKinematicVelocity(core, kinematicEntity, infVelocity, deltaTime));
 }
 
-TEST_F(KinematicMoverTest, GetKinematicTarget_ReturnsFalseForNonKinematic) {
+TEST_F(KinematicMoverTest, GetKinematicTarget_ReturnsFalseForNonKinematic)
+{
     // Query dynamic body
     auto target = GetKinematicTarget(core, dynamicEntity);
-    
+
     // Should return hasTarget = false
     EXPECT_FALSE(target.hasTarget);
 }
 
-TEST_F(KinematicMoverTest, InvalidEntity_DoesNotCrash) {
+TEST_F(KinematicMoverTest, InvalidEntity_DoesNotCrash)
+{
     Engine::Entity invalidEntity = Engine::Entity(entt::entity(999999));
     glm::vec3 targetPosition(5.0f, 2.0f, 3.0f);
     glm::quat targetRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
@@ -156,14 +166,16 @@ TEST_F(KinematicMoverTest, InvalidEntity_DoesNotCrash) {
 // BEHAVIOR Tests - Verify kinematic properties
 //============================================================================
 
-TEST_F(KinematicMoverTest, KinematicBody_HasCorrectMotionType) {
+TEST_F(KinematicMoverTest, KinematicBody_HasCorrectMotionType)
+{
     // Verify test setup
-    auto& rb = core.GetRegistry().get<RigidBody>(kinematicEntity);
+    auto &rb = core.GetRegistry().get<RigidBody>(kinematicEntity);
     EXPECT_EQ(rb.motionType, MotionType::Kinematic);
 }
 
-TEST_F(KinematicMoverTest, DynamicBody_HasCorrectMotionType) {
+TEST_F(KinematicMoverTest, DynamicBody_HasCorrectMotionType)
+{
     // Verify test setup
-    auto& rb = core.GetRegistry().get<RigidBody>(dynamicEntity);
+    auto &rb = core.GetRegistry().get<RigidBody>(dynamicEntity);
     EXPECT_EQ(rb.motionType, MotionType::Dynamic);
 }

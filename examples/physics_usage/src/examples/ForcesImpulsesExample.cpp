@@ -11,13 +11,15 @@ namespace Examples {
 
 struct PropelledCubeTag {};
 struct SpinnerTag {};
-struct DebrisTag { glm::vec3 position; };
+struct DebrisTag {
+    glm::vec3 position;
+};
 
 // ============================================================================
 // Systems
 // ============================================================================
 
-static void SetupSceneSystem(Engine::Core& core)
+static void SetupSceneSystem(Engine::Core &core)
 {
     std::cout << "\n=================================================" << std::endl;
     std::cout << "  Forces & Impulses Example (Issue #001)" << std::endl;
@@ -28,7 +30,7 @@ static void SetupSceneSystem(Engine::Core& core)
     std::cout << "---------------------------------------------------" << std::endl;
 
     auto propelledCube = Engine::Entity::Create(core);
-    auto& rb1 = propelledCube.AddComponent<Physics::Component::RigidBody>(core);
+    auto &rb1 = propelledCube.AddComponent<Physics::Component::RigidBody>(core);
     rb1.motionType = Physics::Component::MotionType::Dynamic;
     rb1.mass = 2.0f;
     rb1.linearDamping = 0.1f;
@@ -43,15 +45,16 @@ static void SetupSceneSystem(Engine::Core& core)
 
     glm::vec3 explosionCenter(0.0f, 5.0f, 0.0f);
     std::vector<glm::vec3> positions = {
-        {-3.0f, 5.0f, 0.0f},
-        {3.0f, 5.0f, 0.0f},
-        {0.0f, 5.0f, -3.0f},
-        {0.0f, 5.0f, 3.0f}
+        {-3.0f, 5.0f, 0.0f },
+        {3.0f,  5.0f, 0.0f },
+        {0.0f,  5.0f, -3.0f},
+        {0.0f,  5.0f, 3.0f }
     };
 
-    for (const auto& pos : positions) {
+    for (const auto &pos : positions)
+    {
         auto debris = Engine::Entity::Create(core);
-        auto& rb = debris.AddComponent<Physics::Component::RigidBody>(core);
+        auto &rb = debris.AddComponent<Physics::Component::RigidBody>(core);
         rb.motionType = Physics::Component::MotionType::Dynamic;
         rb.mass = 1.0f;
         rb.restitution = 0.3f;
@@ -69,7 +72,7 @@ static void SetupSceneSystem(Engine::Core& core)
     std::cout << "---------------------------------------------------" << std::endl;
 
     auto spinner = Engine::Entity::Create(core);
-    auto& rb3 = spinner.AddComponent<Physics::Component::RigidBody>(core);
+    auto &rb3 = spinner.AddComponent<Physics::Component::RigidBody>(core);
     rb3.motionType = Physics::Component::MotionType::Dynamic;
     rb3.mass = 3.0f;
     rb3.angularDamping = 0.05f;
@@ -83,7 +86,7 @@ static void SetupSceneSystem(Engine::Core& core)
     std::cout << "---------------------------------------------------" << std::endl;
 
     auto door = Engine::Entity::Create(core);
-    auto& rb4 = door.AddComponent<Physics::Component::RigidBody>(core);
+    auto &rb4 = door.AddComponent<Physics::Component::RigidBody>(core);
     rb4.motionType = Physics::Component::MotionType::Dynamic;
     rb4.mass = 5.0f;
     rb4.friction = 0.8f;
@@ -103,7 +106,7 @@ static void SetupSceneSystem(Engine::Core& core)
     std::cout << "---------------------------------------------------" << std::endl;
 
     auto flywheel = Engine::Entity::Create(core);
-    auto& rb5 = flywheel.AddComponent<Physics::Component::RigidBody>(core);
+    auto &rb5 = flywheel.AddComponent<Physics::Component::RigidBody>(core);
     rb5.motionType = Physics::Component::MotionType::Dynamic;
     rb5.mass = 10.0f;
     rb5.angularDamping = 0.01f;
@@ -119,7 +122,7 @@ static void SetupSceneSystem(Engine::Core& core)
     std::cout << "---------------------------------------------------" << std::endl;
 
     auto ball = Engine::Entity::Create(core);
-    auto& rb6 = ball.AddComponent<Physics::Component::RigidBody>(core);
+    auto &rb6 = ball.AddComponent<Physics::Component::RigidBody>(core);
     rb6.motionType = Physics::Component::MotionType::Dynamic;
     rb6.mass = 0.145f;
     rb6.restitution = 0.5f;
@@ -136,7 +139,7 @@ static void SetupSceneSystem(Engine::Core& core)
     std::cout << "\n✓ All 6 examples created and initialized!" << std::endl;
 }
 
-static void ApplyContinuousForcesSystem(Engine::Core& core)
+static void ApplyContinuousForcesSystem(Engine::Core &core)
 {
     static int frame = 0;
     frame++;
@@ -147,24 +150,25 @@ static void ApplyContinuousForcesSystem(Engine::Core& core)
 
     // Example 1: Apply continuous force to propelled cube
     core.GetRegistry().view<PropelledCubeTag, Physics::Component::RigidBody>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody& rb) {
+        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             glm::vec3 thrustForce(0.0f, 20.0f, 0.0f);
             Physics::Resource::AddForce(core, entity, thrustForce);
         });
 
     // Example 3: Apply continuous torque to spinner
     core.GetRegistry().view<SpinnerTag, Physics::Component::RigidBody>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody& rb) {
+        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             glm::vec3 torque(0.0f, 10.0f, 0.0f);
             Physics::Resource::AddTorque(core, entity, torque);
         });
 
-    if (frame == 1) {
+    if (frame == 1)
+    {
         std::cout << "\n[Physics Update] Applying continuous forces..." << std::endl;
     }
 }
 
-static void ApplyExplosionImpulsesSystem(Engine::Core& core)
+static void ApplyExplosionImpulsesSystem(Engine::Core &core)
 {
     static bool explosionApplied = false;
 
@@ -179,26 +183,25 @@ static void ApplyExplosionImpulsesSystem(Engine::Core& core)
     std::cout << "\n[Explosion] Applying radial impulses..." << std::endl;
 
     core.GetRegistry().view<DebrisTag, Physics::Component::RigidBody>().each(
-        [&](Engine::Entity entity, const DebrisTag& tag,
-            [[maybe_unused]] const Physics::Component::RigidBody& rb) {
+        [&](Engine::Entity entity, const DebrisTag &tag, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             glm::vec3 direction = glm::normalize(tag.position - explosionCenter);
             glm::vec3 impulse = direction * explosionStrength;
 
             Physics::Resource::AddImpulse(core, entity, impulse);
 
-            std::cout << "  → Debris at (" << tag.position.x << ", " << tag.position.y
-                      << ", " << tag.position.z << "): " << explosionStrength
-                      << "N·s impulse" << std::endl;
+            std::cout << "  → Debris at (" << tag.position.x << ", " << tag.position.y << ", " << tag.position.z
+                      << "): " << explosionStrength << "N·s impulse" << std::endl;
         });
 }
 
-static void PrintSummarySystem(Engine::Core& core)
+static void PrintSummarySystem(Engine::Core &core)
 {
     static int updateCount = 0;
     updateCount++;
 
     // Print summary after 120 updates (2 seconds at 60 FPS)
-    if (updateCount == 120) {
+    if (updateCount == 120)
+    {
         std::cout << "\n=================================================" << std::endl;
         std::cout << "  API Summary" << std::endl;
         std::cout << "=================================================\n" << std::endl;
@@ -217,7 +220,7 @@ static void PrintSummarySystem(Engine::Core& core)
     }
 }
 
-static void CleanupSystem(Engine::Core& core)
+static void CleanupSystem(Engine::Core &core)
 {
     std::cout << "\nCleaning up Forces & Impulses example..." << std::endl;
 
@@ -225,7 +228,7 @@ static void CleanupSystem(Engine::Core& core)
 
     // Clean all entities with RigidBody
     core.GetRegistry().view<Physics::Component::RigidBody>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody& rb) {
+        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             core.KillEntity(entity);
             removedCount++;
         });

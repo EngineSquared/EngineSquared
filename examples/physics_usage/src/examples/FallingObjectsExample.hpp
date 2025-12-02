@@ -25,14 +25,14 @@ namespace Examples {
  * - Automatic simulation loop (100 steps)
  */
 class FallingObjectsExample : public Engine::APlugin {
-public:
-    explicit FallingObjectsExample(Engine::Core& core) : Engine::APlugin(core) {}
+  public:
+    explicit FallingObjectsExample(Engine::Core &core) : Engine::APlugin(core) {}
     ~FallingObjectsExample() override = default;
 
     void Bind() final;
 
-    const char* GetName() const { return "FallingObjectsExample"; }
-    const char* GetVersion() const { return "1.0.0"; }
+    const char *GetName() const { return "FallingObjectsExample"; }
+    const char *GetVersion() const { return "1.0.0"; }
 };
 
 } // namespace Examples

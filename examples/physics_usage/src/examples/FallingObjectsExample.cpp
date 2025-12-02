@@ -27,7 +27,7 @@ struct SimulationCounterComponent {
  * Add Large flat box collider (20x1x20 meters) component for collision and
  * Static rigid body (immovable) component.
  */
-static void CreateFloor(Engine::Core& core)
+static void CreateFloor(Engine::Core &core)
 {
     auto floor = Object::Resource::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
@@ -46,7 +46,7 @@ static void CreateFloor(Engine::Core& core)
  * Add RigidBody component with dynamic motion type and specified mass.
  * The DefaultCollider is created automatically!
  */
-static void CreateFallingCube(Engine::Core& core, float x, float y, float z, float mass)
+static void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass)
 {
     auto cube = Object::Resource::CreateCube(core, 1.0f, glm::vec3(x, y, z));
 
@@ -55,8 +55,7 @@ static void CreateFallingCube(Engine::Core& core, float x, float y, float z, flo
     rigidBody.restitution = 0.3f; // Some bounce
     cube.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
 
-    std::cout << "  - Cube created at (" << x << ", " << y << ", " << z
-              << ") with mass " << mass << "kg" << std::endl;
+    std::cout << "  - Cube created at (" << x << ", " << y << ", " << z << ") with mass " << mass << "kg" << std::endl;
 }
 
 /**
@@ -66,7 +65,7 @@ static void CreateFallingCube(Engine::Core& core, float x, float y, float z, flo
  * Add Sphere-like collider (using small cube for now as approximation),
  * then Very bouncy properties
  */
-static void CreateBouncyBall(Engine::Core& core, float x, float y, float z)
+static void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
 {
     auto ball = Object::Resource::CreateSphere(core, 0.5f, glm::vec3(x, y, z));
 
@@ -86,20 +85,15 @@ static void CreateBouncyBall(Engine::Core& core, float x, float y, float z)
  *
  * Use the helper function to create a cube entity (flattened for platform shape)
  */
-static void CreateMovingPlatform(Engine::Core& core)
+static void CreateMovingPlatform(Engine::Core &core)
 {
-    auto platform = Object::Resource::CreateCube(
-        core, 1.0f,
-        glm::vec3(0.0f, 5.0f, 0.0f),
-        glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
-        glm::vec3(3.0f, 0.3f, 3.0f)
-    );
+    auto platform = Object::Resource::CreateCube(core, 1.0f, glm::vec3(0.0f, 5.0f, 0.0f),
+                                                 glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(3.0f, 0.3f, 3.0f));
 
     auto collider = Physics::Component::BoxCollider(glm::vec3(3.0f, 0.3f, 3.0f));
     platform.AddComponent<Physics::Component::BoxCollider>(core, collider);
 
-    platform.AddComponent<Physics::Component::RigidBody>(core,
-        Physics::Component::RigidBody::CreateKinematic());
+    platform.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateKinematic());
 
     std::cout << "  - Kinematic platform created" << std::endl;
 }
@@ -128,7 +122,7 @@ void RegisterCollisionLoggerSystem(Engine::Core &core)
  * 3. Bouncy ball
  * 4. Kinematic platform
  */
-static void SetupSceneSystem(Engine::Core& core)
+static void SetupSceneSystem(Engine::Core &core)
 {
     std::cout << "\n[Falling Objects Example]" << std::endl;
     std::cout << "Creating physics scene..." << std::endl;
@@ -150,10 +144,11 @@ static void SetupSceneSystem(Engine::Core& core)
 /**
  * @brief Runs the physics simulation system and prints info every 10 steps
  */
-static void SimulationUpdateSystem(Engine::Core& core)
+static void SimulationUpdateSystem(Engine::Core &core)
 {
-    core.GetRegistry().view<SimulationCounterComponent>().each([&](SimulationCounterComponent& counter) {
-        if (counter.currentStep >= counter.MAX_STEPS) {
+    core.GetRegistry().view<SimulationCounterComponent>().each([&](SimulationCounterComponent &counter) {
+        if (counter.currentStep >= counter.MAX_STEPS)
+        {
             core.Stop();
             return;
         }
@@ -164,43 +159,34 @@ static void SimulationUpdateSystem(Engine::Core& core)
         if (counter.currentStep % 10 != 0)
             return;
 
-        auto& registry = core.GetRegistry();
+        auto &registry = core.GetRegistry();
         uint32_t dynamicBodies = 0;
         uint32_t staticBodies = 0;
         uint32_t kinematicBodies = 0;
 
         registry.view<Physics::Component::RigidBody>().each(
-            [&]([[maybe_unused]] Engine::Entity entity, const Physics::Component::RigidBody& rb) {
-                switch (rb.motionType) {
-                case Physics::Component::MotionType::Dynamic:
-                    dynamicBodies++;
-                    break;
-                case Physics::Component::MotionType::Static:
-                    staticBodies++;
-                    break;
-                case Physics::Component::MotionType::Kinematic:
-                    kinematicBodies++;
-                    break;
+            [&]([[maybe_unused]] Engine::Entity entity, const Physics::Component::RigidBody &rb) {
+                switch (rb.motionType)
+                {
+                case Physics::Component::MotionType::Dynamic: dynamicBodies++; break;
+                case Physics::Component::MotionType::Static: staticBodies++; break;
+                case Physics::Component::MotionType::Kinematic: kinematicBodies++; break;
                 }
             });
 
-        std::cout << "\n[Step " << counter.currentStep << "] "
-                  << "Dynamic: " << dynamicBodies << " | "
-                  << "Static: " << staticBodies << " | "
-                  << "Kinematic: " << kinematicBodies << std::endl;
+        std::cout << "\n[Step " << counter.currentStep << "] " << "Dynamic: " << dynamicBodies << " | "
+                  << "Static: " << staticBodies << " | " << "Kinematic: " << kinematicBodies << std::endl;
 
         // Print positions of dynamic bodies
         std::cout << "  Dynamic body positions:" << std::endl;
         registry.view<Physics::Component::RigidBody, Object::Component::Transform>().each(
-            [&](Engine::Entity entity, const Physics::Component::RigidBody& rb,
-                const Object::Component::Transform& transform) {
+            [&](Engine::Entity entity, const Physics::Component::RigidBody &rb,
+                const Object::Component::Transform &transform) {
                 if (rb.motionType != Physics::Component::MotionType::Dynamic)
                     return;
 
-                std::cout << "    Entity " << static_cast<uint32_t>(entity)
-                          << ": (" << transform.position.x << ", "
-                          << transform.position.y << ", "
-                          << transform.position.z << ")" << std::endl;
+                std::cout << "    Entity " << static_cast<uint32_t>(entity) << ": (" << transform.position.x << ", "
+                          << transform.position.y << ", " << transform.position.z << ")" << std::endl;
             });
     });
 }
@@ -208,20 +194,20 @@ static void SimulationUpdateSystem(Engine::Core& core)
 /**
  * @brief Cleanup all created entities in the physics demonstration
  */
-static void CleanupSystem(Engine::Core& core)
+static void CleanupSystem(Engine::Core &core)
 {
     std::cout << "\nCleaning up Falling Objects example..." << std::endl;
 
     int removedCount = 0;
 
     core.GetRegistry().view<Physics::Component::RigidBody>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody& rb) {
+        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             core.KillEntity(entity);
             removedCount++;
         });
 
     core.GetRegistry().view<SimulationCounterComponent>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const SimulationCounterComponent& sc) {
+        [&](Engine::Entity entity, [[maybe_unused]] const SimulationCounterComponent &sc) {
             core.KillEntity(entity);
             removedCount++;
         });

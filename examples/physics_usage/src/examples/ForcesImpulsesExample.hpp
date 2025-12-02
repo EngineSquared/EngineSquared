@@ -32,14 +32,14 @@ namespace Examples {
  * All 6 API functions are demonstrated with practical examples.
  */
 class ForcesImpulsesExample : public Engine::APlugin {
-public:
-    explicit ForcesImpulsesExample(Engine::Core& core) : Engine::APlugin(core) {}
+  public:
+    explicit ForcesImpulsesExample(Engine::Core &core) : Engine::APlugin(core) {}
     ~ForcesImpulsesExample() override = default;
 
     void Bind() final;
 
-    const char* GetName() const { return "ForcesImpulsesExample"; }
-    const char* GetVersion() const { return "1.0.0"; }
+    const char *GetName() const { return "ForcesImpulsesExample"; }
+    const char *GetVersion() const { return "1.0.0"; }
 };
 
 } // namespace Examples
