@@ -56,8 +56,7 @@ namespace Physics::Helper {
  *
  * @see GetLinearVelocity, AddLinearVelocity
  */
-void SetLinearVelocity(Engine::Core& core, Engine::Entity entity,
-                       const glm::vec3& velocity);
+void SetLinearVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &velocity);
 
 /**
  * @brief Get the current linear velocity of a rigid body (world space)
@@ -70,7 +69,7 @@ void SetLinearVelocity(Engine::Core& core, Engine::Entity entity,
  *
  * @see SetLinearVelocity, AddLinearVelocity
  */
-glm::vec3 GetLinearVelocity(Engine::Core& core, Engine::Entity entity);
+glm::vec3 GetLinearVelocity(Engine::Core &core, Engine::Entity entity);
 
 /**
  * @brief Add a delta to the current linear velocity
@@ -89,8 +88,7 @@ glm::vec3 GetLinearVelocity(Engine::Core& core, Engine::Entity entity);
  *
  * @see SetLinearVelocity, GetLinearVelocity
  */
-void AddLinearVelocity(Engine::Core& core, Engine::Entity entity,
-                       const glm::vec3& deltaVelocity);
+void AddLinearVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &deltaVelocity);
 
 // ============================================================================
 // ANGULAR VELOCITY CONTROL
@@ -123,8 +121,7 @@ void AddLinearVelocity(Engine::Core& core, Engine::Entity entity,
  *
  * @see GetAngularVelocity, AddAngularVelocity
  */
-void SetAngularVelocity(Engine::Core& core, Engine::Entity entity,
-                        const glm::vec3& angularVelocity);
+void SetAngularVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &angularVelocity);
 
 /**
  * @brief Get the current angular velocity of a rigid body (world space)
@@ -138,7 +135,7 @@ void SetAngularVelocity(Engine::Core& core, Engine::Entity entity,
  *
  * @see SetAngularVelocity, AddAngularVelocity
  */
-glm::vec3 GetAngularVelocity(Engine::Core& core, Engine::Entity entity);
+glm::vec3 GetAngularVelocity(Engine::Core &core, Engine::Entity entity);
 
 /**
  * @brief Add a delta to the current angular velocity
@@ -157,7 +154,6 @@ glm::vec3 GetAngularVelocity(Engine::Core& core, Engine::Entity entity);
  *
  * @see SetAngularVelocity, GetAngularVelocity
  */
-void AddAngularVelocity(Engine::Core& core, Engine::Entity entity,
-                        const glm::vec3& deltaAngularVelocity);
+void AddAngularVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &deltaAngularVelocity);
 
-}  // namespace Physics::Helper
+} // namespace Physics::Helper

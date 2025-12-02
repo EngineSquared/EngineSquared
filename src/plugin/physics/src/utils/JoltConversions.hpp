@@ -75,7 +75,7 @@ inline glm::quat FromJoltQuat(const JPH::Quat &q) { return glm::quat(q.GetW(), q
 /**
  * @brief Helper to check if a quaternion is finite (not NaN, not Inf)
  */
-inline bool IsFinite(const glm::quat& q)
+inline bool IsFinite(const glm::quat &q)
 {
     return std::isfinite(q.w) && std::isfinite(q.x) && std::isfinite(q.y) && std::isfinite(q.z);
 }

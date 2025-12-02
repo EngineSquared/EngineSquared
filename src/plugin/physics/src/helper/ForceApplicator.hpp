@@ -75,9 +75,7 @@ void AddForce(Engine::Core &core, Engine::Entity entity, const glm::vec3 &force)
  * Physics::Helper::AddForceAtPoint(core, boat, windForce, sailPosition);
  * @endcode
  */
-void AddForceAtPoint(Engine::Core &core, Engine::Entity entity,
-                     const glm::vec3 &force,
-                     const glm::vec3 &worldPoint);
+void AddForceAtPoint(Engine::Core &core, Engine::Entity entity, const glm::vec3 &force, const glm::vec3 &worldPoint);
 
 /**
  * @brief Apply a torque (rotational force) to a rigid body
@@ -143,8 +141,7 @@ void AddImpulse(Engine::Core &core, Engine::Entity entity, const glm::vec3 &impu
  * Physics::Helper::AddImpulseAtPoint(core, object, impulse, transform.position);
  * @endcode
  */
-void AddImpulseAtPoint(Engine::Core &core, Engine::Entity entity,
-                       const glm::vec3 &impulse,
+void AddImpulseAtPoint(Engine::Core &core, Engine::Entity entity, const glm::vec3 &impulse,
                        const glm::vec3 &worldPoint);
 
 /**
@@ -164,7 +161,6 @@ void AddImpulseAtPoint(Engine::Core &core, Engine::Entity entity,
  * Physics::Helper::AddAngularImpulse(core, coin, flipImpulse);
  * @endcode
  */
-void AddAngularImpulse(Engine::Core &core, Engine::Entity entity,
-                       const glm::vec3 &angularImpulse);
+void AddAngularImpulse(Engine::Core &core, Engine::Entity entity, const glm::vec3 &angularImpulse);
 
 } // namespace Physics::Helper

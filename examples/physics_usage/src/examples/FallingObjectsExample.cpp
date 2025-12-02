@@ -88,7 +88,7 @@ static void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
 static void CreateMovingPlatform(Engine::Core &core)
 {
     auto platform = Object::Helper::CreateCube(core, 1.0f, glm::vec3(0.0f, 5.0f, 0.0f),
-                                                 glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(3.0f, 0.3f, 3.0f));
+                                               glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(3.0f, 0.3f, 3.0f));
 
     auto collider = Physics::Component::BoxCollider(glm::vec3(3.0f, 0.3f, 3.0f));
     platform.AddComponent<Physics::Component::BoxCollider>(core, collider);
