@@ -96,7 +96,7 @@ static void SetupSceneSystem(Engine::Core &core)
     glm::vec3 pushPoint = doorCenter + glm::vec3(1.0f, 0.0f, 0.0f);
     glm::vec3 pushForce(0.0f, 0.0f, 15.0f);
 
-    Physics::Resource::AddForceAtPoint(core, door, pushForce, pushPoint);
+    Physics::Helper::AddForceAtPoint(core, door, pushForce, pushPoint);
 
     std::cout << "  ✓ Created door (mass = 5 kg)" << std::endl;
     std::cout << "  ✓ Applied 15N force at edge (creates rotation)\n" << std::endl;
@@ -112,7 +112,7 @@ static void SetupSceneSystem(Engine::Core &core)
     rb5.angularDamping = 0.01f;
 
     glm::vec3 angularImpulse(0.0f, 20.0f, 0.0f);
-    Physics::Resource::AddAngularImpulse(core, flywheel, angularImpulse);
+    Physics::Helper::AddAngularImpulse(core, flywheel, angularImpulse);
 
     std::cout << "  ✓ Created flywheel (mass = 10 kg)" << std::endl;
     std::cout << "  ✓ Applied 20 N·m·s angular impulse (instant spin)\n" << std::endl;
@@ -131,7 +131,7 @@ static void SetupSceneSystem(Engine::Core &core)
     glm::vec3 hitPoint = ballCenter + glm::vec3(0.0f, 0.05f, 0.0f);
     glm::vec3 batImpulse(20.0f, 5.0f, 0.0f);
 
-    Physics::Resource::AddImpulseAtPoint(core, ball, batImpulse, hitPoint);
+    Physics::Helper::AddImpulseAtPoint(core, ball, batImpulse, hitPoint);
 
     std::cout << "  ✓ Created baseball (mass = 145 g)" << std::endl;
     std::cout << "  ✓ Applied impulse at point (backspin launch)\n" << std::endl;
@@ -152,14 +152,14 @@ static void ApplyContinuousForcesSystem(Engine::Core &core)
     core.GetRegistry().view<PropelledCubeTag, Physics::Component::RigidBody>().each(
         [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             glm::vec3 thrustForce(0.0f, 20.0f, 0.0f);
-            Physics::Resource::AddForce(core, entity, thrustForce);
+            Physics::Helper::AddForce(core, entity, thrustForce);
         });
 
     // Example 3: Apply continuous torque to spinner
     core.GetRegistry().view<SpinnerTag, Physics::Component::RigidBody>().each(
         [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             glm::vec3 torque(0.0f, 10.0f, 0.0f);
-            Physics::Resource::AddTorque(core, entity, torque);
+            Physics::Helper::AddTorque(core, entity, torque);
         });
 
     if (frame == 1)
@@ -187,7 +187,7 @@ static void ApplyExplosionImpulsesSystem(Engine::Core &core)
             glm::vec3 direction = glm::normalize(tag.position - explosionCenter);
             glm::vec3 impulse = direction * explosionStrength;
 
-            Physics::Resource::AddImpulse(core, entity, impulse);
+            Physics::Helper::AddImpulse(core, entity, impulse);
 
             std::cout << "  → Debris at (" << tag.position.x << ", " << tag.position.y << ", " << tag.position.z
                       << "): " << explosionStrength << "N·s impulse" << std::endl;

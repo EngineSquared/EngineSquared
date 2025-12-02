@@ -1,9 +1,25 @@
-/*
-** EPITECH PROJECT, 2025
-** EngineSquared - Physics Plugin
-** File description:
-** VelocityController - API for direct velocity control (Issue #002)
-*/
+/**************************************************************************
+ * EngineSquared v0.1.1
+ *
+ * EngineSquared is a software package, part of the Engine² organization.
+ *
+ * This file is part of the EngineSquared project that is under MIT License.
+ * Copyright © 2025-present by @EngineSquared, All rights reserved.
+ *
+ * EngineSquared is a free software: you can redistribute it and/or modify
+ * it under the terms of the MIT License. See the project's LICENSE file for
+ * the full license text and details.
+ *
+ * @file VelocityController.hpp
+ * @brief API for direct velocity control
+ *
+ * This API provides a clean interface for direct velocity control of rigid bodies.
+ * It handles all the necessary conversions and error checking.
+ *
+ * @author @EngineSquared
+ * @version 0.1.1
+ * @date 2025-11-05
+ **************************************************************************/
 
 #pragma once
 
@@ -12,7 +28,7 @@
 
 #include <glm/glm.hpp>
 
-namespace Physics::Resource {
+namespace Physics::Helper {
 
 // ============================================================================
 // LINEAR VELOCITY CONTROL
@@ -40,7 +56,8 @@ namespace Physics::Resource {
  *
  * @see GetLinearVelocity, AddLinearVelocity
  */
-void SetLinearVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &velocity);
+void SetLinearVelocity(Engine::Core& core, Engine::Entity entity,
+                       const glm::vec3& velocity);
 
 /**
  * @brief Get the current linear velocity of a rigid body (world space)
@@ -53,7 +70,7 @@ void SetLinearVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec
  *
  * @see SetLinearVelocity, AddLinearVelocity
  */
-glm::vec3 GetLinearVelocity(Engine::Core &core, Engine::Entity entity);
+glm::vec3 GetLinearVelocity(Engine::Core& core, Engine::Entity entity);
 
 /**
  * @brief Add a delta to the current linear velocity
@@ -72,7 +89,8 @@ glm::vec3 GetLinearVelocity(Engine::Core &core, Engine::Entity entity);
  *
  * @see SetLinearVelocity, GetLinearVelocity
  */
-void AddLinearVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &deltaVelocity);
+void AddLinearVelocity(Engine::Core& core, Engine::Entity entity,
+                       const glm::vec3& deltaVelocity);
 
 // ============================================================================
 // ANGULAR VELOCITY CONTROL
@@ -105,7 +123,8 @@ void AddLinearVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec
  *
  * @see GetAngularVelocity, AddAngularVelocity
  */
-void SetAngularVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &angularVelocity);
+void SetAngularVelocity(Engine::Core& core, Engine::Entity entity,
+                        const glm::vec3& angularVelocity);
 
 /**
  * @brief Get the current angular velocity of a rigid body (world space)
@@ -119,7 +138,7 @@ void SetAngularVelocity(Engine::Core &core, Engine::Entity entity, const glm::ve
  *
  * @see SetAngularVelocity, AddAngularVelocity
  */
-glm::vec3 GetAngularVelocity(Engine::Core &core, Engine::Entity entity);
+glm::vec3 GetAngularVelocity(Engine::Core& core, Engine::Entity entity);
 
 /**
  * @brief Add a delta to the current angular velocity
@@ -138,6 +157,7 @@ glm::vec3 GetAngularVelocity(Engine::Core &core, Engine::Entity entity);
  *
  * @see SetAngularVelocity, GetAngularVelocity
  */
-void AddAngularVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &deltaAngularVelocity);
+void AddAngularVelocity(Engine::Core& core, Engine::Entity entity,
+                        const glm::vec3& deltaAngularVelocity);
 
-} // namespace Physics::Resource
+}  // namespace Physics::Helper

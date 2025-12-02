@@ -11,6 +11,7 @@
 #include "Physics.hpp"
 
 using namespace Physics::Resource;
+using namespace Physics::Helper;
 using namespace Physics::Component;
 
 class ForceApplicatorSimpleTest : public ::testing::Test {

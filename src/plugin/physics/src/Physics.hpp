@@ -13,12 +13,8 @@
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
 
-// Resource
-#include "resource/ForceApplicator.hpp"
-#include "resource/JoltConversions.hpp"
-#include "resource/KinematicMover.hpp"
+// Resources
 #include "resource/PhysicsManager.hpp"
-#include "resource/VelocityController.hpp"
 
 // Systems
 #include "system/InitJoltPhysics.hpp"
@@ -26,6 +22,11 @@
 #include "system/PhysicsUpdate.hpp"
 #include "system/RigidBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
+
+// Helpers
+#include "helper/ForceApplicator.hpp"
+#include "helper/KinematicMover.hpp"
+#include "helper/VelocityController.hpp"
 
 // Utils
 #include "utils/BroadPhaseLayerImpl.hpp"

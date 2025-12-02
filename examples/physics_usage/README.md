@@ -55,8 +55,8 @@ Demonstrates the Force Applicator API for applying forces and impulses to rigid 
 
 ```bash
 cd examples/physics_usage
-xmake
-xmake run PhysicsUsage
+xmake -P .
+xmake run PhysicsUsage -P .
 ```
 
 ### From the repository root:

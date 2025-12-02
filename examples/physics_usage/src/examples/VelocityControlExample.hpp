@@ -1,9 +1,11 @@
-/*
-** EPITECH PROJECT, 2025
-** EngineSquared - Physics Usage Examples
-** File description:
-** VelocityControlExample - Demonstrates Velocity Control API (Issue #002)
-*/
+/**************************************************************************
+ * VelocityControlExample - Demonstration of Velocity Control API
+ *
+ * This example demonstrates how to use the Physics plugin with RigidBody
+ * components to showcase velocity control features, including:
+ * - GetLinearVelocity / SetLinearVelocity / AddLinearVelocity
+ * - GetAngularVelocity / SetAngularVelocity / AddAngularVelocity
+ **************************************************************************/
 
 #pragma once
 
@@ -24,6 +26,9 @@ class VelocityControlExample : public Engine::APlugin {
     explicit VelocityControlExample(Engine::Core &core) : APlugin(core) {}
 
     void Bind() override;
+
+    const char *GetName() const { return "VelocityControlExample"; }
+    const char *GetVersion() const { return "1.0.0"; }
 };
 
 } // namespace Examples

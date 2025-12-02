@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** EngineSquared - Physics Usage Examples
-** File description:
-** VelocityControlExample - Implementation (Issue #002)
-*/
-
 #include "VelocityControlExample.hpp"
 
 #include "Object.hpp"
@@ -54,7 +47,7 @@ static void SetupSceneSystem(Engine::Core &core)
     registry.emplace<ConstantVelocityTag>(constantCube);
 
     // Set constant velocity: 2 m/s to the right
-    Physics::Resource::SetLinearVelocity(core, Engine::Entity(constantCube), glm::vec3(2.0f, 0.0f, 0.0f));
+    Physics::Helper::SetLinearVelocity(core, Engine::Entity(constantCube), glm::vec3(2.0f, 0.0f, 0.0f));
 
     std::cout << "  ✓ Created cube with constant velocity (2 m/s →)" << std::endl;
     std::cout << "  → Moves at constant speed without forces\n" << std::endl;
@@ -80,7 +73,7 @@ static void SetupSceneSystem(Engine::Core &core)
     // Set angular velocity: 90°/second around Y-axis
     float degreesPerSecond = 90.0f;
     float radiansPerSecond = glm::radians(degreesPerSecond);
-    Physics::Resource::SetAngularVelocity(core, Engine::Entity(spinner), glm::vec3(0.0f, radiansPerSecond, 0.0f));
+    Physics::Helper::SetAngularVelocity(core, Engine::Entity(spinner), glm::vec3(0.0f, radiansPerSecond, 0.0f));
 
     std::cout << "  ✓ Created spinning cube (" << degreesPerSecond << "°/sec around Y)" << std::endl;
     std::cout << "  → Spins continuously without torque\n" << std::endl;
@@ -104,7 +97,7 @@ static void SetupSceneSystem(Engine::Core &core)
     registry.emplace<OscillatorTag>(oscillator);
 
     // Initial velocity
-    Physics::Resource::SetLinearVelocity(core, Engine::Entity(oscillator), glm::vec3(0.0f, 3.0f, 0.0f));
+    Physics::Helper::SetLinearVelocity(core, Engine::Entity(oscillator), glm::vec3(0.0f, 3.0f, 0.0f));
 
     std::cout << "  ✓ Created oscillating cube (bounces up/down)" << std::endl;
     std::cout << "  → Velocity reversed at bounds\n" << std::endl;
@@ -143,7 +136,7 @@ static void VelocityUpdateSystem(Engine::Core &core)
         [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             float oscillate = std::sin(frame * 0.1f) * 5.0f;
             glm::vec3 velocity(oscillate, 0.0f, 0.0f);
-            Physics::Resource::SetLinearVelocity(core, entity, velocity);
+            Physics::Helper::SetLinearVelocity(core, entity, velocity);
         });
 
     // Example 2: Spinner - set angular velocity using SetAngularVelocity
@@ -151,18 +144,18 @@ static void VelocityUpdateSystem(Engine::Core &core)
         [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             // Spin around Y axis at 90 degrees per second
             glm::vec3 angularVelocity(0.0f, glm::radians(90.0f), 0.0f);
-            Physics::Resource::SetAngularVelocity(core, entity, angularVelocity);
+            Physics::Helper::SetAngularVelocity(core, entity, angularVelocity);
         });
 
     // Example 3: Constant velocity cube
     core.GetRegistry().view<ConstantVelocityTag, Physics::Component::RigidBody>().each(
         [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             // Check velocity and reset if needed (demonstrate Get+Set)
-            glm::vec3 currentVel = Physics::Resource::GetLinearVelocity(core, entity);
+            glm::vec3 currentVel = Physics::Helper::GetLinearVelocity(core, entity);
             if (glm::length(currentVel) < 2.9f)
             {
                 // Reset to target velocity if it's been dampened
-                Physics::Resource::SetLinearVelocity(core, entity, glm::vec3(0.0f, 3.0f, 0.0f));
+                Physics::Helper::SetLinearVelocity(core, entity, glm::vec3(0.0f, 3.0f, 0.0f));
             }
         });
 
@@ -173,7 +166,7 @@ static void VelocityUpdateSystem(Engine::Core &core)
             [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
                 // Add small velocity increment each frame (acceleration)
                 glm::vec3 deltaVelocity(0.05f, 0.0f, 0.0f);
-                Physics::Resource::AddLinearVelocity(core, entity, deltaVelocity);
+                Physics::Helper::AddLinearVelocity(core, entity, deltaVelocity);
             });
     }
 }
@@ -206,20 +199,20 @@ static void PrintSummarySystem(Engine::Core &core)
 
     core.GetRegistry().view<ConstantVelocityTag, Physics::Component::RigidBody>().each(
         [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
-            glm::vec3 vel = Physics::Resource::GetLinearVelocity(core, entity);
+            glm::vec3 vel = Physics::Helper::GetLinearVelocity(core, entity);
             std::cout << "  Constant Velocity: (" << vel.x << ", " << vel.y << ", " << vel.z << ") m/s" << std::endl;
         });
 
     core.GetRegistry().view<SpinnerTag, Physics::Component::RigidBody>().each(
         [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
-            glm::vec3 angVel = Physics::Resource::GetAngularVelocity(core, entity);
+            glm::vec3 angVel = Physics::Helper::GetAngularVelocity(core, entity);
             float degreesPerSec = glm::degrees(angVel.y);
             std::cout << "  Spinner: " << degreesPerSec << "°/sec around Y" << std::endl;
         });
 
     core.GetRegistry().view<AcceleratorTag, Physics::Component::RigidBody>().each(
         [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
-            glm::vec3 vel = Physics::Resource::GetLinearVelocity(core, entity);
+            glm::vec3 vel = Physics::Helper::GetLinearVelocity(core, entity);
             std::cout << "  Accelerator: (" << vel.x << ", " << vel.y << ", " << vel.z
                       << ") m/s (reached after acceleration)" << std::endl;
         });

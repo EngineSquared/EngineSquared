@@ -27,7 +27,7 @@
 #include <Engine.hpp>
 #include <glm/glm.hpp>
 
-namespace Physics::Resource {
+namespace Physics::Helper {
 
 //============================================================================
 // CONTINUOUS FORCES (applied each frame)
@@ -49,7 +49,7 @@ namespace Physics::Resource {
  * @example Apply upward force (like a thruster):
  * @code
  * glm::vec3 thrustForce(0.0f, 100.0f, 0.0f); // 100N upward
- * Physics::Resource::AddForce(core, rocket, thrustForce);
+ * Physics::Helper::AddForce(core, rocket, thrustForce);
  * @endcode
  */
 void AddForce(Engine::Core &core, Engine::Entity entity, const glm::vec3 &force);
@@ -72,10 +72,12 @@ void AddForce(Engine::Core &core, Engine::Entity entity, const glm::vec3 &force)
  * @code
  * glm::vec3 windForce(50.0f, 0.0f, 0.0f);
  * glm::vec3 sailPosition = transform.position + glm::vec3(0, 2, 0);
- * Physics::Resource::AddForceAtPoint(core, boat, windForce, sailPosition);
+ * Physics::Helper::AddForceAtPoint(core, boat, windForce, sailPosition);
  * @endcode
  */
-void AddForceAtPoint(Engine::Core &core, Engine::Entity entity, const glm::vec3 &force, const glm::vec3 &worldPoint);
+void AddForceAtPoint(Engine::Core &core, Engine::Entity entity,
+                     const glm::vec3 &force,
+                     const glm::vec3 &worldPoint);
 
 /**
  * @brief Apply a torque (rotational force) to a rigid body
@@ -91,7 +93,7 @@ void AddForceAtPoint(Engine::Core &core, Engine::Entity entity, const glm::vec3 
  * @example Spin a wheel around its Y axis:
  * @code
  * glm::vec3 spinTorque(0.0f, 10.0f, 0.0f); // 10 Nm around Y
- * Physics::Resource::AddTorque(core, wheel, spinTorque);
+ * Physics::Helper::AddTorque(core, wheel, spinTorque);
  * @endcode
  */
 void AddTorque(Engine::Core &core, Engine::Entity entity, const glm::vec3 &torque);
@@ -116,7 +118,7 @@ void AddTorque(Engine::Core &core, Engine::Entity entity, const glm::vec3 &torqu
  * @example Make a character jump:
  * @code
  * glm::vec3 jumpImpulse(0.0f, 300.0f, 0.0f); // 300 kg⋅m/s upward
- * Physics::Resource::AddImpulse(core, player, jumpImpulse);
+ * Physics::Helper::AddImpulse(core, player, jumpImpulse);
  * @endcode
  */
 void AddImpulse(Engine::Core &core, Engine::Entity entity, const glm::vec3 &impulse);
@@ -138,10 +140,11 @@ void AddImpulse(Engine::Core &core, Engine::Entity entity, const glm::vec3 &impu
  * glm::vec3 explosionCenter(0, 0, 0);
  * glm::vec3 toObject = transform.position - explosionCenter;
  * glm::vec3 impulse = glm::normalize(toObject) * 500.0f;
- * Physics::Resource::AddImpulseAtPoint(core, object, impulse, transform.position);
+ * Physics::Helper::AddImpulseAtPoint(core, object, impulse, transform.position);
  * @endcode
  */
-void AddImpulseAtPoint(Engine::Core &core, Engine::Entity entity, const glm::vec3 &impulse,
+void AddImpulseAtPoint(Engine::Core &core, Engine::Entity entity,
+                       const glm::vec3 &impulse,
                        const glm::vec3 &worldPoint);
 
 /**
@@ -158,9 +161,10 @@ void AddImpulseAtPoint(Engine::Core &core, Engine::Entity entity, const glm::vec
  * @example Instantly spin a coin when flipped:
  * @code
  * glm::vec3 flipImpulse(0.0f, 50.0f, 0.0f); // 50 kg⋅m²/s around Y
- * Physics::Resource::AddAngularImpulse(core, coin, flipImpulse);
+ * Physics::Helper::AddAngularImpulse(core, coin, flipImpulse);
  * @endcode
  */
-void AddAngularImpulse(Engine::Core &core, Engine::Entity entity, const glm::vec3 &angularImpulse);
+void AddAngularImpulse(Engine::Core &core, Engine::Entity entity,
+                       const glm::vec3 &angularImpulse);
 
-} // namespace Physics::Resource
+} // namespace Physics::Helper

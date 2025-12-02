@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** EngineSquared - Physics Usage Examples
-** File description:
-** KinematicMovementExample - Implementation (Issue #003)
-*/
-
 #include "KinematicMovementExample.hpp"
 
 #include "Object.hpp"
@@ -145,7 +138,7 @@ static void KinematicMovementSystem(Engine::Core &core)
             glm::vec3 targetPosition(xPosition, 1.0f, 0.0f);
             glm::quat targetRotation = glm::quat(1, 0, 0, 0);
 
-            Physics::Resource::MoveKinematic(core, entity, targetPosition, targetRotation, deltaTime);
+            Physics::Helper::MoveKinematic(core, entity, targetPosition, targetRotation, deltaTime);
         });
 
     // Example 2: Elevator (vertical movement)
@@ -158,7 +151,7 @@ static void KinematicMovementSystem(Engine::Core &core)
             glm::vec3 targetPosition(5.0f, yPosition, 0.0f);
             glm::quat targetRotation = glm::quat(1, 0, 0, 0);
 
-            Physics::Resource::MoveKinematic(core, entity, targetPosition, targetRotation, deltaTime);
+            Physics::Helper::MoveKinematic(core, entity, targetPosition, targetRotation, deltaTime);
         });
 
     // Example 3: Rotating Door (rotation around Y axis)
@@ -171,7 +164,7 @@ static void KinematicMovementSystem(Engine::Core &core)
             glm::vec3 targetPosition(0.0f, 1.5f, -5.0f);
             glm::quat targetRotation = glm::angleAxis(angle, glm::vec3(0, 1, 0));
 
-            Physics::Resource::MoveKinematic(core, entity, targetPosition, targetRotation, deltaTime);
+            Physics::Helper::MoveKinematic(core, entity, targetPosition, targetRotation, deltaTime);
         });
 }
 

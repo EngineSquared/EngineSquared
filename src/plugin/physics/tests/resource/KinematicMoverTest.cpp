@@ -12,6 +12,7 @@
 #include "Physics.hpp"
 
 using namespace Physics::Resource;
+using namespace Physics::Helper;
 using namespace Physics::Component;
 
 class KinematicMoverTest : public ::testing::Test {

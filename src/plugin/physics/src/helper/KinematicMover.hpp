@@ -1,9 +1,26 @@
-/*
-** EPITECH PROJECT, 2025
-** EngineSquared - Physics Plugin
-** File description:
-** KinematicMover - API for kinematic body movement (Issue #003)
-*/
+/**************************************************************************
+ * EngineSquared v0.1.1
+ *
+ * EngineSquared is a software package, part of the Engine² organization.
+ *
+ * This file is part of the EngineSquared project that is under MIT License.
+ * Copyright © 2025-present by @EngineSquared, All rights reserved.
+ *
+ * EngineSquared is a free software: you can redistribute it and/or modify
+ * it under the terms of the MIT License. See the project's LICENSE file for
+ * the full license text and details.
+ *
+ * @file KinematicMover.hpp
+ * @brief API for kinematic body movement control
+ *
+ * This API provides a clean interface for moving kinematic bodies
+ * to entities with RigidBody components. It handles all the necessary
+ * conversions and error checking.
+ *
+ * @author @EngineSquared
+ * @version 0.1.1
+ * @date 2025-11-05
+ **************************************************************************/
 
 #pragma once
 
@@ -13,7 +30,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-namespace Physics::Resource {
+namespace Physics::Helper {
 
 // ============================================================================
 // KINEMATIC MOVEMENT
@@ -54,8 +71,9 @@ namespace Physics::Resource {
  *
  * @see SetKinematicVelocity, GetKinematicTarget
  */
-void MoveKinematic(Engine::Core &core, Engine::Entity entity, const glm::vec3 &targetPosition,
-                   const glm::quat &targetRotation, float deltaTime);
+void MoveKinematic(Engine::Core& core, Engine::Entity entity,
+                   const glm::vec3& targetPosition, const glm::quat& targetRotation,
+                   float deltaTime);
 
 /**
  * @brief Set kinematic body to move with constant velocity
@@ -87,7 +105,8 @@ void MoveKinematic(Engine::Core &core, Engine::Entity entity, const glm::vec3 &t
  *
  * @see MoveKinematic
  */
-void SetKinematicVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &velocity, float deltaTime);
+void SetKinematicVelocity(Engine::Core& core, Engine::Entity entity,
+                          const glm::vec3& velocity, float deltaTime);
 
 // ============================================================================
 // KINEMATIC STATE QUERY (Optional - for debugging)
@@ -97,7 +116,7 @@ void SetKinematicVelocity(Engine::Core &core, Engine::Entity entity, const glm::
  * @brief Information about a kinematic body's current movement target
  */
 struct KinematicTarget {
-    glm::vec3 position{0.0f};       ///< Target position (world space)
+    glm::vec3 position{0.0f};      ///< Target position (world space)
     glm::quat rotation{1, 0, 0, 0}; ///< Target rotation (world space)
     bool hasTarget = false;         ///< Whether a target is currently set
 };
@@ -117,6 +136,6 @@ struct KinematicTarget {
  *
  * @see MoveKinematic
  */
-KinematicTarget GetKinematicTarget(Engine::Core &core, Engine::Entity entity);
+KinematicTarget GetKinematicTarget(Engine::Core& core, Engine::Entity entity);
 
-} // namespace Physics::Resource
+}  // namespace Physics::Helper
