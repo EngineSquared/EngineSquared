@@ -27,7 +27,7 @@ static constexpr inline const uint32_t ENTITY_ID_MASK =
     entt::entt_traits<Engine::Entity::entity_id_type>::version_mask;
 
 void ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Body &inBody2,
-                                                         const JPH::ContactManifold &, JPH::ContactSettings &)
+                                         const JPH::ContactManifold &, JPH::ContactSettings &)
 {
     auto entity1 = static_cast<Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
@@ -37,7 +37,7 @@ void ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Bo
 }
 
 void ContactListenerImpl::OnContactPersisted(const JPH::Body &inBody1, const JPH::Body &inBody2,
-                                                             const JPH::ContactManifold &, JPH::ContactSettings &)
+                                             const JPH::ContactManifold &, JPH::ContactSettings &)
 {
     auto entity1 = static_cast<Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
