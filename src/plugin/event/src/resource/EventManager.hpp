@@ -1,6 +1,7 @@
 #pragma once
 
 #include <any>
+#include <mutex>
 #include <functional>
 #include <memory>
 #include <queue>
@@ -20,6 +21,29 @@ class EventManager {
     EventManager() = default;
     ~EventManager() = default;
 
+    EventManager(const EventManager &) = delete;
+    EventManager &operator=(const EventManager &) = delete;
+
+    EventManager(EventManager &&other) noexcept
+    {
+        std::lock_guard<std::mutex> lock(other._queueMutex);
+        _eventCallbacks = std::move(other._eventCallbacks);
+        _eventQueue = std::move(other._eventQueue);
+    }
+
+    EventManager &operator=(EventManager &&other) noexcept
+    {
+        if (this != &other)
+        {
+            std::lock_guard<std::mutex> lock(other._queueMutex);
+            std::lock_guard<std::mutex> lock2(_queueMutex);
+            _eventCallbacks = std::move(other._eventCallbacks);
+            _eventQueue = std::move(other._eventQueue);
+        }
+
+        return *this;
+    }
+
     template <typename TEvent, typename TCallBack> EventCallbackID RegisterCallback(TCallBack &&callback)
     {
         EventTypeID typeID = _GetId<TEvent>();
@@ -34,15 +58,22 @@ class EventManager {
     template <typename TEvent> void PushEvent(const TEvent &event)
     {
         EventTypeID typeID = _GetId<TEvent>();
+        std::lock_guard<std::mutex> lock(_queueMutex);
         _eventQueue.push({typeID, event});
     }
 
     void ProcessEvents(Engine::Core &core)
     {
-        while (!_eventQueue.empty())
+        std::queue<std::pair<EventTypeID, std::any>> queueCopy;
         {
-            auto [typeID, event] = std::move(_eventQueue.front());
-            _eventQueue.pop();
+            std::lock_guard<std::mutex> lock(_queueMutex);
+            std::swap(queueCopy, _eventQueue);
+        }
+
+        while (!queueCopy.empty())
+        {
+            auto [typeID, event] = std::move(queueCopy.front());
+            queueCopy.pop();
 
             if (_eventCallbacks.contains(typeID))
             {
@@ -79,5 +110,6 @@ class EventManager {
 
     std::unordered_map<EventTypeID, std::shared_ptr<Utils::IEventContainer>> _eventCallbacks;
     std::queue<std::pair<EventTypeID, std::any>> _eventQueue;
+    std::mutex _queueMutex;
 };
 } // namespace Event::Resource
