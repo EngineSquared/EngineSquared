@@ -2,10 +2,10 @@
 
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
-#include "system/initialization/CreateRenderSurface.hpp"
 #include "exception/RenderSurfaceCreationError.hpp"
 #include "resource/Context.hpp"
 #include "resource/Surface.hpp"
+#include "system/initialization/CreateRenderSurface.hpp"
 
 TEST(CreateRenderSurfaceTest, ReturnsEarlyWhenWindowSystemIsNone)
 {
@@ -75,4 +75,3 @@ TEST(CreateRenderSurfaceTest, SystemCanBeCalledDirectly)
     EXPECT_NO_THROW(core.RunSystems());
     EXPECT_TRUE(systemRan);
 }
-
