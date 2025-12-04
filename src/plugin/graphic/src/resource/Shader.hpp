@@ -1,5 +1,6 @@
 #pragma once
 
+#include "resource/Context.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "utils/shader/BindGroupLayout.hpp"
 #include "utils/shader/ColorTargetState.hpp"
@@ -89,7 +90,11 @@ class Shader {
         return shader;
     }
 
-    const ShaderDescriptor &getDescriptor() const { return descriptor; }
+    const ShaderDescriptor &GetDescriptor() const { return descriptor; }
+    wgpu::BindGroupLayout GetBindGroupLayout(uint32_t groupIndex = 0) const
+    {
+        return pipeline.getBindGroupLayout(groupIndex);
+    }
 
   private:
     Shader(void) = default;

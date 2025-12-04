@@ -83,3 +83,8 @@ bool Engine::Core::IsEntityValid(entt::entity entity) { return GetRegistry().val
 void Engine::Core::ClearEntities() { this->_registry->clear(); }
 
 bool Engine::Core::HasPlugin(std::type_index type) const { return this->_plugins.contains(type); }
+
+void Engine::Core::SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy policy)
+{
+    _schedulers.SetErrorPolicyForAllSchedulers(policy);
+}
