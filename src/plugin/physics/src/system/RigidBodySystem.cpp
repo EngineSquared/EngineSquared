@@ -10,15 +10,15 @@
 #include "exception/RigidBodyError.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
-#include <fmt/format.h>
 #include <algorithm>
+#include <fmt/format.h>
 
 #include "Object.hpp"
 
-#include <Jolt/Physics/Body/BodyCreationSettings.h>
-#include <Jolt/Physics/Collision/Shape/BoxShape.h>
-#include <Jolt/Physics/Body/MotionQuality.h>
 #include <Jolt/Physics/Body/AllowedDOFs.h>
+#include <Jolt/Physics/Body/BodyCreationSettings.h>
+#include <Jolt/Physics/Body/MotionQuality.h>
+#include <Jolt/Physics/Collision/Shape/BoxShape.h>
 
 namespace Physics::System {
 
@@ -88,7 +88,7 @@ static JPH::RefConst<JPH::Shape> GetOrCreateColliderShape(entt::registry &regist
  * allowed DOFs and advanced flags (e.g. enhanced internal edge removal).
  */
 static void ApplyRigidBodyPropertiesToBodySettings(const Component::RigidBody &rigidBody,
-                                                  JPH::BodyCreationSettings &bodySettings)
+                                                   JPH::BodyCreationSettings &bodySettings)
 {
     float friction = rigidBody.friction;
     if (friction < 0.0f)

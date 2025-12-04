@@ -6,9 +6,9 @@
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
 
-#include <Jolt/Physics/Body/MotionProperties.h>
-#include <Jolt/Physics/Body/BodyLockInterface.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
+#include <Jolt/Physics/Body/BodyLockInterface.h>
+#include <Jolt/Physics/Body/MotionProperties.h>
 
 #include <fmt/format.h>
 
@@ -96,7 +96,8 @@ void SetRestitution(Engine::Core &core, Engine::Entity entity, float restitution
     bodyInterface.SetRestitution(internal.bodyID, rb.restitution);
 }
 
-void SetMotionQuality(Engine::Core &core, Engine::Entity entity, Component::MotionQuality motionQuality, bool useLinearCast)
+void SetMotionQuality(Engine::Core &core, Engine::Entity entity, Component::MotionQuality motionQuality,
+                      bool useLinearCast)
 {
     auto &registry = core.GetRegistry();
     entt::entity enttEntity = static_cast<entt::entity>(entity);
@@ -168,7 +169,7 @@ void SetEnhancedInternalEdgeRemoval(Engine::Core &core, Engine::Entity entity, b
     if (body == nullptr)
     {
         Log::Warn(fmt::format("[RigidBodyController] SetEnhancedInternalEdgeRemoval: Body null for Entity {}",
-                               entt::to_integral(enttEntity)));
+                              entt::to_integral(enttEntity)));
         return;
     }
 
@@ -200,15 +201,16 @@ void SetAxisLocks(Engine::Core &core, Engine::Entity entity, bool lockPositionX,
     auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
 
     // Build allowed DOFs mask
-    JPH::EAllowedDOFs allowed = BuildAllowedDOFs(lockPositionX, lockPositionY, lockPositionZ, lockRotationX, lockRotationY,
-                                                lockRotationZ);
+    JPH::EAllowedDOFs allowed =
+        BuildAllowedDOFs(lockPositionX, lockPositionY, lockPositionZ, lockRotationX, lockRotationY, lockRotationZ);
 
     // If all DOFs are locked for a non-static body, fallback / warn
     auto &bodyInterface = physicsManager.GetBodyInterface();
     JPH::EMotionType motionType = bodyInterface.GetMotionType(internal.bodyID);
     if (allowed == JPH::EAllowedDOFs::None && motionType != JPH::EMotionType::Static)
     {
-        Log::Warn("[RigidBodyController] SetAxisLocks: All axis locked for a non-static body - falling back to All DOFs");
+        Log::Warn(
+            "[RigidBodyController] SetAxisLocks: All axis locked for a non-static body - falling back to All DOFs");
         allowed = JPH::EAllowedDOFs::All;
     }
 
@@ -217,8 +219,8 @@ void SetAxisLocks(Engine::Core &core, Engine::Entity entity, bool lockPositionX,
     JPH::Body *body = bodyLockInterface.TryGetBody(internal.bodyID);
     if (body == nullptr)
     {
-        Log::Warn(fmt::format("[RigidBodyController] SetAxisLocks: Body null for Entity {}",
-                               entt::to_integral(enttEntity)));
+        Log::Warn(
+            fmt::format("[RigidBodyController] SetAxisLocks: Body null for Entity {}", entt::to_integral(enttEntity)));
         return;
     }
 
@@ -226,7 +228,7 @@ void SetAxisLocks(Engine::Core &core, Engine::Entity entity, bool lockPositionX,
     if (!mp)
     {
         Log::Warn(fmt::format("[RigidBodyController] SetAxisLocks: MotionProperties null for Entity {}",
-                               entt::to_integral(enttEntity)));
+                              entt::to_integral(enttEntity)));
         return;
     }
 
@@ -259,8 +261,8 @@ void SetLinearDamping(Engine::Core &core, Engine::Entity entity, float linearDam
     auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
 
     // Set using BodyInterface
-    // BodyInterface doesn't provide SetLinearDamping ID-based wrapper in older Jolt versions, but Get/Set available via MotionProperties.
-    // We'll use BodyInterface if available, otherwise write via body pointer.
+    // BodyInterface doesn't provide SetLinearDamping ID-based wrapper in older Jolt versions, but Get/Set available via
+    // MotionProperties. We'll use BodyInterface if available, otherwise write via body pointer.
     auto &bodyLockInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
     JPH::Body *body = bodyLockInterface.TryGetBody(internal.bodyID);
     if (body && body->GetMotionProperties())
@@ -304,8 +306,8 @@ void SetMass(Engine::Core &core, Engine::Entity entity, float mass)
 
     if (!registry.all_of<Component::RigidBodyInternal>(enttEntity))
     {
-        Log::Error(fmt::format("[RigidBodyController] SetMass: Entity {} has no RigidBody",
-                               entt::to_integral(enttEntity)));
+        Log::Error(
+            fmt::format("[RigidBodyController] SetMass: Entity {} has no RigidBody", entt::to_integral(enttEntity)));
         return;
     }
 
@@ -325,8 +327,7 @@ void SetMass(Engine::Core &core, Engine::Entity entity, float mass)
     JPH::Body *body = bodyLockInterface.TryGetBody(internal.bodyID);
     if (body == nullptr)
     {
-        Log::Warn(fmt::format("[RigidBodyController] SetMass: Body null for Entity {}",
-                               entt::to_integral(enttEntity)));
+        Log::Warn(fmt::format("[RigidBodyController] SetMass: Body null for Entity {}", entt::to_integral(enttEntity)));
         return;
     }
 
@@ -334,7 +335,7 @@ void SetMass(Engine::Core &core, Engine::Entity entity, float mass)
     if (!mp)
     {
         Log::Warn(fmt::format("[RigidBodyController] SetMass: MotionProperties null for Entity {}",
-                               entt::to_integral(enttEntity)));
+                              entt::to_integral(enttEntity)));
         return;
     }
 

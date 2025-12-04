@@ -1,7 +1,7 @@
 #pragma once
 
-#include "core/Core.hpp"
 #include "component/RigidBody.hpp"
+#include "core/Core.hpp"
 
 namespace Physics::Helper {
 

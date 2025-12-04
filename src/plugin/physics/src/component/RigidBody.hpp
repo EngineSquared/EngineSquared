@@ -24,9 +24,9 @@
 #pragma once
 
 #include "utils/Layers.hpp"
-#include <Jolt/Physics/Body/MotionType.h>
-#include <Jolt/Physics/Body/MotionQuality.h>
 #include <Jolt/Physics/Body/AllowedDOFs.h>
+#include <Jolt/Physics/Body/MotionQuality.h>
+#include <Jolt/Physics/Body/MotionType.h>
 #include <Jolt/Physics/EActivation.h>
 #include <cstdint>
 

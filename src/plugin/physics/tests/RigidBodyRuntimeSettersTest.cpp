@@ -16,7 +16,7 @@ using namespace Physics::Component;
 using namespace Physics::Resource;
 
 class RigidBodyRuntimeSettersTest : public ::testing::Test {
-protected:
+  protected:
     void SetUp() override
     {
         core = std::make_unique<Engine::Core>();
@@ -39,10 +39,7 @@ protected:
         internal = core->GetRegistry().try_get<RigidBodyInternal>(entity);
     }
 
-    void TearDown() override
-    {
-        core.reset();
-    }
+    void TearDown() override { core.reset(); }
 
     std::unique_ptr<Engine::Core> core;
     Engine::Entity entity{0};
