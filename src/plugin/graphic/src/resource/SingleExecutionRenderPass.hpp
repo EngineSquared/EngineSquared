@@ -4,8 +4,7 @@
 
 namespace Graphic::Resource {
 
-template <typename TDerived>
-class ASingleExecutionRenderPass : public ARenderPass<TDerived> {
+template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPass<TDerived> {
   public:
     ASingleExecutionRenderPass(std::string_view name) : ARenderPass<TDerived>(name) {}
 
@@ -13,11 +12,10 @@ class ASingleExecutionRenderPass : public ARenderPass<TDerived> {
     {
         Resource::Context &context = core.GetResource<Resource::Context>();
 
-
         if (this->GetOutputs().colorBuffers.empty() && !this->GetOutputs().depthBuffer.has_value())
         {
-            throw std::runtime_error(
-                fmt::format("RenderPass {}: No outputs defined for render pass, cannot execute.", this->GetName())); // TODO: Custom exception
+            throw std::runtime_error(fmt::format("RenderPass {}: No outputs defined for render pass, cannot execute.",
+                                                 this->GetName())); // TODO: Custom exception
         }
 
         wgpu::RenderPassEncoder renderPass = this->_CreateRenderPass(context.deviceContext, core);
@@ -27,7 +25,8 @@ class ASingleExecutionRenderPass : public ARenderPass<TDerived> {
 
         for (auto &[index, name] : this->GetInputs()) // TODO: think if it should be done here or in herited class
         {
-            Resource::BindGroup &bindGroup = core.GetResource<Resource::BindGroupManager>().Get(entt::hashed_string{name.c_str()});
+            Resource::BindGroup &bindGroup =
+                core.GetResource<Resource::BindGroupManager>().Get(entt::hashed_string{name.c_str()});
             renderPass.setBindGroup(index, bindGroup.GetBindGroup(), 0, nullptr);
         }
 
@@ -37,7 +36,8 @@ class ASingleExecutionRenderPass : public ARenderPass<TDerived> {
         renderPass.release();
 
         wgpu::CommandBufferDescriptor cmdBufferDescriptor(wgpu::Default);
-        cmdBufferDescriptor.label = wgpu::StringView(fmt::format("CreateRenderPass::{}::CommandBuffer", this->GetName()));
+        cmdBufferDescriptor.label =
+            wgpu::StringView(fmt::format("CreateRenderPass::{}::CommandBuffer", this->GetName()));
         auto commandBuffer = _commandEncoder.finish(cmdBufferDescriptor);
         _commandEncoder.release();
 
@@ -74,7 +74,9 @@ class ASingleExecutionRenderPass : public ARenderPass<TDerived> {
             const auto &colorTexture = colorTextureName.second;
             wgpu::RenderPassColorAttachment colorAttachment(wgpu::Default);
             std::string textureViewName = colorTexture.textureViewName;
-            auto textureView = core.GetResource<Resource::TextureContainer>().Get(entt::hashed_string{textureViewName.c_str()}).GetDefaultView();
+            auto textureView = core.GetResource<Resource::TextureContainer>()
+                                   .Get(entt::hashed_string{textureViewName.c_str()})
+                                   .GetDefaultView();
             colorAttachment.view = textureView;
             if (colorTexture.textureResolveTargetName.has_value())
             {

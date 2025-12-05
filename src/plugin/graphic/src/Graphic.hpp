@@ -21,7 +21,6 @@
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
-#include "resource/SingleExecutionRenderPass.hpp"
 
 // Utils
 #include "utils/GetBytesPerPixel.hpp"

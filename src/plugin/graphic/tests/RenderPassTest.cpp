@@ -2,8 +2,8 @@
 
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
-#include "utils/CreateDefaultTestShader.hpp"
 #include "utils/ConfigureHeadlessGraphics.hpp"
+#include "utils/CreateDefaultTestShader.hpp"
 #include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
@@ -11,22 +11,27 @@ struct History {
     bool called = false;
 };
 
-class SingleExecutionRenderPassTest : public Graphic::Resource::ASingleExecutionRenderPass<SingleExecutionRenderPassTest> {
-    public:
+class SingleExecutionRenderPassTest
+    : public Graphic::Resource::ASingleExecutionRenderPass<SingleExecutionRenderPassTest> {
+  public:
     SingleExecutionRenderPassTest() : ASingleExecutionRenderPass("TestRenderPass") {}
 
-    virtual void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override {
+    virtual void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
+    {
         core.GetResource<History>().called = true;
 
-        for (const auto &[id, input] : this->GetInputs()) {
-            auto &bindGroup = core.GetResource<Graphic::Resource::BindGroupManager>().Get(entt::hashed_string{input.c_str()});
+        for (const auto &[id, input] : this->GetInputs())
+        {
+            auto &bindGroup =
+                core.GetResource<Graphic::Resource::BindGroupManager>().Get(entt::hashed_string{input.c_str()});
             renderPass.setBindGroup(id, bindGroup.GetBindGroup(), 0, nullptr);
         }
 
         renderPass.draw(6, 1, 0, 0);
     }
-    private:
-        wgpu::Buffer _vertexBuffer;
+
+  private:
+    wgpu::Buffer _vertexBuffer;
 };
 
 Graphic::Resource::Shader CreateTestShader1(Graphic::Resource::Context &graphicContext)
@@ -65,15 +70,14 @@ fn fs_main() -> @location(0) vec4f {
 
     Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
-    auto bindGroupLayout =
-        Graphic::Utils::BindGroupLayout("ExampleLayout")
-            .addEntry(
-                Graphic::Utils::BufferBindGroupLayoutEntry("BufferEntry")
-                    .setType(wgpu::BufferBindingType::Uniform)
-                    .setMinBindingSize<glm::vec4>()
-                    .setVisibility(wgpu::ShaderStage::Fragment)
-                    .setBinding(0));
-    auto normalColorOutput = Graphic::Utils::ColorTargetState("returnTextureTest").setFormat(wgpu::TextureFormat::RGBA8Unorm);
+    auto bindGroupLayout = Graphic::Utils::BindGroupLayout("ExampleLayout")
+                               .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("BufferEntry")
+                                             .setType(wgpu::BufferBindingType::Uniform)
+                                             .setMinBindingSize<glm::vec4>()
+                                             .setVisibility(wgpu::ShaderStage::Fragment)
+                                             .setBinding(0));
+    auto normalColorOutput =
+        Graphic::Utils::ColorTargetState("returnTextureTest").setFormat(wgpu::TextureFormat::RGBA8Unorm);
 
     shaderDescriptor.setShader(shaderSource)
         .setName("ExampleShader")
@@ -99,7 +103,8 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
   public:
     explicit TestGPUBuffer(std::string label, glm::vec4 value) : _label(std::move(label)), _value(value) {}
 
-    void Create(Engine::Core &core) override {
+    void Create(Engine::Core &core) override
+    {
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
         bufferDesc.label = wgpu::StringView(_label);
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
@@ -107,10 +112,12 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
 
         _buffer = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);
 
-        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, glm::value_ptr(_value), bufferDesc.size);
+        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, glm::value_ptr(_value),
+                                                                          bufferDesc.size);
         _isCreated = true;
     }
-    void Destroy(Engine::Core &) override {
+    void Destroy(Engine::Core &) override
+    {
         if (_isCreated)
         {
             _isCreated = false;
@@ -119,7 +126,8 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
     }
     bool IsCreated(Engine::Core &) const override { return _isCreated; }
     void Update(Engine::Core &) override {}
-    const wgpu::Buffer &GetBuffer() const override {
+    const wgpu::Buffer &GetBuffer() const override
+    {
         if (_isCreated == false)
             throw std::runtime_error("Trying to access a GPU buffer that is not created");
         return _buffer;
@@ -141,35 +149,36 @@ void TestSystem(Engine::Core &core)
     std::unique_ptr<SingleExecutionRenderPassTest> renderPass = std::make_unique<SingleExecutionRenderPassTest>();
 
     auto shader = CreateTestShader1(context);
-    core.GetResource<Graphic::Resource::ShaderContainer>().Add(entt::hashed_string{"DefaultTestShader"}, std::move(shader));
+    core.GetResource<Graphic::Resource::ShaderContainer>().Add(entt::hashed_string{"DefaultTestShader"},
+                                                               std::move(shader));
 
-    core.GetResource<Graphic::Resource::GPUBufferContainer>().Add(entt::hashed_string{"TestGPUBuffer1"}, std::make_unique<TestGPUBuffer>("TestGPUBuffer1", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
+    core.GetResource<Graphic::Resource::GPUBufferContainer>().Add(
+        entt::hashed_string{"TestGPUBuffer1"},
+        std::make_unique<TestGPUBuffer>("TestGPUBuffer1", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
     core.GetResource<Graphic::Resource::GPUBufferContainer>().Get(entt::hashed_string{"TestGPUBuffer1"})->Create(core);
 
-    Graphic::Resource::BindGroup inputBindGroup(core, entt::hashed_string{"DefaultTestShader"}, 0,
+    Graphic::Resource::BindGroup inputBindGroup(core,
+                                                entt::hashed_string{
+                                                    "DefaultTestShader"
+    },
+                                                0,
                                                 {
                                                     {.binding = 0,
                                                      .type = Graphic::Resource::BindGroup::Asset::Type::Buffer,
                                                      .name = entt::hashed_string{"TestGPUBuffer1"},
-                                                     .size = sizeof(glm::vec4) },
+                                                     .size = sizeof(glm::vec4)},
                                                 });
-    core.GetResource<Graphic::Resource::BindGroupManager>().Add(entt::hashed_string{"TestBindGroup1"}, std::move(inputBindGroup));
+    core.GetResource<Graphic::Resource::BindGroupManager>().Add(entt::hashed_string{"TestBindGroup1"},
+                                                                std::move(inputBindGroup));
 
-    core.GetResource<Graphic::Resource::TextureContainer>().Add(entt::hashed_string{"returnTextureTest"},
-        context, "returnTextureTest",
-        Graphic::Resource::Image(
-            glm::uvec2(256, 256),
-            [](glm::uvec2) {
-                return glm::u8vec4(255, 0, 0, 255);
-            }));
+    core.GetResource<Graphic::Resource::TextureContainer>().Add(
+        entt::hashed_string{"returnTextureTest"}, context, "returnTextureTest",
+        Graphic::Resource::Image(glm::uvec2(256, 256), [](glm::uvec2) { return glm::u8vec4(255, 0, 0, 255); }));
 
     Graphic::Resource::ColorOutput colorOutput;
     colorOutput.textureViewName = "returnTextureTest";
 
-    renderPass
-        ->BindShader("DefaultTestShader")
-        .AddOutput(0, colorOutput)
-        .AddInput(0, "TestBindGroup1");
+    renderPass->BindShader("DefaultTestShader").AddOutput(0, colorOutput).AddInput(0, "TestBindGroup1");
     EXPECT_NO_THROW(renderPass->Execute(core));
 
     auto validationErrors = renderPass->validate(core);
@@ -185,9 +194,12 @@ void TestSystem(Engine::Core &core)
 
     renderPass->Execute(core);
 
-    auto image = core.GetResource<Graphic::Resource::TextureContainer>().Get(entt::hashed_string{"returnTextureTest"}).RetrieveImage(context);
+    auto image = core.GetResource<Graphic::Resource::TextureContainer>()
+                     .Get(entt::hashed_string{"returnTextureTest"})
+                     .RetrieveImage(context);
 
-    image.ToPng("/Users/miouzora/Documents/EngineSquared/RenderPassTestOutput.png"); //TODO: use a better path for tests
+    image.ToPng("/Users/miouzora/Documents/EngineSquared/RenderPassTestOutput.png"); // TODO: use a better path for
+                                                                                     // tests
 
     EXPECT_TRUE(core.GetResource<History>().called);
 }

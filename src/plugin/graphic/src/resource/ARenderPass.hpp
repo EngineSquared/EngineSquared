@@ -13,9 +13,7 @@ struct ColorOutput {
     std::optional<std::string> textureResolveTargetName = std::nullopt;
     uint32_t depthSlice = 0;
     wgpu::StoreOp storeOp = wgpu::StoreOp::Store;
-    std::function<bool(Engine::Core &, glm::vec4 &)> getClearColorCallback = [](
-        Engine::Core &,
-        glm::vec4 &) {
+    std::function<bool(Engine::Core &, glm::vec4 &)> getClearColorCallback = [](Engine::Core &, glm::vec4 &) {
         return false;
     };
 };
@@ -91,7 +89,8 @@ template <typename TDerived> class ARenderPass {
         if (_boundShader.has_value() && !shaderManager.Contains(_boundShader.value()))
         {
             errors.push_back(Utils::ValidationError{
-                .message = fmt::format("Bound shader '{}' does not exist in ShaderManager", std::string_view(_boundShader->data(), _boundShader->size())),
+                .message = fmt::format("Bound shader '{}' does not exist in ShaderManager",
+                                       std::string_view(_boundShader->data(), _boundShader->size())),
                 .location = location,
                 .severity = Utils::ValidationError::Severity::Error});
         }
