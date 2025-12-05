@@ -62,26 +62,39 @@ static JPH::Ref<JPH::SoftBodySharedSettings> CreateJoltSharedSettings(const Comp
         settings->mVertices.push_back(v);
     }
 
-    // Add faces
-    settings->mFaces.reserve(softBody.faces.size() / 3);
-    for (size_t i = 0; i < softBody.faces.size(); i += 3)
+    // Add faces (if any)
+    if (!softBody.faces.empty())
     {
-        settings->mFaces.push_back(JPH::SoftBodySharedSettings::Face(
-            softBody.faces[i],
-            softBody.faces[i + 1],
-            softBody.faces[i + 2],
-            0  // Material index
-        ));
+        settings->mFaces.reserve(softBody.faces.size() / 3);
+        for (size_t i = 0; i < softBody.faces.size(); i += 3)
+        {
+            settings->mFaces.push_back(JPH::SoftBodySharedSettings::Face(
+                softBody.faces[i],
+                softBody.faces[i + 1],
+                softBody.faces[i + 2],
+                0  // Material index
+            ));
+        }
+
+        // Create constraints automatically based on faces
+        JPH::SoftBodySharedSettings::VertexAttributes attributes(
+            softBody.settings.edgeCompliance,
+            softBody.settings.shearCompliance,
+            softBody.settings.bendCompliance);
+
+        settings->CreateConstraints(&attributes, 1, JPH::SoftBodySharedSettings::EBendType::Distance);
     }
-
-    // Create constraints automatically based on faces
-    JPH::SoftBodySharedSettings::VertexAttributes attributes(
-        softBody.settings.edgeCompliance,
-        softBody.settings.shearCompliance,
-        softBody.settings.bendCompliance);
-
-    // Use Distance bend type for simpler computation
-    settings->CreateConstraints(&attributes, 1, JPH::SoftBodySharedSettings::EBendType::Distance);
+    else if (!softBody.edges.empty())
+    {
+        // For rope/chain without faces, manually add edge constraints
+        for (const auto &edge : softBody.edges)
+        {
+            settings->mEdgeConstraints.push_back(JPH::SoftBodySharedSettings::Edge(
+                edge.first,
+                edge.second,
+                softBody.settings.edgeCompliance));
+        }
+    }
 
     // Optimize for parallel simulation
     settings->Optimize();
@@ -179,10 +192,11 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
         // Store internal component
         registry.emplace<Component::SoftBodyInternal>(entity, bodyID);
 
-        Log::Debug(fmt::format("Created SoftBody for entity {} with {} vertices, {} faces",
+        Log::Debug(fmt::format("Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f})",
                                static_cast<uint32_t>(entity),
                                softBody.GetVertexCount(),
-                               softBody.GetFaceCount()));
+                               softBody.GetFaceCount(),
+                               position.GetX(), position.GetY(), position.GetZ()));
     }
     catch (const std::exception &e)
     {
@@ -283,12 +297,20 @@ void SyncSoftBodyVertices(Engine::Core &core)
         const JPH::SoftBodyMotionProperties *motionProps =
             static_cast<const JPH::SoftBodyMotionProperties *>(body.GetMotionProperties());
 
-        // Update vertex positions
+        // Get body center of mass in world space
+        JPH::RVec3 bodyPosition = body.GetCenterOfMassPosition();
+
+        // Update vertex positions (vertices are in local space relative to body center of mass)
         const auto &vertices = motionProps->GetVertices();
+
         for (size_t i = 0; i < vertices.size() && i < softBody.vertices.size(); ++i)
         {
             const auto &v = vertices[i];
-            softBody.vertices[i] = glm::vec3(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
+            // Convert from local to world space by adding body position
+            softBody.vertices[i] = glm::vec3(
+                bodyPosition.GetX() + v.mPosition.GetX(),
+                bodyPosition.GetY() + v.mPosition.GetY(),
+                bodyPosition.GetZ() + v.mPosition.GetZ());
         }
     }
 }
