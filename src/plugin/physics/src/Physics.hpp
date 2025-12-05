@@ -5,18 +5,29 @@
 // clang-format on
 
 // Exceptions
+#include "exception/ConstraintError.hpp"
 #include "exception/RigidBodyError.hpp"
 
-// Components
+// Components - Colliders
 #include "component/BoxCollider.hpp"
 #include "component/DefaultCollider.hpp"
+
+// Components - RigidBody
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
+
+// Components - Constraints
+#include "component/ConstraintSettings.hpp"
+#include "component/ConstraintInternal.hpp"
+#include "component/DistanceConstraint.hpp"
+#include "component/FixedConstraint.hpp"
+#include "component/PointConstraint.hpp"
 
 // Resources
 #include "resource/PhysicsManager.hpp"
 
 // Systems
+#include "system/ConstraintSystem.hpp"
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
