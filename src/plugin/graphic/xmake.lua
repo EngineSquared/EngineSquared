@@ -45,6 +45,21 @@ target(plugin_name)
 
     add_includedirs("src", {public = true})
 
+target("PluginGraphicTests")
+    set_kind("static")
+    set_group(TEST_GROUP_NAME)
+    set_languages("cxx20")
+
+    add_packages(required_packages, "gtest")
+
+    add_deps(plugin_name)
+
+    add_files("tests/utils/**.cpp")
+
+    add_headerfiles("tests/(utils/*.hpp)")
+
+    add_includedirs("tests", {public = true})
+
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
     if name == "main" then
@@ -64,15 +79,13 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_languages("cxx20")
         add_links("gtest")
         add_tests("default")
-        add_packages(required_packages, "gtest", "lodepng")
+        add_packages(required_packages, "gtest")
 
         add_deps(plugin_name)
-
-        add_files("tests/utils/**.cpp")
-
-        add_headerfiles("tests/(utils/*.hpp)")
+        add_deps("PluginGraphicTests")
 
         add_includedirs("tests", {public = true})
+
         after_build(function (target)
             import("core.project.config")
 

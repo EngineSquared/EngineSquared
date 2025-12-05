@@ -1,6 +1,7 @@
 #include "Graphic.hpp"
 #include "core/Core.hpp"
 #include <glm/mat4x4.hpp>
+#include "utils/CreateDefaultTestShader.hpp"
 
 namespace Graphic::Tests::Utils {
 Graphic::Resource::Shader CreateDefaultTestShader(Graphic::Resource::Context &graphicContext)

@@ -162,7 +162,7 @@ template <typename ResourceType> class ResourceManager {
      * @param id  id of the resource
      * @return true if the resource exists, false otherwise.
      */
-    [[nodiscard]] bool Contains(const entt::hashed_string &id) { return cache.contains(id); }
+    [[nodiscard]] bool Contains(const entt::hashed_string &id) const { return cache.contains(id); }
 
     /**
      * @brief Set the default resource that will be used as fallback.

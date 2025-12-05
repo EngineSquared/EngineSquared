@@ -2,18 +2,22 @@
 
 #include "core/Core.hpp"
 #include "resource/Shader.hpp"
+#include "resource/ShaderContainer.hpp"
 #include "utils/IValidable.hpp"
 #include <glm/vec4.hpp>
 
 namespace Graphic::Resource {
 
 struct ColorOutput {
-    std::optional<std::string> textureViewName = std::nullopt;
+    std::string textureViewName = "NONE"; // TODO: Change to optional
     std::optional<std::string> textureResolveTargetName = std::nullopt;
-    uint32_t depthSlice;
-    wgpu::LoadOp loadOp;
-    wgpu::StoreOp storeOp;
-    std::function<bool(Engine::Core &, glm::vec4 &)> getClearColorCallback;
+    uint32_t depthSlice = 0;
+    wgpu::StoreOp storeOp = wgpu::StoreOp::Store;
+    std::function<bool(Engine::Core &, glm::vec4 &)> getClearColorCallback = [](
+        Engine::Core &,
+        glm::vec4 &) {
+        return false;
+    };
 };
 
 struct DepthOutput {
@@ -21,7 +25,7 @@ struct DepthOutput {
 };
 
 struct OutputContainer {
-    std::unordered_map<uint32_t, wgpu::RenderPassColorAttachment> colorBuffers;
+    std::unordered_map<uint32_t, ColorOutput> colorBuffers;
     std::optional<wgpu::RenderPassDepthStencilAttachment> depthBuffer;
 };
 
@@ -29,7 +33,7 @@ struct InputContainer : public std::map<uint32_t /* index inside shader */, std:
     using std::map<uint32_t, std::string>::map;
 };
 
-template <typename TDerived> class ARenderPass : public Utils::IValidable {
+template <typename TDerived> class ARenderPass {
   public:
     ARenderPass(std::string_view name) : _name(name) {}
 
@@ -37,13 +41,7 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable {
 
     TDerived &BindShader(std::string_view shaderName)
     {
-        _boundShader = shaderName;
-        return static_cast<TDerived &>(*this);
-    }
-
-    TDerived &SetGetClearColorCallback(std::function<bool(Engine::Core &, glm::vec4 &)> callback)
-    {
-        _getClearColorCallback = callback;
+        _boundShader = entt::hashed_string(shaderName.data(), shaderName.size());
         return static_cast<TDerived &>(*this);
     }
 
@@ -57,7 +55,7 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable {
         return static_cast<TDerived &>(*this);
     }
 
-    TDerived &AddOutput(uint32_t id, wgpu::RenderPassColorAttachment output)
+    TDerived &AddOutput(uint32_t id, ColorOutput output)
     {
         if (_outputs.colorBuffers.contains(id))
         {
@@ -77,7 +75,7 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable {
         return static_cast<TDerived &>(*this);
     }
 
-    virtual std::vector<Utils::ValidationError> validate() const override
+    std::vector<Utils::ValidationError> validate(Engine::Core &core) const
     {
         std::vector<Utils::ValidationError> errors;
         const std::string location = fmt::format("RenderPass({})", _name);
@@ -88,14 +86,15 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable {
                                                     .location = location,
                                                     .severity = Utils::ValidationError::Severity::Error});
         }
-        if (!_getClearColorCallback.has_value())
+
+        const auto &shaderManager = core.GetResource<Resource::ShaderContainer>();
+        if (_boundShader.has_value() && !shaderManager.Contains(_boundShader.value()))
         {
             errors.push_back(Utils::ValidationError{
-                .message = "No clear color callback set for render pass, using default clear color (black)",
+                .message = fmt::format("Bound shader '{}' does not exist in ShaderManager", std::string_view(_boundShader->data(), _boundShader->size())),
                 .location = location,
-                .severity = Utils::ValidationError::Severity::Warning});
+                .severity = Utils::ValidationError::Severity::Error});
         }
-
         /**
          * TODO: Check if shader exists in resource manager
          * TODO: Check if all inputs match shader bind groups
@@ -105,15 +104,13 @@ template <typename TDerived> class ARenderPass : public Utils::IValidable {
         return errors;
     };
 
-    const auto &GetGetClearColorCallback(void) const { return _getClearColorCallback; }
     const auto &GetBoundShader(void) const { return _boundShader; }
     const auto &GetInputs(void) const { return _inputs; }
     const auto &GetName(void) const { return _name; }
     const auto &GetOutputs(void) const { return _outputs; }
 
   private:
-    std::optional<std::function<bool(Engine::Core &, glm::vec4 &)>> _getClearColorCallback = std::nullopt;
-    std::optional<std::string> _boundShader = std::nullopt;
+    std::optional<entt::hashed_string> _boundShader = std::nullopt;
     InputContainer _inputs;
     std::string _name;
     OutputContainer _outputs;

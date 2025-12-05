@@ -4,9 +4,10 @@
 #include "resource/AGPUBuffer.hpp"
 #include "resource/ARenderPass.hpp"
 #include "resource/BindGroup.hpp"
+#include "resource/BindGroupManager.hpp"
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
-#include "resource/GPUBufferManager.hpp"
+#include "resource/GPUBufferContainer.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
@@ -20,6 +21,7 @@
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
+#include "resource/SingleExecutionRenderPass.hpp"
 
 // Utils
 #include "utils/GetBytesPerPixel.hpp"
