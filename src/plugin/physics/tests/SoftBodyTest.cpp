@@ -35,7 +35,7 @@ TEST(SoftBodySettingsTest, ClothFactory)
     auto settings = SoftBodySettings::Cloth(0.5f);
 
     EXPECT_EQ(settings.solverIterations, 8u);
-    EXPECT_GT(settings.linearDamping, 0.1f);  // Higher than default
+    EXPECT_GT(settings.linearDamping, 0.1f); // Higher than default
     EXPECT_TRUE(settings.doubleSidedFaces);
 }
 
@@ -44,7 +44,7 @@ TEST(SoftBodySettingsTest, RopeFactory)
     auto settings = SoftBodySettings::Rope(0.9f);
 
     EXPECT_EQ(settings.solverIterations, 10u);
-    EXPECT_GT(settings.linearDamping, 0.2f);  // Higher damping for rope
+    EXPECT_GT(settings.linearDamping, 0.2f); // Higher damping for rope
 }
 
 TEST(SoftBodySettingsTest, BalloonFactory)
@@ -52,7 +52,7 @@ TEST(SoftBodySettingsTest, BalloonFactory)
     auto settings = SoftBodySettings::Balloon(2000.0f);
 
     EXPECT_FLOAT_EQ(settings.pressure, 2000.0f);
-    EXPECT_GT(settings.restitution, 0.0f);  // Bouncy
+    EXPECT_GT(settings.restitution, 0.0f); // Bouncy
 }
 
 TEST(SoftBodySettingsTest, JellyFactory)
@@ -60,7 +60,7 @@ TEST(SoftBodySettingsTest, JellyFactory)
     auto settings = SoftBodySettings::Jelly();
 
     EXPECT_GT(settings.pressure, 0.0f);
-    EXPECT_GT(settings.restitution, 0.5f);  // Very bouncy
+    EXPECT_GT(settings.restitution, 0.5f); // Very bouncy
 }
 
 //=============================================================================
@@ -72,8 +72,8 @@ TEST(SoftBodyTest, CreateCloth)
     auto cloth = SoftBody::CreateCloth(5, 5, 0.1f);
 
     EXPECT_EQ(cloth.type, SoftBodyType::Cloth);
-    EXPECT_EQ(cloth.GetVertexCount(), 25u);  // 5 * 5
-    EXPECT_EQ(cloth.GetFaceCount(), 32u);    // (5-1) * (5-1) * 2 = 32
+    EXPECT_EQ(cloth.GetVertexCount(), 25u); // 5 * 5
+    EXPECT_EQ(cloth.GetFaceCount(), 32u);   // (5-1) * (5-1) * 2 = 32
     EXPECT_GT(cloth.GetEdgeCount(), 0u);
     EXPECT_TRUE(cloth.IsValid());
 }
@@ -83,9 +83,9 @@ TEST(SoftBodyTest, CreateRope)
     auto rope = SoftBody::CreateRope(10, 0.1f);
 
     EXPECT_EQ(rope.type, SoftBodyType::Rope);
-    EXPECT_EQ(rope.GetVertexCount(), 11u);  // 10 segments + 1
-    EXPECT_EQ(rope.GetFaceCount(), 0u);     // No faces for rope
-    EXPECT_EQ(rope.GetEdgeCount(), 10u);    // 10 segments
+    EXPECT_EQ(rope.GetVertexCount(), 11u); // 10 segments + 1
+    EXPECT_EQ(rope.GetFaceCount(), 0u);    // No faces for rope
+    EXPECT_EQ(rope.GetEdgeCount(), 10u);   // 10 segments
     EXPECT_TRUE(rope.IsValid());
 }
 
@@ -94,7 +94,7 @@ TEST(SoftBodyTest, CreateCube)
     auto cube = SoftBody::CreateCube(3, 0.1f);
 
     EXPECT_EQ(cube.type, SoftBodyType::Cube);
-    EXPECT_EQ(cube.GetVertexCount(), 27u);  // 3 * 3 * 3
+    EXPECT_EQ(cube.GetVertexCount(), 27u); // 3 * 3 * 3
     EXPECT_GT(cube.GetEdgeCount(), 0u);
     EXPECT_TRUE(cube.IsValid());
 }
@@ -119,7 +119,7 @@ TEST(SoftBodyTest, UnpinVertex)
 
     cloth.UnpinVertex(0, 2.0f);
     EXPECT_FALSE(cloth.IsVertexPinned(0));
-    EXPECT_FLOAT_EQ(cloth.invMasses[0], 0.5f);  // 1 / 2.0
+    EXPECT_FLOAT_EQ(cloth.invMasses[0], 0.5f); // 1 / 2.0
 }
 
 TEST(SoftBodyTest, IsValidWithEmptyVertices)
@@ -133,7 +133,7 @@ TEST(SoftBodyTest, IsValidWithMismatchedInvMasses)
     SoftBody body;
     body.vertices.push_back(glm::vec3(0.0f));
     body.vertices.push_back(glm::vec3(1.0f));
-    body.invMasses.push_back(1.0f);  // Missing one invMass
+    body.invMasses.push_back(1.0f); // Missing one invMass
 
     EXPECT_FALSE(body.IsValid());
 }
@@ -144,7 +144,7 @@ TEST(SoftBodyTest, IsValidWithMalformedFaces)
     body.vertices.push_back(glm::vec3(0.0f));
     body.invMasses.push_back(1.0f);
     body.faces.push_back(0);
-    body.faces.push_back(0);  // Only 2 indices, not divisible by 3
+    body.faces.push_back(0); // Only 2 indices, not divisible by 3
 
     EXPECT_FALSE(body.IsValid());
 }
@@ -163,13 +163,13 @@ TEST(SoftBodyTest, CreateFromMesh)
     EXPECT_EQ(body.type, SoftBodyType::Custom);
     EXPECT_EQ(body.GetVertexCount(), 3u);
     EXPECT_EQ(body.GetFaceCount(), 1u);
-    EXPECT_EQ(body.GetEdgeCount(), 3u);  // 3 edges of triangle
+    EXPECT_EQ(body.GetEdgeCount(), 3u); // 3 edges of triangle
     EXPECT_TRUE(body.IsValid());
 }
 
 TEST(SoftBodyTest, ClothVertexLayout)
 {
-    auto cloth = SoftBody::CreateCloth(4, 3, 0.5f);  // 4 wide, 3 tall
+    auto cloth = SoftBody::CreateCloth(4, 3, 0.5f); // 4 wide, 3 tall
 
     // First row
     EXPECT_EQ(cloth.vertices[0], glm::vec3(0.0f, 0.0f, 0.0f));
@@ -222,8 +222,8 @@ TEST_F(SoftBodyIntegrationTest, CreateClothSoftBody)
 
     // Create cloth and pin top corners
     auto cloth = SoftBody::CreateCloth(5, 5, 0.1f);
-    cloth.PinVertex(0);   // Top-left
-    cloth.PinVertex(4);   // Top-right
+    cloth.PinVertex(0); // Top-left
+    cloth.PinVertex(4); // Top-right
     registry.emplace<SoftBody>(entity, cloth);
 
     // Check SoftBodyInternal was created
@@ -243,7 +243,7 @@ TEST_F(SoftBodyIntegrationTest, CreateRopeSoftBody)
     registry.emplace<Object::Component::Transform>(entity, transform);
 
     auto rope = SoftBody::CreateRope(20, 0.05f);
-    rope.PinVertex(0);  // Pin top
+    rope.PinVertex(0); // Pin top
     registry.emplace<SoftBody>(entity, rope);
 
     auto *internal = registry.try_get<SoftBodyInternal>(entity);

@@ -35,8 +35,8 @@
 // Jolt soft body includes
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/SoftBody/SoftBodyCreationSettings.h>
-#include <Jolt/Physics/SoftBody/SoftBodySharedSettings.h>
 #include <Jolt/Physics/SoftBody/SoftBodyMotionProperties.h>
+#include <Jolt/Physics/SoftBody/SoftBodySharedSettings.h>
 
 namespace Physics::System {
 
@@ -68,19 +68,15 @@ static JPH::Ref<JPH::SoftBodySharedSettings> CreateJoltSharedSettings(const Comp
         settings->mFaces.reserve(softBody.faces.size() / 3);
         for (size_t i = 0; i < softBody.faces.size(); i += 3)
         {
-            settings->mFaces.push_back(JPH::SoftBodySharedSettings::Face(
-                softBody.faces[i],
-                softBody.faces[i + 1],
-                softBody.faces[i + 2],
-                0  // Material index
-            ));
+            settings->mFaces.push_back(JPH::SoftBodySharedSettings::Face(softBody.faces[i], softBody.faces[i + 1],
+                                                                         softBody.faces[i + 2],
+                                                                         0 // Material index
+                                                                         ));
         }
 
         // Create constraints automatically based on faces
         JPH::SoftBodySharedSettings::VertexAttributes attributes(
-            softBody.settings.edgeCompliance,
-            softBody.settings.shearCompliance,
-            softBody.settings.bendCompliance);
+            softBody.settings.edgeCompliance, softBody.settings.shearCompliance, softBody.settings.bendCompliance);
 
         settings->CreateConstraints(&attributes, 1, JPH::SoftBodySharedSettings::EBendType::Distance);
     }
@@ -89,10 +85,8 @@ static JPH::Ref<JPH::SoftBodySharedSettings> CreateJoltSharedSettings(const Comp
         // For rope/chain without faces, manually add edge constraints
         for (const auto &edge : softBody.edges)
         {
-            settings->mEdgeConstraints.push_back(JPH::SoftBodySharedSettings::Edge(
-                edge.first,
-                edge.second,
-                softBody.settings.edgeCompliance));
+            settings->mEdgeConstraints.push_back(
+                JPH::SoftBodySharedSettings::Edge(edge.first, edge.second, softBody.settings.edgeCompliance));
         }
     }
 
@@ -105,17 +99,12 @@ static JPH::Ref<JPH::SoftBodySharedSettings> CreateJoltSharedSettings(const Comp
 /**
  * @brief Create Jolt SoftBodyCreationSettings from component
  */
-static JPH::SoftBodyCreationSettings CreateJoltCreationSettings(
-    const Component::SoftBody &softBody,
-    const JPH::Ref<JPH::SoftBodySharedSettings> &sharedSettings,
-    const JPH::RVec3 &position,
-    const JPH::Quat &rotation)
+static JPH::SoftBodyCreationSettings
+CreateJoltCreationSettings(const Component::SoftBody &softBody,
+                           const JPH::Ref<JPH::SoftBodySharedSettings> &sharedSettings, const JPH::RVec3 &position,
+                           const JPH::Quat &rotation)
 {
-    JPH::SoftBodyCreationSettings creationSettings(
-        sharedSettings,
-        position,
-        rotation,
-        Utils::Layers::MOVING);
+    JPH::SoftBodyCreationSettings creationSettings(sharedSettings, position, rotation, Utils::Layers::MOVING);
 
     // Apply settings
     creationSettings.mNumIterations = softBody.settings.solverIterations;
@@ -192,11 +181,10 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
         // Store internal component
         registry.emplace<Component::SoftBodyInternal>(entity, bodyID);
 
-        Log::Debug(fmt::format("Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f})",
-                               static_cast<uint32_t>(entity),
-                               softBody.GetVertexCount(),
-                               softBody.GetFaceCount(),
-                               position.GetX(), position.GetY(), position.GetZ()));
+        Log::Debug(fmt::format(
+            "Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f})",
+            static_cast<uint32_t>(entity), softBody.GetVertexCount(), softBody.GetFaceCount(), position.GetX(),
+            position.GetY(), position.GetZ()));
     }
     catch (const std::exception &e)
     {
@@ -307,10 +295,9 @@ void SyncSoftBodyVertices(Engine::Core &core)
         {
             const auto &v = vertices[i];
             // Convert from local to world space by adding body position
-            softBody.vertices[i] = glm::vec3(
-                bodyPosition.GetX() + v.mPosition.GetX(),
-                bodyPosition.GetY() + v.mPosition.GetY(),
-                bodyPosition.GetZ() + v.mPosition.GetZ());
+            softBody.vertices[i] =
+                glm::vec3(bodyPosition.GetX() + v.mPosition.GetX(), bodyPosition.GetY() + v.mPosition.GetY(),
+                          bodyPosition.GetZ() + v.mPosition.GetZ());
         }
     }
 }

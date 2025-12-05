@@ -19,8 +19,8 @@
 #include "component/RigidBodyInternal.hpp"
 
 // Components - Constraints
-#include "component/ConstraintSettings.hpp"
 #include "component/ConstraintInternal.hpp"
+#include "component/ConstraintSettings.hpp"
 #include "component/DistanceConstraint.hpp"
 #include "component/FixedConstraint.hpp"
 #include "component/PointConstraint.hpp"

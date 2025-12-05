@@ -15,10 +15,10 @@
 #include <fmt/format.h>
 
 // Jolt constraint headers
+#include <Jolt/Physics/Body/BodyLockMulti.h>
 #include <Jolt/Physics/Constraints/DistanceConstraint.h>
 #include <Jolt/Physics/Constraints/FixedConstraint.h>
 #include <Jolt/Physics/Constraints/PointConstraint.h>
-#include <Jolt/Physics/Body/BodyLockMulti.h>
 #include <Jolt/Physics/PhysicsSystem.h>
 
 namespace Physics::System {
@@ -59,7 +59,7 @@ static void ConfigureSpringSettings(JPH::SpringSettings &springSettings, const C
     {
         // Use stiffness and damping mode for soft constraints
         springSettings.mMode = JPH::ESpringMode::StiffnessAndDamping;
-        springSettings.mStiffness = settings.stiffness * 10000.0f;  // Scale to reasonable Jolt values
+        springSettings.mStiffness = settings.stiffness * 10000.0f; // Scale to reasonable Jolt values
         springSettings.mDamping = settings.damping * 100.0f;
     }
 }
@@ -127,14 +127,15 @@ static void OnFixedConstraintConstruct(entt::registry &registry, entt::entity en
 
             // For world constraints, use world space
             joltSettings.mSpace = JPH::EConstraintSpace::WorldSpace;
-            joltSettings.mPoint2 = Utils::ToJoltRVec3(constraint.localPointB);  // World position
+            joltSettings.mPoint2 = Utils::ToJoltRVec3(constraint.localPointB); // World position
 
             joltConstraint = joltSettings.Create(lockA.GetBody(), JPH::Body::sFixedToWorld);
         }
         else
         {
             // Body to body constraint - use multi-body lock to avoid deadlock
-            auto *internalB = registry.try_get<Component::RigidBodyInternal>(static_cast<entt::entity>(constraint.bodyB));
+            auto *internalB =
+                registry.try_get<Component::RigidBodyInternal>(static_cast<entt::entity>(constraint.bodyB));
             if (!internalB || !internalB->IsValid())
             {
                 Log::Error("FixedConstraint: bodyB has no valid RigidBodyInternal");
@@ -167,12 +168,9 @@ static void OnFixedConstraintConstruct(entt::registry &registry, entt::entity en
         physicsSystem.AddConstraint(joltConstraint);
 
         // Store internal component
-        registry.emplace<Component::ConstraintInternal>(
-            entity,
-            joltConstraint,
-            Component::ConstraintType::Fixed,
-            constraint.settings.breakForce,
-            constraint.settings.breakTorque);
+        registry.emplace<Component::ConstraintInternal>(entity, joltConstraint, Component::ConstraintType::Fixed,
+                                                        constraint.settings.breakForce,
+                                                        constraint.settings.breakTorque);
 
         Log::Debug(fmt::format("Created FixedConstraint for entity {}", static_cast<uint32_t>(entity)));
     }
@@ -281,14 +279,15 @@ static void OnDistanceConstraintConstruct(entt::registry &registry, entt::entity
             }
 
             joltSettings.mSpace = JPH::EConstraintSpace::WorldSpace;
-            joltSettings.mPoint2 = Utils::ToJoltRVec3(constraint.localPointB);  // World position
+            joltSettings.mPoint2 = Utils::ToJoltRVec3(constraint.localPointB); // World position
 
             joltConstraint = joltSettings.Create(lockA.GetBody(), JPH::Body::sFixedToWorld);
         }
         else
         {
             // Body to body constraint - use multi-body lock to avoid deadlock
-            auto *internalB = registry.try_get<Component::RigidBodyInternal>(static_cast<entt::entity>(constraint.bodyB));
+            auto *internalB =
+                registry.try_get<Component::RigidBodyInternal>(static_cast<entt::entity>(constraint.bodyB));
             if (!internalB || !internalB->IsValid())
             {
                 Log::Error("DistanceConstraint: bodyB has no valid RigidBodyInternal");
@@ -321,17 +320,12 @@ static void OnDistanceConstraintConstruct(entt::registry &registry, entt::entity
         physicsSystem.AddConstraint(joltConstraint);
 
         // Store internal component
-        registry.emplace<Component::ConstraintInternal>(
-            entity,
-            joltConstraint,
-            Component::ConstraintType::Distance,
-            constraint.settings.breakForce,
-            constraint.settings.breakTorque);
+        registry.emplace<Component::ConstraintInternal>(entity, joltConstraint, Component::ConstraintType::Distance,
+                                                        constraint.settings.breakForce,
+                                                        constraint.settings.breakTorque);
 
         Log::Debug(fmt::format("Created DistanceConstraint for entity {} (min: {}, max: {})",
-                               static_cast<uint32_t>(entity),
-                               constraint.minDistance,
-                               constraint.maxDistance));
+                               static_cast<uint32_t>(entity), constraint.minDistance, constraint.maxDistance));
     }
     catch (const std::exception &e)
     {
@@ -426,14 +420,15 @@ static void OnPointConstraintConstruct(entt::registry &registry, entt::entity en
             }
 
             joltSettings.mSpace = JPH::EConstraintSpace::WorldSpace;
-            joltSettings.mPoint2 = Utils::ToJoltRVec3(constraint.localPointB);  // World position
+            joltSettings.mPoint2 = Utils::ToJoltRVec3(constraint.localPointB); // World position
 
             joltConstraint = joltSettings.Create(lockA.GetBody(), JPH::Body::sFixedToWorld);
         }
         else
         {
             // Body to body constraint - use multi-body lock to avoid deadlock
-            auto *internalB = registry.try_get<Component::RigidBodyInternal>(static_cast<entt::entity>(constraint.bodyB));
+            auto *internalB =
+                registry.try_get<Component::RigidBodyInternal>(static_cast<entt::entity>(constraint.bodyB));
             if (!internalB || !internalB->IsValid())
             {
                 Log::Error("PointConstraint: bodyB has no valid RigidBodyInternal");
@@ -466,12 +461,9 @@ static void OnPointConstraintConstruct(entt::registry &registry, entt::entity en
         physicsSystem.AddConstraint(joltConstraint);
 
         // Store internal component
-        registry.emplace<Component::ConstraintInternal>(
-            entity,
-            joltConstraint,
-            Component::ConstraintType::Point,
-            constraint.settings.breakForce,
-            constraint.settings.breakTorque);
+        registry.emplace<Component::ConstraintInternal>(entity, joltConstraint, Component::ConstraintType::Point,
+                                                        constraint.settings.breakForce,
+                                                        constraint.settings.breakTorque);
 
         Log::Debug(fmt::format("Created PointConstraint for entity {}", static_cast<uint32_t>(entity)));
     }

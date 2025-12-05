@@ -36,9 +36,9 @@ namespace Physics::Component {
  * @brief Enumeration of supported constraint types
  */
 enum class ConstraintType : uint8_t {
-    Fixed,      ///< Fixed constraint (0 DOF) - welds two bodies together
-    Distance,   ///< Distance constraint (5 DOF) - rope/spring with min/max distance
-    Point       ///< Point constraint (3 DOF) - ball-and-socket joint
+    Fixed,    ///< Fixed constraint (0 DOF) - welds two bodies together
+    Distance, ///< Distance constraint (5 DOF) - rope/spring with min/max distance
+    Point     ///< Point constraint (3 DOF) - ball-and-socket joint
 };
 
 /**

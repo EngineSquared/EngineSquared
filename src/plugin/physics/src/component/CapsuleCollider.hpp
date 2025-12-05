@@ -169,10 +169,7 @@ struct CapsuleCollider {
      * @note By default capsules are vertical (Y-up). Use rotation in Transform
      *       to make it horizontal, or use offset to position it differently.
      */
-    static CapsuleCollider Horizontal(float length, float r)
-    {
-        return FromTotalHeight(length, r);
-    }
+    static CapsuleCollider Horizontal(float length, float r) { return FromTotalHeight(length, r); }
 
     /**
      * @brief Create a capsule at an offset (useful for compound shapes)

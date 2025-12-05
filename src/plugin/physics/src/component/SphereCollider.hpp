@@ -118,10 +118,7 @@ struct SphereCollider {
      * @param localOffset Position offset from entity center
      * @return SphereCollider
      */
-    static SphereCollider AtOffset(float r, const glm::vec3 &localOffset)
-    {
-        return SphereCollider(r, localOffset);
-    }
+    static SphereCollider AtOffset(float r, const glm::vec3 &localOffset) { return SphereCollider(r, localOffset); }
 };
 
 } // namespace Physics::Component

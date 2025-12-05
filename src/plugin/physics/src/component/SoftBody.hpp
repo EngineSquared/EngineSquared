@@ -33,11 +33,11 @@ namespace Physics::Component {
  * @brief Type of soft body for preset configurations
  */
 enum class SoftBodyType {
-    Custom,    ///< User-defined configuration
-    Cloth,     ///< 2D grid for flags, capes, curtains
-    Rope,      ///< 1D chain for ropes, cables, chains
-    Cube,      ///< 3D volumetric soft body
-    Pressure,  ///< Pressure-based soft body (balloons, inflatables)
+    Custom,   ///< User-defined configuration
+    Cloth,    ///< 2D grid for flags, capes, curtains
+    Rope,     ///< 1D chain for ropes, cables, chains
+    Cube,     ///< 3D volumetric soft body
+    Pressure, ///< Pressure-based soft body (balloons, inflatables)
 };
 
 /**
@@ -142,7 +142,7 @@ struct SoftBodySettings {
         s.gravityFactor = 1.0f;
         s.friction = 0.5f;
         s.edgeCompliance = (1.0f - stiffness) * 0.0001f;
-        s.shearCompliance = 1e10f;  // Disable shear for 1D
+        s.shearCompliance = 1e10f; // Disable shear for 1D
         s.bendCompliance = (1.0f - stiffness) * 0.01f;
         s.vertexRadius = 0.02f;
         return s;
@@ -277,9 +277,8 @@ struct SoftBody {
         if (vertexIndex < invMasses.size())
         {
             invMasses[vertexIndex] = mass > 0.0f ? 1.0f / mass : 0.0f;
-            pinnedVertices.erase(
-                std::remove(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex),
-                pinnedVertices.end());
+            pinnedVertices.erase(std::remove(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex),
+                                 pinnedVertices.end());
         }
     }
 
@@ -296,8 +295,7 @@ struct SoftBody {
      */
     [[nodiscard]] bool IsValid() const
     {
-        return !vertices.empty() && vertices.size() == invMasses.size() &&
-               (faces.empty() || faces.size() % 3 == 0);
+        return !vertices.empty() && vertices.size() == invMasses.size() && (faces.empty() || faces.size() % 3 == 0);
     }
 
     //=========================================================================
@@ -338,8 +336,7 @@ struct SoftBody {
      * @param settings Simulation settings
      * @return SoftBody with custom mesh
      */
-    static SoftBody CreateFromMesh(const std::vector<glm::vec3> &verts,
-                                   const std::vector<uint32_t> &faceIndices,
+    static SoftBody CreateFromMesh(const std::vector<glm::vec3> &verts, const std::vector<uint32_t> &faceIndices,
                                    const SoftBodySettings &settings = SoftBodySettings::Default());
 };
 

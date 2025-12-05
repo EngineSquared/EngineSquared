@@ -142,12 +142,10 @@ struct PointConstraint {
      * @param constraintSettings Constraint behavior settings
      * @return Configured PointConstraint component
      */
-    [[nodiscard]] static PointConstraint Create(
-        Engine::Entity a,
-        Engine::Entity b,
-        const glm::vec3 &pointA = glm::vec3(0.0f),
-        const glm::vec3 &pointB = glm::vec3(0.0f),
-        const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
+    [[nodiscard]] static PointConstraint
+    Create(Engine::Entity a, Engine::Entity b, const glm::vec3 &pointA = glm::vec3(0.0f),
+           const glm::vec3 &pointB = glm::vec3(0.0f),
+           const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
         PointConstraint constraint;
         constraint.bodyA = a;
@@ -170,16 +168,15 @@ struct PointConstraint {
      * @param constraintSettings Constraint behavior settings
      * @return Configured PointConstraint component
      */
-    [[nodiscard]] static PointConstraint CreateToWorld(
-        Engine::Entity body,
-        const glm::vec3 &worldPoint,
-        const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
+    [[nodiscard]] static PointConstraint
+    CreateToWorld(Engine::Entity body, const glm::vec3 &worldPoint,
+                  const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
         PointConstraint constraint;
         constraint.bodyA = body;
-        constraint.bodyB = Engine::Entity();  // Invalid entity = world
-        constraint.localPointA = glm::vec3(0.0f);  // Center of body
-        constraint.localPointB = worldPoint;  // World position
+        constraint.bodyB = Engine::Entity();      // Invalid entity = world
+        constraint.localPointA = glm::vec3(0.0f); // Center of body
+        constraint.localPointB = worldPoint;      // World position
         constraint.settings = constraintSettings;
         constraint.broken = false;
         return constraint;
@@ -196,17 +193,15 @@ struct PointConstraint {
      * @param constraintSettings Constraint behavior settings
      * @return Configured PointConstraint component
      */
-    [[nodiscard]] static PointConstraint CreateToWorldWithOffset(
-        Engine::Entity body,
-        const glm::vec3 &worldPoint,
-        const glm::vec3 &localPoint,
-        const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
+    [[nodiscard]] static PointConstraint
+    CreateToWorldWithOffset(Engine::Entity body, const glm::vec3 &worldPoint, const glm::vec3 &localPoint,
+                            const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
         PointConstraint constraint;
         constraint.bodyA = body;
-        constraint.bodyB = Engine::Entity();  // Invalid entity = world
+        constraint.bodyB = Engine::Entity(); // Invalid entity = world
         constraint.localPointA = localPoint;
-        constraint.localPointB = worldPoint;  // World position
+        constraint.localPointB = worldPoint; // World position
         constraint.settings = constraintSettings;
         constraint.broken = false;
         return constraint;
@@ -216,10 +211,7 @@ struct PointConstraint {
      * @brief Check if this is a world constraint
      * @return true if bodyB is invalid (world constraint)
      */
-    [[nodiscard]] bool IsWorldConstraint() const
-    {
-        return !bodyB.IsValid();
-    }
+    [[nodiscard]] bool IsWorldConstraint() const { return !bodyB.IsValid(); }
 };
 
 } // namespace Physics::Component

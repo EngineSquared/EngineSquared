@@ -99,7 +99,7 @@ TEST(ConstraintSettingsTest, BreakableForceOnly)
 
     EXPECT_FLOAT_EQ(settings.breakForce, 100.0f);
     EXPECT_FLOAT_EQ(settings.breakTorque, 0.0f);
-    EXPECT_TRUE(settings.IsBreakable());  // Force alone makes it breakable
+    EXPECT_TRUE(settings.IsBreakable()); // Force alone makes it breakable
 }
 
 //=============================================================================
@@ -111,11 +111,8 @@ TEST(FixedConstraintComponentTest, CreateBetweenBodies)
     Engine::Entity mockA(entt::entity(1));
     Engine::Entity mockB(entt::entity(2));
 
-    auto constraint = FixedConstraint::Create(
-        mockA, mockB,
-        glm::vec3(0.0f, -0.5f, 0.0f),
-        glm::vec3(0.0f, 0.5f, 0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint = FixedConstraint::Create(mockA, mockB, glm::vec3(0.0f, -0.5f, 0.0f), glm::vec3(0.0f, 0.5f, 0.0f),
+                                              ConstraintSettings::Rigid());
 
     EXPECT_EQ(constraint.bodyA, mockA);
     EXPECT_EQ(constraint.bodyB, mockB);
@@ -129,15 +126,13 @@ TEST(FixedConstraintComponentTest, CreateToWorld)
 {
     Engine::Entity mockBody(entt::entity(1));
 
-    auto constraint = FixedConstraint::CreateToWorld(
-        mockBody,
-        glm::vec3(0.0f, 10.0f, 0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint =
+        FixedConstraint::CreateToWorld(mockBody, glm::vec3(0.0f, 10.0f, 0.0f), ConstraintSettings::Rigid());
 
     EXPECT_EQ(constraint.bodyA, mockBody);
     EXPECT_FALSE(constraint.bodyB.IsValid());
     EXPECT_TRUE(constraint.IsWorldConstraint());
-    EXPECT_EQ(constraint.localPointB, glm::vec3(0.0f, 10.0f, 0.0f));  // World position
+    EXPECT_EQ(constraint.localPointB, glm::vec3(0.0f, 10.0f, 0.0f)); // World position
 }
 
 //=============================================================================
@@ -149,12 +144,9 @@ TEST(DistanceConstraintComponentTest, CreateFixedDistance)
     Engine::Entity mockA(entt::entity(1));
     Engine::Entity mockB(entt::entity(2));
 
-    auto constraint = DistanceConstraint::Create(
-        mockA, mockB,
-        3.0f,  // Fixed distance
-        glm::vec3(0.0f),
-        glm::vec3(0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint = DistanceConstraint::Create(mockA, mockB,
+                                                 3.0f, // Fixed distance
+                                                 glm::vec3(0.0f), glm::vec3(0.0f), ConstraintSettings::Rigid());
 
     EXPECT_EQ(constraint.bodyA, mockA);
     EXPECT_EQ(constraint.bodyB, mockB);
@@ -170,12 +162,9 @@ TEST(DistanceConstraintComponentTest, CreateWithRange)
     Engine::Entity mockA(entt::entity(1));
     Engine::Entity mockB(entt::entity(2));
 
-    auto constraint = DistanceConstraint::CreateWithRange(
-        mockA, mockB,
-        1.0f, 5.0f,  // Min and max distance (spring)
-        glm::vec3(0.0f),
-        glm::vec3(0.0f),
-        ConstraintSettings::Soft(0.5f, 0.1f));
+    auto constraint =
+        DistanceConstraint::CreateWithRange(mockA, mockB, 1.0f, 5.0f, // Min and max distance (spring)
+                                            glm::vec3(0.0f), glm::vec3(0.0f), ConstraintSettings::Soft(0.5f, 0.1f));
 
     EXPECT_FLOAT_EQ(constraint.minDistance, 1.0f);
     EXPECT_FLOAT_EQ(constraint.maxDistance, 5.0f);
@@ -187,11 +176,8 @@ TEST(DistanceConstraintComponentTest, CreateAutoDistance)
     Engine::Entity mockA(entt::entity(1));
     Engine::Entity mockB(entt::entity(2));
 
-    auto constraint = DistanceConstraint::CreateAutoDistance(
-        mockA, mockB,
-        glm::vec3(0.0f),
-        glm::vec3(0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint = DistanceConstraint::CreateAutoDistance(mockA, mockB, glm::vec3(0.0f), glm::vec3(0.0f),
+                                                             ConstraintSettings::Rigid());
 
     EXPECT_FLOAT_EQ(constraint.minDistance, -1.0f);
     EXPECT_FLOAT_EQ(constraint.maxDistance, -1.0f);
@@ -202,12 +188,8 @@ TEST(DistanceConstraintComponentTest, CreateToWorld)
 {
     Engine::Entity mockBody(entt::entity(1));
 
-    auto constraint = DistanceConstraint::CreateToWorld(
-        mockBody,
-        glm::vec3(0.0f, 10.0f, 0.0f),
-        3.0f,
-        glm::vec3(0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint = DistanceConstraint::CreateToWorld(mockBody, glm::vec3(0.0f, 10.0f, 0.0f), 3.0f, glm::vec3(0.0f),
+                                                        ConstraintSettings::Rigid());
 
     EXPECT_TRUE(constraint.IsWorldConstraint());
     EXPECT_FLOAT_EQ(constraint.minDistance, 3.0f);
@@ -223,11 +205,8 @@ TEST(PointConstraintComponentTest, CreateBetweenBodies)
     Engine::Entity mockA(entt::entity(1));
     Engine::Entity mockB(entt::entity(2));
 
-    auto constraint = PointConstraint::Create(
-        mockA, mockB,
-        glm::vec3(0.5f, 0.0f, 0.0f),
-        glm::vec3(-0.5f, 0.0f, 0.0f),
-        ConstraintSettings::Soft(0.8f, 0.2f));
+    auto constraint = PointConstraint::Create(mockA, mockB, glm::vec3(0.5f, 0.0f, 0.0f), glm::vec3(-0.5f, 0.0f, 0.0f),
+                                              ConstraintSettings::Soft(0.8f, 0.2f));
 
     EXPECT_EQ(constraint.bodyA, mockA);
     EXPECT_EQ(constraint.bodyB, mockB);
@@ -241,24 +220,20 @@ TEST(PointConstraintComponentTest, CreateToWorld)
 {
     Engine::Entity mockBody(entt::entity(1));
 
-    auto constraint = PointConstraint::CreateToWorld(
-        mockBody,
-        glm::vec3(0.0f, 10.0f, 0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint =
+        PointConstraint::CreateToWorld(mockBody, glm::vec3(0.0f, 10.0f, 0.0f), ConstraintSettings::Rigid());
 
     EXPECT_TRUE(constraint.IsWorldConstraint());
-    EXPECT_EQ(constraint.localPointB, glm::vec3(0.0f, 10.0f, 0.0f));  // World position
+    EXPECT_EQ(constraint.localPointB, glm::vec3(0.0f, 10.0f, 0.0f)); // World position
 }
 
 TEST(PointConstraintComponentTest, CreateToWorldWithOffset)
 {
     Engine::Entity mockBody(entt::entity(1));
 
-    auto constraint = PointConstraint::CreateToWorldWithOffset(
-        mockBody,
-        glm::vec3(0.0f, 10.0f, 0.0f),  // World anchor
-        glm::vec3(0.0f, 1.0f, 0.0f),   // Local offset on body
-        ConstraintSettings::Rigid());
+    auto constraint = PointConstraint::CreateToWorldWithOffset(mockBody, glm::vec3(0.0f, 10.0f, 0.0f), // World anchor
+                                                               glm::vec3(0.0f, 1.0f, 0.0f), // Local offset on body
+                                                               ConstraintSettings::Rigid());
 
     EXPECT_TRUE(constraint.IsWorldConstraint());
     EXPECT_EQ(constraint.localPointA, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -301,11 +276,8 @@ TEST_F(BasicConstraintsTest, FixedConstraintCreatesInternalComponent)
     ASSERT_TRUE(internalB->IsValid());
 
     // Add fixed constraint
-    auto constraint = FixedConstraint::Create(
-        entityA, entityB,
-        glm::vec3(0.0f, -0.5f, 0.0f),
-        glm::vec3(0.0f, 0.5f, 0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint = FixedConstraint::Create(entityA, entityB, glm::vec3(0.0f, -0.5f, 0.0f),
+                                              glm::vec3(0.0f, 0.5f, 0.0f), ConstraintSettings::Rigid());
 
     core->GetRegistry().emplace<FixedConstraint>(entityA, constraint);
 
@@ -322,10 +294,8 @@ TEST_F(BasicConstraintsTest, FixedConstraintRemovedOnDestroy)
     ASSERT_NE(internalB, nullptr);
 
     // Add then remove constraint
-    auto constraint = FixedConstraint::Create(
-        entityA, entityB,
-        glm::vec3(0.0f), glm::vec3(0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint =
+        FixedConstraint::Create(entityA, entityB, glm::vec3(0.0f), glm::vec3(0.0f), ConstraintSettings::Rigid());
 
     core->GetRegistry().emplace<FixedConstraint>(entityA, constraint);
 
@@ -348,11 +318,9 @@ TEST_F(BasicConstraintsTest, DistanceConstraintCreatesInternalComponent)
     ASSERT_NE(internalA, nullptr);
     ASSERT_NE(internalB, nullptr);
 
-    auto constraint = DistanceConstraint::Create(
-        entityA, entityB,
-        2.0f,  // Distance of 2 meters
-        glm::vec3(0.0f), glm::vec3(0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint = DistanceConstraint::Create(entityA, entityB,
+                                                 2.0f, // Distance of 2 meters
+                                                 glm::vec3(0.0f), glm::vec3(0.0f), ConstraintSettings::Rigid());
 
     core->GetRegistry().emplace<DistanceConstraint>(entityA, constraint);
 
@@ -367,11 +335,9 @@ TEST_F(BasicConstraintsTest, DistanceConstraintWithSoftLimits)
     ASSERT_NE(internalA, nullptr);
     ASSERT_NE(internalB, nullptr);
 
-    auto constraint = DistanceConstraint::CreateWithRange(
-        entityA, entityB,
-        1.0f, 3.0f,  // Range 1-3 meters
-        glm::vec3(0.0f), glm::vec3(0.0f),
-        ConstraintSettings::Soft(0.5f, 0.1f));
+    auto constraint =
+        DistanceConstraint::CreateWithRange(entityA, entityB, 1.0f, 3.0f, // Range 1-3 meters
+                                            glm::vec3(0.0f), glm::vec3(0.0f), ConstraintSettings::Soft(0.5f, 0.1f));
 
     core->GetRegistry().emplace<DistanceConstraint>(entityA, constraint);
 
@@ -389,10 +355,8 @@ TEST_F(BasicConstraintsTest, PointConstraintCreatesInternalComponent)
     ASSERT_NE(internalA, nullptr);
     ASSERT_NE(internalB, nullptr);
 
-    auto constraint = PointConstraint::Create(
-        entityA, entityB,
-        glm::vec3(0.0f), glm::vec3(0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint =
+        PointConstraint::Create(entityA, entityB, glm::vec3(0.0f), glm::vec3(0.0f), ConstraintSettings::Rigid());
 
     core->GetRegistry().emplace<PointConstraint>(entityA, constraint);
 
@@ -406,10 +370,8 @@ TEST_F(BasicConstraintsTest, PointConstraintToWorld)
 {
     ASSERT_NE(internalB, nullptr);
 
-    auto constraint = PointConstraint::CreateToWorld(
-        entityB,
-        glm::vec3(0.0f, 10.0f, 0.0f),  // World anchor
-        ConstraintSettings::Rigid());
+    auto constraint = PointConstraint::CreateToWorld(entityB, glm::vec3(0.0f, 10.0f, 0.0f), // World anchor
+                                                     ConstraintSettings::Rigid());
 
     core->GetRegistry().emplace<PointConstraint>(entityB, constraint);
 
@@ -426,14 +388,12 @@ TEST_F(BasicConstraintsTest, ConstraintWithInvalidBodyAFails)
 {
     // Create a valid entity to hold the constraint
     Engine::Entity constraintEntity(core->CreateEntity());
-    
+
     // Reference an invalid entity as bodyA (doesn't exist, no RigidBody)
     Engine::Entity invalidBodyA(entt::entity(99999));
 
-    auto constraint = FixedConstraint::Create(
-        invalidBodyA, entityB,
-        glm::vec3(0.0f), glm::vec3(0.0f),
-        ConstraintSettings::Rigid());
+    auto constraint =
+        FixedConstraint::Create(invalidBodyA, entityB, glm::vec3(0.0f), glm::vec3(0.0f), ConstraintSettings::Rigid());
 
     // Add constraint to a valid entity, but with an invalid bodyA reference
     core->GetRegistry().emplace<FixedConstraint>(constraintEntity, constraint);

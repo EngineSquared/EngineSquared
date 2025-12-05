@@ -50,19 +50,19 @@ TEST(CapsuleColliderTest, GetCylinderHeight)
 {
     CapsuleCollider collider(0.8f, 0.3f);
 
-    EXPECT_FLOAT_EQ(collider.GetCylinderHeight(), 1.6f);  // 0.8 * 2
+    EXPECT_FLOAT_EQ(collider.GetCylinderHeight(), 1.6f); // 0.8 * 2
 }
 
 TEST(CapsuleColliderTest, GetDiameter)
 {
     CapsuleCollider collider(0.5f, 0.4f);
 
-    EXPECT_FLOAT_EQ(collider.GetDiameter(), 0.8f);  // 0.4 * 2
+    EXPECT_FLOAT_EQ(collider.GetDiameter(), 0.8f); // 0.4 * 2
 }
 
 TEST(CapsuleColliderTest, SetTotalHeight)
 {
-    CapsuleCollider collider(0.5f, 0.25f);  // Original halfHeight=0.5, radius=0.25
+    CapsuleCollider collider(0.5f, 0.25f); // Original halfHeight=0.5, radius=0.25
     collider.SetTotalHeight(2.0f);
 
     // totalHeight = (halfHeight + radius) * 2
@@ -70,7 +70,7 @@ TEST(CapsuleColliderTest, SetTotalHeight)
     // 1.0 = halfHeight + 0.25
     // halfHeight = 0.75
     EXPECT_FLOAT_EQ(collider.halfHeight, 0.75f);
-    EXPECT_FLOAT_EQ(collider.radius, 0.25f);  // Radius unchanged
+    EXPECT_FLOAT_EQ(collider.radius, 0.25f); // Radius unchanged
 }
 
 TEST(CapsuleColliderTest, IsValidWithPositiveDimensions)
@@ -81,7 +81,7 @@ TEST(CapsuleColliderTest, IsValidWithPositiveDimensions)
 
 TEST(CapsuleColliderTest, IsValidWithZeroHalfHeight)
 {
-    CapsuleCollider collider(0.0f, 0.25f);  // Valid - degenerates to sphere
+    CapsuleCollider collider(0.0f, 0.25f); // Valid - degenerates to sphere
     EXPECT_TRUE(collider.IsValid());
 }
 
@@ -189,7 +189,7 @@ TEST_F(CapsuleColliderIntegrationTest, CreateDynamicBodyWithCapsuleCollider)
     auto capsuleCollider = CapsuleCollider::ForCharacter(1.8f, 0.3f);
     registry.emplace<CapsuleCollider>(entity, capsuleCollider);
 
-    RigidBody rb = RigidBody::CreateDynamic(70.0f);  // 70kg character
+    RigidBody rb = RigidBody::CreateDynamic(70.0f); // 70kg character
     registry.emplace<RigidBody>(entity, rb);
 
     auto *internal = registry.try_get<RigidBodyInternal>(entity);

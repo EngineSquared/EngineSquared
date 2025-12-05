@@ -186,19 +186,13 @@ struct ConstraintSettings {
      * @brief Check if this constraint is breakable
      * @return true if either breakForce or breakTorque is greater than 0
      */
-    [[nodiscard]] bool IsBreakable() const
-    {
-        return breakForce > 0.0f || breakTorque > 0.0f;
-    }
+    [[nodiscard]] bool IsBreakable() const { return breakForce > 0.0f || breakTorque > 0.0f; }
 
     /**
      * @brief Check if this constraint is rigid (no spring behavior)
      * @return true if stiffness is 1.0 and damping is 0.0
      */
-    [[nodiscard]] bool IsRigid() const
-    {
-        return stiffness >= 1.0f && damping <= 0.0f;
-    }
+    [[nodiscard]] bool IsRigid() const { return stiffness >= 1.0f && damping <= 0.0f; }
 };
 
 } // namespace Physics::Component

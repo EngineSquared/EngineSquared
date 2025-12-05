@@ -40,11 +40,8 @@ SoftBody SoftBody::CreateCloth(uint32_t width, uint32_t height, float spacing, f
     {
         for (uint32_t x = 0; x < width; ++x)
         {
-            body.vertices.emplace_back(
-                static_cast<float>(x) * spacing,
-                static_cast<float>(y) * spacing,
-                0.0f);
-            body.invMasses.push_back(1.0f);  // Default mass = 1
+            body.vertices.emplace_back(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing, 0.0f);
+            body.invMasses.push_back(1.0f); // Default mass = 1
         }
     }
 
@@ -123,10 +120,9 @@ SoftBody SoftBody::CreateRope(uint32_t segmentCount, float segmentLength, float 
 
     for (uint32_t i = 0; i < vertexCount; ++i)
     {
-        body.vertices.emplace_back(
-            0.0f,
-            -static_cast<float>(i) * segmentLength,  // Hang down
-            0.0f);
+        body.vertices.emplace_back(0.0f,
+                                   -static_cast<float>(i) * segmentLength, // Hang down
+                                   0.0f);
         body.invMasses.push_back(1.0f);
     }
 
@@ -159,10 +155,8 @@ SoftBody SoftBody::CreateCube(uint32_t gridSize, float spacing)
         {
             for (uint32_t x = 0; x < gridSize; ++x)
             {
-                body.vertices.emplace_back(
-                    static_cast<float>(x) * spacing,
-                    static_cast<float>(y) * spacing,
-                    static_cast<float>(z) * spacing);
+                body.vertices.emplace_back(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing,
+                                           static_cast<float>(z) * spacing);
                 body.invMasses.push_back(1.0f);
             }
         }
@@ -241,8 +235,7 @@ SoftBody SoftBody::CreateCube(uint32_t gridSize, float spacing)
     return body;
 }
 
-SoftBody SoftBody::CreateFromMesh(const std::vector<glm::vec3> &verts,
-                                  const std::vector<uint32_t> &faceIndices,
+SoftBody SoftBody::CreateFromMesh(const std::vector<glm::vec3> &verts, const std::vector<uint32_t> &faceIndices,
                                   const SoftBodySettings &settings)
 {
     SoftBody body;

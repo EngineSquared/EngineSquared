@@ -80,7 +80,7 @@ TEST(SphereColliderTest, FactoryUnit)
 
 TEST(SphereColliderTest, FactoryBall)
 {
-    auto collider = SphereCollider::Ball(0.11f);  // Tennis ball ~11cm diameter
+    auto collider = SphereCollider::Ball(0.11f); // Tennis ball ~11cm diameter
 
     EXPECT_FLOAT_EQ(collider.radius, 0.11f);
 }
@@ -148,7 +148,7 @@ TEST_F(SphereColliderIntegrationTest, CreateStaticBodyWithSphereCollider)
     transform.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
     registry.emplace<Object::Component::Transform>(entity, transform);
 
-    SphereCollider sphereCollider(10.0f);  // Large floor sphere
+    SphereCollider sphereCollider(10.0f); // Large floor sphere
     registry.emplace<SphereCollider>(entity, sphereCollider);
 
     RigidBody rb = RigidBody::CreateStatic();

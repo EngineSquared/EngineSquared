@@ -167,13 +167,10 @@ struct DistanceConstraint {
      * @param constraintSettings Constraint behavior settings
      * @return Configured DistanceConstraint component
      */
-    [[nodiscard]] static DistanceConstraint Create(
-        Engine::Entity a,
-        Engine::Entity b,
-        float distance,
-        const glm::vec3 &pointA = glm::vec3(0.0f),
-        const glm::vec3 &pointB = glm::vec3(0.0f),
-        const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
+    [[nodiscard]] static DistanceConstraint
+    Create(Engine::Entity a, Engine::Entity b, float distance, const glm::vec3 &pointA = glm::vec3(0.0f),
+           const glm::vec3 &pointB = glm::vec3(0.0f),
+           const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
         DistanceConstraint constraint;
         constraint.bodyA = a;
@@ -201,14 +198,10 @@ struct DistanceConstraint {
      * @param constraintSettings Constraint behavior settings
      * @return Configured DistanceConstraint component
      */
-    [[nodiscard]] static DistanceConstraint CreateWithRange(
-        Engine::Entity a,
-        Engine::Entity b,
-        float min,
-        float max,
-        const glm::vec3 &pointA = glm::vec3(0.0f),
-        const glm::vec3 &pointB = glm::vec3(0.0f),
-        const ConstraintSettings &constraintSettings = ConstraintSettings::Soft())
+    [[nodiscard]] static DistanceConstraint
+    CreateWithRange(Engine::Entity a, Engine::Entity b, float min, float max, const glm::vec3 &pointA = glm::vec3(0.0f),
+                    const glm::vec3 &pointB = glm::vec3(0.0f),
+                    const ConstraintSettings &constraintSettings = ConstraintSettings::Soft())
     {
         DistanceConstraint constraint;
         constraint.bodyA = a;
@@ -234,18 +227,16 @@ struct DistanceConstraint {
      * @param constraintSettings Constraint behavior settings
      * @return Configured DistanceConstraint component
      */
-    [[nodiscard]] static DistanceConstraint CreateToWorld(
-        Engine::Entity body,
-        const glm::vec3 &worldPoint,
-        float distance,
-        const glm::vec3 &localPoint = glm::vec3(0.0f),
-        const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
+    [[nodiscard]] static DistanceConstraint
+    CreateToWorld(Engine::Entity body, const glm::vec3 &worldPoint, float distance,
+                  const glm::vec3 &localPoint = glm::vec3(0.0f),
+                  const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
         DistanceConstraint constraint;
         constraint.bodyA = body;
-        constraint.bodyB = Engine::Entity();  // Invalid entity = world
+        constraint.bodyB = Engine::Entity(); // Invalid entity = world
         constraint.localPointA = localPoint;
-        constraint.localPointB = worldPoint;  // Used as world position
+        constraint.localPointB = worldPoint; // Used as world position
         constraint.minDistance = distance;
         constraint.maxDistance = distance;
         constraint.settings = constraintSettings;
@@ -265,20 +256,18 @@ struct DistanceConstraint {
      * @param constraintSettings Constraint behavior settings
      * @return Configured DistanceConstraint component
      */
-    [[nodiscard]] static DistanceConstraint CreateAutoDistance(
-        Engine::Entity a,
-        Engine::Entity b,
-        const glm::vec3 &pointA = glm::vec3(0.0f),
-        const glm::vec3 &pointB = glm::vec3(0.0f),
-        const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
+    [[nodiscard]] static DistanceConstraint
+    CreateAutoDistance(Engine::Entity a, Engine::Entity b, const glm::vec3 &pointA = glm::vec3(0.0f),
+                       const glm::vec3 &pointB = glm::vec3(0.0f),
+                       const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
         DistanceConstraint constraint;
         constraint.bodyA = a;
         constraint.bodyB = b;
         constraint.localPointA = pointA;
         constraint.localPointB = pointB;
-        constraint.minDistance = -1.0f;  // Auto-detect
-        constraint.maxDistance = -1.0f;  // Auto-detect
+        constraint.minDistance = -1.0f; // Auto-detect
+        constraint.maxDistance = -1.0f; // Auto-detect
         constraint.settings = constraintSettings;
         constraint.broken = false;
         return constraint;
@@ -288,28 +277,19 @@ struct DistanceConstraint {
      * @brief Check if this is a world constraint
      * @return true if bodyB is invalid (world constraint)
      */
-    [[nodiscard]] bool IsWorldConstraint() const
-    {
-        return !bodyB.IsValid();
-    }
+    [[nodiscard]] bool IsWorldConstraint() const { return !bodyB.IsValid(); }
 
     /**
      * @brief Check if distances should be auto-detected
      * @return true if either min or max distance is -1.0f
      */
-    [[nodiscard]] bool IsAutoDistance() const
-    {
-        return minDistance < 0.0f || maxDistance < 0.0f;
-    }
+    [[nodiscard]] bool IsAutoDistance() const { return minDistance < 0.0f || maxDistance < 0.0f; }
 
     /**
      * @brief Check if this is a fixed distance (rope) or range (spring)
      * @return true if minDistance equals maxDistance
      */
-    [[nodiscard]] bool IsFixedDistance() const
-    {
-        return minDistance == maxDistance;
-    }
+    [[nodiscard]] bool IsFixedDistance() const { return minDistance == maxDistance; }
 };
 
 } // namespace Physics::Component
