@@ -42,6 +42,7 @@
 #include "exception/DuplicatedVertexAttributeLocationError.hpp"
 #include "exception/FileReadingError.hpp"
 #include "exception/InstanceCreationError.hpp"
+#include "exception/MissingOutputRenderPassError.hpp"
 #include "exception/QueueCreationError.hpp"
 #include "exception/SurfaceCreationError.hpp"
 #include "exception/UncapturedDeviceError.hpp"
@@ -50,7 +51,6 @@
 #include "exception/UnsetAttributeTextureDescriptor.hpp"
 #include "exception/UnsupportedTextureFormatError.hpp"
 #include "exception/VertexAttributeOverlappingError.hpp"
-#include "exception/MissingOutputRenderPassError.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"

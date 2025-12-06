@@ -1,7 +1,7 @@
 #pragma once
 
-#include "resource/ARenderPass.hpp"
 #include "exception/MissingOutputRenderPassError.hpp"
+#include "resource/ARenderPass.hpp"
 
 namespace Graphic::Resource {
 
@@ -15,8 +15,8 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
 
         if (this->GetOutputs().colorBuffers.empty() && !this->GetOutputs().depthBuffer.has_value())
         {
-            throw Exception::MissingOutputRenderPassError(fmt::format("RenderPass {}: No outputs defined for render pass, cannot execute.",
-                                                 this->GetName()));
+            throw Exception::MissingOutputRenderPassError(
+                fmt::format("RenderPass {}: No outputs defined for render pass, cannot execute.", this->GetName()));
         }
 
         wgpu::RenderPassEncoder renderPass = this->_CreateRenderPass(context.deviceContext, core);
