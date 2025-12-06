@@ -3,7 +3,6 @@
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
 #include "utils/ConfigureHeadlessGraphics.hpp"
-#include "utils/CreateDefaultTestShader.hpp"
 #include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
@@ -194,12 +193,11 @@ void TestSystem(Engine::Core &core)
 
     renderPass->Execute(core);
 
-    auto image = core.GetResource<Graphic::Resource::TextureContainer>()
-                     .Get(entt::hashed_string{"returnTextureTest"})
-                     .RetrieveImage(context);
-
-    image.ToPng("/Users/miouzora/Documents/EngineSquared/RenderPassTestOutput.png"); // TODO: use a better path for
-                                                                                     // tests
+    // Uncomment this to check if the retrieved texture data is correct
+    // auto image = core.GetResource<Graphic::Resource::TextureContainer>()
+    //                  .Get(entt::hashed_string{"returnTextureTest"})
+    //                  .RetrieveImage(context);
+    // image.ToPng("RenderPassTestOutput.png");
 
     EXPECT_TRUE(core.GetResource<History>().called);
 }

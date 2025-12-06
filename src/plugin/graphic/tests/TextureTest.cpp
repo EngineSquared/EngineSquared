@@ -28,7 +28,7 @@ void TextureTest(Engine::Core &core)
     }
 
     // Uncomment this to check if the retrieved texture data is correct
-    // data.ToPng(std::filesystem::current_path().string() + "/output_test_texture.png");
+    data.ToPng(std::filesystem::current_path().string() + "/output_test_texture.png");
 }
 
 TEST(Texture, GlobalRun)
