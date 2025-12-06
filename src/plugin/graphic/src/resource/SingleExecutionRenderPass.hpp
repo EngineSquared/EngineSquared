@@ -1,8 +1,8 @@
 #pragma once
 
+#include "exception/FailToCreateCommandEncoderError.hpp"
 #include "exception/MissingOutputRenderPassError.hpp"
 #include "resource/ARenderPass.hpp"
-#include "exception/FailToCreateCommandEncoderError.hpp"
 
 namespace Graphic::Resource {
 

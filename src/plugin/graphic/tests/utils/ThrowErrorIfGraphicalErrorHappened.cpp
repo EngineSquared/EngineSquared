@@ -1,6 +1,6 @@
 #include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
-#include "utils/TestGraphicalError.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "utils/TestGraphicalError.hpp"
 
 namespace Graphic::Tests::Utils {
 
