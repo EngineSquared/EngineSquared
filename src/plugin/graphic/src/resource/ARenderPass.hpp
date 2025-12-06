@@ -4,6 +4,7 @@
 #include "resource/Shader.hpp"
 #include "resource/ShaderContainer.hpp"
 #include "utils/IValidable.hpp"
+#include "resource/BindGroupManager.hpp"
 #include <glm/vec4.hpp>
 
 namespace Graphic::Resource {
@@ -86,7 +87,7 @@ template <typename TDerived> class ARenderPass {
         }
 
         const auto &shaderManager = core.GetResource<Resource::ShaderContainer>();
-        if (_boundShader.has_value() && !shaderManager.Contains(_boundShader.value()))
+        if (!shaderManager.Contains(_boundShader.value()))
         {
             errors.push_back(Utils::ValidationError{
                 .message = fmt::format("Bound shader '{}' does not exist in ShaderManager",
@@ -94,12 +95,33 @@ template <typename TDerived> class ARenderPass {
                 .location = location,
                 .severity = Utils::ValidationError::Severity::Error});
         }
-        /**
-         * TODO: Check if shader exists in resource manager
-         * TODO: Check if all inputs match shader bind groups
-         * TODO: Check if inputs exists in resource manager
-         */
-
+        const auto &shader = shaderManager.Get(_boundShader.value());
+        for (const auto &[index, bindGroupName] : _inputs)
+        {
+            const auto &bindGroupLayouts = shader.GetDescriptor().getBindGroupLayouts();
+            if (index >= bindGroupLayouts.size())
+            {
+                errors.push_back(Utils::ValidationError{
+                    .message = fmt::format("Input bind group index {} exceeds number of bind groups ({}) in shader '{}'",
+                                           index, bindGroupLayouts.size(),
+                                           std::string_view(_boundShader->data(), _boundShader->size())),
+                    .location = location,
+                    .severity = Utils::ValidationError::Severity::Error});
+                continue;
+            }
+        }
+        const auto &bindGroups = core.GetResource<Resource::BindGroupManager>();
+        for (const auto &[index, bindGroupName] : _inputs)
+        {
+            if (!bindGroups.Contains(entt::hashed_string(bindGroupName.data(), bindGroupName.size())))
+            {
+                errors.push_back(Utils::ValidationError{
+                    .message = fmt::format("Input bind group '{}' at index {} does not exist in BindGroupContainer",
+                                           bindGroupName, index),
+                    .location = location,
+                    .severity = Utils::ValidationError::Severity::Error});
+            }
+        }
         return errors;
     };
 

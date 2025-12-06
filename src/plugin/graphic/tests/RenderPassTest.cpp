@@ -145,7 +145,7 @@ void TestSystem(Engine::Core &core)
 {
     auto &context = core.GetResource<Graphic::Resource::Context>();
 
-    std::unique_ptr<SingleExecutionRenderPassTest> renderPass = std::make_unique<SingleExecutionRenderPassTest>();
+    SingleExecutionRenderPassTest renderPass{};
 
     auto shader = CreateTestShader1(context);
     core.GetResource<Graphic::Resource::ShaderContainer>().Add(entt::hashed_string{"DefaultTestShader"},
@@ -177,10 +177,12 @@ void TestSystem(Engine::Core &core)
     Graphic::Resource::ColorOutput colorOutput;
     colorOutput.textureViewName = "returnTextureTest";
 
-    renderPass->BindShader("DefaultTestShader").AddOutput(0, colorOutput).AddInput(0, "TestBindGroup1");
-    EXPECT_NO_THROW(renderPass->Execute(core));
+    renderPass.BindShader("DefaultTestShader")
+        .AddInput(0, "TestBindGroup1")
+        .AddOutput(0, colorOutput);
+    EXPECT_NO_THROW(renderPass.Execute(core));
 
-    auto validationErrors = renderPass->validate(core);
+    auto validationErrors = renderPass.validate(core);
 
     if (!validationErrors.empty())
     {
@@ -190,8 +192,6 @@ void TestSystem(Engine::Core &core)
         }
         FAIL() << "RenderPass validation failed with errors.";
     }
-
-    renderPass->Execute(core);
 
     // Uncomment this to check if the retrieved texture data is correct
     // auto image = core.GetResource<Graphic::Resource::TextureContainer>()

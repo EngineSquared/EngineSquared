@@ -94,13 +94,13 @@ class Shader {
         return shader;
     }
 
-    const ShaderDescriptor &GetDescriptor() const { return descriptor; }
-    wgpu::BindGroupLayout GetBindGroupLayout(uint32_t groupIndex = 0) const
+    inline const ShaderDescriptor &GetDescriptor() const { return descriptor; }
+    inline wgpu::BindGroupLayout GetBindGroupLayout(uint32_t groupIndex = 0) const
     {
         return pipeline.getBindGroupLayout(groupIndex);
     }
 
-    const auto &GetPipeline() const { return pipeline; }
+    inline const auto &GetPipeline() const { return pipeline; }
 
   private:
     Shader(void) = default;

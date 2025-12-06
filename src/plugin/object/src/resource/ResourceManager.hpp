@@ -141,10 +141,10 @@ template <typename ResourceType> class ResourceManager {
      */
     [[nodiscard]] const ResourceType &Get(const entt::hashed_string &id) const
     {
-        auto &resource = cache[id];
+        const auto &resource = cache[id];
 
         if (!resource)
-            throw ResourceManagerError(fmt::format("Resource with id {} not found.", id));
+            throw ResourceManagerError(fmt::format("Resource with id {} not found.", std::string_view(id.data(), id.size())));
 
         return *resource;
     }
