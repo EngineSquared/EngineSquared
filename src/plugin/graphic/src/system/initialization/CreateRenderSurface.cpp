@@ -7,12 +7,33 @@
 
 void Graphic::System::CreateRenderSurface(Engine::Core &core)
 {
+    auto &context = core.GetResource<Resource::Context>();
+    auto &textureContainer = core.GetResource<Resource::TextureContainer>();
+    entt::hashed_string textureId = "surface_current_texture";
+
     if (core.GetResource<Resource::GraphicSettings>().GetWindowSystem() == Resource::WindowSystem::None)
     {
+        // We create a placeholder texture when there's no window system
+        wgpu::TextureDescriptor textureDesc(wgpu::Default);
+        textureDesc.label = wgpu::StringView("surface_current_texture");
+        textureDesc.size = {.width=1920u, .height=1080u, .depthOrArrayLayers=1};
+        textureDesc.dimension = wgpu::TextureDimension::_2D;
+        textureDesc.mipLevelCount = 1;
+        textureDesc.sampleCount = 1;
+        textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+        textureDesc.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TextureBinding |
+                            wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
+        textureDesc.viewFormats = nullptr;
+        textureDesc.viewFormatCount = 0;
+
+        Resource::Texture texture(context, textureDesc);
+        textureContainer.Add(textureId, std::move(texture));
+        if (context.surface.has_value())
+        {
+            context.surface->currentTextureId = textureId;
+        }
         return;
     }
-
-    auto &context = core.GetResource<Resource::Context>();
 
     if (!context.surface.has_value() || !context.surface->value.has_value())
     {
@@ -36,8 +57,6 @@ void Graphic::System::CreateRenderSurface(Engine::Core &core)
     }
 
     wgpu::Texture currentTexture = surfaceTexture.texture;
-    auto &textureContainer = core.GetResource<Resource::TextureContainer>();
-    entt::hashed_string textureId = "surface_current_texture";
     textureContainer.Add(textureId, Resource::Texture("surface_current_texture", currentTexture));
     context.surface->currentTextureId = textureId;
 }
