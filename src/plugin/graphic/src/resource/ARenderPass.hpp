@@ -1,10 +1,10 @@
 #pragma once
 
 #include "core/Core.hpp"
+#include "resource/BindGroupManager.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderContainer.hpp"
 #include "utils/IValidable.hpp"
-#include "resource/BindGroupManager.hpp"
 #include <glm/vec4.hpp>
 
 namespace Graphic::Resource {
@@ -102,9 +102,9 @@ template <typename TDerived> class ARenderPass {
             if (index >= bindGroupLayouts.size())
             {
                 errors.push_back(Utils::ValidationError{
-                    .message = fmt::format("Input bind group index {} exceeds number of bind groups ({}) in shader '{}'",
-                                           index, bindGroupLayouts.size(),
-                                           std::string_view(_boundShader->data(), _boundShader->size())),
+                    .message = fmt::format(
+                        "Input bind group index {} exceeds number of bind groups ({}) in shader '{}'", index,
+                        bindGroupLayouts.size(), std::string_view(_boundShader->data(), _boundShader->size())),
                     .location = location,
                     .severity = Utils::ValidationError::Severity::Error});
                 continue;

@@ -144,7 +144,8 @@ template <typename ResourceType> class ResourceManager {
         const auto &resource = cache[id];
 
         if (!resource)
-            throw ResourceManagerError(fmt::format("Resource with id {} not found.", std::string_view(id.data(), id.size())));
+            throw ResourceManagerError(
+                fmt::format("Resource with id {} not found.", std::string_view(id.data(), id.size())));
 
         return *resource;
     }
