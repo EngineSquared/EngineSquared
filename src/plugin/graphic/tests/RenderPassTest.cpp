@@ -15,7 +15,7 @@ class SingleExecutionRenderPassTest
   public:
     explicit SingleExecutionRenderPassTest() : ASingleExecutionRenderPass("TestRenderPass") {}
 
-    virtual void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
+    void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
     {
         core.GetResource<History>().called = true;
 

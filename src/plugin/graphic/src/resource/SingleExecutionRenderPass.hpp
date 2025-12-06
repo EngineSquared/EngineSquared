@@ -2,6 +2,7 @@
 
 #include "exception/MissingOutputRenderPassError.hpp"
 #include "resource/ARenderPass.hpp"
+#include "exception/FailToCreateCommandEncoderError.hpp"
 
 namespace Graphic::Resource {
 
@@ -58,7 +59,7 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
         encoderDesc.label = wgpu::StringView(encoderDescLabel);
         _commandEncoder = device.createCommandEncoder(encoderDesc);
         if (_commandEncoder == nullptr)
-            throw std::runtime_error(fmt::format(
+            throw Exception::FailToCreateCommandEncoderError(fmt::format(
                 "CreateRenderPass::{}::Command encoder is not created, cannot draw sprite.", this->GetName()));
 
         std::vector<wgpu::CommandBuffer> commandBuffers;

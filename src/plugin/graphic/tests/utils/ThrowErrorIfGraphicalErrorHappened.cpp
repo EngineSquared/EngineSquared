@@ -1,4 +1,5 @@
 #include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
+#include "utils/TestGraphicalError.hpp"
 #include "resource/GraphicSettings.hpp"
 
 namespace Graphic::Tests::Utils {
@@ -10,7 +11,7 @@ void ThrowErrorIfGraphicalErrorHappened(Engine::Core &core)
            WGPU_NULLABLE void *userdata2) {
             Log::Error(fmt::format("Custom uncaptured device error: type {:x} ({})", static_cast<uint32_t>(type),
                                    std::string(message.data, message.length)));
-            throw std::runtime_error("Custom uncaptured device error occurred");
+            throw Exception::TestGraphicalError("Custom uncaptured device error occurred");
         });
 }
 } // namespace Graphic::Tests::Utils
