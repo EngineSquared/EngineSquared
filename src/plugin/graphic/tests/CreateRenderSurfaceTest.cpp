@@ -67,7 +67,7 @@ TEST(CreateRenderSurfaceTest, CreatesTextureInContainerWhenWindowSystemIsNone)
 
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
     entt::hashed_string textureId = "surface_current_texture";
-    
+
     EXPECT_TRUE(textureContainer.Contains(textureId));
-    EXPECT_NO_THROW(auto &texture = textureContainer.Get(textureId); (void)texture;);
+    EXPECT_NO_THROW(auto &texture = textureContainer.Get(textureId); (void) texture;);
 }

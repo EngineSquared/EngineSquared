@@ -16,7 +16,7 @@ void Graphic::System::CreateRenderSurface(Engine::Core &core)
         // We create a placeholder texture when there's no window system
         wgpu::TextureDescriptor textureDesc(wgpu::Default);
         textureDesc.label = wgpu::StringView("surface_current_texture");
-        textureDesc.size = {.width=1920u, .height=1080u, .depthOrArrayLayers=1};
+        textureDesc.size = {.width = 1920u, .height = 1080u, .depthOrArrayLayers = 1};
         textureDesc.dimension = wgpu::TextureDimension::_2D;
         textureDesc.mipLevelCount = 1;
         textureDesc.sampleCount = 1;

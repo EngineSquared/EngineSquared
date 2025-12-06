@@ -14,11 +14,10 @@ void Graphic::Plugin::Bind()
     RegisterResource(Graphic::Resource::GPUBufferContainer());
     RegisterResource(Graphic::Resource::SamplerContainer());
 
-    RegisterSystems<RenderingPipeline::Setup>(System::CreateInstance, System::CreateSurface, System::CreateAdapter,
-                                              System::ReleaseInstance, System::RequestCapabilities,
-                                              System::CreateDevice, System::CreateQueue, System::SetupQueue,
-                                              System::ConfigureSurface, System::CreateRenderSurface,
-                                              System::ReleaseAdapter);
+    RegisterSystems<RenderingPipeline::Setup>(
+        System::CreateInstance, System::CreateSurface, System::CreateAdapter, System::ReleaseInstance,
+        System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
+        System::ConfigureSurface, System::CreateRenderSurface, System::ReleaseAdapter);
 
     RegisterSystems<Engine::Scheduler::Shutdown>(System::ReleaseContext);
 }

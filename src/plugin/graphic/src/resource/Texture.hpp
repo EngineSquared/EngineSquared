@@ -69,8 +69,7 @@ class Texture {
     {
     }
 
-    Texture(std::string_view name, wgpu::Texture texture)
-        : _webgpuTexture(texture), _name(std::string(name))
+    Texture(std::string_view name, wgpu::Texture texture) : _webgpuTexture(texture), _name(std::string(name))
     {
         _defaultView = _webgpuTexture.createView();
     }
