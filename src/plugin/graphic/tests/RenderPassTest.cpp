@@ -13,7 +13,7 @@ struct History {
 class SingleExecutionRenderPassTest
     : public Graphic::Resource::ASingleExecutionRenderPass<SingleExecutionRenderPassTest> {
   public:
-    SingleExecutionRenderPassTest() : ASingleExecutionRenderPass("TestRenderPass") {}
+    explicit SingleExecutionRenderPassTest() : ASingleExecutionRenderPass("TestRenderPass") {}
 
     virtual void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
     {

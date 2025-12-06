@@ -1,12 +1,13 @@
 #pragma once
 
 #include "resource/ARenderPass.hpp"
+#include "exception/MissingOutputRenderPassError.hpp"
 
 namespace Graphic::Resource {
 
 template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPass<TDerived> {
   public:
-    ASingleExecutionRenderPass(std::string_view name) : ARenderPass<TDerived>(name) {}
+    explicit ASingleExecutionRenderPass(std::string_view name) : ARenderPass<TDerived>(name) {}
 
     void Execute(Engine::Core &core) override
     {
@@ -14,8 +15,8 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
 
         if (this->GetOutputs().colorBuffers.empty() && !this->GetOutputs().depthBuffer.has_value())
         {
-            throw std::runtime_error(fmt::format("RenderPass {}: No outputs defined for render pass, cannot execute.",
-                                                 this->GetName())); // TODO: Custom exception
+            throw Exception::MissingOutputRenderPassError(fmt::format("RenderPass {}: No outputs defined for render pass, cannot execute.",
+                                                 this->GetName()));
         }
 
         wgpu::RenderPassEncoder renderPass = this->_CreateRenderPass(context.deviceContext, core);
@@ -23,7 +24,7 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
         auto &shader = core.GetResource<Graphic::Resource::ShaderContainer>().Get(this->GetBoundShader().value());
         renderPass.setPipeline(shader.GetPipeline());
 
-        for (auto &[index, name] : this->GetInputs()) // TODO: think if it should be done here or in herited class
+        for (auto &[index, name] : this->GetInputs())
         {
             Resource::BindGroup &bindGroup =
                 core.GetResource<Resource::BindGroupManager>().Get(entt::hashed_string{name.c_str()});

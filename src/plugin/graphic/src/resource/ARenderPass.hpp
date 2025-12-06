@@ -10,7 +10,7 @@
 namespace Graphic::Resource {
 
 struct ColorOutput {
-    std::string textureViewName = "NONE"; // TODO: Change to optional
+    std::string textureViewName = "";
     std::optional<std::string> textureResolveTargetName = std::nullopt;
     uint32_t depthSlice = 0;
     wgpu::StoreOp storeOp = wgpu::StoreOp::Store;
@@ -34,7 +34,7 @@ struct InputContainer : public std::map<uint32_t /* index inside shader */, std:
 
 template <typename TDerived> class ARenderPass {
   public:
-    ARenderPass(std::string_view name) : _name(name) {}
+    explicit ARenderPass(std::string_view name) : _name(name) {}
 
     virtual void Execute(Engine::Core &core) = 0;
 
