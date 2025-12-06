@@ -50,12 +50,14 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
 };
 class Texture {
   public:
-    Texture(Context &context, const wgpu::TextureDescriptor &descriptor)
-        : _name(std::string(descriptor.label.data, descriptor.label.length))
+    Texture(std::string_view name, wgpu::Texture texture) : _webgpuTexture(texture), _name(std::string(name)), _defaultView(nullptr)
     {
-        _webgpuTexture = context.deviceContext.GetDevice()->createTexture(descriptor);
         _defaultView = _webgpuTexture.createView();
     }
+
+    Texture(Context &context, const wgpu::TextureDescriptor &descriptor)
+        : Texture(std::string(descriptor.label.data, descriptor.label.length), context.deviceContext.GetDevice()->createTexture(descriptor))
+    { }
 
     Texture(Context &context, std::string_view name, const Image &image)
         : Texture(context, _BuildDescriptor(name, image))
@@ -66,12 +68,42 @@ class Texture {
     Texture(Context &context, std::string_view name, const glm::uvec2 &size,
             const std::function<glm::u8vec4(glm::uvec2 pos)> &callback)
         : Texture(context, name, Image(size, callback))
-    {
+    { }
+
+    ~Texture() {
+        if (_webgpuTexture == nullptr)
+            return;
+        _webgpuTexture.release();
+
+        if (_defaultView == nullptr)
+            return;
+        _defaultView.release();
     }
 
-    Texture(std::string_view name, wgpu::Texture texture) : _webgpuTexture(texture), _name(std::string(name))
+    Texture(const Texture &) = delete;
+    Texture &operator=(const Texture &) = delete;
+
+    Texture(Texture &&other) noexcept
+        : _webgpuTexture(std::move(other._webgpuTexture)), _defaultView(std::move(other._defaultView)), _name(std::move(other._name))
     {
-        _defaultView = _webgpuTexture.createView();
+        other._webgpuTexture = nullptr;
+        other._defaultView = nullptr;
+        other._name.clear();
+    }
+
+    Texture &operator=(Texture &&other) noexcept
+    {
+        if (this != &other)
+        {
+            _webgpuTexture = std::move(other._webgpuTexture);
+            _defaultView = std::move(other._defaultView);
+            _name = std::move(other._name);
+
+            other._webgpuTexture = nullptr;
+            other._defaultView = nullptr;
+            other._name.clear();
+        }
+        return *this;
     }
 
     // We assume the image is correctly formatted (width * height = pixels.size())
