@@ -2,6 +2,7 @@
 #include "exception/RenderSurfaceCreationError.hpp"
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/TextureContainer.hpp"
 #include "utils/webgpu.hpp"
 
 void Graphic::System::CreateRenderSurface(Engine::Core &core)
@@ -35,13 +36,8 @@ void Graphic::System::CreateRenderSurface(Engine::Core &core)
     }
 
     wgpu::Texture currentTexture = surfaceTexture.texture;
-    wgpu::TextureView textureView = currentTexture.createView();
-
-    if (textureView == nullptr)
-    {
-        throw Exception::RenderSurfaceCreationError("Failed to create texture view from surface texture");
-    }
-
-    context.surface->currentTexture = currentTexture;
-    context.surface->currentTextureView = textureView;
+    auto &textureContainer = core.GetResource<Resource::TextureContainer>();
+    entt::hashed_string textureId = "surface_current_texture";
+    textureContainer.Add(textureId, Resource::Texture("surface_current_texture", currentTexture));
+    context.surface->currentTextureId = textureId;
 }

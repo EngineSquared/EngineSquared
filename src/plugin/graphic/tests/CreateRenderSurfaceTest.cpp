@@ -24,8 +24,7 @@ TEST(CreateRenderSurfaceTest, ReturnsEarlyWhenWindowSystemIsNone)
     auto &context = core.GetResource<Graphic::Resource::Context>();
     if (context.surface.has_value())
     {
-        EXPECT_FALSE(context.surface->currentTexture.has_value());
-        EXPECT_FALSE(context.surface->currentTextureView.has_value());
+        EXPECT_FALSE(context.surface->currentTextureId.has_value());
     }
 }
 

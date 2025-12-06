@@ -69,6 +69,12 @@ class Texture {
     {
     }
 
+    Texture(std::string_view name, wgpu::Texture texture)
+        : _webgpuTexture(texture), _name(std::string(name))
+    {
+        _defaultView = _webgpuTexture.createView();
+    }
+
     // We assume the image is correctly formatted (width * height = pixels.size())
     void Write(Context &context, const Image &image)
     {

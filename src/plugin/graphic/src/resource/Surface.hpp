@@ -2,6 +2,7 @@
 
 #include "Logger.hpp"
 #include "utils/webgpu.hpp"
+#include <entt/core/hashed_string.hpp>
 
 namespace Graphic::Resource {
 struct Surface {
@@ -10,8 +11,7 @@ struct Surface {
 
     std::optional<wgpu::Surface> value;
     std::optional<wgpu::SurfaceCapabilities> capabilities;
-    std::optional<wgpu::Texture> currentTexture;
-    std::optional<wgpu::TextureView> currentTextureView;
+    std::optional<entt::hashed_string> currentTextureId;
 
     inline wgpu::Status updateCapabilities(wgpu::Adapter &adapter)
     {
@@ -24,16 +24,6 @@ struct Surface {
 
     inline void Release() noexcept
     {
-        if (currentTextureView.has_value())
-        {
-            currentTextureView->release();
-            currentTextureView.reset();
-        }
-        if (currentTexture.has_value())
-        {
-            currentTexture->release();
-            currentTexture.reset();
-        }
         if (value.has_value())
         {
             value->release();
