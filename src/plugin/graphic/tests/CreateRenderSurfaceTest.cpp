@@ -5,9 +5,10 @@
 #include "exception/RenderSurfaceCreationError.hpp"
 #include "resource/Context.hpp"
 #include "resource/Surface.hpp"
+#include "resource/TextureContainer.hpp"
 #include "system/initialization/CreateRenderSurface.hpp"
 
-TEST(CreateRenderSurfaceTest, ReturnsEarlyWhenWindowSystemIsNone)
+TEST(CreateRenderSurfaceTest, CreatesTextureWhenWindowSystemIsNone)
 {
     Engine::Core core;
 
@@ -17,15 +18,14 @@ TEST(CreateRenderSurfaceTest, ReturnsEarlyWhenWindowSystemIsNone)
         c.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
     });
 
-    core.RegisterSystem<RenderingPipeline::Setup>(Graphic::System::CreateRenderSurface);
-
     EXPECT_NO_THROW(core.RunSystems());
 
-    auto &context = core.GetResource<Graphic::Resource::Context>();
-    if (context.surface.has_value())
-    {
-        EXPECT_FALSE(context.surface->currentTextureId.has_value());
-    }
+    auto const &context = core.GetResource<Graphic::Resource::Context>();
+    auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
+    entt::hashed_string textureId = "surface_current_texture";
+
+    EXPECT_FALSE(context.surface.has_value());
+    EXPECT_TRUE(textureContainer.Contains(textureId));
 }
 
 TEST(CreateRenderSurfaceTest, ThrowsWhenSurfaceNotCreated)
@@ -39,11 +39,10 @@ TEST(CreateRenderSurfaceTest, ThrowsWhenSurfaceNotCreated)
     });
 
     core.RegisterSystem<RenderingPipeline::Setup>([](Engine::Core &c) {
-        // After CreateSurface runs (which returns early), manually create a Surface object
-        // but with a null value to simulate surface not being properly created
+        // After CreateSurface runs (which returns early when WindowSystem is None),
+        // manually create a Surface object but with a null value to simulate surface not being properly created
         auto &context = c.GetResource<Graphic::Resource::Context>();
         context.surface = Graphic::Resource::Surface(std::nullopt);
-        // Now change WindowSystem so CreateRenderSurface doesn't return early
         c.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::GLFW);
     });
 
@@ -54,23 +53,21 @@ TEST(CreateRenderSurfaceTest, ThrowsWhenSurfaceNotCreated)
     EXPECT_NO_THROW(core.RunSystems());
 }
 
-TEST(CreateRenderSurfaceTest, SystemCanBeCalledDirectly)
+TEST(CreateRenderSurfaceTest, CreatesTextureInContainerWhenWindowSystemIsNone)
 {
     Engine::Core core;
 
     core.AddPlugins<Graphic::Plugin>();
 
-    bool systemRan = false;
-
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &c) {
         c.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
     });
 
-    core.RegisterSystem<RenderingPipeline::Setup>([&systemRan](Engine::Core &c) {
-        Graphic::System::CreateRenderSurface(c);
-        systemRan = true;
-    });
-
     EXPECT_NO_THROW(core.RunSystems());
-    EXPECT_TRUE(systemRan);
+
+    auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
+    entt::hashed_string textureId = "surface_current_texture";
+    
+    EXPECT_TRUE(textureContainer.Contains(textureId));
+    EXPECT_NO_THROW(auto &texture = textureContainer.Get(textureId); (void)texture;);
 }

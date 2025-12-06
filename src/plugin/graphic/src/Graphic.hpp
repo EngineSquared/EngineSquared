@@ -57,6 +57,7 @@
 #include "system/initialization/CreateDevice.hpp"
 #include "system/initialization/CreateInstance.hpp"
 #include "system/initialization/CreateQueue.hpp"
+#include "system/initialization/CreateRenderSurface.hpp"
 #include "system/initialization/CreateSurface.hpp"
 #include "system/initialization/ReleaseAdapter.hpp"
 #include "system/initialization/ReleaseInstance.hpp"
