@@ -227,9 +227,9 @@ TEST(BindGroupTest, RefreshUpdatesTextureBindings)
         auto initialView = bindGroup.GetEntries().front().textureView;
 
         {
-            auto newTexture =
-                Graphic::Resource::Texture(context, "bindgroup_texture_asset_name",
-                                        Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(200, 100, 50, 255); }));
+            auto newTexture = Graphic::Resource::Texture(
+                context, "bindgroup_texture_asset_name",
+                Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(200, 100, 50, 255); }));
             textures.Remove(textureId);
             textures.Add(textureId, std::move(newTexture));
         }
