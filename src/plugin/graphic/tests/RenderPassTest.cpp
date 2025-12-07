@@ -6,6 +6,8 @@
 #include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
+using namespace entt::literals;
+
 struct History {
     bool called = false;
 };
@@ -134,30 +136,28 @@ void TestSystem(Engine::Core &core)
     SingleExecutionRenderPassTest renderPass{};
 
     auto shader = CreateTestShader1(context);
-    core.GetResource<Graphic::Resource::ShaderContainer>().Add(entt::hashed_string{"DefaultTestShader"},
+    core.GetResource<Graphic::Resource::ShaderContainer>().Add("DefaultTestShader"_hs,
                                                                std::move(shader));
 
     core.GetResource<Graphic::Resource::GPUBufferContainer>().Add(
-        entt::hashed_string{"TestGPUBuffer1"},
+        "TestGPUBuffer1"_hs,
         std::make_unique<TestGPUBuffer>("TestGPUBuffer1", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
-    core.GetResource<Graphic::Resource::GPUBufferContainer>().Get(entt::hashed_string{"TestGPUBuffer1"})->Create(core);
+    core.GetResource<Graphic::Resource::GPUBufferContainer>().Get("TestGPUBuffer1"_hs)->Create(core);
 
     Graphic::Resource::BindGroup inputBindGroup(core,
-                                                entt::hashed_string{
-                                                    "DefaultTestShader"
-    },
+                                                    "DefaultTestShader"_hs,
                                                 0,
                                                 {
                                                     {.binding = 0,
                                                      .type = Graphic::Resource::BindGroup::Asset::Type::Buffer,
-                                                     .name = entt::hashed_string{"TestGPUBuffer1"},
+                                                     .name = "TestGPUBuffer1"_hs,
                                                      .size = sizeof(glm::vec4)},
                                                 });
-    core.GetResource<Graphic::Resource::BindGroupManager>().Add(entt::hashed_string{"TestBindGroup1"},
+    core.GetResource<Graphic::Resource::BindGroupManager>().Add("TestBindGroup1"_hs,
                                                                 std::move(inputBindGroup));
 
     core.GetResource<Graphic::Resource::TextureContainer>().Add(
-        entt::hashed_string{"returnTextureTest"}, context, "returnTextureTest",
+        "returnTextureTest"_hs, context, "returnTextureTest",
         Graphic::Resource::Image(glm::uvec2(256, 256), [](glm::uvec2) { return glm::u8vec4(255, 0, 0, 255); }));
 
     Graphic::Resource::ColorOutput colorOutput;
@@ -178,7 +178,7 @@ void TestSystem(Engine::Core &core)
     }
 
     auto image = core.GetResource<Graphic::Resource::TextureContainer>()
-                     .Get(entt::hashed_string{"returnTextureTest"})
+                     .Get("returnTextureTest"_hs)
                      .RetrieveImage(context);
 
     EXPECT_EQ(image.width, 256);
