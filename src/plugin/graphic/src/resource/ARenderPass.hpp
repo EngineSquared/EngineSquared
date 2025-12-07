@@ -85,12 +85,14 @@ template <typename TDerived> class ARenderPass {
             errors.push_back(Utils::ValidationError{.message = "No shader bound to render pass",
                                                     .location = location,
                                                     .severity = Utils::ValidationError::Severity::Error});
-        } else {
+        }
+        else
+        {
             if (!shaderManager.Contains(_boundShader.value()))
             {
                 errors.push_back(Utils::ValidationError{
                     .message = fmt::format("Bound shader '{}' does not exist in ShaderManager",
-                                        std::string_view(_boundShader->data(), _boundShader->size())),
+                                           std::string_view(_boundShader->data(), _boundShader->size())),
                     .location = location,
                     .severity = Utils::ValidationError::Severity::Error});
             }

@@ -178,8 +178,8 @@ void TestSystem(Engine::Core &core)
     }
 
     auto image = core.GetResource<Graphic::Resource::TextureContainer>()
-    .Get(entt::hashed_string{"returnTextureTest"})
-    .RetrieveImage(context);
+                     .Get(entt::hashed_string{"returnTextureTest"})
+                     .RetrieveImage(context);
 
     EXPECT_EQ(image.width, 256);
     EXPECT_EQ(image.height, 256);
