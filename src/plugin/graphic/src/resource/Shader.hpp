@@ -42,7 +42,8 @@ class Shader {
         pipelineDescriptor.vertex.entryPoint = wgpu::StringView(descriptor.getVertexEntryPoint());
 
         wgpu::FragmentState fragmentState(wgpu::Default);
-        std::vector<wgpu::ColorTargetState> colorTargets(descriptor.getOutputColorFormats().size());
+        std::vector<wgpu::ColorTargetState> colorTargets;
+        colorTargets.reserve(descriptor.getOutputColorFormats().size());
         wgpu::BlendState blendState(wgpu::Default);
         for (const auto &format : descriptor.getOutputColorFormats())
         {
@@ -50,7 +51,7 @@ class Shader {
             colorTarget.format = format.getFormat();
             colorTarget.writeMask = wgpu::ColorWriteMask::All;
             colorTarget.blend = &blendState;
-            colorTargets.push_back(colorTarget);
+            colorTargets.emplace_back(colorTarget);
         }
         fragmentState.module = shaderModule;
         fragmentState.entryPoint = wgpu::StringView(descriptor.getFragmentEntryPoint());
@@ -80,7 +81,10 @@ class Shader {
         pipelineLayoutDescriptor.bindGroupLayouts = bindGroupLayouts.data();
         pipelineDescriptor.layout = device.createPipelineLayout(pipelineLayoutDescriptor);
 
-        pipelineDescriptor.depthStencil = &descriptor.getOutputDepthFormat()->getValue();
+        if (descriptor.getOutputDepthFormat().has_value())
+            pipelineDescriptor.depthStencil = &descriptor.getOutputDepthFormat()->getValue();
+        else
+            pipelineDescriptor.depthStencil = nullptr;
 
         pipelineDescriptor.primitive.topology = descriptor.getPrimitiveTopology();
         pipelineDescriptor.primitive.cullMode = descriptor.getCullMode();
@@ -90,11 +94,13 @@ class Shader {
         return shader;
     }
 
-    const ShaderDescriptor &GetDescriptor() const { return descriptor; }
-    wgpu::BindGroupLayout GetBindGroupLayout(uint32_t groupIndex = 0) const
+    inline const ShaderDescriptor &GetDescriptor() const { return descriptor; }
+    inline wgpu::BindGroupLayout GetBindGroupLayout(uint32_t groupIndex = 0) const
     {
         return pipeline.getBindGroupLayout(groupIndex);
     }
+
+    inline const auto &GetPipeline() const { return pipeline; }
 
   private:
     Shader(void) = default;

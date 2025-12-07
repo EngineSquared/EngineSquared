@@ -141,10 +141,11 @@ template <typename ResourceType> class ResourceManager {
      */
     [[nodiscard]] const ResourceType &Get(const entt::hashed_string &id) const
     {
-        auto &resource = cache[id];
+        const auto &resource = cache[id];
 
         if (!resource)
-            throw ResourceManagerError(fmt::format("Resource with id {} not found.", id));
+            throw ResourceManagerError(
+                fmt::format("Resource with id {} not found.", std::string_view(id.data(), id.size())));
 
         return *resource;
     }
@@ -162,7 +163,7 @@ template <typename ResourceType> class ResourceManager {
      * @param id  id of the resource
      * @return true if the resource exists, false otherwise.
      */
-    [[nodiscard]] bool Contains(const entt::hashed_string &id) { return cache.contains(id); }
+    [[nodiscard]] bool Contains(const entt::hashed_string &id) const { return cache.contains(id); }
 
     /**
      * @brief Set the default resource that will be used as fallback.
