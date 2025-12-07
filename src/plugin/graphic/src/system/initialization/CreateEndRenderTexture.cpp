@@ -9,7 +9,6 @@ void Graphic::System::CreateEndRenderTexture(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
     auto &textureContainer = core.GetResource<Resource::TextureContainer>();
-    entt::hashed_string textureId = "end_render_texture";
 
     if (core.GetResource<Resource::GraphicSettings>().GetWindowSystem() == Resource::WindowSystem::None)
     {
@@ -27,11 +26,7 @@ void Graphic::System::CreateEndRenderTexture(Engine::Core &core)
         textureDesc.viewFormatCount = 0;
 
         Resource::Texture texture(context, textureDesc);
-        textureContainer.Add(textureId, std::move(texture));
-        if (context.surface.has_value())
-        {
-            context.surface->currentTextureId = textureId;
-        }
+        textureContainer.Add(END_RENDER_TEXTURE_ID, std::move(texture));
         return;
     }
 
@@ -57,6 +52,5 @@ void Graphic::System::CreateEndRenderTexture(Engine::Core &core)
     }
 
     wgpu::Texture currentTexture = surfaceTexture.texture;
-    textureContainer.Add(textureId, Resource::Texture("end_render_texture", currentTexture));
-    context.surface->currentTextureId = textureId;
+    textureContainer.Add(END_RENDER_TEXTURE_ID, Resource::Texture("end_render_texture", currentTexture));
 }

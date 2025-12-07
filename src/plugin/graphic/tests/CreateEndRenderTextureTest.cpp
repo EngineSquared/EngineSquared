@@ -8,6 +8,8 @@
 #include "resource/TextureContainer.hpp"
 #include "system/initialization/CreateEndRenderTexture.hpp"
 
+using Graphic::System::END_RENDER_TEXTURE_ID;
+
 TEST(CreateEndRenderTextureTest, CreatesTextureWhenWindowSystemIsNone)
 {
     Engine::Core core;
@@ -22,10 +24,9 @@ TEST(CreateEndRenderTextureTest, CreatesTextureWhenWindowSystemIsNone)
 
     auto const &context = core.GetResource<Graphic::Resource::Context>();
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
-    entt::hashed_string textureId = "end_render_texture";
 
     EXPECT_FALSE(context.surface.has_value());
-    EXPECT_TRUE(textureContainer.Contains(textureId));
+    EXPECT_TRUE(textureContainer.Contains(END_RENDER_TEXTURE_ID));
 }
 
 TEST(CreateEndRenderTextureTest, ThrowsWhenSurfaceNotCreated)
@@ -66,8 +67,7 @@ TEST(CreateEndRenderTextureTest, CreatesTextureInContainerWhenWindowSystemIsNone
     EXPECT_NO_THROW(core.RunSystems());
 
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
-    entt::hashed_string textureId = "end_render_texture";
 
-    EXPECT_TRUE(textureContainer.Contains(textureId));
-    EXPECT_NO_THROW(auto &texture = textureContainer.Get(textureId); (void) texture;);
+    EXPECT_TRUE(textureContainer.Contains(END_RENDER_TEXTURE_ID));
+    EXPECT_NO_THROW(auto &texture = textureContainer.Get(END_RENDER_TEXTURE_ID); (void) texture;);
 }
