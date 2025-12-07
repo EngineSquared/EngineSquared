@@ -136,25 +136,20 @@ void TestSystem(Engine::Core &core)
     SingleExecutionRenderPassTest renderPass{};
 
     auto shader = CreateTestShader1(context);
-    core.GetResource<Graphic::Resource::ShaderContainer>().Add("DefaultTestShader"_hs,
-                                                               std::move(shader));
+    core.GetResource<Graphic::Resource::ShaderContainer>().Add("DefaultTestShader"_hs, std::move(shader));
 
     core.GetResource<Graphic::Resource::GPUBufferContainer>().Add(
-        "TestGPUBuffer1"_hs,
-        std::make_unique<TestGPUBuffer>("TestGPUBuffer1", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
+        "TestGPUBuffer1"_hs, std::make_unique<TestGPUBuffer>("TestGPUBuffer1", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
     core.GetResource<Graphic::Resource::GPUBufferContainer>().Get("TestGPUBuffer1"_hs)->Create(core);
 
-    Graphic::Resource::BindGroup inputBindGroup(core,
-                                                    "DefaultTestShader"_hs,
-                                                0,
+    Graphic::Resource::BindGroup inputBindGroup(core, "DefaultTestShader"_hs, 0,
                                                 {
                                                     {.binding = 0,
                                                      .type = Graphic::Resource::BindGroup::Asset::Type::Buffer,
                                                      .name = "TestGPUBuffer1"_hs,
                                                      .size = sizeof(glm::vec4)},
-                                                });
-    core.GetResource<Graphic::Resource::BindGroupManager>().Add("TestBindGroup1"_hs,
-                                                                std::move(inputBindGroup));
+    });
+    core.GetResource<Graphic::Resource::BindGroupManager>().Add("TestBindGroup1"_hs, std::move(inputBindGroup));
 
     core.GetResource<Graphic::Resource::TextureContainer>().Add(
         "returnTextureTest"_hs, context, "returnTextureTest",
@@ -177,9 +172,8 @@ void TestSystem(Engine::Core &core)
         FAIL() << "RenderPass validation failed with errors.";
     }
 
-    auto image = core.GetResource<Graphic::Resource::TextureContainer>()
-                     .Get("returnTextureTest"_hs)
-                     .RetrieveImage(context);
+    auto image =
+        core.GetResource<Graphic::Resource::TextureContainer>().Get("returnTextureTest"_hs).RetrieveImage(context);
 
     EXPECT_EQ(image.width, 256);
     EXPECT_EQ(image.height, 256);
