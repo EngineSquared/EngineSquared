@@ -23,7 +23,7 @@ void CreatePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
 }
 
 void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
-                                    Graphic::Resource::TextureContainer &textureContainer)
+                                   Graphic::Resource::TextureContainer &textureContainer)
 {
     if (!context.surface.has_value() || !context.surface->value.has_value())
     {
@@ -49,7 +49,7 @@ void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
 
     wgpu::Texture currentTexture = surfaceTexture.texture;
     textureContainer.Add(Graphic::System::END_RENDER_TEXTURE_ID,
-                          Graphic::Resource::Texture("end_render_texture", currentTexture));
+                         Graphic::Resource::Texture("end_render_texture", currentTexture));
 }
 } // namespace
 
