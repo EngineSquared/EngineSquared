@@ -6,7 +6,7 @@
 #include "core/Core.hpp"
 #include "exception/BindGroupCreationError.hpp"
 #include "resource/DeviceContext.hpp"
-#include "resource/GPUBufferManager.hpp"
+#include "resource/GPUBufferContainer.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "resource/ShaderContainer.hpp"
 #include "resource/TextureContainer.hpp"
