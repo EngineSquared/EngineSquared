@@ -1,21 +1,21 @@
-#include "CreateRenderSurface.hpp"
-#include "exception/RenderSurfaceCreationError.hpp"
+#include "CreateEndRenderTexture.hpp"
+#include "exception/EndRenderTextureCreationError.hpp"
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/TextureContainer.hpp"
 #include "utils/webgpu.hpp"
 
-void Graphic::System::CreateRenderSurface(Engine::Core &core)
+void Graphic::System::CreateEndRenderTexture(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
     auto &textureContainer = core.GetResource<Resource::TextureContainer>();
-    entt::hashed_string textureId = "surface_current_texture";
+    entt::hashed_string textureId = "end_render_texture";
 
     if (core.GetResource<Resource::GraphicSettings>().GetWindowSystem() == Resource::WindowSystem::None)
     {
         // We create a placeholder texture when there's no window system
         wgpu::TextureDescriptor textureDesc(wgpu::Default);
-        textureDesc.label = wgpu::StringView("surface_current_texture");
+        textureDesc.label = wgpu::StringView("end_render_texture");
         textureDesc.size = {.width = 1920u, .height = 1080u, .depthOrArrayLayers = 1};
         textureDesc.dimension = wgpu::TextureDimension::_2D;
         textureDesc.mipLevelCount = 1;
@@ -37,7 +37,7 @@ void Graphic::System::CreateRenderSurface(Engine::Core &core)
 
     if (!context.surface.has_value() || !context.surface->value.has_value())
     {
-        throw Exception::RenderSurfaceCreationError("Surface is not created, cannot create render surface");
+        throw Exception::EndRenderTextureCreationError("Surface is not created, cannot create the end render texture.");
     }
 
     const wgpu::Surface &surface = context.surface->value.value();
@@ -47,16 +47,16 @@ void Graphic::System::CreateRenderSurface(Engine::Core &core)
     if (surfaceTexture.status != wgpu::SurfaceGetCurrentTextureStatus::SuccessOptimal &&
         surfaceTexture.status != wgpu::SurfaceGetCurrentTextureStatus::SuccessSuboptimal)
     {
-        throw Exception::RenderSurfaceCreationError(fmt::format(
+        throw Exception::EndRenderTextureCreationError(fmt::format(
             "Failed to get current texture from surface, status: {}", static_cast<int>(surfaceTexture.status)));
     }
 
     if (surfaceTexture.texture == nullptr)
     {
-        throw Exception::RenderSurfaceCreationError("Surface texture is null");
+        throw Exception::EndRenderTextureCreationError("Surface texture is null");
     }
 
     wgpu::Texture currentTexture = surfaceTexture.texture;
-    textureContainer.Add(textureId, Resource::Texture("surface_current_texture", currentTexture));
+    textureContainer.Add(textureId, Resource::Texture("end_render_texture", currentTexture));
     context.surface->currentTextureId = textureId;
 }

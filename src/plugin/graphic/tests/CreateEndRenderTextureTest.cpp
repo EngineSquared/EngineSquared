@@ -2,13 +2,13 @@
 
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
-#include "exception/RenderSurfaceCreationError.hpp"
+#include "exception/EndRenderTextureCreationError.hpp"
 #include "resource/Context.hpp"
 #include "resource/Surface.hpp"
 #include "resource/TextureContainer.hpp"
-#include "system/initialization/CreateRenderSurface.hpp"
+#include "system/initialization/CreateEndRenderTexture.hpp"
 
-TEST(CreateRenderSurfaceTest, CreatesTextureWhenWindowSystemIsNone)
+TEST(CreateEndRenderTextureTest, CreatesTextureWhenWindowSystemIsNone)
 {
     Engine::Core core;
 
@@ -22,13 +22,13 @@ TEST(CreateRenderSurfaceTest, CreatesTextureWhenWindowSystemIsNone)
 
     auto const &context = core.GetResource<Graphic::Resource::Context>();
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
-    entt::hashed_string textureId = "surface_current_texture";
+    entt::hashed_string textureId = "end_render_texture";
 
     EXPECT_FALSE(context.surface.has_value());
     EXPECT_TRUE(textureContainer.Contains(textureId));
 }
 
-TEST(CreateRenderSurfaceTest, ThrowsWhenSurfaceNotCreated)
+TEST(CreateEndRenderTextureTest, ThrowsWhenSurfaceNotCreated)
 {
     Engine::Core core;
 
@@ -47,13 +47,13 @@ TEST(CreateRenderSurfaceTest, ThrowsWhenSurfaceNotCreated)
     });
 
     core.RegisterSystem<RenderingPipeline::Setup>([](Engine::Core &c) {
-        EXPECT_THROW(Graphic::System::CreateRenderSurface(c), Graphic::Exception::RenderSurfaceCreationError);
+        EXPECT_THROW(Graphic::System::CreateEndRenderTexture(c), Graphic::Exception::EndRenderTextureCreationError);
     });
 
     EXPECT_NO_THROW(core.RunSystems());
 }
 
-TEST(CreateRenderSurfaceTest, CreatesTextureInContainerWhenWindowSystemIsNone)
+TEST(CreateEndRenderTextureTest, CreatesTextureInContainerWhenWindowSystemIsNone)
 {
     Engine::Core core;
 
@@ -66,7 +66,7 @@ TEST(CreateRenderSurfaceTest, CreatesTextureInContainerWhenWindowSystemIsNone)
     EXPECT_NO_THROW(core.RunSystems());
 
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
-    entt::hashed_string textureId = "surface_current_texture";
+    entt::hashed_string textureId = "end_render_texture";
 
     EXPECT_TRUE(textureContainer.Contains(textureId));
     EXPECT_NO_THROW(auto &texture = textureContainer.Get(textureId); (void) texture;);

@@ -17,7 +17,7 @@ void Graphic::Plugin::Bind()
     RegisterSystems<RenderingPipeline::Setup>(
         System::CreateInstance, System::CreateSurface, System::CreateAdapter, System::ReleaseInstance,
         System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
-        System::ConfigureSurface, System::CreateRenderSurface, System::ReleaseAdapter);
+        System::ConfigureSurface, System::CreateEndRenderTexture, System::ReleaseAdapter);
 
     RegisterSystems<Engine::Scheduler::Shutdown>(System::ReleaseContext);
 }
