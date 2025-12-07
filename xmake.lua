@@ -20,7 +20,8 @@ add_requires(
     "glfw3webgpu v1.3.0-alpha",
     { debug = is_mode("debug") }
 )
-add_requires("rmlui 6.0", { configs = { transform = true }, debug = is_mode("debug") })
+-- Temporarily disabled due to build issues on Windows 11
+--add_requires("rmlui 6.0", { configs = { transform = true }, debug = is_mode("debug") })
 
 
 set_languages("c++20")
