@@ -38,8 +38,8 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
         renderPass.release();
 
         wgpu::CommandBufferDescriptor cmdBufferDescriptor(wgpu::Default);
-        cmdBufferDescriptor.label =
-            wgpu::StringView(fmt::format("CreateRenderPass::{}::CommandBuffer", this->GetName()));
+        std::string cmdBufferDescriptorLabel = fmt::format("CreateRenderPass::{}::CommandBuffer", this->GetName());
+        cmdBufferDescriptor.label = wgpu::StringView(cmdBufferDescriptorLabel);
         auto commandBuffer = _commandEncoder.finish(cmdBufferDescriptor);
         _commandEncoder.release();
 
@@ -61,8 +61,6 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
         if (_commandEncoder == nullptr)
             throw Exception::FailToCreateCommandEncoderError(fmt::format(
                 "CreateRenderPass::{}::Command encoder is not created, cannot draw sprite.", this->GetName()));
-
-        std::vector<wgpu::CommandBuffer> commandBuffers;
 
         wgpu::RenderPassDescriptor renderPassDesc(wgpu::Default);
         std::string renderPassDescLabel = fmt::format("CreateRenderPass::{}::RenderPass", this->GetName());

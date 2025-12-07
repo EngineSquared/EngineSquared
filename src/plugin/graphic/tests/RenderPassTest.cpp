@@ -19,18 +19,8 @@ class SingleExecutionRenderPassTest
     {
         core.GetResource<History>().called = true;
 
-        for (const auto &[id, input] : this->GetInputs())
-        {
-            auto &bindGroup =
-                core.GetResource<Graphic::Resource::BindGroupManager>().Get(entt::hashed_string{input.c_str()});
-            renderPass.setBindGroup(id, bindGroup.GetBindGroup(), 0, nullptr);
-        }
-
         renderPass.draw(6, 1, 0, 0);
     }
-
-  private:
-    wgpu::Buffer _vertexBuffer;
 };
 
 Graphic::Resource::Shader CreateTestShader1(Graphic::Resource::Context &graphicContext)
@@ -42,10 +32,6 @@ struct Global {
 };
 
 @group(0) @binding(0) var<uniform> global: Global;
-
-struct VertexOutput {
-    @builtin(position) position: vec4f,
-};
 
 
 @vertex
@@ -191,16 +177,24 @@ void TestSystem(Engine::Core &core)
         FAIL() << "RenderPass validation failed with errors.";
     }
 
+    auto image = core.GetResource<Graphic::Resource::TextureContainer>()
+    .Get(entt::hashed_string{"returnTextureTest"})
+    .RetrieveImage(context);
+
+    EXPECT_EQ(image.width, 256);
+    EXPECT_EQ(image.height, 256);
+    for (const auto &pixel : image.pixels)
+    {
+        EXPECT_EQ(pixel, glm::u8vec4(0, 255, 0, 255));
+    }
+
     // Uncomment this to check if the retrieved texture data is correct
-    // auto image = core.GetResource<Graphic::Resource::TextureContainer>()
-    //                  .Get(entt::hashed_string{"returnTextureTest"})
-    //                  .RetrieveImage(context);
     // image.ToPng("RenderPassTestOutput.png");
 
     EXPECT_TRUE(core.GetResource<History>().called);
 }
 
-TEST(GraphicPlugin, GlobalRun)
+TEST(RenderPass, SingleExecutionTest)
 {
     Engine::Core core;
 

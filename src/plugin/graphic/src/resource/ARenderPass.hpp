@@ -78,36 +78,36 @@ template <typename TDerived> class ARenderPass {
     {
         std::vector<Utils::ValidationError> errors;
         const std::string location = fmt::format("RenderPass({})", _name);
+        const auto &shaderManager = core.GetResource<Resource::ShaderContainer>();
 
         if (!_boundShader.has_value())
         {
             errors.push_back(Utils::ValidationError{.message = "No shader bound to render pass",
                                                     .location = location,
                                                     .severity = Utils::ValidationError::Severity::Error});
-        }
-
-        const auto &shaderManager = core.GetResource<Resource::ShaderContainer>();
-        if (!shaderManager.Contains(_boundShader.value()))
-        {
-            errors.push_back(Utils::ValidationError{
-                .message = fmt::format("Bound shader '{}' does not exist in ShaderManager",
-                                       std::string_view(_boundShader->data(), _boundShader->size())),
-                .location = location,
-                .severity = Utils::ValidationError::Severity::Error});
-        }
-        const auto &shader = shaderManager.Get(_boundShader.value());
-        for (const auto &[index, bindGroupName] : _inputs)
-        {
-            const auto &bindGroupLayouts = shader.GetDescriptor().getBindGroupLayouts();
-            if (index >= bindGroupLayouts.size())
+        } else {
+            if (!shaderManager.Contains(_boundShader.value()))
             {
                 errors.push_back(Utils::ValidationError{
-                    .message = fmt::format(
-                        "Input bind group index {} exceeds number of bind groups ({}) in shader '{}'", index,
-                        bindGroupLayouts.size(), std::string_view(_boundShader->data(), _boundShader->size())),
+                    .message = fmt::format("Bound shader '{}' does not exist in ShaderManager",
+                                        std::string_view(_boundShader->data(), _boundShader->size())),
                     .location = location,
                     .severity = Utils::ValidationError::Severity::Error});
-                continue;
+            }
+            const auto &shader = shaderManager.Get(_boundShader.value());
+            for (const auto &[index, bindGroupName] : _inputs)
+            {
+                const auto &bindGroupLayouts = shader.GetDescriptor().getBindGroupLayouts();
+                if (index >= bindGroupLayouts.size())
+                {
+                    errors.push_back(Utils::ValidationError{
+                        .message = fmt::format(
+                            "Input bind group index {} exceeds number of bind groups ({}) in shader '{}'", index,
+                            bindGroupLayouts.size(), std::string_view(_boundShader->data(), _boundShader->size())),
+                        .location = location,
+                        .severity = Utils::ValidationError::Severity::Error});
+                    continue;
+                }
             }
         }
         const auto &bindGroups = core.GetResource<Resource::BindGroupManager>();
