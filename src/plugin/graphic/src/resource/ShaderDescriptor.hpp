@@ -127,7 +127,7 @@ class ShaderDescriptor : public Utils::IValidable {
         if (this->_vertexBufferLayouts.empty())
         {
             errors.emplace_back("No vertex buffer layouts added", "ShaderDescriptor",
-                                Utils::ValidationError::Severity::Error);
+                                Utils::ValidationError::Severity::Warning);
         }
         if (!this->_vertexEntryPoint.has_value())
         {
