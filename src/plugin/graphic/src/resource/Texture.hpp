@@ -51,7 +51,7 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
 class Texture {
   public:
     Texture(std::string_view name, wgpu::Texture texture)
-        : _webgpuTexture(texture), _name(std::string(name)), _defaultView(nullptr)
+        : _webgpuTexture(texture), _defaultView(nullptr), _name(std::string(name))
     {
         _defaultView = _webgpuTexture.createView();
     }
