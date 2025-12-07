@@ -55,6 +55,7 @@
 #include "system/initialization/ConfigureSurface.hpp"
 #include "system/initialization/CreateAdapter.hpp"
 #include "system/initialization/CreateDevice.hpp"
+#include "system/initialization/CreateEndRenderTexture.hpp"
 #include "system/initialization/CreateInstance.hpp"
 #include "system/initialization/CreateQueue.hpp"
 #include "system/initialization/CreateSurface.hpp"
