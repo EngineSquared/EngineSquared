@@ -10,7 +10,6 @@
 
 int main(void)
 {
-
     Engine::Core core;
 
     core.AddPlugins<Graphic::Plugin>();
