@@ -71,7 +71,6 @@
 
 #include "system/presentation/Present.hpp"
 
-#include "system/shutdown/ReleaseGPUBuffer.hpp"
 #include "system/shutdown/ReleaseBindingGroup.hpp"
 #include "system/shutdown/ReleaseContext.hpp"
 #include "system/shutdown/ReleaseGPUBuffer.hpp"

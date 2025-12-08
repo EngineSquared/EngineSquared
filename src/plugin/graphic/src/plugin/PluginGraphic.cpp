@@ -24,10 +24,7 @@ void Graphic::Plugin::Bind()
 
     RegisterSystems<RenderingPipeline::Presentation>(System::Present);
 
-    RegisterSystems<Engine::Scheduler::Shutdown>(System::ReleaseGPUBuffer,
-                                                 System::ReleaseBindingGroup,
-                                                 System::ReleaseShader,
-                                                 System::ReleaseTexture,
-                                                 System::ReleaseSampler,
+    RegisterSystems<Engine::Scheduler::Shutdown>(System::ReleaseGPUBuffer, System::ReleaseBindingGroup,
+                                                 System::ReleaseShader, System::ReleaseTexture, System::ReleaseSampler,
                                                  System::ReleaseContext);
 }
