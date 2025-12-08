@@ -1,5 +1,7 @@
 #include "resource/RenderGraph.hpp"
 #include "exception/RenderPassSortError.hpp"
+#include <map>
+#include <queue>
 
 namespace Graphic::Resource {
 void RenderGraph::Remove(std::string_view name)
@@ -84,7 +86,11 @@ void RenderGraph::TopologicalSort(void)
 
     for (const auto &[after, befores] : _dependencies)
     {
-        inDegree[after] += befores.size();
+        if (_renderPasses.find(after) != _renderPasses.end()) {
+            inDegree[after] += befores.size();
+        } else {
+            Log::Warn(fmt::format("RenderGraph: Dependency references non-existent render pass with ID '{}'. Skipping.", after.value()));
+        }
     }
 
     std::queue<ID> queue;

@@ -5,6 +5,8 @@
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
+#include <list>
+#include <queue>
 
 template <typename TRenderPass>
 concept CRenderPass = std::is_base_of_v<Graphic::Resource::ARenderPass, TRenderPass>;
@@ -46,7 +48,7 @@ class RenderGraph {
 
     void Update(void);
     void TopologicalSort(void);
-    void ProcessDependencies(ID current, std::queue<ID> &queue, std::map<ID, size_t> &inDegree) const;
+    void ProcessDependencies(ID current, std::queue<ID> &queue, std::unordered_map<ID, size_t> &inDegree) const;
 
     bool _dirty = false;
     std::unordered_map<ID, std::shared_ptr<ARenderPass>, IDHash> _renderPasses;
