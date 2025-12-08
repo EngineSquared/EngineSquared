@@ -12,7 +12,7 @@ int main(void)
 {
     Engine::Core core;
 
-    core.AddPlugins<Graphic::Plugin>();
+    core.AddPlugins<Window::Plugin, Graphic::Plugin>();
 
     core.RunCore();
 

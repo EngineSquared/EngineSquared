@@ -6,7 +6,6 @@
 
 void Graphic::Plugin::Bind()
 {
-    RequirePlugins<Window::Plugin>();
     RequirePlugins<RenderingPipeline::Plugin>();
 
     RegisterResource(Graphic::Resource::Context());
