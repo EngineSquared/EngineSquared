@@ -7,6 +7,7 @@
 #include "Engine.hpp"
 
 #include "Graphic.hpp"
+#include "plugin/PluginWindow.hpp"
 
 int main(void)
 {
