@@ -10,9 +10,9 @@
 
 // Mock RenderPass for testing
 class MockRenderPass : public Graphic::Resource::ARenderPass {
-  public:
-    explicit MockRenderPass() : ARenderPass("MockRenderPass"), executeCount(0) {}
-    explicit MockRenderPass(std::string_view name) : ARenderPass(name), executeCount(0) {}
+public:
+    explicit MockRenderPass() : ARenderPass("MockRenderPass") {}
+    explicit MockRenderPass(std::string_view name) : ARenderPass(name) {}
 
     void Execute(Engine::Core &core) override
     {
@@ -20,7 +20,7 @@ class MockRenderPass : public Graphic::Resource::ARenderPass {
         executionOrder.push_back(GetName());
     }
 
-    int executeCount;
+    int executeCount = 0;
     static std::vector<std::string> executionOrder;
 };
 

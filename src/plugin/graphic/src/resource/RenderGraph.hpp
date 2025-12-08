@@ -7,7 +7,7 @@
 #include <unordered_set>
 
 template <typename TRenderPass>
-concept CRenderPass = std::is_base_of<Graphic::Resource::ARenderPass, TRenderPass>::value;
+concept CRenderPass = std::is_base_of_v<Graphic::Resource::ARenderPass, TRenderPass>;
 
 namespace Graphic::Resource {
 

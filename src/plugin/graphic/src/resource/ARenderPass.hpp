@@ -10,7 +10,8 @@
 namespace Graphic::Resource {
 
 struct ColorOutput {
-    std::string textureViewName = "";
+    explicit ColorOutput(std::string_view textureName = "") : textureName(textureName) {}
+    std::string textureName = "";
     std::optional<std::string> textureResolveTargetName = std::nullopt;
     uint32_t depthSlice = 0;
     wgpu::StoreOp storeOp = wgpu::StoreOp::Store;
@@ -52,13 +53,13 @@ class ARenderPass {
         _inputs[groupIndex] = bindGroupName;
     }
 
-    void AddOutput(uint32_t id, ColorOutput output)
+    void AddOutput(uint32_t id, ColorOutput &&output)
     {
         if (_outputs.colorBuffers.contains(id))
         {
             Log::Warn(fmt::format("RenderPass {}: Overwriting existing color buffer at index {}", _name, id));
         }
-        _outputs.colorBuffers[id] = output;
+        _outputs.colorBuffers[id] = std::move(output);
     }
 
     void AddOutput(wgpu::RenderPassDepthStencilAttachment output)
