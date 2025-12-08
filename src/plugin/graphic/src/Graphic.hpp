@@ -69,4 +69,9 @@
 #include "system/initialization/RequestCapabilities.hpp"
 #include "system/initialization/SetupQueue.hpp"
 
+#include "system/shutdown/ReleaseGPUBuffer.hpp"
+#include "system/shutdown/ReleaseBindingGroup.hpp"
+#include "system/shutdown/ReleaseShader.hpp"
 #include "system/shutdown/ReleaseContext.hpp"
+#include "system/shutdown/ReleaseTexture.hpp"
+#include "system/shutdown/ReleaseSampler.hpp"
