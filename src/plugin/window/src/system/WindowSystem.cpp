@@ -24,9 +24,7 @@ void InitGLFW(const Engine::Core &)
 
 void SetupGLFWHints(const Engine::Core &)
 {
-    glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
 void LinkGLFWContextToGL(Engine::Core &core)
