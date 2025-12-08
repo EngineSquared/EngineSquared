@@ -5,8 +5,7 @@
 
 namespace Event::System {
 
-template <typename TScheduler>
-inline void ProcessEvents(Engine::Core &core)
+template <typename TScheduler> inline void ProcessEvents(Engine::Core &core)
 {
     auto &eventManager = core.GetResource<Resource::EventManager>();
     eventManager.ProcessEvents<TScheduler>(core);
