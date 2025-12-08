@@ -2,9 +2,11 @@
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
 #include "scheduler/Shutdown.hpp"
+#include "plugin/PluginWindow.hpp"
 
 void Graphic::Plugin::Bind()
 {
+    RequirePlugins<Window::Plugin>();
     RequirePlugins<RenderingPipeline::Plugin>();
 
     RegisterResource(Graphic::Resource::Context());
