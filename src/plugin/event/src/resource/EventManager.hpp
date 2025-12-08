@@ -113,8 +113,7 @@ class EventManager {
             Log::Warn("EventManager::UnregisterCallback: No callbacks registered for this event type.");
             return;
         }
-        auto container =
-            std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
+        auto container = std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
         if (!container->Contains(callbackID))
         {
             Log::Warn("EventManager::UnregisterCallback: Callback ID not found.");
@@ -139,8 +138,7 @@ class EventManager {
         {
             _eventCallbacks[schedulerID].try_emplace(typeID, std::make_shared<Utils::EventContainer<TEvent>>());
         }
-        auto container =
-            std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
+        auto container = std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
         return container->AddFunction(std::forward<TCallBack>(callback));
     }
 
