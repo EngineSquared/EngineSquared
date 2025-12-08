@@ -6,9 +6,9 @@
 
 namespace Graphic::Resource {
 
-template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPass<TDerived> {
+template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPass {
   public:
-    explicit ASingleExecutionRenderPass(std::string_view name) : ARenderPass<TDerived>(name) {}
+    explicit ASingleExecutionRenderPass(std::string_view name) : ARenderPass(name) {}
 
     void Execute(Engine::Core &core) override
     {

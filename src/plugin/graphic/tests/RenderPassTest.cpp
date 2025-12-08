@@ -158,7 +158,9 @@ void TestSystem(Engine::Core &core)
     Graphic::Resource::ColorOutput colorOutput;
     colorOutput.textureViewName = "returnTextureTest";
 
-    renderPass.BindShader("DefaultTestShader").AddInput(0, "TestBindGroup1").AddOutput(0, colorOutput);
+    renderPass.BindShader("DefaultTestShader");
+    renderPass.AddInput(0, "TestBindGroup1");
+    renderPass.AddOutput(0, colorOutput);
     EXPECT_NO_THROW(renderPass.Execute(core));
 
     auto validationErrors = renderPass.validate(core);

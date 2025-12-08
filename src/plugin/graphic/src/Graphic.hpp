@@ -21,6 +21,7 @@
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
+#include "resource/RenderGraph.hpp"
 
 // Utils
 #include "utils/GetBytesPerPixel.hpp"
@@ -52,6 +53,7 @@
 #include "exception/UnsetAttributeTextureDescriptor.hpp"
 #include "exception/UnsupportedTextureFormatError.hpp"
 #include "exception/VertexAttributeOverlappingError.hpp"
+#include "exception/RenderPassSortError.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"
