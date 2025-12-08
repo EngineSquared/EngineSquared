@@ -16,9 +16,7 @@ class RenderGraph {
     using ID = entt::hashed_string;
 
     struct IDHash {
-        std::size_t operator()(const ID &id) const noexcept {
-            return std::hash<std::size_t>{}(id.value());
-        }
+        std::size_t operator()(const ID &id) const noexcept { return std::hash<std::size_t>{}(id.value()); }
     };
 
   public:

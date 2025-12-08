@@ -12,6 +12,7 @@
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
 #include "resource/PointGPUBuffer.hpp"
+#include "resource/RenderGraph.hpp"
 #include "resource/Sampler.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "resource/Shader.hpp"
@@ -21,7 +22,6 @@
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
-#include "resource/RenderGraph.hpp"
 
 // Utils
 #include "utils/GetBytesPerPixel.hpp"
@@ -46,6 +46,7 @@
 #include "exception/InstanceCreationError.hpp"
 #include "exception/MissingOutputRenderPassError.hpp"
 #include "exception/QueueCreationError.hpp"
+#include "exception/RenderPassSortError.hpp"
 #include "exception/SurfaceCreationError.hpp"
 #include "exception/UncapturedDeviceError.hpp"
 #include "exception/UnknownFileError.hpp"
@@ -53,7 +54,6 @@
 #include "exception/UnsetAttributeTextureDescriptor.hpp"
 #include "exception/UnsupportedTextureFormatError.hpp"
 #include "exception/VertexAttributeOverlappingError.hpp"
-#include "exception/RenderPassSortError.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"

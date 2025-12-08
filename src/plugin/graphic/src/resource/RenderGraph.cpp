@@ -28,7 +28,9 @@ void RenderGraph::Execute(Engine::Core &core)
         if (auto it = _renderPasses.find(id); it != _renderPasses.end())
         {
             it->second->Execute(core);
-        } else {
+        }
+        else
+        {
             throw Exception::RenderPassSortError(
                 fmt::format("RenderGraph: Render pass with ID '{}' not found during execution.", id.value()));
         }
@@ -63,13 +65,15 @@ void RenderGraph::SetDependency(std::string_view nameBefore, std::string_view na
     _dependencies[idAfter].insert(idBefore);
 }
 
-void RenderGraph::Update(void) {
+void RenderGraph::Update(void)
+{
     if (!_dirty)
         return;
     TopologicalSort();
     _dirty = false;
 }
-void RenderGraph::TopologicalSort(void) {
+void RenderGraph::TopologicalSort(void)
+{
     _orderedIDs.clear();
 
     std::map<ID, size_t> inDegree;
@@ -110,8 +114,7 @@ void RenderGraph::TopologicalSort(void) {
         throw Exception::RenderPassSortError("Cyclic dependency detected between render passes.");
     }
 }
-void RenderGraph::ProcessDependencies(ID current, std::queue<ID> &queue,
-                                      std::map<ID, size_t> &inDegree) const
+void RenderGraph::ProcessDependencies(ID current, std::queue<ID> &queue, std::map<ID, size_t> &inDegree) const
 {
     for (const auto &[after, befores] : _dependencies)
     {

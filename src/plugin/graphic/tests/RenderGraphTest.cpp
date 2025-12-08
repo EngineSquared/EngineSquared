@@ -2,19 +2,20 @@
 
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
+#include "exception/RenderPassSortError.hpp"
 #include "resource/RenderGraph.hpp"
 #include "resource/SingleExecutionRenderPass.hpp"
-#include "exception/RenderPassSortError.hpp"
 #include "utils/ConfigureHeadlessGraphics.hpp"
 #include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
 
 // Mock RenderPass for testing
 class MockRenderPass : public Graphic::Resource::ARenderPass {
-public:
+  public:
     explicit MockRenderPass() : ARenderPass("MockRenderPass"), executeCount(0) {}
     explicit MockRenderPass(std::string_view name) : ARenderPass(name), executeCount(0) {}
 
-    void Execute(Engine::Core &core) override {
+    void Execute(Engine::Core &core) override
+    {
         executeCount++;
         executionOrder.push_back(GetName());
     }
@@ -27,14 +28,10 @@ std::vector<std::string> MockRenderPass::executionOrder;
 
 // Test fixture for RenderGraph tests
 class RenderGraphTest : public ::testing::Test {
-protected:
-    void SetUp() override {
-        MockRenderPass::executionOrder.clear();
-    }
+  protected:
+    void SetUp() override { MockRenderPass::executionOrder.clear(); }
 
-    void TearDown() override {
-        MockRenderPass::executionOrder.clear();
-    }
+    void TearDown() override { MockRenderPass::executionOrder.clear(); }
 };
 
 TEST_F(RenderGraphTest, AddRenderPass)
@@ -219,19 +216,19 @@ TEST_F(RenderGraphTest, ExecuteWithComplexDependencies)
     core.RegisterSystem<RenderingPipeline::Init>(Graphic::Tests::Utils::ConfigureHeadlessGraphics,
                                                  Graphic::Tests::Utils::ThrowErrorIfGraphicalErrorHappened);
     core.RunSystems();
-    
+
     Graphic::Resource::RenderGraph graph;
-    
+
     MockRenderPass pass1("pass1name");
     MockRenderPass pass2("pass2name");
     MockRenderPass pass3("pass3name");
     MockRenderPass pass4("pass4name");
-    
+
     graph.Add("pass1", std::move(pass1));
     graph.Add("pass2", std::move(pass2));
     graph.Add("pass3", std::move(pass3));
     graph.Add("pass4", std::move(pass4));
-    
+
     // Create diamond dependency:
     //     pass1
     //    /     \
@@ -242,14 +239,15 @@ TEST_F(RenderGraphTest, ExecuteWithComplexDependencies)
     graph.SetDependency("pass1", "pass3");
     graph.SetDependency("pass2", "pass4");
     graph.SetDependency("pass3", "pass4");
-    
+
     EXPECT_NO_THROW(graph.Execute(core));
-    
+
     ASSERT_EQ(MockRenderPass::executionOrder.size(), 4);
     EXPECT_EQ(MockRenderPass::executionOrder[0], "pass1name");
     // pass2 and pass3 can be in any order
-    EXPECT_TRUE((MockRenderPass::executionOrder[1] == "pass2name" && MockRenderPass::executionOrder[2] == "pass3name") ||
-                (MockRenderPass::executionOrder[1] == "pass3name" && MockRenderPass::executionOrder[2] == "pass2name"));
+    EXPECT_TRUE(
+        (MockRenderPass::executionOrder[1] == "pass2name" && MockRenderPass::executionOrder[2] == "pass3name") ||
+        (MockRenderPass::executionOrder[1] == "pass3name" && MockRenderPass::executionOrder[2] == "pass2name"));
     EXPECT_EQ(MockRenderPass::executionOrder[3], "pass4name");
 }
 
