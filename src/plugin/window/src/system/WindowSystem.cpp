@@ -22,10 +22,7 @@ void InitGLFW(const Engine::Core &)
     }
 }
 
-void SetupGLFWHints(const Engine::Core &)
-{
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-}
+void SetupGLFWHints(const Engine::Core &) { glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); }
 
 void LinkGLFWContextToGL(Engine::Core &core)
 {
