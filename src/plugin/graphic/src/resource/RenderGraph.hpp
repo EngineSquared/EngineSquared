@@ -1,12 +1,12 @@
 #pragma once
 
 #include "resource/ARenderPass.hpp"
+#include <list>
 #include <memory>
+#include <queue>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
-#include <list>
-#include <queue>
 
 template <typename TRenderPass>
 concept CRenderPass = std::is_base_of_v<Graphic::Resource::ARenderPass, TRenderPass>;

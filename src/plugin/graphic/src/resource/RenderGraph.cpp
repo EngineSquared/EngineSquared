@@ -86,10 +86,14 @@ void RenderGraph::TopologicalSort(void)
 
     for (const auto &[after, befores] : _dependencies)
     {
-        if (_renderPasses.find(after) != _renderPasses.end()) {
+        if (_renderPasses.find(after) != _renderPasses.end())
+        {
             inDegree[after] += befores.size();
-        } else {
-            Log::Warn(fmt::format("RenderGraph: Dependency references non-existent render pass with ID '{}'. Skipping.", after.value()));
+        }
+        else
+        {
+            Log::Warn(fmt::format("RenderGraph: Dependency references non-existent render pass with ID '{}'. Skipping.",
+                                  after.value()));
         }
     }
 
