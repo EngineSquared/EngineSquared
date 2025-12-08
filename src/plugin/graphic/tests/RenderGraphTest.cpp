@@ -10,7 +10,7 @@
 
 // Mock RenderPass for testing
 class MockRenderPass : public Graphic::Resource::ARenderPass {
-public:
+  public:
     explicit MockRenderPass() : ARenderPass("MockRenderPass") {}
     explicit MockRenderPass(std::string_view name) : ARenderPass(name) {}
 
