@@ -124,7 +124,8 @@ void RenderGraph::TopologicalSort(void)
         throw Exception::RenderPassSortError("Cyclic dependency detected between render passes.");
     }
 }
-void RenderGraph::ProcessDependencies(ID current, std::queue<ID> &queue, std::unordered_map<ID, size_t, IDHash> &inDegree) const
+void RenderGraph::ProcessDependencies(ID current, std::queue<ID> &queue,
+                                      std::unordered_map<ID, size_t, IDHash> &inDegree) const
 {
     for (const auto &[after, befores] : _dependencies)
     {
