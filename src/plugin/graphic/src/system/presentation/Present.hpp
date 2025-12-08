@@ -6,4 +6,4 @@ namespace Graphic::System {
 
 void Present(Engine::Core &core);
 
-}
+} // namespace Graphic::System
