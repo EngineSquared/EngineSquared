@@ -39,6 +39,13 @@ namespace Physics::Utils {
 inline JPH::Vec3 ToJoltVec3(const glm::vec3 &v) { return JPH::Vec3(v.x, v.y, v.z); }
 
 /**
+ * @brief Convert glm::vec3 to JPH::RVec3 (real vector, double precision)
+ *
+ * @note RVec3 is used by Jolt for constraint positions to support large worlds.
+ */
+inline JPH::RVec3 ToJoltRVec3(const glm::vec3 &v) { return JPH::RVec3(v.x, v.y, v.z); }
+
+/**
  * @brief Convert glm::quat to JPH::Quat
  */
 inline JPH::Quat ToJoltQuat(const glm::quat &q) { return JPH::Quat(q.x, q.y, q.z, q.w); }
