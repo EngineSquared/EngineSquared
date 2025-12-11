@@ -16,6 +16,9 @@
 // Components - RigidBody
 #include "component/RigidBody.hpp"
 
+// Components - Constraints
+#include "component/FixedConstraint.hpp"
+
 // Resources
 #include "resource/PhysicsManager.hpp"
 
