@@ -15,6 +15,8 @@
 #include "component/RigidBodyInternal.hpp"
 
 // Components - Constraints
+#include "component/ConstraintInternal.hpp"
+#include "component/ConstraintSettings.hpp"
 #include "component/DistanceConstraint.hpp"
 #include "component/FixedConstraint.hpp"
 #include "component/PointConstraint.hpp"
@@ -23,6 +25,7 @@
 #include "resource/PhysicsManager.hpp"
 
 // Systems
+#include "system/ConstraintSystem.hpp"
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
