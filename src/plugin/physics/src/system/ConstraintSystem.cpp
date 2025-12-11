@@ -44,46 +44,6 @@ static void OnFixedConstraintConstruct(entt::registry &registry, entt::entity en
         [](auto const &) { return true; });
 }
 
-static void OnFixedConstraintDestroy(entt::registry &registry, entt::entity entity)
-{
-    DestroyConstraint(registry, entity, "FixedConstraint");
-}
-
-//=============================================================================
-// Distance Constraint Handler
-//=============================================================================
-
-static void OnDistanceConstraintConstruct(entt::registry &registry, entt::entity entity)
-{
-    constexpr const char *NAME = "DistanceConstraint";
-
-    CreateConstraintGeneric<Component::ConstraintType::Distance, Component::DistanceConstraint,
-                            JPH::DistanceConstraintSettings>(
-        registry, entity, NAME,
-        [](auto &constraint, auto &joltSettings) {
-            joltSettings.mSpace = JPH::EConstraintSpace::LocalToBodyCOM;
-            joltSettings.mPoint1 = Utils::ToJoltRVec3(constraint.localPointA);
-            joltSettings.mPoint2 = Utils::ToJoltRVec3(constraint.localPointB);
-            joltSettings.mMinDistance = constraint.minDistance;
-            joltSettings.mMaxDistance = constraint.maxDistance;
-            if (!constraint.settings.IsRigid())
-            {
-                joltSettings.mLimitsSpringSettings.mMode = JPH::ESpringMode::StiffnessAndDamping;
-                joltSettings.mLimitsSpringSettings.mStiffness = constraint.settings.stiffness * 10000.0f;
-                joltSettings.mLimitsSpringSettings.mDamping = constraint.settings.damping * 100.0f;
-            }
-        },
-        [](auto const &constraint) {
-            if (constraint.maxDistance >= 0 && constraint.minDistance >= 0 &&
-                constraint.maxDistance < constraint.minDistance)
-            {
-                Log::Error(fmt::format("{}: maxDistance < minDistance", "DistanceConstraint"));
-                return false;
-            }
-            return true;
-        });
-}
-
 static void OnDistanceConstraintDestroy(entt::registry &registry, entt::entity entity)
 {
     DestroyConstraint(registry, entity, "DistanceConstraint");
