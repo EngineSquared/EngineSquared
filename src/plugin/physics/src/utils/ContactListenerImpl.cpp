@@ -2,9 +2,10 @@
 
 #include "utils/ContactListenerImpl.hpp"
 
-#include "event/CollisionEvent.hpp"
 #include "resource/EventManager.hpp"
 #include "resource/PhysicsManager.hpp"
+
+namespace Physics::Utils {
 
 /**
  * EnTT divides the entity ID into two parts: the entity index and the version.
@@ -25,29 +26,29 @@ static constexpr inline const uint32_t ENTITY_ID_MASK =
             std::popcount(entt::entt_traits<Engine::Entity::entity_id_type>::entity_mask)) |
     entt::entt_traits<Engine::Entity::entity_id_type>::version_mask;
 
-void Physics::Utils::ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Body &inBody2,
-                                                         const JPH::ContactManifold &, JPH::ContactSettings &)
+void ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Body &inBody2,
+                                         const JPH::ContactManifold &, JPH::ContactSettings &)
 {
     // Right now we use 32 bits for entities IDs with EnTT but Jolt stores user data as 64 bits
     // so we have to mask the upper 32 bits
     auto entity1 = static_cast<Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
-    auto &eventManager = _core.GetResource<::Event::Resource::EventManager>();
-    eventManager.PushEvent(Physics::Event::CollisionAddedEvent{entity1, entity2});
+    std::lock_guard<std::mutex> lock(_bufferMutex);
+    _bufferedAdded.emplace_back(Physics::Event::CollisionAddedEvent{entity1, entity2});
 }
 
-void Physics::Utils::ContactListenerImpl::OnContactPersisted(const JPH::Body &inBody1, const JPH::Body &inBody2,
-                                                             const JPH::ContactManifold &, JPH::ContactSettings &)
+void ContactListenerImpl::OnContactPersisted(const JPH::Body &inBody1, const JPH::Body &inBody2,
+                                             const JPH::ContactManifold &, JPH::ContactSettings &)
 {
     auto entity1 = static_cast<Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
-    auto &eventManager = _core.GetResource<::Event::Resource::EventManager>();
-    eventManager.PushEvent(Physics::Event::CollisionPersistedEvent{entity1, entity2});
+    std::lock_guard<std::mutex> lock(_bufferMutex);
+    _bufferedPersisted.emplace_back(Physics::Event::CollisionPersistedEvent{entity1, entity2});
 }
 
-void Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH::SubShapeIDPair &inSubShapePair)
+void ContactListenerImpl::OnContactRemoved(const JPH::SubShapeIDPair &inSubShapePair)
 {
     auto &physicsManager = _core.GetResource<Physics::Resource::PhysicsManager>();
     auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
@@ -63,6 +64,47 @@ void Physics::Utils::ContactListenerImpl::OnContactRemoved(const JPH::SubShapeID
     auto entity1 = static_cast<Engine::Entity>(body1->GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<Engine::Entity>(body2->GetUserData() & ENTITY_ID_MASK);
 
-    auto &eventManager = _core.GetResource<::Event::Resource::EventManager>();
-    eventManager.PushEvent(Physics::Event::CollisionRemovedEvent{entity1, entity2});
+    std::lock_guard<std::mutex> lock(_bufferMutex);
+    _bufferedRemoved.emplace_back(Physics::Event::CollisionRemovedEvent{entity1, entity2});
 }
+
+void ContactListenerImpl::ProcessBufferedEvents(Engine::Core &core)
+{
+    std::vector<Physics::Event::CollisionAddedEvent> added;
+    std::vector<Physics::Event::CollisionPersistedEvent> persisted;
+    std::vector<Physics::Event::CollisionRemovedEvent> removed;
+    {
+        std::lock_guard<std::mutex> lock(_bufferMutex);
+        added.swap(_bufferedAdded);
+        persisted.swap(_bufferedPersisted);
+        removed.swap(_bufferedRemoved);
+    }
+
+    if (added.empty() && persisted.empty() && removed.empty())
+        return;
+
+    auto &eventManager = core.GetResource<::Event::Resource::EventManager>();
+    auto isValidEntityPair = [&core](const Engine::Entity &a, const Engine::Entity &b) {
+        entt::entity enttA = static_cast<entt::entity>(a);
+        entt::entity enttB = static_cast<entt::entity>(b);
+        return core.IsEntityValid(enttA) && core.IsEntityValid(enttB);
+    };
+
+    for (const auto &e : added)
+    {
+        if (isValidEntityPair(e.entity1, e.entity2))
+            eventManager.PushEvent(e);
+    }
+    for (const auto &e : persisted)
+    {
+        if (isValidEntityPair(e.entity1, e.entity2))
+            eventManager.PushEvent(e);
+    }
+    for (const auto &e : removed)
+    {
+        if (isValidEntityPair(e.entity1, e.entity2))
+            eventManager.PushEvent(e);
+    }
+}
+
+} // namespace Physics::Utils
