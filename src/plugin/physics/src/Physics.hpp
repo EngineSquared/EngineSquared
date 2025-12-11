@@ -7,13 +7,17 @@
 // Exceptions
 #include "exception/RigidBodyError.hpp"
 
-// Components
+// Components - Colliders
 #include "component/BoxCollider.hpp"
+#include "component/CapsuleCollider.hpp"
 #include "component/DefaultCollider.hpp"
+#include "component/SphereCollider.hpp"
+
+// Components - RigidBody
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
 
-// Resource
+// Resources
 #include "resource/PhysicsManager.hpp"
 
 // Systems
