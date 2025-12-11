@@ -5,6 +5,7 @@
 // clang-format on
 
 // Exceptions
+#include "exception/ConstraintError.hpp"
 #include "exception/RigidBodyError.hpp"
 
 // Components
