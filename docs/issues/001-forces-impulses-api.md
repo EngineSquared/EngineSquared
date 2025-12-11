@@ -1,9 +1,10 @@
 # Issue #001: Implement Forces and Impulses API
 
-**Milestone:** v0.3 - Core Completeness
-**Priority:** 🔴 CRITICAL
-**Estimated Effort:** 3-4 days
-**Dependencies:** None
+**Status:** ✅ **DONE** (Completed 2025-11-05)  
+**Milestone:** v0.3 - Core Completeness  
+**Priority:** 🔴 CRITICAL  
+**Estimated Effort:** 3-4 days  
+**Dependencies:** None  
 **Related Issues:** #002, #003
 
 ---
@@ -26,10 +27,10 @@ Currently, users cannot apply any forces to dynamic bodies. This issue will expo
 
 ## 🔧 Technical Details
 
-### Files to Create
+### Files Created
 
 ```
-src/plugin/physics/src/resource/
+src/plugin/physics/src/helper/
 ├── ForceApplicator.hpp  # Force & impulse application API
 └── ForceApplicator.cpp  # Implementation
 ```
@@ -37,7 +38,7 @@ src/plugin/physics/src/resource/
 ### API Design
 
 ```cpp
-namespace Physics::Resource {
+namespace Physics::Helper {
     // === Forces (continuous, applied each frame) ===
 
     /// Apply force at center of mass
@@ -65,34 +66,34 @@ namespace Physics::Resource {
     /// Apply angular impulse (instantaneous rotation change)
     void AddAngularImpulse(Engine::Core &core, Engine::Entity entity,
                            const glm::vec3 &angularImpulse);
-}  // namespace Physics::Resource
+}  // namespace Physics::Helper
 ```
 
 ## 📝 Implementation Tasks
 
-### Phase 1: Create Resource Header (1 hour)
+### Phase 1: Create Helper Header (1 hour)
 
-- [ ] Create `src/plugin/physics/src/resource/ForceApplicator.hpp`
-- [ ] Declare all 6 functions with full documentation (namespace `Physics::Resource`)
-- [ ] Add to `Physics.hpp` public header
+- [x] Create `src/plugin/physics/src/helper/ForceApplicator.hpp`
+- [x] Declare all 6 functions with full documentation (namespace `Physics::Helper`)
+- [x] Add to `Physics.hpp` public header
 
 ### Phase 2: Implement Functions (4-6 hours)
 
-- [ ] Create `src/plugin/physics/src/resource/ForceApplicator.cpp`
-- [ ] Implement `AddForce()` with error checking
+- [x] Create `src/plugin/physics/src/helper/ForceApplicator.cpp`
+- [x] Implement `AddForce()` with error checking
   - Check entity has RigidBodyInternal
   - Get BodyInterface from PhysicsManager
   - Call JPH::BodyInterface::AddForce()
-- [ ] Implement `AddForceAtPoint()` with point conversion
-- [ ] Implement `AddTorque()`
-- [ ] Implement `AddImpulse()`
-- [ ] Implement `AddImpulseAtPoint()`
-- [ ] Implement `AddAngularImpulse()`
+- [x] Implement `AddForceAtPoint()` with point conversion
+- [x] Implement `AddTorque()`
+- [x] Implement `AddImpulse()`
+- [x] Implement `AddImpulseAtPoint()`
+- [x] Implement `AddAngularImpulse()`
 
 ### Phase 3: Unit Tests (3-4 hours)
 
-- [ ] Create `src/plugin/physics/tests/ForceApplicatorTest.cpp`
-- [ ] Test AddForce on dynamic body
+- [x] Create `src/plugin/physics/tests/helper/ForceApplicatorSimpleTest.cpp`
+- [x] Test AddForce on dynamic body
   - Verify velocity changes
   - Verify position changes over time
 - [ ] Test AddForceAtPoint creates torque
@@ -102,7 +103,7 @@ namespace Physics::Resource {
 - [ ] Test AddImpulse (immediate velocity change)
 - [ ] Test AddImpulseAtPoint
 - [ ] Test AddAngularImpulse
-- [ ] Test error cases:
+- [x] Test error cases:
   - Entity without RigidBody
   - Static body (should log warning)
   - Invalid entity
@@ -158,7 +159,7 @@ namespace Physics::Resource {
 void ApplyJumpForce(Engine::Core &core, Engine::Entity player) {
     // Apply instant upward impulse (like jumping)
     glm::vec3 jumpImpulse(0.0f, 300.0f, 0.0f);
-    Physics::Resource::AddImpulse(core, player, jumpImpulse);
+    Physics::Helper::AddImpulse(core, player, jumpImpulse);
 }
 ```
 
@@ -257,6 +258,6 @@ void ApplySpinTorque(Engine::Core &core, Engine::Entity entity) {
 
 ---
 
-**Assignee:** TBD
-**Labels:** `enhancement`, `physics`, `v0.3`, `priority:critical`
+**Assignee:** TBD  
+**Labels:** `enhancement`, `physics`, `v0.3`, `priority:critical`  
 **Milestone:** v0.3 - Core Completeness

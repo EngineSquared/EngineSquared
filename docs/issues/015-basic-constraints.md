@@ -1,5 +1,6 @@
 # Issue #015: Implement Basic Constraints (Fixed, Distance, Point)
 
+**Status:** ✅ DONE  
 **Milestone:** v0.6 - Collision Events & Constraints  
 **Priority:** 🟢 MEDIUM  
 **Estimated Effort:** 3-4 days  

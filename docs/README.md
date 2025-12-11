@@ -325,6 +325,21 @@ Vous disposez maintenant d'une documentation **complète, validée et prête pou
 
 ---
 
-**Dernière mise à jour :** 2025-11-05
-**Version :** 1.0 - Documentation complète
-**Statut :** ✅ **PRODUCTION READY**
+## 🆕 Changelog
+
+### 2025-12-02
+- ✅ Issues #001, #002, #003 complétées et marquées comme DONE
+- 🔄 Architecture mise à jour : `resource/` → `helper/` pour les API utilisateur
+- 🔄 Namespace mis à jour : `Physics::Resource::` → `Physics::Helper::`
+- 📝 Documentation mise à jour pour refléter les changements
+- 🎮 Ajout de ES-Raylib pour les tests visuels
+
+### 2025-11-05
+- 📋 Création initiale de la documentation complète
+- 📝 26 issues détaillées créées
+
+---
+
+**Dernière mise à jour :** 2025-12-02
+**Version :** 1.1 - Issues v0.3 Core complétées
+**Statut :** ✅ **EN DÉVELOPPEMENT - v0.3 Foundation partiellement complété**

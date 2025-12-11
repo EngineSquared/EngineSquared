@@ -1,5 +1,6 @@
 # Issue #005: Implement SphereCollider and CapsuleCollider
 
+**Status:** ✅ DONE  
 **Milestone:** v0.3 - Core Completeness  
 **Priority:** 🔴 CRITICAL  
 **Estimated Effort:** 3-4 days  

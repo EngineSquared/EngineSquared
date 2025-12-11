@@ -265,6 +265,8 @@ The Force Applicator API provides 6 functions to apply forces and impulses to dy
 | `AddImpulseAtPoint()` | Instant | Velocity + spin | Baseball bat, projectile impacts |
 | `AddAngularImpulse()` | Instant | Angular velocity | Instant spin-up/down |
 
+> **Note:** All functions are in the `Physics::Helper` namespace.
+
 ### Key Differences
 
 **Forces vs Impulses:**
@@ -287,7 +289,7 @@ The Force Applicator API provides 6 functions to apply forces and impulses to dy
 void UpdateThruster(Engine::Core& core, Engine::Entity rocket) {
     // Call this every frame in your game loop
     glm::vec3 thrustForce(0.0f, 100.0f, 0.0f);  // 100N upward
-    Physics::Resource::AddForce(core, rocket, thrustForce);
+    Physics::Helper::AddForce(core, rocket, thrustForce);
 }
 ```
 
@@ -296,24 +298,24 @@ void UpdateThruster(Engine::Core& core, Engine::Entity rocket) {
 ```cpp
 void CreateExplosion(Engine::Core& core, glm::vec3 center, float radius, float strength) {
     auto& registry = core.GetRegistry();
-    
+
     // Find all dynamic bodies within radius
     registry.view<Physics::Component::RigidBody, Object::Component::Transform>().each(
         [&](Engine::Entity entity, const auto& rb, const auto& transform) {
             if (rb.motionType != Physics::Component::MotionType::Dynamic)
                 return;
-            
+
             float distance = glm::distance(transform.position, center);
             if (distance > radius)
                 return;
-            
+
             // Calculate impulse direction and magnitude
             glm::vec3 direction = glm::normalize(transform.position - center);
             float falloff = 1.0f - (distance / radius);  // Closer = stronger
             glm::vec3 impulse = direction * strength * falloff;
-            
+
             // Apply instant velocity change
-            Physics::Resource::AddImpulse(core, entity, impulse);
+            Physics::Helper::AddImpulse(core, entity, impulse);
         });
 }
 
@@ -326,18 +328,18 @@ CreateExplosion(core, glm::vec3(0, 5, 0), 10.0f, 50.0f);  // 10m radius, 50 N·s
 ```cpp
 void CreateSpinner(Engine::Core& core) {
     auto spinner = Engine::Entity::Create(core);
-    
+
     auto& rb = spinner.AddComponent<Physics::Component::RigidBody>(core);
     rb.motionType = Physics::Component::MotionType::Dynamic;
     rb.mass = 5.0f;
     rb.angularDamping = 0.05f;  // Low damping for sustained spin
-    
+
     // Apply torque every frame
     auto spinSystem = [spinner](Engine::Core& core) {
         glm::vec3 torque(0.0f, 10.0f, 0.0f);  // 10 N·m around Y-axis
-        Physics::Resource::AddTorque(core, spinner, torque);
+        Physics::Helper::AddTorque(core, spinner, torque);
     };
-    
+
     core.RegisterSystem<Engine::Scheduler::Update>(spinSystem);
 }
 ```
@@ -349,8 +351,8 @@ void PushDoor(Engine::Core& core, Engine::Entity door, glm::vec3 pushPoint) {
     // Push at the edge of the door (far from hinge)
     // This creates both translation and rotation
     glm::vec3 pushForce(0.0f, 0.0f, 15.0f);  // 15N forward
-    
-    Physics::Resource::AddForceAtPoint(core, door, pushForce, pushPoint);
+
+    Physics::Helper::AddForceAtPoint(core, door, pushForce, pushPoint);
 }
 
 // Usage:
@@ -364,9 +366,9 @@ PushDoor(core, doorEntity, doorEdge);
 void HitBall(Engine::Core& core, Engine::Entity ball, glm::vec3 batContactPoint) {
     // Hit slightly above center to create backspin
     glm::vec3 batImpulse(20.0f, 5.0f, 0.0f);  // Forward and up
-    
+
     // Creates both velocity and spin
-    Physics::Resource::AddImpulseAtPoint(core, ball, batImpulse, batContactPoint);
+    Physics::Helper::AddImpulseAtPoint(core, ball, batImpulse, batContactPoint);
 }
 
 // Usage:
@@ -381,8 +383,8 @@ HitBall(core, baseball, hitPoint);
 void SpinUpFlywheel(Engine::Core& core, Engine::Entity flywheel) {
     // Instant angular velocity change (like a motor startup)
     glm::vec3 angularImpulse(0.0f, 20.0f, 0.0f);  // 20 N·m·s around Y
-    
-    Physics::Resource::AddAngularImpulse(core, flywheel, angularImpulse);
+
+    Physics::Helper::AddAngularImpulse(core, flywheel, angularImpulse);
 }
 ```
 
@@ -393,17 +395,17 @@ All functions handle common error cases gracefully:
 ```cpp
 // Invalid entity - logs error, doesn't crash
 Engine::Entity invalid = Engine::Entity(entt::entity(999999));
-Physics::Resource::AddForce(core, invalid, glm::vec3(1, 0, 0));
+Physics::Helper::AddForce(core, invalid, glm::vec3(1, 0, 0));
 // Output: [error] AddForce: Entity 999999 has no RigidBody component
 
 // Non-dynamic body - logs warning, ignores force
 Engine::Entity staticWall = /*...*/;
-Physics::Resource::AddForce(core, staticWall, glm::vec3(1, 0, 0));
+Physics::Helper::AddForce(core, staticWall, glm::vec3(1, 0, 0));
 // Output: [warning] AddForce: Cannot apply force/impulse to non-Dynamic body
 
 // NaN or Inf vectors - rejected with error
 glm::vec3 invalid(std::numeric_limits<float>::quiet_NaN(), 0, 0);
-Physics::Resource::AddForce(core, entity, invalid);
+Physics::Helper::AddForce(core, entity, invalid);
 // Output: [error] AddForce: Invalid force vector (NaN or Inf): vec3(nan, 0, 0)
 ```
 
@@ -433,11 +435,11 @@ Physics::Resource::AddForce(core, entity, invalid);
 ### Complete API Reference
 
 ```cpp
-namespace Physics::Resource {
+namespace Physics::Helper {
 
 // Continuous forces (apply each frame)
 void AddForce(Engine::Core& core, Engine::Entity entity, const glm::vec3& force);
-void AddForceAtPoint(Engine::Core& core, Engine::Entity entity, 
+void AddForceAtPoint(Engine::Core& core, Engine::Entity entity,
                      const glm::vec3& force, const glm::vec3& worldPoint);
 void AddTorque(Engine::Core& core, Engine::Entity entity, const glm::vec3& torque);
 
@@ -445,10 +447,10 @@ void AddTorque(Engine::Core& core, Engine::Entity entity, const glm::vec3& torqu
 void AddImpulse(Engine::Core& core, Engine::Entity entity, const glm::vec3& impulse);
 void AddImpulseAtPoint(Engine::Core& core, Engine::Entity entity,
                        const glm::vec3& impulse, const glm::vec3& worldPoint);
-void AddAngularImpulse(Engine::Core& core, Engine::Entity entity, 
+void AddAngularImpulse(Engine::Core& core, Engine::Entity entity,
                        const glm::vec3& angularImpulse);
 
-} // namespace Physics::Resource
+} // namespace Physics::Helper
 ```
 
 ---
@@ -467,6 +469,8 @@ The Velocity Control API provides direct control over linear and angular velocit
 | `SetAngularVelocity()` | Set | Angular | Direct rotation control (spinning objects) |
 | `GetAngularVelocity()` | Get | Angular | Read current rotation speed |
 | `AddAngularVelocity()` | Modify | Angular | Add rotation delta (spin effects) |
+
+> **Note:** All functions are in the `Physics::Helper` namespace.
 
 ### Key Concepts
 
@@ -492,18 +496,18 @@ The Velocity Control API provides direct control over linear and angular velocit
 void UpdateCharacterMovement(Engine::Core& core, Engine::Entity character,
                              const glm::vec2& input, float speed) {
     // Get current velocity to preserve Y (gravity)
-    glm::vec3 currentVel = Physics::Resource::GetLinearVelocity(core, character);
+    glm::vec3 currentVel = Physics::Helper::GetLinearVelocity(core, character);
 
     // Calculate horizontal movement
     glm::vec3 targetVel(input.x * speed, currentVel.y, input.y * speed);
 
     // Apply velocity
-    Physics::Resource::SetLinearVelocity(core, character, targetVel);
+    Physics::Helper::SetLinearVelocity(core, character, targetVel);
 }
 
 void CharacterJump(Engine::Core& core, Engine::Entity character, float jumpForce) {
     // Add upward velocity (preserves horizontal movement)
-    Physics::Resource::AddLinearVelocity(core, character, glm::vec3(0.0f, jumpForce, 0.0f));
+    Physics::Helper::AddLinearVelocity(core, character, glm::vec3(0.0f, jumpForce, 0.0f));
 }
 ```
 
@@ -515,9 +519,9 @@ void CreateRotatingPlatform(Engine::Core& core, Engine::Entity platform, float r
     float radiansPerSecond = (rpm * 2.0f * glm::pi<float>()) / 60.0f;
 
     // Set constant angular velocity
-    Physics::Resource::SetAngularVelocity(core, platform, 
+    Physics::Helper::SetAngularVelocity(core, platform,
                                          glm::vec3(0.0f, radiansPerSecond, 0.0f));
-    
+
     // Platform spins continuously without torque!
 }
 ```
@@ -526,13 +530,13 @@ void CreateRotatingPlatform(Engine::Core& core, Engine::Entity platform, float r
 
 ```cpp
 void LimitSpeed(Engine::Core& core, Engine::Entity entity, float maxSpeed) {
-    glm::vec3 velocity = Physics::Resource::GetLinearVelocity(core, entity);
+    glm::vec3 velocity = Physics::Helper::GetLinearVelocity(core, entity);
     float speed = glm::length(velocity);
 
     if (speed > maxSpeed) {
         // Clamp to max speed
         velocity = glm::normalize(velocity) * maxSpeed;
-        Physics::Resource::SetLinearVelocity(core, entity, velocity);
+        Physics::Helper::SetLinearVelocity(core, entity, velocity);
     }
 }
 ```
@@ -543,7 +547,7 @@ void LimitSpeed(Engine::Core& core, Engine::Entity entity, float maxSpeed) {
 void PlayerDash(Engine::Core& core, Engine::Entity player, glm::vec3 direction, float dashSpeed) {
     // Add instant velocity in dash direction
     glm::vec3 dashVelocity = glm::normalize(direction) * dashSpeed;
-    Physics::Resource::AddLinearVelocity(core, player, dashVelocity);
+    Physics::Helper::AddLinearVelocity(core, player, dashVelocity);
 }
 ```
 
@@ -556,14 +560,14 @@ void UpdateOscillator(Engine::Core& core, Engine::Entity entity, float time) {
     glm::vec3 pos = transform.GetPosition();
 
     // Reverse velocity at bounds
-    glm::vec3 velocity = Physics::Resource::GetLinearVelocity(core, entity);
-    
+    glm::vec3 velocity = Physics::Helper::GetLinearVelocity(core, entity);
+
     if (pos.y > 5.0f && velocity.y > 0.0f) {
         // Hit top, reverse
-        Physics::Resource::SetLinearVelocity(core, entity, glm::vec3(0.0f, -3.0f, 0.0f));
+        Physics::Helper::SetLinearVelocity(core, entity, glm::vec3(0.0f, -3.0f, 0.0f));
     } else if (pos.y < 0.0f && velocity.y < 0.0f) {
         // Hit bottom, reverse
-        Physics::Resource::SetLinearVelocity(core, entity, glm::vec3(0.0f, 3.0f, 0.0f));
+        Physics::Helper::SetLinearVelocity(core, entity, glm::vec3(0.0f, 3.0f, 0.0f));
     }
 }
 ```
@@ -599,40 +603,40 @@ void UpdateOscillator(Engine::Core& core, Engine::Entity entity, float time) {
 
 ```cpp
 // Stop object instantly
-Physics::Resource::SetLinearVelocity(core, entity, glm::vec3(0.0f));
+Physics::Helper::SetLinearVelocity(core, entity, glm::vec3(0.0f));
 
 // Check if moving
-glm::vec3 vel = Physics::Resource::GetLinearVelocity(core, entity);
+glm::vec3 vel = Physics::Helper::GetLinearVelocity(core, entity);
 bool isMoving = glm::length(vel) > 0.1f;
 
 // Preserve Y velocity (gravity) when changing X/Z
-glm::vec3 currentVel = Physics::Resource::GetLinearVelocity(core, entity);
-Physics::Resource::SetLinearVelocity(core, entity, glm::vec3(newX, currentVel.y, newZ));
+glm::vec3 currentVel = Physics::Helper::GetLinearVelocity(core, entity);
+Physics::Helper::SetLinearVelocity(core, entity, glm::vec3(newX, currentVel.y, newZ));
 
 // Gradual acceleration (call each frame)
-Physics::Resource::AddLinearVelocity(core, entity, glm::vec3(0.1f, 0.0f, 0.0f));
+Physics::Helper::AddLinearVelocity(core, entity, glm::vec3(0.1f, 0.0f, 0.0f));
 ```
 
 ### Complete API Reference
 
 ```cpp
-namespace Physics::Resource {
+namespace Physics::Helper {
 
 // Linear velocity control
-void SetLinearVelocity(Engine::Core& core, Engine::Entity entity, 
+void SetLinearVelocity(Engine::Core& core, Engine::Entity entity,
                        const glm::vec3& velocity);
 glm::vec3 GetLinearVelocity(Engine::Core& core, Engine::Entity entity);
-void AddLinearVelocity(Engine::Core& core, Engine::Entity entity, 
+void AddLinearVelocity(Engine::Core& core, Engine::Entity entity,
                        const glm::vec3& deltaVelocity);
 
 // Angular velocity control
-void SetAngularVelocity(Engine::Core& core, Engine::Entity entity, 
+void SetAngularVelocity(Engine::Core& core, Engine::Entity entity,
                         const glm::vec3& angularVelocity);
 glm::vec3 GetAngularVelocity(Engine::Core& core, Engine::Entity entity);
-void AddAngularVelocity(Engine::Core& core, Engine::Entity entity, 
+void AddAngularVelocity(Engine::Core& core, Engine::Entity entity,
                         const glm::vec3& deltaAngularVelocity);
 
-} // namespace Physics::Resource
+} // namespace Physics::Helper
 ```
 
 ---
@@ -652,11 +656,11 @@ void AddAngularVelocity(Engine::Core& core, Engine::Entity entity,
 
 ```cpp
 // Character jump with IMPULSE (realistic):
-Physics::Resource::AddImpulse(core, character, glm::vec3(0.0f, 50.0f, 0.0f));
+Physics::Helper::AddImpulse(core, character, glm::vec3(0.0f, 50.0f, 0.0f));
 // → Feels "heavy" and physical
 
 // Character jump with VELOCITY (instant):
-Physics::Resource::AddLinearVelocity(core, character, glm::vec3(0.0f, 5.0f, 0.0f));
+Physics::Helper::AddLinearVelocity(core, character, glm::vec3(0.0f, 5.0f, 0.0f));
 // → Feels "snappy" and responsive (better for platformers)
 ```
 
@@ -664,9 +668,9 @@ Physics::Resource::AddLinearVelocity(core, character, glm::vec3(0.0f, 5.0f, 0.0f
 
 - [VelocityControlExample.cpp](../examples/physics_usage/src/examples/VelocityControlExample.cpp) - Complete working examples
 - [Issue #002](./issues/002-velocity-control-api.md) - Original specification
-- [VelocityController.hpp](../src/plugin/physics/src/resource/VelocityController.hpp) - Implementation details
+- [VelocityController.hpp](../src/plugin/physics/src/helper/VelocityController.hpp) - Implementation details
 - [forces_demo.cpp](../examples/physics_usage/forces_demo.cpp) - Compare with Force Applicator API
 - [Issue #001](./issues/001-forces-impulses-api.md) - Force Applicator specification
-- [ForceApplicator.hpp](../src/plugin/physics/src/resource/ForceApplicator.hpp) - Implementation details
+- [ForceApplicator.hpp](../src/plugin/physics/src/helper/ForceApplicator.hpp) - Implementation details
 
 ````

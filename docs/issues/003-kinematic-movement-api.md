@@ -1,9 +1,10 @@
 # Issue #003: Implement Kinematic Movement API
 
-**Milestone:** v0.3 - Core Completeness
-**Priority:** 🔴 CRITICAL
-**Estimated Effort:** 2-3 days
-**Dependencies:** None
+**Status:** ✅ **DONE** (Completed 2025-11-05)  
+**Milestone:** v0.3 - Core Completeness  
+**Priority:** 🔴 CRITICAL  
+**Estimated Effort:** 2-3 days  
+**Dependencies:** None  
 **Related Issues:** #001, #002
 
 ---
@@ -25,10 +26,10 @@ This is essential for creating moving platforms, doors, elevators, and other gam
 
 ## 🔧 Technical Details
 
-### Files to Create
+### Files Created
 
 ```
-src/plugin/physics/src/resource/
+src/plugin/physics/src/helper/
 ├── KinematicMover.hpp   # Kinematic movement API
 └── KinematicMover.cpp   # Implementation
 ```
@@ -36,7 +37,7 @@ src/plugin/physics/src/resource/
 ### API Design
 
 ```cpp
-namespace Physics::Resource {
+namespace Physics::Helper {
     /// Move kinematic body to target position/rotation over deltaTime
     /// This is the recommended way to move kinematic bodies
     /// @param targetPosition World space target position
@@ -62,25 +63,25 @@ namespace Physics::Resource {
         bool hasTarget;
     };
     KinematicTarget GetKinematicTarget(Engine::Core &core, Engine::Entity entity);
-}  // namespace Physics::Resource
+}  // namespace Physics::Helper
 ```
 
 ## 📝 Implementation Tasks
 
-### Phase 1: Create Resource Header (1 hour)
+### Phase 1: Create Helper Header (1 hour)
 
-- [ ] Create `src/plugin/physics/src/resource/KinematicMover.hpp`
-- [ ] Declare MoveKinematic(), SetKinematicVelocity(), GetKinematicTarget() (namespace `Physics::Resource`)
-- [ ] Add comprehensive documentation
+- [x] Create `src/plugin/physics/src/helper/KinematicMover.hpp`
+- [x] Declare MoveKinematic(), SetKinematicVelocity(), GetKinematicTarget() (namespace `Physics::Helper`)
+- [x] Add comprehensive documentation
   - Explain kinematic vs dynamic
   - When to use each function
   - Common pitfalls
-- [ ] Add to `Physics.hpp`
+- [x] Add to `Physics.hpp`
 
 ### Phase 2: Implement MoveKinematic (2-3 hours)
 
-- [ ] Create `src/plugin/physics/src/resource/KinematicMover.cpp`
-- [ ] Implement MoveKinematic()
+- [x] Create `src/plugin/physics/src/helper/KinematicMover.cpp`
+- [x] Implement MoveKinematic()
   ```cpp
   void MoveKinematic(Engine::Core &core, Engine::Entity entity,
                      const glm::vec3 &targetPosition,
@@ -90,14 +91,14 @@ namespace Physics::Resource {
 
       // Validate entity has RigidBody
       if (!registry.all_of<Component::RigidBody, Component::RigidBodyInternal>(entity)) {
-          Logger::Error("MoveKinematic: Entity has no RigidBody");
+          Log::Error("MoveKinematic: Entity has no RigidBody");
           return;
       }
 
       // Check it's actually kinematic
       auto &rb = registry.get<Component::RigidBody>(entity);
       if (rb.motionType != Component::MotionType::Kinematic) {
-          Logger::Warn("MoveKinematic: Body is not kinematic (entity {})",
+          Log::Warn("MoveKinematic: Body is not kinematic (entity {})",
                        entt::to_integral(entity));
           return;
       }
@@ -106,8 +107,8 @@ namespace Physics::Resource {
       auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
 
       // Convert to Jolt types
-      JPH::RVec3 joltTarget = Resource::ToJoltVec3(targetPosition);
-      JPH::Quat joltRotation = Resource::ToJoltQuat(targetRotation);
+      JPH::RVec3 joltTarget = ToJoltVec3(targetPosition);
+      JPH::Quat joltRotation = ToJoltQuat(targetRotation);
 
       // Move kinematic body
       physicsManager.GetBodyInterface().MoveKinematic(
@@ -121,7 +122,7 @@ namespace Physics::Resource {
 
 ### Phase 3: Implement SetKinematicVelocity (1-2 hours)
 
-- [ ] Implement SetKinematicVelocity()
+- [x] Implement SetKinematicVelocity()
   ```cpp
   void SetKinematicVelocity(Engine::Core &core, Engine::Entity entity,
                             const glm::vec3 &velocity) {
@@ -139,7 +140,7 @@ namespace Physics::Resource {
 
 ### Phase 4: Implement GetKinematicTarget (1 hour)
 
-- [ ] Implement GetKinematicTarget() for debugging
+- [x] Implement GetKinematicTarget() for debugging
   ```cpp
   KinematicTarget GetKinematicTarget(Engine::Core &core, Engine::Entity entity) {
       // Query Jolt for current kinematic target
@@ -149,14 +150,14 @@ namespace Physics::Resource {
 
 ### Phase 5: Unit Tests (3-4 hours)
 
-- [ ] Create `src/plugin/physics/tests/KinematicMoverTest.cpp`
-- [ ] Test MoveKinematic moves body to target
-- [ ] Test kinematic body pushes dynamic bodies
-- [ ] Test kinematic body doesn't fall (unaffected by gravity)
-- [ ] Test SetKinematicVelocity creates constant movement
-- [ ] Test kinematic collision with static bodies
-- [ ] Test kinematic collision with other kinematics
-- [ ] Test error cases:
+- [x] Create `src/plugin/physics/tests/helper/KinematicMoverTest.cpp`
+- [x] Test MoveKinematic moves body to target
+- [x] Test kinematic body pushes dynamic bodies
+- [x] Test kinematic body doesn't fall (unaffected by gravity)
+- [x] Test SetKinematicVelocity creates constant movement
+- [x] Test kinematic collision with static bodies
+- [x] Test kinematic collision with other kinematics
+- [x] Test error cases:
   - MoveKinematic on dynamic body (should warn)
   - MoveKinematic on static body (should warn)
   - Invalid deltaTime (0 or negative)
@@ -253,7 +254,7 @@ public:
         glm::vec3 targetPosition = glm::mix(startPosition, endPosition, progress);
 
         // Move platform
-        Physics::Resource::MoveKinematic(core, platformEntity, targetPosition,
+        Physics::Helper::MoveKinematic(core, platformEntity, targetPosition,
                                glm::quat(1, 0, 0, 0), deltaTime);
     }
 };
@@ -286,7 +287,7 @@ public:
 
         // Move elevator
         glm::vec3 targetPosition(0.0f, currentHeight, 0.0f);
-        Physics::Resource::MoveKinematic(core, elevatorEntity, targetPosition,
+        Physics::Helper::MoveKinematic(core, elevatorEntity, targetPosition,
                                glm::quat(1, 0, 0, 0), deltaTime);
     }
 };
@@ -319,7 +320,7 @@ public:
         glm::quat rotation = glm::angleAxis(currentAngle, glm::vec3(0, 1, 0));
 
         // Move door
-        Physics::Resource::MoveKinematic(core, doorEntity, hingePoint, rotation, deltaTime);
+        Physics::Helper::MoveKinematic(core, doorEntity, hingePoint, rotation, deltaTime);
     }
 };
 ```
@@ -330,7 +331,7 @@ public:
 void UpdateConstantVelocityPlatform(Engine::Core &core, Engine::Entity platform, float deltaTime) {
     // Simple constant velocity (useful for conveyor belts)
     glm::vec3 velocity(2.0f, 0.0f, 0.0f);  // 2 m/s to the right
-    Physics::Resource::SetKinematicVelocity(core, platform, velocity);
+    Physics::Helper::SetKinematicVelocity(core, platform, velocity, deltaTime);
 }
 ```
 
@@ -410,6 +411,6 @@ void UpdateConstantVelocityPlatform(Engine::Core &core, Engine::Entity platform,
 
 ---
 
-**Assignee:** TBD
-**Labels:** `enhancement`, `physics`, `v0.3`, `priority:critical`
+**Assignee:** TBD  
+**Labels:** `enhancement`, `physics`, `v0.3`, `priority:critical`  
 **Milestone:** v0.3 - Core Completeness

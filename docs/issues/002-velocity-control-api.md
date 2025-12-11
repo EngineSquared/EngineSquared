@@ -1,9 +1,10 @@
 # Issue #002: Implement Velocity Control API
 
-**Milestone:** v0.3 - Core Completeness
-**Priority:** 🔴 CRITICAL
-**Estimated Effort:** 2-3 days
-**Dependencies:** None
+**Status:** ✅ **DONE** (Completed 2025-11-05)  
+**Milestone:** v0.3 - Core Completeness  
+**Priority:** 🔴 CRITICAL  
+**Estimated Effort:** 2-3 days  
+**Dependencies:** None  
 **Related Issues:** #001, #003
 
 ---
@@ -25,10 +26,10 @@ Unlike forces/impulses which require physics simulation to affect velocity, this
 
 ## 🔧 Technical Details
 
-### Files to Create/Modify
+### Files Created
 
 ```
-src/plugin/physics/src/resource/
+src/plugin/physics/src/helper/
 ├── VelocityController.hpp  # Velocity control API
 └── VelocityController.cpp  # Implementation
 ```
@@ -36,7 +37,7 @@ src/plugin/physics/src/resource/
 ### API Design
 
 ```cpp
-namespace Physics::Resource {
+namespace Physics::Helper {
     // === Linear Velocity ===
 
     /// Set linear velocity (world space)
@@ -59,26 +60,26 @@ namespace Physics::Resource {
 
     /// Add to current angular velocity (delta)
     void AddAngularVelocity(Engine::Core &core, Engine::Entity entity, const glm::vec3 &deltaAngularVelocity);
-}  // namespace Physics::Resource
+}  // namespace Physics::Helper
 ```
 
 ## 📝 Implementation Tasks
 
-### Phase 1: Create Resource Header (30 min)
+### Phase 1: Create Helper Header (30 min)
 
-- [ ] Create `src/plugin/physics/src/resource/VelocityController.hpp`
-- [ ] Declare all 6 functions (namespace `Physics::Resource`)
-- [ ] Add comprehensive Doxygen comments
-- [ ] Add to `Physics.hpp`
+- [x] Create `src/plugin/physics/src/helper/VelocityController.hpp`
+- [x] Declare all 6 functions (namespace `Physics::Helper`)
+- [x] Add comprehensive Doxygen comments
+- [x] Add to `Physics.hpp`
 
 ### Phase 2: Implement Getters (1-2 hours)
 
-- [ ] Implement `GetLinearVelocity()`
+- [x] Implement `GetLinearVelocity()`
   ```cpp
   glm::vec3 GetLinearVelocity(Engine::Core &core, Engine::Entity entity) {
       auto &registry = core.GetRegistry();
       if (!registry.all_of<Component::RigidBodyInternal>(entity)) {
-          Logger::Error("GetLinearVelocity: Entity has no RigidBody");
+          Log::Error("GetLinearVelocity: Entity has no RigidBody");
           return glm::vec3(0.0f);
       }
 
@@ -88,40 +89,40 @@ namespace Physics::Resource {
       JPH::Vec3 velocity = physicsManager.GetBodyInterface()
                                .GetLinearVelocity(internal.bodyID);
 
-      return Resource::FromJoltVec3(velocity);
+      return FromJoltVec3(velocity);
   }
   ```
 
-- [ ] Implement `GetAngularVelocity()`
+- [x] Implement `GetAngularVelocity()`
 
 ### Phase 3: Implement Setters (1-2 hours)
 
-- [ ] Implement `SetLinearVelocity()`
+- [x] Implement `SetLinearVelocity()`
   - Validate velocity values (no NaN/Inf)
   - Activate body if sleeping
   - Use BodyInterface::SetLinearVelocity()
 
-- [ ] Implement `SetAngularVelocity()`
+- [x] Implement `SetAngularVelocity()`
   - Same validation and activation
 
-- [ ] Implement `AddLinearVelocity()`
+- [x] Implement `AddLinearVelocity()`
   - Get current velocity
   - Add delta
   - Set new velocity
 
-- [ ] Implement `AddAngularVelocity()`
+- [x] Implement `AddAngularVelocity()`
 
 ### Phase 4: Unit Tests (2-3 hours)
 
-- [ ] Create `src/plugin/physics/tests/VelocityControllerTest.cpp`
-- [ ] Test SetLinearVelocity changes position over time
-- [ ] Test GetLinearVelocity returns correct value
-- [ ] Test AddLinearVelocity accumulates
-- [ ] Test SetAngularVelocity creates rotation
-- [ ] Test GetAngularVelocity returns correct value
-- [ ] Test AddAngularVelocity accumulates
-- [ ] Test velocity on static body (should fail gracefully)
-- [ ] Test velocity persistence across frames
+- [x] Create `src/plugin/physics/tests/helper/VelocityControllerTest.cpp`
+- [x] Test SetLinearVelocity changes position over time
+- [x] Test GetLinearVelocity returns correct value
+- [x] Test AddLinearVelocity accumulates
+- [x] Test SetAngularVelocity creates rotation
+- [x] Test GetAngularVelocity returns correct value
+- [x] Test AddAngularVelocity accumulates
+- [x] Test velocity on static body (should fail gracefully)
+- [x] Test velocity persistence across frames
 
 ### Phase 5: Integration Example (2 hours)
 
@@ -177,7 +178,7 @@ namespace Physics::Resource {
 void MoveAtConstantSpeed(Engine::Core &core, Engine::Entity entity) {
     // Move forward at 5 m/s
     glm::vec3 velocity(0.0f, 0.0f, 5.0f);
-    Physics::Resource::SetLinearVelocity(core, entity, velocity);
+    Physics::Helper::SetLinearVelocity(core, entity, velocity);
 }
 ```
 
@@ -189,10 +190,10 @@ void UpdateCharacterMovement(Engine::Core &core, Engine::Entity character,
     glm::vec3 velocity(input.x * speed, 0.0f, input.y * speed);
 
     // Keep current Y velocity (gravity)
-    glm::vec3 currentVel = Physics::Resource::GetLinearVelocity(core, character);
+    glm::vec3 currentVel = Physics::Helper::GetLinearVelocity(core, character);
     velocity.y = currentVel.y;
 
-    Physics::Resource::SetLinearVelocity(core, character, velocity);
+    Physics::Helper::SetLinearVelocity(core, character, velocity);
 }
 ```
 
@@ -205,7 +206,7 @@ void CreateSpinner(Engine::Core &core, Engine::Entity entity, float rpm) {
 
     // Spin around Y axis
     glm::vec3 angularVelocity(0.0f, radiansPerSecond, 0.0f);
-    Physics::Resource::SetAngularVelocity(core, entity, angularVelocity);
+    Physics::Helper::SetAngularVelocity(core, entity, angularVelocity);
 }
 ```
 
@@ -213,13 +214,13 @@ void CreateSpinner(Engine::Core &core, Engine::Entity entity, float rpm) {
 
 ```cpp
 void ApplyCustomDamping(Engine::Core &core, Engine::Entity entity, float damping, float deltaTime) {
-    glm::vec3 velocity = Physics::Resource::GetLinearVelocity(core, entity);
+    glm::vec3 velocity = Physics::Helper::GetLinearVelocity(core, entity);
 
     // Apply exponential damping
     float dampingFactor = std::pow(1.0f - damping, deltaTime);
     velocity *= dampingFactor;
 
-    Physics::Resource::SetLinearVelocity(core, entity, velocity);
+    Physics::Helper::SetLinearVelocity(core, entity, velocity);
 }
 ```
 
@@ -308,6 +309,6 @@ void SetLinearVelocity(Core &core, entt::entity entity, const glm::vec3 &velocit
 
 ---
 
-**Assignee:** TBD
-**Labels:** `enhancement`, `physics`, `v0.3`, `priority:critical`
+**Assignee:** TBD  
+**Labels:** `enhancement`, `physics`, `v0.3`, `priority:critical`  
 **Milestone:** v0.3 - Core Completeness

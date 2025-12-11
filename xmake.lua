@@ -25,6 +25,15 @@ add_requires("rmlui 6.0", { configs = { transform = true }, debug = is_mode("deb
 
 set_languages("c++20")
 
+-- Optional: enable address sanitizer when ENABLE_ASAN is set (for debugging heap corruption)
+if os.getenv("ENABLE_ASAN") == "1" then
+    if is_plat("linux") then
+        add_cxflags("-fsanitize=address", "-fsanitize=undefined", {force = true})
+        add_ldflags("-fsanitize=address", "-fsanitize=undefined", {force = true})
+        add_defines("ENABLE_ASAN")
+    end
+end
+
 includes("src/engine/xmake.lua")
 includes("src/plugin/input/xmake.lua")
 includes("src/plugin/native-scripting/xmake.lua")

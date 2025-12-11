@@ -1,7 +1,8 @@
 # 🏗️ Physics Plugin - Structure Finale (v0.8+)
 
-**Date:** 2025-11-05  
-**Statut:** Structure complète après implémentation des 26 issues  
+**Date:** 2025-12-02
+**Dernière mise à jour:** Architecture helper/ implémentée
+**Statut:** Issues #001-003 complétées, structure évolutive
 **Base:** Analyse de toutes les issues (#001-#026)
 
 ---
@@ -25,7 +26,9 @@ src/plugin/physics/
 │   │   ├── MeshCollider.hpp                 # #006 - Collider mesh complexe
 │   │   ├── CompoundCollider.hpp             # #007 - Collider composé
 │   │   ├── HeightFieldCollider.hpp          # #008 - Collider terrain
+│   │   ├── CollisionListener.hpp            # #013 - Écouteur collisions (opt-in)
 │   │   ├── TriggerVolume.hpp                # #014 - Volume de déclenchement
+│   │   ├── TriggerListener.hpp              # #014 - Écouteur triggers (opt-in)
 │   │   ├── CollisionFilter.hpp              # #012 - Filtrage des collisions
 │   │   ├── Constraint.hpp                   # #015 - Contrainte de base
 │   │   ├── FixedConstraint.hpp              # #015 - Contrainte fixe
@@ -310,7 +313,13 @@ namespace Physics {
 
     namespace Resource {
         // Managers et resources
-        // Ex: PhysicsManager, ForceApplicator, etc.
+        // Ex: PhysicsManager, etc.
+    }
+
+    namespace Helper {
+        // API utilisateur (helpers)
+        // Ex: ForceApplicator, VelocityController, KinematicMover, etc.
+        // Ces fonctions sont le point d'entrée principal pour les utilisateurs
     }
 
     namespace System {
@@ -440,10 +449,10 @@ entity.AddComponent<Physics::Component::RigidBody>();
 entity.AddComponent<Physics::Component::BoxCollider>(glm::vec3(1.0f));
 
 // Appliquer une force
-Physics::Resource::AddForce(core, entity, glm::vec3(0, 100, 0));
+Physics::Helper::AddForce(core, entity, glm::vec3(0, 100, 0));
 
 // Effectuer un raycast
-auto hit = Physics::Resource::Raycast(core, origin, direction, maxDistance);
+auto hit = Physics::Helper::Raycast(core, origin, direction, maxDistance);
 if (hit.hasHit) {
     // Traiter le hit
 }
@@ -467,17 +476,17 @@ target("physics")
     set_kind("static")
     add_files("src/**.cpp")
     add_headerfiles("src/**.hpp")
-    
+
     -- Dépendances
     add_deps("engine")
     add_packages("joltphysics", "glm", "entt")
-    
+
     -- Options de build
     add_defines("JPH_PROFILE_ENABLED", "JPH_DEBUG_RENDERER")
     if is_mode("debug") then
         add_defines("PHYSICS_DEBUG")
     end
-    
+
     -- Tests
     if has_config("tests") then
         add_tests("tests/**Test.cpp")
@@ -486,8 +495,8 @@ target("physics")
 
 ---
 
-**Date de génération:** 2025-11-05  
-**Base:** 26 issues validées (#001-#026)  
-**Fichiers totaux:** ~110 fichiers sources + 27 tests  
+**Date de génération:** 2025-11-05
+**Base:** 26 issues validées (#001-#026)
+**Fichiers totaux:** ~110 fichiers sources + 27 tests
 **Lignes estimées:** ~50,000-80,000 lignes de code
 
