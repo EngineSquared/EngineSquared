@@ -18,6 +18,7 @@
 
 // Components - Constraints
 #include "component/FixedConstraint.hpp"
+#include "component/PointConstraint.hpp"
 
 // Resources
 #include "resource/PhysicsManager.hpp"
