@@ -13,7 +13,10 @@
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
 
-// Resource
+// Components - Constraints
+#include "component/FixedConstraint.hpp"
+
+// Resources
 #include "resource/PhysicsManager.hpp"
 
 // Systems
