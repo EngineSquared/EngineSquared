@@ -25,8 +25,8 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
-#include <vector>
 #include <utility>
+#include <vector>
 
 // Forward declaration to avoid circular dependency
 namespace Object::Component {
