@@ -77,7 +77,8 @@ static JPH::Constraint *CreateJoltConstraint(ConstraintContext &ctx, SettingsT &
         return nullptr;
 
     std::array<JPH::BodyID, 2> bodyIDs = {internalA->bodyID, internalB->bodyID};
-    JPH::BodyLockMultiWrite lock(ctx.physicsSystem.GetBodyLockInterface(), bodyIDs.data(), static_cast<int>(bodyIDs.size()));
+    JPH::BodyLockMultiWrite lock(ctx.physicsSystem.GetBodyLockInterface(), bodyIDs.data(),
+                                 static_cast<int>(bodyIDs.size()));
 
     JPH::Body *bodyA = lock.GetBody(0);
     JPH::Body *bodyB = lock.GetBody(1);
