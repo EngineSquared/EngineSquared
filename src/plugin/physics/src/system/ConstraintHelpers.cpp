@@ -141,7 +141,7 @@ void DestroyConstraint(entt::registry &registry, entt::entity entity, const char
     {
         Log::Critical(fmt::format("{} destroy memory error: {}", safeName, e.what()));
     }
-    catch (const std::exception &e)
+    catch (const Physics::Exception::ConstraintError &e)
     {
         Log::Error(fmt::format("{} destroy unexpected error: {}", safeName, e.what()));
     }

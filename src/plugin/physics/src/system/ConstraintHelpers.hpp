@@ -140,7 +140,7 @@ static void CreateConstraintGeneric(entt::registry &registry, entt::entity entit
     {
         Log::Critical(fmt::format("{} bad alloc: {}", safeName, e.what()));
     }
-    catch (const std::exception &e)
+    catch (const Physics::Exception::ConstraintError &e)
     {
         Log::Error(fmt::format("{} unexpected error: {}", safeName, e.what()));
     }
