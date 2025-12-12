@@ -51,8 +51,8 @@ Component::RigidBodyInternal *GetBodyInternal(entt::registry &registry, Engine::
 
 template <typename SettingsT, typename ConstraintT>
 static JPH::Constraint *CreateJoltConstraint(ConstraintContext &ctx, SettingsT &joltSettings,
-                                             const ConstraintT &constraint,
-                                             Component::RigidBodyInternal *internalA, const char *constraintName)
+                                             const ConstraintT &constraint, Component::RigidBodyInternal *internalA,
+                                             const char *constraintName)
 {
     if (constraint.IsWorldConstraint())
     {
@@ -89,12 +89,13 @@ static JPH::Constraint *CreateJoltConstraint(ConstraintContext &ctx, SettingsT &
 }
 
 void FinalizeConstraint(ConstraintContext &ctx, entt::entity entity, JPH::Constraint *joltConstraint,
-                       Component::ConstraintType type, const Component::ConstraintSettings &settings,
-                       const char *constraintName);
+                        Component::ConstraintType type, const Component::ConstraintSettings &settings,
+                        const char *constraintName);
 
 void DestroyConstraint(entt::registry &registry, entt::entity entity, const char *constraintName);
 
-template <Component::ConstraintType TYPE, typename CompT, typename SettingsT, typename Configurator, typename ExtraValidate>
+template <Component::ConstraintType TYPE, typename CompT, typename SettingsT, typename Configurator,
+          typename ExtraValidate>
 static void CreateConstraintGeneric(entt::registry &registry, entt::entity entity, const char *constraintName,
                                     Configurator &&configurator, ExtraValidate &&extraValidate)
 {
