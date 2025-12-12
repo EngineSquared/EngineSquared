@@ -4,16 +4,16 @@ namespace Physics::System {
 
 std::optional<ConstraintContext> ConstraintContext::Create(entt::registry &registry, const char *constraintName)
 {
-    auto &core = *registry.ctx().get<Engine::Core *>();
-    auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
+    auto &coreRef = *registry.ctx().get<Engine::Core *>();
+    auto &physicsManagerRef = coreRef.GetResource<Resource::PhysicsManager>();
 
-    if (!physicsManager.IsPhysicsActivated())
+    if (!physicsManagerRef.IsPhysicsActivated())
     {
         Log::Error(fmt::format("Cannot create {}: Physics system not activated", constraintName));
         return std::nullopt;
     }
 
-    return ConstraintContext{core, registry, physicsManager, physicsManager.GetPhysicsSystem()};
+    return ConstraintContext{coreRef, registry, physicsManagerRef, physicsManagerRef.GetPhysicsSystem()};
 }
 
 Component::RigidBodyInternal *GetBodyInternal(entt::registry &registry, Engine::Entity entity,
@@ -49,25 +49,29 @@ void DestroyConstraint(entt::registry &registry, entt::entity entity, const char
 {
     try
     {
-        auto &core = *registry.ctx().get<Engine::Core *>();
-        auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
+        auto &coreRef = *registry.ctx().get<Engine::Core *>();
+        auto &physicsManagerRef = coreRef.GetResource<Resource::PhysicsManager>();
 
-        if (!physicsManager.IsPhysicsActivated())
+        if (!physicsManagerRef.IsPhysicsActivated())
             return;
 
         auto *internal = registry.try_get<Component::ConstraintInternal>(entity);
         if (!internal || !internal->IsValid())
             return;
 
-        physicsManager.GetPhysicsSystem().RemoveConstraint(internal->constraint);
+        physicsManagerRef.GetPhysicsSystem().RemoveConstraint(internal->constraint);
 
         Log::Debug(fmt::format("Destroyed {} for entity {}", constraintName, static_cast<uint32_t>(entity)));
 
         registry.remove<Component::ConstraintInternal>(entity);
     }
-    catch (const std::exception &e)
+    catch (const Physics::Exception::ConstraintError &e)
     {
-        Log::Error(fmt::format("{} destroy error: {}", constraintName, e.what()));
+        Log::Warn(fmt::format("{} destroy constraint error: {}", constraintName, e.what()));
+    }
+    catch (const std::bad_alloc &e)
+    {
+        Log::Critical(fmt::format("{} destroy memory error: {}", constraintName, e.what()));
     }
 }
 
