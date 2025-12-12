@@ -10,6 +10,7 @@
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
 #include "system/RigidBodySystem.hpp"
+#include "system/SoftBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
 
 void Physics::Plugin::Bind()
@@ -20,7 +21,9 @@ void Physics::Plugin::Bind()
     RegisterSystems<Engine::Scheduler::Startup>(System::InitPhysicsManager);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitRigidBodySystem);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitConstraintSystem);
+    RegisterSystems<Engine::Scheduler::Startup>(System::InitSoftBodySystem);
 
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::PhysicsUpdate);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::SyncTransformWithPhysics);
+    RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::SyncSoftBodyVertices);
 }
