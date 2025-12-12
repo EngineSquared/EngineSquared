@@ -74,7 +74,7 @@ struct ConstraintInternal {
      * @param t Type of the constraint
      */
     ConstraintInternal(JPH::Constraint *c, ConstraintType t)
-        : constraint(c), type(t), broken(false), breakForce(0.0f), breakTorque(0.0f)
+        : constraint(c), type(t)
     {
     }
 
@@ -86,7 +86,7 @@ struct ConstraintInternal {
      * @param torque Breaking torque threshold
      */
     ConstraintInternal(JPH::Constraint *c, ConstraintType t, float force, float torque)
-        : constraint(c), type(t), broken(false), breakForce(force), breakTorque(torque)
+        : constraint(c), type(t), breakForce(force), breakTorque(torque)
     {
     }
 

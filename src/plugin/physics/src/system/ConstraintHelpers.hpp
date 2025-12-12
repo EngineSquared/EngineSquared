@@ -10,6 +10,9 @@
 #include "utils/JoltConversions.hpp"
 
 #include <fmt/format.h>
+#include <array>
+#include <stdexcept>
+#include "exception/ConstraintError.hpp"
 
 #include <Jolt/Physics/Body/BodyLockMulti.h>
 #include <Jolt/Physics/Constraints/DistanceConstraint.h>
@@ -73,7 +76,7 @@ static JPH::Constraint *CreateJoltConstraint(ConstraintContext &ctx, SettingsT &
     if (!internalB)
         return nullptr;
 
-    JPH::BodyID bodyIDs[2] = {internalA->bodyID, internalB->bodyID};
+    std::array<JPH::BodyID, 2> bodyIDs = {internalA->bodyID, internalB->bodyID};
     JPH::BodyLockMultiWrite lock(ctx.physicsSystem.GetBodyLockInterface(), bodyIDs, 2);
 
     JPH::Body *bodyA = lock.GetBody(0);
@@ -126,9 +129,13 @@ static void CreateConstraintGeneric(entt::registry &registry, entt::entity entit
         auto *joltConstraint = CreateJoltConstraint(ctx, joltSettings, constraint, internalA, constraintName);
         FinalizeConstraint(ctx, entity, joltConstraint, TYPE, constraint.settings, constraintName);
     }
-    catch (const std::exception &e)
+    catch (const Physics::Exception::ConstraintError &e)
     {
-        Log::Error(fmt::format("{} error: {}", constraintName, e.what()));
+        Log::Warn(fmt::format("{} constraint error: {}", constraintName, e.what()));
+    }
+    catch (const std::bad_alloc &e)
+    {
+        Log::Critical(fmt::format("{} bad alloc: {}", constraintName, e.what()));
     }
 }
 
