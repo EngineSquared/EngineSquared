@@ -50,7 +50,7 @@ namespace Physics::System {
  * @param mesh The mesh containing vertices and face indices
  */
 static JPH::Ref<JPH::SoftBodySharedSettings> CreateJoltSharedSettings(const Component::SoftBody &softBody,
-                                                                       const Object::Component::Mesh &mesh)
+                                                                      const Object::Component::Mesh &mesh)
 {
     auto settings = new JPH::SoftBodySharedSettings();
 
@@ -72,9 +72,9 @@ static JPH::Ref<JPH::SoftBodySharedSettings> CreateJoltSharedSettings(const Comp
         for (size_t i = 0; i + 2 < mesh.indices.size(); i += 3)
         {
             settings->mFaces.emplace_back(JPH::SoftBodySharedSettings::Face(mesh.indices[i], mesh.indices[i + 1],
-                                                                         mesh.indices[i + 2],
-                                                                         0 // Material index
-                                                                         ));
+                                                                            mesh.indices[i + 2],
+                                                                            0 // Material index
+                                                                            ));
         }
 
         // Create constraints automatically based on faces
