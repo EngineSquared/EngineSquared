@@ -9,10 +9,10 @@
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
 
-#include <fmt/format.h>
-#include <array>
-#include <stdexcept>
 #include "exception/ConstraintError.hpp"
+#include <array>
+#include <fmt/format.h>
+#include <stdexcept>
 
 #include <Jolt/Physics/Body/BodyLockMulti.h>
 #include <Jolt/Physics/Constraints/DistanceConstraint.h>

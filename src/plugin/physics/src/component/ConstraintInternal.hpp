@@ -73,10 +73,7 @@ struct ConstraintInternal {
      * @param c Pointer to the Jolt constraint
      * @param t Type of the constraint
      */
-    ConstraintInternal(JPH::Constraint *c, ConstraintType t)
-        : constraint(c), type(t)
-    {
-    }
+    ConstraintInternal(JPH::Constraint *c, ConstraintType t) : constraint(c), type(t) {}
 
     /**
      * @brief Construct with constraint pointer, type, and breaking thresholds
