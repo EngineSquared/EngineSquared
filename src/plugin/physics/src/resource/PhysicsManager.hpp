@@ -51,6 +51,14 @@ class PhysicsManager {
     inline JPH::PhysicsSystem &GetPhysicsSystem() { return *_physicsSystem; }
 
     /**
+     * @brief Get a reference to the body interface for manipulating bodies.
+     *
+     * @return JPH::BodyInterface&
+     * @note Use this to apply forces, impulses, or modify body properties.
+     */
+    inline JPH::BodyInterface &GetBodyInterface() { return _physicsSystem->GetBodyInterface(); }
+
+    /**
      * @brief Get a pointer to the temp allocator.
      *
      * @return JPH::TempAllocator*

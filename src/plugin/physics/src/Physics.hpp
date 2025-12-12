@@ -21,6 +21,10 @@
 #include "component/FixedConstraint.hpp"
 #include "component/PointConstraint.hpp"
 
+// Components - Soft Body
+#include "component/SoftBody.hpp"
+#include "component/SoftBodyInternal.hpp"
+
 // Resources
 #include "resource/PhysicsManager.hpp"
 
@@ -30,6 +34,7 @@
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
 #include "system/RigidBodySystem.hpp"
+#include "system/SoftBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
 
 // Utils
