@@ -57,7 +57,8 @@ static void OnDistanceConstraintConstruct(entt::registry &registry, entt::entity
 {
     constexpr const char *NAME = "DistanceConstraint";
 
-    CreateConstraintGeneric<Component::ConstraintType::Distance, Component::DistanceConstraint, JPH::DistanceConstraintSettings>(
+    CreateConstraintGeneric<Component::ConstraintType::Distance, Component::DistanceConstraint,
+                            JPH::DistanceConstraintSettings>(
         registry, entity, NAME,
         [](auto &constraint, auto &joltSettings) {
             joltSettings.mSpace = JPH::EConstraintSpace::LocalToBodyCOM;
