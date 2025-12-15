@@ -29,8 +29,6 @@ static constexpr inline const uint32_t ENTITY_ID_MASK =
 void ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Body &inBody2,
                                          const JPH::ContactManifold &, JPH::ContactSettings &)
 {
-    // Right now we use 32 bits for entities IDs with EnTT but Jolt stores user data as 64 bits
-    // so we have to mask the upper 32 bits
     auto entity1 = static_cast<Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
