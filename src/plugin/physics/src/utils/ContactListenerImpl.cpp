@@ -34,7 +34,7 @@ void ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Bo
     auto entity1 = static_cast<Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
-    std::lock_guard<std::mutex> lock(_bufferMutex);
+    std::scoped_lock lock(_bufferMutex);
     _bufferedAdded.emplace_back(Physics::Event::CollisionAddedEvent{entity1, entity2});
 }
 
@@ -44,7 +44,7 @@ void ContactListenerImpl::OnContactPersisted(const JPH::Body &inBody1, const JPH
     auto entity1 = static_cast<Engine::Entity>(inBody1.GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<Engine::Entity>(inBody2.GetUserData() & ENTITY_ID_MASK);
 
-    std::lock_guard<std::mutex> lock(_bufferMutex);
+    std::scoped_lock lock(_bufferMutex);
     _bufferedPersisted.emplace_back(Physics::Event::CollisionPersistedEvent{entity1, entity2});
 }
 
@@ -64,7 +64,7 @@ void ContactListenerImpl::OnContactRemoved(const JPH::SubShapeIDPair &inSubShape
     auto entity1 = static_cast<Engine::Entity>(body1->GetUserData() & ENTITY_ID_MASK);
     auto entity2 = static_cast<Engine::Entity>(body2->GetUserData() & ENTITY_ID_MASK);
 
-    std::lock_guard<std::mutex> lock(_bufferMutex);
+    std::scoped_lock lock(_bufferMutex);
     _bufferedRemoved.emplace_back(Physics::Event::CollisionRemovedEvent{entity1, entity2});
 }
 
@@ -74,7 +74,7 @@ void ContactListenerImpl::ProcessBufferedEvents(Engine::Core &core)
     std::vector<Physics::Event::CollisionPersistedEvent> persisted;
     std::vector<Physics::Event::CollisionRemovedEvent> removed;
     {
-        std::lock_guard<std::mutex> lock(_bufferMutex);
+        std::scoped_lock lock(_bufferMutex);
         added.swap(_bufferedAdded);
         persisted.swap(_bufferedPersisted);
         removed.swap(_bufferedRemoved);
