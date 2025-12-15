@@ -26,7 +26,7 @@ class EventManager {
 
     EventManager(EventManager &&other) noexcept
     {
-        std::lock_guard<std::mutex> lock(other._queueMutex);
+        std::scoped_lock lock(other._queueMutex);
         _eventCallbacks = std::move(other._eventCallbacks);
         _eventQueue = std::move(other._eventQueue);
     }
@@ -35,8 +35,7 @@ class EventManager {
     {
         if (this != &other)
         {
-            std::lock_guard<std::mutex> lock(other._queueMutex);
-            std::lock_guard<std::mutex> lock2(_queueMutex);
+            std::scoped_lock lock(other._queueMutex, _queueMutex);
             _eventCallbacks = std::move(other._eventCallbacks);
             _eventQueue = std::move(other._eventQueue);
         }
@@ -58,7 +57,7 @@ class EventManager {
     template <typename TEvent> void PushEvent(const TEvent &event)
     {
         EventTypeID typeID = _GetId<TEvent>();
-        std::lock_guard<std::mutex> lock(_queueMutex);
+        std::scoped_lock lock(_queueMutex);
         _eventQueue.push({typeID, event});
     }
 
@@ -66,7 +65,7 @@ class EventManager {
     {
         std::queue<std::pair<EventTypeID, std::any>> queueCopy;
         {
-            std::lock_guard<std::mutex> lock(_queueMutex);
+            std::scoped_lock lock(_queueMutex);
             std::swap(queueCopy, _eventQueue);
         }
 
