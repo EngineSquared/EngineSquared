@@ -119,10 +119,10 @@ TEST_F(FunctionContainerTest, DeleteFunctionDoesNotMessUpOrder)
 
     std::vector<int> expected = {6, 8}; // 5 + 1 and 5 + 3
 
+    std::size_t idx = 0u;
     for (const auto &func : functions)
     {
-        EXPECT_EQ((*func)(5), expected.front());
-        expected.erase(expected.begin());
+        EXPECT_EQ((*func)(5), expected[idx++]);
     }
 }
 
