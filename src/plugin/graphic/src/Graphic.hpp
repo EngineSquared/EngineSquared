@@ -21,10 +21,12 @@
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
+#include "resource/RenderPassManager.hpp"
 
 // Utils
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/IValidable.hpp"
+#include "utils/shader/IBindGroupLayoutEntry.hpp"
 #include "utils/shader/ABindGroupLayoutEntry.hpp"
 #include "utils/shader/BindGroupLayout.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
@@ -60,7 +62,6 @@
 #include "system/initialization/ConfigureSurface.hpp"
 #include "system/initialization/CreateAdapter.hpp"
 #include "system/initialization/CreateDevice.hpp"
-#include "system/initialization/CreateEndRenderTexture.hpp"
 #include "system/initialization/CreateInstance.hpp"
 #include "system/initialization/CreateQueue.hpp"
 #include "system/initialization/CreateSurface.hpp"
@@ -68,6 +69,10 @@
 #include "system/initialization/ReleaseInstance.hpp"
 #include "system/initialization/RequestCapabilities.hpp"
 #include "system/initialization/SetupQueue.hpp"
+
+#include "system/preparation/CreateEndRenderTexture.hpp"
+
+#include "system/commandCreation/ExecuteDefaultRenderPass.hpp"
 
 #include "system/presentation/Present.hpp"
 

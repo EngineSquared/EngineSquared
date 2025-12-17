@@ -6,7 +6,7 @@
 #include "resource/Context.hpp"
 #include "resource/Surface.hpp"
 #include "resource/TextureContainer.hpp"
-#include "system/initialization/CreateEndRenderTexture.hpp"
+#include "system/preparation/CreateEndRenderTexture.hpp"
 
 using Graphic::System::END_RENDER_TEXTURE_ID;
 

@@ -2,10 +2,6 @@
 set_project("GraphicUsage")
 set_languages("c++20")
 
-add_rules("mode.debug", "mode.release")
-
-includes("../../xmake.lua")
-
 if is_plat("windows") then
     add_cxflags("/W4")
 end

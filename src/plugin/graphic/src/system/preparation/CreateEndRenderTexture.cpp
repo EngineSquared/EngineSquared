@@ -48,8 +48,16 @@ void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
     }
 
     wgpu::Texture currentTexture = surfaceTexture.texture;
-    textureContainer.Add(Graphic::System::END_RENDER_TEXTURE_ID,
-                         Graphic::Resource::Texture("end_render_texture", currentTexture));
+    Graphic::Resource::Texture newTexture("end_render_texture", currentTexture, false);
+    if (textureContainer.Contains(Graphic::System::END_RENDER_TEXTURE_ID))
+    {
+        auto &texture = textureContainer.Get(Graphic::System::END_RENDER_TEXTURE_ID);
+        std::swap(texture, newTexture);
+    }
+    else
+    {
+        textureContainer.Add(Graphic::System::END_RENDER_TEXTURE_ID, std::move(newTexture));
+    }
 }
 } // namespace
 
