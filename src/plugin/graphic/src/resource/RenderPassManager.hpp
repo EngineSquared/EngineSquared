@@ -12,11 +12,11 @@
 
 namespace Graphic::Resource {
 
-namespace {
-static inline const std::string DEFAULT_RENDER_PASS_SHADER_NAME = "DEFAULT_RENDER_PASS_SHADER";
-static inline const entt::hashed_string DEFAULT_RENDER_PASS_SHADER_ID{DEFAULT_RENDER_PASS_SHADER_NAME.c_str(),
+namespace detail {
+static inline constexpr std::string_view DEFAULT_RENDER_PASS_SHADER_NAME = "DEFAULT_RENDER_PASS_SHADER";
+static inline const entt::hashed_string DEFAULT_RENDER_PASS_SHADER_ID{DEFAULT_RENDER_PASS_SHADER_NAME.data(),
                                                                       DEFAULT_RENDER_PASS_SHADER_NAME.size()};
-static inline const std::string DEFAULT_RENDER_PASS_SHADER_CONTENT = R"(
+static inline constexpr std::string_view DEFAULT_RENDER_PASS_SHADER_CONTENT = R"(
 @vertex
 fn vs_main(
   @builtin(vertex_index) VertexIndex : u32
@@ -53,15 +53,15 @@ class DefaultRenderPass : public ASingleExecutionRenderPass<DefaultRenderPass> {
         auto output =
             Graphic::Utils::ColorTargetState("END_RENDER_TEXTURE").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);
 
-        shaderDescriptor.setShader(DEFAULT_RENDER_PASS_SHADER_CONTENT)
-            .setName(DEFAULT_RENDER_PASS_SHADER_NAME)
+        shaderDescriptor.setShader(std::string(DEFAULT_RENDER_PASS_SHADER_CONTENT))
+            .setName(std::string(DEFAULT_RENDER_PASS_SHADER_NAME))
             .addOutputColorFormat(output);
         return Shader::Create(shaderDescriptor, graphicContext);
     }
 };
-} // namespace
+} // namespace detail
 struct RenderPassManager {
-    static constexpr std::string DEFAULT_RENDER_PASS_NAME = "DEFAULT_RENDER_PASS";
+    static inline constexpr std::string_view DEFAULT_RENDER_PASS_NAME = "DEFAULT_RENDER_PASS";
 
     RenderPassManager() = default;
     ~RenderPassManager() = default;
@@ -69,22 +69,22 @@ struct RenderPassManager {
     void Execute(Engine::Core &core)
     {
         if (_defaultRenderPass == nullptr)
-            _defaultRenderPass = std::make_shared<DefaultRenderPass>(_CreateDefaultRenderPass(core));
+            _defaultRenderPass = std::make_shared<detail::DefaultRenderPass>(_CreateDefaultRenderPass(core));
         _defaultRenderPass->Execute(core);
     }
 
   private:
-    DefaultRenderPass _CreateDefaultRenderPass(Engine::Core &core)
+    detail::DefaultRenderPass _CreateDefaultRenderPass(Engine::Core &core)
     {
-        DefaultRenderPass renderPass{};
-        Shader defaultShader = DefaultRenderPass::CreateShader(core.GetResource<Context>());
-        core.GetResource<ShaderContainer>().Add(DEFAULT_RENDER_PASS_SHADER_ID, std::move(defaultShader));
+        detail::DefaultRenderPass renderPass{};
+        Shader defaultShader = detail::DefaultRenderPass::CreateShader(core.GetResource<Context>());
+        core.GetResource<ShaderContainer>().Add(detail::DEFAULT_RENDER_PASS_SHADER_ID, std::move(defaultShader));
         Graphic::Resource::ColorOutput colorOutput;
         colorOutput.textureViewId = System::END_RENDER_TEXTURE_ID;
-        renderPass.BindShader(DEFAULT_RENDER_PASS_SHADER_NAME).AddOutput(0, colorOutput);
+        renderPass.BindShader(std::string(detail::DEFAULT_RENDER_PASS_SHADER_NAME)).AddOutput(0, colorOutput);
         return renderPass;
     }
 
-    std::shared_ptr<DefaultRenderPass> _defaultRenderPass = nullptr;
+    std::shared_ptr<detail::DefaultRenderPass> _defaultRenderPass = nullptr;
 };
 } // namespace Graphic::Resource
