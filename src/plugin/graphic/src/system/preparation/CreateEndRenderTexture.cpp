@@ -5,9 +5,8 @@
 #include "resource/TextureContainer.hpp"
 #include "utils/webgpu.hpp"
 
-
 static void CreatePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
-                                       Graphic::Resource::TextureContainer &textureContainer)
+                                              Graphic::Resource::TextureContainer &textureContainer)
 {
     wgpu::TextureDescriptor textureDesc(wgpu::Default);
     textureDesc.label = wgpu::StringView("end_render_texture");
@@ -23,7 +22,7 @@ static void CreatePlaceholderEndRenderTexture(Graphic::Resource::Context &contex
 }
 
 static void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
-                                   Graphic::Resource::TextureContainer &textureContainer)
+                                          Graphic::Resource::TextureContainer &textureContainer)
 {
     if (!context.surface.has_value() || !context.surface->value.has_value())
     {
