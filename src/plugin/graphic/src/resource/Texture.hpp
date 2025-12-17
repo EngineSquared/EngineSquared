@@ -79,9 +79,7 @@ class Texture {
         if (_defaultView != nullptr)
             _defaultView.release();
 
-        if (_ownsResources)
-        {
-            if (_webgpuTexture != nullptr)
+        if (_ownsResources && _webgpuTexture != nullptr)
                 _webgpuTexture.release();
         }
     }
@@ -106,10 +104,9 @@ class Texture {
             if (_defaultView != nullptr)
                 _defaultView.release();
 
-            if (_ownsResources)
+            if (_ownsResources && _webgpuTexture != nullptr)
             {
-                if (_webgpuTexture != nullptr)
-                    _webgpuTexture.release();
+                _webgpuTexture.release();
             }
 
             _webgpuTexture = std::move(other._webgpuTexture);

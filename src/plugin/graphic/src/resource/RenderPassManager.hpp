@@ -12,7 +12,6 @@
 
 namespace Graphic::Resource {
 
-namespace detail {
 static inline constexpr std::string_view DEFAULT_RENDER_PASS_SHADER_NAME = "DEFAULT_RENDER_PASS_SHADER";
 static inline const entt::hashed_string DEFAULT_RENDER_PASS_SHADER_ID{DEFAULT_RENDER_PASS_SHADER_NAME.data(),
                                                                       DEFAULT_RENDER_PASS_SHADER_NAME.size()};
@@ -59,7 +58,7 @@ class DefaultRenderPass : public ASingleExecutionRenderPass<DefaultRenderPass> {
         return Shader::Create(shaderDescriptor, graphicContext);
     }
 };
-} // namespace detail
+
 struct RenderPassManager {
     static inline constexpr std::string_view DEFAULT_RENDER_PASS_NAME = "DEFAULT_RENDER_PASS";
 
@@ -69,22 +68,22 @@ struct RenderPassManager {
     void Execute(Engine::Core &core)
     {
         if (_defaultRenderPass == nullptr)
-            _defaultRenderPass = std::make_shared<detail::DefaultRenderPass>(_CreateDefaultRenderPass(core));
+            _defaultRenderPass = std::make_shared<DefaultRenderPass>(_CreateDefaultRenderPass(core));
         _defaultRenderPass->Execute(core);
     }
 
   private:
-    detail::DefaultRenderPass _CreateDefaultRenderPass(Engine::Core &core)
+    DefaultRenderPass _CreateDefaultRenderPass(Engine::Core &core)
     {
-        detail::DefaultRenderPass renderPass{};
-        Shader defaultShader = detail::DefaultRenderPass::CreateShader(core.GetResource<Context>());
-        core.GetResource<ShaderContainer>().Add(detail::DEFAULT_RENDER_PASS_SHADER_ID, std::move(defaultShader));
+        DefaultRenderPass renderPass{};
+        Shader defaultShader = DefaultRenderPass::CreateShader(core.GetResource<Context>());
+        core.GetResource<ShaderContainer>().Add(DEFAULT_RENDER_PASS_SHADER_ID, std::move(defaultShader));
         Graphic::Resource::ColorOutput colorOutput;
         colorOutput.textureViewId = System::END_RENDER_TEXTURE_ID;
-        renderPass.BindShader(std::string(detail::DEFAULT_RENDER_PASS_SHADER_NAME)).AddOutput(0, colorOutput);
+        renderPass.BindShader(std::string(DEFAULT_RENDER_PASS_SHADER_NAME)).AddOutput(0, colorOutput);
         return renderPass;
     }
 
-    std::shared_ptr<detail::DefaultRenderPass> _defaultRenderPass = nullptr;
+    std::shared_ptr<DefaultRenderPass> _defaultRenderPass = nullptr;
 };
 } // namespace Graphic::Resource

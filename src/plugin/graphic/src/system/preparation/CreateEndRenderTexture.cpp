@@ -5,8 +5,8 @@
 #include "resource/TextureContainer.hpp"
 #include "utils/webgpu.hpp"
 
-namespace {
-void CreatePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
+
+static void CreatePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
                                        Graphic::Resource::TextureContainer &textureContainer)
 {
     wgpu::TextureDescriptor textureDesc(wgpu::Default);
@@ -22,7 +22,7 @@ void CreatePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
     textureContainer.Add(Graphic::System::END_RENDER_TEXTURE_ID, std::move(texture));
 }
 
-void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
+static void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
                                    Graphic::Resource::TextureContainer &textureContainer)
 {
     if (!context.surface.has_value() || !context.surface->value.has_value())
@@ -59,8 +59,6 @@ void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
         textureContainer.Add(Graphic::System::END_RENDER_TEXTURE_ID, std::move(newTexture));
     }
 }
-} // namespace
-
 void Graphic::System::CreateEndRenderTexture(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
