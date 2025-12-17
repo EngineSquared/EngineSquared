@@ -74,9 +74,7 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
             const auto &colorTexture = colorTextureName.second;
             wgpu::RenderPassColorAttachment colorAttachment(wgpu::Default);
             entt::hashed_string textureViewId = colorTexture.textureViewId;
-            auto textureView = core.GetResource<Resource::TextureContainer>()
-                                   .Get(textureViewId)
-                                   .GetDefaultView();
+            auto textureView = core.GetResource<Resource::TextureContainer>().Get(textureViewId).GetDefaultView();
             colorAttachment.view = textureView;
             if (colorTexture.textureResolveTargetName.has_value())
             {
