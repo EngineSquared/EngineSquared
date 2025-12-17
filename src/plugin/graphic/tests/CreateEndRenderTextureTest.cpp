@@ -20,7 +20,7 @@ TEST(CreateEndRenderTextureTest, CreatesTextureWhenWindowSystemIsNone)
         c.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
     });
 
-    core.RegisterSystem([](Engine::Core &core) {
+    core.RegisterSystem<RenderingPipeline::Extraction>([](Engine::Core &core) {
         auto const &context = core.GetResource<Graphic::Resource::Context>();
         auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
 
