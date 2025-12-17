@@ -52,8 +52,8 @@ class DefaultRenderPass : public ASingleExecutionRenderPass<DefaultRenderPass> {
         auto output =
             Graphic::Utils::ColorTargetState("END_RENDER_TEXTURE").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);
 
-        shaderDescriptor.setShader(std::string(DEFAULT_RENDER_PASS_SHADER_CONTENT))
-            .setName(std::string(DEFAULT_RENDER_PASS_SHADER_NAME))
+        shaderDescriptor.setShader(DEFAULT_RENDER_PASS_SHADER_CONTENT)
+            .setName(DEFAULT_RENDER_PASS_SHADER_NAME)
             .addOutputColorFormat(output);
         return Shader::Create(shaderDescriptor, graphicContext);
     }

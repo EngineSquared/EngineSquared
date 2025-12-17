@@ -80,8 +80,7 @@ class Texture {
             _defaultView.release();
 
         if (_ownsResources && _webgpuTexture != nullptr)
-                _webgpuTexture.release();
-        }
+            _webgpuTexture.release();
     }
 
     Texture(const Texture &) = delete;
