@@ -11,7 +11,7 @@ static void CreatePlaceholderEndRenderTexture(Graphic::Resource::Context &contex
     wgpu::TextureDescriptor textureDesc(wgpu::Default);
     textureDesc.label = wgpu::StringView("end_render_texture");
     textureDesc.size = {.width = 1920u, .height = 1080u, .depthOrArrayLayers = 1};
-    textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+    textureDesc.format = wgpu::TextureFormat::BGRA8UnormSrgb;
     textureDesc.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TextureBinding |
                         wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
     textureDesc.viewFormats = nullptr;
