@@ -6,9 +6,9 @@
 
 namespace Graphic::Resource {
 
-template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPass<TDerived> {
+template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPass {
   public:
-    explicit ASingleExecutionRenderPass(std::string_view name) : ARenderPass<TDerived>(name) {}
+    explicit ASingleExecutionRenderPass(std::string_view name) : ARenderPass(name) {}
 
     void Execute(Engine::Core &core) override
     {
@@ -73,8 +73,10 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
         {
             const auto &colorTexture = colorTextureName.second;
             wgpu::RenderPassColorAttachment colorAttachment(wgpu::Default);
-            entt::hashed_string textureViewId = colorTexture.textureViewId;
+
+            entt::hashed_string textureId = colorTexture.textureId;
             auto textureView = core.GetResource<Resource::TextureContainer>().Get(textureViewId).GetDefaultView();
+
             colorAttachment.view = textureView;
             if (colorTexture.textureResolveTargetName.has_value())
             {
