@@ -11,8 +11,10 @@ namespace Graphic::Resource {
 
 struct ColorOutput {
     entt::hashed_string textureId{};
-    explicit ColorOutput(std::string_view textureId_ = {}) {
-        if (!textureId_.empty()) {
+    explicit ColorOutput(std::string_view textureId_ = {})
+    {
+        if (!textureId_.empty())
+        {
             textureId = entt::hashed_string(textureId_.data(), textureId_.size());
         }
     }
