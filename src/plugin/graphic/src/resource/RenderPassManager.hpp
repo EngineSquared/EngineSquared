@@ -78,9 +78,10 @@ struct RenderPassManager {
         DefaultRenderPass renderPass{};
         Shader defaultShader = DefaultRenderPass::CreateShader(core.GetResource<Context>());
         core.GetResource<ShaderContainer>().Add(DEFAULT_RENDER_PASS_SHADER_ID, std::move(defaultShader));
+        renderPass.BindShader(std::string(DEFAULT_RENDER_PASS_SHADER_NAME));
         Graphic::Resource::ColorOutput colorOutput;
-        colorOutput.textureViewId = System::END_RENDER_TEXTURE_ID;
-        renderPass.BindShader(std::string(DEFAULT_RENDER_PASS_SHADER_NAME)).AddOutput(0, colorOutput);
+        colorOutput.textureId = System::END_RENDER_TEXTURE_ID;
+        renderPass.AddOutput(0, std::move(colorOutput));
         return renderPass;
     }
 

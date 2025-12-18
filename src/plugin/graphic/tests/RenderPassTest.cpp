@@ -155,12 +155,13 @@ void TestSystem(Engine::Core &core)
         "returnTextureTest"_hs, context, "returnTextureTest",
         Graphic::Resource::Image(glm::uvec2(256, 256), [](glm::uvec2) { return glm::u8vec4(255, 0, 0, 255); }));
 
-    Graphic::Resource::ColorOutput colorOutput;
-    colorOutput.textureId = "returnTextureTest"_hs;
-
     renderPass.BindShader("DefaultTestShader");
     renderPass.AddInput(0, "TestBindGroup1");
-    renderPass.AddOutput(0, colorOutput);
+        {
+        Graphic::Resource::ColorOutput colorOutput;
+        colorOutput.textureId = "returnTextureTest"_hs;
+        renderPass.AddOutput(0, std::move(colorOutput));
+    }
 
     EXPECT_NO_THROW(renderPass.Execute(core));
 
