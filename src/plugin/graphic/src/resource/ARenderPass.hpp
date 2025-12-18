@@ -10,7 +10,8 @@
 namespace Graphic::Resource {
 
 struct ColorOutput {
-    std::string textureViewName = "";
+    explicit ColorOutput(std::string_view textureName = "") : textureName(textureName) {}
+    std::string textureName = "";
     std::optional<std::string> textureResolveTargetName = std::nullopt;
     uint32_t depthSlice = 0;
     wgpu::StoreOp storeOp = wgpu::StoreOp::Store;
@@ -32,46 +33,42 @@ struct InputContainer : public std::map<uint32_t /* index inside shader */, std:
     using std::map<uint32_t, std::string>::map;
 };
 
-template <typename TDerived> class ARenderPass {
+class ARenderPass {
   public:
     explicit ARenderPass(std::string_view name) : _name(name) {}
 
     virtual void Execute(Engine::Core &core) = 0;
 
-    TDerived &BindShader(std::string_view shaderName)
+    void BindShader(std::string_view shaderName)
     {
         _boundShader = entt::hashed_string(shaderName.data(), shaderName.size());
-        return static_cast<TDerived &>(*this);
     }
 
-    TDerived &AddInput(uint32_t groupIndex, std::string_view bindGroupName)
+    void AddInput(uint32_t groupIndex, std::string_view bindGroupName)
     {
         if (_inputs.contains(groupIndex))
         {
             Log::Warn(fmt::format("RenderPass {}: Overwriting existing bind group at index {}", _name, groupIndex));
         }
         _inputs[groupIndex] = bindGroupName;
-        return static_cast<TDerived &>(*this);
     }
 
-    TDerived &AddOutput(uint32_t id, ColorOutput output)
+    void AddOutput(uint32_t id, ColorOutput &&output)
     {
         if (_outputs.colorBuffers.contains(id))
         {
             Log::Warn(fmt::format("RenderPass {}: Overwriting existing color buffer at index {}", _name, id));
         }
-        _outputs.colorBuffers[id] = output;
-        return static_cast<TDerived &>(*this);
+        _outputs.colorBuffers[id] = std::move(output);
     }
 
-    TDerived &AddOutput(wgpu::RenderPassDepthStencilAttachment output)
+    void AddOutput(wgpu::RenderPassDepthStencilAttachment output)
     {
         if (_outputs.depthBuffer.has_value())
         {
             Log::Warn(fmt::format("RenderPass {}: Overwriting existing depth buffer", _name));
         }
         _outputs.depthBuffer = output;
-        return static_cast<TDerived &>(*this);
     }
 
     std::vector<Utils::ValidationError> validate(Engine::Core &core) const
