@@ -10,8 +10,12 @@
 namespace Graphic::Resource {
 
 struct ColorOutput {
-    entt::hashed_string textureId = "";
-    explicit ColorOutput(std::string_view textureId_ = "") : textureId(textureId_.data(), textureId_.size()) {}
+    entt::hashed_string textureId{};
+    explicit ColorOutput(std::string_view textureId_ = {}) {
+        if (!textureId_.empty()) {
+            textureId = entt::hashed_string(textureId_.data(), textureId_.size());
+        }
+    }
 
     std::optional<std::string> textureResolveTargetName = std::nullopt;
     uint32_t depthSlice = 0;

@@ -22,7 +22,7 @@ fn vs_main(
 
 @fragment
 fn fs_main() -> @location(0) vec4f {
-    const color = vec4f(27.0 / 255.0, 7.0 / 255.0, 7.0 / 255.0, 255.0);
+    const color = vec4f(27.0 / 255.0, 7.0 / 255.0, 7.0 / 255.0, 1.0);
     return color;
 }
 
