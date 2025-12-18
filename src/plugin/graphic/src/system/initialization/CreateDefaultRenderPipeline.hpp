@@ -3,7 +3,5 @@
 #include "core/Core.hpp"
 
 namespace Graphic::System {
-
-void ExecuteDefaultRenderPass(Engine::Core &core);
-
+    void CreateDefaultRenderPipeline(Engine::Core &core);
 }

@@ -13,7 +13,6 @@
 #include "resource/Limits.hpp"
 #include "resource/PointGPUBuffer.hpp"
 #include "resource/RenderGraph.hpp"
-#include "resource/RenderPassManager.hpp"
 #include "resource/Sampler.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "resource/Shader.hpp"
@@ -71,10 +70,11 @@
 #include "system/initialization/ReleaseInstance.hpp"
 #include "system/initialization/RequestCapabilities.hpp"
 #include "system/initialization/SetupQueue.hpp"
+#include "system/initialization/CreateDefaultRenderPipeline.hpp"
 
 #include "system/preparation/CreateEndRenderTexture.hpp"
 
-#include "system/commandCreation/ExecuteDefaultRenderPass.hpp"
+#include "system/commandCreation/ExecuteRenderPass.hpp"
 
 #include "system/presentation/Present.hpp"
 

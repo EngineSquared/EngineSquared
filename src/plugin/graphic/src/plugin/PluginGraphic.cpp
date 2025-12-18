@@ -15,16 +15,16 @@ void Graphic::Plugin::Bind()
     RegisterResource(Graphic::Resource::GPUBufferContainer());
     RegisterResource(Graphic::Resource::SamplerContainer());
     RegisterResource(Graphic::Resource::BindGroupManager());
-    RegisterResource(Graphic::Resource::RenderPassManager());
+    RegisterResource(Graphic::Resource::RenderGraph());
 
     RegisterSystems<RenderingPipeline::Setup>(System::CreateInstance, System::CreateSurface, System::CreateAdapter,
                                               System::ReleaseInstance, System::RequestCapabilities,
                                               System::CreateDevice, System::CreateQueue, System::SetupQueue,
-                                              System::ConfigureSurface, System::ReleaseAdapter);
+                                              System::ConfigureSurface, System::ReleaseAdapter, System::CreateDefaultRenderPipeline);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::CreateEndRenderTexture);
 
-    RegisterSystems<RenderingPipeline::CommandCreation>(System::ExecuteDefaultRenderPass);
+    RegisterSystems<RenderingPipeline::CommandCreation>(System::ExecuteRenderPass);
 
     RegisterSystems<RenderingPipeline::Presentation>(System::Present);
 
