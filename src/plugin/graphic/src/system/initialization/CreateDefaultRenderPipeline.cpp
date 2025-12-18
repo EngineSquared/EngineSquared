@@ -51,13 +51,13 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
     }
 };
 
-
 void Graphic::System::CreateDefaultRenderPipeline(Engine::Core &core)
 {
     auto &renderPassManager = core.GetResource<Graphic::Resource::RenderGraph>();
 
     DefaultRenderPass renderPass{};
-    Graphic::Resource::Shader defaultShader = DefaultRenderPass::CreateShader(core.GetResource<Graphic::Resource::Context>());
+    Graphic::Resource::Shader defaultShader =
+        DefaultRenderPass::CreateShader(core.GetResource<Graphic::Resource::Context>());
     core.GetResource<Graphic::Resource::ShaderContainer>().Add(DEFAULT_RENDER_PASS_SHADER_ID, std::move(defaultShader));
     renderPass.BindShader(std::string(DEFAULT_RENDER_PASS_SHADER_NAME));
     Graphic::Resource::ColorOutput colorOutput;

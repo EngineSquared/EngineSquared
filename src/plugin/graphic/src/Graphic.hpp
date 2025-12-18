@@ -62,6 +62,7 @@
 // Systems
 #include "system/initialization/ConfigureSurface.hpp"
 #include "system/initialization/CreateAdapter.hpp"
+#include "system/initialization/CreateDefaultRenderPipeline.hpp"
 #include "system/initialization/CreateDevice.hpp"
 #include "system/initialization/CreateInstance.hpp"
 #include "system/initialization/CreateQueue.hpp"
@@ -70,7 +71,6 @@
 #include "system/initialization/ReleaseInstance.hpp"
 #include "system/initialization/RequestCapabilities.hpp"
 #include "system/initialization/SetupQueue.hpp"
-#include "system/initialization/CreateDefaultRenderPipeline.hpp"
 
 #include "system/preparation/CreateEndRenderTexture.hpp"
 
