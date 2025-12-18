@@ -6,6 +6,8 @@ if is_plat("windows") then
     add_cxflags("/W4")
 end
 
+include("../xmake.lua")
+
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
 target("GraphicUsage")
     set_kind("binary")

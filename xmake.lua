@@ -42,12 +42,6 @@ includes("src/utils/log/xmake.lua")
 includes("src/utils/tools/xmake.lua")
 includes("src/plugin/event/xmake.lua")
 
-option("with_graphic_usage_example", {default = false, description = "Enable Graphic Usage Example"})
-
-if has_config("with_graphic_usage_example") then
-    includes("examples/graphic_usage/xmake.lua")
-end
-
 add_rules("plugin.vsxmake.autoupdate")
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
 target("EngineSquared")
