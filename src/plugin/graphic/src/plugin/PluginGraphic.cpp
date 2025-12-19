@@ -1,9 +1,9 @@
 #include "plugin/PluginGraphic.hpp"
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
+#include "component/Camera.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "scheduler/Shutdown.hpp"
-#include "component/Camera.hpp"
 
 void Graphic::Plugin::Bind()
 {
@@ -20,13 +20,16 @@ void Graphic::Plugin::Bind()
 
     {
         struct OnCameraCreationBinder {
-            void CallFunction(entt::registry &registry, entt::entity entity) {
+            void CallFunction(entt::registry &registry, entt::entity entity)
+            {
                 Graphic::System::OnCameraCreation(core, entity);
             }
             Engine::Core &core;
         };
         static OnCameraCreationBinder binder{this->GetCore()};
-        this->GetCore().GetRegistry().on_construct<Object::Component::Camera>()
+        this->GetCore()
+            .GetRegistry()
+            .on_construct<Object::Component::Camera>()
             .connect<&OnCameraCreationBinder::CallFunction>(binder);
     }
 

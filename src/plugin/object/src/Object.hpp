@@ -1,10 +1,10 @@
 #pragma once
 
 // Components
+#include "component/Camera.hpp"
 #include "component/Material.hpp"
 #include "component/Mesh.hpp"
 #include "component/Transform.hpp"
-#include "component/Camera.hpp"
 
 // Exceptions
 #include "exception/ResourceManagerError.hpp"

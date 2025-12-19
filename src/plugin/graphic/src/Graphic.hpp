@@ -25,6 +25,7 @@
 #include "resource/TextureContainer.hpp"
 
 // Utils
+#include "utils/DefaultPipeline.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/IValidable.hpp"
 #include "utils/shader/ABindGroupLayoutEntry.hpp"
@@ -36,7 +37,6 @@
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include "utils/shader/VertexBufferLayout.hpp"
-#include "utils/DefaultPipeline.hpp"
 
 // Exceptions
 #include "exception/AdapterCreationError.hpp"

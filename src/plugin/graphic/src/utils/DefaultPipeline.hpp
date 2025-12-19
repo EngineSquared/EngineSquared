@@ -1,14 +1,14 @@
 #pragma once
 
-#include "resource/SingleExecutionRenderPass.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
+#include "resource/SingleExecutionRenderPass.hpp"
 #include <entt/core/hashed_string.hpp>
 
 namespace Graphic::Utils {
 static inline constexpr std::string_view DEFAULT_RENDER_GRAPH_NAME = "END_RENDER_TEXTURE";
 static inline const entt::hashed_string DEFAULT_RENDER_GRAPH_ID{DEFAULT_RENDER_GRAPH_NAME.data(),
-                                                                    DEFAULT_RENDER_GRAPH_NAME.size()};
+                                                                DEFAULT_RENDER_GRAPH_NAME.size()};
 static inline constexpr std::string_view DEFAULT_RENDER_PASS_NAME = "DEFAULT_RENDER_PASS";
 static inline constexpr std::string_view DEFAULT_RENDER_PASS_SHADER_NAME = "DEFAULT_RENDER_PASS_SHADER";
 static inline const entt::hashed_string DEFAULT_RENDER_PASS_SHADER_ID{DEFAULT_RENDER_PASS_SHADER_NAME.data(),
@@ -56,4 +56,4 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
         return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
     }
 };
-}
+} // namespace Graphic::Utils

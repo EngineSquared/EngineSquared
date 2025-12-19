@@ -7,11 +7,11 @@
 #include "Engine.hpp"
 
 #include "Graphic.hpp"
-#include "plugin/PluginWindow.hpp"
-#include "component/Transform.hpp"
-#include "component/Mesh.hpp"
-#include "utils/ShapeGenerator.hpp"
 #include "component/Camera.hpp"
+#include "component/Mesh.hpp"
+#include "component/Transform.hpp"
+#include "plugin/PluginWindow.hpp"
+#include "utils/ShapeGenerator.hpp"
 
 void Setup(Engine::Core &core)
 {

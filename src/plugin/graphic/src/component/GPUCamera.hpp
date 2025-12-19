@@ -15,4 +15,4 @@ struct GPUCamera {
     glm::mat4 inverseViewProjection;
     Id pipelineId = Graphic::Utils::DEFAULT_RENDER_GRAPH_ID;
 };
-};
+}; // namespace Graphic::Component
