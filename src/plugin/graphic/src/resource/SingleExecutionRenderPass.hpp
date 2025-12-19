@@ -73,10 +73,10 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
         {
             const auto &colorTexture = colorTextureName.second;
             wgpu::RenderPassColorAttachment colorAttachment(wgpu::Default);
-            std::string textureName = colorTexture.textureName;
-            auto textureView = core.GetResource<Resource::TextureContainer>()
-                                   .Get(entt::hashed_string{textureName.c_str()})
-                                   .GetDefaultView();
+
+            entt::hashed_string textureId = colorTexture.textureId;
+            auto textureView = core.GetResource<Resource::TextureContainer>().Get(textureId).GetDefaultView();
+
             colorAttachment.view = textureView;
             if (colorTexture.textureResolveTargetName.has_value())
             {

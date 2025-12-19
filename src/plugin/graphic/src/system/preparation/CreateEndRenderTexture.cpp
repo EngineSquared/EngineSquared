@@ -5,14 +5,13 @@
 #include "resource/TextureContainer.hpp"
 #include "utils/webgpu.hpp"
 
-namespace {
-void CreatePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
-                                       Graphic::Resource::TextureContainer &textureContainer)
+static void CreatePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
+                                              Graphic::Resource::TextureContainer &textureContainer)
 {
     wgpu::TextureDescriptor textureDesc(wgpu::Default);
     textureDesc.label = wgpu::StringView("end_render_texture");
     textureDesc.size = {.width = 1920u, .height = 1080u, .depthOrArrayLayers = 1};
-    textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+    textureDesc.format = wgpu::TextureFormat::BGRA8UnormSrgb;
     textureDesc.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TextureBinding |
                         wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
     textureDesc.viewFormats = nullptr;
@@ -22,8 +21,8 @@ void CreatePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
     textureContainer.Add(Graphic::System::END_RENDER_TEXTURE_ID, std::move(texture));
 }
 
-void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
-                                   Graphic::Resource::TextureContainer &textureContainer)
+static void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
+                                          Graphic::Resource::TextureContainer &textureContainer)
 {
     if (!context.surface.has_value() || !context.surface->value.has_value())
     {
@@ -48,11 +47,17 @@ void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
     }
 
     wgpu::Texture currentTexture = surfaceTexture.texture;
-    textureContainer.Add(Graphic::System::END_RENDER_TEXTURE_ID,
-                         Graphic::Resource::Texture("end_render_texture", currentTexture));
+    Graphic::Resource::Texture newTexture("end_render_texture", currentTexture, false);
+    if (textureContainer.Contains(Graphic::System::END_RENDER_TEXTURE_ID))
+    {
+        auto &texture = textureContainer.Get(Graphic::System::END_RENDER_TEXTURE_ID);
+        std::swap(texture, newTexture);
+    }
+    else
+    {
+        textureContainer.Add(Graphic::System::END_RENDER_TEXTURE_ID, std::move(newTexture));
+    }
 }
-} // namespace
-
 void Graphic::System::CreateEndRenderTexture(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();

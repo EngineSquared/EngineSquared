@@ -31,6 +31,7 @@
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
 #include "utils/shader/ColorTargetState.hpp"
 #include "utils/shader/DepthStencilState.hpp"
+#include "utils/shader/IBindGroupLayoutEntry.hpp"
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include "utils/shader/VertexBufferLayout.hpp"
@@ -61,8 +62,8 @@
 // Systems
 #include "system/initialization/ConfigureSurface.hpp"
 #include "system/initialization/CreateAdapter.hpp"
+#include "system/initialization/CreateDefaultRenderPipeline.hpp"
 #include "system/initialization/CreateDevice.hpp"
-#include "system/initialization/CreateEndRenderTexture.hpp"
 #include "system/initialization/CreateInstance.hpp"
 #include "system/initialization/CreateQueue.hpp"
 #include "system/initialization/CreateSurface.hpp"
@@ -71,4 +72,15 @@
 #include "system/initialization/RequestCapabilities.hpp"
 #include "system/initialization/SetupQueue.hpp"
 
+#include "system/preparation/CreateEndRenderTexture.hpp"
+
+#include "system/commandCreation/ExecuteRenderPass.hpp"
+
+#include "system/presentation/Present.hpp"
+
+#include "system/shutdown/ReleaseBindingGroup.hpp"
 #include "system/shutdown/ReleaseContext.hpp"
+#include "system/shutdown/ReleaseGPUBuffer.hpp"
+#include "system/shutdown/ReleaseSampler.hpp"
+#include "system/shutdown/ReleaseShader.hpp"
+#include "system/shutdown/ReleaseTexture.hpp"

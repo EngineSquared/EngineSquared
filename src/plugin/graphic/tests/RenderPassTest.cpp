@@ -157,7 +157,11 @@ void TestSystem(Engine::Core &core)
 
     renderPass.BindShader("DefaultTestShader");
     renderPass.AddInput(0, "TestBindGroup1");
-    renderPass.AddOutput(0, Graphic::Resource::ColorOutput("returnTextureTest"));
+    {
+        Graphic::Resource::ColorOutput colorOutput;
+        colorOutput.textureId = "returnTextureTest"_hs;
+        renderPass.AddOutput(0, std::move(colorOutput));
+    }
 
     EXPECT_NO_THROW(renderPass.Execute(core));
 
