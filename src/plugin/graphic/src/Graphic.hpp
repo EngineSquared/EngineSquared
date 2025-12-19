@@ -13,6 +13,7 @@
 #include "resource/Limits.hpp"
 #include "resource/PointGPUBuffer.hpp"
 #include "resource/RenderGraph.hpp"
+#include "resource/RenderGraphContainer.hpp"
 #include "resource/Sampler.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "resource/Shader.hpp"
@@ -35,6 +36,7 @@
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include "utils/shader/VertexBufferLayout.hpp"
+#include "utils/DefaultPipeline.hpp"
 
 // Exceptions
 #include "exception/AdapterCreationError.hpp"
@@ -58,6 +60,8 @@
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"
+
+#include "system/GPUComponentManagement/OnCameraCreation.hpp"
 
 // Systems
 #include "system/initialization/ConfigureSurface.hpp"
