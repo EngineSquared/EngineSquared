@@ -10,8 +10,15 @@
 namespace Graphic::Resource {
 
 struct ColorOutput {
-    explicit ColorOutput(std::string_view textureName = "") : textureName(textureName) {}
-    std::string textureName = "";
+    entt::hashed_string textureId{};
+    explicit ColorOutput(std::string_view textureId_ = {})
+    {
+        if (!textureId_.empty())
+        {
+            textureId = entt::hashed_string(textureId_.data(), textureId_.size());
+        }
+    }
+
     std::optional<std::string> textureResolveTargetName = std::nullopt;
     uint32_t depthSlice = 0;
     wgpu::StoreOp storeOp = wgpu::StoreOp::Store;

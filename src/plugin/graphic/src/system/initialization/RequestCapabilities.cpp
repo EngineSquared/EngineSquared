@@ -7,9 +7,8 @@ namespace Graphic::System {
 void RequestCapabilities(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
-    auto &settings = core.GetResource<Resource::GraphicSettings>();
 
-    if (settings.GetWindowSystem() == Resource::WindowSystem::None)
+    if (context.surface == std::nullopt)
         return;
     if (context.surface->updateCapabilities(context.adapter.value()) == wgpu::Status::Error)
     {

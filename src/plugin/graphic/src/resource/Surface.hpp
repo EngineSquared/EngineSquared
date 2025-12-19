@@ -17,7 +17,10 @@ struct Surface {
         {
             Log::Warn("Surface capabilities already requested, overwriting");
         }
-        return value->getCapabilities(adapter, &(capabilities.value()));
+        wgpu::SurfaceCapabilities caps;
+        wgpu::Status status = value->getCapabilities(adapter, &caps);
+        capabilities = caps;
+        return status;
     }
 
     inline void Release() noexcept
