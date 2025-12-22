@@ -17,8 +17,10 @@
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
 // TODO: put buffer class into a dedicated folder
-#include "resource/IndexGPUBuffer.hpp"
-#include "resource/PointGPUBuffer.hpp"
+#include "resource/buffer/IndexGPUBuffer.hpp"
+#include "resource/buffer/PointGPUBuffer.hpp"
+#include "resource/buffer/TransformGPUBuffer.hpp"
+#include "resource/buffer/CameraGPUBuffer.hpp"
 #include "resource/RenderGraph.hpp"
 #include "resource/RenderGraphContainer.hpp"
 #include "resource/Sampler.hpp"
@@ -30,7 +32,6 @@
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
-#include "resource/TransformGPUBuffer.hpp"
 
 // Utils
 #include "utils/DefaultPipeline.hpp"
