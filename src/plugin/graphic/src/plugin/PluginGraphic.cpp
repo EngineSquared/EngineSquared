@@ -44,7 +44,8 @@ void Graphic::Plugin::Bind()
                 const auto &mesh = entity.GetComponents<Object::Component::Mesh>(core);
 
                 // TODO: use name if exists
-                std::string entityString = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
+                std::string entityString =
+                    Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
 
                 auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
 
@@ -77,7 +78,8 @@ void Graphic::Plugin::Bind()
                     entity.AddComponent<Graphic::Component::GPUTransform>(core);
                 const auto &transform = entity.GetComponents<Object::Component::Transform>(core);
 
-                std::string entityString = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
+                std::string entityString =
+                    Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
 
                 auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
 
@@ -90,13 +92,12 @@ void Graphic::Plugin::Bind()
                 auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
                 std::string bindGroupName = "TRANSFORM_BIND_GROUP_" + entityString;
                 entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
-                Resource::BindGroup bindGroup(
-                    core, "DEFAULT_RENDER_PASS_SHADER", 1,
-                    {
-                        {
-                         0, Resource::BindGroup::Asset::Type::Buffer,
-                         transformBufferId, gpuBufferContainer.Get(transformBufferId)->GetBuffer().getSize(),
-                         },
+                Resource::BindGroup bindGroup(core, "DEFAULT_RENDER_PASS_SHADER", 1,
+                                              {
+                                                  {
+                                                   0, Resource::BindGroup::Asset::Type::Buffer,
+                                                   transformBufferId, gpuBufferContainer.Get(transformBufferId)->GetBuffer().getSize(),
+                                                   },
                 });
                 bindGroupManager.Add(bindGroupId, std::move(bindGroup));
                 GPUTransform.bindGroup = bindGroupId;
