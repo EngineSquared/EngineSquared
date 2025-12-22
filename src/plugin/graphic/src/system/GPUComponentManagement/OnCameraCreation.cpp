@@ -8,32 +8,9 @@
 #include "resource/Context.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "utils/DefaultPipeline.hpp"
-#include <random>
 #include <string>
 
 namespace {
-std::string GenerateUUID()
-{
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    static std::uniform_int_distribution<> dis(0, 15);
-    static const char *digits = "0123456789abcdef";
-
-    std::string uuid;
-    uuid.reserve(36);
-    for (int i = 0; i < 36; ++i)
-    {
-        if (i == 8 || i == 13 || i == 18 || i == 23)
-        {
-            uuid += '-';
-        }
-        else
-        {
-            uuid += digits[dis(gen)];
-        }
-    }
-    return uuid;
-}
 
 class CameraUniformBuffer final : public Graphic::Resource::AGPUBuffer {
   public:
@@ -103,29 +80,28 @@ void Graphic::System::OnCameraCreation(Engine::Core &core, Engine::Entity entity
     gpuCameraComponent.inverseViewProjection = glm::inverse(gpuCameraComponent.viewProjection);
     gpuCameraComponent.pipeline = Graphic::Utils::DEFAULT_RENDER_GRAPH_ID;
 
-    // Créer le buffer GPU pour la caméra
-    std::string uuid = GenerateUUID();
-    std::string cameraBufferName = "CAMERA_UNIFORM_BUFFER_" + uuid;
-    entt::hashed_string cameraBufferUUID{cameraBufferName.data(), cameraBufferName.size()};
+    std::string entityString = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
+    std::string cameraBufferName = "CAMERA_UNIFORM_BUFFER_" + entityString;
+    entt::hashed_string cameraBufferId{cameraBufferName.data(), cameraBufferName.size()};
 
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
     const auto &cameraUniformBuffer =
-        gpuBufferContainer.Add(cameraBufferUUID, std::make_unique<CameraUniformBuffer>(entity));
-
-    std::string bindGroupName = "CAMERA_BIND_GROUP_" + uuid;
-    entt::hashed_string bindGroupUUID{bindGroupName.data(), bindGroupName.size()};
+        gpuBufferContainer.Add(cameraBufferId, std::make_unique<CameraUniformBuffer>(entity));
+    std::string bindGroupName = "CAMERA_BIND_GROUP_" + entityString;
+    entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
     entt::hashed_string shaderId = Graphic::Utils::DEFAULT_RENDER_PASS_SHADER_ID;
 
     auto &gpuCameraComponentInContainer =
         entity.AddComponent<Graphic::Component::GPUCamera>(core, std::move(gpuCameraComponent));
-    gpuBufferContainer.Get(cameraBufferUUID)->Create(core);
+    gpuBufferContainer.Get(cameraBufferId)->Create(core);
+    gpuCameraComponentInContainer.buffer = cameraBufferId;
 
     Graphic::Resource::BindGroup cameraBindGroup(
         core, shaderId, 0,
         {
-            {0, Graphic::Resource::BindGroup::Asset::Type::Buffer, cameraBufferUUID,
+            {0, Graphic::Resource::BindGroup::Asset::Type::Buffer, cameraBufferId,
              cameraUniformBuffer->get()->GetBuffer().getSize()}
     });
-    gpuCameraComponentInContainer.bindGroup = bindGroupUUID;
-    core.GetResource<Graphic::Resource::BindGroupManager>().Add(bindGroupUUID, cameraBindGroup);
+    gpuCameraComponentInContainer.bindGroup = bindGroupId;
+    core.GetResource<Graphic::Resource::BindGroupManager>().Add(bindGroupId, cameraBindGroup);
 }
