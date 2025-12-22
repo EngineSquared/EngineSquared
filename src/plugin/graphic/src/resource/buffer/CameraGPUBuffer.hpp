@@ -54,4 +54,4 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
     bool _isCreated = false;
     wgpu::Buffer _buffer;
 };
-} // namespace
+} // namespace Graphic::Resource
