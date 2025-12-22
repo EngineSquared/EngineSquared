@@ -5,6 +5,7 @@
 #include "exception/NonexistentComponentError.hpp"
 #include "exception/UpdateBufferError.hpp"
 #include "resource/AGPUBuffer.hpp"
+#include "resource/Context.hpp"
 
 namespace Graphic::Resource {
 class IndexGPUBuffer : public AGPUBuffer {
@@ -31,9 +32,9 @@ class IndexGPUBuffer : public AGPUBuffer {
             "IndexGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
         bufferDesc.label = wgpu::StringView(label);
 
-        _buffer = core.GetResource<Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);
+        _buffer = core.GetResource<Resource::Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);
 
-        core.GetResource<Context>().queue->writeBuffer(_buffer, 0, indices.data(), bufferDesc.size);
+        core.GetResource<Resource::Context>().queue->writeBuffer(_buffer, 0, indices.data(), bufferDesc.size);
 
         _isCreated = true;
     };

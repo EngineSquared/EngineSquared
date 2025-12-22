@@ -17,19 +17,10 @@ class TransformGPUBuffer : public AGPUBuffer {
     {
         const Object::Component::Transform &transformComponent =
             _entity.GetComponents<Object::Component::Transform>(core);
+        const Context &context = core.GetResource<Context>();
 
-        wgpu::BufferDescriptor bufferDesc(wgpu::Default);
-        bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
-        bufferDesc.size = sizeof(glm::mat4);
-        std::string label =
-            "TransformGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
-        bufferDesc.label = wgpu::StringView(label);
-
-        _buffer = core.GetResource<Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);
-
-        glm::mat4 modelMatrix = transformComponent.GetTransformationMatrix();
-        core.GetResource<Context>().queue->writeBuffer(_buffer, 0, glm::value_ptr(modelMatrix), bufferDesc.size);
-
+        _buffer = _CreateBuffer(context.deviceContext);
+        _UpdateBuffer(transformComponent, context);
         _isCreated = true;
     };
     void Destroy(Engine::Core &core) override
@@ -49,12 +40,33 @@ class TransformGPUBuffer : public AGPUBuffer {
             throw Exception::UpdateBufferError("Cannot update a GPU buffer that is not created.");
         }
 
-        // TODO: implement update logic
+        const Object::Component::Transform &transformComponent =
+            _entity.GetComponents<Object::Component::Transform>(core);
+        const Context &context = core.GetResource<Context>();
+        _UpdateBuffer(transformComponent, context);
     };
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
 
   private:
+    wgpu::Buffer _CreateBuffer(const DeviceContext &context)
+    {
+        wgpu::BufferDescriptor bufferDesc(wgpu::Default);
+        bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
+        bufferDesc.size = sizeof(glm::mat4);
+        std::string label =
+            "TransformGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
+        bufferDesc.label = wgpu::StringView(label);
+
+        return context.GetDevice()->createBuffer(bufferDesc);
+    }
+
+    void _UpdateBuffer(const Object::Component::Transform &transformComponent, const Context &context)
+    {
+        glm::mat4 modelMatrix = transformComponent.GetTransformationMatrix();
+        context.queue->writeBuffer(_buffer, 0, glm::value_ptr(modelMatrix), sizeof(glm::mat4));
+    }
+
     wgpu::Buffer _buffer;
     bool _isCreated = false;
     Engine::Entity _entity = Engine::Entity::entity_null_id;

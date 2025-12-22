@@ -1,6 +1,7 @@
 #pragma once
 
 #include "resource/AGPUBuffer.hpp"
+#include "entity/Entity.hpp"
 
 namespace Graphic::Resource {
 
