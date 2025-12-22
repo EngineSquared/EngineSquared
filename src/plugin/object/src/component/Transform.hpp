@@ -61,9 +61,11 @@ struct Transform {
      * Create the transformation matrix for this transform component.
      *
      * \return  transformation matrix that combines the position, scale, and rotation of the entity.
+     *
      */
     glm::mat4 GetTransformationMatrix() const
     {
+        // TODO: don't calculate every time, cache the result and update only when needed
         glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);
         glm::mat4 rotationMatrix = glm::mat4_cast(rotation);
         glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), scale);

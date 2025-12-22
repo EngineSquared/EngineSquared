@@ -4,6 +4,12 @@
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/SingleExecutionRenderPass.hpp"
 #include <entt/core/hashed_string.hpp>
+#include "component/Transform.hpp"
+#include "component/GPUCamera.hpp"
+#include "component/GPUMesh.hpp"
+#include "component/GPUTransform.hpp"
+#include "entity/Entity.hpp"
+#include "utils/shader/BufferBindGroupLayoutEntry.hpp"
 
 namespace Graphic::Utils {
 static inline constexpr std::string_view DEFAULT_RENDER_GRAPH_NAME = "END_RENDER_TEXTURE";
@@ -14,16 +20,32 @@ static inline constexpr std::string_view DEFAULT_RENDER_PASS_SHADER_NAME = "DEFA
 static inline const entt::hashed_string DEFAULT_RENDER_PASS_SHADER_ID{DEFAULT_RENDER_PASS_SHADER_NAME.data(),
                                                                       DEFAULT_RENDER_PASS_SHADER_NAME.size()};
 static inline constexpr std::string_view DEFAULT_RENDER_PASS_SHADER_CONTENT = R"(
+struct Camera {
+    viewProjectionMatrix : mat4x4<f32>,
+};
+
+struct Model {
+    modelMatrix : mat4x4<f32>,
+};
+
+@group(0) @binding(0) var<uniform> camera : Camera;
+@group(1) @binding(0) var<uniform> model : Model;
+
+struct VertexInput {
+    @location(0) position : vec3f,
+    @location(1) normal : vec3f,
+    @location(2) uv : vec2f,
+};
+
+struct VertexOutput {
+    @builtin(position) Position : vec4f,
+};
+
 @vertex
 fn vs_main(
-  @builtin(vertex_index) VertexIndex : u32
+    input : VertexInput
 ) -> @builtin(position) vec4f {
-  const pos = array(
-    vec2(-1.0, -1.0), vec2(1.0, -1.0), vec2(-1.0, 1.0),
-    vec2(-1.0, 1.0), vec2(1.0, -1.0), vec2(1.0, 1.0),
-  );
-
-  return vec4f(pos[VertexIndex], 0.9, 1.0);
+    return camera.viewProjectionMatrix * model.modelMatrix * vec4f(input.position, 1.0);
 }
 
 @fragment
@@ -36,22 +58,77 @@ fn fs_main() -> @location(0) vec4f {
 
 class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<DefaultRenderPass> {
   public:
-    explicit DefaultRenderPass() : ASingleExecutionRenderPass(DEFAULT_RENDER_PASS_NAME) {}
+    explicit DefaultRenderPass(void) : ASingleExecutionRenderPass(DEFAULT_RENDER_PASS_NAME) {}
 
     void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
     {
-        renderPass.draw(6, 1, 0, 0);
+        Engine::Entity camera(core.GetRegistry()
+                                   .view<Graphic::Component::GPUCamera>()
+                                   .front());
+        auto &cameraGPUComponent = camera.GetComponents<Graphic::Component::GPUCamera>(core);
+
+        auto &cameraBindGroup = core.GetResource<Graphic::Resource::BindGroupManager>()
+                                    .Get(cameraGPUComponent.bindGroup);
+
+        renderPass.setBindGroup(0, cameraBindGroup.GetBindGroup(), 0, nullptr);
+
+        const auto &bufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
+        const auto &bindgroupContainer = core.GetResource<Graphic::Resource::BindGroupManager>();
+
+        core.GetRegistry().view<Graphic::Component::GPUTransform, Graphic::Component::GPUMesh>().each(
+            [&](Graphic::Component::GPUTransform &transform, Graphic::Component::GPUMesh &gpuMesh) {
+                struct ModelUniform {
+                    glm::mat4 modelMatrix;
+                } modelUniform;
+
+                const auto &transformBindgroup =
+                    bindgroupContainer.Get(transform.bindGroup);
+
+                renderPass.setBindGroup(transformBindgroup.GetLayoutIndex(), transformBindgroup.GetBindGroup(), 0, nullptr);
+
+                const auto &pointBuffer = bufferContainer.Get(gpuMesh.pointBufferId);
+                renderPass.setVertexBuffer(0, pointBuffer->GetBuffer(), 0,
+                                           pointBuffer->GetBuffer().getSize());
+                const auto &indexBuffer = bufferContainer.Get(gpuMesh.indexBufferId);
+                renderPass.setIndexBuffer(indexBuffer->GetBuffer(), wgpu::IndexFormat::Uint32, 0,
+                                          indexBuffer->GetBuffer().getSize());
+
+                renderPass.drawIndexed(gpuMesh.indexBufferId.size() / sizeof(uint32_t), 1, 0, 0, 0);
+            });
     }
 
     static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext)
     {
         Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
+        auto cameraLayout = Graphic::Utils::BindGroupLayout("CameraModelLayout")
+            .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("camera")
+                .setType(wgpu::BufferBindingType::Uniform)
+                .setMinBindingSize(sizeof(glm::mat4))
+                .setVisibility(wgpu::ShaderStage::Vertex)
+                .setBinding(0));
+        auto modelLayout = Graphic::Utils::BindGroupLayout("CameraModelLayout")
+            .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("model")
+                .setType(wgpu::BufferBindingType::Uniform)
+                .setMinBindingSize(sizeof(glm::mat4))
+                .setVisibility(wgpu::ShaderStage::Vertex)
+                .setBinding(0));
+
+        auto vertexLayout = Graphic::Utils::VertexBufferLayout()
+            .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)
+            .addVertexAttribute(wgpu::VertexFormat::Float32x3, 3 * sizeof(float), 1)
+            .addVertexAttribute(wgpu::VertexFormat::Float32x2, 6 * sizeof(float), 2)
+            .setArrayStride(8 * sizeof(float))
+            .setStepMode(wgpu::VertexStepMode::Vertex);
+
         auto output =
             Graphic::Utils::ColorTargetState("END_RENDER_TEXTURE").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);
 
         shaderDescriptor.setShader(DEFAULT_RENDER_PASS_SHADER_CONTENT)
             .setName(DEFAULT_RENDER_PASS_SHADER_NAME)
+            .addBindGroupLayout(cameraLayout)
+            .addBindGroupLayout(modelLayout)
+            .addVertexBufferLayout(vertexLayout)
             .addOutputColorFormat(output);
         return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
     }

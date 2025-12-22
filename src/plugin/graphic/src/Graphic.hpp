@@ -1,5 +1,10 @@
 #pragma once
 
+// Components
+#include "component/GPUCamera.hpp"
+#include "component/GPUMesh.hpp"
+#include "component/GPUTransform.hpp"
+
 // Resources
 #include "resource/AGPUBuffer.hpp"
 #include "resource/ARenderPass.hpp"
@@ -11,7 +16,10 @@
 #include "resource/GraphicSettings.hpp"
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
+// TODO: put buffer class into a dedicated folder
 #include "resource/PointGPUBuffer.hpp"
+#include "resource/IndexGPUBuffer.hpp"
+#include "resource/TransformGPUBuffer.hpp"
 #include "resource/RenderGraph.hpp"
 #include "resource/RenderGraphContainer.hpp"
 #include "resource/Sampler.hpp"

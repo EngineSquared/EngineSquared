@@ -16,6 +16,7 @@ target("GraphicUsage")
     add_deps("EngineSquaredCore")
     add_deps("PluginGraphic")
     add_deps("PluginWindow")
+    add_deps("PluginInput")
 
     add_files("src/**.cpp")
 

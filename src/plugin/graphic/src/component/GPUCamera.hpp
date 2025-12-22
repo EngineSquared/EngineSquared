@@ -1,8 +1,7 @@
 #pragma once
 
 #include "glm/glm.hpp"
-#include "system/initialization/CreateDefaultRenderPipeline.hpp"
-#include "utils/DefaultPipeline.hpp"
+#include <entt/core/hashed_string.hpp>
 
 namespace Graphic::Component {
 struct GPUCamera {
@@ -13,6 +12,8 @@ struct GPUCamera {
     glm::mat4 view;
     glm::mat4 viewProjection;
     glm::mat4 inverseViewProjection;
-    Id pipelineId = Graphic::Utils::DEFAULT_RENDER_GRAPH_ID;
+    Id buffer{};
+    Id bindGroup{};
+    Id pipeline{};
 };
 }; // namespace Graphic::Component
