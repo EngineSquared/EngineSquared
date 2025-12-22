@@ -7,7 +7,7 @@ namespace Graphic::Component {
 struct GPUCamera {
     using Id = entt::hashed_string;
     // TODO: find a way to update this on window resize
-    float aspectRatio = 800.0f / 800.0f;
+    float aspectRatio = 1.f;
     glm::mat4 projection;
     glm::mat4 view;
     glm::mat4 viewProjection;

@@ -75,10 +75,6 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
 
         core.GetRegistry().view<Graphic::Component::GPUTransform, Graphic::Component::GPUMesh>().each(
             [&](Graphic::Component::GPUTransform &transform, Graphic::Component::GPUMesh &gpuMesh) {
-                struct ModelUniform {
-                    glm::mat4 modelMatrix;
-                } modelUniform;
-
                 const auto &transformBindgroup = bindgroupContainer.Get(transform.bindGroup);
 
                 renderPass.setBindGroup(transformBindgroup.GetLayoutIndex(), transformBindgroup.GetBindGroup(), 0,

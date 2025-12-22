@@ -7,6 +7,5 @@ struct GPUMesh {
     using Id = entt::hashed_string;
     Id pointBufferId{};
     Id indexBufferId{};
-    // Id bindGroupId;
 };
 }; // namespace Graphic::Component

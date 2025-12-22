@@ -12,7 +12,6 @@ void Graphic::System::OnMeshCreation(Engine::Core &core, entt::entity e)
     Graphic::Component::GPUMesh &GPUMesh = entity.AddComponent<Graphic::Component::GPUMesh>(core);
     const auto &mesh = entity.GetComponents<Object::Component::Mesh>(core);
 
-    // TODO: use name if exists
     std::string entityString = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
 
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();

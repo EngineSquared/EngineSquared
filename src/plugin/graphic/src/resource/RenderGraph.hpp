@@ -25,6 +25,12 @@ class RenderGraph {
     RenderGraph(void) = default;
     ~RenderGraph() = default;
 
+    RenderGraph(const RenderGraph &) = delete;
+    RenderGraph &operator=(const RenderGraph &) = delete;
+
+    RenderGraph(RenderGraph &&) = default;
+    RenderGraph &operator=(RenderGraph &&) = default;
+
     template <CRenderPass TRenderPass> void Add(std::string_view name, TRenderPass &&renderPass)
     {
         ID id = GetID(name);
