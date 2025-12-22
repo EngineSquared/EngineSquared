@@ -1,7 +1,7 @@
 #pragma once
 
-#include <glm/glm.hpp>
 #include <entt/core/hashed_string.hpp>
+#include <glm/glm.hpp>
 
 namespace Object::Component {
 

@@ -9,8 +9,10 @@
 void Graphic::System::UpdateGPUCameras(Engine::Core &core)
 {
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
-    core.GetRegistry().view<Object::Component::Transform, Object::Component::Camera, Graphic::Component::GPUCamera>().each(
-        [&core, &gpuBufferContainer](Object::Component::Transform &transform, Object::Component::Camera &camera, Graphic::Component::GPUCamera &gpuCamera) {
+    core.GetRegistry()
+        .view<Object::Component::Transform, Object::Component::Camera, Graphic::Component::GPUCamera>()
+        .each([&core, &gpuBufferContainer](Object::Component::Transform &transform, Object::Component::Camera &camera,
+                                           Graphic::Component::GPUCamera &gpuCamera) {
             gpuCamera.Update(camera, transform);
             auto &gpuBuffer = gpuBufferContainer.Get(gpuCamera.buffer);
             gpuBuffer->Update(core);

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "entity/Entity.hpp"
-#include "resource/AGPUBuffer.hpp"
-#include "exception/UpdateBufferError.hpp"
-#include <glm/gtc/type_ptr.hpp>
 #include "component/GPUCamera.hpp"
+#include "entity/Entity.hpp"
+#include "exception/UpdateBufferError.hpp"
+#include "resource/AGPUBuffer.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Graphic::Resource {
 
