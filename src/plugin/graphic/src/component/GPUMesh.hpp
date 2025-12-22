@@ -9,4 +9,4 @@ struct GPUMesh {
     Id indexBufferId{};
     // Id bindGroupId;
 };
-};
+}; // namespace Graphic::Component

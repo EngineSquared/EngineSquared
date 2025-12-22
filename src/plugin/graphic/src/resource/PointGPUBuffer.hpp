@@ -41,7 +41,8 @@ class PointGPUBuffer : public AGPUBuffer {
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Vertex;
         bufferDesc.size = sizeof(float) * pointData.size();
-        std::string label = "PointGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
+        std::string label =
+            "PointGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
         bufferDesc.label = wgpu::StringView(label);
 
         _buffer = core.GetResource<Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);

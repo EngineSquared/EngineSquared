@@ -138,16 +138,14 @@ void Graphic::Plugin::Bind()
         System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
         System::ConfigureSurface, System::ReleaseAdapter, System::CreateDefaultRenderPipeline);
 
-    RegisterSystems<RenderingPipeline::Preparation>(System::CreateEndRenderTexture,
-        [](Engine::Core &core){
-            core.GetRegistry().view<Object::Component::Camera, Graphic::Component::GPUCamera>().each(
-                [&](auto e, const Object::Component::Camera &camera, Graphic::Component::GPUCamera &gpuCamera) {
-                    Engine::Entity entity{e};
-                    entity.RemoveComponent<Graphic::Component::GPUCamera>(core);
-                    Graphic::System::OnCameraCreation(core, entity);
-                }
-            );
-        });
+    RegisterSystems<RenderingPipeline::Preparation>(System::CreateEndRenderTexture, [](Engine::Core &core) {
+        core.GetRegistry().view<Object::Component::Camera, Graphic::Component::GPUCamera>().each(
+            [&](auto e, const Object::Component::Camera &camera, Graphic::Component::GPUCamera &gpuCamera) {
+                Engine::Entity entity{e};
+                entity.RemoveComponent<Graphic::Component::GPUCamera>(core);
+                Graphic::System::OnCameraCreation(core, entity);
+            });
+    });
 
     RegisterSystems<RenderingPipeline::CommandCreation>(System::ExecuteRenderPass);
 

@@ -8,4 +8,4 @@ struct GPUTransform {
     Id modelMatrixBuffer{};
     Id bindGroup{};
 };
-};
+}; // namespace Graphic::Component

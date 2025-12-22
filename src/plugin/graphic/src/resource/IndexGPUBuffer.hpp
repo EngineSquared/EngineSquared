@@ -27,7 +27,8 @@ class IndexGPUBuffer : public AGPUBuffer {
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Index;
         bufferDesc.size = sizeof(uint32_t) * indices.size();
-        std::string label = "IndexGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
+        std::string label =
+            "IndexGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
         bufferDesc.label = wgpu::StringView(label);
 
         _buffer = core.GetResource<Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);
