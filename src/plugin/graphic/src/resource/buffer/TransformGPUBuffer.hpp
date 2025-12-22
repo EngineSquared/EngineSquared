@@ -15,7 +15,7 @@ class TransformGPUBuffer : public AGPUBuffer {
     ~TransformGPUBuffer() override = default;
     void Create(Engine::Core &core) override
     {
-        const Object::Component::Transform &transformComponent =
+        Object::Component::Transform &transformComponent =
             _entity.GetComponents<Object::Component::Transform>(core);
         const Context &context = core.GetResource<Context>();
 
@@ -40,7 +40,7 @@ class TransformGPUBuffer : public AGPUBuffer {
             throw Exception::UpdateBufferError("Cannot update a GPU buffer that is not created.");
         }
 
-        const Object::Component::Transform &transformComponent =
+        Object::Component::Transform &transformComponent =
             _entity.GetComponents<Object::Component::Transform>(core);
         const Context &context = core.GetResource<Context>();
         _UpdateBuffer(transformComponent, context);
@@ -61,9 +61,9 @@ class TransformGPUBuffer : public AGPUBuffer {
         return context.GetDevice()->createBuffer(bufferDesc);
     }
 
-    void _UpdateBuffer(const Object::Component::Transform &transformComponent, const Context &context)
+    void _UpdateBuffer(Object::Component::Transform &transformComponent, const Context &context)
     {
-        glm::mat4 modelMatrix = transformComponent.GetTransformationMatrix();
+        glm::mat4 modelMatrix = transformComponent.ComputeTransformationMatrix();
         context.queue->writeBuffer(_buffer, 0, glm::value_ptr(modelMatrix), sizeof(glm::mat4));
     }
 

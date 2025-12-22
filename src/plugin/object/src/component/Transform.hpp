@@ -50,12 +50,36 @@ struct Transform {
     inline const glm::quat &GetRotation() const { return rotation; }
 
     // Setters
-    void SetPosition(const glm::vec3 &newPosition) { position = newPosition; }
-    void SetPosition(float x, float y, float z) { position = glm::vec3(x, y, z); }
-    void SetScale(const glm::vec3 &newScale) { scale = newScale; }
-    void SetScale(float x, float y, float z) { scale = glm::vec3(x, y, z); }
-    void SetRotation(const glm::quat &newRotation) { rotation = newRotation; }
-    void SetRotation(float x, float y, float z, float w) { rotation = glm::quat(w, x, y, z); }
+    void SetPosition(const glm::vec3 &newPosition)
+    {
+        _dirty = true;
+        position = newPosition;
+    }
+    void SetPosition(float x, float y, float z)
+    {
+        _dirty = true;
+        position = glm::vec3(x, y, z);
+    }
+    void SetScale(const glm::vec3 &newScale)
+    {
+        _dirty = true;
+        scale = newScale;
+    }
+    void SetScale(float x, float y, float z)
+    {
+        _dirty = true;
+        scale = glm::vec3(x, y, z);
+    }
+    void SetRotation(const glm::quat &newRotation)
+    {
+        _dirty = true;
+        rotation = newRotation;
+    }
+    void SetRotation(float x, float y, float z, float w)
+    {
+        _dirty = true;
+        rotation = glm::quat(w, x, y, z);
+    }
 
     /**
      * Create the transformation matrix for this transform component.
@@ -63,13 +87,26 @@ struct Transform {
      * \return  transformation matrix that combines the position, scale, and rotation of the entity.
      *
      */
-    glm::mat4 GetTransformationMatrix() const
+    glm::mat4 ComputeTransformationMatrix()
     {
-        // TODO: don't calculate every time, cache the result and update only when needed
+        if (_dirty)
+        {
+            _transformationMatrixCache = _BuildTransformationMatrix();
+            _dirty = false;
+        }
+        return _transformationMatrixCache;
+    }
+
+  private:
+    inline glm::mat4 _BuildTransformationMatrix() const
+    {
         glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);
         glm::mat4 rotationMatrix = glm::mat4_cast(rotation);
         glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
         return translation * rotationMatrix * scaleMatrix;
     }
+
+    bool _dirty = true;
+    glm::mat4 _transformationMatrixCache = glm::mat4(1.0f);
 };
 } // namespace Object::Component
