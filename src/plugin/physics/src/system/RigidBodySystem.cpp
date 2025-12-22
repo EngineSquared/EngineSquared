@@ -115,8 +115,8 @@ static void OnRigidBodyConstruct(entt::registry &registry, entt::entity entity)
             return;
         }
 
-        JPH::BodyCreationSettings bodySettings(shape, Utils::ToJoltVec3(transform->position),
-                                               Utils::ToJoltQuat(transform->rotation), rigidBody.motionType,
+        JPH::BodyCreationSettings bodySettings(shape, Utils::ToJoltVec3(transform->GetPosition()),
+                                               Utils::ToJoltQuat(transform->GetRotation()), rigidBody.motionType,
                                                rigidBody.objectLayer);
 
         bodySettings.mUserData = static_cast<uint64_t>(entity);

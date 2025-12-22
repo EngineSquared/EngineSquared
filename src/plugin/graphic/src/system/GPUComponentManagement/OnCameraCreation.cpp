@@ -18,9 +18,9 @@ void Graphic::System::OnCameraCreation(Engine::Core &core, Engine::Entity entity
     const auto &transformComponent = entity.GetComponents<Object::Component::Transform>(core);
 
     Graphic::Component::GPUCamera gpuCameraComponent;
-    glm::vec3 forward = transformComponent.rotation * glm::vec3(0.0f, 0.0f, 1.0f);
+    glm::vec3 forward = transformComponent.GetRotation() * glm::vec3(0.0f, 0.0f, 1.0f);
     gpuCameraComponent.view =
-        glm::lookAt(transformComponent.position, transformComponent.position + forward, cameraComponent.up);
+        glm::lookAt(transformComponent.GetPosition(), transformComponent.GetPosition() + forward, cameraComponent.up);
     gpuCameraComponent.projection = glm::perspectiveLH_ZO(cameraComponent.fov, gpuCameraComponent.aspectRatio,
                                                           cameraComponent.nearPlane, cameraComponent.farPlane);
     gpuCameraComponent.viewProjection = gpuCameraComponent.projection * gpuCameraComponent.view;

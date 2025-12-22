@@ -59,7 +59,9 @@ void CameraTranslationSystem(Engine::Core &core)
     {
         direction = glm::normalize(direction);
     }
-    camera.GetComponents<Object::Component::Transform>(core).position += cameraTranslationSpeed * deltaTime * direction;
+    camera.GetComponents<Object::Component::Transform>(core).SetPosition(
+        camera.GetComponents<Object::Component::Transform>(core).GetPosition() +
+        direction * cameraTranslationSpeed * deltaTime);
 }
 
 void CameraRotationSystem(Engine::Core &core)
@@ -87,9 +89,10 @@ void CameraRotationSystem(Engine::Core &core)
     {
         rotation.y -= 1.0f;
     }
-    camera.GetComponents<Object::Component::Transform>(core).rotation *=
+    camera.GetComponents<Object::Component::Transform>(core).SetRotation(
+        camera.GetComponents<Object::Component::Transform>(core).GetRotation() *
         glm::quat(glm::vec3(glm::radians(cameraRotationSpeed * deltaTime * rotation.x),
-                            glm::radians(cameraRotationSpeed * deltaTime * rotation.y), 0.0f));
+                            glm::radians(cameraRotationSpeed * deltaTime * rotation.y), 0.0f)));
 }
 
 void Setup(Engine::Core &core)
