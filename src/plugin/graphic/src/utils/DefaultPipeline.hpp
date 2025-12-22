@@ -85,12 +85,14 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                                         nullptr);
 
                 const auto &pointBuffer = bufferContainer.Get(gpuMesh.pointBufferId);
-                renderPass.setVertexBuffer(0, pointBuffer->GetBuffer(), 0, pointBuffer->GetBuffer().getSize());
+                const auto &pointBufferSize = pointBuffer->GetBuffer().getSize();
+                renderPass.setVertexBuffer(0, pointBuffer->GetBuffer(), 0, pointBufferSize);
                 const auto &indexBuffer = bufferContainer.Get(gpuMesh.indexBufferId);
+                const auto &indexBufferSize = indexBuffer->GetBuffer().getSize();
                 renderPass.setIndexBuffer(indexBuffer->GetBuffer(), wgpu::IndexFormat::Uint32, 0,
-                                          indexBuffer->GetBuffer().getSize());
+                                          indexBufferSize);
 
-                renderPass.drawIndexed(gpuMesh.indexBufferId.size() / sizeof(uint32_t), 1, 0, 0, 0);
+                renderPass.drawIndexed(indexBufferSize / sizeof(uint32_t), 1, 0, 0, 0);
             });
     }
 

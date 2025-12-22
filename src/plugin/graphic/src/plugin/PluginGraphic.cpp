@@ -21,6 +21,7 @@ void Graphic::Plugin::Bind()
     RegisterResource(Graphic::Resource::BindGroupManager());
     RegisterResource(Graphic::Resource::RenderGraphContainer());
 
+    // TODO: Put those into dedicated systems
     { // GPUCamera
         struct OnCameraCreationBinder {
             void CallFunction(entt::registry &registry, entt::entity entity)
