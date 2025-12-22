@@ -36,7 +36,7 @@ class TransformGPUBuffer : public AGPUBuffer {
     {
         if (!_isCreated)
         {
-            throw Exception::UpdateBufferError("Cannot update a GPU buffer that is not created.");
+            throw Exception::UpdateBufferError("Cannot update a GPU transform buffer that is not created.");
         }
 
         Object::Component::Transform &transformComponent = _entity.GetComponents<Object::Component::Transform>(core);
@@ -61,7 +61,7 @@ class TransformGPUBuffer : public AGPUBuffer {
 
     void _UpdateBuffer(Object::Component::Transform &transformComponent, const Context &context)
     {
-        glm::mat4 modelMatrix = transformComponent.ComputeTransformationMatrix();
+        const glm::mat4 &modelMatrix = transformComponent.ComputeTransformationMatrix();
         context.queue->writeBuffer(_buffer, 0, glm::value_ptr(modelMatrix), sizeof(glm::mat4));
     }
 

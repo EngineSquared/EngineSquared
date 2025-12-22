@@ -4,6 +4,6 @@
 
 namespace Graphic::System {
 
-void RecreateGPUCameras(Engine::Core &core);
+void UpdateGPUTransforms(Engine::Core &core);
 
 } // namespace Graphic::System

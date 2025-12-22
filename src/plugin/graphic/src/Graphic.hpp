@@ -85,7 +85,13 @@
 #include "system/initialization/RequestCapabilities.hpp"
 #include "system/initialization/SetupQueue.hpp"
 
+#include "system/GPUComponentManagement/OnMeshCreation.hpp"
+#include "system/GPUComponentManagement/OnTransformCreation.hpp"
+#include "system/GPUComponentManagement/OnCameraCreation.hpp"
+
 #include "system/preparation/CreateEndRenderTexture.hpp"
+#include "system/preparation/UpdateGPUCameras.hpp"
+#include "system/preparation/UpdateGPUTransforms.hpp"
 
 #include "system/commandCreation/ExecuteRenderPass.hpp"
 

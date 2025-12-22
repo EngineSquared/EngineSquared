@@ -2,6 +2,9 @@
 
 #include "entity/Entity.hpp"
 #include "resource/AGPUBuffer.hpp"
+#include "exception/UpdateBufferError.hpp"
+#include <glm/gtc/type_ptr.hpp>
+#include "component/GPUCamera.hpp"
 
 namespace Graphic::Resource {
 
@@ -11,18 +14,11 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
 
     void Create(Engine::Core &core) override
     {
-        wgpu::BufferDescriptor bufferDesc(wgpu::Default);
-        std::string label =
-            "CameraUniformBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
-        bufferDesc.label = wgpu::StringView(label);
-        bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
-        bufferDesc.size = sizeof(glm::mat4);
-
-        _buffer = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);
-
         const auto &gpuCamera = _entity.GetComponents<Graphic::Component::GPUCamera>(core);
-        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, &gpuCamera.viewProjection,
-                                                                          sizeof(glm::mat4));
+        const Context &context = core.GetResource<Graphic::Resource::Context>();
+
+        _buffer = _CreateBuffer(context.deviceContext);
+        _UpdateBuffer(gpuCamera, context);
 
         _isCreated = true;
     }
@@ -40,17 +36,36 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
 
     void Update(Engine::Core &core) override
     {
-        if (_isCreated)
+        if (!_isCreated)
         {
-            const auto &gpuCamera = _entity.GetComponents<Graphic::Component::GPUCamera>(core);
-            core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, &gpuCamera.viewProjection,
-                                                                              sizeof(glm::mat4));
+            throw Exception::UpdateBufferError("Cannot update a GPU camera buffer that is not created.");
         }
+        Graphic::Component::GPUCamera &cameraComponent = _entity.GetComponents<Graphic::Component::GPUCamera>(core);
+        const Context &context = core.GetResource<Context>();
+        _UpdateBuffer(cameraComponent, context);
     }
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; }
 
   private:
+    wgpu::Buffer _CreateBuffer(const DeviceContext &context)
+    {
+        wgpu::BufferDescriptor bufferDesc(wgpu::Default);
+        std::string label =
+            "CameraUniformBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
+        bufferDesc.label = wgpu::StringView(label);
+        bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
+        bufferDesc.size = sizeof(glm::mat4);
+
+        return context.GetDevice()->createBuffer(bufferDesc);
+    }
+
+    void _UpdateBuffer(const Graphic::Component::GPUCamera &GPUCameraComponent, const Context &context)
+    {
+        const glm::mat4 &viewProjection = GPUCameraComponent.viewProjection;
+        context.queue->writeBuffer(_buffer, 0, glm::value_ptr(viewProjection), sizeof(glm::mat4));
+    }
+
     Engine::Entity _entity;
     bool _isCreated = false;
     wgpu::Buffer _buffer;

@@ -5,10 +5,6 @@
 #include "component/Mesh.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "scheduler/Shutdown.hpp"
-#include "system/GPUComponentManagement/OnCameraCreation.hpp"
-#include "system/GPUComponentManagement/OnMeshCreation.hpp"
-#include "system/GPUComponentManagement/OnTransformCreation.hpp"
-#include "system/preparation/RecreateGPUCameras.hpp"
 #include <iomanip>
 #include <sstream>
 
@@ -39,7 +35,7 @@ void Graphic::Plugin::Bind()
         System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
         System::ConfigureSurface, System::ReleaseAdapter, System::CreateDefaultRenderPipeline);
 
-    RegisterSystems<RenderingPipeline::Preparation>(System::CreateEndRenderTexture, System::RecreateGPUCameras);
+    RegisterSystems<RenderingPipeline::Preparation>(System::CreateEndRenderTexture, System::UpdateGPUTransforms, System::UpdateGPUCameras);
 
     RegisterSystems<RenderingPipeline::CommandCreation>(System::ExecuteRenderPass);
 
