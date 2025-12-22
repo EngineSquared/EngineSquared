@@ -25,14 +25,10 @@ void Graphic::Plugin::Bind()
     RegisterResource(Graphic::Resource::BindGroupManager());
     RegisterResource(Graphic::Resource::RenderGraphContainer());
 
-    this->GetCore()
-        .GetRegistry()
-        .on_construct<Object::Component::Camera>()
-        .connect<&Graphic::System::OnCameraCreation>(this->GetCore());
-    this->GetCore()
-        .GetRegistry()
-        .on_construct<Object::Component::Mesh>()
-        .connect<&Graphic::System::OnMeshCreation>(this->GetCore());
+    this->GetCore().GetRegistry().on_construct<Object::Component::Camera>().connect<&Graphic::System::OnCameraCreation>(
+        this->GetCore());
+    this->GetCore().GetRegistry().on_construct<Object::Component::Mesh>().connect<&Graphic::System::OnMeshCreation>(
+        this->GetCore());
     this->GetCore()
         .GetRegistry()
         .on_construct<Object::Component::Transform>()
