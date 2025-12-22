@@ -10,6 +10,7 @@ struct Surface {
 
     std::optional<wgpu::Surface> value;
     std::optional<wgpu::SurfaceCapabilities> capabilities;
+    bool configured = false;
 
     inline wgpu::Status updateCapabilities(wgpu::Adapter &adapter)
     {
@@ -34,6 +35,7 @@ struct Surface {
         {
             capabilities.reset();
         }
+        configured = false;
     }
 };
 } // namespace Graphic::Resource
