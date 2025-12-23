@@ -30,6 +30,13 @@ static void CreateSurfaceEndRenderTexture(Graphic::Resource::Context &context,
             "Surface is not created, cannot create the end render texture.");
     }
 
+    if (!context.surface->configured)
+    {
+        // Surface not configured (likely OpenGL backend). Fallback to placeholder texture
+        CreatePlaceholderEndRenderTexture(context, textureContainer);
+        return;
+    }
+
     const wgpu::Surface &surface = context.surface->value.value();
     wgpu::SurfaceTexture surfaceTexture(wgpu::Default);
     surface.getCurrentTexture(&surfaceTexture);

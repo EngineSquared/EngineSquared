@@ -41,8 +41,8 @@ void SyncTransformWithPhysics(Engine::Core &core)
         JPH::RVec3 joltPosition = bodyInterface.GetCenterOfMassPosition(internal.bodyID);
         JPH::Quat joltRotation = bodyInterface.GetRotation(internal.bodyID);
 
-        transform.position = Utils::FromJoltRVec3(joltPosition);
-        transform.rotation = Utils::FromJoltQuat(joltRotation);
+        transform.SetPosition(Utils::FromJoltRVec3(joltPosition));
+        transform.SetRotation(Utils::FromJoltQuat(joltRotation));
     }
 }
 
