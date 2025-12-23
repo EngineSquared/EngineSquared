@@ -124,11 +124,10 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
         auto colorOutput =
             Graphic::Utils::ColorTargetState("END_RENDER_TEXTURE").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);
 
-        auto depthOutput =
-            Graphic::Utils::DepthStencilState("END_DEPTH_RENDER_TEXTURE")
-            .setFormat(wgpu::TextureFormat::Depth24Plus)
-            .setCompareFunction(wgpu::CompareFunction::Less)
-            .setDepthWriteEnabled(wgpu::OptionalBool::True);
+        auto depthOutput = Graphic::Utils::DepthStencilState("END_DEPTH_RENDER_TEXTURE")
+                               .setFormat(wgpu::TextureFormat::Depth24Plus)
+                               .setCompareFunction(wgpu::CompareFunction::Less)
+                               .setDepthWriteEnabled(wgpu::OptionalBool::True);
 
         shaderDescriptor.setShader(DEFAULT_RENDER_PASS_SHADER_CONTENT)
             .setName(DEFAULT_RENDER_PASS_SHADER_NAME)
@@ -146,12 +145,13 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
             {
                 if (validation.severity == Utils::ValidationError::Severity::Error)
                 {
-                Log::Error(fmt::format("Shader Descriptor Validation Error: {} at {}", validation
-                                      .message, validation.location));
-                } else if (validation.severity == Utils::ValidationError::Severity::Warning)
+                    Log::Error(fmt::format("Shader Descriptor Validation Error: {} at {}", validation.message,
+                                           validation.location));
+                }
+                else if (validation.severity == Utils::ValidationError::Severity::Warning)
                 {
-                    Log::Warn(fmt::format("Shader Descriptor Validation Warning: {} at {}", validation
-                                          .message, validation.location));
+                    Log::Warn(fmt::format("Shader Descriptor Validation Warning: {} at {}", validation.message,
+                                          validation.location));
                 }
             }
         }

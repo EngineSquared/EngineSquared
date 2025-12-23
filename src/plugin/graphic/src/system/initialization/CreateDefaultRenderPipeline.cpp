@@ -50,8 +50,8 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
         return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
     }
 };
-#include <GLFW/glfw3.h>
 #include "resource/Window.hpp"
+#include <GLFW/glfw3.h>
 
 static void CreateEndDepthRenderTexture(Engine::Core &core, const std::string &textureName)
 {
@@ -59,7 +59,7 @@ static void CreateEndDepthRenderTexture(Engine::Core &core, const std::string &t
     Window::Resource::Window &window = core.GetResource<Window::Resource::Window>();
 
     int frameBufferSizeX, frameBufferSizeY;
-	glfwGetFramebufferSize(window.GetGLFWWindow(), &frameBufferSizeX, &frameBufferSizeY);
+    glfwGetFramebufferSize(window.GetGLFWWindow(), &frameBufferSizeX, &frameBufferSizeY);
 
     wgpu::TextureDescriptor textureDesc(wgpu::Default);
     textureDesc.label = wgpu::StringView(textureName);
@@ -75,8 +75,8 @@ static void CreateEndDepthRenderTexture(Engine::Core &core, const std::string &t
 
     Graphic::Resource::Texture depthTexture(context, textureDesc);
 
-    core.GetResource<Graphic::Resource::TextureContainer>()
-        .Add(entt::hashed_string{textureName.data(), textureName.size()}, std::move(depthTexture));
+    core.GetResource<Graphic::Resource::TextureContainer>().Add(
+        entt::hashed_string{textureName.data(), textureName.size()}, std::move(depthTexture));
 }
 
 void Graphic::System::CreateDefaultRenderPipeline(Engine::Core &core)
@@ -98,8 +98,8 @@ void Graphic::System::CreateDefaultRenderPipeline(Engine::Core &core)
         colorOutput.textureId = System::END_RENDER_TEXTURE_ID;
         renderPass.AddOutput(0, std::move(colorOutput));
         Graphic::Resource::DepthOutput depthOutput;
-        depthOutput.textureId = entt::hashed_string{END_DEPTH_RENDER_TEXTURE_NAME.data(),
-                                                    END_DEPTH_RENDER_TEXTURE_NAME.size()};
+        depthOutput.textureId =
+            entt::hashed_string{END_DEPTH_RENDER_TEXTURE_NAME.data(), END_DEPTH_RENDER_TEXTURE_NAME.size()};
         depthOutput.getClearColorCallback = [](Engine::Core &, float &clearDepth) {
             clearDepth = 1.0f;
             return true;
