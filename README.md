@@ -60,3 +60,7 @@ For Visual Studio users, you can use the [ClangFormat extension](https://marketp
 1. Download Doxygen from the [official website](https://www.doxygen.nl/download.html)
 2. Create a `docs` folder if it doesn't already exist and run `doxygen Doxyfile.cfg` to generate the documentation using Doxygen
 3. Open the generated documentation using a web browser (/docs/EngineSquared/html/index.html)
+
+## Code of Conduct
+
+Please note that this project is released with a [Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
