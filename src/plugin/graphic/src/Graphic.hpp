@@ -1,5 +1,10 @@
 #pragma once
 
+// Components
+#include "component/GPUCamera.hpp"
+#include "component/GPUMesh.hpp"
+#include "component/GPUTransform.hpp"
+
 // Resources
 #include "resource/AGPUBuffer.hpp"
 #include "resource/ARenderPass.hpp"
@@ -11,8 +16,8 @@
 #include "resource/GraphicSettings.hpp"
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
-#include "resource/PointGPUBuffer.hpp"
 #include "resource/RenderGraph.hpp"
+#include "resource/RenderGraphContainer.hpp"
 #include "resource/Sampler.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "resource/Shader.hpp"
@@ -23,7 +28,13 @@
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
 
+#include "resource/buffer/CameraGPUBuffer.hpp"
+#include "resource/buffer/IndexGPUBuffer.hpp"
+#include "resource/buffer/PointGPUBuffer.hpp"
+#include "resource/buffer/TransformGPUBuffer.hpp"
+
 // Utils
+#include "utils/DefaultPipeline.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/IValidable.hpp"
 #include "utils/shader/ABindGroupLayoutEntry.hpp"
@@ -59,6 +70,8 @@
 // Plugin
 #include "plugin/PluginGraphic.hpp"
 
+#include "system/GPUComponentManagement/OnCameraCreation.hpp"
+
 // Systems
 #include "system/initialization/ConfigureSurface.hpp"
 #include "system/initialization/CreateAdapter.hpp"
@@ -72,7 +85,13 @@
 #include "system/initialization/RequestCapabilities.hpp"
 #include "system/initialization/SetupQueue.hpp"
 
+#include "system/GPUComponentManagement/OnCameraCreation.hpp"
+#include "system/GPUComponentManagement/OnMeshCreation.hpp"
+#include "system/GPUComponentManagement/OnTransformCreation.hpp"
+
 #include "system/preparation/CreateEndRenderTexture.hpp"
+#include "system/preparation/UpdateGPUCameras.hpp"
+#include "system/preparation/UpdateGPUTransforms.hpp"
 
 #include "system/commandCreation/ExecuteRenderPass.hpp"
 
