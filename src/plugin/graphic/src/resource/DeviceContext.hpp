@@ -10,6 +10,7 @@ struct DeviceContext {
 
     auto &GetDescriptor() { return _descriptor; }
     auto &GetDevice() { return _device; }
+    const auto &GetDevice() const { return _device; }
 
     void Release() noexcept
     {

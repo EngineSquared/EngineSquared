@@ -1,8 +1,12 @@
 #include "plugin/PluginGraphic.hpp"
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
+#include "component/Camera.hpp"
+#include "component/Mesh.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "scheduler/Shutdown.hpp"
+#include <iomanip>
+#include <sstream>
 
 void Graphic::Plugin::Bind()
 {
@@ -15,14 +19,24 @@ void Graphic::Plugin::Bind()
     RegisterResource(Graphic::Resource::GPUBufferContainer());
     RegisterResource(Graphic::Resource::SamplerContainer());
     RegisterResource(Graphic::Resource::BindGroupManager());
-    RegisterResource(Graphic::Resource::RenderGraph());
+    RegisterResource(Graphic::Resource::RenderGraphContainer());
+
+    this->GetCore().GetRegistry().on_construct<Object::Component::Camera>().connect<&Graphic::System::OnCameraCreation>(
+        this->GetCore());
+    this->GetCore().GetRegistry().on_construct<Object::Component::Mesh>().connect<&Graphic::System::OnMeshCreation>(
+        this->GetCore());
+    this->GetCore()
+        .GetRegistry()
+        .on_construct<Object::Component::Transform>()
+        .connect<&Graphic::System::OnTransformCreation>(this->GetCore());
 
     RegisterSystems<RenderingPipeline::Setup>(
         System::CreateInstance, System::CreateSurface, System::CreateAdapter, System::ReleaseInstance,
         System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
         System::ConfigureSurface, System::ReleaseAdapter, System::CreateDefaultRenderPipeline);
 
-    RegisterSystems<RenderingPipeline::Preparation>(System::CreateEndRenderTexture);
+    RegisterSystems<RenderingPipeline::Preparation>(System::CreateEndRenderTexture, System::UpdateGPUTransforms,
+                                                    System::UpdateGPUCameras);
 
     RegisterSystems<RenderingPipeline::CommandCreation>(System::ExecuteRenderPass);
 

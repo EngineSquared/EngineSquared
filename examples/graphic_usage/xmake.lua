@@ -6,7 +6,8 @@ if is_plat("windows") then
     add_cxflags("/W4")
 end
 
-includes("../../xmake.lua")
+
+-- includes("../../xmake.lua")
 
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
 target("GraphicUsage")
@@ -15,6 +16,7 @@ target("GraphicUsage")
     add_deps("EngineSquaredCore")
     add_deps("PluginGraphic")
     add_deps("PluginWindow")
+    add_deps("PluginInput")
 
     add_files("src/**.cpp")
 

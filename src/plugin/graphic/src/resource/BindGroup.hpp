@@ -39,6 +39,8 @@ class BindGroup {
 
     wgpu::BindGroup GetBindGroup() const { return _bindGroup; }
 
+    uint32_t GetLayoutIndex() const { return _layoutIndex; }
+
     const std::vector<wgpu::BindGroupEntry> &GetEntries() const { return _entries; }
 
     void Refresh(Engine::Core &core)
@@ -107,7 +109,7 @@ class BindGroup {
             auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
             auto &buffer = gpuBufferContainer.Get(asset.name);
             entry.buffer = buffer->GetBuffer();
-            entry.size = asset.size;
+            entry.size = buffer->GetBuffer().getSize();
             break;
         }
         case Asset::Type::Sampler: {

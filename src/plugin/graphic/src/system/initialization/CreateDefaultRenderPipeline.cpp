@@ -1,6 +1,7 @@
 #include "system/initialization/CreateDefaultRenderPipeline.hpp"
 #include "resource/RenderGraph.hpp"
-#include "resource/SingleExecutionRenderPass.hpp"
+#include "resource/RenderGraphContainer.hpp"
+#include "resource/ShaderContainer.hpp"
 #include "system/preparation/CreateEndRenderTexture.hpp"
 
 static inline constexpr std::string_view DEFAULT_RENDER_PASS_NAME = "DEFAULT_RENDER_PASS";
@@ -81,7 +82,7 @@ static void CreateEndDepthRenderTexture(Engine::Core &core, const std::string &t
 
 void Graphic::System::CreateDefaultRenderPipeline(Engine::Core &core)
 {
-    auto &renderPassManager = core.GetResource<Graphic::Resource::RenderGraph>();
+    auto &renderPassContainer = core.GetResource<Graphic::Resource::RenderGraphContainer>();
 
     const std::string END_DEPTH_RENDER_TEXTURE_NAME = "END_DEPTH_RENDER_TEXTURE";
     CreateEndDepthRenderTexture(core, END_DEPTH_RENDER_TEXTURE_NAME);
@@ -109,5 +110,18 @@ void Graphic::System::CreateDefaultRenderPipeline(Engine::Core &core)
         renderGraph.Add(Graphic::Utils::DEFAULT_RENDER_PASS_NAME, std::move(renderPass));
     }
 
-    renderPassManager.Add(DEFAULT_RENDER_PASS_NAME, std::move(renderPass));
+    {
+        Graphic::Utils::DefaultRenderPass renderPass{};
+        Graphic::Resource::Shader defaultShader =
+            Graphic::Utils::DefaultRenderPass::CreateShader(core.GetResource<Graphic::Resource::Context>());
+        core.GetResource<Graphic::Resource::ShaderContainer>().Add(Graphic::Utils::DEFAULT_RENDER_PASS_SHADER_ID,
+                                                                   std::move(defaultShader));
+        renderPass.BindShader(std::string(Graphic::Utils::DEFAULT_RENDER_PASS_SHADER_NAME));
+        Graphic::Resource::ColorOutput colorOutput;
+        colorOutput.textureId = System::END_RENDER_TEXTURE_ID;
+        renderPass.AddOutput(0, std::move(colorOutput));
+        renderGraph.Add(Graphic::Utils::DEFAULT_RENDER_PASS_NAME, std::move(renderPass));
+    }
+
+    renderPassContainer.Add(Graphic::Utils::DEFAULT_RENDER_GRAPH_ID, std::move(renderGraph));
 }

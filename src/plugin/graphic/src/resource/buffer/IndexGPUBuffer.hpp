@@ -5,12 +5,13 @@
 #include "exception/NonexistentComponentError.hpp"
 #include "exception/UpdateBufferError.hpp"
 #include "resource/AGPUBuffer.hpp"
+#include "resource/Context.hpp"
 
 namespace Graphic::Resource {
-class PointGPUBuffer : public AGPUBuffer {
+class IndexGPUBuffer : public AGPUBuffer {
   public:
-    explicit PointGPUBuffer(Engine::Entity entity) : _entity(entity) {}
-    ~PointGPUBuffer() override = default;
+    explicit IndexGPUBuffer(Engine::Entity entity) : _entity(entity) {}
+    ~IndexGPUBuffer() override = default;
     void Create(Engine::Core &core) override
     {
 
@@ -22,29 +23,18 @@ class PointGPUBuffer : public AGPUBuffer {
                 "Cannot create a GPU buffer for an entity without a Mesh component.");
         }
 
-        std::vector<float> pointData;
-
-        pointData.reserve(meshComponent->vertices.size() * 8);
-
-        for (uint64_t i = 0; i < meshComponent->vertices.size(); ++i)
-        {
-            pointData.emplace_back(meshComponent->vertices[i].x);
-            pointData.emplace_back(meshComponent->vertices[i].y);
-            pointData.emplace_back(meshComponent->vertices[i].z);
-            pointData.emplace_back(meshComponent->normals[i].x);
-            pointData.emplace_back(meshComponent->normals[i].y);
-            pointData.emplace_back(meshComponent->normals[i].z);
-            pointData.emplace_back(meshComponent->texCoords[i].x);
-            pointData.emplace_back(meshComponent->texCoords[i].y);
-        }
+        const auto &indices = meshComponent->indices;
 
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
-        bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Vertex;
-        bufferDesc.size = sizeof(float) * pointData.size();
+        bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Index;
+        bufferDesc.size = sizeof(uint32_t) * indices.size();
+        std::string label =
+            "IndexGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
+        bufferDesc.label = wgpu::StringView(label);
 
-        _buffer = core.GetResource<Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);
+        _buffer = core.GetResource<Resource::Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);
 
-        core.GetResource<Context>().queue->writeBuffer(_buffer, 0, pointData.data(), bufferDesc.size);
+        core.GetResource<Resource::Context>().queue->writeBuffer(_buffer, 0, indices.data(), bufferDesc.size);
 
         _isCreated = true;
     };
@@ -68,7 +58,7 @@ class PointGPUBuffer : public AGPUBuffer {
         auto &meshComponent = core.GetRegistry().get<Object::Component::Mesh>(_entity);
 
         // For now, we will not implement dynamic resizing of the buffer. As we should have a way to know if the size
-        // changed. And it would be so heavy to check every frame every vertex position, normal and texCoord.
+        // changed. And it would be so heavy to check every frame every index.
     };
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
