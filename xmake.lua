@@ -23,14 +23,6 @@ add_requires(
 -- Temporarily disabled due to build issues on Windows 11
 --add_requires("rmlui 6.0", { configs = { transform = true }, debug = is_mode("debug") })
 
--- TEMPORARY
-option("with_graphic_usage_example", {default = false, description = "Enable Graphic Usage Example"})
-
-if has_config("with_graphic_usage_example") then
-    includes("examples/graphic_usage/xmake.lua")
-    includes("examples/graphic_usage_with_physics/xmake.lua")
-end
-
 set_languages("c++20")
 
 includes("src/engine/xmake.lua")
