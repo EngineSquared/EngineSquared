@@ -23,6 +23,11 @@ class DepthStencilState : public IValidable {
             errors.emplace_back("Depth compare function is not set while depth write is enabled",
                                 fmt::format("DepthStencilState({})", this->name), ValidationError::Severity::Error);
         }
+        if (this->value.depthCompare == wgpu::CompareFunction::Undefined)
+        {
+            errors.emplace_back("Depth compare function is not set", fmt::format("DepthStencilState({})", this->name),
+                                ValidationError::Severity::Error);
+        }
         return errors;
     }
 

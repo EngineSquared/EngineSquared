@@ -105,7 +105,25 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
 
         if (this->GetOutputs().depthBuffer.has_value())
         {
-            renderPassDesc.depthStencilAttachment = &this->GetOutputs().depthBuffer.value();
+            const auto &depthTexture = this->GetOutputs().depthBuffer.value();
+            wgpu::RenderPassDepthStencilAttachment depthAttachment(wgpu::Default);
+
+            entt::hashed_string textureId = depthTexture.textureId;
+            auto textureView = core.GetResource<Resource::TextureContainer>().Get(textureId).GetDefaultView();
+
+            depthAttachment.view = textureView;
+            depthAttachment.depthStoreOp = depthTexture.storeOp;
+            float clearDepth = 1.0f;
+            if (depthTexture.getClearColorCallback(core, clearDepth))
+            {
+                depthAttachment.depthClearValue = clearDepth;
+                depthAttachment.depthLoadOp = wgpu::LoadOp::Clear;
+            }
+            else
+            {
+                depthAttachment.depthLoadOp = wgpu::LoadOp::Load;
+            }
+            renderPassDesc.depthStencilAttachment = &depthAttachment;
         }
 
         return _commandEncoder.beginRenderPass(renderPassDesc);
