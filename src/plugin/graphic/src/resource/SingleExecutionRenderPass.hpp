@@ -114,7 +114,7 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
             depthAttachment.view = textureView;
             depthAttachment.depthStoreOp = depthTexture.storeOp;
             float clearDepth = 1.0f;
-            if (depthTexture.getClearColorCallback(core, clearDepth))
+            if (depthTexture.getClearDepthCallback(core, clearDepth))
             {
                 depthAttachment.depthClearValue = clearDepth;
                 depthAttachment.depthLoadOp = wgpu::LoadOp::Clear;

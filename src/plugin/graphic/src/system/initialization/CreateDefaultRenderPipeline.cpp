@@ -25,7 +25,7 @@ void Graphic::System::CreateDefaultRenderPipeline(Engine::Core &core)
         renderPass.AddOutput(0, std::move(colorOutput));
         Graphic::Resource::DepthOutput depthOutput;
         depthOutput.textureId = END_DEPTH_RENDER_TEXTURE_ID;
-        depthOutput.getClearColorCallback = [](Engine::Core &, float &clearDepth) {
+        depthOutput.getClearDepthCallback = [](Engine::Core &, float &clearDepth) {
             clearDepth = 1.0f;
             return true;
         };

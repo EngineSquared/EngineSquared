@@ -37,7 +37,7 @@ struct DepthOutput {
         }
     }
     wgpu::StoreOp storeOp = wgpu::StoreOp::Store;
-    std::function<bool(Engine::Core &, float &)> getClearColorCallback = [](Engine::Core &, float &) { return false; };
+    std::function<bool(Engine::Core &, float &)> getClearDepthCallback = [](Engine::Core &, float &) { return false; };
 };
 
 struct OutputContainer {
