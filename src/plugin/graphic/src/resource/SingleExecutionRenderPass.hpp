@@ -103,10 +103,10 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
         renderPassDesc.colorAttachmentCount = static_cast<uint32_t>(colorAttachments.size());
         renderPassDesc.colorAttachments = colorAttachments.data();
 
+        wgpu::RenderPassDepthStencilAttachment depthAttachment(wgpu::Default);
         if (this->GetOutputs().depthBuffer.has_value())
         {
             const auto &depthTexture = this->GetOutputs().depthBuffer.value();
-            wgpu::RenderPassDepthStencilAttachment depthAttachment(wgpu::Default);
 
             entt::hashed_string textureId = depthTexture.textureId;
             auto textureView = core.GetResource<Resource::TextureContainer>().Get(textureId).GetDefaultView();
