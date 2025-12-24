@@ -28,12 +28,21 @@ struct ColorOutput {
 };
 
 struct DepthOutput {
-    std::string textureName;
+    entt::hashed_string textureId{};
+    explicit DepthOutput(std::string_view textureId_ = {})
+    {
+        if (!textureId_.empty())
+        {
+            textureId = entt::hashed_string(textureId_.data(), textureId_.size());
+        }
+    }
+    wgpu::StoreOp storeOp = wgpu::StoreOp::Store;
+    std::function<bool(Engine::Core &, float &)> getClearDepthCallback = [](Engine::Core &, float &) { return false; };
 };
 
 struct OutputContainer {
     std::unordered_map<uint32_t, ColorOutput> colorBuffers;
-    std::optional<wgpu::RenderPassDepthStencilAttachment> depthBuffer;
+    std::optional<DepthOutput> depthBuffer;
 };
 
 struct InputContainer : public std::map<uint32_t /* index inside shader */, std::string /* bind group name */> {
@@ -69,7 +78,7 @@ class ARenderPass {
         _outputs.colorBuffers[id] = std::move(output);
     }
 
-    void AddOutput(wgpu::RenderPassDepthStencilAttachment output)
+    void AddOutput(DepthOutput &&output)
     {
         if (_outputs.depthBuffer.has_value())
         {

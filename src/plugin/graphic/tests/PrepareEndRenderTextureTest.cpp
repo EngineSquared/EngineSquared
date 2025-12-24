@@ -2,15 +2,10 @@
 
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
-#include "exception/EndRenderTextureCreationError.hpp"
-#include "resource/Context.hpp"
-#include "resource/Surface.hpp"
-#include "resource/TextureContainer.hpp"
-#include "system/preparation/CreateEndRenderTexture.hpp"
 
 using Graphic::System::END_RENDER_TEXTURE_ID;
 
-TEST(CreateEndRenderTextureTest, CreatesTextureWhenWindowSystemIsNone)
+TEST(PrepareEndRenderTextureTest, CreatesTextureWhenWindowSystemIsNone)
 {
     Engine::Core core;
 

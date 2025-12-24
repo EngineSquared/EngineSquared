@@ -89,7 +89,7 @@
 #include "system/GPUComponentManagement/OnMeshCreation.hpp"
 #include "system/GPUComponentManagement/OnTransformCreation.hpp"
 
-#include "system/preparation/CreateEndRenderTexture.hpp"
+#include "system/preparation/PrepareEndRenderTexture.hpp"
 #include "system/preparation/UpdateGPUCameras.hpp"
 #include "system/preparation/UpdateGPUTransforms.hpp"
 

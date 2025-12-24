@@ -35,7 +35,7 @@ void Graphic::Plugin::Bind()
         System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
         System::ConfigureSurface, System::ReleaseAdapter, System::CreateDefaultRenderPipeline);
 
-    RegisterSystems<RenderingPipeline::Preparation>(System::CreateEndRenderTexture, System::UpdateGPUTransforms,
+    RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
                                                     System::UpdateGPUCameras);
 
     RegisterSystems<RenderingPipeline::CommandCreation>(System::ExecuteRenderPass);
