@@ -24,7 +24,7 @@ target("GraphicUsageWithPhysics")
 
     add_includedirs("$(projectdir)/src/")
 
-    add_packages("entt", "glm", "glfw", "spdlog", "fmt", "joltphysics", "stb", "tinyobjloader", "wgpu-native", "glfw3webgpu", "lodepng", "joltphysics")
+    add_packages("entt", "glm", "glfw", "spdlog", "fmt", "joltphysics", "stb", "tinyobjloader", "wgpu-native", "glfw3webgpu", "lodepng")
 
     set_rundir("$(projectdir)")
 
