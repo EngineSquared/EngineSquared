@@ -1,7 +1,7 @@
 /**************************************************************************
- * EngineSquared - Graphic Usage Example
+ * EngineSquared - Graphic Plugin Usage With Physics Example
  *
- * This example demonstrates how to use the Graphic plugin.
+ * This example demonstrates how to use the Graphic and Physics plugins together.
  **************************************************************************/
 
 #include "Engine.hpp"

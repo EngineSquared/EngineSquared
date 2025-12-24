@@ -1,4 +1,4 @@
-# Graphic usage
+# Graphic Usage With Physics Example
 
 ## How to run / debug on vscode
 
