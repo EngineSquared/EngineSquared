@@ -7,7 +7,6 @@
 
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
-#include "exception/ResourceManagerError.hpp"
 
 namespace {
 class DummyGPUBuffer final : public Graphic::Resource::AGPUBuffer {

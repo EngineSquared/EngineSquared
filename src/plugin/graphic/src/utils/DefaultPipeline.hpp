@@ -39,18 +39,24 @@ struct VertexInput {
 
 struct VertexOutput {
     @builtin(position) Position : vec4f,
+    @location(0) fragUV : vec2f,
 };
 
 @vertex
 fn vs_main(
     input : VertexInput
-) -> @builtin(position) vec4f {
-    return camera.viewProjectionMatrix * model.modelMatrix * vec4f(input.position, 1.0);
+) -> VertexOutput {
+    var output : VertexOutput;
+    output.Position = camera.viewProjectionMatrix * model.modelMatrix * vec4f(input.position, 1.0);
+    output.fragUV = input.uv;
+    return output;
 }
 
 @fragment
-fn fs_main() -> @location(0) vec4f {
-    const color = vec4f(27.0 / 255.0, 7.0 / 255.0, 7.0 / 255.0, 1.0);
+fn fs_main(
+    input : VertexOutput
+) -> @location(0) vec4f {
+    var color : vec4f = vec4f(input.fragUV, 1.0, 1.0);
     return color;
 }
 
@@ -115,15 +121,40 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                                 .setArrayStride(8 * sizeof(float))
                                 .setStepMode(wgpu::VertexStepMode::Vertex);
 
-        auto output =
+        auto colorOutput =
             Graphic::Utils::ColorTargetState("END_RENDER_TEXTURE").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);
+
+        auto depthOutput = Graphic::Utils::DepthStencilState("END_DEPTH_RENDER_TEXTURE")
+                               .setFormat(wgpu::TextureFormat::Depth24Plus)
+                               .setCompareFunction(wgpu::CompareFunction::Less)
+                               .setDepthWriteEnabled(wgpu::OptionalBool::True);
 
         shaderDescriptor.setShader(DEFAULT_RENDER_PASS_SHADER_CONTENT)
             .setName(DEFAULT_RENDER_PASS_SHADER_NAME)
+            .setVertexEntryPoint("vs_main")
+            .setFragmentEntryPoint("fs_main")
             .addBindGroupLayout(cameraLayout)
             .addBindGroupLayout(modelLayout)
             .addVertexBufferLayout(vertexLayout)
-            .addOutputColorFormat(output);
+            .addOutputColorFormat(colorOutput)
+            .setOutputDepthFormat(depthOutput);
+        const auto validations = shaderDescriptor.validate();
+        if (!validations.empty())
+        {
+            for (const auto &validation : validations)
+            {
+                if (validation.severity == Utils::ValidationError::Severity::Error)
+                {
+                    Log::Error(fmt::format("Shader Descriptor Validation Error: {} at {}", validation.message,
+                                           validation.location));
+                }
+                else if (validation.severity == Utils::ValidationError::Severity::Warning)
+                {
+                    Log::Warn(fmt::format("Shader Descriptor Validation Warning: {} at {}", validation.message,
+                                          validation.location));
+                }
+            }
+        }
         return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
     }
 };

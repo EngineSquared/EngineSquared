@@ -121,6 +121,8 @@ class Texture {
         return *this;
     }
 
+    inline glm::uvec2 GetSize() const { return glm::uvec2{_webgpuTexture.getWidth(), _webgpuTexture.getHeight()}; }
+
     // We assume the image is correctly formatted (width * height = pixels.size())
     void Write(Context &context, const Image &image)
     {
