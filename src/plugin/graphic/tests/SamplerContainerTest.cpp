@@ -2,7 +2,6 @@
 
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
-#include "resource/SamplerContainer.hpp"
 
 Graphic::Resource::Sampler CreateTestSampler(Engine::Core &core)
 {

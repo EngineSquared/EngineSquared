@@ -2,9 +2,6 @@
 
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
-#include "exception/RenderPassSortError.hpp"
-#include "resource/RenderGraph.hpp"
-#include "resource/SingleExecutionRenderPass.hpp"
 #include "utils/ConfigureHeadlessGraphics.hpp"
 #include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
 
