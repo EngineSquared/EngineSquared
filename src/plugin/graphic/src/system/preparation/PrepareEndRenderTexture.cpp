@@ -1,13 +1,13 @@
-#include "resource/Context.hpp"
-#include "resource/TextureContainer.hpp"
-#include "resource/GraphicSettings.hpp"
-#include "exception/EndRenderTextureCreationError.hpp"
-#include "utils/webgpu.hpp"
 #include "system/preparation/PrepareEndRenderTexture.hpp"
+#include "exception/EndRenderTextureCreationError.hpp"
+#include "resource/Context.hpp"
+#include "resource/GraphicSettings.hpp"
+#include "resource/TextureContainer.hpp"
+#include "utils/webgpu.hpp"
 #include <glm/vec2.hpp>
 
 static void EnsurePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
-                                               Graphic::Resource::TextureContainer &textureContainer)
+                                              Graphic::Resource::TextureContainer &textureContainer)
 {
     wgpu::TextureDescriptor textureDesc(wgpu::Default);
     std::string_view name(Graphic::System::END_RENDER_TEXTURE_ID.data(), Graphic::System::END_RENDER_TEXTURE_ID.size());
