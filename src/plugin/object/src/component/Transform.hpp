@@ -67,6 +67,11 @@ struct Transform {
         _rotation = glm::quat(w, x, y, z);
     }
 
+    glm::vec3 GetForwardVector() const
+    {
+        return glm::normalize(_rotation * glm::vec3(0.0f, 0.0f, 1.0f));
+    }
+
     /**
      * Create the transformation matrix for this transform component.
      *
