@@ -34,10 +34,11 @@ void Graphic::Plugin::Bind()
         .on_construct<Object::Component::Material>()
         .connect<&Graphic::System::OnMaterialCreation>(this->GetCore());
 
-    RegisterSystems<RenderingPipeline::Setup>(
-        System::CreateInstance, System::CreateSurface, System::CreateAdapter, System::ReleaseInstance,
-        System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
-        System::ConfigureSurface, System::ReleaseAdapter, System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial);
+    RegisterSystems<RenderingPipeline::Setup>(System::CreateInstance, System::CreateSurface, System::CreateAdapter,
+                                              System::ReleaseInstance, System::RequestCapabilities,
+                                              System::CreateDevice, System::CreateQueue, System::SetupQueue,
+                                              System::ConfigureSurface, System::ReleaseAdapter,
+                                              System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
                                                     System::UpdateGPUCameras, System::UpdateGPUMaterials);
