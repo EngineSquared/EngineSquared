@@ -1,9 +1,9 @@
 #pragma once
 
 #include "component/GPUCamera.hpp"
+#include "component/GPUMaterial.hpp"
 #include "component/GPUMesh.hpp"
 #include "component/GPUTransform.hpp"
-#include "component/GPUMaterial.hpp"
 #include "component/Transform.hpp"
 #include "entity/Entity.hpp"
 #include "resource/Shader.hpp"
@@ -95,12 +95,13 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                                         nullptr);
 
                 entt::hashed_string gpuMaterialId{};
-                if (entity.HasComponents<Graphic::Component::GPUMaterial>(core)) {
+                if (entity.HasComponents<Graphic::Component::GPUMaterial>(core))
+                {
                     const auto &materialComponent = entity.GetComponents<Graphic::Component::GPUMaterial>(core);
                     gpuMaterialId = materialComponent.bindGroup;
                 }
                 // else {
-                    // gpuMaterialId = Graphic::Component::GPUMaterial::DefaultId;
+                // gpuMaterialId = Graphic::Component::GPUMaterial::DefaultId;
                 // }
                 const auto &materialBindgroup = bindgroupContainer.Get(gpuMaterialId);
                 renderPass.setBindGroup(materialBindgroup.GetLayoutIndex(), materialBindgroup.GetBindGroup(), 0,
@@ -135,10 +136,10 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                                              .setBinding(0));
         auto materialLayout = Graphic::Utils::BindGroupLayout("MaterialLayout")
                                   .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("material")
-                                            .setType(wgpu::BufferBindingType::Uniform)
-                                            .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
-                                            .setVisibility(wgpu::ShaderStage::Fragment)
-                                            .setBinding(0));
+                                                .setType(wgpu::BufferBindingType::Uniform)
+                                                .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
+                                                .setVisibility(wgpu::ShaderStage::Fragment)
+                                                .setBinding(0));
 
         auto vertexLayout = Graphic::Utils::VertexBufferLayout()
                                 .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)

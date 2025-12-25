@@ -18,7 +18,7 @@ void Graphic::System::OnMaterialCreation(Engine::Core &core, entt::entity e)
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
 
     std::unique_ptr<Graphic::Resource::MaterialGPUBuffer> materialBuffer =
-    std::make_unique<Graphic::Resource::MaterialGPUBuffer>(entity);
+        std::make_unique<Graphic::Resource::MaterialGPUBuffer>(entity);
     materialBuffer->Create(core);
     uint64_t materialBufferSize = materialBuffer->GetBuffer().getSize();
     const std::string_view materialBufferName = materialBuffer->GetDebugName();

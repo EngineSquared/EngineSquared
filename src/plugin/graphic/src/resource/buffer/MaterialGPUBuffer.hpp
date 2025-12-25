@@ -8,14 +8,12 @@
 
 namespace Graphic::Resource {
 class MaterialGPUBuffer : public AGPUBuffer {
-    private:
+  private:
     static inline std::string prefix = "MaterialGPUBuffer_";
     struct MaterialTransfer {
         glm::vec3 ambient;
 
-        explicit MaterialTransfer(const Object::Component::Material &material)
-            : ambient(material.ambient)
-        {}
+        explicit MaterialTransfer(const Object::Component::Material &material) : ambient(material.ambient) {}
 
         static uint32_t CPUSize() { return sizeof(MaterialTransfer); }
         static uint32_t GPUSize() { return sizeof(MaterialTransfer) + sizeof(float) /*padding*/; }
@@ -23,8 +21,10 @@ class MaterialGPUBuffer : public AGPUBuffer {
 
     static_assert(sizeof(MaterialTransfer) == (sizeof(float) * 3),
                   "MaterialTransfer struct size does not match GPU requirements.");
+
   public:
-    explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity) {
+    explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity)
+    {
         _debugName = prefix + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
     }
     ~MaterialGPUBuffer() override = default;
@@ -61,10 +61,7 @@ class MaterialGPUBuffer : public AGPUBuffer {
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
 
-    std::string_view GetDebugName() const
-    {
-        return _debugName;
-    }
+    std::string_view GetDebugName() const { return _debugName; }
 
   private:
     wgpu::Buffer _CreateBuffer(const DeviceContext &context)
