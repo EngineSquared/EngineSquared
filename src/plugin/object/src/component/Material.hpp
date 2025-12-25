@@ -51,15 +51,13 @@ struct Material {
     explicit Material() = default;
     ~Material() = default;
 
-    // Move constructor
-    Material(Material &&other) = default;
-    // Move assignment operator
-    Material &operator=(Material &&other) = default;
-
-    // Copy constructor
+    // Copy
     explicit Material(const Material &mesh) = default;
-    // Copy assignment operator
     Material &operator=(const Material &other) = default;
+
+    // Move
+    Material(Material &&other) = default;
+    Material &operator=(Material &&other) = default;
 };
 
 } // namespace Object::Component

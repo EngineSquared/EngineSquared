@@ -20,6 +20,7 @@ void Graphic::Plugin::Bind()
     RegisterResource(Graphic::Resource::BindGroupManager());
     RegisterResource(Graphic::Resource::RenderGraphContainer());
 
+    // TODO: Implement disconnect on destroy
     this->GetCore().GetRegistry().on_construct<Object::Component::Camera>().connect<&Graphic::System::OnCameraCreation>(
         this->GetCore());
     this->GetCore().GetRegistry().on_construct<Object::Component::Mesh>().connect<&Graphic::System::OnMeshCreation>(
@@ -36,7 +37,7 @@ void Graphic::Plugin::Bind()
     RegisterSystems<RenderingPipeline::Setup>(
         System::CreateInstance, System::CreateSurface, System::CreateAdapter, System::ReleaseInstance,
         System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
-        System::ConfigureSurface, System::ReleaseAdapter, System::CreateDefaultRenderPipeline);
+        System::ConfigureSurface, System::ReleaseAdapter, System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
                                                     System::UpdateGPUCameras, System::UpdateGPUMaterials);

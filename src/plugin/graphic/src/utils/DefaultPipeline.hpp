@@ -100,9 +100,11 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                     const auto &materialComponent = entity.GetComponents<Graphic::Component::GPUMaterial>(core);
                     gpuMaterialId = materialComponent.bindGroup;
                 }
-                // else {
-                // gpuMaterialId = Graphic::Component::GPUMaterial::DefaultId;
-                // }
+                else {
+                    std::string bindGroupName = "DEFAULT_MATERIAL_BIND_GROUP";
+                    entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
+                    gpuMaterialId = bindGroupId;
+                }
                 const auto &materialBindgroup = bindgroupContainer.Get(gpuMaterialId);
                 renderPass.setBindGroup(materialBindgroup.GetLayoutIndex(), materialBindgroup.GetBindGroup(), 0,
                                         nullptr);

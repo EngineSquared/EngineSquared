@@ -27,14 +27,15 @@ class MaterialGPUBuffer : public AGPUBuffer {
     {
         _debugName = prefix + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
     }
+
+    explicit MaterialGPUBuffer(void) = default;
+
     ~MaterialGPUBuffer() override = default;
     void Create(Engine::Core &core) override
     {
-        const auto &materialComponent = _entity.GetComponents<Object::Component::Material>(core);
         const Context &context = core.GetResource<Context>();
 
         _buffer = _CreateBuffer(context.deviceContext);
-        _UpdateBuffer(materialComponent, context);
         _isCreated = true;
     };
     void Destroy(Engine::Core &core) override
@@ -54,10 +55,26 @@ class MaterialGPUBuffer : public AGPUBuffer {
             throw Exception::UpdateBufferError("Cannot update a GPU material buffer that is not created.");
         }
 
+        if (_entity == Engine::Entity::entity_null_id)
+        {
+            return;
+        }
+
         const auto &materialComponent = _entity.GetComponents<Object::Component::Material>(core);
         const Context &context = core.GetResource<Context>();
         _UpdateBuffer(materialComponent, context);
     };
+
+    void SetMaterial(const Engine::Core &core, const Object::Component::Material &material)
+    {
+        if (!_isCreated)
+        {
+            throw Exception::UpdateBufferError("Cannot update a GPU material buffer that is not created.");
+        }
+
+        const Context &context = core.GetResource<Context>();
+        _UpdateBuffer(material, context);
+    }
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
 

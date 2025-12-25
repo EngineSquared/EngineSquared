@@ -140,16 +140,18 @@ void CameraRotationSystem(Engine::Core &core)
 
 void Setup(Engine::Core &core)
 {
-    auto cube = core.CreateEntity();
+    Object::Component::Material material;
+    material.ambient = glm::vec3(0.0f, 0.5f, 0.8f);
+    auto cube_with_material = core.CreateEntity();
+    cube_with_material.AddComponent<Object::Component::Transform>(core);
+    cube_with_material.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
+    cube_with_material.AddComponent<Object::Component::Material>(core, std::move(material));
 
-    cube.AddComponent<Object::Component::Transform>(core);
+    auto cube = core.CreateEntity();
+    cube.AddComponent<Object::Component::Transform>(core, glm::vec3(2.0f, 0.0f, 0.0f));
     cube.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
-    cube.AddComponent<Object::Component::Material>(core);
-    cube.GetComponents<Object::Component::Material>(core).name = "DefaultCubeMaterial";
-    cube.GetComponents<Object::Component::Material>(core).ambient = glm::vec3(0.0f, 0.5f, 0.8f);
 
     auto camera = core.CreateEntity();
-
     camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 0.0f, 2.0f));
     camera.AddComponent<Object::Component::Camera>(core);
 
