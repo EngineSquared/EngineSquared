@@ -93,8 +93,7 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
             Engine::Entity entity(e);
 
             const auto &transformBindgroup = bindgroupContainer.Get(transform.bindGroup);
-            renderPass.setBindGroup(transformBindgroup.GetLayoutIndex(), transformBindgroup.GetBindGroup(), 0,
-                                    nullptr);
+            renderPass.setBindGroup(transformBindgroup.GetLayoutIndex(), transformBindgroup.GetBindGroup(), 0, nullptr);
 
             entt::hashed_string gpuMaterialId{};
             if (entity.HasComponents<Graphic::Component::GPUMaterial>(core))
@@ -102,14 +101,14 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                 const auto &materialComponent = entity.GetComponents<Graphic::Component::GPUMaterial>(core);
                 gpuMaterialId = materialComponent.bindGroup;
             }
-            else {
+            else
+            {
                 std::string bindGroupName = "DEFAULT_MATERIAL_BIND_GROUP";
                 entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
                 gpuMaterialId = bindGroupId;
             }
             const auto &materialBindgroup = bindgroupContainer.Get(gpuMaterialId);
-            renderPass.setBindGroup(materialBindgroup.GetLayoutIndex(), materialBindgroup.GetBindGroup(), 0,
-                                    nullptr);
+            renderPass.setBindGroup(materialBindgroup.GetLayoutIndex(), materialBindgroup.GetBindGroup(), 0, nullptr);
 
             const auto &pointBuffer = bufferContainer.Get(gpuMesh.pointBufferId);
             const auto &pointBufferSize = pointBuffer->GetBuffer().getSize();
