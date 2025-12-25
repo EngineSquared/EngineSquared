@@ -86,39 +86,40 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
         const auto &bufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
         const auto &bindgroupContainer = core.GetResource<Graphic::Resource::BindGroupManager>();
 
-        core.GetRegistry().view<Graphic::Component::GPUTransform, Graphic::Component::GPUMesh>().each(
-            [&](entt::entity e, Graphic::Component::GPUTransform &transform, Graphic::Component::GPUMesh &gpuMesh) {
-                Engine::Entity entity(e);
+        auto view = core.GetRegistry().view<Graphic::Component::GPUTransform, Graphic::Component::GPUMesh>();
 
-                const auto &transformBindgroup = bindgroupContainer.Get(transform.bindGroup);
-                renderPass.setBindGroup(transformBindgroup.GetLayoutIndex(), transformBindgroup.GetBindGroup(), 0,
-                                        nullptr);
+        for (auto &&[e, transform, gpuMesh] : view.each())
+        {
+            Engine::Entity entity(e);
 
-                entt::hashed_string gpuMaterialId{};
-                if (entity.HasComponents<Graphic::Component::GPUMaterial>(core))
-                {
-                    const auto &materialComponent = entity.GetComponents<Graphic::Component::GPUMaterial>(core);
-                    gpuMaterialId = materialComponent.bindGroup;
-                }
-                else
-                {
-                    std::string bindGroupName = "DEFAULT_MATERIAL_BIND_GROUP";
-                    entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
-                    gpuMaterialId = bindGroupId;
-                }
-                const auto &materialBindgroup = bindgroupContainer.Get(gpuMaterialId);
-                renderPass.setBindGroup(materialBindgroup.GetLayoutIndex(), materialBindgroup.GetBindGroup(), 0,
-                                        nullptr);
+            const auto &transformBindgroup = bindgroupContainer.Get(transform.bindGroup);
+            renderPass.setBindGroup(transformBindgroup.GetLayoutIndex(), transformBindgroup.GetBindGroup(), 0,
+                                    nullptr);
 
-                const auto &pointBuffer = bufferContainer.Get(gpuMesh.pointBufferId);
-                const auto &pointBufferSize = pointBuffer->GetBuffer().getSize();
-                renderPass.setVertexBuffer(0, pointBuffer->GetBuffer(), 0, pointBufferSize);
-                const auto &indexBuffer = bufferContainer.Get(gpuMesh.indexBufferId);
-                const auto &indexBufferSize = indexBuffer->GetBuffer().getSize();
-                renderPass.setIndexBuffer(indexBuffer->GetBuffer(), wgpu::IndexFormat::Uint32, 0, indexBufferSize);
+            entt::hashed_string gpuMaterialId{};
+            if (entity.HasComponents<Graphic::Component::GPUMaterial>(core))
+            {
+                const auto &materialComponent = entity.GetComponents<Graphic::Component::GPUMaterial>(core);
+                gpuMaterialId = materialComponent.bindGroup;
+            }
+            else {
+                std::string bindGroupName = "DEFAULT_MATERIAL_BIND_GROUP";
+                entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
+                gpuMaterialId = bindGroupId;
+            }
+            const auto &materialBindgroup = bindgroupContainer.Get(gpuMaterialId);
+            renderPass.setBindGroup(materialBindgroup.GetLayoutIndex(), materialBindgroup.GetBindGroup(), 0,
+                                    nullptr);
 
-                renderPass.drawIndexed(indexBufferSize / sizeof(uint32_t), 1, 0, 0, 0);
-            });
+            const auto &pointBuffer = bufferContainer.Get(gpuMesh.pointBufferId);
+            const auto &pointBufferSize = pointBuffer->GetBuffer().getSize();
+            renderPass.setVertexBuffer(0, pointBuffer->GetBuffer(), 0, pointBufferSize);
+            const auto &indexBuffer = bufferContainer.Get(gpuMesh.indexBufferId);
+            const auto &indexBufferSize = indexBuffer->GetBuffer().getSize();
+            renderPass.setIndexBuffer(indexBuffer->GetBuffer(), wgpu::IndexFormat::Uint32, 0, indexBufferSize);
+
+            renderPass.drawIndexed(indexBufferSize / sizeof(uint32_t), 1, 0, 0, 0);
+        }
     }
 
     static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext)

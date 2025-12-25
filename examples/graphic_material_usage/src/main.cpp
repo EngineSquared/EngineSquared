@@ -86,7 +86,7 @@ void CameraTranslationSystem(Engine::Core &core)
     auto &transform = camera.GetComponents<Object::Component::Transform>(core);
 
     glm::vec3 forwardDir = camera.GetComponents<Object::Component::Transform>(core).GetForwardVector();
-    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 up{0.0f, 1.0f, 0.0f};
     glm::vec3 rightDir = glm::normalize(glm::cross(forwardDir, up));
     glm::vec3 downDir = glm::normalize(glm::cross(rightDir, forwardDir));
     glm::vec3 movementDirection = forwardDir * movementForce.z * transform.GetScale().z +
@@ -123,7 +123,7 @@ void CameraRotationSystem(Engine::Core &core)
 
         if (targetController.active)
         {
-            glm::vec2 currentMouse = glm::vec2((float) x, -(float) y);
+            glm::vec2 currentMouse{(float) x, -(float) y};
             glm::vec2 delta = (currentMouse - targetController.startMouse) * targetController.sensitivity;
 
             glm::quat yawRotation = glm::angleAxis(delta.x, glm::vec3(0.0f, 1.0f, 0.0f));
