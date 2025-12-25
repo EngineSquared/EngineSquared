@@ -87,14 +87,13 @@
 #include "system/initialization/SetupQueue.hpp"
 
 #include "system/GPUComponentManagement/OnCameraCreation.hpp"
-#include "system/GPUComponentManagement/OnMaterialCreation.hpp"
-#include "system/GPUComponentManagement/OnMeshCreation.hpp"
-#include "system/GPUComponentManagement/OnTransformCreation.hpp"
 #include "system/GPUComponentManagement/OnCameraDestruction.hpp"
+#include "system/GPUComponentManagement/OnMaterialCreation.hpp"
 #include "system/GPUComponentManagement/OnMaterialDestruction.hpp"
+#include "system/GPUComponentManagement/OnMeshCreation.hpp"
 #include "system/GPUComponentManagement/OnMeshDestruction.hpp"
+#include "system/GPUComponentManagement/OnTransformCreation.hpp"
 #include "system/GPUComponentManagement/OnTransformDestruction.hpp"
-
 
 #include "system/preparation/PrepareEndRenderTexture.hpp"
 #include "system/preparation/UpdateGPUCameras.hpp"
