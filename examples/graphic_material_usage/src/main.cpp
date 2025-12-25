@@ -144,6 +144,9 @@ void Setup(Engine::Core &core)
 
     cube.AddComponent<Object::Component::Transform>(core);
     cube.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
+    cube.AddComponent<Object::Component::Material>(core);
+    cube.GetComponents<Object::Component::Material>(core).name = "DefaultCubeMaterial";
+    cube.GetComponents<Object::Component::Material>(core).ambient = glm::vec3(0.0f, 0.5f, 0.8f);
 
     auto camera = core.CreateEntity();
 

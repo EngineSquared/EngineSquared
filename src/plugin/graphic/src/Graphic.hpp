@@ -88,10 +88,12 @@
 #include "system/GPUComponentManagement/OnCameraCreation.hpp"
 #include "system/GPUComponentManagement/OnMeshCreation.hpp"
 #include "system/GPUComponentManagement/OnTransformCreation.hpp"
+#include "system/GPUComponentManagement/OnMaterialCreation.hpp"
 
 #include "system/preparation/PrepareEndRenderTexture.hpp"
 #include "system/preparation/UpdateGPUCameras.hpp"
 #include "system/preparation/UpdateGPUTransforms.hpp"
+#include "system/preparation/UpdateGPUMaterials.hpp"
 
 #include "system/commandCreation/ExecuteRenderPass.hpp"
 
