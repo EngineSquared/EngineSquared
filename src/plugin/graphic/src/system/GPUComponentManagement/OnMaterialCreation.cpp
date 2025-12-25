@@ -7,9 +7,8 @@
 #include "resource/buffer/MaterialGPUBuffer.hpp"
 #include <string>
 
-void Graphic::System::OnMaterialCreation(Engine::Core &core, entt::entity e)
+void Graphic::System::OnMaterialCreation(Engine::Core &core, Engine::Entity entity)
 {
-    Engine::Entity entity{e};
     Graphic::Component::GPUMaterial &GPUMaterial = entity.AddComponent<Graphic::Component::GPUMaterial>(core);
     const auto &material = entity.GetComponents<Object::Component::Material>(core);
 

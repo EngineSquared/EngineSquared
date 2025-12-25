@@ -5,6 +5,6 @@
 
 namespace Graphic::System {
 
-void OnMaterialCreation(Engine::Core &core, entt::entity entity);
+void OnMaterialCreation(Engine::Core &core, Engine::Entity entity);
 
 }
