@@ -17,7 +17,7 @@ struct TargetController {
 
     bool active = false;
     glm::vec2 startMouse = {0.0f, 0.0f};
-    glm::quat originRotation = glm::quat(0.0f, 0.0f, 0.0f, 1.0f);
+    glm::quat originRotation{0.0f, 0.0f, 0.0f, 1.0f};
 
     float sensitivity = 0.005f;
     float scrollSensitivity = 0.1f;
@@ -126,7 +126,7 @@ void CameraRotationSystem(Engine::Core &core)
             glm::vec2 currentMouse{(float) x, -(float) y};
             glm::vec2 delta = (currentMouse - targetController.startMouse) * targetController.sensitivity;
 
-            glm::quat yawRotation = glm::angleAxis(delta.x, glm::vec3(0.0f, 1.0f, 0.0f));
+            glm::quat yawRotation = glm::angleAxis(-delta.x, glm::vec3(0.0f, 1.0f, 0.0f));
             glm::quat pitchRotation = glm::angleAxis(delta.y, glm::vec3(1.0f, 0.0f, 0.0f));
 
             auto &cameraTransform = camera.GetComponents<Object::Component::Transform>(core);

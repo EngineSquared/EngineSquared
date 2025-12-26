@@ -20,9 +20,9 @@ struct GPUCamera {
 
     void Update(const Object::Component::Camera &camera, const Object::Component::Transform &transform)
     {
-        glm::vec3 forward = transform.GetRotation() * glm::vec3(0.0f, 0.0f, -1.0f);
-        view = glm::lookAt(transform.GetPosition(), transform.GetPosition() + forward, camera.up);
-        projection = glm::perspectiveLH_ZO(camera.fov, aspectRatio, camera.nearPlane, camera.farPlane);
+        glm::vec3 forward = glm::normalize(transform.GetForwardVector() * transform.GetScale());
+        view = glm::lookAtLH(transform.GetPosition(), transform.GetPosition() + forward, camera.up);
+        projection = glm::perspectiveLH_NO(camera.fov, aspectRatio, camera.nearPlane, camera.farPlane);
         viewProjection = projection * view;
         inverseViewProjection = glm::inverse(viewProjection);
     }

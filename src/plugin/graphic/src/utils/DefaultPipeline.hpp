@@ -67,7 +67,8 @@ fn vs_main(
 fn fs_main(
     input : VertexOutput
 ) -> @location(0) vec4f {
-    var texColor : vec4f = textureSample(materialTexture, materialSampler, input.fragUV);
+    var uv = vec2f(1.0 - input.fragUV.x, 1.0 - input.fragUV.y);
+    var texColor : vec4f = textureSample(materialTexture, materialSampler, uv);
     var color : vec4f = vec4f(material.emission * texColor.xyz, 1.0);
     return color;
 }

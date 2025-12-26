@@ -6,6 +6,9 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/quaternion.hpp"
 
+#include <glm/gtx/string_cast.hpp>
+#include <iostream>
+
 namespace Object::Component {
 /**
  * Component used to represent a 3D transformation for a game object.
@@ -19,7 +22,7 @@ struct Transform {
      * \param   rotation    rotation of the entity. Default is identity (no rotation).
      */
     Transform(glm::vec3 position = glm::vec3(0), glm::vec3 scale = glm::vec3(1),
-              glm::quat rotation = glm::quat(0, 0, 0, 1))
+              glm::quat rotation = glm::quat(1, 0, 0, 0))
         : _position(position), _scale(scale), _rotation(rotation)
     {
     }
@@ -67,8 +70,13 @@ struct Transform {
         _rotation = glm::quat(w, x, y, z);
     }
 
-    glm::vec3 GetForwardVector() const { return glm::normalize(_rotation * glm::vec3(0.0f, 0.0f, 1.0f)); }
-
+    glm::vec3 GetForwardVector() const {
+        glm::vec3 direction;
+        direction.x = 2.0f * (_rotation.x * _rotation.z - _rotation.w * _rotation.y);
+        direction.y = 2.0f * (_rotation.w * _rotation.x + _rotation.y * _rotation.z);
+        direction.z = 1.0f - 2.0f * (_rotation.x * _rotation.x + _rotation.y * _rotation.y);
+        return glm::normalize(direction);
+     }
     /**
      * Create the transformation matrix for this transform component.
      *
