@@ -38,9 +38,8 @@ void Graphic::System::CreateDefaultMaterial(Engine::Core &core)
     textureContainer.SetDefault(std::move(emptyTexture));
     std::string defaultTextureName = "DEFAULT_TEXTURE";
     entt::hashed_string defaultTextureId{defaultTextureName.data(), defaultTextureName.size()};
-    Resource::Texture defaultTexture(context, defaultTextureName, glm::uvec2(2, 2), [](glm::uvec2) {
-        return glm::u8vec4(150, 100, 100, 255);
-    });
+    Resource::Texture defaultTexture(context, defaultTextureName, glm::uvec2(2, 2),
+                                     [](glm::uvec2) { return glm::u8vec4(150, 100, 100, 255); });
     textureContainer.Add(defaultTextureId, std::move(defaultTexture));
 
     defaultMaterial.ambientTexName = "DEFAULT_TEXTURE";
