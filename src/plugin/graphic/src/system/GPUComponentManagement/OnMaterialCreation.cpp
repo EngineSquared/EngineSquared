@@ -1,15 +1,15 @@
 #include "system/GPUComponentManagement/OnMaterialCreation.hpp"
+#include "Logger.hpp"
 #include "component/GPUMaterial.hpp"
 #include "component/Material.hpp"
 #include "resource/BindGroup.hpp"
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
-#include "resource/buffer/MaterialGPUBuffer.hpp"
 #include "resource/Sampler.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
-#include "Logger.hpp"
+#include "resource/buffer/MaterialGPUBuffer.hpp"
 #include <string>
 
 void Graphic::System::OnMaterialCreation(Engine::Core &core, Engine::Entity entity)
@@ -32,9 +32,10 @@ void Graphic::System::OnMaterialCreation(Engine::Core &core, Engine::Entity enti
         {
             Log::Warn("Material texture file not found: " + material.ambientTexName +
                       ". Using default texture instead.");
-        } else {
-            Resource::Texture texture{context, material.ambientTexName,
-                Resource::Image(material.ambientTexName)};
+        }
+        else
+        {
+            Resource::Texture texture{context, material.ambientTexName, Resource::Image(material.ambientTexName)};
             textureContainer.Add(textureId, std::move(texture));
         }
     }
@@ -62,8 +63,8 @@ void Graphic::System::OnMaterialCreation(Engine::Core &core, Engine::Entity enti
                                        0, Resource::BindGroup::Asset::Type::Buffer,
                                        materialBufferId, materialBufferSize,
                                        },
-                                        {1, Resource::BindGroup::Asset::Type::Texture, textureId, 0},
-                                        {2, Resource::BindGroup::Asset::Type::Sampler, samplerId, 0},
+                                      {1, Resource::BindGroup::Asset::Type::Texture, textureId, 0},
+                                      {2, Resource::BindGroup::Asset::Type::Sampler, samplerId, 0},
     });
     bindGroupManager.Add(bindGroupId, std::move(bindGroup));
     GPUMaterial.bindGroup = bindGroupId;

@@ -10,8 +10,8 @@
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/SingleExecutionRenderPass.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
-#include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
+#include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include <entt/core/hashed_string.hpp>
 
 namespace Graphic::Utils {
@@ -148,15 +148,15 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                                                 .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
                                                 .setVisibility(wgpu::ShaderStage::Fragment)
                                                 .setBinding(0))
-                                .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("materialTexture")
-                                              .setSampleType(wgpu::TextureSampleType::Float)
-                                              .setViewDimension(wgpu::TextureViewDimension::_2D)
-                                              .setVisibility(wgpu::ShaderStage::Fragment)
-                                              .setBinding(1))
-                                .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("materialSampler")
-                                              .setType(wgpu::SamplerBindingType::Filtering)
-                                              .setVisibility(wgpu::ShaderStage::Fragment)
-                                              .setBinding(2));
+                                  .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("materialTexture")
+                                                .setSampleType(wgpu::TextureSampleType::Float)
+                                                .setViewDimension(wgpu::TextureViewDimension::_2D)
+                                                .setVisibility(wgpu::ShaderStage::Fragment)
+                                                .setBinding(1))
+                                  .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("materialSampler")
+                                                .setType(wgpu::SamplerBindingType::Filtering)
+                                                .setVisibility(wgpu::ShaderStage::Fragment)
+                                                .setBinding(2));
 
         auto vertexLayout = Graphic::Utils::VertexBufferLayout()
                                 .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)

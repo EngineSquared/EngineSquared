@@ -22,10 +22,10 @@
 
 #pragma once
 
-#include <glm/glm.hpp>
-#include <vector>
 #include <entt/core/hashed_string.hpp>
+#include <glm/glm.hpp>
 #include <string>
+#include <vector>
 
 namespace Object::Component {
 
