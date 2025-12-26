@@ -43,6 +43,7 @@ void Graphic::Plugin::Bind()
                                               System::ReleaseInstance, System::RequestCapabilities,
                                               System::CreateDevice, System::CreateQueue, System::SetupQueue,
                                               System::ConfigureSurface, System::ReleaseAdapter,
+                                              System::CreateEmptyTexture, System::CreateDefaultTexture, System::CreateDefaultSampler,
                                               System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
