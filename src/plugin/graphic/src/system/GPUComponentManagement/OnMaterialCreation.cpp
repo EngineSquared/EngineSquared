@@ -10,8 +10,8 @@
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
 #include "resource/buffer/MaterialGPUBuffer.hpp"
-#include <string>
 #include <filesystem>
+#include <string>
 
 void Graphic::System::OnMaterialCreation(Engine::Core &core, Engine::Entity entity)
 {
