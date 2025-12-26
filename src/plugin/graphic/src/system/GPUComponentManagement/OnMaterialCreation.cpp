@@ -11,6 +11,7 @@
 #include "resource/TextureContainer.hpp"
 #include "resource/buffer/MaterialGPUBuffer.hpp"
 #include <string>
+#include <filesystem>
 
 void Graphic::System::OnMaterialCreation(Engine::Core &core, Engine::Entity entity)
 {
