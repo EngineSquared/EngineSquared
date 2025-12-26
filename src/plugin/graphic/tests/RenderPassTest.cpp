@@ -64,7 +64,7 @@ fn fs_main() -> @location(0) vec4f {
                                              .setVisibility(wgpu::ShaderStage::Fragment)
                                              .setBinding(0));
     auto normalColorOutput =
-        Graphic::Utils::ColorTargetState("returnTextureTest").setFormat(wgpu::TextureFormat::RGBA8Unorm);
+        Graphic::Utils::ColorTargetState("returnTextureTest").setFormat(wgpu::TextureFormat::RGBA8UnormSrgb);
 
     shaderDescriptor.setShader(shaderSource)
         .setName("ExampleShader")

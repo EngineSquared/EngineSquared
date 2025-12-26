@@ -148,7 +148,6 @@ void Setup(Engine::Core &core)
 
     // Custom Material with Texture
     Object::Component::Material materialWithTexture;
-    Log::Info(std::filesystem::current_path().string());
     materialWithTexture.ambientTexName = "./examples/graphic_material_usage/asset/texture.png";
     auto cube1 = core.CreateEntity();
     cube1.AddComponent<Object::Component::Transform>(core);
@@ -164,7 +163,7 @@ void Setup(Engine::Core &core)
 
     // Camera
     auto camera = core.CreateEntity();
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 0.0f, -2.0f));
+    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 0.0f, -5.0f));
     camera.AddComponent<Object::Component::Camera>(core);
 
     auto &targetController = core.GetResource<TargetController>();
