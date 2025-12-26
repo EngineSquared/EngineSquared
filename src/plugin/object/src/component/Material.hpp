@@ -58,7 +58,7 @@ struct Material {
     ~Material() = default;
 
     // Copy
-    explicit Material(const Material &mesh) = default;
+    explicit Material(const Material &other) = default;
     Material &operator=(const Material &other) = default;
 
     // Move
