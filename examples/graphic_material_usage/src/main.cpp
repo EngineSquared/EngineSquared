@@ -17,7 +17,7 @@ struct TargetController {
 
     bool active = false;
     glm::vec2 startMouse = {0.0f, 0.0f};
-    glm::quat originRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    glm::quat originRotation = glm::quat(0.0f, 0.0f, 0.0f, 1.0f);
 
     float sensitivity = 0.005f;
     float scrollSensitivity = 0.1f;
@@ -43,11 +43,11 @@ static glm::vec3 GetMovementForce(Engine::Core &core)
     glm::vec3 force{0.0f};
     if (inputManager.IsKeyPressed(GLFW_KEY_W))
     {
-        force += glm::vec3(0.0f, 0.0f, -1.0f);
+        force += glm::vec3(0.0f, 0.0f, 1.0f);
     }
     if (inputManager.IsKeyPressed(GLFW_KEY_S))
     {
-        force += glm::vec3(0.0f, 0.0f, 1.0f);
+        force += glm::vec3(0.0f, 0.0f, -1.0f);
     }
     if (inputManager.IsKeyPressed(GLFW_KEY_A))
     {
@@ -87,8 +87,8 @@ void CameraTranslationSystem(Engine::Core &core)
 
     glm::vec3 forwardDir = camera.GetComponents<Object::Component::Transform>(core).GetForwardVector();
     glm::vec3 up{0.0f, 1.0f, 0.0f};
-    glm::vec3 rightDir = glm::normalize(glm::cross(forwardDir, up));
-    glm::vec3 downDir = glm::normalize(glm::cross(rightDir, forwardDir));
+    glm::vec3 rightDir = glm::normalize(glm::cross(up, forwardDir));
+    glm::vec3 downDir = glm::normalize(glm::cross(forwardDir, rightDir));
     glm::vec3 movementDirection = forwardDir * movementForce.z * transform.GetScale().z +
                                   downDir * movementForce.y * transform.GetScale().y +
                                   rightDir * movementForce.x * transform.GetScale().x;
@@ -140,19 +140,31 @@ void CameraRotationSystem(Engine::Core &core)
 
 void Setup(Engine::Core &core)
 {
-    Object::Component::Material material;
-    material.ambient = glm::vec3(0.0f, 0.5f, 0.8f);
-    auto cube_with_material = core.CreateEntity();
-    cube_with_material.AddComponent<Object::Component::Transform>(core);
-    cube_with_material.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
-    cube_with_material.AddComponent<Object::Component::Material>(core, std::move(material));
-
+    // TODO: find why x is inverted
+    // Default Material
     auto cube = core.CreateEntity();
-    cube.AddComponent<Object::Component::Transform>(core, glm::vec3(2.0f, 0.0f, 0.0f));
+    cube.AddComponent<Object::Component::Transform>(core, glm::vec3(-2.0f, 0.0f, 0.0f));
     cube.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
 
+    // Custom Material with Texture
+    Object::Component::Material materialWithTexture;
+    Log::Info(std::filesystem::current_path().string());
+    materialWithTexture.ambientTexName = "./examples/graphic_material_usage/asset/texture.png";
+    auto cube1 = core.CreateEntity();
+    cube1.AddComponent<Object::Component::Transform>(core);
+    cube1.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
+    cube1.AddComponent<Object::Component::Material>(core, std::move(materialWithTexture));
+
+    // Custom Material without Texture
+    Object::Component::Material materialWithoutTexture;
+    auto cube2 = core.CreateEntity();
+    cube2.AddComponent<Object::Component::Transform>(core, glm::vec3(2.0f, 0.0f, 0.0f));
+    cube2.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
+    cube2.AddComponent<Object::Component::Material>(core, std::move(materialWithoutTexture));
+
+    // Camera
     auto camera = core.CreateEntity();
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 0.0f, 2.0f));
+    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 0.0f, -2.0f));
     camera.AddComponent<Object::Component::Camera>(core);
 
     auto &targetController = core.GetResource<TargetController>();

@@ -24,6 +24,8 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include <entt/core/hashed_string.hpp>
+#include <string>
 
 namespace Object::Component {
 
@@ -37,9 +39,11 @@ namespace Object::Component {
  * - https://github.com/tinyobjloader/tinyobjloader/blob/release/tiny_obj_loader.h (look for `material_t` struct)
  */
 struct Material {
+    using Id = entt::hashed_string;
+
     std::string name;
 
-    glm::vec3 ambient;
+    glm::vec3 ambient = glm::vec3(1.f, 1.f, 1.f);
     glm::vec3 diffuse;
     glm::vec3 specular;
     glm::vec3 transmittance;
@@ -47,6 +51,8 @@ struct Material {
     float shininess;
     float ior;      // index of refraction
     float dissolve; // 1 == opaque; 0 == fully transparent
+
+    std::string ambientTexName;
 
     explicit Material() = default;
     ~Material() = default;
