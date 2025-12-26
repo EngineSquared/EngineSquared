@@ -6,9 +6,9 @@
 #include "resource/Context.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/MaterialGPUBuffer.hpp"
-#include "utils/DefaultTexture.hpp"
-#include "utils/DefaultSampler.hpp"
 #include "utils/DefaultMaterial.hpp"
+#include "utils/DefaultSampler.hpp"
+#include "utils/DefaultTexture.hpp"
 
 void Graphic::System::CreateDefaultMaterial(Engine::Core &core)
 {
@@ -32,8 +32,8 @@ void Graphic::System::CreateDefaultMaterial(Engine::Core &core)
                                   {
                                       {
                                        0, Resource::BindGroup::Asset::Type::Buffer,
-                                       Utils::DEFAULT_MATERIAL_ID, materialBufferSize,
-                                       },
+                                       Utils::DEFAULT_MATERIAL_ID,
+                                       materialBufferSize, },
                                       {1, Resource::BindGroup::Asset::Type::Texture, Utils::DEFAULT_TEXTURE_ID, 0},
                                       {2, Resource::BindGroup::Asset::Type::Sampler, Utils::DEFAULT_SAMPLER_ID, 0},
     });

@@ -39,12 +39,11 @@ void Graphic::Plugin::Bind()
     SetupGPUComponent<Object::Component::Material, Component::GPUMaterial, &Graphic::System::OnMaterialCreation,
                       &Graphic::System::OnMaterialDestruction>(this->GetCore());
 
-    RegisterSystems<RenderingPipeline::Setup>(System::CreateInstance, System::CreateSurface, System::CreateAdapter,
-                                              System::ReleaseInstance, System::RequestCapabilities,
-                                              System::CreateDevice, System::CreateQueue, System::SetupQueue,
-                                              System::ConfigureSurface, System::ReleaseAdapter,
-                                              System::CreateEmptyTexture, System::CreateDefaultTexture, System::CreateDefaultSampler,
-                                              System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial);
+    RegisterSystems<RenderingPipeline::Setup>(
+        System::CreateInstance, System::CreateSurface, System::CreateAdapter, System::ReleaseInstance,
+        System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
+        System::ConfigureSurface, System::ReleaseAdapter, System::CreateEmptyTexture, System::CreateDefaultTexture,
+        System::CreateDefaultSampler, System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
                                                     System::UpdateGPUCameras, System::UpdateGPUMaterials);

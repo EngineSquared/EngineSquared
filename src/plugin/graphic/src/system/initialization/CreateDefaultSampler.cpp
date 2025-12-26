@@ -1,7 +1,7 @@
-#include "system/initialization/CreateDefaultTexture.hpp"
 #include "resource/Context.hpp"
 #include "resource/Sampler.hpp"
 #include "resource/SamplerContainer.hpp"
+#include "system/initialization/CreateDefaultTexture.hpp"
 #include "utils/DefaultSampler.hpp"
 
 namespace Graphic::System {
@@ -14,4 +14,4 @@ void CreateDefaultSampler(Engine::Core &core)
 
     samplerContainer.Add(Utils::DEFAULT_SAMPLER_ID, std::move(defaultSampler));
 }
-}
+} // namespace Graphic::System

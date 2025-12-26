@@ -10,9 +10,8 @@ void CreateDefaultTexture(Engine::Core &core)
     const Resource::Context &context = core.GetResource<Resource::Context>();
     Resource::TextureContainer &textureContainer = core.GetResource<Resource::TextureContainer>();
 
-    Resource::Texture defaultTexture(context, Utils::DEFAULT_TEXTURE_NAME, glm::uvec2(2, 2), [](glm::uvec2) {
-        return glm::u8vec4(150, 100, 100, 255);
-    });
+    Resource::Texture defaultTexture(context, Utils::DEFAULT_TEXTURE_NAME, glm::uvec2(2, 2),
+                                     [](glm::uvec2) { return glm::u8vec4(150, 100, 100, 255); });
     textureContainer.Add(Utils::DEFAULT_TEXTURE_ID, std::move(defaultTexture));
 }
-}
+} // namespace Graphic::System

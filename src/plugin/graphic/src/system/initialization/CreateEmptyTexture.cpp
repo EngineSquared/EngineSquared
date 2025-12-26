@@ -21,4 +21,4 @@ void CreateEmptyTexture(Engine::Core &core)
 
     textureContainer.SetDefault(std::move(emptyTexture));
 }
-}
+} // namespace Graphic::System
