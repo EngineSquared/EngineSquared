@@ -130,7 +130,7 @@ void CameraRotationSystem(Engine::Core &core)
             glm::quat pitchRotation = glm::angleAxis(delta.y, glm::vec3(1.0f, 0.0f, 0.0f));
 
             auto &cameraTransform = camera.GetComponents<Object::Component::Transform>(core);
-            cameraTransform.SetRotation(yawRotation * targetController.originRotation * pitchRotation);
+            cameraTransform.SetRotation(yawRotation * pitchRotation * targetController.originRotation);
 
             targetController.velocity = (delta - targetController.previousDelta) * 100.0f;
             targetController.previousDelta = delta;
