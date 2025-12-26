@@ -140,7 +140,6 @@ void CameraRotationSystem(Engine::Core &core)
 
 void Setup(Engine::Core &core)
 {
-    // TODO: find why x is inverted
     // Default Material
     auto cube = core.CreateEntity();
     cube.AddComponent<Object::Component::Transform>(core, glm::vec3(-2.0f, 0.0f, 0.0f));
