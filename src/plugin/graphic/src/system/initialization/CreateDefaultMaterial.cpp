@@ -27,7 +27,7 @@ void Graphic::System::CreateDefaultMaterial(Engine::Core &core)
 
     // TODO: Put this in a different system
     Resource::TextureContainer &textureContainer = core.GetResource<Resource::TextureContainer>();
-    Resource::Texture emptyTexture(context, "EMPTY_TEXTURE", glm::uvec2(2, 2), [](glm::uvec2 pos) -> glm::u8vec4 {
+    Resource::Texture emptyTexture(context, "EMPTY_TEXTURE", glm::uvec2(2, 2), [](glm::uvec2 pos) {
         glm::u8vec4 color;
         color.r = ((pos.x + pos.y) % 2 == 0) ? 255 : 0;
         color.g = 0;
@@ -38,9 +38,8 @@ void Graphic::System::CreateDefaultMaterial(Engine::Core &core)
     textureContainer.SetDefault(std::move(emptyTexture));
     std::string defaultTextureName = "DEFAULT_TEXTURE";
     entt::hashed_string defaultTextureId{defaultTextureName.data(), defaultTextureName.size()};
-    Resource::Texture defaultTexture(context, defaultTextureName, glm::uvec2(2, 2), [](glm::uvec2 pos) -> glm::u8vec4 {
-        glm::u8vec4 color(150, 100, 100, 255);
-        return color;
+    Resource::Texture defaultTexture(context, defaultTextureName, glm::uvec2(2, 2), [](glm::uvec2) {
+        return glm::u8vec4(150, 100, 100, 255);
     });
     textureContainer.Add(defaultTextureId, std::move(defaultTexture));
 
