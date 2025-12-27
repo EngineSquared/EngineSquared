@@ -6,6 +6,7 @@
 #include "component/GPUTransform.hpp"
 #include "component/Transform.hpp"
 #include "entity/Entity.hpp"
+#include "utils/DefaultMaterial.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/SingleExecutionRenderPass.hpp"
@@ -109,9 +110,7 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
             }
             else
             {
-                std::string bindGroupName = "DEFAULT_MATERIAL_BIND_GROUP";
-                entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
-                gpuMaterialId = bindGroupId;
+                gpuMaterialId = Utils::DEFAULT_MATERIAL_BIND_GROUP_ID;
             }
             const auto &materialBindgroup = bindgroupContainer.Get(gpuMaterialId);
             renderPass.setBindGroup(materialBindgroup.GetLayoutIndex(), materialBindgroup.GetBindGroup(), 0, nullptr);
