@@ -102,6 +102,7 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
             const auto &transformBindgroup = bindgroupContainer.Get(transform.bindGroup);
             renderPass.setBindGroup(transformBindgroup.GetLayoutIndex(), transformBindgroup.GetBindGroup(), 0, nullptr);
 
+            // TODO: create a system that will add the component if not present before rendering to avoid checking every frame if the component exists
             entt::hashed_string gpuMaterialId{};
             if (entity.HasComponents<Graphic::Component::GPUMaterial>(core))
             {

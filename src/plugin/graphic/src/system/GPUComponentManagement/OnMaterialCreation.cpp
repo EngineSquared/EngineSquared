@@ -27,25 +27,20 @@ void Graphic::System::OnMaterialCreation(Engine::Core &core, Engine::Entity enti
     entt::hashed_string textureId{material.ambientTexName.data(), material.ambientTexName.size()};
     entt::hashed_string samplerId{material.ambientTexName.data(), material.ambientTexName.size()};
 
-    if (textureContainer.Contains(textureId) == false)
+    if (std::filesystem::exists(material.ambientTexName) == false)
     {
-        if (std::filesystem::exists(material.ambientTexName) == false)
-        {
-            Log::Warn("Material texture file not found: " + material.ambientTexName +
-                      ". Using default texture instead.");
-        }
-        else
-        {
-            Resource::Texture texture{context, material.ambientTexName, Resource::Image(material.ambientTexName)};
-            textureContainer.Add(textureId, std::move(texture));
-        }
+        Log::Warn(fmt::format("Material texture file not found: {}", material.ambientTexName));
+    }
+    else
+    {
+        Resource::Texture texture{context, material.ambientTexName, Resource::Image(material.ambientTexName)};
+        textureContainer.Add(textureId, std::move(texture));
+        GPUMaterial.texture = textureId;
     }
 
-    if (samplerContainer.Contains(samplerId) == false)
-    {
-        Resource::Sampler sampler{context.deviceContext.GetDevice().value()};
-        samplerContainer.Add(samplerId, std::move(sampler));
-    }
+    Resource::Sampler sampler{context.deviceContext.GetDevice().value()};
+    samplerContainer.Add(samplerId, std::move(sampler));
+    GPUMaterial.sampler = samplerId;
 
     auto materialBuffer = std::make_unique<Graphic::Resource::MaterialGPUBuffer>(entity);
     materialBuffer->Create(core);
