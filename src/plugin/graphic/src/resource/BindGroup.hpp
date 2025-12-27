@@ -120,7 +120,7 @@ class BindGroup {
         }
         case Asset::Type::Texture: {
             auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
-            auto &texture = textureContainer.Get(asset.name);
+            auto &texture = textureContainer.GetOrDefault(asset.name);
             entry.textureView = texture.GetDefaultView();
             break;
         }

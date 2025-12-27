@@ -101,7 +101,7 @@ Graphic::Resource::Shader CreateShader(Engine::Core &core)
                                              .setVisibility(wgpu::ShaderStage::Fragment)
                                              .setBinding(1))
                                .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("SamplerEntry")
-                                             .setSamplerType(wgpu::SamplerBindingType::Filtering)
+                                             .setType(wgpu::SamplerBindingType::Filtering)
                                              .setVisibility(wgpu::ShaderStage::Fragment)
                                              .setBinding(2));
 
