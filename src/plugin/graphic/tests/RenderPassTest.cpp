@@ -187,7 +187,7 @@ void TestSystem(Engine::Core &core)
     }
 
     // Uncomment this to check if the retrieved texture data is correct
-    image.ToPng("RenderPassTestOutput.png");
+    // image.ToPng("RenderPassTestOutput.png");
 
     EXPECT_TRUE(core.GetResource<History>().called);
 }
