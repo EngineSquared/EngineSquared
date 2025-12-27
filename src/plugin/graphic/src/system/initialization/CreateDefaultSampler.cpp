@@ -1,7 +1,7 @@
+#include "system/initialization/CreateDefaultSampler.hpp"
 #include "resource/Context.hpp"
 #include "resource/Sampler.hpp"
 #include "resource/SamplerContainer.hpp"
-#include "system/initialization/CreateDefaultSampler.hpp"
 #include "utils/DefaultSampler.hpp"
 
 namespace Graphic::System {
