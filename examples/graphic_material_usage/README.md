@@ -1,6 +1,6 @@
-# Graphic usage
+# Graphic Material Usage
 
-## How to run / debug on vscode
+## How to run / debug in VS Code
 
 1. Remove `includes("../../xmake.lua")` from `examples/graphic_material_usage/xmake.lua`
 
