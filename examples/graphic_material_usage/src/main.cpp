@@ -197,12 +197,17 @@ int main(void)
     core.RegisterResource(TargetController{});
     core.RegisterSystem<Engine::Scheduler::Startup>(Setup);
 
-    try {
+    try
+    {
         core.RunCore();
-    } catch (const GraphicExampleError &e) {
+    }
+    catch (const GraphicExampleError &e)
+    {
         Log::Error(fmt::format("GraphicExampleError: {}", e.what()));
         return EXIT_FAILURE;
-    } catch (const std::exception &e) {
+    }
+    catch (const std::exception &e)
+    {
         Log::Error(fmt::format("Unhandled exception: {}", e.what()));
         return EXIT_FAILURE;
     }
