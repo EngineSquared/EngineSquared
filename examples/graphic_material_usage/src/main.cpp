@@ -147,7 +147,7 @@ void Setup(Engine::Core &core)
 
     // Custom Material with Texture
     Object::Component::Material materialWithTexture;
-    materialWithTexture.ambientTexName = "./examples/graphic_material_usage/asset/texture.png";
+    materialWithTexture.ambientTexName = "./asset/texture.png";
     auto cube1 = core.CreateEntity();
     cube1.AddComponent<Object::Component::Transform>(core);
     cube1.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
@@ -197,7 +197,15 @@ int main(void)
     core.RegisterResource(TargetController{});
     core.RegisterSystem<Engine::Scheduler::Startup>(Setup);
 
-    core.RunCore();
+    try {
+        core.RunCore();
+    } catch (const GraphicExampleError &e) {
+        Log::Error(fmt::format("GraphicExampleError: {}", e.what()));
+        return EXIT_FAILURE;
+    } catch (const std::exception &e) {
+        Log::Error(fmt::format("Unhandled exception: {}", e.what()));
+        return EXIT_FAILURE;
+    }
 
     return 0;
 }
