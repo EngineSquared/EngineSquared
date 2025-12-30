@@ -1,6 +1,7 @@
 -- Build with xmake -P .
 set_project("GraphicMaterialUsage")
 set_languages("c++20")
+add_rules("mode.debug", "mode.release")
 
 if is_plat("windows") then
     add_cxflags("/W4")
