@@ -7,6 +7,7 @@
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/MaterialGPUBuffer.hpp"
 #include "utils/DefaultMaterial.hpp"
+#include "utils/DefaultPipeline.hpp"
 #include "utils/DefaultSampler.hpp"
 #include "utils/DefaultTexture.hpp"
 
@@ -26,9 +27,7 @@ void Graphic::System::CreateDefaultMaterial(Engine::Core &core)
     Resource::GPUBufferContainer &gpuBufferContainer = core.GetResource<Resource::GPUBufferContainer>();
     gpuBufferContainer.Add(Utils::DEFAULT_MATERIAL_ID, std::move(materialBuffer));
 
-    std::string bindGroupName = "DEFAULT_MATERIAL_BIND_GROUP";
-    entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
-    Resource::BindGroup bindGroup(core, "DEFAULT_RENDER_PASS_SHADER", 2,
+    Resource::BindGroup bindGroup(core, Utils::DEFAULT_RENDER_PASS_SHADER_ID, 2,
                                   {
                                       {
                                        0, Resource::BindGroup::Asset::Type::Buffer,
@@ -37,5 +36,5 @@ void Graphic::System::CreateDefaultMaterial(Engine::Core &core)
                                       {1, Resource::BindGroup::Asset::Type::Texture, Utils::DEFAULT_TEXTURE_ID, 0},
                                       {2, Resource::BindGroup::Asset::Type::Sampler, Utils::DEFAULT_SAMPLER_ID, 0},
     });
-    bindGroupManager.Add(bindGroupId, std::move(bindGroup));
+    bindGroupManager.Add(Utils::DEFAULT_MATERIAL_BIND_GROUP_ID, std::move(bindGroup));
 }
