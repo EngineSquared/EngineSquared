@@ -46,7 +46,6 @@ struct Image {
         int width_ = -1;
         int height_ = -1;
         int channels_ = -1;
-
         unsigned char *data = stbi_load(filepath.string().c_str(), &width_, &height_, &channels_, 4);
 
         if (!data || width_ <= 0 || height_ <= 0 || channels_ <= 0)

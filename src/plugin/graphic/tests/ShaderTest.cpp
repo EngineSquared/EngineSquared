@@ -70,7 +70,7 @@ auto TestSystem(Engine::Core &core) -> void
                           .setVisibility(wgpu::ShaderStage::Fragment)
                           .setBinding(1))
             .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("SamplerEntry")
-                          .setSamplerType(wgpu::SamplerBindingType::Filtering)
+                          .setType(wgpu::SamplerBindingType::Filtering)
                           .setVisibility(wgpu::ShaderStage::Fragment)
                           .setBinding(2));
     auto normalColorOutput = Graphic::Utils::ColorTargetState("NormalColor").setFormat(wgpu::TextureFormat::BGRA8Unorm);

@@ -1,1 +1,32 @@
+# Line endings
 * text=auto eol=lf
+
+# Binary files
+*.jpg binary
+*.png binary
+*.gif binary
+*.mp4 binary
+*.mp3 binary
+*.pdf binary
+*.zip binary
+*.ico binary
+*.xpm binary
+*.icns binary
+*.obj binary
+*.o binary
+*.a binary
+*.lib binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.exe binary
+*.out binary
+*.app binary
+
+# Handling of C-specific and C++-specific files
+*.c linguist-language=C
+*.h linguist-language=C
+*.cpp linguist-language=C++
+*.inl linguist-language=C++
+*.hpp linguist-language=C++
+*.lua linguist-language=Lua

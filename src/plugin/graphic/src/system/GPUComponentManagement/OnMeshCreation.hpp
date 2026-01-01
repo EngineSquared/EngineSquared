@@ -5,6 +5,6 @@
 
 namespace Graphic::System {
 
-void OnMeshCreation(Engine::Core &core, entt::entity entity);
+void OnMeshCreation(Engine::Core &core, Engine::Entity entity);
 
 }

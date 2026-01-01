@@ -210,6 +210,6 @@ class ShaderDescriptor : public Utils::IValidable {
     std::optional<std::string> _vertexEntryPoint;
     std::optional<Utils::DepthStencilState> _outputDepthFormat;
     wgpu::PrimitiveTopology _primitiveTopology = wgpu::PrimitiveTopology::TriangleList;
-    wgpu::CullMode _cullMode = wgpu::CullMode::None;
+    wgpu::CullMode _cullMode = wgpu::CullMode::Back;
 };
 } // namespace Graphic::Resource

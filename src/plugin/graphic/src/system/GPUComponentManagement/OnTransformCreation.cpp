@@ -7,9 +7,8 @@
 #include "resource/buffer/TransformGPUBuffer.hpp"
 #include <string>
 
-void Graphic::System::OnTransformCreation(Engine::Core &core, entt::entity e)
+void Graphic::System::OnTransformCreation(Engine::Core &core, Engine::Entity entity)
 {
-    Engine::Entity entity{e};
     Graphic::Component::GPUTransform &GPUTransform = entity.AddComponent<Graphic::Component::GPUTransform>(core);
     const auto &transform = entity.GetComponents<Object::Component::Transform>(core);
 
