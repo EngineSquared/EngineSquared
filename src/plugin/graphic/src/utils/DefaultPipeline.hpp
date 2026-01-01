@@ -70,7 +70,7 @@ fn fs_main(
 ) -> @location(0) vec4f {
     var uv = vec2f(1.0 - input.fragUV.x, 1.0 - input.fragUV.y);
     var texColor : vec4f = textureSample(materialTexture, materialSampler, uv);
-    var color : vec4f = vec4f(material.emission * texColor.xyz, 1.0);
+    var color : vec4f = vec4f(material.emission * texColor.xyz, texColor.a);
     return color;
 }
 
