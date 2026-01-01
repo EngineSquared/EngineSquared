@@ -30,6 +30,7 @@ void Graphic::System::OnMaterialCreation(Engine::Core &core, Engine::Entity enti
     if (std::filesystem::exists(material.ambientTexName) == false)
     {
         Log::Warn(fmt::format("Material texture file not found: {}", material.ambientTexName));
+        GPUMaterial.texture = entt::hashed_string{};
     }
     else
     {
