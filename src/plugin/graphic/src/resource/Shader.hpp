@@ -88,6 +88,7 @@ class Shader {
 
         pipelineDescriptor.primitive.topology = descriptor.getPrimitiveTopology();
         pipelineDescriptor.primitive.cullMode = descriptor.getCullMode();
+        pipelineDescriptor.primitive.frontFace = wgpu::FrontFace::CW;
 
         shader.pipeline = device.createRenderPipeline(pipelineDescriptor);
 

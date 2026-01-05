@@ -27,7 +27,7 @@ class SamplerBindGroupLayoutEntry : public ABindGroupLayoutEntry<SamplerBindGrou
         return errors;
     }
 
-    inline SamplerBindGroupLayoutEntry &setSamplerType(const wgpu::SamplerBindingType &type)
+    inline SamplerBindGroupLayoutEntry &setType(const wgpu::SamplerBindingType &type)
     {
         this->getEntry().sampler.type = type;
         this->_isSamplerTypeSet = true;
