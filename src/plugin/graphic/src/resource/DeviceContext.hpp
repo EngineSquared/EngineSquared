@@ -1,6 +1,7 @@
 #pragma once
 
 #include "utils/webgpu.hpp"
+#include <optional>
 
 namespace Graphic::Resource {
 struct DeviceContext {

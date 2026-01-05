@@ -6,9 +6,8 @@
 #include "resource/buffer/PointGPUBuffer.hpp"
 #include <string>
 
-void Graphic::System::OnMeshCreation(Engine::Core &core, entt::entity e)
+void Graphic::System::OnMeshCreation(Engine::Core &core, Engine::Entity entity)
 {
-    Engine::Entity entity{e};
     Graphic::Component::GPUMesh &GPUMesh = entity.AddComponent<Graphic::Component::GPUMesh>(core);
     const auto &mesh = entity.GetComponents<Object::Component::Mesh>(core);
 
