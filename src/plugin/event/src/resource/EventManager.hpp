@@ -59,7 +59,7 @@ class EventManager {
     {
         EventTypeID typeID = _GetId<TEvent>();
         std::scoped_lock lock(_queueMutex);
-        
+
         // Push event to all schedulers that have callbacks for this event type
         for (auto &[schedulerID, callbacks] : _eventCallbacks)
         {
@@ -73,7 +73,7 @@ class EventManager {
     template <typename TScheduler> void ProcessEvents(Engine::Core &core)
     {
         std::type_index schedulerID = std::type_index(typeid(TScheduler));
-        
+
         std::queue<std::pair<EventTypeID, std::any>> queueCopy;
         {
             std::scoped_lock lock(_queueMutex);
