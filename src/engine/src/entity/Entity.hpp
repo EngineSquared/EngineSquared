@@ -23,14 +23,14 @@ class Entity {
      *
      * @param   entity  index value in the registry
      */
-    explicit(false) Entity(entity_id_type entity = entity_null_id) : _entity(entity) {}
+    Entity(entity_id_type entity = entity_null_id) : _entity(entity) {}
 
     /**
      * Create a ES Entity from Entt Entity
      *
      * @param   entt    index value in the registry
      */
-    explicit(false) Entity(entt::entity entity) : Entity(FromEnttEntity(entity)) {}
+    Entity(entt::entity entity) : Entity(FromEnttEntity(entity)) {}
 
     ~Entity() = default;
 
@@ -62,7 +62,7 @@ class Entity {
     /**
      * Implicit cast into entt::entity.
      */
-    explicit(false) operator entt::entity() const { return static_cast<entt::entity>(_entity); }
+    operator entt::entity() const { return static_cast<entt::entity>(_entity); }
 
     /**
      * Explicit cast into entity_id_type.
