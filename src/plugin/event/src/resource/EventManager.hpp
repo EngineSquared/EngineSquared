@@ -46,7 +46,7 @@ class EventManager {
 
     template <typename TEvent, typename TCallBack> EventCallbackID RegisterCallback(TCallBack &&callback)
     {
-        return _RegisterCallbackImpl<TEvent, TCallBack, TScheduler>(std::forward<TCallBack>(callback));
+        return _RegisterCallbackImpl<TEvent, TCallBack, Engine::Scheduler::Update>(std::forward<TCallBack>(callback));
     }
 
     template <typename TEvent, Engine::CScheduler TScheduler, typename TCallBack>
@@ -59,23 +59,11 @@ class EventManager {
     {
         EventTypeID typeID = _GetId<TEvent>();
         std::scoped_lock lock(_queueMutex);
-        _eventQueue.push({typeID, event});
-    }
-
-    void ProcessEvents(Engine::Core &core)
-    {
-        std::queue<std::pair<EventTypeID, std::any>> queueCopy;
+        
+        // Push event to all schedulers that have callbacks for this event type
+        for (auto &[schedulerID, callbacks] : _eventCallbacks)
         {
-            std::scoped_lock lock(_queueMutex);
-            std::swap(queueCopy, _eventQueue);
-        }
-
-        while (!queueCopy.empty())
-        {
-            auto [typeID, event] = std::move(queueCopy.front());
-            queueCopy.pop();
-
-            if (_eventCallbacks.contains(typeID))
+            if (callbacks.contains(typeID))
             {
                 _eventQueue[schedulerID].push({typeID, event});
             }
@@ -85,18 +73,22 @@ class EventManager {
     template <typename TScheduler> void ProcessEvents(Engine::Core &core)
     {
         std::type_index schedulerID = std::type_index(typeid(TScheduler));
-        if (!_eventQueue.contains(schedulerID))
+        
+        std::queue<std::pair<EventTypeID, std::any>> queueCopy;
         {
-            return;
+            std::scoped_lock lock(_queueMutex);
+            if (_eventQueue.contains(schedulerID))
+            {
+                std::swap(queueCopy, _eventQueue[schedulerID]);
+            }
         }
 
-        auto &queue = _eventQueue[schedulerID];
-        while (!queue.empty())
+        while (!queueCopy.empty())
         {
-            auto [typeID, event] = std::move(queue.front());
-            queue.pop();
+            auto [typeID, event] = std::move(queueCopy.front());
+            queueCopy.pop();
 
-            if (_eventCallbacks[schedulerID].contains(typeID))
+            if (_eventCallbacks.contains(schedulerID) && _eventCallbacks[schedulerID].contains(typeID))
             {
                 _eventCallbacks[schedulerID][typeID]->Trigger(core, event);
             }
@@ -151,8 +143,9 @@ class EventManager {
 
     template <typename TEvent> static EventTypeID _GetId(void) { return typeid(TEvent).hash_code(); }
 
-    std::unordered_map<EventTypeID, std::shared_ptr<Utils::IEventContainer>> _eventCallbacks;
-    std::queue<std::pair<EventTypeID, std::any>> _eventQueue;
+    std::unordered_map<std::type_index, std::unordered_map<EventTypeID, std::shared_ptr<Utils::IEventContainer>>>
+        _eventCallbacks;
+    std::unordered_map<std::type_index, std::queue<std::pair<EventTypeID, std::any>>> _eventQueue;
     std::mutex _queueMutex;
 };
 } // namespace Event::Resource
