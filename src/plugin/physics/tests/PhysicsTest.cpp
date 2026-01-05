@@ -1,13 +1,13 @@
-#include <gtest/gtest.h>
 #include <glm/glm.hpp>
+#include <gtest/gtest.h>
 
+#include "component/BoxCollider.hpp"
+#include "component/RigidBody.hpp"
+#include "component/Transform.hpp"
 #include "core/Core.hpp"
+#include "event/CollisionEvent.hpp"
 #include "plugin/PhysicsPlugin.hpp"
 #include "plugin/PluginEvent.hpp"
-#include "component/RigidBody.hpp"
-#include "component/BoxCollider.hpp"
-#include "component/Transform.hpp"
-#include "event/CollisionEvent.hpp"
 #include "resource/EventManager.hpp"
 #include "resource/Time.hpp"
 
@@ -65,21 +65,22 @@ TEST(PhysicsPlugin, CubeFallingOnPlane)
 
     core.GetResource<Event::Resource::EventManager>().RegisterCallback<Physics::Event::CollisionAddedEvent>(
         [&](Engine::Core &c, const Physics::Event::CollisionAddedEvent &event) {
-            if ((event.entity1 == cube && event.entity2 == plane) ||
-                (event.entity1 == plane && event.entity2 == cube)) {
+            if ((event.entity1 == cube && event.entity2 == plane) || (event.entity1 == plane && event.entity2 == cube))
+            {
                 collisionAdded = true;
             }
         });
 
     core.GetResource<Event::Resource::EventManager>().RegisterCallback<Physics::Event::CollisionRemovedEvent>(
         [&](Engine::Core &c, const Physics::Event::CollisionRemovedEvent &event) {
-            if ((event.entity1 == cube && event.entity2 == plane) ||
-                (event.entity1 == plane && event.entity2 == cube)) {
+            if ((event.entity1 == cube && event.entity2 == plane) || (event.entity1 == plane && event.entity2 == cube))
+            {
                 collisionRemoved = true;
             }
         });
 
-    for (int i = 0; i < 200; ++i) {
+    for (int i = 0; i < 200; ++i)
+    {
         core.RunSystems();
     }
 
