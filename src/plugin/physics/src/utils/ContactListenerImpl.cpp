@@ -82,25 +82,20 @@ void ContactListenerImpl::ProcessBufferedEvents(Engine::Core &core)
         return;
 
     auto &eventManager = core.GetResource<::Event::Resource::EventManager>();
-    auto isValidEntityPair = [&core](const Engine::Entity &a, const Engine::Entity &b) {
-        entt::entity enttA = static_cast<entt::entity>(a);
-        entt::entity enttB = static_cast<entt::entity>(b);
-        return core.IsEntityValid(enttA) && core.IsEntityValid(enttB);
-    };
 
     for (const auto &e : added)
     {
-        if (isValidEntityPair(e.entity1, e.entity2))
+        if (core.IsEntityValid(e.entity1) && core.IsEntityValid(e.entity2))
             eventManager.PushEvent(e);
     }
     for (const auto &e : persisted)
     {
-        if (isValidEntityPair(e.entity1, e.entity2))
+        if (core.IsEntityValid(e.entity1) && core.IsEntityValid(e.entity2))
             eventManager.PushEvent(e);
     }
     for (const auto &e : removed)
     {
-        if (isValidEntityPair(e.entity1, e.entity2))
+        if (core.IsEntityValid(e.entity1) && core.IsEntityValid(e.entity2))
             eventManager.PushEvent(e);
     }
 }

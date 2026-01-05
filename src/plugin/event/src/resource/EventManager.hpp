@@ -24,7 +24,7 @@ class EventManager {
     EventManager(const EventManager &) = delete;
     EventManager &operator=(const EventManager &) = delete;
 
-    EventManager(EventManager &&other) noexcept
+    EventManager(EventManager &&other) noexcept : _queueMutex()
     {
         std::scoped_lock lock(other._queueMutex);
         _eventCallbacks = std::move(other._eventCallbacks);
