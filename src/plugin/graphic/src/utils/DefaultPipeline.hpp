@@ -1,6 +1,7 @@
 #pragma once
 
 #include "component/GPUCamera.hpp"
+#include "component/GPUMaterial.hpp"
 #include "component/GPUMesh.hpp"
 #include "component/GPUTransform.hpp"
 #include "component/Transform.hpp"
@@ -8,7 +9,10 @@
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/SingleExecutionRenderPass.hpp"
+#include "utils/DefaultMaterial.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
+#include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
+#include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include <entt/core/hashed_string.hpp>
 
 namespace Graphic::Utils {
@@ -28,8 +32,16 @@ struct Model {
     modelMatrix : mat4x4<f32>,
 };
 
+struct Material {
+    emission: vec3f,
+    padding: f32,
+};
+
 @group(0) @binding(0) var<uniform> camera : Camera;
 @group(1) @binding(0) var<uniform> model : Model;
+@group(2) @binding(0) var<uniform> material : Material;
+@group(2) @binding(1) var materialTexture : texture_2d<f32>;
+@group(2) @binding(2) var materialSampler : sampler;
 
 struct VertexInput {
     @location(0) position : vec3f,
@@ -56,7 +68,9 @@ fn vs_main(
 fn fs_main(
     input : VertexOutput
 ) -> @location(0) vec4f {
-    var color : vec4f = vec4f(input.fragUV, 1.0, 1.0);
+    var uv = vec2f(1.0 - input.fragUV.x, 1.0 - input.fragUV.y);
+    var texColor : vec4f = textureSample(materialTexture, materialSampler, uv);
+    var color : vec4f = vec4f(material.emission * texColor.xyz, texColor.a);
     return color;
 }
 
@@ -79,22 +93,39 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
         const auto &bufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
         const auto &bindgroupContainer = core.GetResource<Graphic::Resource::BindGroupManager>();
 
-        core.GetRegistry().view<Graphic::Component::GPUTransform, Graphic::Component::GPUMesh>().each(
-            [&](Graphic::Component::GPUTransform &transform, Graphic::Component::GPUMesh &gpuMesh) {
-                const auto &transformBindgroup = bindgroupContainer.Get(transform.bindGroup);
+        auto view = core.GetRegistry().view<Graphic::Component::GPUTransform, Graphic::Component::GPUMesh>();
 
-                renderPass.setBindGroup(transformBindgroup.GetLayoutIndex(), transformBindgroup.GetBindGroup(), 0,
-                                        nullptr);
+        for (auto &&[e, transform, gpuMesh] : view.each())
+        {
+            Engine::Entity entity(e);
 
-                const auto &pointBuffer = bufferContainer.Get(gpuMesh.pointBufferId);
-                const auto &pointBufferSize = pointBuffer->GetBuffer().getSize();
-                renderPass.setVertexBuffer(0, pointBuffer->GetBuffer(), 0, pointBufferSize);
-                const auto &indexBuffer = bufferContainer.Get(gpuMesh.indexBufferId);
-                const auto &indexBufferSize = indexBuffer->GetBuffer().getSize();
-                renderPass.setIndexBuffer(indexBuffer->GetBuffer(), wgpu::IndexFormat::Uint32, 0, indexBufferSize);
+            const auto &transformBindgroup = bindgroupContainer.Get(transform.bindGroup);
+            renderPass.setBindGroup(transformBindgroup.GetLayoutIndex(), transformBindgroup.GetBindGroup(), 0, nullptr);
 
-                renderPass.drawIndexed(indexBufferSize / sizeof(uint32_t), 1, 0, 0, 0);
-            });
+            // TODO: create a system that will add the component if not present before rendering to avoid checking every
+            // frame if the component exists
+            entt::hashed_string gpuMaterialId{};
+            if (entity.HasComponents<Graphic::Component::GPUMaterial>(core))
+            {
+                const auto &materialComponent = entity.GetComponents<Graphic::Component::GPUMaterial>(core);
+                gpuMaterialId = materialComponent.bindGroup;
+            }
+            else
+            {
+                gpuMaterialId = Utils::DEFAULT_MATERIAL_BIND_GROUP_ID;
+            }
+            const auto &materialBindgroup = bindgroupContainer.Get(gpuMaterialId);
+            renderPass.setBindGroup(materialBindgroup.GetLayoutIndex(), materialBindgroup.GetBindGroup(), 0, nullptr);
+
+            const auto &pointBuffer = bufferContainer.Get(gpuMesh.pointBufferId);
+            const auto &pointBufferSize = pointBuffer->GetBuffer().getSize();
+            renderPass.setVertexBuffer(0, pointBuffer->GetBuffer(), 0, pointBufferSize);
+            const auto &indexBuffer = bufferContainer.Get(gpuMesh.indexBufferId);
+            const auto &indexBufferSize = indexBuffer->GetBuffer().getSize();
+            renderPass.setIndexBuffer(indexBuffer->GetBuffer(), wgpu::IndexFormat::Uint32, 0, indexBufferSize);
+
+            renderPass.drawIndexed(indexBufferSize / sizeof(uint32_t), 1, 0, 0, 0);
+        }
     }
 
     static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext)
@@ -113,6 +144,21 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                                              .setMinBindingSize(sizeof(glm::mat4))
                                              .setVisibility(wgpu::ShaderStage::Vertex)
                                              .setBinding(0));
+        auto materialLayout = Graphic::Utils::BindGroupLayout("MaterialLayout")
+                                  .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("material")
+                                                .setType(wgpu::BufferBindingType::Uniform)
+                                                .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
+                                                .setVisibility(wgpu::ShaderStage::Fragment)
+                                                .setBinding(0))
+                                  .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("materialTexture")
+                                                .setSampleType(wgpu::TextureSampleType::Float)
+                                                .setViewDimension(wgpu::TextureViewDimension::_2D)
+                                                .setVisibility(wgpu::ShaderStage::Fragment)
+                                                .setBinding(1))
+                                  .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("materialSampler")
+                                                .setType(wgpu::SamplerBindingType::Filtering)
+                                                .setVisibility(wgpu::ShaderStage::Fragment)
+                                                .setBinding(2));
 
         auto vertexLayout = Graphic::Utils::VertexBufferLayout()
                                 .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)
@@ -135,6 +181,7 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
             .setFragmentEntryPoint("fs_main")
             .addBindGroupLayout(cameraLayout)
             .addBindGroupLayout(modelLayout)
+            .addBindGroupLayout(materialLayout)
             .addVertexBufferLayout(vertexLayout)
             .addOutputColorFormat(colorOutput)
             .setOutputDepthFormat(depthOutput);
