@@ -99,6 +99,8 @@ jobs:
           package-cache: true
           package-cache-key: '${{ runner.os }}-xmake-entt-vulkan-glm'
           project-path: '.'
+          build-cache: true
+          build-cache-key: '${{ runner.os }}-xmake-build'
 
       - name: Build project
         run: xmake build -y
