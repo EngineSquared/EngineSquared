@@ -1,21 +1,19 @@
 # xmake-related files
-**/.xmake/*
-.vs/*
-**/.vscode/*
-CMakeLists.txt
-Makefile
-vs*/*
-vsxmake*/*
-build/
-docs/
-.Test/
-*.spv
-.clangd
-compile_commands.json
+**/.xmake
+**/.vs
+**/.vscode
+**/CMakeLists.txt
+**/Makefile
+**/build
+**/docs
+**/.Test
+**/*.spv
+**/.clangd
+**/compile_commands.json
 
 # sonar
-.sonarlint/*
-sonar-project.properties
-.DS_Store
-src/.DS_Store
-_codeql_detected_source_root
+**/.sonarlint/*
+**/sonar-project.properties
+**/.DS_Store
+**/src/.DS_Store
+**/_codeql_detected_source_root
