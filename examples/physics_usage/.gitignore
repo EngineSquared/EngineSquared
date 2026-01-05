@@ -1,7 +1,0 @@
-# Physics Usage Example - Output
-*.exe
-*.pdb
-*.ilk
-*.obj
-build/
-.xmake/
