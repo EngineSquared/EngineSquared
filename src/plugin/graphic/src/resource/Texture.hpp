@@ -56,19 +56,19 @@ class Texture {
         _defaultView = _webgpuTexture.createView();
     }
 
-    Texture(Context &context, const wgpu::TextureDescriptor &descriptor)
+    Texture(const Context &context, const wgpu::TextureDescriptor &descriptor)
         : Texture(std::string(descriptor.label.data, descriptor.label.length),
                   context.deviceContext.GetDevice()->createTexture(descriptor))
     {
     }
 
-    Texture(Context &context, std::string_view name, const Image &image)
+    Texture(const Context &context, std::string_view name, const Image &image)
         : Texture(context, _BuildDescriptor(name, image))
     {
         Write(context, image);
     }
 
-    Texture(Context &context, std::string_view name, const glm::uvec2 &size,
+    Texture(const Context &context, std::string_view name, const glm::uvec2 &size,
             const std::function<glm::u8vec4(glm::uvec2 pos)> &callback)
         : Texture(context, name, Image(size, callback))
     {
@@ -124,7 +124,7 @@ class Texture {
     inline glm::uvec2 GetSize() const { return glm::uvec2{_webgpuTexture.getWidth(), _webgpuTexture.getHeight()}; }
 
     // We assume the image is correctly formatted (width * height = pixels.size())
-    void Write(Context &context, const Image &image)
+    void Write(const Context &context, const Image &image)
     {
         if (image.width != this->_webgpuTexture.getWidth() || image.height != this->_webgpuTexture.getHeight())
         {
@@ -142,14 +142,14 @@ class Texture {
         source.offset = 0;
         source.bytesPerRow = image.channels * textureSize.width;
         source.rowsPerImage = textureSize.height;
-        wgpu::Queue &queue = context.queue.value();
+        const wgpu::Queue &queue = context.queue.value();
         queue.writeTexture(destination, image.pixels.data(), source.bytesPerRow * source.rowsPerImage, source,
                            textureSize);
     }
 
-    Image RetrieveImage(Context &context) const
+    Image RetrieveImage(const Context &context) const
     {
-        wgpu::Queue &queue = context.queue.value();
+        const wgpu::Queue &queue = context.queue.value();
 
         wgpu::Extent3D copySize(_webgpuTexture.getWidth(), _webgpuTexture.getHeight(), 1);
 
@@ -218,7 +218,7 @@ class Texture {
         textureDesc.dimension = wgpu::TextureDimension::_2D;
         textureDesc.mipLevelCount = 1;
         textureDesc.sampleCount = 1;
-        textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+        textureDesc.format = wgpu::TextureFormat::RGBA8UnormSrgb;
         textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
                             wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
         textureDesc.viewFormats = nullptr;

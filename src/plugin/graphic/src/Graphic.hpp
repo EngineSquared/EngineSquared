@@ -35,6 +35,9 @@
 
 // Utils
 #include "utils/DefaultPipeline.hpp"
+#include "utils/DefaultSampler.hpp"
+#include "utils/DefaultTexture.hpp"
+#include "utils/EmptyTexture.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/IValidable.hpp"
 #include "utils/shader/ABindGroupLayoutEntry.hpp"
@@ -75,8 +78,12 @@
 // Systems
 #include "system/initialization/ConfigureSurface.hpp"
 #include "system/initialization/CreateAdapter.hpp"
+#include "system/initialization/CreateDefaultMaterial.hpp"
 #include "system/initialization/CreateDefaultRenderPipeline.hpp"
+#include "system/initialization/CreateDefaultSampler.hpp"
+#include "system/initialization/CreateDefaultTexture.hpp"
 #include "system/initialization/CreateDevice.hpp"
+#include "system/initialization/CreateEmptyTexture.hpp"
 #include "system/initialization/CreateInstance.hpp"
 #include "system/initialization/CreateQueue.hpp"
 #include "system/initialization/CreateSurface.hpp"
@@ -86,11 +93,17 @@
 #include "system/initialization/SetupQueue.hpp"
 
 #include "system/GPUComponentManagement/OnCameraCreation.hpp"
+#include "system/GPUComponentManagement/OnCameraDestruction.hpp"
+#include "system/GPUComponentManagement/OnMaterialCreation.hpp"
+#include "system/GPUComponentManagement/OnMaterialDestruction.hpp"
 #include "system/GPUComponentManagement/OnMeshCreation.hpp"
+#include "system/GPUComponentManagement/OnMeshDestruction.hpp"
 #include "system/GPUComponentManagement/OnTransformCreation.hpp"
+#include "system/GPUComponentManagement/OnTransformDestruction.hpp"
 
 #include "system/preparation/PrepareEndRenderTexture.hpp"
 #include "system/preparation/UpdateGPUCameras.hpp"
+#include "system/preparation/UpdateGPUMaterials.hpp"
 #include "system/preparation/UpdateGPUTransforms.hpp"
 
 #include "system/commandCreation/ExecuteRenderPass.hpp"
