@@ -60,8 +60,7 @@ class EventManager {
         EventTypeID typeID = _GetId<TEvent>();
         std::scoped_lock lock(_queueMutex);
 
-        // Push event to all schedulers that have callbacks for this event type
-        for (auto &[schedulerID, callbacks] : _eventCallbacks)
+        for (const auto &[schedulerID, callbacks] : _eventCallbacks)
         {
             if (callbacks.contains(typeID))
             {
@@ -72,7 +71,7 @@ class EventManager {
 
     template <typename TScheduler> void ProcessEvents(Engine::Core &core)
     {
-        std::type_index schedulerID = std::type_index(typeid(TScheduler));
+        auto schedulerID = std::type_index(typeid(TScheduler));
 
         std::queue<std::pair<EventTypeID, std::any>> queueCopy;
         {
@@ -98,7 +97,7 @@ class EventManager {
     template <typename TEvent, typename TScheduler = Engine::Scheduler::Update>
     void UnregisterCallback(EventCallbackID callbackID)
     {
-        std::type_index schedulerID = std::type_index(typeid(TScheduler));
+        auto schedulerID = std::type_index(typeid(TScheduler));
         EventTypeID typeID = _GetId<TEvent>();
         if (!_eventCallbacks.contains(schedulerID) || !_eventCallbacks[schedulerID].contains(typeID))
         {
@@ -118,7 +117,7 @@ class EventManager {
     template <typename TEvent, typename TCallBack, typename TScheduler>
     EventCallbackID _RegisterCallbackImpl(TCallBack &&callback)
     {
-        std::type_index schedulerID = std::type_index(typeid(TScheduler));
+        auto schedulerID = std::type_index(typeid(TScheduler));
         EventTypeID typeID = _GetId<TEvent>();
 
         if (!_eventCallbacks.contains(schedulerID))
