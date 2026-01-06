@@ -14,17 +14,41 @@
 #include "utils/EventContainer.hpp"
 
 namespace Event::Resource {
+/**
+ * @brief Thread-safe event manager for registering, queuing, and dispatching events.
+ * 
+ * Manages event callbacks and event queues per scheduler type. Events are queued when pushed
+ * and processed during the corresponding scheduler execution. All operations are thread-safe.
+ */
 class EventManager {
   public:
+    /**
+     * @brief Type identifier for event types.
+     */
     using EventTypeID = size_t;
+    
+    /**
+     * @brief Unique identifier for registered event callbacks.
+     */
     using EventCallbackID = size_t;
 
+    /**
+     * @brief Default constructor.
+     */
     EventManager() = default;
+    
+    /**
+     * @brief Default destructor.
+     */
     ~EventManager() = default;
 
     EventManager(const EventManager &) = delete;
     EventManager &operator=(const EventManager &) = delete;
 
+    /**
+     * @brief Move constructor.
+     * @param other The EventManager to move from.
+     */
     EventManager(EventManager &&other) noexcept : _queueMutex(), _callbacksMutex()
     {
         std::scoped_lock lock(other._queueMutex, other._callbacksMutex);
@@ -32,6 +56,11 @@ class EventManager {
         _eventQueue = std::move(other._eventQueue);
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other The EventManager to move from.
+     * @return Reference to this EventManager.
+     */
     EventManager &operator=(EventManager &&other) noexcept
     {
         if (this != &other)
@@ -44,17 +73,41 @@ class EventManager {
         return *this;
     }
 
+    /**
+     * @brief Register a callback for an event type on the Update scheduler.
+     * @tparam TEvent The event type to listen for.
+     * @tparam TCallBack The callback type (auto-deduced).
+     * @param callback The callback function with signature void(Engine::Core&, const TEvent&).
+     * @return Unique identifier for the registered callback.
+     */
     template <typename TEvent, typename TCallBack> EventCallbackID RegisterCallback(TCallBack &&callback)
     {
         return _RegisterCallbackImpl<TEvent, TCallBack, Engine::Scheduler::Update>(std::forward<TCallBack>(callback));
     }
 
+    /**
+     * @brief Register a callback for an event type on a specific scheduler.
+     * @tparam TEvent The event type to listen for.
+     * @tparam TScheduler The scheduler type on which to process this event.
+     * @tparam TCallBack The callback type (auto-deduced).
+     * @param callback The callback function with signature void(Engine::Core&, const TEvent&).
+     * @return Unique identifier for the registered callback.
+     */
     template <typename TEvent, Engine::CScheduler TScheduler, typename TCallBack>
     EventCallbackID RegisterCallback(TCallBack &&callback)
     {
         return _RegisterCallbackImpl<TEvent, TCallBack, TScheduler>(std::forward<TCallBack>(callback));
     }
 
+    /**
+     * @brief Queue an event for processing.
+     * 
+     * The event is added to the queue for each scheduler that has registered callbacks
+     * for this event type. Events are processed during the corresponding scheduler execution.
+     * 
+     * @tparam TEvent The event type.
+     * @param event The event instance to queue.
+     */
     template <typename TEvent> void PushEvent(const TEvent &event)
     {
         EventTypeID typeID = _GetId<TEvent>();
@@ -69,6 +122,15 @@ class EventManager {
         }
     }
 
+    /**
+     * @brief Process all queued events for a specific scheduler.
+     * 
+     * Dequeues and triggers all callbacks registered for the given scheduler type.
+     * This method is typically called by the scheduler during its execution phase.
+     * 
+     * @tparam TScheduler The scheduler type whose events should be processed.
+     * @param core Reference to the engine core.
+     */
     template <typename TScheduler> void ProcessEvents(Engine::Core &core)
     {
         auto schedulerID = std::type_index(typeid(TScheduler));
@@ -103,6 +165,16 @@ class EventManager {
         }
     }
 
+    /**
+     * @brief Unregister a previously registered callback.
+     * 
+     * Removes the callback identified by the given ID for the specified event type
+     * and scheduler. Logs a warning if the callback or event type is not found.
+     * 
+     * @tparam TEvent The event type the callback was registered for.
+     * @tparam TScheduler The scheduler type (defaults to Update).
+     * @param callbackID The unique identifier returned by RegisterCallback.
+     */
     template <typename TEvent, typename TScheduler = Engine::Scheduler::Update>
     void UnregisterCallback(EventCallbackID callbackID)
     {
