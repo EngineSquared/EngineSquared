@@ -164,6 +164,29 @@ void Setup(Engine::Core &core)
     core.RegisterSystem(EscapeKeySystem);
     core.RegisterSystem(CameraTranslationSystem);
     core.RegisterSystem<Engine::Scheduler::Startup>(CameraRotationSystem);
+
+    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback([](Engine::Core &core, int key, int, int action, int) {
+        if (!(action == GLFW_PRESS))
+            return;
+        auto lightView = core.GetRegistry().view<Object::Component::AmbientLight>();
+        if (lightView.empty())
+            return;
+        Engine::Entity light = lightView.front();
+        if (key == GLFW_KEY_R)
+        {
+            Log::Info("Increasing ambient light color intensity");
+            light.GetComponents<Object::Component::AmbientLight>(core).color.x += 0.1f;
+            light.GetComponents<Object::Component::AmbientLight>(core).color.y += 0.1f;
+            light.GetComponents<Object::Component::AmbientLight>(core).color.z += 0.1f;
+        }
+        if (key == GLFW_KEY_F)
+        {
+            Log::Info("Decreasing ambient light color intensity");
+            light.GetComponents<Object::Component::AmbientLight>(core).color.x -= 0.1f;
+            light.GetComponents<Object::Component::AmbientLight>(core).color.y -= 0.1f;
+            light.GetComponents<Object::Component::AmbientLight>(core).color.z -= 0.1f;
+        }
+    });
 }
 
 class GraphicExampleError : public std::runtime_error {
