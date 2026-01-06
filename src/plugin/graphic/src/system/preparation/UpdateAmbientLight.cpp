@@ -1,7 +1,7 @@
 #include "UpdateAmbientLight.hpp"
-#include "resource/AmbientLight.hpp"
 #include "component/AmbientLight.hpp"
 #include "entity/Entity.hpp"
+#include "resource/AmbientLight.hpp"
 
 namespace Graphic::System {
 
@@ -11,7 +11,8 @@ void UpdateAmbientLight(Engine::Core &core)
     auto view = core.GetRegistry().view<Object::Component::AmbientLight>();
     if (view.empty())
         ambientLightResource.SetEntity(core, Engine::Entity{});
-    else {
+    else
+    {
         Engine::Entity ambientLightEntity{view.front()};
         ambientLightResource.SetEntity(core, ambientLightEntity);
     }

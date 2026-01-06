@@ -48,7 +48,8 @@ void Graphic::Plugin::Bind()
         System::CreateAmbientLight);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
-                                                    System::UpdateGPUCameras, System::UpdateGPUMaterials, System::UpdateAmbientLight);
+                                                    System::UpdateGPUCameras, System::UpdateGPUMaterials,
+                                                    System::UpdateAmbientLight);
 
     RegisterSystems<RenderingPipeline::CommandCreation>(System::ExecuteRenderPass);
 
