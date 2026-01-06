@@ -133,7 +133,6 @@ class EventManager {
         return container->AddFunction(std::forward<TCallBack>(callback));
     }
 
-  private:
     static EventCallbackID _GenerateRandomID()
     {
         static EventCallbackID currentID = 0;
