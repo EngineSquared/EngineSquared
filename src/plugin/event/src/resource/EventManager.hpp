@@ -16,7 +16,7 @@
 namespace Event::Resource {
 /**
  * @brief Thread-safe event manager for registering, queuing, and dispatching events.
- * 
+ *
  * Manages event callbacks and event queues per scheduler type. Events are queued when pushed
  * and processed during the corresponding scheduler execution. All operations are thread-safe.
  */
@@ -26,7 +26,7 @@ class EventManager {
      * @brief Type identifier for event types.
      */
     using EventTypeID = size_t;
-    
+
     /**
      * @brief Unique identifier for registered event callbacks.
      */
@@ -36,7 +36,7 @@ class EventManager {
      * @brief Default constructor.
      */
     EventManager() = default;
-    
+
     /**
      * @brief Default destructor.
      */
@@ -101,10 +101,10 @@ class EventManager {
 
     /**
      * @brief Queue an event for processing.
-     * 
+     *
      * The event is added to the queue for each scheduler that has registered callbacks
      * for this event type. Events are processed during the corresponding scheduler execution.
-     * 
+     *
      * @tparam TEvent The event type.
      * @param event The event instance to queue.
      */
@@ -124,10 +124,10 @@ class EventManager {
 
     /**
      * @brief Process all queued events for a specific scheduler.
-     * 
+     *
      * Dequeues and triggers all callbacks registered for the given scheduler type.
      * This method is typically called by the scheduler during its execution phase.
-     * 
+     *
      * @tparam TScheduler The scheduler type whose events should be processed.
      * @param core Reference to the engine core.
      */
@@ -157,7 +157,7 @@ class EventManager {
                     callback = _eventCallbacks[schedulerID][typeID];
                 }
             }
-            
+
             if (callback)
             {
                 callback->Trigger(core, event);
@@ -167,10 +167,10 @@ class EventManager {
 
     /**
      * @brief Unregister a previously registered callback.
-     * 
+     *
      * Removes the callback identified by the given ID for the specified event type
      * and scheduler. Logs a warning if the callback or event type is not found.
-     * 
+     *
      * @tparam TEvent The event type the callback was registered for.
      * @tparam TScheduler The scheduler type (defaults to Update).
      * @param callbackID The unique identifier returned by RegisterCallback.
