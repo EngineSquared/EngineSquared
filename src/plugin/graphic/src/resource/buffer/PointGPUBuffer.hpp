@@ -68,7 +68,7 @@ class PointGPUBuffer : public AGPUBuffer {
             throw Exception::UpdateBufferError("Cannot update a GPU buffer that is not created.");
         }
 
-        auto &meshComponent = core.GetRegistry().get<Object::Component::Mesh>(_entity);
+        const auto &meshComponent = _entity.GetComponents<Object::Component::Mesh>(core);
 
         // For now, we will not implement dynamic resizing of the buffer. As we should have a way to know if the size
         // changed. And it would be so heavy to check every frame every vertex position, normal and texCoord.

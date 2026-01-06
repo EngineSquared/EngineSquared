@@ -5,6 +5,7 @@
 #include "component/Material.hpp"
 #include "component/Mesh.hpp"
 #include "component/Transform.hpp"
+#include "component/AmbientLight.hpp"
 
 // Exceptions
 #include "exception/ResourceManagerError.hpp"

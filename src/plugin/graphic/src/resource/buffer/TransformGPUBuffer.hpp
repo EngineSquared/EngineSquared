@@ -39,7 +39,7 @@ class TransformGPUBuffer : public AGPUBuffer {
             throw Exception::UpdateBufferError("Cannot update a GPU transform buffer that is not created.");
         }
 
-        Object::Component::Transform &transformComponent = _entity.GetComponents<Object::Component::Transform>(core);
+        auto &transformComponent = _entity.GetComponents<Object::Component::Transform>(core);
         const Context &context = core.GetResource<Context>();
         _UpdateBuffer(transformComponent, context);
     };

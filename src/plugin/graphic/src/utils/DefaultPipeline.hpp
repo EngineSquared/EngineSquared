@@ -14,6 +14,8 @@
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include <entt/core/hashed_string.hpp>
+#include "resource/AmbientLight.hpp"
+#include "utils/AmbientLight.hpp"
 
 namespace Graphic::Utils {
 static inline constexpr std::string_view DEFAULT_RENDER_GRAPH_NAME = "END_RENDER_TEXTURE";
@@ -37,11 +39,17 @@ struct Material {
     padding: f32,
 };
 
+struct AmbientLight {
+    color : vec3f,
+    padding : f32,
+};
+
 @group(0) @binding(0) var<uniform> camera : Camera;
 @group(1) @binding(0) var<uniform> model : Model;
 @group(2) @binding(0) var<uniform> material : Material;
 @group(2) @binding(1) var materialTexture : texture_2d<f32>;
 @group(2) @binding(2) var materialSampler : sampler;
+@group(3) @binding(0) var<uniform> ambientLight : AmbientLight;
 
 struct VertexInput {
     @location(0) position : vec3f,
@@ -70,7 +78,7 @@ fn fs_main(
 ) -> @location(0) vec4f {
     var uv = vec2f(1.0 - input.fragUV.x, 1.0 - input.fragUV.y);
     var texColor : vec4f = textureSample(materialTexture, materialSampler, uv);
-    var color : vec4f = vec4f(material.emission * texColor.xyz, texColor.a);
+    var color : vec4f = vec4f(material.emission * texColor.xyz * ambientLight.color, texColor.a);
     return color;
 }
 
@@ -83,12 +91,15 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
     void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
     {
         Engine::Entity camera(core.GetRegistry().view<Graphic::Component::GPUCamera>().front());
-        auto &cameraGPUComponent = camera.GetComponents<Graphic::Component::GPUCamera>(core);
+        const auto &cameraGPUComponent = camera.GetComponents<Graphic::Component::GPUCamera>(core);
+        const auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
 
-        auto &cameraBindGroup =
-            core.GetResource<Graphic::Resource::BindGroupManager>().Get(cameraGPUComponent.bindGroup);
-
+        const auto &cameraBindGroup = bindGroupManager.Get(cameraGPUComponent.bindGroup);
         renderPass.setBindGroup(0, cameraBindGroup.GetBindGroup(), 0, nullptr);
+
+        const auto &ambientLight = core.GetResource<Graphic::Resource::AmbientLight>();
+        const auto &ambientLightBindGroup = bindGroupManager.Get(Graphic::Utils::AMBIENT_LIGHT_BIND_GROUP_ID);
+        renderPass.setBindGroup(3, ambientLightBindGroup.GetBindGroup(), 0, nullptr);
 
         const auto &bufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
         const auto &bindgroupContainer = core.GetResource<Graphic::Resource::BindGroupManager>();
@@ -159,6 +170,12 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                                                 .setType(wgpu::SamplerBindingType::Filtering)
                                                 .setVisibility(wgpu::ShaderStage::Fragment)
                                                 .setBinding(2));
+        auto ambientLightLayout = Graphic::Utils::BindGroupLayout("AmbientLightLayout")
+                                      .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("ambientLight")
+                                                    .setType(wgpu::BufferBindingType::Uniform)
+                                                    .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
+                                                    .setVisibility(wgpu::ShaderStage::Fragment)
+                                                    .setBinding(0));
 
         auto vertexLayout = Graphic::Utils::VertexBufferLayout()
                                 .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)
@@ -182,6 +199,7 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
             .addBindGroupLayout(cameraLayout)
             .addBindGroupLayout(modelLayout)
             .addBindGroupLayout(materialLayout)
+            .addBindGroupLayout(ambientLightLayout)
             .addVertexBufferLayout(vertexLayout)
             .addOutputColorFormat(colorOutput)
             .setOutputDepthFormat(depthOutput);

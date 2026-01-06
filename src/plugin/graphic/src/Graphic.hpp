@@ -27,16 +27,19 @@
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
+#include "resource/AmbientLight.hpp"
 
 #include "resource/buffer/CameraGPUBuffer.hpp"
 #include "resource/buffer/IndexGPUBuffer.hpp"
 #include "resource/buffer/PointGPUBuffer.hpp"
 #include "resource/buffer/TransformGPUBuffer.hpp"
+#include "resource/buffer/AmbientLightBuffer.hpp"
 
 // Utils
 #include "utils/DefaultPipeline.hpp"
 #include "utils/DefaultSampler.hpp"
 #include "utils/DefaultTexture.hpp"
+#include "utils/AmbientLight.hpp"
 #include "utils/EmptyTexture.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/IValidable.hpp"
@@ -91,6 +94,7 @@
 #include "system/initialization/ReleaseInstance.hpp"
 #include "system/initialization/RequestCapabilities.hpp"
 #include "system/initialization/SetupQueue.hpp"
+#include "system/initialization/CreateAmbientLight.hpp"
 
 #include "system/GPUComponentManagement/OnCameraCreation.hpp"
 #include "system/GPUComponentManagement/OnCameraDestruction.hpp"
