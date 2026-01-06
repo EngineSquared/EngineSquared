@@ -25,9 +25,9 @@ class EventManager {
     EventManager(const EventManager &) = delete;
     EventManager &operator=(const EventManager &) = delete;
 
-    EventManager(EventManager &&other) noexcept : _queueMutex()
+    EventManager(EventManager &&other) noexcept : _queueMutex(), _callbacksMutex()
     {
-        std::scoped_lock lock(other._queueMutex);
+        std::scoped_lock lock(other._queueMutex, other._callbacksMutex);
         _eventCallbacks = std::move(other._eventCallbacks);
         _eventQueue = std::move(other._eventQueue);
     }
@@ -36,7 +36,7 @@ class EventManager {
     {
         if (this != &other)
         {
-            std::scoped_lock lock(other._queueMutex, _queueMutex);
+            std::scoped_lock lock(other._queueMutex, _queueMutex, other._callbacksMutex, _callbacksMutex);
             _eventCallbacks = std::move(other._eventCallbacks);
             _eventQueue = std::move(other._eventQueue);
         }
@@ -58,7 +58,7 @@ class EventManager {
     template <typename TEvent> void PushEvent(const TEvent &event)
     {
         EventTypeID typeID = _GetId<TEvent>();
-        std::scoped_lock lock(_queueMutex);
+        std::scoped_lock lock(_queueMutex, _callbacksMutex);
 
         for (const auto &[schedulerID, callbacks] : _eventCallbacks)
         {
@@ -87,9 +87,18 @@ class EventManager {
             auto [typeID, event] = std::move(queueCopy.front());
             queueCopy.pop();
 
-            if (_eventCallbacks.contains(schedulerID) && _eventCallbacks[schedulerID].contains(typeID))
+            std::shared_ptr<Utils::IEventContainer> callback;
             {
-                _eventCallbacks[schedulerID][typeID]->Trigger(core, event);
+                std::scoped_lock lock(_callbacksMutex);
+                if (_eventCallbacks.contains(schedulerID) && _eventCallbacks[schedulerID].contains(typeID))
+                {
+                    callback = _eventCallbacks[schedulerID][typeID];
+                }
+            }
+            
+            if (callback)
+            {
+                callback->Trigger(core, event);
             }
         }
     }
@@ -97,6 +106,7 @@ class EventManager {
     template <typename TEvent, typename TScheduler = Engine::Scheduler::Update>
     void UnregisterCallback(EventCallbackID callbackID)
     {
+        std::scoped_lock lock(_callbacksMutex);
         auto schedulerID = std::type_index(typeid(TScheduler));
         EventTypeID typeID = _GetId<TEvent>();
         if (!_eventCallbacks.contains(schedulerID) || !_eventCallbacks[schedulerID].contains(typeID))
@@ -117,6 +127,7 @@ class EventManager {
     template <typename TEvent, typename TCallBack, typename TScheduler>
     EventCallbackID _RegisterCallbackImpl(TCallBack &&callback)
     {
+        std::scoped_lock lock(_callbacksMutex);
         auto schedulerID = std::type_index(typeid(TScheduler));
         EventTypeID typeID = _GetId<TEvent>();
 
@@ -145,5 +156,6 @@ class EventManager {
         _eventCallbacks;
     std::unordered_map<std::type_index, std::queue<std::pair<EventTypeID, std::any>>> _eventQueue;
     std::mutex _queueMutex;
+    std::mutex _callbacksMutex;
 };
 } // namespace Event::Resource
