@@ -14,7 +14,9 @@ class AmbientLightBuffer : public AGPUBuffer {
     struct AmbientLightTransfer {
         glm::vec3 color;
 
-        explicit AmbientLightTransfer(const Object::Component::AmbientLight &ambientLight) : color(ambientLight.color) {}
+        explicit AmbientLightTransfer(const Object::Component::AmbientLight &ambientLight) : color(ambientLight.color)
+        {
+        }
 
         static uint32_t CPUSize() { return sizeof(AmbientLightTransfer); }
         static uint32_t GPUSize() { return sizeof(AmbientLightTransfer) + sizeof(float) /*padding*/; }

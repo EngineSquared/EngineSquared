@@ -18,7 +18,7 @@ struct AmbientLight {
     void SetEntity(Engine::Core &core, Engine::Entity entity);
     void SetValue(Engine::Core &core, const Object::Component::AmbientLight &ambientLight);
 
-private:
+  private:
     AmbientLightBuffer &GetLight(Engine::Core &core);
     Object::Component::AmbientLight _ambientLightComponent{};
 };

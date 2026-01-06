@@ -6,16 +6,16 @@
 #include "component/GPUTransform.hpp"
 #include "component/Transform.hpp"
 #include "entity/Entity.hpp"
+#include "resource/AmbientLight.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/SingleExecutionRenderPass.hpp"
+#include "utils/AmbientLight.hpp"
 #include "utils/DefaultMaterial.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include <entt/core/hashed_string.hpp>
-#include "resource/AmbientLight.hpp"
-#include "utils/AmbientLight.hpp"
 
 namespace Graphic::Utils {
 static inline constexpr std::string_view DEFAULT_RENDER_GRAPH_NAME = "END_RENDER_TEXTURE";

@@ -1,9 +1,9 @@
 #include "CreateAmbientLight.hpp"
-#include "utils/AmbientLight.hpp"
 #include "resource/AmbientLight.hpp"
 #include "resource/BindGroupManager.hpp"
-#include "resource/buffer/AmbientLightBuffer.hpp"
 #include "resource/GPUBufferContainer.hpp"
+#include "resource/buffer/AmbientLightBuffer.hpp"
+#include "utils/AmbientLight.hpp"
 
 namespace Graphic::System {
 
@@ -13,4 +13,4 @@ void CreateAmbientLight(Engine::Core &core)
     ambientLight.Create(core);
 }
 
-}
+} // namespace Graphic::System
