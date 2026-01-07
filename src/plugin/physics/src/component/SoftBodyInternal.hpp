@@ -25,6 +25,7 @@
 
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Body/BodyID.h>
+#include <vector>
 
 namespace Physics::Component {
 
@@ -40,6 +41,10 @@ struct SoftBodyInternal {
     /// Jolt body ID for the soft body
     JPH::BodyID bodyID;
 
+    /// Maps original mesh vertex index to deduplicated Jolt vertex index
+    /// Used to sync Jolt simulation results back to the original mesh
+    std::vector<uint32_t> vertexMap;
+
     /**
      * @brief Default constructor (invalid body)
      */
@@ -50,6 +55,13 @@ struct SoftBodyInternal {
      * @param id Jolt body ID
      */
     explicit SoftBodyInternal(JPH::BodyID id) : bodyID(id) {}
+
+    /**
+     * @brief Construct with body ID and vertex map
+     * @param id Jolt body ID
+     * @param map Vertex mapping from original to deduplicated indices
+     */
+    SoftBodyInternal(JPH::BodyID id, std::vector<uint32_t> map) : bodyID(id), vertexMap(std::move(map)) {}
 
     /**
      * @brief Check if body ID is valid

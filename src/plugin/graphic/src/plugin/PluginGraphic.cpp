@@ -46,7 +46,8 @@ void Graphic::Plugin::Bind()
         System::CreateDefaultSampler, System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
-                                                    System::UpdateGPUCameras, System::UpdateGPUMaterials);
+                                                    System::UpdateGPUCameras, System::UpdateGPUMaterials,
+                                                    System::UpdateGPUMeshes);
 
     RegisterSystems<RenderingPipeline::CommandCreation>(System::ExecuteRenderPass);
 
