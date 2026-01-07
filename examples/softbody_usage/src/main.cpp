@@ -138,15 +138,32 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     Object::OBJLoader loader(FILES_PATH "teapot.obj");
     auto mesh = loader.GetMesh();
 
-    const float scaleFactor = 0.08f;
+    // Scale down the teapot (original coords are ~40 units)
+    const float scaleFactor = 0.05f;  // Results in ~2 unit teapot
     for (auto &vertex : mesh.vertices)
         vertex *= scaleFactor;
 
-    auto teapot = core.CreateEntity();
-    teapot.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 5.0f, 0.0f));
+    // Also scale normals (though they don't need magnitude change, just in case)
+    for (auto &normal : mesh.normals)
+        normal = glm::normalize(normal);
 
-    auto soft =
-        Physics::Component::SoftBody::CreateFromMesh(mesh, Physics::Component::SoftBodySettings::Balloon(500.0f));
+    auto teapot = core.CreateEntity();
+    // Position the teapot so it falls onto the floor (floor surface is at y=0.5)
+    teapot.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 3.0f, 0.0f));
+
+    // Configure soft body settings based on Jolt's SoftBodyCreator defaults
+    // Jolt uses VertexAttributes { 1.0e-4f, 1.0e-4f, 1.0e-3f } for edge/shear/bend
+    auto settings = Physics::Component::SoftBodySettings::Balloon(5000.0f);
+    settings.edgeCompliance = 1.0e-5f;   // Very stiff edges (stiffer than Jolt default)
+    settings.shearCompliance = 1.0e-5f;  // Very stiff shear
+    settings.bendCompliance = 1.0e-4f;   // Stiff bending (10x stiffer than Jolt default)
+    settings.solverIterations = 10;      // More iterations for stability
+    settings.vertexRadius = 0.5f;        // Larger radius for better collision detection
+    settings.gravityFactor = 1.0f;
+    settings.friction = 0.5f;            // Friction with floor
+    settings.restitution = 0.3f;         // Some bounce
+
+    auto soft = Physics::Component::SoftBody::CreateFromMesh(mesh, settings);
 
     teapot.AddComponent<Object::Component::Mesh>(core, std::move(mesh));
     teapot.AddComponent<Physics::Component::SoftBody>(core, std::move(soft));
@@ -161,7 +178,7 @@ void Setup(Engine::Core &core)
 
     auto camera = core.CreateEntity();
 
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 1.0f, -2.0f));
+    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 5.0f, -10.0f));
     camera.AddComponent<Object::Component::Camera>(core);
 
     core.RegisterSystem(EscapeKeySystem);
