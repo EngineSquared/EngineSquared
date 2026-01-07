@@ -68,10 +68,27 @@ class PointGPUBuffer : public AGPUBuffer {
             throw Exception::UpdateBufferError("Cannot update a GPU buffer that is not created.");
         }
 
-        auto &meshComponent = core.GetRegistry().get<Object::Component::Mesh>(_entity);
+        auto meshComponent = _entity.TryGetComponent<Object::Component::Mesh>(core);
+        if (!meshComponent)
+            return;
 
-        // For now, we will not implement dynamic resizing of the buffer. As we should have a way to know if the size
-        // changed. And it would be so heavy to check every frame every vertex position, normal and texCoord.
+        // Update vertex data from mesh (for soft bodies and other dynamic meshes)
+        std::vector<float> pointData;
+        pointData.reserve(meshComponent->vertices.size() * 8);
+
+        for (uint64_t i = 0; i < meshComponent->vertices.size(); ++i)
+        {
+            pointData.emplace_back(meshComponent->vertices[i].x);
+            pointData.emplace_back(meshComponent->vertices[i].y);
+            pointData.emplace_back(meshComponent->vertices[i].z);
+            pointData.emplace_back(meshComponent->normals[i].x);
+            pointData.emplace_back(meshComponent->normals[i].y);
+            pointData.emplace_back(meshComponent->normals[i].z);
+            pointData.emplace_back(meshComponent->texCoords[i].x);
+            pointData.emplace_back(meshComponent->texCoords[i].y);
+        }
+
+        core.GetResource<Context>().queue->writeBuffer(_buffer, 0, pointData.data(), sizeof(float) * pointData.size());
     };
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };

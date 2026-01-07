@@ -158,18 +158,24 @@ struct SoftBodySettings {
      * @brief Settings for pressure-based soft bodies (balloons)
      * @param pressure Internal pressure
      * @return SoftBodySettings
+     *
+     * Uses stiff constraint values inspired by Jolt's SoftBodyCreator defaults:
+     * - Edge/Shear: 1.0e-4f (very stiff)
+     * - Bend: 1.0e-3f (stiff but allows some bending)
      */
     static SoftBodySettings Balloon(float pressure = 1000.0f)
     {
         SoftBodySettings s;
-        s.solverIterations = 8;
+        s.solverIterations = 10;
         s.linearDamping = 0.1f;
         s.pressure = pressure;
         s.restitution = 0.5f;
-        s.friction = 0.2f;
-        s.edgeCompliance = 0.001f;
-        s.bendCompliance = 0.1f;
-        s.vertexRadius = 0.02f;
+        s.friction = 0.3f;
+        // Jolt defaults: { 1.0e-4f, 1.0e-4f, 1.0e-3f } for edge/shear/bend
+        s.edgeCompliance = 1.0e-4f;
+        s.shearCompliance = 1.0e-4f;
+        s.bendCompliance = 1.0e-3f;
+        s.vertexRadius = 0.02f;  // Small, only for z-fighting prevention
         return s;
     }
 

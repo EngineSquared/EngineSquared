@@ -29,6 +29,7 @@
 #include "utils/JoltConversions.hpp"
 #include "utils/Layers.hpp"
 #include <fmt/format.h>
+#include <unordered_map>
 
 #include "Object.hpp"
 
@@ -45,43 +46,181 @@ namespace Physics::System {
 //=============================================================================
 
 /**
+ * @brief Hash function for glm::vec3 to use in unordered_map
+ */
+struct Vec3Hash {
+    size_t operator()(const glm::vec3 &v) const
+    {
+        // Use a simple hash combining x, y, z components
+        size_t h1 = std::hash<float>{}(v.x);
+        size_t h2 = std::hash<float>{}(v.y);
+        size_t h3 = std::hash<float>{}(v.z);
+        return h1 ^ (h2 << 1) ^ (h3 << 2);
+    }
+};
+
+/**
+ * @brief Equality function for glm::vec3 with epsilon tolerance
+ */
+struct Vec3Equal {
+    bool operator()(const glm::vec3 &a, const glm::vec3 &b) const
+    {
+        constexpr float epsilon = 1e-6f;
+        return std::abs(a.x - b.x) < epsilon && std::abs(a.y - b.y) < epsilon && std::abs(a.z - b.z) < epsilon;
+    }
+};
+
+/**
+ * @brief Structure holding deduplicated mesh data for Jolt soft body
+ */
+struct DeduplicatedMesh {
+    std::vector<glm::vec3> vertices;  ///< Unique vertices
+    std::vector<uint32_t> indices;    ///< Face indices referencing unique vertices
+    std::vector<uint32_t> vertexMap;  ///< Maps original vertex index to deduplicated index
+};
+
+/**
+ * @brief Convert a potentially "flat" mesh (with duplicated vertices) to an indexed mesh with unique vertices
+ *
+ * OBJLoader creates meshes where each face has its own copy of vertices, resulting in
+ * indices like [0, 1, 2, 3, 4, 5, ...] where vertices are duplicated.
+ * Jolt SoftBody needs a proper indexed mesh with shared vertices for constraint creation.
+ *
+ * @param mesh The input mesh (potentially with duplicated vertices)
+ * @return DeduplicatedMesh with unique vertices and proper indices
+ */
+static DeduplicatedMesh DeduplicateMesh(const Object::Component::Mesh &mesh)
+{
+    DeduplicatedMesh result;
+    result.vertexMap.resize(mesh.vertices.size());
+
+    std::unordered_map<glm::vec3, uint32_t, Vec3Hash, Vec3Equal> vertexToIndex;
+
+    for (size_t i = 0; i < mesh.vertices.size(); ++i)
+    {
+        const auto &vertex = mesh.vertices[i];
+
+        auto it = vertexToIndex.find(vertex);
+        if (it != vertexToIndex.end())
+        {
+            // Vertex already exists, reuse its index
+            result.vertexMap[i] = it->second;
+        }
+        else
+        {
+            // New unique vertex
+            uint32_t newIndex = static_cast<uint32_t>(result.vertices.size());
+            result.vertices.push_back(vertex);
+            vertexToIndex[vertex] = newIndex;
+            result.vertexMap[i] = newIndex;
+        }
+    }
+
+    // Remap indices to point to deduplicated vertices
+    result.indices.reserve(mesh.indices.size());
+    for (uint32_t idx : mesh.indices)
+    {
+        if (idx < result.vertexMap.size())
+        {
+            result.indices.push_back(result.vertexMap[idx]);
+        }
+    }
+
+    return result;
+}
+
+/**
+ * @brief Result of creating Jolt shared settings, includes vertex mapping
+ */
+struct CreateSettingsResult {
+    JPH::Ref<JPH::SoftBodySharedSettings> settings;
+    std::vector<uint32_t> vertexMap;  ///< Maps original vertex index to deduplicated index
+};
+
+/**
  * @brief Convert SoftBody component to Jolt SoftBodySharedSettings
  * @param softBody The soft body component with settings and physics data
  * @param mesh The mesh containing vertices and face indices
+ * @return CreateSettingsResult with settings and vertex mapping
  */
-static JPH::Ref<JPH::SoftBodySharedSettings> CreateJoltSharedSettings(const Component::SoftBody &softBody,
-                                                                      const Object::Component::Mesh &mesh)
+static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &softBody,
+                                                     const Object::Component::Mesh &mesh)
 {
+    CreateSettingsResult result;
     auto settings = new JPH::SoftBodySharedSettings();
 
-    // Add vertices from Mesh
-    settings->mVertices.reserve(mesh.vertices.size());
-    for (size_t i = 0; i < mesh.vertices.size(); ++i)
+    // Deduplicate the mesh to get unique vertices and proper indices
+    // This is necessary because OBJLoader creates "flat" meshes with duplicated vertices
+    DeduplicatedMesh deduped = DeduplicateMesh(mesh);
+
+    // Store the vertex map for later sync
+    result.vertexMap = std::move(deduped.vertexMap);
+
+    Log::Info(fmt::format("SoftBody mesh: original {} vertices -> {} unique vertices, {} indices",
+                          mesh.vertices.size(), deduped.vertices.size(), deduped.indices.size()));
+
+    // Add unique vertices
+    settings->mVertices.reserve(deduped.vertices.size());
+    for (size_t i = 0; i < deduped.vertices.size(); ++i)
     {
         JPH::SoftBodySharedSettings::Vertex v;
-        v.mPosition = JPH::Float3(mesh.vertices[i].x, mesh.vertices[i].y, mesh.vertices[i].z);
+        v.mPosition = JPH::Float3(deduped.vertices[i].x, deduped.vertices[i].y, deduped.vertices[i].z);
         v.mVelocity = JPH::Float3(0, 0, 0);
-        v.mInvMass = (i < softBody.invMasses.size()) ? softBody.invMasses[i] : 1.0f;
+
+        // Map inverse mass from original vertices - find any original vertex that maps to this one
+        float invMass = 1.0f;
+        for (size_t origIdx = 0; origIdx < result.vertexMap.size(); ++origIdx)
+        {
+            if (result.vertexMap[origIdx] == i && origIdx < softBody.invMasses.size())
+            {
+                invMass = softBody.invMasses[origIdx];
+                break;
+            }
+        }
+        v.mInvMass = invMass;
+
         settings->mVertices.emplace_back(v);
     }
 
-    // Add faces from Mesh (if any)
-    if (!mesh.indices.empty())
+    // Add faces using deduplicated indices
+    if (!deduped.indices.empty())
     {
-        settings->mFaces.reserve(mesh.indices.size() / 3);
-        for (size_t i = 0; i + 2 < mesh.indices.size(); i += 3)
+        settings->mFaces.reserve(deduped.indices.size() / 3);
+        for (size_t i = 0; i + 2 < deduped.indices.size(); i += 3)
         {
-            settings->mFaces.emplace_back(JPH::SoftBodySharedSettings::Face(mesh.indices[i], mesh.indices[i + 1],
-                                                                            mesh.indices[i + 2],
-                                                                            0 // Material index
-                                                                            ));
+            uint32_t idx0 = deduped.indices[i];
+            uint32_t idx1 = deduped.indices[i + 1];
+            uint32_t idx2 = deduped.indices[i + 2];
+
+            // Skip degenerate faces (faces where two or more vertices are the same)
+            if (idx0 == idx1 || idx1 == idx2 || idx0 == idx2)
+            {
+                continue;
+            }
+
+            // Validate indices are within bounds
+            if (idx0 >= deduped.vertices.size() || idx1 >= deduped.vertices.size() ||
+                idx2 >= deduped.vertices.size())
+            {
+                Log::Warn(fmt::format("SoftBody: Skipping face with out-of-bounds indices ({}, {}, {})", idx0, idx1,
+                                         idx2));
+                continue;
+            }
+
+            settings->mFaces.emplace_back(JPH::SoftBodySharedSettings::Face(idx0, idx1, idx2, 0));
         }
 
-        // Create constraints automatically based on faces
-        JPH::SoftBodySharedSettings::VertexAttributes attributes(
-            softBody.settings.edgeCompliance, softBody.settings.shearCompliance, softBody.settings.bendCompliance);
+        Log::Info(fmt::format("SoftBody: Created {} faces", settings->mFaces.size()));
 
-        settings->CreateConstraints(&attributes, 1, JPH::SoftBodySharedSettings::EBendType::Distance);
+        // Only create constraints if we have valid faces
+        if (!settings->mFaces.empty())
+        {
+            // Create constraints automatically based on faces
+            JPH::SoftBodySharedSettings::VertexAttributes attributes(
+                softBody.settings.edgeCompliance, softBody.settings.shearCompliance, softBody.settings.bendCompliance);
+
+            settings->CreateConstraints(&attributes, 1, JPH::SoftBodySharedSettings::EBendType::Distance);
+        }
     }
     else if (!softBody.edges.empty())
     {
@@ -97,7 +236,8 @@ static JPH::Ref<JPH::SoftBodySharedSettings> CreateJoltSharedSettings(const Comp
     // Optimize for parallel simulation
     settings->Optimize();
 
-    return settings;
+    result.settings = settings;
+    return result;
 }
 
 /**
@@ -183,11 +323,11 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
             rotation = Utils::ToJoltQuat(transform->GetRotation());
         }
 
-        // Create shared settings from Mesh
-        auto sharedSettings = CreateJoltSharedSettings(softBody, *mesh);
+        // Create shared settings from Mesh (includes deduplication and vertex mapping)
+        auto settingsResult = CreateJoltSharedSettings(softBody, *mesh);
 
         // Create body settings
-        auto creationSettings = CreateJoltCreationSettings(softBody, sharedSettings, position, rotation);
+        auto creationSettings = CreateJoltCreationSettings(softBody, settingsResult.settings, position, rotation);
 
         // Create the soft body
         auto &bodyInterface = physicsManager.GetBodyInterface();
@@ -204,10 +344,10 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
         // Add to physics system (activate)
         bodyInterface.AddBody(bodyID, JPH::EActivation::Activate);
 
-        // Store internal component
-        registry.emplace<Component::SoftBodyInternal>(entity, bodyID);
+        // Store internal component with vertex mapping for sync
+        registry.emplace<Component::SoftBodyInternal>(entity, bodyID, std::move(settingsResult.vertexMap));
 
-        Log::Debug(fmt::format(
+        Log::Info(fmt::format(
             "Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f})",
             static_cast<uint32_t>(entity), mesh->vertices.size(), mesh->indices.size() / 3, position.GetX(),
             position.GetY(), position.GetZ()));
@@ -308,6 +448,54 @@ void SyncSoftBodyVertices(Engine::Core &core)
 
         // Get body center of mass in world space
         JPH::RVec3 bodyPosition = body.GetCenterOfMassPosition();
+        
+        // Debug: Log soft body position and bounds periodically
+        static int frameCount = 0;
+        static bool loggedOnce = false;
+        if (frameCount++ % 60 == 0) {  // Log every 60 frames
+            auto localBounds = motionProps->GetLocalBounds();
+            auto worldBounds = body.GetWorldSpaceBounds();
+            
+            // Find actual min Y world-space vertex position
+            float minY = std::numeric_limits<float>::max();
+            const auto &verts = motionProps->GetVertices();
+            for (const auto &v : verts) {
+                float worldY = bodyPosition.GetY() + v.mPosition.GetY();
+                if (worldY < minY) minY = worldY;
+            }
+            
+            // Check how many vertices have collision
+            int collidingVerts = 0;
+            for (const auto &v : verts) {
+                if (v.mCollidingShapeIndex >= 0) collidingVerts++;
+            }
+            
+            Log::Info(fmt::format("SoftBody worldBounds: [({:.2f},{:.2f},{:.2f}) - ({:.2f},{:.2f},{:.2f})], minVertY: {:.2f}, collidingVerts: {}/{}",
+                worldBounds.mMin.GetX(), worldBounds.mMin.GetY(), worldBounds.mMin.GetZ(),
+                worldBounds.mMax.GetX(), worldBounds.mMax.GetY(), worldBounds.mMax.GetZ(),
+                minY, collidingVerts, verts.size()));
+            
+            // Log all bodies once
+            if (!loggedOnce) {
+                loggedOnce = true;
+                auto& bodyLockInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
+                JPH::BodyIDVector bodyIDs;
+                physicsManager.GetPhysicsSystem().GetBodies(bodyIDs);
+                for (auto id : bodyIDs) {
+                    JPH::BodyLockRead bodyLock(bodyLockInterface, id);
+                    if (bodyLock.Succeeded()) {
+                        const JPH::Body& b = bodyLock.GetBody();
+                        auto bounds = b.GetWorldSpaceBounds();
+                        Log::Info(fmt::format("Body {}: layer={}, broadphase={}, type={}, bounds=[({:.2f},{:.2f},{:.2f})-({:.2f},{:.2f},{:.2f})]",
+                            id.GetIndex(), b.GetObjectLayer(), 
+                            b.GetBroadPhaseLayer().GetValue(),
+                            b.IsSoftBody() ? "soft" : (b.IsStatic() ? "static" : "dynamic"),
+                            bounds.mMin.GetX(), bounds.mMin.GetY(), bounds.mMin.GetZ(),
+                            bounds.mMax.GetX(), bounds.mMax.GetY(), bounds.mMax.GetZ()));
+                    }
+                }
+            }
+        }
 
         // Update vertex positions (vertices are in local space relative to body center of mass)
         const auto &joltVertices = motionProps->GetVertices();
@@ -317,12 +505,33 @@ void SyncSoftBodyVertices(Engine::Core &core)
         if (!mesh || mesh->vertices.empty())
             continue;
 
-        for (size_t i = 0; i < joltVertices.size() && i < mesh->vertices.size(); ++i)
+        // Use the vertex map to sync deduplicated Jolt vertices back to the original mesh
+        // Each original mesh vertex maps to a deduplicated Jolt vertex
+        if (!internal.vertexMap.empty())
         {
-            const auto &v = joltVertices[i];
-            mesh->vertices[i] =
-                glm::vec3(bodyPosition.GetX() + v.mPosition.GetX(), bodyPosition.GetY() + v.mPosition.GetY(),
-                          bodyPosition.GetZ() + v.mPosition.GetZ());
+            // Use vertex map: original mesh vertices are mapped to deduplicated Jolt vertices
+            for (size_t origIdx = 0; origIdx < mesh->vertices.size() && origIdx < internal.vertexMap.size(); ++origIdx)
+            {
+                uint32_t joltIdx = internal.vertexMap[origIdx];
+                if (joltIdx < joltVertices.size())
+                {
+                    const auto &v = joltVertices[joltIdx];
+                    mesh->vertices[origIdx] =
+                        glm::vec3(bodyPosition.GetX() + v.mPosition.GetX(), bodyPosition.GetY() + v.mPosition.GetY(),
+                                  bodyPosition.GetZ() + v.mPosition.GetZ());
+                }
+            }
+        }
+        else
+        {
+            // Fallback: direct 1:1 mapping (for procedurally generated meshes)
+            for (size_t i = 0; i < joltVertices.size() && i < mesh->vertices.size(); ++i)
+            {
+                const auto &v = joltVertices[i];
+                mesh->vertices[i] =
+                    glm::vec3(bodyPosition.GetX() + v.mPosition.GetX(), bodyPosition.GetY() + v.mPosition.GetY(),
+                              bodyPosition.GetZ() + v.mPosition.GetZ());
+            }
         }
     }
 }
