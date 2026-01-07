@@ -74,9 +74,9 @@ struct Vec3Equal {
  * @brief Structure holding deduplicated mesh data for Jolt soft body
  */
 struct DeduplicatedMesh {
-    std::vector<glm::vec3> vertices;  ///< Unique vertices
-    std::vector<uint32_t> indices;    ///< Face indices referencing unique vertices
-    std::vector<uint32_t> vertexMap;  ///< Maps original vertex index to deduplicated index
+    std::vector<glm::vec3> vertices; ///< Unique vertices
+    std::vector<uint32_t> indices;   ///< Face indices referencing unique vertices
+    std::vector<uint32_t> vertexMap; ///< Maps original vertex index to deduplicated index
 };
 
 /**
@@ -134,7 +134,7 @@ static DeduplicatedMesh DeduplicateMesh(const Object::Component::Mesh &mesh)
  */
 struct CreateSettingsResult {
     JPH::Ref<JPH::SoftBodySharedSettings> settings;
-    std::vector<uint32_t> vertexMap;  ///< Maps original vertex index to deduplicated index
+    std::vector<uint32_t> vertexMap; ///< Maps original vertex index to deduplicated index
 };
 
 /**
@@ -156,8 +156,8 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
     // Store the vertex map for later sync
     result.vertexMap = std::move(deduped.vertexMap);
 
-    Log::Info(fmt::format("SoftBody mesh: original {} vertices -> {} unique vertices, {} indices",
-                          mesh.vertices.size(), deduped.vertices.size(), deduped.indices.size()));
+    Log::Info(fmt::format("SoftBody mesh: original {} vertices -> {} unique vertices, {} indices", mesh.vertices.size(),
+                          deduped.vertices.size(), deduped.indices.size()));
 
     // Add unique vertices
     settings->mVertices.reserve(deduped.vertices.size());
@@ -199,11 +199,10 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
             }
 
             // Validate indices are within bounds
-            if (idx0 >= deduped.vertices.size() || idx1 >= deduped.vertices.size() ||
-                idx2 >= deduped.vertices.size())
+            if (idx0 >= deduped.vertices.size() || idx1 >= deduped.vertices.size() || idx2 >= deduped.vertices.size())
             {
-                Log::Warn(fmt::format("SoftBody: Skipping face with out-of-bounds indices ({}, {}, {})", idx0, idx1,
-                                         idx2));
+                Log::Warn(
+                    fmt::format("SoftBody: Skipping face with out-of-bounds indices ({}, {}, {})", idx0, idx1, idx2));
                 continue;
             }
 
@@ -448,50 +447,59 @@ void SyncSoftBodyVertices(Engine::Core &core)
 
         // Get body center of mass in world space
         JPH::RVec3 bodyPosition = body.GetCenterOfMassPosition();
-        
+
         // Debug: Log soft body position and bounds periodically
         static int frameCount = 0;
         static bool loggedOnce = false;
-        if (frameCount++ % 60 == 0) {  // Log every 60 frames
+        if (frameCount++ % 60 == 0)
+        { // Log every 60 frames
             auto localBounds = motionProps->GetLocalBounds();
             auto worldBounds = body.GetWorldSpaceBounds();
-            
+
             // Find actual min Y world-space vertex position
             float minY = std::numeric_limits<float>::max();
             const auto &verts = motionProps->GetVertices();
-            for (const auto &v : verts) {
+            for (const auto &v : verts)
+            {
                 float worldY = bodyPosition.GetY() + v.mPosition.GetY();
-                if (worldY < minY) minY = worldY;
+                if (worldY < minY)
+                    minY = worldY;
             }
-            
+
             // Check how many vertices have collision
             int collidingVerts = 0;
-            for (const auto &v : verts) {
-                if (v.mCollidingShapeIndex >= 0) collidingVerts++;
+            for (const auto &v : verts)
+            {
+                if (v.mCollidingShapeIndex >= 0)
+                    collidingVerts++;
             }
-            
-            Log::Info(fmt::format("SoftBody worldBounds: [({:.2f},{:.2f},{:.2f}) - ({:.2f},{:.2f},{:.2f})], minVertY: {:.2f}, collidingVerts: {}/{}",
-                worldBounds.mMin.GetX(), worldBounds.mMin.GetY(), worldBounds.mMin.GetZ(),
-                worldBounds.mMax.GetX(), worldBounds.mMax.GetY(), worldBounds.mMax.GetZ(),
-                minY, collidingVerts, verts.size()));
-            
+
+            Log::Info(fmt::format("SoftBody worldBounds: [({:.2f},{:.2f},{:.2f}) - ({:.2f},{:.2f},{:.2f})], minVertY: "
+                                  "{:.2f}, collidingVerts: {}/{}",
+                                  worldBounds.mMin.GetX(), worldBounds.mMin.GetY(), worldBounds.mMin.GetZ(),
+                                  worldBounds.mMax.GetX(), worldBounds.mMax.GetY(), worldBounds.mMax.GetZ(), minY,
+                                  collidingVerts, verts.size()));
+
             // Log all bodies once
-            if (!loggedOnce) {
+            if (!loggedOnce)
+            {
                 loggedOnce = true;
-                auto& bodyLockInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
+                auto &bodyLockInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
                 JPH::BodyIDVector bodyIDs;
                 physicsManager.GetPhysicsSystem().GetBodies(bodyIDs);
-                for (auto id : bodyIDs) {
+                for (auto id : bodyIDs)
+                {
                     JPH::BodyLockRead bodyLock(bodyLockInterface, id);
-                    if (bodyLock.Succeeded()) {
-                        const JPH::Body& b = bodyLock.GetBody();
+                    if (bodyLock.Succeeded())
+                    {
+                        const JPH::Body &b = bodyLock.GetBody();
                         auto bounds = b.GetWorldSpaceBounds();
-                        Log::Info(fmt::format("Body {}: layer={}, broadphase={}, type={}, bounds=[({:.2f},{:.2f},{:.2f})-({:.2f},{:.2f},{:.2f})]",
-                            id.GetIndex(), b.GetObjectLayer(), 
-                            b.GetBroadPhaseLayer().GetValue(),
-                            b.IsSoftBody() ? "soft" : (b.IsStatic() ? "static" : "dynamic"),
-                            bounds.mMin.GetX(), bounds.mMin.GetY(), bounds.mMin.GetZ(),
-                            bounds.mMax.GetX(), bounds.mMax.GetY(), bounds.mMax.GetZ()));
+                        Log::Info(fmt::format("Body {}: layer={}, broadphase={}, type={}, "
+                                              "bounds=[({:.2f},{:.2f},{:.2f})-({:.2f},{:.2f},{:.2f})]",
+                                              id.GetIndex(), b.GetObjectLayer(), b.GetBroadPhaseLayer().GetValue(),
+                                              b.IsSoftBody() ? "soft" : (b.IsStatic() ? "static" : "dynamic"),
+                                              bounds.mMin.GetX(), bounds.mMin.GetY(), bounds.mMin.GetZ(),
+                                              bounds.mMax.GetX(), bounds.mMax.GetY(), bounds.mMax.GetZ()));
                     }
                 }
             }

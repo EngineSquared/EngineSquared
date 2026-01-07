@@ -139,7 +139,7 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     auto mesh = loader.GetMesh();
 
     // Scale down the teapot (original coords are ~40 units)
-    const float scaleFactor = 0.05f;  // Results in ~2 unit teapot
+    const float scaleFactor = 0.05f; // Results in ~2 unit teapot
     for (auto &vertex : mesh.vertices)
         vertex *= scaleFactor;
 
@@ -154,14 +154,14 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     // Configure soft body settings based on Jolt's SoftBodyCreator defaults
     // Jolt uses VertexAttributes { 1.0e-4f, 1.0e-4f, 1.0e-3f } for edge/shear/bend
     auto settings = Physics::Component::SoftBodySettings::Balloon(5000.0f);
-    settings.edgeCompliance = 1.0e-5f;   // Very stiff edges (stiffer than Jolt default)
-    settings.shearCompliance = 1.0e-5f;  // Very stiff shear
-    settings.bendCompliance = 1.0e-4f;   // Stiff bending (10x stiffer than Jolt default)
-    settings.solverIterations = 10;      // More iterations for stability
-    settings.vertexRadius = 0.5f;        // Larger radius for better collision detection
+    settings.edgeCompliance = 1.0e-5f;  // Very stiff edges (stiffer than Jolt default)
+    settings.shearCompliance = 1.0e-5f; // Very stiff shear
+    settings.bendCompliance = 1.0e-4f;  // Stiff bending (10x stiffer than Jolt default)
+    settings.solverIterations = 10;     // More iterations for stability
+    settings.vertexRadius = 0.5f;       // Larger radius for better collision detection
     settings.gravityFactor = 1.0f;
-    settings.friction = 0.5f;            // Friction with floor
-    settings.restitution = 0.3f;         // Some bounce
+    settings.friction = 0.5f;    // Friction with floor
+    settings.restitution = 0.3f; // Some bounce
 
     auto soft = Physics::Component::SoftBody::CreateFromMesh(mesh, settings);
 
