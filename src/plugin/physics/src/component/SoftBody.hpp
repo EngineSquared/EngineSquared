@@ -175,7 +175,7 @@ struct SoftBodySettings {
         s.edgeCompliance = 1.0e-4f;
         s.shearCompliance = 1.0e-4f;
         s.bendCompliance = 1.0e-3f;
-        s.vertexRadius = 0.02f;  // Small, only for z-fighting prevention
+        s.vertexRadius = 0.02f; // Small, only for z-fighting prevention
         return s;
     }
 
