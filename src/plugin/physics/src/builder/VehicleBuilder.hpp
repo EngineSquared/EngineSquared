@@ -1,12 +1,12 @@
 #pragma once
 
-#include "core/Core.hpp"
-#include "entity/Entity.hpp"
 #include "component/BoxCollider.hpp"
 #include "component/RigidBody.hpp"
 #include "component/Vehicle.hpp"
 #include "component/VehicleController.hpp"
 #include "component/WheelSettings.hpp"
+#include "core/Core.hpp"
+#include "entity/Entity.hpp"
 
 #include "Object.hpp"
 
@@ -33,8 +33,7 @@ namespace Physics::Builder {
  *        .Build(core);
  * @endcode
  */
-template <size_t N>
-class VehicleBuilder {
+template <size_t N> class VehicleBuilder {
     static_assert(N == 4, "VehicleBuilder currently only supports 4-wheel vehicles (N=4). "
                           "Support for other wheel counts may be added in future versions.");
 };
@@ -42,8 +41,7 @@ class VehicleBuilder {
 /**
  * @brief Specialized builder for 4-wheel vehicles
  */
-template <>
-class VehicleBuilder<4> {
+template <> class VehicleBuilder<4> {
   public:
     /**
      * @brief Set the chassis mesh and initial transform
@@ -54,9 +52,9 @@ class VehicleBuilder<4> {
      * @param scale Scale of the chassis mesh
      */
     VehicleBuilder &SetChassisMesh(const Object::Component::Mesh &chassisMesh,
-                                    const glm::vec3 &position = glm::vec3(0.0f),
-                                    const glm::quat &rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
-                                    const glm::vec3 &scale = glm::vec3(1.0f))
+                                   const glm::vec3 &position = glm::vec3(0.0f),
+                                   const glm::quat &rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
+                                   const glm::vec3 &scale = glm::vec3(1.0f))
     {
         _chassisMesh = chassisMesh;
         _chassisPosition = position;
@@ -141,7 +139,7 @@ class VehicleBuilder<4> {
      * @param rearRight Position of rear-right wheel
      */
     VehicleBuilder &SetWheelPositions(const glm::vec3 &frontLeft, const glm::vec3 &frontRight,
-                                       const glm::vec3 &rearLeft, const glm::vec3 &rearRight)
+                                      const glm::vec3 &rearLeft, const glm::vec3 &rearRight)
     {
         _wheelPositions[static_cast<size_t>(Component::WheelIndex::FrontLeft)] = frontLeft;
         _wheelPositions[static_cast<size_t>(Component::WheelIndex::FrontRight)] = frontRight;

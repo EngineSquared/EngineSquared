@@ -1,21 +1,21 @@
 #include <gtest/gtest.h>
 
-#include "core/Core.hpp"
-#include "component/Transform.hpp"
-#include "component/Mesh.hpp"
-#include "helper/CreateShape.hpp"
-#include "utils/ShapeGenerator.hpp"
-#include "plugin/PhysicsPlugin.hpp"
-#include "component/RigidBody.hpp"
-#include "component/BoxCollider.hpp"
-#include "component/Vehicle.hpp"
-#include "component/VehicleInternal.hpp"
-#include "component/VehicleController.hpp"
 #include "builder/VehicleBuilder.hpp"
+#include "component/BoxCollider.hpp"
+#include "component/Mesh.hpp"
+#include "component/RigidBody.hpp"
+#include "component/Transform.hpp"
+#include "component/Vehicle.hpp"
+#include "component/VehicleController.hpp"
+#include "component/VehicleInternal.hpp"
+#include "core/Core.hpp"
+#include "helper/CreateShape.hpp"
+#include "plugin/PhysicsPlugin.hpp"
 #include "resource/Time.hpp"
+#include "utils/ShapeGenerator.hpp"
 
-#include <glm/glm.hpp>
 #include <cmath>
+#include <glm/glm.hpp>
 
 /**
  * @brief Test wheel transform synchronization
@@ -31,7 +31,8 @@ TEST(VehiclePlugin, WheelTransformSync)
     core.RunSystems();
 
     auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
-    floor.AddComponent<Physics::Component::BoxCollider>(core, Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f)));
+    floor.AddComponent<Physics::Component::BoxCollider>(core,
+                                                        Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f)));
     floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
 
     Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);

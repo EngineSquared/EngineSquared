@@ -15,16 +15,16 @@
 #include <Jolt/Physics/Collision/Shape/CylinderShape.h>
 #include <Jolt/Physics/Vehicle/WheeledVehicleController.h>
 
+#include <array>
 #include <fmt/format.h>
 #include <glm/glm.hpp>
-#include <array>
 
 namespace Physics::System {
 
 /**
  * @brief Create Jolt wheel settings from Engine� wheel configuration
  */
-static JPH::WheelSettingsWV *CreateJoltWheelSettings(const Component::WheelSettings &wheelSettings, 
+static JPH::WheelSettingsWV *CreateJoltWheelSettings(const Component::WheelSettings &wheelSettings,
                                                      const glm::vec3 &position, bool isRear)
 {
     auto *joltWheel = new JPH::WheelSettingsWV();
@@ -87,7 +87,7 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
         std::array<Engine::Entity, 4> wheelEntities{};
         std::array<JPH::BodyID, 4> wheelBodyIDs{};
 
-        if (auto* storedWheelEntities = registry.ctx().find<std::array<Engine::Entity, 4>>())
+        if (auto *storedWheelEntities = registry.ctx().find<std::array<Engine::Entity, 4>>())
         {
             wheelEntities = *storedWheelEntities;
         }
@@ -159,18 +159,13 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
 
         JPH::VehicleConstraintSettings constraintSettings;
 
-        std::array<glm::vec3, 4> wheelPositions = {
-            glm::vec3(-0.9f, -0.3f, 1.2f),
-            glm::vec3(0.9f, -0.3f, 1.2f),
-            glm::vec3(-0.9f, -0.3f, -1.2f),
-            glm::vec3(0.9f, -0.3f, -1.2f)
-        };
+        std::array<glm::vec3, 4> wheelPositions = {glm::vec3(-0.9f, -0.3f, 1.2f), glm::vec3(0.9f, -0.3f, 1.2f),
+                                                   glm::vec3(-0.9f, -0.3f, -1.2f), glm::vec3(0.9f, -0.3f, -1.2f)};
 
         for (size_t i = 0; i < 4; ++i)
         {
             bool isRear = (i >= 2);
-            constraintSettings.mWheels.push_back(
-                CreateJoltWheelSettings(vehicle.wheels[i], wheelPositions[i], isRear));
+            constraintSettings.mWheels.push_back(CreateJoltWheelSettings(vehicle.wheels[i], wheelPositions[i], isRear));
         }
 
         constraintSettings.mController = new JPH::WheeledVehicleControllerSettings(controllerSettings);
@@ -194,7 +189,7 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
             constraintSettings.mAntiRollBars.push_back(rearBar);
         }
 
-        JPH::VehicleConstraint* vehicleConstraint = nullptr;
+        JPH::VehicleConstraint *vehicleConstraint = nullptr;
         {
             JPH::BodyLockWrite lock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(), chassisInternal->bodyID);
             if (lock.Succeeded())
@@ -209,7 +204,8 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
             }
         }
 
-        JPH::Ref<JPH::VehicleCollisionTester> collisionTester = new JPH::VehicleCollisionTesterRay(Utils::Layers::MOVING);
+        JPH::Ref<JPH::VehicleCollisionTester> collisionTester =
+            new JPH::VehicleCollisionTesterRay(Utils::Layers::MOVING);
         vehicleConstraint->SetVehicleCollisionTester(collisionTester);
 
         physicsManager.GetPhysicsSystem().AddConstraint(vehicleConstraint);

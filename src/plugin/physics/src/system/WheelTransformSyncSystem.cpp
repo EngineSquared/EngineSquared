@@ -31,9 +31,8 @@ void WheelTransformSyncSystem(Engine::Core &core)
             if (!wheelTransform)
                 continue;
 
-            JPH::RMat44 wheelWorldTransform = constraint->GetWheelWorldTransform(static_cast<uint32_t>(i),
-                                                                                  JPH::Vec3::sAxisY(),
-                                                                                  JPH::Vec3::sAxisX());
+            JPH::RMat44 wheelWorldTransform =
+                constraint->GetWheelWorldTransform(static_cast<uint32_t>(i), JPH::Vec3::sAxisY(), JPH::Vec3::sAxisX());
 
             JPH::Vec3 wheelPos = wheelWorldTransform.GetTranslation();
             JPH::Quat wheelRot = wheelWorldTransform.GetQuaternion();

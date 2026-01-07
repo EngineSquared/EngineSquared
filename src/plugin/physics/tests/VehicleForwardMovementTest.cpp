@@ -1,22 +1,22 @@
 #include <gtest/gtest.h>
 
-#include "core/Core.hpp"
-#include "component/Transform.hpp"
-#include "component/Mesh.hpp"
-#include "helper/CreateShape.hpp"
-#include "utils/ShapeGenerator.hpp"
-#include "plugin/PhysicsPlugin.hpp"
-#include "component/RigidBody.hpp"
-#include "component/BoxCollider.hpp"
-#include "component/Vehicle.hpp"
-#include "component/VehicleInternal.hpp"
-#include "component/VehicleController.hpp"
-#include "component/WheelSettings.hpp"
 #include "builder/VehicleBuilder.hpp"
+#include "component/BoxCollider.hpp"
+#include "component/Mesh.hpp"
+#include "component/RigidBody.hpp"
+#include "component/Transform.hpp"
+#include "component/Vehicle.hpp"
+#include "component/VehicleController.hpp"
+#include "component/VehicleInternal.hpp"
+#include "component/WheelSettings.hpp"
+#include "core/Core.hpp"
+#include "helper/CreateShape.hpp"
+#include "plugin/PhysicsPlugin.hpp"
 #include "resource/Time.hpp"
+#include "utils/ShapeGenerator.hpp"
 
-#include <glm/glm.hpp>
 #include <cmath>
+#include <glm/glm.hpp>
 
 /**
  * @brief Test that a vehicle moves forward when forward input is applied

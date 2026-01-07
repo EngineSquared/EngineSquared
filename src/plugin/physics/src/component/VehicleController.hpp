@@ -26,37 +26,25 @@ struct VehicleController {
      * @brief Set forward/backward input
      * @param value Input value clamped to [-1.0, 1.0]
      */
-    void SetForward(float value)
-    {
-        forwardInput = std::clamp(value, -1.0f, 1.0f);
-    }
+    void SetForward(float value) { forwardInput = std::clamp(value, -1.0f, 1.0f); }
 
     /**
      * @brief Set steering input
      * @param value Input value clamped to [-1.0, 1.0]
      */
-    void SetSteering(float value)
-    {
-        steeringInput = std::clamp(value, -1.0f, 1.0f);
-    }
+    void SetSteering(float value) { steeringInput = std::clamp(value, -1.0f, 1.0f); }
 
     /**
      * @brief Set brake input
      * @param value Input value clamped to [0.0, 1.0]
      */
-    void SetBrake(float value)
-    {
-        brakeInput = std::clamp(value, 0.0f, 1.0f);
-    }
+    void SetBrake(float value) { brakeInput = std::clamp(value, 0.0f, 1.0f); }
 
     /**
      * @brief Set handbrake input
      * @param value Input value clamped to [0.0, 1.0]
      */
-    void SetHandBrake(float value)
-    {
-        handBrakeInput = std::clamp(value, 0.0f, 1.0f);
-    }
+    void SetHandBrake(float value) { handBrakeInput = std::clamp(value, 0.0f, 1.0f); }
 
     /**
      * @brief Reset all inputs to neutral

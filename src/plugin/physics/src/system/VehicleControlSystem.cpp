@@ -15,10 +15,10 @@ void VehicleControlSystem(Engine::Core &core)
 {
     auto &registry = core.GetRegistry();
     auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
-    
+
     if (!physicsManager.IsPhysicsActivated())
         return;
-    
+
     auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyInterface();
 
     registry.view<Component::VehicleController, Component::VehicleInternal>().each(
@@ -28,11 +28,11 @@ void VehicleControlSystem(Engine::Core &core)
 
             auto *wheeledController = internal.vehicleController;
 
-            wheeledController->SetDriverInput(controller.forwardInput, controller.steeringInput,
-                                               controller.brakeInput, controller.handBrakeInput);
+            wheeledController->SetDriverInput(controller.forwardInput, controller.steeringInput, controller.brakeInput,
+                                              controller.handBrakeInput);
 
-            if (controller.forwardInput != 0.0f || controller.steeringInput != 0.0f || 
-                controller.brakeInput != 0.0f || controller.handBrakeInput != 0.0f)
+            if (controller.forwardInput != 0.0f || controller.steeringInput != 0.0f || controller.brakeInput != 0.0f ||
+                controller.handBrakeInput != 0.0f)
             {
                 bodyInterface.ActivateBody(internal.chassisBodyID);
             }

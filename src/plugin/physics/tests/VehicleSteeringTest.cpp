@@ -1,19 +1,19 @@
 #include <gtest/gtest.h>
 
-#include "core/Core.hpp"
-#include "component/Transform.hpp"
-#include "component/Mesh.hpp"
-#include "helper/CreateShape.hpp"
-#include "utils/ShapeGenerator.hpp"
-#include "plugin/PhysicsPlugin.hpp"
-#include "component/RigidBody.hpp"
-#include "component/BoxCollider.hpp"
-#include "component/Vehicle.hpp"
-#include "component/VehicleInternal.hpp"
-#include "component/VehicleController.hpp"
 #include "builder/VehicleBuilder.hpp"
+#include "component/BoxCollider.hpp"
+#include "component/Mesh.hpp"
+#include "component/RigidBody.hpp"
+#include "component/Transform.hpp"
+#include "component/Vehicle.hpp"
+#include "component/VehicleController.hpp"
+#include "component/VehicleInternal.hpp"
+#include "core/Core.hpp"
+#include "helper/CreateShape.hpp"
+#include "plugin/PhysicsPlugin.hpp"
 #include "resource/Time.hpp"
 #include "scheduler/Startup.hpp"
+#include "utils/ShapeGenerator.hpp"
 
 #include <glm/glm.hpp>
 
@@ -51,9 +51,9 @@ TEST(VehiclePlugin, VehicleSteering)
     auto *controller = registry.try_get<Physics::Component::VehicleController>(vehicle);
     ASSERT_NE(controller, nullptr);
 
-    controller->SetForward(2.0f);  // Should clamp to 1.0
+    controller->SetForward(2.0f);   // Should clamp to 1.0
     controller->SetSteering(-2.0f); // Should clamp to -1.0
-    controller->SetBrake(5.0f);    // Should clamp to 1.0
+    controller->SetBrake(5.0f);     // Should clamp to 1.0
 
     EXPECT_FLOAT_EQ(controller->forwardInput, 1.0f);
     EXPECT_FLOAT_EQ(controller->steeringInput, -1.0f);

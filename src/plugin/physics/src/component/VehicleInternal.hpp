@@ -2,8 +2,8 @@
 
 #include "entity/Entity.hpp"
 #include <Jolt/Physics/Body/BodyID.h>
-#include <Jolt/Physics/Vehicle/VehicleConstraint.h>
 #include <Jolt/Physics/Vehicle/VehicleCollisionTester.h>
+#include <Jolt/Physics/Vehicle/VehicleConstraint.h>
 #include <Jolt/Physics/Vehicle/WheeledVehicleController.h>
 #include <array>
 #include <memory>
@@ -21,11 +21,11 @@ namespace Physics::Component {
 struct VehicleInternal {
     /// The Jolt vehicle constraint (owns the vehicle physics)
     /// Raw pointer - manually managed, must be removed from PhysicsSystem before deletion
-    JPH::VehicleConstraint* vehicleConstraint = nullptr;
+    JPH::VehicleConstraint *vehicleConstraint = nullptr;
 
     /// The Jolt vehicle controller (manages input/control)
     /// Raw pointer - owned by vehicleConstraint, do not delete separately
-    JPH::WheeledVehicleController* vehicleController = nullptr;
+    JPH::WheeledVehicleController *vehicleController = nullptr;
 
     /// Collision tester for vehicle wheel raycasts (must stay alive while constraint exists)
     /// Using Jolt's Ref smart pointer for proper reference counting
@@ -43,10 +43,7 @@ struct VehicleInternal {
     /**
      * @brief Check if the vehicle constraint is valid
      */
-    bool IsValid() const
-    {
-        return vehicleConstraint != nullptr && !chassisBodyID.IsInvalid();
-    }
+    bool IsValid() const { return vehicleConstraint != nullptr && !chassisBodyID.IsInvalid(); }
 
     /**
      * @brief Default constructor
