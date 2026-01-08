@@ -3,7 +3,10 @@
 #include "RenderingPipeline.hpp"
 #include "component/Material.hpp"
 #include "plugin/PluginWindow.hpp"
+#include "resource/PointLights.hpp"
 #include "scheduler/Shutdown.hpp"
+#include "system/initialization/CreatePointLights.hpp"
+#include "system/preparation/UpdatePointLights.hpp"
 #include <iomanip>
 #include <sstream>
 
@@ -30,6 +33,7 @@ void Graphic::Plugin::Bind()
     RegisterResource(Graphic::Resource::BindGroupManager());
     RegisterResource(Graphic::Resource::RenderGraphContainer());
     RegisterResource(Graphic::Resource::AmbientLight());
+    RegisterResource(Graphic::Resource::PointLights());
 
     SetupGPUComponent<Object::Component::Camera, Component::GPUCamera, &Graphic::System::OnCameraCreation,
                       &Graphic::System::OnCameraDestruction>(this->GetCore());
@@ -45,11 +49,11 @@ void Graphic::Plugin::Bind()
         System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
         System::ConfigureSurface, System::ReleaseAdapter, System::CreateEmptyTexture, System::CreateDefaultTexture,
         System::CreateDefaultSampler, System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial,
-        System::CreateAmbientLight);
+        System::CreateAmbientLight, System::CreatePointLights);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
                                                     System::UpdateGPUCameras, System::UpdateGPUMaterials,
-                                                    System::UpdateAmbientLight);
+                                                    System::UpdateAmbientLight, System::UpdatePointLights);
 
     RegisterSystems<RenderingPipeline::CommandCreation>(System::ExecuteRenderPass);
 

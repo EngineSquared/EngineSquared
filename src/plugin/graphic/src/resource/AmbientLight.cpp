@@ -13,16 +13,7 @@ void AmbientLight::Create(Engine::Core &core)
     ambientLightBuffer->Create(core);
     Object::Component::AmbientLight ambientLightComponent;
     ambientLightBuffer->SetValue(core, ambientLightComponent);
-    auto bufferSize = ambientLightBuffer->GetBuffer().getSize();
     bufferManager.Add(Utils::AMBIENT_LIGHT_BUFFER_ID, std::move(ambientLightBuffer));
-
-    auto &bindGroupManager = core.GetResource<Resource::BindGroupManager>();
-    Graphic::Resource::BindGroup ambientLightBindGroup(
-        core, Graphic::Utils::DEFAULT_RENDER_PASS_SHADER_ID, 3,
-        {
-            {0, Graphic::Resource::BindGroup::Asset::Type::Buffer, Utils::AMBIENT_LIGHT_BUFFER_ID, bufferSize}
-    });
-    bindGroupManager.Add(Utils::AMBIENT_LIGHT_BIND_GROUP_ID, ambientLightBindGroup);
 }
 
 void AmbientLight::Update(Engine::Core &core)

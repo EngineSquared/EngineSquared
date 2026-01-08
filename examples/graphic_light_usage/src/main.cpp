@@ -154,9 +154,33 @@ void Setup(Engine::Core &core)
     camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 0.0f, -5.0f));
     camera.AddComponent<Object::Component::Camera>(core);
 
-    auto light = core.CreateEntity();
-    light.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 1.0f, 0.0f));
-    light.AddComponent<Object::Component::AmbientLight>(core);
+    auto ambientLight = core.CreateEntity();
+    ambientLight.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 1.0f, 0.0f));
+    ambientLight.AddComponent<Object::Component::AmbientLight>(core, Object::Component::AmbientLight{glm::vec3(0.1f)});
+
+    auto redPointLight = core.CreateEntity();
+    redPointLight.AddComponent<Object::Component::Transform>(core, glm::vec3(-2.0f, 1.0f, -1.0f));
+    redPointLight.AddComponent<Object::Component::PointLight>(
+        core, Object::Component::PointLight{.color = glm::vec3(1.0f, 0.2f, 0.2f),
+                                            .intensity = 100000.0f,
+                                            .radius = 2.0f,
+                                            .falloff = 1.0f});
+
+    auto bluePointLight = core.CreateEntity();
+    bluePointLight.AddComponent<Object::Component::Transform>(core, glm::vec3(2.0f, 1.0f, -1.0f));
+    bluePointLight.AddComponent<Object::Component::PointLight>(
+        core, Object::Component::PointLight{.color = glm::vec3(0.2f, 0.2f, 1.0f),
+                                            .intensity = 50.0f,
+                                            .radius = 2.0f,
+                                            .falloff = 1.0f});
+
+    auto greenPointLight = core.CreateEntity();
+    greenPointLight.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 1.0f, 2.0f));
+    greenPointLight.AddComponent<Object::Component::PointLight>(
+        core, Object::Component::PointLight{.color = glm::vec3(0.2f, 1.0f, 0.2f),
+                                            .intensity = 1.0f,
+                                            .radius = 2.0f,
+                                            .falloff = 1.0f});
 
     auto &targetController = core.GetResource<TargetController>();
     targetController.target = camera;
@@ -165,29 +189,54 @@ void Setup(Engine::Core &core)
     core.RegisterSystem(CameraTranslationSystem);
     core.RegisterSystem<Engine::Scheduler::Startup>(CameraRotationSystem);
 
-    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback(
-        [](Engine::Core &core, int key, int, int action, int) {
-            if (!(action == GLFW_PRESS))
-                return;
-            auto lightView = core.GetRegistry().view<Object::Component::AmbientLight>();
-            if (lightView.empty())
-                return;
+    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback([](Engine::Core &core, int key, int,
+                                                                             int action, int) {
+        if (!(action == GLFW_PRESS))
+            return;
+
+        auto lightView = core.GetRegistry().view<Object::Component::AmbientLight>();
+        if (!lightView.empty())
+        {
             Engine::Entity light = lightView.front();
-            if (key == GLFW_KEY_R)
+            switch (key)
             {
+            case GLFW_KEY_R:
                 Log::Info("Increasing ambient light color intensity");
-                light.GetComponents<Object::Component::AmbientLight>(core).color.x += 0.1f;
-                light.GetComponents<Object::Component::AmbientLight>(core).color.y += 0.1f;
-                light.GetComponents<Object::Component::AmbientLight>(core).color.z += 0.1f;
-            }
-            if (key == GLFW_KEY_F)
-            {
+                light.GetComponents<Object::Component::AmbientLight>(core).color += glm::vec3(0.1f);
+                break;
+            case GLFW_KEY_F:
                 Log::Info("Decreasing ambient light color intensity");
-                light.GetComponents<Object::Component::AmbientLight>(core).color.x -= 0.1f;
-                light.GetComponents<Object::Component::AmbientLight>(core).color.y -= 0.1f;
-                light.GetComponents<Object::Component::AmbientLight>(core).color.z -= 0.1f;
+                light.GetComponents<Object::Component::AmbientLight>(core).color -= glm::vec3(0.1f);
+                break;
             }
-        });
+        }
+
+        auto pointLightView = core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>();
+        if (pointLightView.front() != entt::null)
+        {
+            pointLightView.each([key](Object::Component::PointLight &light, Object::Component::Transform &transform) {
+                switch (key)
+                {
+                case GLFW_KEY_T:
+                    Log::Info("Increasing point lights intensity");
+                    light.intensity += 0.5f;
+                    break;
+                case GLFW_KEY_G:
+                    Log::Info("Decreasing point lights intensity");
+                    light.intensity = std::max(0.0f, light.intensity - 0.5f);
+                    break;
+                case GLFW_KEY_Y:
+                    Log::Info("Moving point lights up");
+                    transform.SetPosition(transform.GetPosition() + glm::vec3(0.0f, 0.5f, 0.0f));
+                    break;
+                case GLFW_KEY_H:
+                    Log::Info("Moving point lights down");
+                    transform.SetPosition(transform.GetPosition() - glm::vec3(0.0f, 0.5f, 0.0f));
+                    break;
+                }
+            });
+        }
+    });
 }
 
 class GraphicExampleError : public std::runtime_error {

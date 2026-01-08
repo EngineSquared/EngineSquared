@@ -17,6 +17,7 @@
 #include "resource/GraphicSettings.hpp"
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
+#include "resource/PointLights.hpp"
 #include "resource/RenderGraph.hpp"
 #include "resource/RenderGraphContainer.hpp"
 #include "resource/Sampler.hpp"
@@ -33,6 +34,7 @@
 #include "resource/buffer/CameraGPUBuffer.hpp"
 #include "resource/buffer/IndexGPUBuffer.hpp"
 #include "resource/buffer/PointGPUBuffer.hpp"
+#include "resource/buffer/PointLightsBuffer.hpp"
 #include "resource/buffer/TransformGPUBuffer.hpp"
 
 // Utils
@@ -43,6 +45,7 @@
 #include "utils/EmptyTexture.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/IValidable.hpp"
+#include "utils/PointLight.hpp"
 #include "utils/shader/ABindGroupLayoutEntry.hpp"
 #include "utils/shader/BindGroupLayout.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
@@ -89,6 +92,7 @@
 #include "system/initialization/CreateDevice.hpp"
 #include "system/initialization/CreateEmptyTexture.hpp"
 #include "system/initialization/CreateInstance.hpp"
+#include "system/initialization/CreatePointLights.hpp"
 #include "system/initialization/CreateQueue.hpp"
 #include "system/initialization/CreateSurface.hpp"
 #include "system/initialization/ReleaseAdapter.hpp"
@@ -110,6 +114,7 @@
 #include "system/preparation/UpdateGPUCameras.hpp"
 #include "system/preparation/UpdateGPUMaterials.hpp"
 #include "system/preparation/UpdateGPUTransforms.hpp"
+#include "system/preparation/UpdatePointLights.hpp"
 
 #include "system/commandCreation/ExecuteRenderPass.hpp"
 

@@ -7,11 +7,14 @@
 #include "component/Transform.hpp"
 #include "entity/Entity.hpp"
 #include "resource/AmbientLight.hpp"
+#include "resource/PointLights.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "resource/SingleExecutionRenderPass.hpp"
+#include "resource/buffer/PointLightsBuffer.hpp"
 #include "utils/AmbientLight.hpp"
 #include "utils/DefaultMaterial.hpp"
+#include "utils/PointLight.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
@@ -26,6 +29,8 @@ static inline constexpr std::string_view DEFAULT_RENDER_PASS_SHADER_NAME = "DEFA
 static inline const entt::hashed_string DEFAULT_RENDER_PASS_SHADER_ID{DEFAULT_RENDER_PASS_SHADER_NAME.data(),
                                                                       DEFAULT_RENDER_PASS_SHADER_NAME.size()};
 static inline constexpr std::string_view DEFAULT_RENDER_PASS_SHADER_CONTENT = R"(
+const MAX_POINT_LIGHTS: u32 = 64u;
+
 struct Camera {
     viewProjectionMatrix : mat4x4<f32>,
 };
@@ -44,12 +49,32 @@ struct AmbientLight {
     padding : f32,
 };
 
+struct GPUPointLight {
+    position: vec3f,
+    intensity: f32,
+    color: vec3f,
+    radius: f32,
+    falloff: f32,
+    _padding1: f32,
+    _padding2: f32,
+    _padding3: f32,
+};
+
+struct PointLightsData {
+    lights: array<GPUPointLight, MAX_POINT_LIGHTS>,
+    count: u32,
+    _padding1: f32,
+    _padding2: f32,
+    _padding3: f32,
+};
+
 @group(0) @binding(0) var<uniform> camera : Camera;
 @group(1) @binding(0) var<uniform> model : Model;
 @group(2) @binding(0) var<uniform> material : Material;
 @group(2) @binding(1) var materialTexture : texture_2d<f32>;
 @group(2) @binding(2) var materialSampler : sampler;
 @group(3) @binding(0) var<uniform> ambientLight : AmbientLight;
+@group(3) @binding(1) var<uniform> pointLights : PointLightsData;
 
 struct VertexInput {
     @location(0) position : vec3f,
@@ -60,6 +85,8 @@ struct VertexInput {
 struct VertexOutput {
     @builtin(position) Position : vec4f,
     @location(0) fragUV : vec2f,
+    @location(1) worldPos : vec3f,
+    @location(2) worldNormal : vec3f,
 };
 
 @vertex
@@ -67,9 +94,38 @@ fn vs_main(
     input : VertexInput
 ) -> VertexOutput {
     var output : VertexOutput;
-    output.Position = camera.viewProjectionMatrix * model.modelMatrix * vec4f(input.position, 1.0);
+    let worldPos = model.modelMatrix * vec4f(input.position, 1.0);
+    output.Position = camera.viewProjectionMatrix * worldPos;
     output.fragUV = input.uv;
+    output.worldPos = worldPos.xyz;
+    output.worldNormal = (model.modelMatrix * vec4f(input.normal, 0.0)).xyz;
     return output;
+}
+
+// Attempt at physically correct attenuation with finite radius
+// Formula: A * (1 - s^2)^2 / (1 + F * s) where s = d/R
+// This gives exactly zero at distance R with zero derivative (smooth cutoff)
+// See https://lisyarus.github.io/blog/posts/point-light-attenuation.html for more information
+fn attenuate(distance: f32, radius: f32, max_intensity: f32, falloff: f32) -> f32 {
+    let s = distance / radius;
+
+    if (s >= 1.0) {
+        return 0.0;
+    }
+
+    let s2 = s * s;
+    let one_minus_s2 = 1.0 - s2;
+
+    return max_intensity * one_minus_s2 * one_minus_s2 / (1.0 + falloff * s);
+}
+
+fn calculatePointLight(light: GPUPointLight, worldPos: vec3f, normal: vec3f) -> vec3f {
+    let lightDir = normalize(light.position - worldPos);
+    let distance = length(light.position - worldPos);
+    let attenuation = attenuate(distance, light.radius, light.intensity, light.falloff);
+    let diff = max(dot(normal, lightDir), 0.0);
+
+    return light.color * diff * attenuation;
 }
 
 @fragment
@@ -78,7 +134,15 @@ fn fs_main(
 ) -> @location(0) vec4f {
     var uv = vec2f(1.0 - input.fragUV.x, 1.0 - input.fragUV.y);
     var texColor : vec4f = textureSample(materialTexture, materialSampler, uv);
-    var color : vec4f = vec4f(material.emission * texColor.xyz * ambientLight.color, texColor.a);
+    let normal = normalize(input.worldNormal);
+
+    var lighting = ambientLight.color;
+
+    for (var i = 0u; i < pointLights.count; i++) {
+        lighting += calculatePointLight(pointLights.lights[i], input.worldPos, normal);
+    }
+
+    var color : vec4f = vec4f(material.emission * texColor.xyz * lighting, texColor.a);
     return color;
 }
 
@@ -97,9 +161,8 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
         const auto &cameraBindGroup = bindGroupManager.Get(cameraGPUComponent.bindGroup);
         renderPass.setBindGroup(0, cameraBindGroup.GetBindGroup(), 0, nullptr);
 
-        const auto &ambientLight = core.GetResource<Graphic::Resource::AmbientLight>();
-        const auto &ambientLightBindGroup = bindGroupManager.Get(Graphic::Utils::AMBIENT_LIGHT_BIND_GROUP_ID);
-        renderPass.setBindGroup(3, ambientLightBindGroup.GetBindGroup(), 0, nullptr);
+        const auto &lightsBindGroup = bindGroupManager.Get(Graphic::Utils::LIGHTS_BIND_GROUP_ID);
+        renderPass.setBindGroup(3, lightsBindGroup.GetBindGroup(), 0, nullptr);
 
         const auto &bufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
         const auto &bindgroupContainer = core.GetResource<Graphic::Resource::BindGroupManager>();
@@ -170,12 +233,17 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                                                 .setType(wgpu::SamplerBindingType::Filtering)
                                                 .setVisibility(wgpu::ShaderStage::Fragment)
                                                 .setBinding(2));
-        auto ambientLightLayout = Graphic::Utils::BindGroupLayout("AmbientLightLayout")
-                                      .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("ambientLight")
-                                                    .setType(wgpu::BufferBindingType::Uniform)
-                                                    .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
-                                                    .setVisibility(wgpu::ShaderStage::Fragment)
-                                                    .setBinding(0));
+        auto lightsLayout = Graphic::Utils::BindGroupLayout("LightsLayout")
+                                .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("ambientLight")
+                                              .setType(wgpu::BufferBindingType::Uniform)
+                                              .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
+                                              .setVisibility(wgpu::ShaderStage::Fragment)
+                                              .setBinding(0))
+                                .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("pointLights")
+                                              .setType(wgpu::BufferBindingType::Uniform)
+                                              .setMinBindingSize(Graphic::Resource::PointLightsBuffer::GPUSize())
+                                              .setVisibility(wgpu::ShaderStage::Fragment)
+                                              .setBinding(1));
 
         auto vertexLayout = Graphic::Utils::VertexBufferLayout()
                                 .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)
@@ -199,7 +267,7 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
             .addBindGroupLayout(cameraLayout)
             .addBindGroupLayout(modelLayout)
             .addBindGroupLayout(materialLayout)
-            .addBindGroupLayout(ambientLightLayout)
+            .addBindGroupLayout(lightsLayout)
             .addVertexBufferLayout(vertexLayout)
             .addOutputColorFormat(colorOutput)
             .setOutputDepthFormat(depthOutput);
