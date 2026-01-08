@@ -80,8 +80,8 @@ class PointLightsBuffer : public AGPUBuffer {
         auto view = core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>();
 
         uint32_t index = 0;
-        view.each([&](const Engine::Entity &entity, const Object::Component::PointLight &light, const Object::Component::Transform &transform)
-        {
+        view.each([&](const Engine::Entity &entity, const Object::Component::PointLight &light,
+                      const Object::Component::Transform &transform) {
             if (index >= Utils::MAX_POINT_LIGHTS)
                 return;
             const glm::vec3 &pos = transform.GetPosition();
