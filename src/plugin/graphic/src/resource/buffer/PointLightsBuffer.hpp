@@ -16,20 +16,20 @@ class PointLightsBuffer : public AGPUBuffer {
     static inline std::string _debugName = "PointLightsBuffer";
 
     struct GPUPointLight {
-        float position[3];
+        std::array<float, 3> position;
         float intensity;
-        float color[3];
+        std::array<float, 3> color;
         float radius;
         float falloff;
-        float _padding[3];
+        std::array<float, 3> _padding;
     };
 
     static_assert(sizeof(GPUPointLight) == 48, "GPUPointLight must be 48 bytes for proper GPU alignment.");
 
     struct PointLightsData {
-        GPUPointLight lights[Utils::MAX_POINT_LIGHTS]; // 64 * 48 = 3072 bytes
+        std::array<GPUPointLight, Utils::MAX_POINT_LIGHTS> lights; // 64 * 48 = 3072 bytes
         uint32_t count;                                // 4 bytes (3076 bytes)
-        float _padding[3];                             // 12 bytes (3088 bytes)
+        std::array<float, 3> _padding;                 // 12 bytes (3088 bytes)
     };
 
     static_assert(sizeof(PointLightsData) == (48 * Utils::MAX_POINT_LIGHTS + 16),
@@ -80,10 +80,12 @@ class PointLightsBuffer : public AGPUBuffer {
         auto view = core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>();
 
         uint32_t index = 0;
-        view.each([&](const Engine::Entity &entity, const Object::Component::PointLight &light,
-                      const Object::Component::Transform &transform) {
-            if (index >= Utils::MAX_POINT_LIGHTS)
+        view.each([&data, &index](auto, const Object::Component::PointLight &light, const Object::Component::Transform &transform)
+        {
+            if (index >= Utils::MAX_POINT_LIGHTS) {
+                Log::Warn("Maximum number of point lights reached for GPU buffer update.");
                 return;
+            }
             const glm::vec3 &pos = transform.GetPosition();
             const glm::vec3 &col = light.color;
 
