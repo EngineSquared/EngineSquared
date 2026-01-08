@@ -223,7 +223,17 @@ void Setup(Engine::Core &core)
                     {
                         light.intensity = std::max(0.0f, light.intensity - 0.5f);
                     }
-                    else if (key == GLFW_KEY_Y)
+                });
+        });
+
+    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback(
+        [](Engine::Core &core, int key, int, int action, int) {
+            if (!(action == GLFW_PRESS))
+                return;
+
+            core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>().each(
+                [key](Object::Component::PointLight &light, Object::Component::Transform &transform) {
+                    if (key == GLFW_KEY_Y)
                     {
                         transform.SetPosition(transform.GetPosition() + glm::vec3(0.0f, 0.5f, 0.0f));
                     }

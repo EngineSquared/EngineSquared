@@ -87,22 +87,15 @@ class PointLightsBuffer : public AGPUBuffer {
                 Log::Warn("Maximum number of point lights reached for GPU buffer update.");
                 return;
             }
-            const glm::vec3 &pos = transform.GetPosition();
-            const glm::vec3 &col = light.color;
+            const glm::vec3 &position = transform.GetPosition();
+            const glm::vec3 &color = light.color;
 
-            data.lights[index].position[0] = pos.x;
-            data.lights[index].position[1] = pos.y;
-            data.lights[index].position[2] = pos.z;
+            data.lights[index].position = {position.x, position.y, position.z};
             data.lights[index].intensity = light.intensity;
-            data.lights[index].color[0] = col.x;
-            data.lights[index].color[1] = col.y;
-            data.lights[index].color[2] = col.z;
+            data.lights[index].color = {color.x, color.y, color.z};
             data.lights[index].radius = light.radius;
             data.lights[index].falloff = light.falloff;
-            data.lights[index]._padding[0] = 0.0f;
-            data.lights[index]._padding[1] = 0.0f;
-            data.lights[index]._padding[2] = 0.0f;
-            ++index;
+            index++;
         });
         data.count = index;
 
