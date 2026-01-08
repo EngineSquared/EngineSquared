@@ -33,7 +33,7 @@ class AmbientLightBuffer : public AGPUBuffer {
         {
             entityName = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
         }
-        _debugName = fmt::format("{}{}", prefix, "NULL_ENTITY");
+        _debugName = fmt::format("{}{}", prefix, entityName);
     }
 
     ~AmbientLightBuffer() override = default;

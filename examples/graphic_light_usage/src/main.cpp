@@ -17,7 +17,7 @@ struct TargetController {
 
     bool active = false;
     glm::vec2 startMouse = {0.0f, 0.0f};
-    glm::quat originRotation{0.0f, 0.0f, 0.0f, 1.0f};
+    glm::quat originRotation{1.0f, 0.0f, 0.0f, 0.0f};
 
     float sensitivity = 0.005f;
     float scrollSensitivity = 0.1f;

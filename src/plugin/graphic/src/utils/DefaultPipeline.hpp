@@ -37,6 +37,7 @@ struct Camera {
 
 struct Model {
     modelMatrix : mat4x4<f32>,
+    normalMatrix : mat3x3<f32>,
 };
 
 struct Material {
@@ -98,7 +99,7 @@ fn vs_main(
     output.Position = camera.viewProjectionMatrix * worldPos;
     output.fragUV = input.uv;
     output.worldPos = worldPos.xyz;
-    output.worldNormal = (model.modelMatrix * vec4f(input.normal, 0.0)).xyz;
+    output.worldNormal = model.normalMatrix * input.normal;
     return output;
 }
 
@@ -212,10 +213,11 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
                                               .setMinBindingSize(sizeof(glm::mat4))
                                               .setVisibility(wgpu::ShaderStage::Vertex)
                                               .setBinding(0));
+        // Model buffer contains: mat4 modelMatrix (64 bytes) + 3 * vec4 normalMatrix columns (48 bytes) = 112 bytes
         auto modelLayout = Graphic::Utils::BindGroupLayout("CameraModelLayout")
                                .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("model")
                                              .setType(wgpu::BufferBindingType::Uniform)
-                                             .setMinBindingSize(sizeof(glm::mat4))
+                                             .setMinBindingSize(sizeof(glm::mat4) + 3 * sizeof(glm::vec4))
                                              .setVisibility(wgpu::ShaderStage::Vertex)
                                              .setBinding(0));
         auto materialLayout = Graphic::Utils::BindGroupLayout("MaterialLayout")
