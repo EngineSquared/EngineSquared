@@ -28,8 +28,8 @@ class PointLightsBuffer : public AGPUBuffer {
 
     struct PointLightsData {
         std::array<GPUPointLight, Utils::MAX_POINT_LIGHTS> lights; // 64 * 48 = 3072 bytes
-        uint32_t count;                                // 4 bytes (3076 bytes)
-        std::array<float, 3> _padding;                 // 12 bytes (3088 bytes)
+        uint32_t count;                                            // 4 bytes (3076 bytes)
+        std::array<float, 3> _padding;                             // 12 bytes (3088 bytes)
     };
 
     static_assert(sizeof(PointLightsData) == (48 * Utils::MAX_POINT_LIGHTS + 16),
@@ -80,9 +80,10 @@ class PointLightsBuffer : public AGPUBuffer {
         auto view = core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>();
 
         uint32_t index = 0;
-        view.each([&data, &index](auto, const Object::Component::PointLight &light, const Object::Component::Transform &transform)
-        {
-            if (index >= Utils::MAX_POINT_LIGHTS) {
+        view.each([&data, &index](auto, const Object::Component::PointLight &light,
+                                  const Object::Component::Transform &transform) {
+            if (index >= Utils::MAX_POINT_LIGHTS)
+            {
                 Log::Warn("Maximum number of point lights reached for GPU buffer update.");
                 return;
             }

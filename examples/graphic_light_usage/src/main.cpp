@@ -189,40 +189,50 @@ void Setup(Engine::Core &core)
     core.RegisterSystem(CameraTranslationSystem);
     core.RegisterSystem<Engine::Scheduler::Startup>(CameraRotationSystem);
 
-    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback([](Engine::Core &core, int key, int,
-                                                                             int action, int) {
-        if (!(action == GLFW_PRESS))
-            return;
+    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback(
+        [](Engine::Core &core, int key, int, int action, int) {
+            if (!(action == GLFW_PRESS))
+                return;
 
-        auto lightView = core.GetRegistry().view<Object::Component::AmbientLight>();
-        if (lightView.empty())
-            return;
+            auto lightView = core.GetRegistry().view<Object::Component::AmbientLight>();
+            if (lightView.empty())
+                return;
 
-        Engine::Entity light = lightView.front();
-        if (key == GLFW_KEY_R) {
-            light.GetComponents<Object::Component::AmbientLight>(core).color += glm::vec3(0.1f);
-        } else if (key == GLFW_KEY_F) {
-            light.GetComponents<Object::Component::AmbientLight>(core).color -= glm::vec3(0.1f);
-        }
-    });
-    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback([](Engine::Core &core, int key, int,
-                                                                             int action, int) {
-        if (!(action == GLFW_PRESS))
-            return;
-
-        core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>()
-            .each([key](Object::Component::PointLight &light, Object::Component::Transform &transform) {
-            if (key == GLFW_KEY_T) {
-                light.intensity += 0.5f;
-            } else if (key == GLFW_KEY_G) {
-                light.intensity = std::max(0.0f, light.intensity - 0.5f);
-            } else if (key == GLFW_KEY_Y) {
-                transform.SetPosition(transform.GetPosition() + glm::vec3(0.0f, 0.5f, 0.0f));
-            } else if (key == GLFW_KEY_H) {
-                transform.SetPosition(transform.GetPosition() - glm::vec3(0.0f, 0.5f, 0.0f));
+            Engine::Entity light = lightView.front();
+            if (key == GLFW_KEY_R)
+            {
+                light.GetComponents<Object::Component::AmbientLight>(core).color += glm::vec3(0.1f);
+            }
+            else if (key == GLFW_KEY_F)
+            {
+                light.GetComponents<Object::Component::AmbientLight>(core).color -= glm::vec3(0.1f);
             }
         });
-    });
+    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback(
+        [](Engine::Core &core, int key, int, int action, int) {
+            if (!(action == GLFW_PRESS))
+                return;
+
+            core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>().each(
+                [key](Object::Component::PointLight &light, Object::Component::Transform &transform) {
+                    if (key == GLFW_KEY_T)
+                    {
+                        light.intensity += 0.5f;
+                    }
+                    else if (key == GLFW_KEY_G)
+                    {
+                        light.intensity = std::max(0.0f, light.intensity - 0.5f);
+                    }
+                    else if (key == GLFW_KEY_Y)
+                    {
+                        transform.SetPosition(transform.GetPosition() + glm::vec3(0.0f, 0.5f, 0.0f));
+                    }
+                    else if (key == GLFW_KEY_H)
+                    {
+                        transform.SetPosition(transform.GetPosition() - glm::vec3(0.0f, 0.5f, 0.0f));
+                    }
+                });
+        });
 }
 
 class GraphicExampleError : public std::runtime_error {
