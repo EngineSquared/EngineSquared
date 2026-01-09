@@ -41,24 +41,39 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'style: apply linter')"
     runs-on: ubuntu-latest
     steps:
+      - name: Check if triggered by bot
+        id: check_bot
+        run: |
+          if [ "${{ github.event.head_commit.author.name }}" = "github-actions[bot]" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "Commit made by github-actions[bot], skipping lint steps"
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.check_bot.outputs.skip != 'true'
         with:
           token: ${{ secrets.PAT_CI_TEST }}
 
       - name: Install clang-format
+        if: steps.check_bot.outputs.skip != 'true'
         run: sudo apt-get install -y clang-format
 
       - name: Run clang-format
+        if: steps.check_bot.outputs.skip != 'true'
         run: |
           git ls-files -z "*.cpp" "*.hpp" "*.inl" | while IFS= read -rd '' f; do tail -c1 < "$f" | read -r _ || echo >> "$f"; done
           find . -iname '*.hpp' -o -iname '*.cpp' -o -iname '*.inl' | xargs clang-format -i
 
       - name: Set up Git
+        if: steps.check_bot.outputs.skip != 'true'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Push changes
+        if: steps.check_bot.outputs.skip != 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_CI_TEST }}
         run: |
