@@ -248,10 +248,3 @@ jobs:
       - name: Check test coverage (Linux)
         if: contains(runner.os, 'linux')
         uses: threeal/gcovr-action@64cb417ed6f143cafe1c69611922672002f460bb
-        with:
-          fail-under-line: 0
-          fail-under-branch: 0
-          excludes: |
-            build/.*
-            examples/.*
-            .*/tests/.*
