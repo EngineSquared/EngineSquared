@@ -448,7 +448,6 @@ void SyncSoftBodyVertices(Engine::Core &core)
         // Get body center of mass in world space
         JPH::RVec3 bodyPosition = body.GetCenterOfMassPosition();
 
-
         // Update vertex positions (vertices are in local space relative to body center of mass)
         const auto &joltVertices = motionProps->GetVertices();
 
@@ -479,8 +478,7 @@ void SyncSoftBodyVertices(Engine::Core &core)
                 {
                     const auto &v = joltVertices[joltIdx];
                     // Local space only - Transform handles world position
-                    mesh->vertices[origIdx] =
-                        glm::vec3(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
+                    mesh->vertices[origIdx] = glm::vec3(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
                 }
             }
         }
@@ -491,8 +489,7 @@ void SyncSoftBodyVertices(Engine::Core &core)
             {
                 const auto &v = joltVertices[i];
                 // Local space only - Transform handles world position
-                mesh->vertices[i] =
-                    glm::vec3(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
+                mesh->vertices[i] = glm::vec3(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
             }
         }
     }
