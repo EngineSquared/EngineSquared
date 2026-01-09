@@ -93,10 +93,6 @@ struct Vehicle {
     /// Rollbar configuration
     RollbarSettings rollbar;
 
-    /// Anti-rollbar settings (shared pointer for Jolt, set as embedded)
-    std::shared_ptr<JPH::VehicleAntiRollBar> frontAntiRollBar;
-    std::shared_ptr<JPH::VehicleAntiRollBar> rearAntiRollBar;
-
     /**
      * @brief Create a default RWD sports car configuration
      */

@@ -214,11 +214,6 @@ template <> class VehicleBuilder<4> {
         // Add chassis collider (use a box approximating the car body)
         chassis.AddComponent<Component::BoxCollider>(core, Component::BoxCollider(_chassisHalfExtents));
 
-        // Store wheel entities in the vehicle component
-        // The system will retrieve them during OnVehicleConstruct
-        _vehicle.frontAntiRollBar = nullptr; // Will be created by system
-        _vehicle.rearAntiRollBar = nullptr;  // Will be created by system
-
         // We need to pass wheel entities to the system somehow
         // Let's use the registry context temporarily
         auto &registry = core.GetRegistry();
