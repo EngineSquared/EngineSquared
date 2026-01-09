@@ -22,7 +22,7 @@
 namespace Physics::System {
 
 /**
- * @brief Create Jolt wheel settings from Engine� wheel configuration
+ * @brief Create Jolt wheel settings from Physics wheel configuration
  */
 static JPH::WheelSettingsWV *CreateJoltWheelSettings(const Component::WheelSettings &wheelSettings,
                                                      const glm::vec3 &position, bool isRear)
