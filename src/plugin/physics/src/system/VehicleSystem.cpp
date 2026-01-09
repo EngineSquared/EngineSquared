@@ -100,6 +100,12 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
         controllerSettings.mTransmission.mClutchReleaseTime = vehicle.gearbox.clutchReleaseTime;
         controllerSettings.mTransmission.mGearRatios.clear();
 
+        if (vehicle.gearbox.gearRatios.size() < 2)
+        {
+            Log::Error("Cannot create Vehicle: Gearbox must have at least one forward gear and one reverse gear");
+            return;
+        }
+
         for (size_t i = 1; i < vehicle.gearbox.gearRatios.size(); ++i)
         {
             controllerSettings.mTransmission.mGearRatios.push_back(vehicle.gearbox.gearRatios[i]);
