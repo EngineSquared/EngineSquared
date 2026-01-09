@@ -284,23 +284,39 @@ struct SoftBody {
         if (vertexIndex < invMasses.size())
         {
             invMasses[vertexIndex] = 0.0f;
-            pinnedVertices.push_back(vertexIndex);
+            if (std::find(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex) == pinnedVertices.end())
+            {
+                pinnedVertices.push_back(vertexIndex);
+            }
         }
     }
 
     /**
      * @brief Unpin a vertex
+     *
+     * @details kMinMass is used to avoid instability from huge inverse masses.
+     *
      * @param vertexIndex Index of vertex to unpin
      * @param mass Mass to assign (default 1.0)
      */
     void UnpinVertex(uint32_t vertexIndex, float mass = 1.0f)
     {
-        if (vertexIndex < invMasses.size())
+        static constexpr float kMinMass = 1.0e-6f;
+
+        if (vertexIndex >= invMasses.size())
+            return;
+
+        if (mass <= 0.0f)
         {
-            invMasses[vertexIndex] = mass > 0.0f ? 1.0f / mass : 0.0f;
-            pinnedVertices.erase(std::remove(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex),
-                                 pinnedVertices.end());
+            invMasses[vertexIndex] = 0.0f;
         }
+        else
+        {
+            float safeMass = mass < kMinMass ? kMinMass : mass;
+            invMasses[vertexIndex] = 1.0f / safeMass;
+        }
+        pinnedVertices.erase(std::remove(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex),
+                                pinnedVertices.end());
     }
 
     /**
@@ -313,7 +329,7 @@ struct SoftBody {
 
     /**
      * @brief Check if the soft body configuration is valid
-     * @note Requires a Mesh component with matching vertex count
+     * @note Only checks if vertex data has been initialized
      */
     [[nodiscard]] bool IsValid() const { return !invMasses.empty(); }
 
