@@ -26,7 +26,8 @@ void VehicleControlSystem(Engine::Core &core)
             if (!internal.IsValid())
                 return;
 
-            auto *wheeledController = static_cast<JPH::WheeledVehicleController *>(internal.vehicleConstraint->GetController());
+            auto *wheeledController =
+                static_cast<JPH::WheeledVehicleController *>(internal.vehicleConstraint->GetController());
 
             wheeledController->SetDriverInput(controller.forwardInput, controller.steeringInput, controller.brakeInput,
                                               controller.handBrakeInput);
