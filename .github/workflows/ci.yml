@@ -58,6 +58,8 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_CI_TEST }}
         run: |
           git add .
           git commit -m "style: apply linter" || true
