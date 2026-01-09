@@ -73,9 +73,6 @@ void CameraTranslationSystem(Engine::Core &core)
     camera.GetComponents<Object::Component::Transform>(core).SetPosition(
         camera.GetComponents<Object::Component::Transform>(core).GetPosition() +
         direction * cameraTranslationSpeed * deltaTime);
-
-    // std::cout << "Camera Position: "
-    //           << glm::to_string(camera.GetComponents<Object::Component::Transform>(core).GetPosition()) << std::endl;
 }
 
 void CameraRotationSystem(Engine::Core &core)
@@ -111,9 +108,11 @@ void CameraRotationSystem(Engine::Core &core)
 
 void CreateFloor(Engine::Core &core)
 {
-    auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    // Create floor like Jolt samples: position at Y=-1, half-extent Y=1, so surface is at Y=0
+    auto floor = Object::Helper::CreatePlane(core, 200.0f, 200.0f, glm::vec3(0.0f, -1.0f, 0.0f));
 
-    auto boxCollider = Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f));
+    // Half-extent 100x1x100 like Jolt samples (surface at Y = -1 + 1 = 0)
+    auto boxCollider = Physics::Component::BoxCollider(glm::vec3(100.0f, 1.0f, 100.0f));
     floor.AddComponent<Physics::Component::BoxCollider>(core, boxCollider);
 
     floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
@@ -143,25 +142,23 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     for (auto &vertex : mesh.vertices)
         vertex *= scaleFactor;
 
-    // Also scale normals (though they don't need magnitude change, just in case)
+    // Normalize normals after scaling
     for (auto &normal : mesh.normals)
         normal = glm::normalize(normal);
 
     auto teapot = core.CreateEntity();
-    // Position the teapot so it falls onto the floor (floor surface is at y=0.5)
-    teapot.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 3.0f, 0.0f));
+    teapot.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 10.0f, 0.0f));
 
-    // Configure soft body settings based on Jolt's SoftBodyCreator defaults
-    // Jolt uses VertexAttributes { 1.0e-4f, 1.0e-4f, 1.0e-3f } for edge/shear/bend
+    // Configure soft body settings
     auto settings = Physics::Component::SoftBodySettings::Balloon(5000.0f);
-    settings.edgeCompliance = 1.0e-5f;  // Very stiff edges (stiffer than Jolt default)
+    settings.edgeCompliance = 1.0e-5f;  // Very stiff edges
     settings.shearCompliance = 1.0e-5f; // Very stiff shear
-    settings.bendCompliance = 1.0e-4f;  // Stiff bending (10x stiffer than Jolt default)
+    settings.bendCompliance = 1.0e-4f;  // Stiff bending
     settings.solverIterations = 10;     // More iterations for stability
-    settings.vertexRadius = 0.5f;       // Larger radius for better collision detection
+    settings.vertexRadius = 0.1f;       // Collision margin
     settings.gravityFactor = 1.0f;
-    settings.friction = 0.5f;    // Friction with floor
-    settings.restitution = 0.3f; // Some bounce
+    settings.friction = 0.5f;
+    settings.restitution = 0.3f;
 
     auto soft = Physics::Component::SoftBody::CreateFromMesh(mesh, settings);
 
