@@ -7,10 +7,12 @@
 #include "component/WheelSettings.hpp"
 #include "core/Core.hpp"
 #include "entity/Entity.hpp"
+#include "exception/VehicleBuilderError.hpp"
 
 #include "Object.hpp"
 
 #include <array>
+#include <fmt/format.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <memory>
@@ -141,10 +143,12 @@ template <> class VehicleBuilder<4> {
     VehicleBuilder &SetWheelPositions(const glm::vec3 &frontLeft, const glm::vec3 &frontRight,
                                       const glm::vec3 &rearLeft, const glm::vec3 &rearRight)
     {
-        _wheelPositions[static_cast<size_t>(Component::WheelIndex::FrontLeft)] = frontLeft;
-        _wheelPositions[static_cast<size_t>(Component::WheelIndex::FrontRight)] = frontRight;
-        _wheelPositions[static_cast<size_t>(Component::WheelIndex::RearLeft)] = rearLeft;
-        _wheelPositions[static_cast<size_t>(Component::WheelIndex::RearRight)] = rearRight;
+        using enum Component::WheelIndex;
+
+        _wheelPositions[static_cast<size_t>(FrontLeft)] = frontLeft;
+        _wheelPositions[static_cast<size_t>(FrontRight)] = frontRight;
+        _wheelPositions[static_cast<size_t>(RearLeft)] = rearLeft;
+        _wheelPositions[static_cast<size_t>(RearRight)] = rearRight;
         return *this;
     }
 
@@ -165,7 +169,7 @@ template <> class VehicleBuilder<4> {
     {
         if (!_hasChassisSet)
         {
-            throw std::runtime_error("VehicleBuilder: Chassis mesh not set");
+            throw Exception::VehicleBuilderError("Chassis mesh not set");
         }
 
         // Validate all wheels have meshes
@@ -173,7 +177,7 @@ template <> class VehicleBuilder<4> {
         {
             if (!_hasWheelMesh[i])
             {
-                throw std::runtime_error("VehicleBuilder: Wheel mesh not set for wheel " + std::to_string(i));
+                throw Exception::VehicleBuilderError(fmt::format("Wheel mesh not set for wheel {}", i));
             }
         }
 
