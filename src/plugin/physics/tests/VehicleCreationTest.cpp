@@ -57,5 +57,5 @@ TEST(VehiclePlugin, VehicleCreation)
     const auto &vehicleInternal = vehicle.GetComponents<Physics::Component::VehicleInternal>(core);
     EXPECT_TRUE(vehicleInternal.IsValid());
     EXPECT_NE(vehicleInternal.vehicleConstraint, nullptr);
-    EXPECT_NE(vehicleInternal.vehicleController, nullptr);
+    EXPECT_NE(vehicleInternal.vehicleConstraint->GetController(), nullptr);
 }

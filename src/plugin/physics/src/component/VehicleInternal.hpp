@@ -20,12 +20,8 @@ namespace Physics::Component {
  */
 struct VehicleInternal {
     /// The Jolt vehicle constraint (owns the vehicle physics)
-    /// Raw pointer - manually managed, must be removed from PhysicsSystem before deletion
-    JPH::VehicleConstraint *vehicleConstraint = nullptr;
-
-    /// The Jolt vehicle controller (manages input/control)
-    /// Raw pointer - owned by vehicleConstraint, do not delete separately
-    JPH::WheeledVehicleController *vehicleController = nullptr;
+    /// Using Jolt's Ref smart pointer for proper reference counting
+    JPH::Ref<JPH::VehicleConstraint> vehicleConstraint;
 
     /// Collision tester for vehicle wheel raycasts (must stay alive while constraint exists)
     /// Using Jolt's Ref smart pointer for proper reference counting

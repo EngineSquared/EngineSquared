@@ -189,7 +189,7 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
             constraintSettings.mAntiRollBars.push_back(rearBar);
         }
 
-        JPH::VehicleConstraint *vehicleConstraint = nullptr;
+        JPH::Ref<JPH::VehicleConstraint> vehicleConstraint;
         {
             JPH::BodyLockWrite lock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(), chassisInternal->bodyID);
             if (lock.Succeeded())
@@ -211,11 +211,8 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
         physicsManager.GetPhysicsSystem().AddConstraint(vehicleConstraint);
         physicsManager.GetPhysicsSystem().AddStepListener(vehicleConstraint);
 
-        auto *controller = static_cast<JPH::WheeledVehicleController *>(vehicleConstraint->GetController());
-
         auto &vehicleInternal = registry.emplace<Component::VehicleInternal>(entity);
         vehicleInternal.vehicleConstraint = vehicleConstraint;
-        vehicleInternal.vehicleController = controller;
         vehicleInternal.collisionTester = collisionTester;
         vehicleInternal.wheelEntities = wheelEntities;
         vehicleInternal.wheelBodyIDs = wheelBodyIDs;
@@ -253,9 +250,8 @@ static void OnVehicleDestroy(entt::registry &registry, entt::entity entity)
         physicsManager.GetPhysicsSystem().RemoveStepListener(vehicleInternal->vehicleConstraint);
         physicsManager.GetPhysicsSystem().RemoveConstraint(vehicleInternal->vehicleConstraint);
 
-        delete vehicleInternal->vehicleConstraint;
+        // JPH::Ref automatically handles cleanup
         vehicleInternal->vehicleConstraint = nullptr;
-        vehicleInternal->vehicleController = nullptr;
 
         Log::Debug(fmt::format("Destroyed Vehicle for entity {}", static_cast<uint32_t>(entity)));
 

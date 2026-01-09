@@ -23,10 +23,10 @@ void VehicleControlSystem(Engine::Core &core)
 
     registry.view<Component::VehicleController, Component::VehicleInternal>().each(
         [&](const Component::VehicleController &controller, const Component::VehicleInternal &internal) {
-            if (!internal.IsValid() || !internal.vehicleController)
+            if (!internal.IsValid())
                 return;
 
-            auto *wheeledController = internal.vehicleController;
+            auto *wheeledController = static_cast<JPH::WheeledVehicleController *>(internal.vehicleConstraint->GetController());
 
             wheeledController->SetDriverInput(controller.forwardInput, controller.steeringInput, controller.brakeInput,
                                               controller.handBrakeInput);

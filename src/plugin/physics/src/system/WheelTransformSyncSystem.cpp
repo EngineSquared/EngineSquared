@@ -19,7 +19,7 @@ void WheelTransformSyncSystem(Engine::Core &core)
         if (!internal.IsValid() || !internal.vehicleConstraint)
             return;
 
-        auto *constraint = internal.vehicleConstraint;
+        JPH::VehicleConstraint *constraint = internal.vehicleConstraint;
 
         for (size_t i = 0; i < 4; ++i)
         {
