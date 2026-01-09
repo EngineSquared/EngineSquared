@@ -170,7 +170,7 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
 void Setup(Engine::Core &core)
 {
     CreateFloor(core);
-    CreateFallingCube(core, 0.0f, 10.0f, 0.0f, 2.0f);
+    // CreateFallingCube(core, 5.0f, 10.0f, 0.0f, 2.0f);
     CreateSoftbodyFromOBJ(core);
 
     auto camera = core.CreateEntity();

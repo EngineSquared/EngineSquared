@@ -26,20 +26,6 @@ target("SoftBodyUsage")
 
     set_rundir("$(projectdir)")
 
-    -- before_build(function (target)
-    --     import("core.project.config")
-
-    --     local builddir = config.get("builddir")
-    --     if not builddir then
-    --         builddir = config.get("buildir")
-    --     end
-    --     local targetdir = path.join(builddir, "$(plat)", "$(arch)", "$(mode)")
-
-    --     local assets_path = path.join(targetdir, "assets"):gsub("\\", "\\\\")
-    --     target:add_defines("PATH_ASSETS=\"" .. assets_path .. "\"")
-    --     add_defines("PATH_ASSETS=\"" .. assets_path .. "\"")
-    -- end)
-
     after_build(function (target)
         import("core.project.config")
 
