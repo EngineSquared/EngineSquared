@@ -63,10 +63,7 @@ struct Vec3Hash {
  * @brief Equality function for glm::vec3 with epsilon tolerance
  */
 struct Vec3Equal {
-    bool operator()(const glm::vec3 &a, const glm::vec3 &b) const
-    {
-        return a.x == b.x && a.y == b.y && a.z == b.z;
-    }
+    bool operator()(const glm::vec3 &a, const glm::vec3 &b) const { return a.x == b.x && a.y == b.y && a.z == b.z; }
 };
 
 /**
