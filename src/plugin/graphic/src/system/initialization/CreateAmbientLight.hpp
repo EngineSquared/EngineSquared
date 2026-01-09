@@ -6,4 +6,4 @@ namespace Graphic::System {
 
 void CreateAmbientLight(Engine::Core &core);
 
-}
+} // namespace Graphic::System

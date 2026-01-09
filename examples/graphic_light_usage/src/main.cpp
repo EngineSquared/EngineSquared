@@ -20,10 +20,6 @@ struct TargetController {
     glm::quat originRotation{1.0f, 0.0f, 0.0f, 0.0f};
 
     float sensitivity = 0.005f;
-    float scrollSensitivity = 0.1f;
-    glm::vec2 velocity = {0.0, 0.0};
-    glm::vec2 previousDelta = {0.0, 0.0};
-    float inertia = 0.9f;
 };
 
 void EscapeKeySystem(Engine::Core &core)
@@ -85,7 +81,7 @@ void CameraTranslationSystem(Engine::Core &core)
     Engine::Entity camera = core.GetRegistry().view<Object::Component::Camera>().front();
     auto &transform = camera.GetComponents<Object::Component::Transform>(core);
 
-    glm::vec3 forwardDir = camera.GetComponents<Object::Component::Transform>(core).GetForwardVector();
+    glm::vec3 forwardDir = transform.GetForwardVector();
     glm::vec3 up{0.0f, 1.0f, 0.0f};
     glm::vec3 rightDir = glm::normalize(glm::cross(up, forwardDir));
     glm::vec3 downDir = glm::normalize(glm::cross(forwardDir, rightDir));
@@ -131,9 +127,6 @@ void CameraRotationSystem(Engine::Core &core)
 
             auto &cameraTransform = camera.GetComponents<Object::Component::Transform>(core);
             cameraTransform.SetRotation(yawRotation * pitchRotation * targetController.originRotation);
-
-            targetController.velocity = (delta - targetController.previousDelta) * 100.0f;
-            targetController.previousDelta = delta;
         }
     });
 }
