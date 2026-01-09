@@ -226,11 +226,12 @@ jobs:
           package-cache-key: '${{ runner.os }}-xmake-entt-vulkan-glm'
           project-path: '.'
 
-      - name: Remove *.gcno and *.gcda files (Linux)
+      - name: Remove *.gcno / *.gcda / *.gcov files (Linux)
         if: contains(runner.os, 'linux')
         run: |
           find . -name "*.gcno" -delete
           find . -name "*.gcda" -delete
+          find . -name "*.gcov" -delete
 
       - name: Run tests (Linux)
         if: contains(runner.os, 'linux')
