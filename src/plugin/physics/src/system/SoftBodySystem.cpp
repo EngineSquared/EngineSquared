@@ -448,62 +448,6 @@ void SyncSoftBodyVertices(Engine::Core &core)
         // Get body center of mass in world space
         JPH::RVec3 bodyPosition = body.GetCenterOfMassPosition();
 
-        // Debug: Log soft body position and bounds periodically
-        static int frameCount = 0;
-        static bool loggedOnce = false;
-        if (frameCount++ % 60 == 0)
-        { // Log every 60 frames
-            auto localBounds = motionProps->GetLocalBounds();
-            auto worldBounds = body.GetWorldSpaceBounds();
-
-            // Find actual min Y world-space vertex position
-            float minY = std::numeric_limits<float>::max();
-            const auto &verts = motionProps->GetVertices();
-            for (const auto &v : verts)
-            {
-                float worldY = bodyPosition.GetY() + v.mPosition.GetY();
-                if (worldY < minY)
-                    minY = worldY;
-            }
-
-            // Check how many vertices have collision
-            int collidingVerts = 0;
-            for (const auto &v : verts)
-            {
-                if (v.mCollidingShapeIndex >= 0)
-                    collidingVerts++;
-            }
-
-            Log::Info(fmt::format("SoftBody worldBounds: [({:.2f},{:.2f},{:.2f}) - ({:.2f},{:.2f},{:.2f})], minVertY: "
-                                  "{:.2f}, collidingVerts: {}/{}",
-                                  worldBounds.mMin.GetX(), worldBounds.mMin.GetY(), worldBounds.mMin.GetZ(),
-                                  worldBounds.mMax.GetX(), worldBounds.mMax.GetY(), worldBounds.mMax.GetZ(), minY,
-                                  collidingVerts, verts.size()));
-
-            // Log all bodies once
-            if (!loggedOnce)
-            {
-                loggedOnce = true;
-                auto &bodyLockInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
-                JPH::BodyIDVector bodyIDs;
-                physicsManager.GetPhysicsSystem().GetBodies(bodyIDs);
-                for (auto id : bodyIDs)
-                {
-                    JPH::BodyLockRead bodyLock(bodyLockInterface, id);
-                    if (bodyLock.Succeeded())
-                    {
-                        const JPH::Body &b = bodyLock.GetBody();
-                        auto bounds = b.GetWorldSpaceBounds();
-                        Log::Info(fmt::format("Body {}: layer={}, broadphase={}, type={}, "
-                                              "bounds=[({:.2f},{:.2f},{:.2f})-({:.2f},{:.2f},{:.2f})]",
-                                              id.GetIndex(), b.GetObjectLayer(), b.GetBroadPhaseLayer().GetValue(),
-                                              b.IsSoftBody() ? "soft" : (b.IsStatic() ? "static" : "dynamic"),
-                                              bounds.mMin.GetX(), bounds.mMin.GetY(), bounds.mMin.GetZ(),
-                                              bounds.mMax.GetX(), bounds.mMax.GetY(), bounds.mMax.GetZ()));
-                    }
-                }
-            }
-        }
 
         // Update vertex positions (vertices are in local space relative to body center of mass)
         const auto &joltVertices = motionProps->GetVertices();
@@ -513,8 +457,18 @@ void SyncSoftBodyVertices(Engine::Core &core)
         if (!mesh || mesh->vertices.empty())
             continue;
 
+        // Update Transform with center of mass position (like RigidBody sync)
+        // This way the GPU applies the Transform, and vertices stay in local space
+        auto *transform = registry.try_get<Object::Component::Transform>(entity);
+        if (transform)
+        {
+            transform->SetPosition(Utils::FromJoltRVec3(bodyPosition));
+            // Note: Soft bodies don't have a single rotation, so we leave it as-is
+        }
+
         // Use the vertex map to sync deduplicated Jolt vertices back to the original mesh
-        // Each original mesh vertex maps to a deduplicated Jolt vertex
+        // Vertices are written in LOCAL space (relative to center of mass)
+        // The Transform handles world positioning
         if (!internal.vertexMap.empty())
         {
             // Use vertex map: original mesh vertices are mapped to deduplicated Jolt vertices
@@ -524,9 +478,9 @@ void SyncSoftBodyVertices(Engine::Core &core)
                 if (joltIdx < joltVertices.size())
                 {
                     const auto &v = joltVertices[joltIdx];
+                    // Local space only - Transform handles world position
                     mesh->vertices[origIdx] =
-                        glm::vec3(bodyPosition.GetX() + v.mPosition.GetX(), bodyPosition.GetY() + v.mPosition.GetY(),
-                                  bodyPosition.GetZ() + v.mPosition.GetZ());
+                        glm::vec3(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
                 }
             }
         }
@@ -536,9 +490,9 @@ void SyncSoftBodyVertices(Engine::Core &core)
             for (size_t i = 0; i < joltVertices.size() && i < mesh->vertices.size(); ++i)
             {
                 const auto &v = joltVertices[i];
+                // Local space only - Transform handles world position
                 mesh->vertices[i] =
-                    glm::vec3(bodyPosition.GetX() + v.mPosition.GetX(), bodyPosition.GetY() + v.mPosition.GetY(),
-                              bodyPosition.GetZ() + v.mPosition.GetZ());
+                    glm::vec3(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
             }
         }
     }
