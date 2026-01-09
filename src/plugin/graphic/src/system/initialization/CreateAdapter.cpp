@@ -40,10 +40,7 @@ std::vector<AdapterInfo> EnumerateAvailableAdapters(const wgpu::Instance &instan
     return result;
 }
 
-bool IsSoftwareAdapter(const AdapterInfo &info)
-{
-    return info.type == wgpu::AdapterType::CPU;
-}
+bool IsSoftwareAdapter(const AdapterInfo &info) { return info.type == wgpu::AdapterType::CPU; }
 
 bool IsHardwareAdapter(const AdapterInfo &info)
 {
@@ -107,10 +104,7 @@ void LogSoftwareAdapterWarning()
     Log::Warn("Consider setting WGPU_BACKEND=gl environment variable for better compatibility.");
 }
 
-void LogNoHardwareAdapterWarning()
-{
-    Log::Warn("No hardware GPU adapter found. Falling back to software rendering.");
-}
+void LogNoHardwareAdapterWarning() { Log::Warn("No hardware GPU adapter found. Falling back to software rendering."); }
 
 } // namespace
 
@@ -178,5 +172,6 @@ void Graphic::System::CreateAdapter(Engine::Core &core)
     context.adapter = selectedAdapter;
     context.backendType = selectedBackend;
     // On ne considère software bloquant que si ce n'est pas OpenGL/OpenGLES
-    context.isSoftwareAdapter = isSoftware && (selectedBackend != wgpu::BackendType::OpenGL && selectedBackend != wgpu::BackendType::OpenGLES);
+    context.isSoftwareAdapter =
+        isSoftware && (selectedBackend != wgpu::BackendType::OpenGL && selectedBackend != wgpu::BackendType::OpenGLES);
 }
