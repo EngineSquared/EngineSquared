@@ -102,7 +102,11 @@ std::pair<Object::Component::Mesh, SoftBody> SoftBody::CreateCloth(uint32_t widt
         {
             mesh.vertices.emplace_back(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing, 0.0f);
             mesh.normals.emplace_back(0.0f, 0.0f, 1.0f); // Face +Z
-            mesh.texCoords.emplace_back(static_cast<float>(x) / (width - 1), static_cast<float>(y) / (height - 1));
+            float uDen = (width > 1) ? static_cast<float>(width - 1) : 1.0f;
+            float vDen = (height > 1) ? static_cast<float>(height - 1) : 1.0f;
+            float u = static_cast<float>(x) / uDen;
+            float v = static_cast<float>(y) / vDen;
+            mesh.texCoords.emplace_back(u, v);
             body.invMasses.push_back(1.0f);
         }
     }
@@ -148,12 +152,14 @@ std::pair<Object::Component::Mesh, SoftBody> SoftBody::CreateRope(uint32_t segme
     uint32_t vertexCount = segmentCount + 1;
     mesh.vertices.reserve(vertexCount);
     mesh.normals.reserve(vertexCount);
+    mesh.texCoords.reserve(vertexCount);
     body.invMasses.reserve(vertexCount);
 
     for (uint32_t i = 0; i < vertexCount; ++i)
     {
         mesh.vertices.emplace_back(0.0f, -static_cast<float>(i) * segmentLength, 0.0f);
         mesh.normals.emplace_back(0.0f, 0.0f, 1.0f);
+        mesh.texCoords.emplace_back(0.0f, static_cast<float>(i) / segmentCount);
         body.invMasses.push_back(1.0f);
     }
 
@@ -184,6 +190,7 @@ std::pair<Object::Component::Mesh, SoftBody> SoftBody::CreateCube(uint32_t gridS
     // Generate vertices in 3D grid
     mesh.vertices.reserve(gridSize * gridSize * gridSize);
     mesh.normals.reserve(gridSize * gridSize * gridSize);
+    mesh.texCoords.reserve(gridSize * gridSize * gridSize);
     body.invMasses.reserve(gridSize * gridSize * gridSize);
 
     for (uint32_t z = 0; z < gridSize; ++z)
@@ -195,6 +202,10 @@ std::pair<Object::Component::Mesh, SoftBody> SoftBody::CreateCube(uint32_t gridS
                 mesh.vertices.emplace_back(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing,
                                            static_cast<float>(z) * spacing);
                 mesh.normals.emplace_back(0.0f, 1.0f, 0.0f); // Placeholder normal
+                // Simple UV mapping based on X and Y
+                float u = (gridSize > 1) ? static_cast<float>(x) / (gridSize - 1) : 0.0f;
+                float v = (gridSize > 1) ? static_cast<float>(y) / (gridSize - 1) : 0.0f;
+                mesh.texCoords.emplace_back(u, v);
                 body.invMasses.push_back(1.0f);
             }
         }

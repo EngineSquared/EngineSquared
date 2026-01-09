@@ -65,8 +65,7 @@ struct Vec3Hash {
 struct Vec3Equal {
     bool operator()(const glm::vec3 &a, const glm::vec3 &b) const
     {
-        constexpr float epsilon = 1e-6f;
-        return std::abs(a.x - b.x) < epsilon && std::abs(a.y - b.y) < epsilon && std::abs(a.z - b.z) < epsilon;
+        return a.x == b.x && a.y == b.y && a.z == b.z;
     }
 };
 
