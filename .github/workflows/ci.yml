@@ -252,6 +252,6 @@ jobs:
           fail-under-line: 0
           fail-under-branch: 0
           excludes: |
-            build/*
-            examples/*
-            */tests/*
+            build/.*
+            examples/.*
+            .*/tests/.*
