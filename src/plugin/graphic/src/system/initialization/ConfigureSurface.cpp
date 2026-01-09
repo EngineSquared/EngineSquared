@@ -1,37 +1,8 @@
 #include "system/initialization/ConfigureSurface.hpp"
-#include "Logger.hpp"
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Window.hpp"
 #include "utils/webgpu.hpp"
-
-namespace {
-
-bool ShouldSkipSurfaceConfiguration(const Graphic::Resource::Context &context)
-{
-    // Ne jamais bloquer si backend OpenGL/OpenGLES
-    if (context.backendType == wgpu::BackendType::OpenGL || context.backendType == wgpu::BackendType::OpenGLES)
-        return false;
-    return context.isSoftwareAdapter;
-}
-
-void LogSkippingSurfaceConfiguration()
-{
-    Log::Warn("Skipping surface configuration for software adapter (incompatible with Lavapipe).");
-    Log::Warn("Surface operations will be unavailable. Consider using WGPU_BACKEND=gl instead.");
-}
-
-bool HasValidSurface(const Graphic::Resource::Context &context)
-{
-    return context.surface.has_value() && context.surface->value.has_value();
-}
-
-bool NeedsCapabilitiesUpdate(const Graphic::Resource::Context &context)
-{
-    return !context.surface->capabilities.has_value();
-}
-
-} // namespace
 
 void Graphic::System::ConfigureSurface(Engine::Core &core)
 {
@@ -43,23 +14,21 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
     auto &context = core.GetResource<Resource::Context>();
     const auto &window = core.GetResource<Window::Resource::Window>();
 
-    if (!HasValidSurface(context))
-        return;
-
-    if (ShouldSkipSurfaceConfiguration(context))
-    {
-        LogSkippingSurfaceConfiguration();
-        return;
-    }
-
     int frameBufferSizeX;
     int frameBufferSizeY;
     glfwGetFramebufferSize(window.GetGLFWWindow(), &frameBufferSizeX, &frameBufferSizeY);
 
-    if (NeedsCapabilitiesUpdate(context))
+    if (context.surface == std::nullopt || !context.surface->value.has_value())
+    {
+        return;
+    }
+
+    if (!context.surface->capabilities.has_value())
     {
         if (context.surface->updateCapabilities(context.adapter.value()) == wgpu::Status::Error)
+        {
             return;
+        }
     }
 
     if (frameBufferSizeX <= 0)
