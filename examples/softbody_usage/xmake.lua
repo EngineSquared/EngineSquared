@@ -26,6 +26,8 @@ target("SoftBodyUsage")
 
     set_rundir("$(projectdir)")
 
+    add_defines("PATH_ASSETS=\"$(builddir)/assets/\"")
+
     after_build(function (target)
         import("core.project.config")
 
@@ -33,13 +35,12 @@ target("SoftBodyUsage")
         if not builddir then
             builddir = config.get("buildir")
         end
-        local targetdir = path.join(builddir, "$(plat)", "$(arch)", "$(mode)")
         local assets_files = os.files("$(scriptdir)" .. "/assets/*")
 
-        os.mkdir(path.join(targetdir, "assets"))
+        os.mkdir(path.join(builddir, "assets"))
 
         for _, assets_file in ipairs(assets_files) do
-            os.cp(assets_file, path.join(targetdir, "assets"))
+            os.cp(assets_file, path.join(builddir, "assets"))
         end
     end)
 
@@ -50,8 +51,7 @@ target("SoftBodyUsage")
         if not builddir then
             builddir = config.get("buildir")
         end
-        local targetdir = path.join(builddir, "$(plat)", "$(arch)", "$(mode)")
-        os.rm(path.join(targetdir, "assets"))
+        os.rm(path.join(builddir, "assets"))
     end)
 
     if is_mode("debug") then
