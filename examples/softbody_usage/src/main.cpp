@@ -17,10 +17,8 @@
 
 #ifdef PATH_ASSETS
 #    define FILES_PATH PATH_ASSETS
-#elif defined(DEBUG) || defined(_DEBUG)
-#    define FILES_PATH PROJECT_SOURCE_DIR "build/linux/x86_64/debug/assets/"
 #else
-#    define FILES_PATH PROJECT_SOURCE_DIR "build/linux/x86_64/release/assets/"
+#    define FILES_PATH "./assets/"
 #endif
 
 void EscapeKeySystem(Engine::Core &core)
