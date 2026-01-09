@@ -198,14 +198,15 @@ void Setup(Engine::Core &core)
             if (lightView.empty())
                 return;
 
-            Engine::Entity light = lightView.front();
+            Engine::Entity ambientLightEntity = lightView.front();
+            auto &ambientLightColor = ambientLightEntity.GetComponents<Object::Component::AmbientLight>(core).color;
             if (key == GLFW_KEY_R)
             {
-                light.GetComponents<Object::Component::AmbientLight>(core).color += glm::vec3(0.1f);
+                ambientLightColor += glm::vec3(0.1f);
             }
             else if (key == GLFW_KEY_F)
             {
-                light.GetComponents<Object::Component::AmbientLight>(core).color -= glm::vec3(0.1f);
+                ambientLightColor -= glm::vec3(0.1f);
             }
         });
     core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback(
