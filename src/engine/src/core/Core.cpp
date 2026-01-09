@@ -13,7 +13,7 @@ Engine::Core::Core() : _registry(nullptr)
     Log::Debug("Create Core");
     this->_registry = std::make_unique<entt::registry>();
 
-this->RegisterResource<Resource::Time>(Resource::Time());
+    this->RegisterResource<Resource::Time>(Resource::Time());
 
     this->RegisterScheduler<Scheduler::Startup>([this]() { this->DeleteScheduler<Scheduler::Startup>(); });
 
