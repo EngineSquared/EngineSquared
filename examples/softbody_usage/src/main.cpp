@@ -39,7 +39,10 @@ void CameraTranslationSystem(Engine::Core &core)
     const float deltaTime = core.GetScheduler<Engine::Scheduler::FixedTimeUpdate>().GetTickRate();
     auto &inputManager = core.GetResource<Input::Resource::InputManager>();
 
-    Engine::Entity camera = core.GetRegistry().view<Object::Component::Camera>().front();
+    auto cameraView = core.GetRegistry().view<Object::Component::Camera>();
+    if (cameraView.empty())
+        return;
+    Engine::Entity camera = cameraView.front();
 
     glm::vec3 direction{0.0f};
     if (inputManager.IsKeyPressed(GLFW_KEY_W))
@@ -81,7 +84,10 @@ void CameraRotationSystem(Engine::Core &core)
     const float deltaTime = core.GetScheduler<Engine::Scheduler::FixedTimeUpdate>().GetTickRate();
     auto &inputManager = core.GetResource<Input::Resource::InputManager>();
 
-    Engine::Entity camera = core.GetRegistry().view<Object::Component::Camera>().front();
+    auto cameraView = core.GetRegistry().view<Object::Component::Camera>();
+    if (cameraView.empty())
+        return;
+    Engine::Entity camera = cameraView.front();
 
     glm::vec2 rotation{0.0f};
     if (inputManager.IsKeyPressed(GLFW_KEY_UP))

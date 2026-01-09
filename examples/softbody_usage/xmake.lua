@@ -54,12 +54,13 @@ target("SoftBodyUsage")
         os.rm(path.join(targetdir, "assets"))
     end)
 
-if is_mode("debug") then
-    add_defines("ES_DEBUG")
-    set_symbols("debug")
-    set_optimize("none")
-end
+    if is_mode("debug") then
+        add_defines("ES_DEBUG")
+        set_symbols("debug")
+        set_optimize("none")
+    end
 
-if is_mode("release") then
-    set_optimize("fastest")
-end
+    if is_mode("release") then
+        set_optimize("fastest")
+    end
+target_end()
