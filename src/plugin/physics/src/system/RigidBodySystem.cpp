@@ -10,11 +10,14 @@
 #include "exception/RigidBodyError.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
+#include <algorithm>
 #include <fmt/format.h>
 
 #include "Object.hpp"
 
+#include <Jolt/Physics/Body/AllowedDOFs.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
+#include <Jolt/Physics/Body/MotionQuality.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 
 namespace Physics::System {
@@ -75,6 +78,76 @@ static JPH::RefConst<JPH::Shape> GetOrCreateColliderShape(entt::registry &regist
 }
 
 //=============================================================================
+// Property helpers
+//=============================================================================
+
+/**
+ * @brief Apply user-facing RigidBody properties to Jolt BodyCreationSettings
+ *
+ * This function validates & applies material, damping, gravity, motion quality,
+ * allowed DOFs and advanced flags (e.g. enhanced internal edge removal).
+ */
+static void ApplyRigidBodyPropertiesToBodySettings(const Component::RigidBody &rigidBody,
+                                                   JPH::BodyCreationSettings &bodySettings)
+{
+    float friction = rigidBody.friction;
+
+    if (friction < 0.0f)
+    {
+        Log::Warn("RigidBody: friction < 0, clamping to 0");
+        friction = 0.0f;
+    }
+
+    float restitution = rigidBody.restitution;
+    if (restitution < 0.0f || restitution > 1.0f)
+    {
+        Log::Warn("RigidBody: restitution out of [0,1], clamping");
+        restitution = std::clamp(restitution, 0.0f, 1.0f);
+    }
+
+    if (rigidBody.linearDamping < 0.0f || rigidBody.angularDamping < 0.0f)
+    {
+        Log::Warn("RigidBody: damping should be >= 0");
+    }
+
+    bodySettings.mFriction = friction;
+    bodySettings.mRestitution = restitution;
+    bodySettings.mLinearDamping = rigidBody.linearDamping;
+    bodySettings.mAngularDamping = rigidBody.angularDamping;
+    bodySettings.mGravityFactor = rigidBody.gravityFactor;
+    bodySettings.mAllowSleeping = rigidBody.allowSleeping;
+
+    if (rigidBody.useMotionQualityLinearCast)
+        bodySettings.mMotionQuality = JPH::EMotionQuality::LinearCast;
+    else
+        bodySettings.mMotionQuality = rigidBody.motionQuality;
+
+    bodySettings.mEnhancedInternalEdgeRemoval = rigidBody.enhancedInternalEdgeRemoval;
+
+    JPH::EAllowedDOFs allowedDOFs = JPH::EAllowedDOFs::All;
+    if (rigidBody.lockPositionX)
+        allowedDOFs &= ~JPH::EAllowedDOFs::TranslationX;
+    if (rigidBody.lockPositionY)
+        allowedDOFs &= ~JPH::EAllowedDOFs::TranslationY;
+    if (rigidBody.lockPositionZ)
+        allowedDOFs &= ~JPH::EAllowedDOFs::TranslationZ;
+    if (rigidBody.lockRotationX)
+        allowedDOFs &= ~JPH::EAllowedDOFs::RotationX;
+    if (rigidBody.lockRotationY)
+        allowedDOFs &= ~JPH::EAllowedDOFs::RotationY;
+    if (rigidBody.lockRotationZ)
+        allowedDOFs &= ~JPH::EAllowedDOFs::RotationZ;
+
+    if (allowedDOFs == JPH::EAllowedDOFs::None && rigidBody.motionType != Component::MotionType::Static)
+    {
+        Log::Warn("RigidBody: All axis locks enabled for a non-static body - falling back to All DOFs");
+        allowedDOFs = JPH::EAllowedDOFs::All;
+    }
+
+    bodySettings.mAllowedDOFs = allowedDOFs;
+}
+
+//=============================================================================
 // Entt hook callbacks
 //=============================================================================
 
@@ -120,12 +193,8 @@ static void OnRigidBodyConstruct(entt::registry &registry, entt::entity entity)
                                                rigidBody.objectLayer);
 
         bodySettings.mUserData = static_cast<uint64_t>(entity);
-        bodySettings.mFriction = rigidBody.friction;
-        bodySettings.mRestitution = rigidBody.restitution;
-        bodySettings.mLinearDamping = rigidBody.linearDamping;
-        bodySettings.mAngularDamping = rigidBody.angularDamping;
-        bodySettings.mGravityFactor = rigidBody.gravityFactor;
-        bodySettings.mAllowSleeping = rigidBody.allowSleeping;
+
+        ApplyRigidBodyPropertiesToBodySettings(rigidBody, bodySettings);
 
         if (rigidBody.motionType == Component::MotionType::Dynamic)
         {

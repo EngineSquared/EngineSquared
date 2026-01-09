@@ -24,6 +24,8 @@
 #pragma once
 
 #include "utils/Layers.hpp"
+#include <Jolt/Physics/Body/AllowedDOFs.h>
+#include <Jolt/Physics/Body/MotionQuality.h>
 #include <Jolt/Physics/Body/MotionType.h>
 #include <Jolt/Physics/EActivation.h>
 #include <cstdint>
@@ -39,6 +41,11 @@ using MotionType = JPH::EMotionType;
  * @brief Activation mode for bodies when added to the physics world
  */
 using Activation = JPH::EActivation;
+
+/**
+ * @brief Motion quality for rigid bodies (Discrete or LinearCast)
+ */
+using MotionQuality = JPH::EMotionQuality;
 
 /**
  * @brief Public RigidBody component
@@ -71,6 +78,28 @@ struct RigidBody {
 
     /// Activation mode when added to world
     Activation activation = Activation::Activate;
+
+    //========================================================================
+    // Motion Quality / CCD
+    //========================================================================
+    /// Motion quality (Discrete or LinearCast / CCD)
+    MotionQuality motionQuality = MotionQuality::Discrete;
+
+    /// Alias for enabling continuous collision detection (LinearCast)
+    bool useMotionQualityLinearCast = false;
+
+    // Axis locks - translation / rotation locks, useful for 2D or constrained movement
+    bool lockPositionX = false;
+    bool lockPositionY = false;
+    bool lockPositionZ = false;
+    bool lockRotationX = false;
+    bool lockRotationY = false;
+    bool lockRotationZ = false;
+
+    // Enhanced internal edge removal (boolean toggle)
+    // When true, the engine will ask Jolt to perform additional checks to avoid ghost contacts
+    // (may be more expensive). Default: false.
+    bool enhancedInternalEdgeRemoval = false;
 
     //========================================================================
     // Mass Properties
