@@ -62,7 +62,7 @@ void Graphic::System::CreateAdapter(Engine::Core &core)
     }
     else if (graphicSettings.GetPowerPreference() == Resource::PowerPreference::HighPerformance)
     {
-            adapterOpts.powerPreference = wgpu::PowerPreference::HighPerformance;
+        adapterOpts.powerPreference = wgpu::PowerPreference::HighPerformance;
     }
 
     if (context.surface.has_value())
