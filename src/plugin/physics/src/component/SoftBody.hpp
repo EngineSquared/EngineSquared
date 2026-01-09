@@ -316,7 +316,7 @@ struct SoftBody {
             invMasses[vertexIndex] = 1.0f / safeMass;
         }
         pinnedVertices.erase(std::remove(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex),
-                                pinnedVertices.end());
+                             pinnedVertices.end());
     }
 
     /**
