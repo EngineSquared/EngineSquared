@@ -15,7 +15,7 @@ Engine::Core::Core() : _registry(nullptr)
 
     this->RegisterResource<Resource::Time>(Resource::Time());
 
-    this->RegisterScheduler<Scheduler::Startup>([this]() { this->DeleteScheduler<Scheduler::Startup>(); });
+this->RegisterScheduler<Scheduler::Startup>([this]() { this->DeleteScheduler<Scheduler::Startup>(); });
 
     this->RegisterScheduler<Scheduler::Update>();
     this->RegisterScheduler<Scheduler::FixedTimeUpdate>();
