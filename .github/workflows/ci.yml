@@ -8,7 +8,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.actor == 'github-actions[bot]' }}
+  cancel-in-progress: true
 
 env:
   UNWANTED_REGEX: '^(?!.*tests\/).*gc(no|da|ov)$|(.*\.(a|o|so|lib))$|(.*~)$|^(#.*#)$|^tmp\/.*|.*\/tmp\/.*'
