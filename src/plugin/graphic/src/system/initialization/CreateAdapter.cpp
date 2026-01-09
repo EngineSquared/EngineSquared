@@ -28,11 +28,9 @@ static std::optional<wgpu::Adapter> findVulkanAdapter(const Graphic::Resource::C
         wgpu::AdapterInfo info(wgpu::Default);
         if (cand.getInfo(&info) != wgpu::Status::Success)
             continue;
-
         if (info.backendType == wgpu::BackendType::Vulkan)
             return cand;
     }
-
     return std::nullopt;
 }
 
