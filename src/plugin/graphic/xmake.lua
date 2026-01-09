@@ -46,6 +46,7 @@ target(plugin_name)
     add_headerfiles("src/(system/commandCreation/*.hpp)")
     add_headerfiles("src/(system/shutdown/*.hpp)")
     add_headerfiles("src/(utils/*.hpp)")
+    add_headerfiles("src/(utils/shader/*.hpp)")
     add_headerfiles("src/(*.hpp)")
 
     add_includedirs("src", {public = true})
