@@ -214,19 +214,14 @@ template <> class VehicleBuilder<4> {
         // Add chassis collider (use a box approximating the car body)
         chassis.AddComponent<Component::BoxCollider>(core, Component::BoxCollider(_chassisHalfExtents));
 
-        // We need to pass wheel entities to the system somehow
-        // Let's use the registry context temporarily
-        auto &registry = core.GetRegistry();
-        registry.ctx().emplace<std::array<Engine::Entity, 4>>(wheelEntities);
+        // Store wheel entities in the Vehicle component
+        _vehicle.wheelEntities = wheelEntities;
 
         // Add the Vehicle component (this triggers OnVehicleConstruct)
         chassis.AddComponent<Component::Vehicle>(core, _vehicle);
 
         // Add controller component for user input
         chassis.AddComponent<Component::VehicleController>(core);
-
-        // Clean up temporary context
-        registry.ctx().erase<std::array<Engine::Entity, 4>>();
 
         return chassis;
     }

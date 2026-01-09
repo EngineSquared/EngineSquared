@@ -1,6 +1,7 @@
 #pragma once
 
 #include "component/WheelSettings.hpp"
+#include "entity/Entity.hpp"
 #include <Jolt/Physics/Vehicle/VehicleAntiRollBar.h>
 #include <Jolt/Physics/Vehicle/VehicleConstraint.h>
 #include <array>
@@ -92,6 +93,9 @@ struct Vehicle {
 
     /// Rollbar configuration
     RollbarSettings rollbar;
+
+    /// Wheel entities for visual representation
+    std::array<Engine::Entity, 4> wheelEntities;
 
     /**
      * @brief Create a default RWD sports car configuration

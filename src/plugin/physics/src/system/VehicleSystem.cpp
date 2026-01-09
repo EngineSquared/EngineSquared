@@ -84,13 +84,8 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
             return;
         }
 
-        std::array<Engine::Entity, 4> wheelEntities{};
+        std::array<Engine::Entity, 4> wheelEntities = vehicle.wheelEntities;
         std::array<JPH::BodyID, 4> wheelBodyIDs{};
-
-        if (auto *storedWheelEntities = registry.ctx().find<std::array<Engine::Entity, 4>>())
-        {
-            wheelEntities = *storedWheelEntities;
-        }
 
         JPH::WheeledVehicleControllerSettings controllerSettings;
 
