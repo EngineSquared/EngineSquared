@@ -80,11 +80,12 @@ class PointLightsBuffer : public AGPUBuffer {
         auto view = core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>();
 
         uint32_t index = 0;
-        view.each([&data, &index](auto, const Object::Component::PointLight &light,
-                                  const Object::Component::Transform &transform) {
+        uint32_t skippedCount = 0;
+        view.each([&data, &index, &skippedCount](auto, const Object::Component::PointLight &light,
+                                                 const Object::Component::Transform &transform) {
             if (index >= Utils::MAX_POINT_LIGHTS)
             {
-                Log::Warn("Maximum number of point lights reached for GPU buffer update.");
+                skippedCount++;
                 return;
             }
             const glm::vec3 &position = transform.GetPosition();
@@ -98,6 +99,12 @@ class PointLightsBuffer : public AGPUBuffer {
             index++;
         });
         data.count = index;
+
+        if (skippedCount > 0)
+        {
+            Log::Warn(fmt::format("Maximum number of point lights ({}) reached. {} light(s) skipped.", Utils::MAX_POINT_LIGHTS,
+                      skippedCount));
+        }
 
         context.queue->writeBuffer(_buffer, 0, &data, sizeof(PointLightsData));
     }
