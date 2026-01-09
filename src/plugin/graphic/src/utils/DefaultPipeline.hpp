@@ -103,10 +103,11 @@ fn vs_main(
     return output;
 }
 
-// Attempt at physically correct attenuation with finite radius
-// Formula: A * (1 - s^2)^2 / (1 + F * s) where s = d/R
-// This gives exactly zero at distance R with zero derivative (smooth cutoff)
-// See https://lisyarus.github.io/blog/posts/point-light-attenuation.html for more information
+// Physically plausible point-light attenuation with finite radius
+// Formula inside the radius: A * (1 - s^2)^2 / (1 + F * s), where s = d / R
+// For s >= 1 (distance >= R) the attenuation is explicitly clamped to 0.0.
+// This yields a compact-support profile that is C1-smooth at distance R (value and derivative are zero there).
+// See https://lisyarus.github.io/blog/posts/point-light-attenuation.html for more details on this model.
 fn attenuate(distance: f32, radius: f32, max_intensity: f32, falloff: f32) -> f32 {
     let s = distance / radius;
 
