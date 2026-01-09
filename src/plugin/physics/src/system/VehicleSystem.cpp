@@ -24,31 +24,27 @@ namespace Physics::System {
 /**
  * @brief Create Jolt wheel settings from Physics wheel configuration
  */
-static JPH::WheelSettingsWV *CreateJoltWheelSettings(const Component::WheelSettings &wheelSettings,
-                                                     const glm::vec3 &position, bool isRear)
+static void CreateJoltWheelSettings(JPH::WheelSettingsWV &joltWheel, const Component::WheelSettings &wheelSettings,
+                                    const glm::vec3 &position, bool isRear)
 {
-    auto *joltWheel = new JPH::WheelSettingsWV();
+    joltWheel.mPosition = Utils::ToJoltVec3(position);
+    joltWheel.mSuspensionDirection = JPH::Vec3(0, -1, 0);
+    joltWheel.mSteeringAxis = JPH::Vec3(0, 1, 0);
+    joltWheel.mWheelUp = JPH::Vec3(0, 1, 0);
+    joltWheel.mWheelForward = JPH::Vec3(0, 0, 1);
+    joltWheel.mSuspensionMinLength = wheelSettings.suspensionMinLength;
+    joltWheel.mSuspensionMaxLength = wheelSettings.suspensionMaxLength;
+    joltWheel.mSuspensionPreloadLength = 0.0f;
+    joltWheel.mMaxSteerAngle = wheelSettings.maxSteerAngle;
+    joltWheel.mMaxHandBrakeTorque = isRear ? 1500.0f : 0.0f;
+    joltWheel.mRadius = wheelSettings.radius;
+    joltWheel.mWidth = wheelSettings.width;
 
-    joltWheel->mPosition = Utils::ToJoltVec3(position);
-    joltWheel->mSuspensionDirection = JPH::Vec3(0, -1, 0);
-    joltWheel->mSteeringAxis = JPH::Vec3(0, 1, 0);
-    joltWheel->mWheelUp = JPH::Vec3(0, 1, 0);
-    joltWheel->mWheelForward = JPH::Vec3(0, 0, 1);
-    joltWheel->mSuspensionMinLength = wheelSettings.suspensionMinLength;
-    joltWheel->mSuspensionMaxLength = wheelSettings.suspensionMaxLength;
-    joltWheel->mSuspensionPreloadLength = 0.0f;
-    joltWheel->mMaxSteerAngle = wheelSettings.maxSteerAngle;
-    joltWheel->mMaxHandBrakeTorque = isRear ? 1500.0f : 0.0f;
-    joltWheel->mRadius = wheelSettings.radius;
-    joltWheel->mWidth = wheelSettings.width;
+    joltWheel.mSuspensionSpring.mFrequency = wheelSettings.suspensionFrequency;
+    joltWheel.mSuspensionSpring.mDamping = wheelSettings.suspensionDamping;
 
-    joltWheel->mSuspensionSpring.mFrequency = wheelSettings.suspensionFrequency;
-    joltWheel->mSuspensionSpring.mDamping = wheelSettings.suspensionDamping;
-
-    joltWheel->mLongitudinalFriction.mPoints[0] = {0.0f, wheelSettings.longitudinalFriction};
-    joltWheel->mLateralFriction.mPoints[0] = {0.0f, wheelSettings.lateralFriction};
-
-    return joltWheel;
+    joltWheel.mLongitudinalFriction.mPoints[0] = {0.0f, wheelSettings.longitudinalFriction};
+    joltWheel.mLateralFriction.mPoints[0] = {0.0f, wheelSettings.lateralFriction};
 }
 
 /**
@@ -102,6 +98,7 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
 
         if (vehicle.gearbox.gearRatios.size() < 2)
         {
+            // Should never happen
             Log::Error("Cannot create Vehicle: Gearbox must have at least one forward gear and one reverse gear");
             return;
         }
@@ -163,10 +160,14 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
         std::array<glm::vec3, 4> wheelPositions = {glm::vec3(-0.9f, -0.3f, 1.2f), glm::vec3(0.9f, -0.3f, 1.2f),
                                                    glm::vec3(-0.9f, -0.3f, -1.2f), glm::vec3(0.9f, -0.3f, -1.2f)};
 
+        constraintSettings.mWheels.resize(4);
         for (size_t i = 0; i < 4; ++i)
         {
             bool isRear = (i >= 2);
-            constraintSettings.mWheels.push_back(CreateJoltWheelSettings(vehicle.wheels[i], wheelPositions[i], isRear));
+            // Safety: mWheels is a vector of Jolt references, so new is safe here
+            auto *wheelSettings = new JPH::WheelSettingsWV();
+            CreateJoltWheelSettings(*wheelSettings, vehicle.wheels[i], wheelPositions[i], isRear);
+            constraintSettings.mWheels[i] = wheelSettings;
         }
 
         constraintSettings.mController = new JPH::WheeledVehicleControllerSettings(controllerSettings);

@@ -181,6 +181,12 @@ template <> class VehicleBuilder<4> {
             }
         }
 
+        // Validate gearbox has at least one forward gear and one reverse gear
+        if (_vehicle.gearbox.gearRatios.size() < 2)
+        {
+            throw Exception::VehicleBuilderError("Gearbox must have at least one forward gear and one reverse gear");
+        }
+
         // Create chassis entity
         Engine::Entity chassis = core.CreateEntity();
         chassis.AddComponent<Object::Component::Transform>(
