@@ -239,17 +239,18 @@ jobs:
           xmake test -y -D
         timeout-minutes: 120
 
+      - name: Remove *.gcno and *.gcda files (Linux)
+        if: contains(runner.os, 'linux')
+        run: |
+          find . -name "*.gcno" -delete
+          find . -name "*.gcda" -delete
+
       - name: Run tests (macOS)
         if: contains(runner.os, 'macos')
         run: |
           xmake test -y -D
         timeout-minutes: 120
 
-      - name: Remove *.gcno and *.gcda files (Linux)
-        if: contains(runner.os, 'linux')
-        run: |
-          find . -name "*.gcno" -delete
-          find . -name "*.gcda" -delete
 
       - name: Check test coverage (Linux)
         if: contains(runner.os, 'linux')
