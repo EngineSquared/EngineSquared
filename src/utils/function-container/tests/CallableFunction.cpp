@@ -8,7 +8,6 @@
 int FreeFunction(int x) { return x + 1; }
 
 struct Functor {
-
     int operator()(int x) const { return x + 2; }
 };
 

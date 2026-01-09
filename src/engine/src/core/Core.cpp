@@ -72,7 +72,7 @@ void Engine::Core::RunSystems()
 
     for (const auto &scheduler : this->_schedulersToDelete)
     {
-        this->_schedulers.DeleteScheduler(scheduler);
+            this->_schedulers.DeleteScheduler(scheduler);
     }
 
     this->_schedulersToDelete.clear();
