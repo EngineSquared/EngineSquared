@@ -42,5 +42,7 @@ class Context {
     std::optional<wgpu::Adapter> adapter;
     DeviceContext deviceContext;
     std::optional<wgpu::Queue> queue;
+    bool isSoftwareAdapter = false;
+    wgpu::BackendType backendType = wgpu::BackendType::Undefined;
 };
 } // namespace Graphic::Resource
