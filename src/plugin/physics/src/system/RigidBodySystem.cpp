@@ -19,8 +19,8 @@
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
-#include <Jolt/Physics/Collision/Shape/SphereShape.h>
 #include <Jolt/Physics/Collision/Shape/RotatedTranslatedShape.h>
+#include <Jolt/Physics/Collision/Shape/SphereShape.h>
 
 namespace Physics::System {
 
@@ -52,7 +52,8 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(entt::registry &regist
 
         auto *baseShape = new JPH::SphereShape(sphereCollider->radius);
         if (sphereCollider->offset != glm::vec3{0.0f, 0.0f, 0.0f})
-            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(sphereCollider->offset), JPH::Quat::sIdentity(), baseShape);
+            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(sphereCollider->offset), JPH::Quat::sIdentity(),
+                                                   baseShape);
         return baseShape;
     }
 
@@ -66,7 +67,8 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(entt::registry &regist
 
         auto *baseShape = new JPH::CapsuleShape(capsuleCollider->halfHeight, capsuleCollider->radius);
         if (capsuleCollider->offset != glm::vec3{0.0f, 0.0f, 0.0f})
-            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(capsuleCollider->offset), JPH::Quat::sIdentity(), baseShape);
+            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(capsuleCollider->offset), JPH::Quat::sIdentity(),
+                                                   baseShape);
         return baseShape;
     }
 
@@ -74,7 +76,8 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(entt::registry &regist
     {
         auto *baseShape = new JPH::BoxShape(Utils::ToJoltVec3(boxCollider->halfExtents), boxCollider->convexRadius);
         if (boxCollider->offset != glm::vec3{0.0f, 0.0f, 0.0f})
-            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(boxCollider->offset), JPH::Quat::sIdentity(), baseShape);
+            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(boxCollider->offset), JPH::Quat::sIdentity(),
+                                                   baseShape);
         return baseShape;
     }
 
@@ -82,7 +85,8 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(entt::registry &regist
     {
         auto *baseShape = new JPH::BoxShape(Utils::ToJoltVec3(defaultCollider->halfExtents));
         if (defaultCollider->offset != glm::vec3{0.0f, 0.0f, 0.0f})
-            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(defaultCollider->offset), JPH::Quat::sIdentity(), baseShape);
+            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(defaultCollider->offset), JPH::Quat::sIdentity(),
+                                                   baseShape);
         return baseShape;
     }
 
