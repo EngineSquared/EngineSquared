@@ -4,11 +4,12 @@
 #include "component/Transform.hpp"
 #include "glm/glm.hpp"
 #include <entt/core/hashed_string.hpp>
+#include "Logger.hpp"
 
 namespace Graphic::Component {
 struct GPUCamera {
     using Id = entt::hashed_string;
-    // TODO: find a way to update this on window resize
+
     float aspectRatio = 1.f;
     glm::mat4 projection;
     glm::mat4 view;
@@ -17,6 +18,7 @@ struct GPUCamera {
     Id buffer{};
     Id bindGroup{};
     Id pipeline{};
+    Id targetTexture{};
 
     void Update(const Object::Component::Camera &camera, const Object::Component::Transform &transform)
     {
@@ -25,6 +27,16 @@ struct GPUCamera {
         projection = glm::perspectiveLH_ZO(camera.fov, aspectRatio, camera.nearPlane, camera.farPlane);
         viewProjection = projection * view;
         inverseViewProjection = glm::inverse(viewProjection);
+    }
+
+    inline void UpdateAspectRatio(const glm::uvec2 &textureSize)
+    {
+        if (textureSize.y > 0)
+        {
+            aspectRatio = static_cast<float>(textureSize.x) / static_cast<float>(textureSize.y);
+        } else {
+            Log::Warn("GPUCamera::UpdateAspectRatio: texture height is zero, cannot update aspect ratio.");
+        }
     }
 };
 }; // namespace Graphic::Component

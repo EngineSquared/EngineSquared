@@ -8,6 +8,7 @@
 #include "resource/Context.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/CameraGPUBuffer.hpp"
+#include "system/preparation/PrepareEndRenderTexture.hpp"
 #include "utils/DefaultPipeline.hpp"
 #include <string>
 
@@ -20,6 +21,7 @@ void Graphic::System::OnCameraCreation(Engine::Core &core, Engine::Entity entity
     Graphic::Component::GPUCamera gpuCameraComponent;
     gpuCameraComponent.Update(cameraComponent, transformComponent);
     gpuCameraComponent.pipeline = Graphic::Utils::DEFAULT_RENDER_GRAPH_ID;
+    gpuCameraComponent.targetTexture = Graphic::System::END_RENDER_TEXTURE_ID;
 
     std::string entityString = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
     std::string cameraBufferName = "CAMERA_UNIFORM_BUFFER_" + entityString;

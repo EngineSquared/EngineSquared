@@ -91,6 +91,7 @@
 #include "system/initialization/ReleaseInstance.hpp"
 #include "system/initialization/RequestCapabilities.hpp"
 #include "system/initialization/SetupQueue.hpp"
+#include "system/initialization/SetupResizableRenderTexture.hpp"
 
 #include "system/GPUComponentManagement/OnCameraCreation.hpp"
 #include "system/GPUComponentManagement/OnCameraDestruction.hpp"

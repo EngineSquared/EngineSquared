@@ -21,6 +21,9 @@ namespace Event::Resource {
  * and processed during the corresponding scheduler execution. All operations are thread-safe.
  */
 class EventManager {
+  private:
+    struct DirectCallbackSchedulerTag {};
+
   public:
     /**
      * @brief Type identifier for event types.
@@ -74,18 +77,6 @@ class EventManager {
     }
 
     /**
-     * @brief Register a callback for an event type on the Update scheduler.
-     * @tparam TEvent The event type to listen for.
-     * @tparam TCallBack The callback type (auto-deduced).
-     * @param callback The callback function with signature void(Engine::Core&, const TEvent&).
-     * @return Unique identifier for the registered callback.
-     */
-    template <typename TEvent, typename TCallBack> EventCallbackID RegisterCallback(TCallBack &&callback)
-    {
-        return _RegisterCallbackImpl<TEvent, TCallBack, Engine::Scheduler::Update>(std::forward<TCallBack>(callback));
-    }
-
-    /**
      * @brief Register a callback for an event type on a specific scheduler.
      * @tparam TEvent The event type to listen for.
      * @tparam TScheduler The scheduler type on which to process this event.
@@ -93,7 +84,7 @@ class EventManager {
      * @param callback The callback function with signature void(Engine::Core&, const TEvent&).
      * @return Unique identifier for the registered callback.
      */
-    template <typename TEvent, Engine::CScheduler TScheduler, typename TCallBack>
+    template <typename TEvent, typename TScheduler = DirectCallbackSchedulerTag,typename TCallBack>
     EventCallbackID RegisterCallback(TCallBack &&callback)
     {
         return _RegisterCallbackImpl<TEvent, TCallBack, TScheduler>(std::forward<TCallBack>(callback));
@@ -120,6 +111,19 @@ class EventManager {
                 _eventQueue[schedulerID].push({typeID, event});
             }
         }
+
+        auto &directEventCallbacks = _eventCallbacks[std::type_index(typeid(DirectCallbackSchedulerTag))];
+        for (const auto &[eventId, _] : directEventCallbacks)
+        {
+            if (eventId == typeID)
+            {
+                auto container = std::static_pointer_cast<Utils::EventContainer<TEvent>>(directEventCallbacks[eventId]);
+                for (auto &callback : container->GetFunctions())
+                {
+                    callback->Call(event);
+                }
+            }
+        }
     }
 
     /**
@@ -131,7 +135,7 @@ class EventManager {
      * @tparam TScheduler The scheduler type whose events should be processed.
      * @param core Reference to the engine core.
      */
-    template <typename TScheduler> void ProcessEvents(Engine::Core &core)
+    template <typename TScheduler> void ProcessEvents(void)
     {
         auto schedulerID = std::type_index(typeid(TScheduler));
 
@@ -160,7 +164,7 @@ class EventManager {
 
             if (callback)
             {
-                callback->Trigger(core, event);
+                callback->Trigger(event);
             }
         }
     }
@@ -175,12 +179,12 @@ class EventManager {
      * @tparam TScheduler The scheduler type (defaults to Update).
      * @param callbackID The unique identifier returned by RegisterCallback.
      */
-    template <typename TEvent, typename TScheduler = Engine::Scheduler::Update>
+    template <typename TEvent, typename TScheduler = DirectCallbackSchedulerTag>
     void UnregisterCallback(EventCallbackID callbackID)
     {
+        EventTypeID typeID = _GetId<TEvent>();
         std::scoped_lock lock(_callbacksMutex);
         auto schedulerID = std::type_index(typeid(TScheduler));
-        EventTypeID typeID = _GetId<TEvent>();
         if (!_eventCallbacks.contains(schedulerID) || !_eventCallbacks[schedulerID].contains(typeID))
         {
             Log::Warn("EventManager::UnregisterCallback: No callbacks registered for this event type.");
@@ -199,9 +203,9 @@ class EventManager {
     template <typename TEvent, typename TCallBack, typename TScheduler>
     EventCallbackID _RegisterCallbackImpl(TCallBack &&callback)
     {
+        EventTypeID typeID = _GetId<TEvent>();
         std::scoped_lock lock(_callbacksMutex);
         auto schedulerID = std::type_index(typeid(TScheduler));
-        EventTypeID typeID = _GetId<TEvent>();
 
         if (!_eventCallbacks.contains(schedulerID))
         {
@@ -212,7 +216,8 @@ class EventManager {
         {
             _eventCallbacks[schedulerID].try_emplace(typeID, std::make_shared<Utils::EventContainer<TEvent>>());
         }
-        auto container = std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
+        auto container =
+            std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
         return container->AddFunction(std::forward<TCallBack>(callback));
     }
 
@@ -229,5 +234,6 @@ class EventManager {
     std::unordered_map<std::type_index, std::queue<std::pair<EventTypeID, std::any>>> _eventQueue;
     std::mutex _queueMutex;
     std::mutex _callbacksMutex;
+    std::mutex _directCallbackMutex;
 };
 } // namespace Event::Resource

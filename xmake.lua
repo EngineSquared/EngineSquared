@@ -25,6 +25,11 @@ add_requires(
 
 set_languages("c++20")
 
+option("with_graphic_material_usage_example", {default = false, description = "Enable Graphic Material Usage Example"})
+if has_config("with_graphic_material_usage_example") then
+    includes("examples/graphic_material_usage/xmake.lua")
+end
+
 includes("src/engine/xmake.lua")
 includes("src/plugin/input/xmake.lua")
 includes("src/plugin/native-scripting/xmake.lua")
