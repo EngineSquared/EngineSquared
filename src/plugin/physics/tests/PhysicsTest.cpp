@@ -64,7 +64,7 @@ TEST(PhysicsPlugin, CubeFallingOnPlane)
     bool collisionRemoved = false;
 
     core.GetResource<Event::Resource::EventManager>().RegisterCallback<Physics::Event::CollisionAddedEvent>(
-        [&](Engine::Core &c, const Physics::Event::CollisionAddedEvent &event) {
+        [&](const Physics::Event::CollisionAddedEvent &event) {
             if ((event.entity1 == cube && event.entity2 == plane) || (event.entity1 == plane && event.entity2 == cube))
             {
                 collisionAdded = true;
@@ -72,7 +72,7 @@ TEST(PhysicsPlugin, CubeFallingOnPlane)
         });
 
     core.GetResource<Event::Resource::EventManager>().RegisterCallback<Physics::Event::CollisionRemovedEvent>(
-        [&](Engine::Core &c, const Physics::Event::CollisionRemovedEvent &event) {
+        [&](const Physics::Event::CollisionRemovedEvent &event) {
             if ((event.entity1 == cube && event.entity2 == plane) || (event.entity1 == plane && event.entity2 == cube))
             {
                 collisionRemoved = true;

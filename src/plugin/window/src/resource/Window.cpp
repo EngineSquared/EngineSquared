@@ -20,23 +20,12 @@ void Window::Destroy()
     glfwDestroyWindow(_window);
 }
 
-glm::ivec2 Window::GetSize()
+glm::uvec2 Window::GetSize() const
 {
-    if (!_window)
-        throw Exception::WindowError("Window is not created");
-
     glm::ivec2 size;
     glfwGetWindowSize(_window, &size.x, &size.y);
-    return size;
-}
 
-void Window::SetFramebufferSizeCallback(void *userPointer, GLFWframebuffersizefun callback)
-{
-    if (!_window)
-        throw Exception::WindowError("Window is not created");
-
-    glfwSetWindowUserPointer(_window, userPointer);
-    glfwSetFramebufferSizeCallback(_window, callback);
+    return glm::uvec2(size);
 }
 
 void Window::SetSize(int width, int height) { glfwSetWindowSize(_window, width, height); }
@@ -48,20 +37,16 @@ void Window::ToggleFullscreen()
 
     if (!_isFullscreen)
     {
-        // Save windowed position and size
         glfwGetWindowPos(_window, &_windowedX, &_windowedY);
         glfwGetWindowSize(_window, &_windowedWidth, &_windowedHeight);
 
-        // Get primary monitor and video mode
         _monitor = glfwGetPrimaryMonitor();
         const GLFWvidmode *mode = glfwGetVideoMode(_monitor);
 
-        // Switch to fullscreen
         glfwSetWindowMonitor(_window, _monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
     }
     else
     {
-        // Restore windowed mode
         glfwSetWindowMonitor(_window, nullptr, _windowedX, _windowedY, _windowedWidth, _windowedHeight, 0);
     }
 

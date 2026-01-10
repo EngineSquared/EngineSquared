@@ -12,7 +12,7 @@ void Window::Plugin::Bind()
                                              Window::System::CreateWindowSystem, Window::System::LinkGLFWContextToGL,
                                              Window::System::StoreCoreInWindow);
 
-    RegisterSystems<RenderingPipeline::Setup>(Window::System::EnableVSync);
+    RegisterSystems<RenderingPipeline::Setup>(Window::System::EnableVSync, Window::System::SetupWindowCallbacks);
 
     RegisterSystems<RenderingPipeline::PreUpdate>(Window::System::PollEvents);
 
