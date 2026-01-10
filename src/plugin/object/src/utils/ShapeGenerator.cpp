@@ -366,7 +366,7 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
     uint32_t capRings = std::max(2u, heightSegments * 2u);
     float halfHeight = height * 0.5f;
 
-    uint32_t ringCount = capRings + 1u + (heightSegments + 1u) + capRings + 1u;
+    uint32_t ringCount = capRings + (heightSegments + 1u) + capRings;
     uint32_t vertexEstimate = ringCount * (segments + 1u);
     mesh.vertices.reserve(vertexEstimate);
     mesh.normals.reserve(vertexEstimate);
