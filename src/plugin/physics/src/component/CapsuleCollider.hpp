@@ -50,6 +50,7 @@ namespace Physics::Component {
  *
  * @note Capsules roll smoothly and are more stable than cylinders
  * @note Very efficient for collision detection
+ * @note The `offset` member is applied to the created physics shape when building the collision shape.
  *
  * @example "Basic usage for a character capsule"
  * @code

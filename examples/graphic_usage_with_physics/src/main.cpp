@@ -98,9 +98,9 @@ void CameraRotationSystem(Engine::Core &core)
 
 void CreateFloor(Engine::Core &core)
 {
-    auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, -1.0f, 0.0f));
 
-    auto boxCollider = Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f));
+    auto boxCollider = Physics::Component::BoxCollider(glm::vec3(10.0f, 1.0f, 10.0f));
     floor.AddComponent<Physics::Component::BoxCollider>(core, boxCollider);
 
     floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
@@ -116,14 +116,45 @@ void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass
     cube.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
 }
 
+void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
+{
+    auto ball = Object::Helper::CreateSphere(core, 0.5f, glm::vec3(x, y, z));
+
+    auto collider = Physics::Component::SphereCollider(0.5f);
+    ball.AddComponent<Physics::Component::SphereCollider>(core, collider);
+
+    auto rigidBody = Physics::Component::RigidBody::CreateDynamic(1.0f);
+    rigidBody.restitution = 0.8f;
+    rigidBody.friction = 0.2f;
+    ball.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
+}
+
+void CreateCharacterCapsule(Engine::Core &core, float x, float y, float z)
+{
+    auto character = Object::Helper::CreateCube(core, 1.0f, glm::vec3(x, y, z),
+                                                glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
+                                                glm::vec3(0.5f, 1.5f, 0.5f));
+
+    auto capsuleCollider = Physics::Component::CapsuleCollider(0.75f, 0.25f);
+    character.AddComponent<Physics::Component::CapsuleCollider>(core, capsuleCollider);
+
+    auto rigidBody = Physics::Component::RigidBody::CreateDynamic(5.0f);
+    rigidBody.friction = 0.8f;
+    rigidBody.restitution = 0.2f;
+    rigidBody.angularDamping = 0.5f;
+    character.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
+}
+
 void Setup(Engine::Core &core)
 {
     CreateFloor(core);
     CreateFallingCube(core, 0.0f, 10.0f, 0.0f, 2.0f);
+    CreateBouncyBall(core, 2.0f, 15.0f, 0.0f);
+    CreateCharacterCapsule(core, -2.0f, 5.0f, 0.0f);
 
     auto camera = core.CreateEntity();
 
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 1.0f, -2.0f));
+    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 1.0f, -10.0f));
     camera.AddComponent<Object::Component::Camera>(core);
 
     core.RegisterSystem(EscapeKeySystem);

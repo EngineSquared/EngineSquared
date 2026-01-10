@@ -44,6 +44,7 @@ namespace Physics::Component {
  *
  * @note Spheres have uniform collision response in all directions
  * @note Most efficient primitive for broad phase and narrow phase collision detection
+ * @note The `offset` member is applied to the created physics shape when building the collision shape.
  *
  * @example "Basic usage for a sphere with radius 0.5"
  * @code

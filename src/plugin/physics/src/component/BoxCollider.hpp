@@ -32,6 +32,8 @@ namespace Physics::Component {
  * Explicit box collider that users can add to customize collision shape.
  * If present on an entity with RigidBody, prevents DefaultCollider auto-creation.
  *
+ * @note The `offset` member is applied to the created physics shape when building the collision shape.
+ *
  * @example "Basic usage for a 1x2x1 box"
  * @code
  * Physics::Component::BoxCollider collider;
