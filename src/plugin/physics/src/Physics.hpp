@@ -37,6 +37,12 @@
 #include "system/SoftBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
 
+// Helpers
+#include "helper/ForceApplicator.hpp"
+#include "helper/KinematicMover.hpp"
+#include "helper/RigidBodyController.hpp"
+#include "helper/VelocityController.hpp"
+
 // Utils
 #include "utils/BroadPhaseLayerImpl.hpp"
 #include "utils/BroadPhaseLayers.hpp"
