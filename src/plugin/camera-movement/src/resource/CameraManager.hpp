@@ -1,5 +1,7 @@
 #pragma once
 
+#include <GLFW/glfw3.h>
+
 #include "component/Camera.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
@@ -34,6 +36,7 @@ class CameraManager {
         _isMouseDragging = false;
         _wasCursorMasked = false;
         _originRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+        _joystickId = GLFW_JOYSTICK_1;
     }
 
     ~CameraManager() = default;
@@ -225,6 +228,20 @@ class CameraManager {
      */
     Engine::Core &GetCore() { return _core; }
 
+    /**
+     * @brief Set the joystick ID to use for camera control.
+     *
+     * @param joystickId The GLFW joystick ID (e.g., GLFW_JOYSTICK_1).
+     */
+    void SetJoystickId(int joystickId) { _joystickId = joystickId; }
+
+    /**
+     * @brief Get the joystick ID used for camera control.
+     *
+     * @return The GLFW joystick ID.
+     */
+    int GetJoystickId() const { return _joystickId; }
+
   private:
     Engine::Core &_core;
     Engine::Entity _cameraEntity;
@@ -236,6 +253,7 @@ class CameraManager {
     bool _isMouseDragging;
     bool _wasCursorMasked;
     glm::quat _originRotation;
+    int _joystickId;
 };
 
 } // namespace CameraMovement::Resource

@@ -2,6 +2,8 @@
 
 #include "component/Camera.hpp"
 #include "component/CameraBehavior.hpp"
+#include "component/DefaultBehavior.hpp"
+#include "component/DontMoveBehavior.hpp"
 #include "component/Transform.hpp"
 #include "resource/CameraManager.hpp"
 #include "scheduler/Update.hpp"
