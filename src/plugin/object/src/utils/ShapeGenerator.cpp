@@ -449,9 +449,10 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
             mesh.indices.emplace_back(i2);
             mesh.indices.emplace_back(i3);
         }
-
-        return mesh;
     }
+
+    return mesh;
+}
 
     Component::Mesh GenerateWheelMesh(float radius, float width, uint32_t segments)
     {
