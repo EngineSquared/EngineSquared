@@ -11,7 +11,7 @@ class CameraManager;
 namespace Object::Component {
 class Transform;
 class Camera;
-}
+} // namespace Object::Component
 
 namespace CameraMovement::Component {
 

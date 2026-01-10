@@ -5,8 +5,8 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include "component/CameraBehavior.hpp"
 #include "component/Camera.hpp"
+#include "component/CameraBehavior.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "resource/CameraManager.hpp"
@@ -78,8 +78,7 @@ class DefaultBehavior : public ICameraBehavior {
         }
     }
 
-    void HandleJoystickInput(Resource::CameraManager &manager, Object::Component::Transform &transform,
-                              float deltaTime)
+    void HandleJoystickInput(Resource::CameraManager &manager, Object::Component::Transform &transform, float deltaTime)
     {
         // As weird as it may seem, this is the correct mapping for a PS5 controller on GLFW
         constexpr int PS5_L3_LR_AXIS = 0;

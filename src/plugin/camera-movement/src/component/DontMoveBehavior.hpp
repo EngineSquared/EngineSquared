@@ -1,7 +1,7 @@
 #pragma once
 
-#include "component/CameraBehavior.hpp"
 #include "component/Camera.hpp"
+#include "component/CameraBehavior.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "resource/CameraManager.hpp"
