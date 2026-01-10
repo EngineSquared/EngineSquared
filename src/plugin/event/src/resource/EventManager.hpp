@@ -120,7 +120,8 @@ class EventManager {
             auto schedulerID = std::type_index(typeid(DirectCallbackSchedulerTag));
             if (_eventCallbacks.contains(schedulerID) && _eventCallbacks[schedulerID].contains(typeID))
             {
-                = std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
+                directContainer =
+                    std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
             }
         }
 
