@@ -4,7 +4,14 @@ namespace Physics::System {
 
 std::optional<ConstraintContext> ConstraintContext::Create(entt::registry &registry, const char *constraintName)
 {
-    auto &coreRef = *registry.ctx().get<Engine::Core *>();
+    auto *corePtr = registry.ctx().get<Engine::Core *>();
+    if (!corePtr)
+    {
+        Log::Error(fmt::format("Cannot create {}: Engine::Core not available", constraintName));
+        return std::nullopt;
+    }
+    auto &coreRef = *corePtr;
+
     auto &physicsManagerRef = coreRef.GetResource<Resource::PhysicsManager>();
 
     if (!physicsManagerRef.IsPhysicsActivated())
