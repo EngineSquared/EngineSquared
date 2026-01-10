@@ -114,26 +114,17 @@ class Window {
     /**
      * @brief Hide the cursor and lock it to the window.
      */
-    inline void MaskCursor()
-    {
-        glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    }
-    
+    inline void MaskCursor() { glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); }
+
     /**
      * @brief Show the cursor and unlock it from the window.
      */
-    inline void ShowCursor()
-    {
-        glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    }
+    inline void ShowCursor() { glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
 
     /**
      * @brief Check if the cursor is currently masked (hidden and locked).
      */
-    inline bool IsCursorMasked() const
-    {
-        return glfwGetInputMode(_window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED;
-    }
+    inline bool IsCursorMasked() const { return glfwGetInputMode(_window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED; }
 };
 
 } // namespace Window::Resource

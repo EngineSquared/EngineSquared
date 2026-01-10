@@ -11,8 +11,8 @@
 #include "Input.hpp"
 #include "Object.hpp"
 #include "RenderingPipeline.hpp"
-#include "resource/Window.hpp"
 #include "plugin/PluginWindow.hpp"
+#include "resource/Window.hpp"
 
 void EscapeKeySystem(Engine::Core &core)
 {
