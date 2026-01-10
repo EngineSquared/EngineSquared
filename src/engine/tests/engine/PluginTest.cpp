@@ -2,7 +2,6 @@
 
 #include "core/Core.hpp"
 #include "plugin/APlugin.hpp"
-#include "scheduler/Startup.hpp"
 
 struct ResourceTest {
     std::vector<std::string> data;
