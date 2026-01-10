@@ -52,7 +52,6 @@ void Graphic::Plugin::Bind()
         System::CreateDefaultSampler, System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial,
         System::SetupResizableRenderTexture, System::CreateAmbientLight, System::CreatePointLights);
 
-
     RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
                                                     System::UpdateGPUCameras, System::UpdateGPUMaterials,
                                                     System::UpdateAmbientLight, System::UpdatePointLights);
