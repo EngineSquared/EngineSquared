@@ -98,6 +98,8 @@ void InitConstraintSystem(Engine::Core &core)
     registry.on_construct<Component::PointConstraint>().connect<&OnPointConstraintConstruct>();
     registry.on_destroy<Component::PointConstraint>().connect<&OnPointConstraintDestroy>();
 
+    registry.ctx().emplace<ConstraintSystemInitializedTag>();
+
     Log::Info("ConstraintSystem initialized");
 }
 
