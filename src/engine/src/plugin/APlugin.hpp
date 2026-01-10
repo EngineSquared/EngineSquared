@@ -9,9 +9,9 @@ class APlugin : public IPlugin {
     explicit APlugin(Core &core) : _core(core){};
     virtual void Bind(void) = 0;
 
-    template <typename TScheduler, typename... Systems> void RegisterSystems(Systems... systems)
+    template <typename TScheduler, typename... Systems> inline decltype(auto) RegisterSystems(Systems... systems)
     {
-        _core.RegisterSystem<TScheduler>(systems...);
+        return _core.RegisterSystem<TScheduler>(systems...);
     }
 
     template <typename TResource> TResource &RegisterResource(TResource &&resource)
