@@ -356,4 +356,88 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
     return mesh;
 }
 
+Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segments, uint32_t heightSegments)
+{
+    Component::Mesh mesh;
+
+    segments = std::max(3u, segments);
+    heightSegments = std::max(1u, heightSegments);
+
+    uint32_t capRings = std::max(2u, heightSegments * 2u);
+    float halfHeight = height * 0.5f;
+
+    uint32_t ringCount = capRings + 1u + (heightSegments + 1u) + capRings + 1u;
+    uint32_t vertexEstimate = ringCount * (segments + 1u);
+    mesh.vertices.reserve(vertexEstimate);
+    mesh.normals.reserve(vertexEstimate);
+    mesh.texCoords.reserve(vertexEstimate);
+
+    auto addRing = [&](float y, float r) {
+        for (uint32_t s = 0; s <= segments; ++s)
+        {
+            float theta = static_cast<float>(s) / static_cast<float>(segments) * 2.0f * glm::pi<float>();
+            float cosT = std::cos(theta);
+            float sinT = std::sin(theta);
+            glm::vec3 vertex(r * cosT, y, r * sinT);
+            mesh.vertices.emplace_back(vertex);
+            glm::vec3 normal = glm::normalize(glm::vec3(cosT, 0.0f, sinT));
+            mesh.normals.emplace_back(normal);
+            mesh.texCoords.emplace_back(static_cast<float>(s) / static_cast<float>(segments), (y + (radius + halfHeight)) / (2.0f * radius + height));
+        }
+    };
+
+    // Top hemisphere (exclude equator)
+    for (uint32_t ring = 0; ring < capRings; ++ring)
+    {
+        float t = static_cast<float>(ring) / static_cast<float>(capRings);
+        float phi = t * (glm::pi<float>() * 0.5f);
+        float r = radius * std::sin(phi);
+        float y = halfHeight + radius * std::cos(phi);
+        addRing(y, r);
+    }
+
+    // Cylinder rings (including top and bottom edges)
+    for (uint32_t h = 0; h <= heightSegments; ++h)
+    {
+        float t = static_cast<float>(h) / static_cast<float>(heightSegments);
+        float y = halfHeight - t * height;
+        addRing(y, radius);
+    }
+
+    // Bottom hemisphere (exclude equator)
+    for (uint32_t ring = 0; ring < capRings; ++ring)
+    {
+        float t = static_cast<float>(ring) / static_cast<float>(capRings);
+        float phi = t * (glm::pi<float>() * 0.5f);
+        float r = radius * std::sin(phi);
+        float y = -halfHeight - radius * std::cos(phi);
+        addRing(y, r);
+    }
+
+    // Build indices between rings
+    uint32_t ringsTotal = capRings + (heightSegments + 1u) + capRings;
+    for (uint32_t ring = 0; ring < ringsTotal; ++ring)
+    {
+        uint32_t ringStart = ring * (segments + 1u);
+        uint32_t nextStart = (ring + 1u) * (segments + 1u);
+        for (uint32_t s = 0; s < segments; ++s)
+        {
+            uint32_t i0 = ringStart + s;
+            uint32_t i1 = ringStart + s + 1u;
+            uint32_t i2 = nextStart + s;
+            uint32_t i3 = nextStart + s + 1u;
+
+            mesh.indices.emplace_back(i0);
+            mesh.indices.emplace_back(i2);
+            mesh.indices.emplace_back(i1);
+
+            mesh.indices.emplace_back(i1);
+            mesh.indices.emplace_back(i2);
+            mesh.indices.emplace_back(i3);
+        }
+    }
+
+    return mesh;
+}
+
 } // namespace Object::Utils

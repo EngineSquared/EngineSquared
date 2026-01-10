@@ -98,9 +98,12 @@ void CameraRotationSystem(Engine::Core &core)
 
 void CreateFloor(Engine::Core &core)
 {
-    auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, -1.0f, 0.0f));
+    // Align visual plane with physics surface at y = 0.0
+    auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
     auto boxCollider = Physics::Component::BoxCollider(glm::vec3(10.0f, 1.0f, 10.0f));
+    // Shift collider down so its top surface lies at y = 0.0 (matches the plane visual)
+    boxCollider.offset = glm::vec3(0.0f, -1.0f, 0.0f);
     floor.AddComponent<Physics::Component::BoxCollider>(core, boxCollider);
 
     floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
@@ -131,8 +134,8 @@ void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
 
 void CreateCharacterCapsule(Engine::Core &core, float x, float y, float z)
 {
-    auto character = Object::Helper::CreateCube(core, 1.0f, glm::vec3(x, y, z), glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
-                                                glm::vec3(0.5f, 2.0f, 0.5f));
+    // Create a visual capsule that matches the physics capsule (cylinder height = 1.5, radius = 0.25)
+    auto character = Object::Helper::CreateCapsule(core, 0.25f, 1.5f, glm::vec3(x, y, z), 32u, 4u);
 
     auto capsuleCollider = Physics::Component::CapsuleCollider(0.75f, 0.25f);
     character.AddComponent<Physics::Component::CapsuleCollider>(core, capsuleCollider);
