@@ -1,5 +1,7 @@
 #include "WindowSystem.hpp"
 #include "Logger.hpp"
+#include "event/OnResize.hpp"
+#include "resource/EventManager.hpp"
 
 namespace Window::System {
 
@@ -48,6 +50,19 @@ void DestroyWindow(Engine::Core &core)
 {
     core.GetResource<Resource::Window>().Destroy();
     glfwTerminate();
+}
+
+void SetupWindowCallbacks(Engine::Core &core)
+{
+    GLFWwindow *glfwWindow = core.GetResource<Resource::Window>().GetGLFWWindow();
+
+    glfwSetFramebufferSizeCallback(glfwWindow, [](GLFWwindow *window, int width, int height) {
+        auto core = static_cast<Engine::Core *>(glfwGetWindowUserPointer(window));
+        auto &eventManager = core->GetResource<::Event::Resource::EventManager>();
+        eventManager.PushEvent(Window::Event::OnResize{
+            glm::ivec2{width, height}
+        });
+    });
 }
 
 } // namespace Window::System

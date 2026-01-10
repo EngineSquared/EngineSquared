@@ -1,6 +1,7 @@
 includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
 includes("../rendering-pipeline/xmake.lua")
+includes("../event/xmake.lua")
 
 target("PluginWindow")
     set_kind("static")
@@ -9,6 +10,7 @@ target("PluginWindow")
 
     add_deps("EngineSquaredCore")
     add_deps("UtilsLog")
+    add_deps("PluginEvent")
     add_deps("PluginRenderingPipeline")
 
     add_packages("glfw", "glm", "entt", "spdlog", "fmt")
@@ -19,5 +21,6 @@ target("PluginWindow")
     add_headerfiles("src/(plugin/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(system/*.hpp)")
+    add_headerfiles("src/(event/*.hpp)")
 
     add_includedirs("src", {public = true})

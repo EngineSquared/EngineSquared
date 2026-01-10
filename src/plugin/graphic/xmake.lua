@@ -3,6 +3,7 @@ includes("../../utils/log/xmake.lua")
 includes("../object/xmake.lua")
 includes("../rendering-pipeline/xmake.lua")
 includes("../window/xmake.lua")
+includes("../event/xmake.lua")
 
 local required_packages = {
     "entt",
@@ -29,7 +30,7 @@ target(plugin_name)
     add_deps("PluginObject")
     add_deps("PluginRenderingPipeline")
     add_deps("PluginWindow")
-    add_deps("PluginObject")
+    add_deps("PluginEvent")
     add_deps("UtilsLog")
 
     add_files("src/**.cpp")

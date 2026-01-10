@@ -76,20 +76,19 @@ class Window {
      *
      * @return A vector of integers to store the size of the window.
      */
-    glm::ivec2 GetSize();
+    glm::uvec2 GetSize() const;
 
     /**
-     * @brief Set the framebuffer size callback.
+     * @brief Set the window size.
      *
-     * @param userPointer The user pointer.
-     * @param callback The callback function.
-     * @todo This function should work like the Input::Resource::InputManager class, it
-     *  means that it should be able to set multiple callbacks.
+     * @param width The new width of the window.
+     * @param height The new height of the window.
      */
-    void SetFramebufferSizeCallback(void *userPointer, GLFWframebuffersizefun callback);
-
     void SetSize(int width, int height);
 
+    /**
+     * @brief Toggle fullscreen mode.
+     */
     void ToggleFullscreen();
 
     /**

@@ -21,6 +21,9 @@ namespace Event::Resource {
  * and processed during the corresponding scheduler execution. All operations are thread-safe.
  */
 class EventManager {
+  private:
+    struct DirectCallbackSchedulerTag {};
+
   public:
     /**
      * @brief Type identifier for event types.
@@ -37,10 +40,12 @@ class EventManager {
      */
     EventManager() = default;
 
-    /**
-     * @brief Default destructor.
-     */
-    ~EventManager() = default;
+    ~EventManager()
+    {
+        std::scoped_lock lock(_queueMutex, _callbacksMutex);
+        _eventCallbacks.clear();
+        _eventQueue.clear();
+    }
 
     EventManager(const EventManager &) = delete;
     EventManager &operator=(const EventManager &) = delete;
@@ -74,26 +79,14 @@ class EventManager {
     }
 
     /**
-     * @brief Register a callback for an event type on the Update scheduler.
-     * @tparam TEvent The event type to listen for.
-     * @tparam TCallBack The callback type (auto-deduced).
-     * @param callback The callback function with signature void(Engine::Core&, const TEvent&).
-     * @return Unique identifier for the registered callback.
-     */
-    template <typename TEvent, typename TCallBack> EventCallbackID RegisterCallback(TCallBack &&callback)
-    {
-        return _RegisterCallbackImpl<TEvent, TCallBack, Engine::Scheduler::Update>(std::forward<TCallBack>(callback));
-    }
-
-    /**
      * @brief Register a callback for an event type on a specific scheduler.
      * @tparam TEvent The event type to listen for.
      * @tparam TScheduler The scheduler type on which to process this event.
      * @tparam TCallBack The callback type (auto-deduced).
-     * @param callback The callback function with signature void(Engine::Core&, const TEvent&).
++    * @param callback The callback function with signature void(const TEvent&).
      * @return Unique identifier for the registered callback.
      */
-    template <typename TEvent, Engine::CScheduler TScheduler, typename TCallBack>
+    template <typename TEvent, typename TScheduler = DirectCallbackSchedulerTag, typename TCallBack>
     EventCallbackID RegisterCallback(TCallBack &&callback)
     {
         return _RegisterCallbackImpl<TEvent, TCallBack, TScheduler>(std::forward<TCallBack>(callback));
@@ -111,13 +104,32 @@ class EventManager {
     template <typename TEvent> void PushEvent(const TEvent &event)
     {
         EventTypeID typeID = _GetId<TEvent>();
-        std::scoped_lock lock(_queueMutex, _callbacksMutex);
+        std::shared_ptr<Utils::EventContainer<TEvent>> directContainer;
 
-        for (const auto &[schedulerID, callbacks] : _eventCallbacks)
         {
-            if (callbacks.contains(typeID))
+            std::scoped_lock lock(_queueMutex, _callbacksMutex);
+
+            for (const auto &[schedulerID, callbacks] : _eventCallbacks)
             {
-                _eventQueue[schedulerID].push({typeID, event});
+                if (callbacks.contains(typeID))
+                {
+                    _eventQueue[schedulerID].push({typeID, event});
+                }
+            }
+
+            auto schedulerID = std::type_index(typeid(DirectCallbackSchedulerTag));
+            if (_eventCallbacks.contains(schedulerID) && _eventCallbacks[schedulerID].contains(typeID))
+            {
+                directContainer =
+                    std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
+            }
+        }
+
+        if (directContainer)
+        {
+            for (auto &callback : directContainer->GetFunctions())
+            {
+                callback->Call(event);
             }
         }
     }
@@ -131,7 +143,7 @@ class EventManager {
      * @tparam TScheduler The scheduler type whose events should be processed.
      * @param core Reference to the engine core.
      */
-    template <typename TScheduler> void ProcessEvents(Engine::Core &core)
+    template <typename TScheduler> void ProcessEvents(void)
     {
         auto schedulerID = std::type_index(typeid(TScheduler));
 
@@ -160,7 +172,7 @@ class EventManager {
 
             if (callback)
             {
-                callback->Trigger(core, event);
+                callback->Trigger(event);
             }
         }
     }
@@ -172,15 +184,15 @@ class EventManager {
      * and scheduler. Logs a warning if the callback or event type is not found.
      *
      * @tparam TEvent The event type the callback was registered for.
-     * @tparam TScheduler The scheduler type (defaults to Update).
+     * @tparam TScheduler The scheduler type (defaults to Immediate call tag).
      * @param callbackID The unique identifier returned by RegisterCallback.
      */
-    template <typename TEvent, typename TScheduler = Engine::Scheduler::Update>
+    template <typename TEvent, typename TScheduler = DirectCallbackSchedulerTag>
     void UnregisterCallback(EventCallbackID callbackID)
     {
+        EventTypeID typeID = _GetId<TEvent>();
         std::scoped_lock lock(_callbacksMutex);
         auto schedulerID = std::type_index(typeid(TScheduler));
-        EventTypeID typeID = _GetId<TEvent>();
         if (!_eventCallbacks.contains(schedulerID) || !_eventCallbacks[schedulerID].contains(typeID))
         {
             Log::Warn("EventManager::UnregisterCallback: No callbacks registered for this event type.");
@@ -199,9 +211,9 @@ class EventManager {
     template <typename TEvent, typename TCallBack, typename TScheduler>
     EventCallbackID _RegisterCallbackImpl(TCallBack &&callback)
     {
+        EventTypeID typeID = _GetId<TEvent>();
         std::scoped_lock lock(_callbacksMutex);
         auto schedulerID = std::type_index(typeid(TScheduler));
-        EventTypeID typeID = _GetId<TEvent>();
 
         if (!_eventCallbacks.contains(schedulerID))
         {

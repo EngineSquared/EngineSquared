@@ -2,6 +2,7 @@
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
 #include "component/Material.hpp"
+#include "plugin/PluginEvent.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "resource/PointLights.hpp"
 #include "scheduler/Shutdown.hpp"
@@ -22,7 +23,7 @@ static void SetupGPUComponent(Engine::Core &core)
 
 void Graphic::Plugin::Bind()
 {
-    RequirePlugins<RenderingPipeline::Plugin>();
+    RequirePlugins<RenderingPipeline::Plugin, Event::Plugin>();
 
     RegisterResource(Graphic::Resource::Context());
     RegisterResource(Graphic::Resource::GraphicSettings());
@@ -49,7 +50,7 @@ void Graphic::Plugin::Bind()
         System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
         System::ConfigureSurface, System::ReleaseAdapter, System::CreateEmptyTexture, System::CreateDefaultTexture,
         System::CreateDefaultSampler, System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial,
-        System::CreateAmbientLight, System::CreatePointLights);
+        System::SetupResizableRenderTexture, System::CreateAmbientLight, System::CreatePointLights);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
                                                     System::UpdateGPUCameras, System::UpdateGPUMaterials,

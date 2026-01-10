@@ -125,4 +125,13 @@ void StoreCoreInWindow(Engine::Core &core);
  */
 void DestroyWindow(Engine::Core &core);
 
+/**
+ * @brief Setup window callbacks
+ *
+ * This function sets up the window callbacks.
+ *
+ * @param core  The Engine² Core.
+ */
+void SetupWindowCallbacks(Engine::Core &core);
+
 } // namespace Window::System
