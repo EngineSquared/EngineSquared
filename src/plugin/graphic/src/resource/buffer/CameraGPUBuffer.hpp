@@ -40,8 +40,8 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         {
             throw Exception::UpdateBufferError("Cannot update a GPU camera buffer that is not created.");
         }
-        Graphic::Component::GPUCamera &cameraComponent = _entity.GetComponents<Graphic::Component::GPUCamera>(core);
-        const Context &context = core.GetResource<Context>();
+        const auto &cameraComponent = _entity.GetComponents<Graphic::Component::GPUCamera>(core);
+        const auto &context = core.GetResource<Context>();
         _UpdateBuffer(cameraComponent, context);
     }
 

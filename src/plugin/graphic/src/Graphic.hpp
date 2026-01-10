@@ -8,6 +8,7 @@
 // Resources
 #include "resource/AGPUBuffer.hpp"
 #include "resource/ARenderPass.hpp"
+#include "resource/AmbientLight.hpp"
 #include "resource/BindGroup.hpp"
 #include "resource/BindGroupManager.hpp"
 #include "resource/Context.hpp"
@@ -16,6 +17,7 @@
 #include "resource/GraphicSettings.hpp"
 #include "resource/Image.hpp"
 #include "resource/Limits.hpp"
+#include "resource/PointLights.hpp"
 #include "resource/RenderGraph.hpp"
 #include "resource/RenderGraphContainer.hpp"
 #include "resource/Sampler.hpp"
@@ -28,18 +30,22 @@
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
 
+#include "resource/buffer/AmbientLightBuffer.hpp"
 #include "resource/buffer/CameraGPUBuffer.hpp"
 #include "resource/buffer/IndexGPUBuffer.hpp"
 #include "resource/buffer/PointGPUBuffer.hpp"
+#include "resource/buffer/PointLightsBuffer.hpp"
 #include "resource/buffer/TransformGPUBuffer.hpp"
 
 // Utils
+#include "utils/AmbientLight.hpp"
 #include "utils/DefaultPipeline.hpp"
 #include "utils/DefaultSampler.hpp"
 #include "utils/DefaultTexture.hpp"
 #include "utils/EmptyTexture.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/IValidable.hpp"
+#include "utils/PointLight.hpp"
 #include "utils/shader/ABindGroupLayoutEntry.hpp"
 #include "utils/shader/BindGroupLayout.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
@@ -78,6 +84,7 @@
 // Systems
 #include "system/initialization/ConfigureSurface.hpp"
 #include "system/initialization/CreateAdapter.hpp"
+#include "system/initialization/CreateAmbientLight.hpp"
 #include "system/initialization/CreateDefaultMaterial.hpp"
 #include "system/initialization/CreateDefaultRenderPipeline.hpp"
 #include "system/initialization/CreateDefaultSampler.hpp"
@@ -85,6 +92,7 @@
 #include "system/initialization/CreateDevice.hpp"
 #include "system/initialization/CreateEmptyTexture.hpp"
 #include "system/initialization/CreateInstance.hpp"
+#include "system/initialization/CreatePointLights.hpp"
 #include "system/initialization/CreateQueue.hpp"
 #include "system/initialization/CreateSurface.hpp"
 #include "system/initialization/ReleaseAdapter.hpp"
@@ -103,9 +111,11 @@
 #include "system/GPUComponentManagement/OnTransformDestruction.hpp"
 
 #include "system/preparation/PrepareEndRenderTexture.hpp"
+#include "system/preparation/UpdateAmbientLight.hpp"
 #include "system/preparation/UpdateGPUCameras.hpp"
 #include "system/preparation/UpdateGPUMaterials.hpp"
 #include "system/preparation/UpdateGPUTransforms.hpp"
+#include "system/preparation/UpdatePointLights.hpp"
 
 #include "system/commandCreation/ExecuteRenderPass.hpp"
 

@@ -84,7 +84,7 @@ struct Transform {
      * \return  transformation matrix that combines the position, scale, and rotation of the entity.
      *
      */
-    glm::mat4 ComputeTransformationMatrix()
+    glm::mat4 ComputeTransformationMatrix() const
     {
         if (_dirty)
         {
@@ -109,8 +109,8 @@ struct Transform {
      */
     glm::quat _rotation;
 
-    bool _dirty = true;
-    glm::mat4 _transformationMatrixCache = glm::mat4(1.0f);
+    mutable bool _dirty = true;
+    mutable glm::mat4 _transformationMatrixCache = glm::mat4(1.0f);
 
     inline glm::mat4 _BuildTransformationMatrix() const
     {
