@@ -101,47 +101,43 @@ class DefaultBehavior : public ICameraBehavior {
         static bool callbacksRegistered = false;
         if (!callbacksRegistered)
         {
-            inputManager.RegisterMouseButtonCallback(
-                [](Engine::Core &core, int button, int action, int mods)
-                {
-                    if (button == GLFW_MOUSE_BUTTON_RIGHT)
-                    {
-                        auto &cameraManager = core.GetResource<Resource::CameraManager>();
-                        if (action == GLFW_PRESS)
-                        {
-                            cameraManager.SetMouseDragging(true);
-                            auto entity = cameraManager.GetActiveCamera();
-                            auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
-                            cameraManager.SetOriginRotation(transform.GetRotation());
-                        }
-                        else if (action == GLFW_RELEASE)
-                        {
-                            cameraManager.SetMouseDragging(false);
-                        }
-                    }
-                });
-
-            inputManager.RegisterCursorPosCallback(
-                [](Engine::Core &core, double xpos, double ypos)
+            inputManager.RegisterMouseButtonCallback([](Engine::Core &core, int button, int action, int mods) {
+                if (button == GLFW_MOUSE_BUTTON_RIGHT)
                 {
                     auto &cameraManager = core.GetResource<Resource::CameraManager>();
-                    if (cameraManager.IsMouseDragging() && cameraManager.HasValidCamera())
+                    if (action == GLFW_PRESS)
                     {
-                        double deltaX = xpos - cameraManager.GetLastMouseX();
-                        double deltaY = ypos - cameraManager.GetLastMouseY();
-
-                        float yaw = static_cast<float>(deltaX * cameraManager.GetMouseSensitivity());
-                        float pitch = static_cast<float>(-deltaY * cameraManager.GetMouseSensitivity());
-
+                        cameraManager.SetMouseDragging(true);
                         auto entity = cameraManager.GetActiveCamera();
                         auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
-                        glm::quat newRotation = Utils::RotateQuaternion(cameraManager.GetOriginRotation(), pitch, yaw);
-                        transform.SetRotation(newRotation);
-
-                        cameraManager.SetOriginRotation(newRotation);
+                        cameraManager.SetOriginRotation(transform.GetRotation());
                     }
-                    cameraManager.SetLastMousePosition(xpos, ypos);
-                });
+                    else if (action == GLFW_RELEASE)
+                    {
+                        cameraManager.SetMouseDragging(false);
+                    }
+                }
+            });
+
+            inputManager.RegisterCursorPosCallback([](Engine::Core &core, double xpos, double ypos) {
+                auto &cameraManager = core.GetResource<Resource::CameraManager>();
+                if (cameraManager.IsMouseDragging() && cameraManager.HasValidCamera())
+                {
+                    double deltaX = xpos - cameraManager.GetLastMouseX();
+                    double deltaY = ypos - cameraManager.GetLastMouseY();
+
+                    float yaw = static_cast<float>(deltaX * cameraManager.GetMouseSensitivity());
+                    float pitch = static_cast<float>(-deltaY * cameraManager.GetMouseSensitivity());
+
+                    auto entity = cameraManager.GetActiveCamera();
+                    auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
+                    glm::quat newRotation = Utils::RotateQuaternion(cameraManager.GetOriginRotation(), pitch, yaw);
+                    transform.SetRotation(newRotation);
+
+                    cameraManager.SetOriginRotation(newRotation);
+                }
+                cameraManager.SetLastMousePosition(xpos, ypos);
+            });
 
             callbacksRegistered = true;
         }

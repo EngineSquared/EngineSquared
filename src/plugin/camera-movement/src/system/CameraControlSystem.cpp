@@ -1,7 +1,7 @@
 #include "system/CameraControlSystem.hpp"
 
-#include "component/CameraBehavior.hpp"
 #include "component/Camera.hpp"
+#include "component/CameraBehavior.hpp"
 #include "component/Transform.hpp"
 #include "resource/CameraManager.hpp"
 #include "scheduler/Update.hpp"
@@ -30,12 +30,8 @@ void CameraControlSystem(Engine::Core &core)
 
     switch (cameraManager.GetBehaviorType())
     {
-    case Resource::CameraBehaviorType::Default:
-        behavior = &defaultBehavior;
-        break;
-    case Resource::CameraBehaviorType::DontMove:
-        behavior = &dontMoveBehavior;
-        break;
+    case Resource::CameraBehaviorType::Default: behavior = &defaultBehavior; break;
+    case Resource::CameraBehaviorType::DontMove: behavior = &dontMoveBehavior; break;
     }
 
     if (behavior != nullptr)
