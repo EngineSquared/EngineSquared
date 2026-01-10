@@ -125,6 +125,8 @@ struct Vehicle {
      */
     static Vehicle CreateDefaultCar()
     {
+        using enum WheelIndex;
+
         Vehicle vehicle;
         vehicle.drivetrain = DrivetrainType::RWD;
         vehicle.engine.maxTorque = 600.0f;
@@ -132,13 +134,12 @@ struct Vehicle {
         vehicle.rollbar.rearStiffness = 8000.0f;
 
         // Front wheels with steering
-        vehicle.wheels[static_cast<size_t>(WheelIndex::FrontLeft)] = WheelSettings::CreateFrontWheel();
-        vehicle.wheels[static_cast<size_t>(WheelIndex::FrontRight)] = WheelSettings::CreateFrontWheel();
+        vehicle.wheels[static_cast<size_t>(FrontLeft)] = WheelSettings::CreateFrontWheel();
+        vehicle.wheels[static_cast<size_t>(FrontRight)] = WheelSettings::CreateFrontWheel();
 
         // Rear wheels without steering
-        vehicle.wheels[static_cast<size_t>(WheelIndex::RearLeft)] = WheelSettings::CreateRearWheel();
-        vehicle.wheels[static_cast<size_t>(WheelIndex::RearRight)] = WheelSettings::CreateRearWheel();
-
+        vehicle.wheels[static_cast<size_t>(RearLeft)] = WheelSettings::CreateRearWheel();
+        vehicle.wheels[static_cast<size_t>(RearRight)] = WheelSettings::CreateRearWheel();
         return vehicle;
     }
 };
