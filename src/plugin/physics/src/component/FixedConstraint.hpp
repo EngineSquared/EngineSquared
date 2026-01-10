@@ -77,7 +77,7 @@ struct FixedConstraint {
      * @brief First body entity (the entity this component is attached to)
      *
      * This should be the entity that owns this constraint component.
-     * If bodyA is invalid, the constraint attaches to the world.
+     * World constraints are encoded by setting `bodyB` invalid (see CreateToWorld()).
      */
     Engine::Entity bodyA;
 

@@ -24,6 +24,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cmath>
 #include <limits>
 
 namespace Physics::Component {
@@ -186,7 +187,12 @@ struct ConstraintSettings {
      * @brief Check if this constraint is breakable
      * @return true if either breakForce or breakTorque is greater than 0
      */
-    [[nodiscard]] bool IsBreakable() const { return breakForce > 0.0f || breakTorque > 0.0f; }
+    [[nodiscard]] bool IsBreakable() const
+    {
+        const bool forceBreakable = breakForce > 0.0f && std::isfinite(breakForce);
+        const bool torqueBreakable = breakTorque > 0.0f && std::isfinite(breakTorque);
+        return forceBreakable || torqueBreakable;
+    }
 
     /**
      * @brief Check if this constraint is rigid (no spring behavior)

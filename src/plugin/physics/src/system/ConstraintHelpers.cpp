@@ -56,7 +56,10 @@ void DestroyConstraint(entt::registry &registry, entt::entity entity, const char
 {
     try
     {
-        auto &coreRef = *registry.ctx().get<Engine::Core *>();
+        auto *corePtr = registry.ctx().get<Engine::Core *>();
+        if (!corePtr)
+            return;
+        auto &coreRef = *corePtr;
         auto &physicsManagerRef = coreRef.GetResource<Resource::PhysicsManager>();
 
         if (!physicsManagerRef.IsPhysicsActivated())
