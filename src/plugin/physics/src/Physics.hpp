@@ -15,7 +15,6 @@
 
 // Components - RigidBody
 #include "component/RigidBody.hpp"
-#include "component/RigidBodyInternal.hpp"
 
 // Resources
 #include "resource/PhysicsManager.hpp"

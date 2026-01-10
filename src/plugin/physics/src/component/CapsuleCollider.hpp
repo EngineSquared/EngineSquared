@@ -56,7 +56,7 @@ namespace Physics::Component {
  * Physics::Component::CapsuleCollider collider;
  * collider.halfHeight = 0.8f;  // Cylinder part is 1.6m tall
  * collider.radius = 0.3f;      // Total height = 1.6 + 0.6 = 2.2m
- * entity.AddComponent<Physics::CapsuleCollider>(core, collider);
+ * entity.AddComponent<Physics::Component::CapsuleCollider>(core, collider);
  * @endcode
  */
 struct CapsuleCollider {
@@ -111,13 +111,17 @@ struct CapsuleCollider {
     [[nodiscard]] float GetDiameter() const { return radius * 2.0f; }
 
     /**
-     * @brief Set total height (distributes between cylinder and caps)
-     * @param totalHeight Total height of the capsule
+     * @brief Set height (distributes between cylinder and caps)
+     * @param capsuleHeight Total height of the capsule
      *
      * @note This keeps the current radius and adjusts halfHeight accordingly
      */
-    void SetTotalHeight(float totalHeight) { halfHeight = (totalHeight * 0.5f) - radius; }
-
+    void SetHeight(float capsuleHeight)
+    {
+        halfHeight = (capsuleHeight * 0.5f) - radius;
+        if (halfHeight < 0.0f)
+            halfHeight = 0.0f;
+    }
     /**
      * @brief Check if collider is valid
      * @return true if halfHeight >= 0 and radius > 0
@@ -130,46 +134,21 @@ struct CapsuleCollider {
      */
     [[nodiscard]] bool IsSphere() const { return halfHeight == 0.0f; }
 
-    //=========================================================================
-    // Factory methods
-    //=========================================================================
-
-    /**
-     * @brief Create a capsule for a standing character
-     * @param characterHeight Total height of the character
-     * @param characterRadius Width/depth radius
-     * @return CapsuleCollider sized for character
-     *
-     * @note Common values: height 1.8m, radius 0.3m for adult human
-     */
-    static CapsuleCollider ForCharacter(float characterHeight, float characterRadius)
-    {
-        float hHeight = (characterHeight * 0.5f) - characterRadius;
-        return CapsuleCollider(hHeight, characterRadius);
-    }
-
     /**
      * @brief Create a capsule from total height and radius
-     * @param totalHeight Total height including caps
-     * @param r Radius
-     * @return CapsuleCollider
-     */
-    static CapsuleCollider FromTotalHeight(float totalHeight, float r)
-    {
-        float hHeight = (totalHeight * 0.5f) - r;
-        return CapsuleCollider(hHeight > 0.0f ? hHeight : 0.0f, r);
-    }
-
-    /**
-     * @brief Create a horizontal capsule (lying on its side)
-     * @param length Total length of the capsule
-     * @param r Radius
+     * @param capsuleHeight Total height including caps
+     * @param r Width/depth radius
      * @return CapsuleCollider
      *
      * @note By default capsules are vertical (Y-up). Use rotation in Transform
      *       to make it horizontal, or use offset to position it differently.
+     * @note Can be used for Character, common values: height 1.8m, radius 0.3m
      */
-    static CapsuleCollider Horizontal(float length, float r) { return FromTotalHeight(length, r); }
+    static CapsuleCollider CreateFromHeight(float capsuleHeight, float r)
+    {
+        float hHeight = (capsuleHeight * 0.5f) - r;
+        return CapsuleCollider(hHeight > 0.0f ? hHeight : 0.0f, r);
+    }
 
     /**
      * @brief Create a capsule at an offset (useful for compound shapes)

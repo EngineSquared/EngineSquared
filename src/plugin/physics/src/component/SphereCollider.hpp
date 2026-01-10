@@ -49,7 +49,7 @@ namespace Physics::Component {
  * @code
  * Physics::Component::SphereCollider collider;
  * collider.radius = 0.5f;
- * entity.AddComponent<Physics::SphereCollider>(core, collider);
+ * entity.AddComponent<Physics::Component::SphereCollider>(core, collider);
  * @endcode
  */
 struct SphereCollider {
