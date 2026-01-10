@@ -118,4 +118,19 @@ Engine::Entity CreateCylinder(Engine::Core &core, float radiusTop = 0.5f, float 
                               float height = 1.0f, const glm::vec3 &position = glm::vec3(0.0f),
                               uint32_t segments = 32u);
 
+/**
+ * @brief Create a capsule entity with mesh and transform
+ *
+ * @param core Engine core reference
+ * @param radius Radius of the capsule (default: 0.5)
+ * @param height Height of the cylindrical part (default: 1.0)
+ * @param position Position in world space (default: origin)
+ * @param segments Number of radial segments (default: 32)
+ * @param heightSegments Number of vertical segments for the cylinder (default: 4)
+ * @return Engine::Entity The created entity with mesh and transform
+ */
+Engine::Entity CreateCapsule(Engine::Core &core, float radius = 0.5f, float height = 1.0f,
+                             const glm::vec3 &position = glm::vec3(0.0f), uint32_t segments = 32u,
+                             uint32_t heightSegments = 4u);
+
 } // namespace Object::Helper

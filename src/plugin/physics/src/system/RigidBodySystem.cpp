@@ -4,9 +4,11 @@
 
 #include "Logger.hpp"
 #include "component/BoxCollider.hpp"
+#include "component/CapsuleCollider.hpp"
 #include "component/DefaultCollider.hpp"
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
+#include "component/SphereCollider.hpp"
 #include "exception/RigidBodyError.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
@@ -16,6 +18,9 @@
 
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
+#include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
+#include <Jolt/Physics/Collision/Shape/RotatedTranslatedShape.h>
+#include <Jolt/Physics/Collision/Shape/SphereShape.h>
 
 namespace Physics::System {
 
@@ -28,23 +33,61 @@ namespace Physics::System {
  * @return Shared pointer to shape, or nullptr if no collider found
  *
  * @note Priority order when multiple colliders exist:
- * 1. BoxCollider
- * 2. DefaultCollider
+ * 1. SphereCollider
+ * 2. CapsuleCollider
+ * 3. BoxCollider
+ * 4. DefaultCollider
  *
  * @note If no collider is found, a DefaultCollider will be created automatically.
  */
 static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(entt::registry &registry, entt::entity entity)
 {
+    if (auto *sphereCollider = registry.try_get<Component::SphereCollider>(entity))
+    {
+        if (!sphereCollider->IsValid())
+        {
+            Log::Warn("SphereCollider: Invalid radius, using default 0.5");
+            return new JPH::SphereShape(0.5f);
+        }
+
+        auto *baseShape = new JPH::SphereShape(sphereCollider->radius);
+        if (sphereCollider->offset != glm::vec3{0.0f, 0.0f, 0.0f})
+            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(sphereCollider->offset), JPH::Quat::sIdentity(),
+                                                   baseShape);
+        return baseShape;
+    }
+
+    if (auto *capsuleCollider = registry.try_get<Component::CapsuleCollider>(entity))
+    {
+        if (!capsuleCollider->IsValid())
+        {
+            Log::Warn("CapsuleCollider: Invalid dimensions, using default");
+            return new JPH::CapsuleShape(0.5f, 0.25f);
+        }
+
+        auto *baseShape = new JPH::CapsuleShape(capsuleCollider->halfHeight, capsuleCollider->radius);
+        if (capsuleCollider->offset != glm::vec3{0.0f, 0.0f, 0.0f})
+            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(capsuleCollider->offset), JPH::Quat::sIdentity(),
+                                                   baseShape);
+        return baseShape;
+    }
+
     if (auto *boxCollider = registry.try_get<Component::BoxCollider>(entity))
     {
-        auto boxShape = new JPH::BoxShape(Utils::ToJoltVec3(boxCollider->halfExtents), boxCollider->convexRadius);
-        return boxShape;
+        auto *baseShape = new JPH::BoxShape(Utils::ToJoltVec3(boxCollider->halfExtents), boxCollider->convexRadius);
+        if (boxCollider->offset != glm::vec3{0.0f, 0.0f, 0.0f})
+            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(boxCollider->offset), JPH::Quat::sIdentity(),
+                                                   baseShape);
+        return baseShape;
     }
 
     if (auto *defaultCollider = registry.try_get<Component::DefaultCollider>(entity))
     {
-        auto boxShape = new JPH::BoxShape(Utils::ToJoltVec3(defaultCollider->halfExtents));
-        return boxShape;
+        auto *baseShape = new JPH::BoxShape(Utils::ToJoltVec3(defaultCollider->halfExtents));
+        if (defaultCollider->offset != glm::vec3{0.0f, 0.0f, 0.0f})
+            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(defaultCollider->offset), JPH::Quat::sIdentity(),
+                                                   baseShape);
+        return baseShape;
     }
 
     return nullptr;

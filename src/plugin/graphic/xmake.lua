@@ -2,7 +2,6 @@ includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
 includes("../object/xmake.lua")
 includes("../rendering-pipeline/xmake.lua")
-includes("../object/xmake.lua")
 includes("../window/xmake.lua")
 
 local required_packages = {
@@ -35,14 +34,19 @@ target(plugin_name)
 
     add_files("src/**.cpp")
 
+    add_headerfiles("src/(component/*.hpp)")
     add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/(plugin/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(resource/buffer/*.hpp)")
     add_headerfiles("src/(system/initialization/*.hpp)")
+    add_headerfiles("src/(system/GPUComponentManagement/*.hpp)")
+    add_headerfiles("src/(system/preparation/*.hpp)")
     add_headerfiles("src/(system/commandCreation/*.hpp)")
+    add_headerfiles("src/(system/presentation/*.hpp)")
     add_headerfiles("src/(system/shutdown/*.hpp)")
     add_headerfiles("src/(utils/*.hpp)")
+    add_headerfiles("src/(utils/shader/*.hpp)")
     add_headerfiles("src/(*.hpp)")
 
     add_includedirs("src", {public = true})
