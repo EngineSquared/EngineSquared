@@ -184,7 +184,7 @@ class EventManager {
      * and scheduler. Logs a warning if the callback or event type is not found.
      *
      * @tparam TEvent The event type the callback was registered for.
-     * @tparam TScheduler The scheduler type (defaults to Update).
+     * @tparam TScheduler The scheduler type (defaults to Immediate call tag).
      * @param callbackID The unique identifier returned by RegisterCallback.
      */
     template <typename TEvent, typename TScheduler = DirectCallbackSchedulerTag>
