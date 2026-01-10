@@ -123,6 +123,10 @@ void InitConstraintSystem(Engine::Core &core)
     if (!registry.ctx().contains<Engine::Core *>())
         registry.ctx().emplace<Engine::Core *>(&core);
 
+    struct ConstraintSystemInitializedTag {};
+    if (registry.ctx().contains<ConstraintSystemInitializedTag>())
+        return;
+
     // Register constraint hooks
     registry.on_construct<Component::FixedConstraint>().connect<&OnFixedConstraintConstruct>();
     registry.on_destroy<Component::FixedConstraint>().connect<&OnFixedConstraintDestroy>();
@@ -132,6 +136,8 @@ void InitConstraintSystem(Engine::Core &core)
 
     registry.on_construct<Component::PointConstraint>().connect<&OnPointConstraintConstruct>();
     registry.on_destroy<Component::PointConstraint>().connect<&OnPointConstraintDestroy>();
+
+    registry.ctx().emplace<ConstraintSystemInitializedTag>();
 
     Log::Info("ConstraintSystem initialized");
 }

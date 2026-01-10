@@ -45,9 +45,9 @@ void FinalizeConstraint(ConstraintContext &ctx, entt::entity entity, JPH::Constr
         return;
     }
 
-    ctx.physicsSystem.AddConstraint(joltConstraint);
     ctx.registry.emplace<Component::ConstraintInternal>(entity, joltConstraint, type, settings.breakForce,
                                                         settings.breakTorque);
+    ctx.physicsSystem.AddConstraint(joltConstraint);
 
     Log::Debug(fmt::format("Created {} for entity {}", constraintName, static_cast<uint32_t>(entity)));
 }
