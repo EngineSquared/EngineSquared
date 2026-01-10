@@ -454,4 +454,31 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
     return mesh;
 }
 
+Component::Mesh GenerateWheelMesh(float radius, float width, uint32_t segments)
+{
+    // Generate a cylinder mesh oriented along the Y axis, then rotate vertices
+    // so the wheel's axis of rotation is along the X axis (left-right)
+    Component::Mesh cylinderMesh = GenerateCylinderMesh(radius, radius, width, segments, 1u);
+
+    Component::Mesh mesh;
+    mesh.vertices.reserve(cylinderMesh.vertices.size());
+    mesh.normals.reserve(cylinderMesh.normals.size());
+    mesh.texCoords = std::move(cylinderMesh.texCoords);
+    mesh.indices = std::move(cylinderMesh.indices);
+
+    // Rotate -90 degrees around Z axis: (x, y, z) -> (y, -x, z)
+    // This transforms Y-up cylinder to X-axis aligned wheel
+    for (const auto &vertex : cylinderMesh.vertices)
+    {
+        mesh.vertices.emplace_back(vertex.y, -vertex.x, vertex.z);
+    }
+
+    for (const auto &normal : cylinderMesh.normals)
+    {
+        mesh.normals.emplace_back(normal.y, -normal.x, normal.z);
+    }
+
+    return mesh;
+}
+
 } // namespace Object::Utils
