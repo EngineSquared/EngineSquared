@@ -11,6 +11,7 @@
 #include "Input.hpp"
 #include "Object.hpp"
 #include "RenderingPipeline.hpp"
+#include "resource/Window.hpp"
 #include "plugin/PluginWindow.hpp"
 
 void EscapeKeySystem(Engine::Core &core)
@@ -25,6 +26,10 @@ void EscapeKeySystem(Engine::Core &core)
 
 void Setup(Engine::Core &core)
 {
+    // Lock the cursor to the window
+    auto &window = core.GetResource<Window::Resource::Window>();
+    // window.MaskCursor();
+
     // Default Material
     auto cube = core.CreateEntity();
     cube.AddComponent<Object::Component::Transform>(core, glm::vec3(-2.0f, 0.0f, 0.0f));

@@ -32,6 +32,7 @@ class CameraManager {
         _lastMouseX = 0.0;
         _lastMouseY = 0.0;
         _isMouseDragging = false;
+        _wasCursorMasked = false;
         _originRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     }
 
@@ -204,6 +205,20 @@ class CameraManager {
     const glm::quat &GetOriginRotation() const { return _originRotation; }
 
     /**
+     * @brief Set whether the cursor was masked in the previous frame.
+     *
+     * @param masked True if cursor was masked, false otherwise.
+     */
+    void SetWasCursorMasked(bool masked) { _wasCursorMasked = masked; }
+
+    /**
+     * @brief Check if the cursor was masked in the previous frame.
+     *
+     * @return True if cursor was masked, false otherwise.
+     */
+    bool WasCursorMasked() const { return _wasCursorMasked; }
+
+    /**
      * @brief Get the core reference.
      *
      * @return The core reference.
@@ -219,6 +234,7 @@ class CameraManager {
     double _lastMouseX;
     double _lastMouseY;
     bool _isMouseDragging;
+    bool _wasCursorMasked;
     glm::quat _originRotation;
 };
 

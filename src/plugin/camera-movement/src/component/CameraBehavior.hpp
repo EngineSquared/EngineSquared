@@ -8,6 +8,7 @@
 #include "core/Core.hpp"
 #include "resource/CameraManager.hpp"
 #include "resource/InputManager.hpp"
+#include "resource/Window.hpp"
 #include "utils/CameraUtils.hpp"
 
 namespace CameraMovement::Component {
@@ -121,13 +122,20 @@ class DefaultBehavior : public ICameraBehavior {
 
             inputManager.RegisterCursorPosCallback([](Engine::Core &core, double xpos, double ypos) {
                 auto &cameraManager = core.GetResource<Resource::CameraManager>();
-                if (cameraManager.IsMouseDragging() && cameraManager.HasValidCamera())
+                auto &window = core.GetResource<Window::Resource::Window>();
+                bool cursorMasked = window.IsCursorMasked();
+                bool wasCursorMasked = cameraManager.WasCursorMasked();
+
+                bool shouldRotate = (cursorMasked || cameraManager.IsMouseDragging()) && cameraManager.HasValidCamera();
+                bool justBecameMasked = cursorMasked && !wasCursorMasked;
+
+                if (shouldRotate && !justBecameMasked)
                 {
                     double deltaX = xpos - cameraManager.GetLastMouseX();
                     double deltaY = ypos - cameraManager.GetLastMouseY();
 
                     float yaw = static_cast<float>(deltaX * cameraManager.GetMouseSensitivity());
-                    float pitch = static_cast<float>(-deltaY * cameraManager.GetMouseSensitivity());
+                    float pitch = static_cast<float>(deltaY * cameraManager.GetMouseSensitivity());
 
                     auto entity = cameraManager.GetActiveCamera();
                     auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
@@ -137,6 +145,7 @@ class DefaultBehavior : public ICameraBehavior {
                     cameraManager.SetOriginRotation(newRotation);
                 }
                 cameraManager.SetLastMousePosition(xpos, ypos);
+                cameraManager.SetWasCursorMasked(cursorMasked);
             });
 
             callbacksRegistered = true;
