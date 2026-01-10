@@ -76,4 +76,3 @@ TEST(Plugin, CasualUse)
     ASSERT_EQ(resource.data[0], "PluginTestA::Bind");
     ASSERT_EQ(resource.data[1], "PluginTestB::Bind");
 }
-
