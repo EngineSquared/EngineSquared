@@ -24,21 +24,19 @@ void WheelTransformSyncSystem(Engine::Core &core)
         for (size_t i = 0; i < 4; ++i)
         {
             Engine::Entity wheelEntity = internal.wheelEntities[i];
-            if (!wheelEntity.IsValid())
+            if (core.IsEntityValid(wheelEntity) == false)
                 continue;
 
             auto *wheelTransform = registry.try_get<Object::Component::Transform>(wheelEntity);
             if (!wheelTransform)
                 continue;
 
-            // wheelUp=Y, wheelForward=Z (rotation axis is X, matching wheel settings)
             JPH::RMat44 wheelWorldTransform =
                 constraint->GetWheelWorldTransform(static_cast<uint32_t>(i), JPH::Vec3::sAxisY(), JPH::Vec3::sAxisZ());
 
             JPH::Vec3 wheelPos = wheelWorldTransform.GetTranslation();
             JPH::Quat wheelRot = wheelWorldTransform.GetQuaternion();
 
-            // Apply 90° rotation around Z to match mesh orientation (cylinder axis along X)
             JPH::Quat meshRotation = JPH::Quat::sRotation(JPH::Vec3::sAxisZ(), JPH::DegreesToRadians(90.0f));
             JPH::Quat finalRot = wheelRot * meshRotation;
 
