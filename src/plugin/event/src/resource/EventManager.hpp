@@ -40,7 +40,8 @@ class EventManager {
      */
     EventManager() = default;
 
-    ~EventManager() {
+    ~EventManager()
+    {
         std::scoped_lock lock(_queueMutex, _callbacksMutex);
         _eventCallbacks.clear();
         _eventQueue.clear();
