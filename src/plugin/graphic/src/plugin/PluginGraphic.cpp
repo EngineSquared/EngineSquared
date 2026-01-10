@@ -2,9 +2,9 @@
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
 #include "component/Material.hpp"
+#include "plugin/PluginEvent.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "scheduler/Shutdown.hpp"
-#include "plugin/PluginEvent.hpp"
 #include <iomanip>
 #include <sstream>
 
@@ -44,11 +44,11 @@ void Graphic::Plugin::Bind()
         System::CreateInstance, System::CreateSurface, System::CreateAdapter, System::ReleaseInstance,
         System::RequestCapabilities, System::CreateDevice, System::CreateQueue, System::SetupQueue,
         System::ConfigureSurface, System::ReleaseAdapter, System::CreateEmptyTexture, System::CreateDefaultTexture,
-        System::CreateDefaultSampler, System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial, System::SetupResizableRenderTexture);
+        System::CreateDefaultSampler, System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial,
+        System::SetupResizableRenderTexture);
 
-    RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture,
-                                                    System::UpdateGPUTransforms, System::UpdateGPUCameras,
-                                                    System::UpdateGPUMaterials);
+    RegisterSystems<RenderingPipeline::Preparation>(System::PrepareEndRenderTexture, System::UpdateGPUTransforms,
+                                                    System::UpdateGPUCameras, System::UpdateGPUMaterials);
 
     RegisterSystems<RenderingPipeline::CommandCreation>(System::ExecuteRenderPass);
 

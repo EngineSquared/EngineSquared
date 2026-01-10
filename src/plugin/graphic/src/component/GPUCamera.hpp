@@ -1,10 +1,10 @@
 #pragma once
 
+#include "Logger.hpp"
 #include "component/Camera.hpp"
 #include "component/Transform.hpp"
 #include "glm/glm.hpp"
 #include <entt/core/hashed_string.hpp>
-#include "Logger.hpp"
 
 namespace Graphic::Component {
 struct GPUCamera {
@@ -34,7 +34,9 @@ struct GPUCamera {
         if (textureSize.y > 0)
         {
             aspectRatio = static_cast<float>(textureSize.x) / static_cast<float>(textureSize.y);
-        } else {
+        }
+        else
+        {
             Log::Warn("GPUCamera::UpdateAspectRatio: texture height is zero, cannot update aspect ratio.");
         }
     }

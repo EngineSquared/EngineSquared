@@ -15,8 +15,8 @@ void Graphic::System::UpdateGPUCameras(Engine::Core &core)
     core.GetRegistry()
         .view<Object::Component::Transform, Object::Component::Camera, Graphic::Component::GPUCamera>()
         .each([&core, &gpuBufferContainer, &textureContainer](Object::Component::Transform &transform,
-                                                               Object::Component::Camera &camera,
-                                                               Graphic::Component::GPUCamera &gpuCamera) {
+                                                              Object::Component::Camera &camera,
+                                                              Graphic::Component::GPUCamera &gpuCamera) {
             if (gpuCamera.targetTexture.value() != 0 && textureContainer.Contains(gpuCamera.targetTexture))
             {
                 const auto &texture = textureContainer.Get(gpuCamera.targetTexture);
