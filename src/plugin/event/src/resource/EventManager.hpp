@@ -52,9 +52,9 @@ class EventManager {
      * @brief Move constructor.
      * @param other The EventManager to move from.
      */
-    EventManager(EventManager &&other) noexcept : _queueMutex(), _callbacksMutex()
+    EventManager(EventManager &&other) noexcept : _queueMutex(), _callbacksMutex(), _directCallbackMutex()
     {
-        std::scoped_lock lock(other._queueMutex, other._callbacksMutex);
+        std::scoped_lock lock(other._queueMutex, other._callbacksMutex, other._directCallbackMutex);
         _eventCallbacks = std::move(other._eventCallbacks);
         _eventQueue = std::move(other._eventQueue);
     }
@@ -68,7 +68,8 @@ class EventManager {
     {
         if (this != &other)
         {
-            std::scoped_lock lock(other._queueMutex, _queueMutex, other._callbacksMutex, _callbacksMutex);
+            std::scoped_lock lock(other._queueMutex, _queueMutex, other._callbacksMutex, _callbacksMutex, other._directCallbackMutex,
+                                  _directCallbackMutex);
             _eventCallbacks = std::move(other._eventCallbacks);
             _eventQueue = std::move(other._eventQueue);
         }
