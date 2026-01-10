@@ -196,7 +196,8 @@ template <> class VehicleBuilder<4> {
             wheelEntities[i] = core.CreateEntity();
 
             glm::vec3 worldWheelPos = _chassisPosition + _chassisRotation * _wheelPositions[i];
-            glm::quat wheelRotation = _chassisRotation * glm::angleAxis(glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+            glm::quat wheelRotation =
+                _chassisRotation * glm::angleAxis(glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
             wheelEntities[i].AddComponent<Object::Component::Transform>(
                 core, Object::Component::Transform(worldWheelPos, glm::vec3(1.0f), wheelRotation));
