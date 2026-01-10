@@ -34,13 +34,10 @@ void WheelTransformSyncSystem(Engine::Core &core)
             JPH::RMat44 wheelWorldTransform =
                 constraint->GetWheelWorldTransform(static_cast<uint32_t>(i), JPH::Vec3::sAxisY(), JPH::Vec3::sAxisZ());
 
-            JPH::Vec3 wheelPos = wheelWorldTransform.GetTranslation();
-            JPH::Quat wheelRot = wheelWorldTransform.GetQuaternion();
-
             JPH::Quat meshRotation = JPH::Quat::sRotation(JPH::Vec3::sAxisZ(), JPH::DegreesToRadians(90.0f));
-            JPH::Quat finalRot = wheelRot * meshRotation;
+            JPH::Quat finalRot = wheelWorldTransform.GetQuaternion() * meshRotation;
 
-            wheelTransform->SetPosition(Utils::FromJoltVec3(wheelPos));
+            wheelTransform->SetPosition(Utils::FromJoltVec3(wheelWorldTransform.GetTranslation()));
             wheelTransform->SetRotation(Utils::FromJoltQuat(finalRot));
         }
     });
