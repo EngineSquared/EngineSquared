@@ -270,6 +270,15 @@ class Core {
     template <typename TPlugin> bool HasPlugin() const;
 
     /**
+     * @brief Retrieves a plugin of the specified type.
+     *
+     * @tparam TPlugin The type of the plugin to retrieve.
+     * @return A reference to the requested plugin.
+     * @throws Engine::Exception::MissingPluginError if the plugin is not found.
+     */
+    template <typename TPlugin> TPlugin &GetPlugin();
+
+    /**
      * @brief Checks if a plugin of the specified type is present.
      *
      * @warning If you know the type of the plugin at compile time, prefer the template version of this function.
