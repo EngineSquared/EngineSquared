@@ -202,8 +202,7 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
         }
     }
 
-    JPH::Ref<JPH::VehicleCollisionTester> collisionTester =
-        new JPH::VehicleCollisionTesterRay(Utils::Layers::MOVING);
+    JPH::Ref<JPH::VehicleCollisionTester> collisionTester = new JPH::VehicleCollisionTesterRay(Utils::Layers::MOVING);
     vehicleConstraint->SetVehicleCollisionTester(collisionTester);
 
     physicsManager.GetPhysicsSystem().AddConstraint(vehicleConstraint);
