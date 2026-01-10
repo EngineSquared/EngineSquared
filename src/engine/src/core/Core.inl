@@ -1,6 +1,5 @@
 #include "Logger.hpp"
 #include "core/Core.hpp"
-#include "exception/MissingPluginError.hpp"
 #include "exception/MissingResourceError.hpp"
 #include "system/WrappedSystem.hpp"
 
