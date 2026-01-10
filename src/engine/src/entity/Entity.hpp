@@ -207,6 +207,17 @@ class Entity {
     }
 
     /**
+     * Get components of type TComponent from the entity.
+     *
+     * @tparam  TComponent  components to get
+     * @return  components of type TComponent from the entity
+     */
+    template <typename... TComponent> inline decltype(auto) GetComponents(const Core &core) const
+    {
+        return core.GetRegistry().get<TComponent...>(ToEnttEntity(this->_entity));
+    }
+
+    /**
      * Try to get a component of type TComponent from the entity.
      *
      * @tparam  TComponent  components to get

@@ -45,6 +45,15 @@ class Core {
      * @return  registry that contains all components.
      */
     inline entt::registry &GetRegistry() { return *_registry; }
+
+    /**
+     * Get the entt::registry that contains all components.
+     * It should be used to update component through systems.
+     *
+     * @return  registry that contains all components.
+     */
+    inline const entt::registry &GetRegistry() const { return *_registry; }
+
     /**
      * Create an entity.
      *
