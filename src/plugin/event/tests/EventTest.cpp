@@ -54,11 +54,10 @@ TEST(Event, multi_scheduler_test)
         res.value += event.value;
     });
 
-    eventManager.RegisterCallback<TestEvent, Engine::Scheduler::FixedTimeUpdate>(
-        [&core](const TestEvent &event) {
-            auto &res = core.GetResource<TestResource>();
-            res.value += event.value * 2;
-        });
+    eventManager.RegisterCallback<TestEvent, Engine::Scheduler::FixedTimeUpdate>([&core](const TestEvent &event) {
+        auto &res = core.GetResource<TestResource>();
+        res.value += event.value * 2;
+    });
 
     eventManager.PushEvent(TestEvent{10});
 

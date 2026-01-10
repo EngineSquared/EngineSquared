@@ -55,13 +55,13 @@ void SetupWindowCallbacks(Engine::Core &core)
 {
     GLFWwindow *glfwWindow = core.GetResource<Resource::Window>().GetGLFWWindow();
 
-    glfwSetFramebufferSizeCallback(
-        glfwWindow,
-        [](GLFWwindow *window, int width, int height) {
-            Engine::Core *core = static_cast<Engine::Core *>(glfwGetWindowUserPointer(window));
-            auto &eventManager = core->GetResource<::Event::Resource::EventManager>();
-            eventManager.PushEvent(Window::Event::OnResize{glm::ivec2{width, height}});
+    glfwSetFramebufferSizeCallback(glfwWindow, [](GLFWwindow *window, int width, int height) {
+        Engine::Core *core = static_cast<Engine::Core *>(glfwGetWindowUserPointer(window));
+        auto &eventManager = core->GetResource<::Event::Resource::EventManager>();
+        eventManager.PushEvent(Window::Event::OnResize{
+            glm::ivec2{width, height}
         });
+    });
 }
 
 } // namespace Window::System

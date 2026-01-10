@@ -14,8 +14,7 @@ struct IEventContainer {
 };
 
 template <typename TEvent>
-class EventContainer : public IEventContainer,
-                       public FunctionUtils::FunctionContainer<void, const TEvent &> {
+class EventContainer : public IEventContainer, public FunctionUtils::FunctionContainer<void, const TEvent &> {
   public:
     void Trigger(const std::any &event) override
     {

@@ -2,10 +2,10 @@
 
 #include <string>
 
+#include "event/OnResize.hpp"
 #include <GLFW/glfw3.h>
 #include <glm/vec2.hpp>
 #include <stdexcept>
-#include "event/OnResize.hpp"
 
 #include "exception/WindowError.hpp"
 

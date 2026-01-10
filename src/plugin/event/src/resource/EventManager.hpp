@@ -84,7 +84,7 @@ class EventManager {
      * @param callback The callback function with signature void(Engine::Core&, const TEvent&).
      * @return Unique identifier for the registered callback.
      */
-    template <typename TEvent, typename TScheduler = DirectCallbackSchedulerTag,typename TCallBack>
+    template <typename TEvent, typename TScheduler = DirectCallbackSchedulerTag, typename TCallBack>
     EventCallbackID RegisterCallback(TCallBack &&callback)
     {
         return _RegisterCallbackImpl<TEvent, TCallBack, TScheduler>(std::forward<TCallBack>(callback));
@@ -216,8 +216,7 @@ class EventManager {
         {
             _eventCallbacks[schedulerID].try_emplace(typeID, std::make_shared<Utils::EventContainer<TEvent>>());
         }
-        auto container =
-            std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
+        auto container = std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
         return container->AddFunction(std::forward<TCallBack>(callback));
     }
 
