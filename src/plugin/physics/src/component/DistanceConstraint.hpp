@@ -27,6 +27,7 @@
 #include "ConstraintSettings.hpp"
 #include <Engine.hpp>
 #include <glm/glm.hpp>
+#include <utility>
 
 namespace Physics::Component {
 
@@ -203,6 +204,9 @@ struct DistanceConstraint {
                     const glm::vec3 &pointB = glm::vec3(0.0f),
                     const ConstraintSettings &constraintSettings = ConstraintSettings::Soft())
     {
+        if (min > max)
+            std::swap(min, max);
+
         DistanceConstraint constraint;
         constraint.bodyA = a;
         constraint.bodyB = b;
