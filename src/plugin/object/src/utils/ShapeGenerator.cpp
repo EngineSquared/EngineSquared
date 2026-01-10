@@ -382,7 +382,8 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
             mesh.vertices.emplace_back(vertex);
             glm::vec3 normal = glm::normalize(glm::vec3(cosT, 0.0f, sinT));
             mesh.normals.emplace_back(normal);
-            mesh.texCoords.emplace_back(static_cast<float>(s) / static_cast<float>(segments), (y + (radius + halfHeight)) / (2.0f * radius + height));
+            mesh.texCoords.emplace_back(static_cast<float>(s) / static_cast<float>(segments),
+                                        (y + (radius + halfHeight)) / (2.0f * radius + height));
         }
     };
 
