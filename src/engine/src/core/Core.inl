@@ -88,17 +88,6 @@ template <typename TPlugin> bool Core::HasPlugin() const
     return this->_plugins.contains(std::type_index(typeid(TPlugin)));
 }
 
-template <typename TPlugin> TPlugin &Core::GetPlugin()
-{
-    auto typeIdx = std::type_index(typeid(TPlugin));
-    if (!this->_plugins.contains(typeIdx))
-    {
-        throw Exception::MissingPluginError(
-            fmt::format("Plugin not found in the core engine: {}", typeid(TPlugin).name()));
-    }
-    return *static_cast<TPlugin *>(this->_plugins.at(typeIdx).get());
-}
-
 inline void Core::SetDefaultScheduler(std::type_index scheduler)
 {
     if (!this->_schedulers.Contains(scheduler))

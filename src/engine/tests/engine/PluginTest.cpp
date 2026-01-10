@@ -77,33 +77,3 @@ TEST(Plugin, CasualUse)
     ASSERT_EQ(resource.data[1], "PluginTestB::Bind");
 }
 
-TEST(Plugin, GetPlugin)
-{
-    Engine::Core core;
-    core.AddPlugins<PluginTestC>();
-
-    auto &pluginC = core.GetPlugin<PluginTestC>();
-    // Check that the systemId has been set correctly
-    ASSERT_NE(pluginC.systemId, 0);
-}
-
-TEST(Plugin, GetPluginUsedToDisableSystem)
-{
-    Engine::Core core;
-    core.RegisterResource<ResourceTest>({});
-    core.AddPlugins<PluginTestC>();
-
-    auto &pluginC = core.GetPlugin<PluginTestC>();
-
-    // Run systems once to bind the plugin and register its system
-    core.RunSystems();
-
-    // Then disable the system
-    core.GetScheduler<Engine::Scheduler::Update>().Disable(pluginC.systemId);
-
-    core.RunSystems();
-
-    auto &resource = core.GetResource<ResourceTest>();
-    // Check that PluginTestC system has been disabled and only executed once during the first RunSystems call
-    ASSERT_EQ(resource.data.size(), 1);
-}
