@@ -132,7 +132,7 @@ void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
 void CreateCharacterCapsule(Engine::Core &core, float x, float y, float z)
 {
     auto character = Object::Helper::CreateCube(core, 1.0f, glm::vec3(x, y, z), glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
-                                                glm::vec3(0.5f, 1.5f, 0.5f));
+                                                glm::vec3(0.5f, 2.0f, 0.5f));
 
     auto capsuleCollider = Physics::Component::CapsuleCollider(0.75f, 0.25f);
     character.AddComponent<Physics::Component::CapsuleCollider>(core, capsuleCollider);
