@@ -1,6 +1,7 @@
 #include "WindowSystem.hpp"
 #include "Logger.hpp"
 #include "resource/EventManager.hpp"
+#include "event/OnResize.hpp"
 
 namespace Window::System {
 

@@ -2,7 +2,6 @@
 
 #include <string>
 
-#include "event/OnResize.hpp"
 #include <GLFW/glfw3.h>
 #include <glm/vec2.hpp>
 #include <stdexcept>
@@ -77,7 +76,7 @@ class Window {
      *
      * @return A vector of integers to store the size of the window.
      */
-    glm::ivec2 GetSize() const;
+    glm::uvec2 GetSize() const;
 
     /**
      * @brief Set the window size.
