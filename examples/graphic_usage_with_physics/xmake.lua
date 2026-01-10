@@ -16,6 +16,7 @@ target("GraphicUsageWithPhysics")
     add_deps("PluginGraphic")
     add_deps("PluginWindow")
     add_deps("PluginInput")
+    add_deps("PluginCameraMovement")
     add_deps("PluginPhysics")
     add_deps("PluginEvent")
 
