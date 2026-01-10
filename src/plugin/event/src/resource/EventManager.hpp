@@ -82,7 +82,7 @@ class EventManager {
      * @tparam TEvent The event type to listen for.
      * @tparam TScheduler The scheduler type on which to process this event.
      * @tparam TCallBack The callback type (auto-deduced).
-     * @param callback The callback function with signature void(Engine::Core&, const TEvent&).
++    * @param callback The callback function with signature void(const TEvent&).
      * @return Unique identifier for the registered callback.
      */
     template <typename TEvent, typename TScheduler = DirectCallbackSchedulerTag, typename TCallBack>
