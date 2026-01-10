@@ -2,6 +2,7 @@
 #include "Object.pch.hpp"
 
 #include <cmath>
+#include <limits>
 
 namespace Object::Utils {
 
@@ -360,11 +361,21 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
 {
     Component::Mesh mesh;
 
+    if (radius <= 0.0f)
+    {
+        return mesh;
+    }
+    height = std::max(0.0f, height);
+
     segments = std::max(3u, segments);
     heightSegments = std::max(1u, heightSegments);
 
     uint32_t capRings = std::max(2u, heightSegments * 2u);
     float halfHeight = height * 0.5f;
+
+    float totalHeight = height + 2.0f * radius;
+    if (totalHeight <= std::numeric_limits<float>::epsilon())
+        totalHeight = 1.0f;
 
     uint32_t ringCount = capRings + (heightSegments + 1u) + capRings;
     uint32_t vertexEstimate = ringCount * (segments + 1u);
@@ -383,7 +394,7 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
             glm::vec3 normal = glm::normalize(glm::vec3(r * cosT, y - centerY, r * sinT));
             mesh.normals.emplace_back(normal);
             mesh.texCoords.emplace_back(static_cast<float>(s) / static_cast<float>(segments),
-                                        (y + (radius + halfHeight)) / (2.0f * radius + height));
+                                        (y + (radius + halfHeight)) / totalHeight);
         }
     };
 
@@ -417,7 +428,9 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
 
     // Build indices between rings
     uint32_t ringsTotal = capRings + (heightSegments + 1u) + capRings;
-    for (uint32_t ring = 0; ring < ringsTotal; ++ring)
+    // Build triangle indices between consecutive rings. Stop at ringsTotal-1 so
+    // nextStart (ring+1) is always valid.
+    for (uint32_t ring = 0; ring + 1u < ringsTotal; ++ring)
     {
         uint32_t ringStart = ring * (segments + 1u);
         uint32_t nextStart = (ring + 1u) * (segments + 1u);
