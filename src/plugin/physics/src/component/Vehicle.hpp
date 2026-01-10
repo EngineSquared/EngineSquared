@@ -98,6 +98,26 @@ struct Vehicle {
     std::array<Engine::Entity, 4> wheelEntities;
 
     /**
+     * @brief Get default wheel positions relative to chassis center
+     *
+     * Default positions assume a standard car layout:
+     * - Front wheels: ±0.9 X, +1.2 Z
+     * - Rear wheels: ±0.9 X, -1.2 Z
+     * - All wheels: -0.3 Y (below chassis center)
+     *
+     * @return Array of wheel positions indexed by WheelIndex
+     */
+    static std::array<glm::vec3, 4> GetDefaultWheelPositions()
+    {
+        return {
+            glm::vec3(-0.9f, -0.3f, 1.2f),  // Front-left
+            glm::vec3(0.9f, -0.3f, 1.2f),   // Front-right
+            glm::vec3(-0.9f, -0.3f, -1.2f), // Rear-left
+            glm::vec3(0.9f, -0.3f, -1.2f)   // Rear-right
+        };
+    }
+
+    /**
      * @brief Create a default RWD sports car configuration
      */
     static Vehicle CreateDefaultCar()

@@ -261,12 +261,7 @@ template <> class VehicleBuilder<4> {
     glm::vec3 _chassisHalfExtents = glm::vec3(1.0f, 0.5f, 2.0f);
 
     std::array<Object::Component::Mesh, 4> _wheelMeshes;
-    std::array<glm::vec3, 4> _wheelPositions = {
-        glm::vec3(-1.0f, -0.3f, 1.5f),  // Front-left
-        glm::vec3(1.0f, -0.3f, 1.5f),   // Front-right
-        glm::vec3(-1.0f, -0.3f, -1.5f), // Rear-left
-        glm::vec3(1.0f, -0.3f, -1.5f)   // Rear-right
-    };
+    std::array<glm::vec3, 4> _wheelPositions = Component::Vehicle::GetDefaultWheelPositions();
 
     bool _hasChassisSet = false;
     std::array<bool, 4> _hasWheelMesh = {false, false, false, false};

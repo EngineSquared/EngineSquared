@@ -157,8 +157,7 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
 
         JPH::VehicleConstraintSettings constraintSettings;
 
-        std::array<glm::vec3, 4> wheelPositions = {glm::vec3(-0.9f, -0.3f, 1.2f), glm::vec3(0.9f, -0.3f, 1.2f),
-                                                   glm::vec3(-0.9f, -0.3f, -1.2f), glm::vec3(0.9f, -0.3f, -1.2f)};
+        std::array<glm::vec3, 4> wheelPositions = Component::Vehicle::GetDefaultWheelPositions();
 
         constraintSettings.mWheels.resize(4);
         for (size_t i = 0; i < 4; ++i)
