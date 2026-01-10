@@ -62,4 +62,18 @@ Engine::Entity CreateCylinder(Engine::Core &core, float radiusTop, float radiusB
     return entity;
 }
 
+Engine::Entity CreateCapsule(Engine::Core &core, float radius, float height, const glm::vec3 &position,
+                             uint32_t segments, uint32_t heightSegments)
+{
+    auto entity = core.CreateEntity();
+
+    auto transform = Component::Transform(position);
+    entity.AddComponent<Component::Transform>(core, transform);
+
+    auto mesh = Utils::GenerateCapsuleMesh(radius, height, segments, heightSegments);
+    entity.AddComponent<Component::Mesh>(core, std::move(mesh));
+
+    return entity;
+}
+
 } // namespace Object::Helper
