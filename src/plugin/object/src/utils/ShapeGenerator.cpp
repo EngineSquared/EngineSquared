@@ -372,7 +372,7 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
     mesh.normals.reserve(vertexEstimate);
     mesh.texCoords.reserve(vertexEstimate);
 
-    auto addRing = [&](float y, float r) {
+    auto addRing = [&](float y, float r, float centerY) {
         for (uint32_t s = 0; s <= segments; ++s)
         {
             float theta = static_cast<float>(s) / static_cast<float>(segments) * 2.0f * glm::pi<float>();
@@ -380,7 +380,7 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
             float sinT = std::sin(theta);
             glm::vec3 vertex(r * cosT, y, r * sinT);
             mesh.vertices.emplace_back(vertex);
-            glm::vec3 normal = glm::normalize(glm::vec3(cosT, 0.0f, sinT));
+            glm::vec3 normal = glm::normalize(glm::vec3(r * cosT, y - centerY, r * sinT));
             mesh.normals.emplace_back(normal);
             mesh.texCoords.emplace_back(static_cast<float>(s) / static_cast<float>(segments),
                                         (y + (radius + halfHeight)) / (2.0f * radius + height));
@@ -394,7 +394,7 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
         float phi = t * (glm::pi<float>() * 0.5f);
         float r = radius * std::sin(phi);
         float y = halfHeight + radius * std::cos(phi);
-        addRing(y, r);
+        addRing(y, r, halfHeight);
     }
 
     // Cylinder rings (including top and bottom edges)
@@ -402,7 +402,7 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
     {
         float t = static_cast<float>(h) / static_cast<float>(heightSegments);
         float y = halfHeight - t * height;
-        addRing(y, radius);
+        addRing(y, radius, y); // centerY == y results in purely horizontal normal
     }
 
     // Bottom hemisphere (exclude equator)
@@ -412,7 +412,7 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
         float phi = t * (glm::pi<float>() * 0.5f);
         float r = radius * std::sin(phi);
         float y = -halfHeight - radius * std::cos(phi);
-        addRing(y, r);
+        addRing(y, r, -halfHeight);
     }
 
     // Build indices between rings
