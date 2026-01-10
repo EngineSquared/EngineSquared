@@ -20,11 +20,12 @@ void Window::Destroy()
     glfwDestroyWindow(_window);
 }
 
-glm::ivec2 Window::GetSize() const
+glm::uvec2 Window::GetSize() const
 {
     glm::ivec2 size;
     glfwGetWindowSize(_window, &size.x, &size.y);
-    return size;
+
+    return glm::uvec2(size);
 }
 
 void Window::SetSize(int width, int height) { glfwSetWindowSize(_window, width, height); }

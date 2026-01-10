@@ -52,9 +52,9 @@ class EventManager {
      * @brief Move constructor.
      * @param other The EventManager to move from.
      */
-    EventManager(EventManager &&other) noexcept : _queueMutex(), _callbacksMutex(), _directCallbackMutex()
+    EventManager(EventManager &&other) noexcept : _queueMutex(), _callbacksMutex()
     {
-        std::scoped_lock lock(other._queueMutex, other._callbacksMutex, other._directCallbackMutex);
+        std::scoped_lock lock(other._queueMutex, other._callbacksMutex);
         _eventCallbacks = std::move(other._eventCallbacks);
         _eventQueue = std::move(other._eventQueue);
     }
@@ -68,8 +68,7 @@ class EventManager {
     {
         if (this != &other)
         {
-            std::scoped_lock lock(other._queueMutex, _queueMutex, other._callbacksMutex, _callbacksMutex,
-                                  other._directCallbackMutex, _directCallbackMutex);
+            std::scoped_lock lock(other._queueMutex, _queueMutex, other._callbacksMutex, _callbacksMutex);
             _eventCallbacks = std::move(other._eventCallbacks);
             _eventQueue = std::move(other._eventQueue);
         }
@@ -114,15 +113,12 @@ class EventManager {
         }
 
         auto &directEventCallbacks = _eventCallbacks[std::type_index(typeid(DirectCallbackSchedulerTag))];
-        for (const auto &[eventId, _] : directEventCallbacks)
+        if (directEventCallbacks.contains(typeID))
         {
-            if (eventId == typeID)
+            auto container = std::static_pointer_cast<Utils::EventContainer<TEvent>>(directEventCallbacks[typeID]);
+            for (auto &callback : container->GetFunctions())
             {
-                auto container = std::static_pointer_cast<Utils::EventContainer<TEvent>>(directEventCallbacks[eventId]);
-                for (auto &callback : container->GetFunctions())
-                {
-                    callback->Call(event);
-                }
+                callback->Call(event);
             }
         }
     }
@@ -234,6 +230,5 @@ class EventManager {
     std::unordered_map<std::type_index, std::queue<std::pair<EventTypeID, std::any>>> _eventQueue;
     std::mutex _queueMutex;
     std::mutex _callbacksMutex;
-    std::mutex _directCallbackMutex;
 };
 } // namespace Event::Resource
