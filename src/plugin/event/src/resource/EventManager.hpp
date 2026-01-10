@@ -104,21 +104,30 @@ class EventManager {
     template <typename TEvent> void PushEvent(const TEvent &event)
     {
         EventTypeID typeID = _GetId<TEvent>();
-        std::scoped_lock lock(_queueMutex, _callbacksMutex);
+        std::shared_ptr<Utils::EventContainer<TEvent>> directContainer;
 
-        for (const auto &[schedulerID, callbacks] : _eventCallbacks)
         {
-            if (callbacks.contains(typeID))
+            std::scoped_lock lock(_queueMutex, _callbacksMutex);
+
+            for (const auto &[schedulerID, callbacks] : _eventCallbacks)
             {
-                _eventQueue[schedulerID].push({typeID, event});
+                if (callbacks.contains(typeID))
+                {
+                    _eventQueue[schedulerID].push({typeID, event});
+                }
+            }
+
+            auto schedulerID = std::type_index(typeid(DirectCallbackSchedulerTag));
+            if (_eventCallbacks.contains(schedulerID) && _eventCallbacks[schedulerID].contains(typeID))
+            {
+                     =
+                    std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
             }
         }
 
-        auto &directEventCallbacks = _eventCallbacks[std::type_index(typeid(DirectCallbackSchedulerTag))];
-        if (directEventCallbacks.contains(typeID))
+        if (directContainer)
         {
-            auto container = std::static_pointer_cast<Utils::EventContainer<TEvent>>(directEventCallbacks[typeID]);
-            for (auto &callback : container->GetFunctions())
+            for (auto &callback : directContainer->GetFunctions())
             {
                 callback->Call(event);
             }
