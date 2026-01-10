@@ -465,7 +465,7 @@ Component::Mesh GenerateWheelMesh(float radius, float width, uint32_t segments)
     mesh.texCoords = std::move(cylinderMesh.texCoords);
     mesh.indices = std::move(cylinderMesh.indices);
 
-    // Rotate 90 degrees around Z axis: (x, y, z) -> (y, -x, z)
+    // Rotate -90 degrees around Z axis: (x, y, z) -> (y, -x, z)
     // This transforms Y-up cylinder to X-axis aligned wheel
     for (const auto &vertex : cylinderMesh.vertices)
     {
