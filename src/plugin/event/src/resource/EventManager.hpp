@@ -68,8 +68,8 @@ class EventManager {
     {
         if (this != &other)
         {
-            std::scoped_lock lock(other._queueMutex, _queueMutex, other._callbacksMutex, _callbacksMutex, other._directCallbackMutex,
-                                  _directCallbackMutex);
+            std::scoped_lock lock(other._queueMutex, _queueMutex, other._callbacksMutex, _callbacksMutex,
+                                  other._directCallbackMutex, _directCallbackMutex);
             _eventCallbacks = std::move(other._eventCallbacks);
             _eventQueue = std::move(other._eventQueue);
         }
