@@ -97,6 +97,9 @@ struct Vehicle {
     /// Wheel entities for visual representation
     std::array<Engine::Entity, 4> wheelEntities;
 
+    /// Wheel positions relative to chassis center
+    std::array<glm::vec3, 4> wheelPositions = GetDefaultWheelPositions();
+
     /**
      * @brief Get default wheel positions relative to chassis center
      *

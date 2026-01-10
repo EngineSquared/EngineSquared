@@ -172,7 +172,6 @@ template <> class VehicleBuilder<4> {
             throw Exception::VehicleBuilderError("Chassis mesh not set");
         }
 
-        // Validate all wheels have meshes
         for (size_t i = 0; i < 4; ++i)
         {
             if (!_hasWheelMesh[i])
@@ -181,52 +180,41 @@ template <> class VehicleBuilder<4> {
             }
         }
 
-        // Validate gearbox has at least one forward gear and one reverse gear
         if (_vehicle.gearbox.gearRatios.size() < 2)
         {
             throw Exception::VehicleBuilderError("Gearbox must have at least one forward gear and one reverse gear");
         }
 
-        // Create chassis entity
         Engine::Entity chassis = core.CreateEntity();
         chassis.AddComponent<Object::Component::Transform>(
             core, Object::Component::Transform(_chassisPosition, _chassisScale, _chassisRotation));
         chassis.AddComponent<Object::Component::Mesh>(core, _chassisMesh);
 
-        // Create wheel entities (meshes only, no physics bodies)
         std::array<Engine::Entity, 4> wheelEntities;
         for (size_t i = 0; i < 4; ++i)
         {
             wheelEntities[i] = core.CreateEntity();
 
-            // Wheel position is relative to chassis
             glm::vec3 worldWheelPos = _chassisPosition + _chassisRotation * _wheelPositions[i];
+            glm::quat wheelRotation = _chassisRotation * glm::angleAxis(glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
             wheelEntities[i].AddComponent<Object::Component::Transform>(
-                core, Object::Component::Transform(worldWheelPos, glm::vec3(1.0f), _chassisRotation));
+                core, Object::Component::Transform(worldWheelPos, glm::vec3(1.0f), wheelRotation));
             wheelEntities[i].AddComponent<Object::Component::Mesh>(core, _wheelMeshes[i]);
         }
 
-        // Store wheel entities in vehicle component (VehicleSystem will use them)
-        // We'll store them temporarily in a way the system can access
-        // For now, we need to add the vehicle component AFTER creating a RigidBody for chassis
-
-        // Create chassis RigidBody (required for vehicle constraint)
         auto chassisRigidBody = Component::RigidBody::CreateDynamic(_chassisMass);
         chassisRigidBody.friction = 0.5f;
         chassisRigidBody.restitution = 0.1f;
         chassis.AddComponent<Component::RigidBody>(core, chassisRigidBody);
 
-        // Add chassis collider (use a box approximating the car body)
         chassis.AddComponent<Component::BoxCollider>(core, Component::BoxCollider(_chassisHalfExtents));
 
-        // Store wheel entities in the Vehicle component
         _vehicle.wheelEntities = wheelEntities;
+        _vehicle.wheelPositions = _wheelPositions;
 
-        // Add the Vehicle component (this triggers OnVehicleConstruct)
         chassis.AddComponent<Component::Vehicle>(core, _vehicle);
 
-        // Add controller component for user input
         chassis.AddComponent<Component::VehicleController>(core);
 
         return chassis;
