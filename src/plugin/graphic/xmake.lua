@@ -2,7 +2,6 @@ includes("../../engine/xmake.lua")
 includes("../../utils/log/xmake.lua")
 includes("../object/xmake.lua")
 includes("../rendering-pipeline/xmake.lua")
-includes("../object/xmake.lua")
 includes("../window/xmake.lua")
 
 local required_packages = {
