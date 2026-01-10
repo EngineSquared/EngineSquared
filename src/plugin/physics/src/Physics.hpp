@@ -12,6 +12,12 @@
 #include "component/CapsuleCollider.hpp"
 #include "component/DefaultCollider.hpp"
 #include "component/SphereCollider.hpp"
+#include "component/RigidBody.hpp"
+#include "component/RigidBodyInternal.hpp"
+#include "component/Vehicle.hpp"
+#include "component/VehicleController.hpp"
+#include "component/VehicleInternal.hpp"
+#include "component/WheelSettings.hpp"
 
 // Components - RigidBody
 #include "component/RigidBody.hpp"
@@ -25,6 +31,12 @@
 #include "system/PhysicsUpdate.hpp"
 #include "system/RigidBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
+#include "system/VehicleControlSystem.hpp"
+#include "system/VehicleSystem.hpp"
+#include "system/WheelTransformSyncSystem.hpp"
+
+// Builders
+#include "builder/VehicleBuilder.hpp"
 
 // Utils
 #include "utils/BroadPhaseLayerImpl.hpp"
