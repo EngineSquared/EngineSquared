@@ -78,4 +78,16 @@ Component::Mesh GeneratePlaneMesh(float width = 1.0f, float depth = 1.0f, uint32
 Component::Mesh GenerateCylinderMesh(float radiusTop = 0.5f, float radiusBottom = 0.5f, float height = 1.0f,
                                      uint32_t segments = 32u, uint32_t heightSegments = 1u);
 
+/**
+ * @brief Generate a capsule mesh with given radius and cylinder height
+ *
+ * @param radius Radius of the capsule
+ * @param height Height of the cylindrical middle section
+ * @param segments Radial segments
+ * @param heightSegments Number of subdivisions along the cylinder height
+ * @return Component::Mesh The generated capsule mesh
+ */
+Component::Mesh GenerateCapsuleMesh(float radius = 0.5f, float height = 1.0f, uint32_t segments = 32u,
+                                    uint32_t heightSegments = 4u);
+
 } // namespace Object::Utils
