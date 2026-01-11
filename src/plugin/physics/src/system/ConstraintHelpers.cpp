@@ -19,7 +19,8 @@ std::optional<ConstraintContext> ConstraintContext::Create(entt::registry &regis
     }
     catch (const Engine::Exception::MissingResourceError &e)
     {
-        Log::Error(fmt::format("Cannot create {}: PhysicsManager resource not registered: {}", constraintName, e.what()));
+        Log::Error(
+            fmt::format("Cannot create {}: PhysicsManager resource not registered: {}", constraintName, e.what()));
         return std::nullopt;
     }
     catch (const std::exception &e)
