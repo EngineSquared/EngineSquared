@@ -4,13 +4,13 @@ namespace Physics::System {
 
 std::optional<ConstraintContext> ConstraintContext::Create(entt::registry &registry, const char *constraintName)
 {
-    auto *corePtr = registry.ctx().get<Engine::Core *>();
-    if (!corePtr)
+    auto **corePtr = registry.ctx().find<Engine::Core *>();
+    if (!corePtr || !*corePtr)
     {
         Log::Error(fmt::format("Cannot create {}: Engine::Core not available", constraintName));
         return std::nullopt;
     }
-    auto &coreRef = *corePtr;
+    auto &coreRef = **corePtr;
 
     auto &physicsManagerRef = coreRef.GetResource<Resource::PhysicsManager>();
 
@@ -45,9 +45,24 @@ void FinalizeConstraint(ConstraintContext &ctx, entt::entity entity, JPH::Constr
         return;
     }
 
-    ctx.registry.emplace<Component::ConstraintInternal>(entity, joltConstraint, type, settings.breakForce,
-                                                        settings.breakTorque);
-    ctx.physicsSystem.AddConstraint(joltConstraint);
+    ctx.registry.emplace_or_replace<Component::ConstraintInternal>(
+        entity, joltConstraint, type, settings.breakForce, settings.breakTorque);
+    try
+    {
+        ctx.physicsSystem.AddConstraint(joltConstraint);
+    }
+    catch (const Physics::Exception::ConstraintError &e)
+    {
+        Log::Error(fmt::format("{}: Failed to register constraint: {}", constraintName, e.what()));
+        ctx.registry.remove<Component::ConstraintInternal>(entity);
+        return;
+    }
+    catch (const std::exception &e)
+    {
+        Log::Error(fmt::format("{}: Failed to register constraint: {}", constraintName, e.what()));
+        ctx.registry.remove<Component::ConstraintInternal>(entity);
+        return;
+    }
 
     Log::Debug(fmt::format("Created {} for entity {}", constraintName, static_cast<uint32_t>(entity)));
 }
@@ -56,10 +71,10 @@ void DestroyConstraint(entt::registry &registry, entt::entity entity, const char
 {
     try
     {
-        auto *corePtr = registry.ctx().get<Engine::Core *>();
-        if (!corePtr)
+        auto **corePtr = registry.ctx().find<Engine::Core *>();
+        if (!corePtr || !*corePtr)
             return;
-        auto &coreRef = *corePtr;
+        auto &coreRef = **corePtr;
         auto &physicsManagerRef = coreRef.GetResource<Resource::PhysicsManager>();
 
         if (!physicsManagerRef.IsPhysicsActivated())
@@ -71,7 +86,7 @@ void DestroyConstraint(entt::registry &registry, entt::entity entity, const char
 
         physicsManagerRef.GetPhysicsSystem().RemoveConstraint(internal->constraint);
 
-        Log::Debug(fmt::format("Destroyed {} for entity {}", constraintName, static_cast<uint32_t>(entity)));
+        Log::Debug(fmt::format("Destroyed {} for entity {}", constraintName, entt::to_integral(entity)));
 
         registry.remove<Component::ConstraintInternal>(entity);
     }
@@ -82,6 +97,10 @@ void DestroyConstraint(entt::registry &registry, entt::entity entity, const char
     catch (const std::bad_alloc &e)
     {
         Log::Critical(fmt::format("{} destroy memory error: {}", constraintName, e.what()));
+    }
+    catch (const std::exception &e)
+    {
+        Log::Error(fmt::format("{} destroy unexpected error: {}", constraintName, e.what()));
     }
 }
 

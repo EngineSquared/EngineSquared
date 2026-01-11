@@ -85,12 +85,12 @@ struct DistanceConstraint {
     /**
      * @brief First body entity (the entity this component is attached to)
      */
-    Engine::Entity bodyA;
+    Engine::Entity bodyA = Engine::Entity{};
 
     /**
      * @brief Second body entity (the entity to connect to)
      */
-    Engine::Entity bodyB;
+    Engine::Entity bodyB = Engine::Entity{}; // invalid => world (see IsWorldConstraint)
 
     //========================================================================
     // Attachment Points
@@ -102,7 +102,12 @@ struct DistanceConstraint {
     glm::vec3 localPointA = glm::vec3(0.0f);
 
     /**
-     * @brief Attachment point on bodyB in local body space
+     * @brief Attachment point on bodyB in local body space (or world-space anchor for world constraints)
+     *
+     * For body-to-body constraints: local coordinates on bodyB.
+     * For body-to-world constraints (when `bodyB` is invalid), this member stores a
+     * world-space anchor point and is interpreted as such. Use `IsWorldConstraint()`
+     * to detect this state.
      */
     glm::vec3 localPointB = glm::vec3(0.0f);
 
@@ -140,7 +145,7 @@ struct DistanceConstraint {
     /**
      * @brief Constraint settings (stiffness, damping, breaking thresholds)
      */
-    ConstraintSettings settings;
+    ConstraintSettings settings = ConstraintSettings::Rigid();
 
     //========================================================================
     // Runtime State
