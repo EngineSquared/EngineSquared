@@ -19,6 +19,7 @@ class DontMoveBehavior : public ICameraBehavior {
     void Update(Engine::Core &core, Resource::CameraManager &manager, Object::Component::Transform &transform,
                 Object::Component::Camera &camera, float deltaTime) override
     {
+      // Intentionally does nothing to keep the camera static
     }
 };
 

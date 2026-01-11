@@ -26,9 +26,9 @@ void EscapeKeySystem(Engine::Core &core)
 
 void Setup(Engine::Core &core)
 {
-    // Lock the cursor to the window
-    auto &window = core.GetResource<Window::Resource::Window>();
-    // window.MaskCursor();
+    // Option to lock the cursor to the window
+    // auto &window = core.GetResource<Window::Resource::Window>(); //NOSONAR
+    // window.MaskCursor(); //NOSONAR
 
     // Default Material
     auto cube = core.CreateEntity();

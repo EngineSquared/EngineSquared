@@ -192,8 +192,8 @@ class DefaultBehavior : public ICameraBehavior {
                     double deltaX = xpos - cameraManager.GetLastMouseX();
                     double deltaY = ypos - cameraManager.GetLastMouseY();
 
-                    float yaw = static_cast<float>(deltaX * cameraManager.GetMouseSensitivity());
-                    float pitch = static_cast<float>(deltaY * cameraManager.GetMouseSensitivity());
+                    auto yaw = static_cast<float>(deltaX * cameraManager.GetMouseSensitivity());
+                    auto pitch = static_cast<float>(deltaY * cameraManager.GetMouseSensitivity());
 
                     auto entity = cameraManager.GetActiveCamera();
                     auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
