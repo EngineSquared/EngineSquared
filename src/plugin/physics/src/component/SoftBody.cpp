@@ -44,7 +44,8 @@ static std::vector<std::pair<uint32_t, uint32_t>> GenerateEdgesFromFaces(const s
     // Validate triangle-indexed input
     if (faceIndices.size() % 3u != 0u)
     {
-        throw std::invalid_argument("GenerateEdgesFromFaces: faceIndices.size() must be a multiple of 3 (triangle indices)");
+        throw std::invalid_argument(
+            "GenerateEdgesFromFaces: faceIndices.size() must be a multiple of 3 (triangle indices)");
     }
 
     std::set<std::pair<uint32_t, uint32_t>> edgeSet;
@@ -89,7 +90,8 @@ SoftBody SoftBody::CreateFromMesh(const Object::Component::Mesh &mesh, const Sof
     // for malformed input; validate early to make the precondition explicit.
     if (!mesh.indices.empty() && mesh.indices.size() % 3u != 0u)
     {
-        throw std::invalid_argument("SoftBody::CreateFromMesh: mesh.indices.size() must be a multiple of 3 (triangle indices)");
+        throw std::invalid_argument(
+            "SoftBody::CreateFromMesh: mesh.indices.size() must be a multiple of 3 (triangle indices)");
     }
 
     // Initialize physics data for each vertex
