@@ -171,11 +171,28 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     teapot.AddComponent<Object::Component::Material>(core);
 }
 
+void CreateJellycube()(Engine::Core &core, const glm::vec3 &position, float size, float mass)
+{
+    auto jellyCube = Object::Helper::CreateCube(core, size, position);
+    auto settings = Physics::Component::SoftBodySettings::Cube(0.5f);
+    settings.edgeCompliance = 1.0e-4f;  // Stiff edges
+    settings.shearCompliance = 1.0e-4f; // Stiff shear
+    settings.bendCompliance = 1.0e-3f;  // Some bending
+    settings.solverIterations = 10;     // More iterations for stability
+    settings.vertexRadius = 0.05f;      // Collision margin
+    settings.gravityFactor = 1.0f;
+    settings.friction = 0.5f;
+    settings.restitution = 0.3f;
+
+    auto soft = Physics::Component::SoftBody::CreateCube(size, 10, settings);
+}
+
 void Setup(Engine::Core &core)
 {
     CreateFloor(core);
     // CreateFallingCube(core, 5.0f, 10.0f, 0.0f, 2.0f);
     CreateSoftbodyFromOBJ(core);
+    CreateJellycube(core, glm::vec3(-5.0f, 10.0f, 0.0f), 2.0f, 0.5f);
 
     auto camera = core.CreateEntity();
 
