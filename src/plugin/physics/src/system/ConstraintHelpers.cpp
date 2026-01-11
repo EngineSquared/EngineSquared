@@ -70,17 +70,18 @@ void FinalizeConstraint(ConstraintContext &ctx, entt::entity entity, JPH::Constr
     catch (const Physics::Exception::ConstraintError &e)
     {
         Log::Error(fmt::format("{}: Failed to register constraint: {}", constraintName, e.what()));
-        ctx.physicsSystem.RemoveConstraint(joltConstraint);
-        ctx.registry.remove<Component::ConstraintInternal>(entity);
+        joltConstraint->Release();
         return;
     }
     catch (const std::exception &e)
     {
         Log::Error(fmt::format("{}: Failed to register constraint: {}", constraintName, e.what()));
-        ctx.physicsSystem.RemoveConstraint(joltConstraint);
-        ctx.registry.remove<Component::ConstraintInternal>(entity);
+        joltConstraint->Release();
         return;
     }
+
+    ctx.registry.emplace_or_replace<Component::ConstraintInternal>(entity, joltConstraint, type, settings.breakForce,
+                                                                   settings.breakTorque);
 
     Log::Debug(fmt::format("Created {} for entity {}", constraintName, static_cast<uint32_t>(entity)));
 }
@@ -102,11 +103,11 @@ void DestroyConstraint(entt::registry &registry, entt::entity entity, const char
         if (!internal || !internal->IsValid())
             return;
 
-        physicsManagerRef.GetPhysicsSystem().RemoveConstraint(internal->constraint);
+        auto *constraint = internal->constraint;
+        registry.remove<Component::ConstraintInternal>(entity);
+        physicsManagerRef.GetPhysicsSystem().RemoveConstraint(constraint);
 
         Log::Debug(fmt::format("Destroyed {} for entity {}", constraintName, entt::to_integral(entity)));
-
-        registry.remove<Component::ConstraintInternal>(entity);
     }
     catch (const Physics::Exception::ConstraintError &e)
     {
