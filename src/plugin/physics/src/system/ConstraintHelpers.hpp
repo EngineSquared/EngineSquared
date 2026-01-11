@@ -34,15 +34,16 @@ struct ConstraintContext {
 template <typename ConstraintT>
 static bool ValidateConstraint(const ConstraintT &constraint, const char *constraintName)
 {
+    const char *safeName = constraintName ? constraintName : "<constraint>";
     if (!constraint.bodyA.IsValid())
     {
-        Log::Error(fmt::format("{}: bodyA is invalid", constraintName));
+        Log::Error(fmt::format("{}: bodyA is invalid", safeName));
         return false;
     }
 
     if (constraint.bodyA == constraint.bodyB)
     {
-        Log::Error(fmt::format("{}: Cannot constrain body to itself", constraintName));
+        Log::Error(fmt::format("{}: Cannot constrain body to itself", safeName));
         return false;
     }
 
@@ -103,22 +104,23 @@ template <Component::ConstraintType TYPE, typename CompT, typename SettingsT, ty
 static void CreateConstraintGeneric(entt::registry &registry, entt::entity entity, const char *constraintName,
                                     Configurator &&configurator, ExtraValidate &&extraValidate)
 {
+    const char *safeName = constraintName ? constraintName : "<constraint>";
     try
     {
-        auto ctxOpt = ConstraintContext::Create(registry, constraintName);
+        auto ctxOpt = ConstraintContext::Create(registry, safeName);
         if (!ctxOpt)
             return;
         auto &ctx = *ctxOpt;
 
         auto &constraint = registry.get<CompT>(entity);
 
-        if (!ValidateConstraint(constraint, constraintName))
+        if (!ValidateConstraint(constraint, safeName))
             return;
 
         if (!extraValidate(constraint))
             return;
 
-        auto *internalA = GetBodyInternal(ctx.registry, constraint.bodyA, constraintName, "bodyA");
+        auto *internalA = GetBodyInternal(ctx.registry, constraint.bodyA, safeName, "bodyA");
         if (!internalA)
             return;
 
@@ -127,16 +129,20 @@ static void CreateConstraintGeneric(entt::registry &registry, entt::entity entit
 
         configurator(constraint, joltSettings);
 
-        auto *joltConstraint = CreateJoltConstraint(ctx, joltSettings, constraint, internalA, constraintName);
-        FinalizeConstraint(ctx, entity, joltConstraint, TYPE, constraint.settings, constraintName);
+        auto *joltConstraint = CreateJoltConstraint(ctx, joltSettings, constraint, internalA, safeName);
+        FinalizeConstraint(ctx, entity, joltConstraint, TYPE, constraint.settings, safeName);
     }
     catch (const Physics::Exception::ConstraintError &e)
     {
-        Log::Warn(fmt::format("{} constraint error: {}", constraintName, e.what()));
+        Log::Warn(fmt::format("{} constraint error: {}", safeName, e.what()));
     }
     catch (const std::bad_alloc &e)
     {
-        Log::Critical(fmt::format("{} bad alloc: {}", constraintName, e.what()));
+        Log::Critical(fmt::format("{} bad alloc: {}", safeName, e.what()));
+    }
+    catch (const std::exception &e)
+    {
+        Log::Error(fmt::format("{} unexpected error: {}", safeName, e.what()));
     }
 }
 
