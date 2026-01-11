@@ -12,7 +12,22 @@ std::optional<ConstraintContext> ConstraintContext::Create(entt::registry &regis
     }
     auto &coreRef = **corePtr;
 
-    auto &physicsManagerRef = coreRef.GetResource<Resource::PhysicsManager>();
+    Resource::PhysicsManager *physicsManagerPtr = nullptr;
+    try
+    {
+        physicsManagerPtr = &coreRef.GetResource<Resource::PhysicsManager>();
+    }
+    catch (const Engine::Exception::MissingResourceError &e)
+    {
+        Log::Error(fmt::format("Cannot create {}: PhysicsManager resource not registered: {}", constraintName, e.what()));
+        return std::nullopt;
+    }
+    catch (const std::exception &e)
+    {
+        Log::Error(fmt::format("Cannot create {}: Failed to access PhysicsManager: {}", constraintName, e.what()));
+        return std::nullopt;
+    }
+    auto &physicsManagerRef = *physicsManagerPtr;
 
     if (!physicsManagerRef.IsPhysicsActivated())
     {
@@ -54,12 +69,14 @@ void FinalizeConstraint(ConstraintContext &ctx, entt::entity entity, JPH::Constr
     catch (const Physics::Exception::ConstraintError &e)
     {
         Log::Error(fmt::format("{}: Failed to register constraint: {}", constraintName, e.what()));
+        ctx.physicsSystem.RemoveConstraint(joltConstraint);
         ctx.registry.remove<Component::ConstraintInternal>(entity);
         return;
     }
     catch (const std::exception &e)
     {
         Log::Error(fmt::format("{}: Failed to register constraint: {}", constraintName, e.what()));
+        ctx.physicsSystem.RemoveConstraint(joltConstraint);
         ctx.registry.remove<Component::ConstraintInternal>(entity);
         return;
     }
