@@ -55,10 +55,6 @@ target("PluginCameraMovementTests")
 
     add_deps(plugin_name)
 
-    add_files("tests/utils/**.cpp")
-
-    add_headerfiles("tests/(utils/*.hpp)")
-
     add_includedirs("tests", {public = true})
 
 for _, file in ipairs(os.files("tests/**.cpp")) do
