@@ -61,8 +61,6 @@ void FinalizeConstraint(ConstraintContext &ctx, entt::entity entity, JPH::Constr
         return;
     }
 
-    ctx.registry.emplace_or_replace<Component::ConstraintInternal>(entity, joltConstraint, type, settings.breakForce,
-                                                                   settings.breakTorque);
     try
     {
         ctx.physicsSystem.AddConstraint(joltConstraint);
@@ -104,8 +102,8 @@ void DestroyConstraint(entt::registry &registry, entt::entity entity, const char
             return;
 
         auto *constraint = internal->constraint;
-        registry.remove<Component::ConstraintInternal>(entity);
         physicsManagerRef.GetPhysicsSystem().RemoveConstraint(constraint);
+        registry.remove<Component::ConstraintInternal>(entity);
 
         Log::Debug(fmt::format("Destroyed {} for entity {}", constraintName, entt::to_integral(entity)));
     }
