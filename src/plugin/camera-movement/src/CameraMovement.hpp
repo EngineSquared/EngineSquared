@@ -8,7 +8,3 @@
 #include "resource/CameraManager.hpp"
 #include "system/CameraControlSystem.hpp"
 #include "utils/CameraUtils.hpp"
-
-namespace CameraMovement {
-using Plugin = CameraMovement::Plugin;
-}
