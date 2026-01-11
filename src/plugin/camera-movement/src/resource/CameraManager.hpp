@@ -27,11 +27,14 @@ enum class CameraBehaviorType {
 class CameraManager {
   public:
     explicit CameraManager(Engine::Core &core)
-        : _core(core), _cameraEntity(Engine::Entity::entity_null_id), _behaviorType(CameraBehaviorType::Default), // NOSONAR
-          _movementSpeed(5.0f), _mouseSensitivity(0.002f), _lastMouseX(0.0), _lastMouseY(0.0), _isMouseDragging(false), // NOSONAR
+        : _core(core), _cameraEntity(Engine::Entity::entity_null_id),
+          _behaviorType(CameraBehaviorType::Default), // NOSONAR
+          _movementSpeed(5.0f), _mouseSensitivity(0.002f), _lastMouseX(0.0), _lastMouseY(0.0),
+          _isMouseDragging(false),                                                                       // NOSONAR
           _wasCursorMasked(false), _originRotation(1.0f, 0.0f, 0.0f, 0.0f), _joystickId(GLFW_JOYSTICK_1) // NOSONAR
     {
-        // sonar can't decide itself to choose whether it should be in initializer list or constructor body, so we disable it
+        // sonar can't decide itself to choose whether it should be in initializer list or constructor body, so we
+        // disable it
     }
 
     ~CameraManager() = default;
