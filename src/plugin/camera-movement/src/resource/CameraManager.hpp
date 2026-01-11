@@ -28,8 +28,8 @@ class CameraManager {
   public:
     explicit CameraManager(Engine::Core &core)
         : _core(core), _cameraEntity(Engine::Entity::entity_null_id),
-          _behaviorType(CameraBehaviorType::Default), // NOSONAR
-          _movementSpeed(5.0f), _mouseSensitivity(0.002f), _lastMouseX(0.0), _lastMouseY(0.0), // NOSONAR
+          _behaviorType(CameraBehaviorType::Default),                                                    // NOSONAR
+          _movementSpeed(5.0f), _mouseSensitivity(0.002f), _lastMouseX(0.0), _lastMouseY(0.0),           // NOSONAR
           _isMouseDragging(false),                                                                       // NOSONAR
           _wasCursorMasked(false), _originRotation(1.0f, 0.0f, 0.0f, 0.0f), _joystickId(GLFW_JOYSTICK_1) // NOSONAR
     {

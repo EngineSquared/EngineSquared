@@ -181,17 +181,20 @@ class DefaultBehavior : public ICameraBehavior {
             inputManager.RegisterCursorPosCallback([](Engine::Core &core, double xpos, double ypos) {
                 auto &cameraManager = core.GetResource<Resource::CameraManager>();
                 auto &window = core.GetResource<Window::Resource::Window>();
-                
-                bool shouldRotate = (window.IsCursorMasked() || cameraManager.IsMouseDragging()) && 
-                                   cameraManager.HasValidCamera() && 
-                                   !(window.IsCursorMasked() && !cameraManager.WasCursorMasked());
-                
-                if (shouldRotate) {
+
+                bool shouldRotate = (window.IsCursorMasked() || cameraManager.IsMouseDragging()) &&
+                                    cameraManager.HasValidCamera() &&
+                                    !(window.IsCursorMasked() && !cameraManager.WasCursorMasked());
+
+                if (shouldRotate)
+                {
                     auto entity = cameraManager.GetActiveCamera();
                     auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
-                    auto yaw = static_cast<float>((xpos - cameraManager.GetLastMouseX()) * cameraManager.GetMouseSensitivity());
-                    auto pitch = static_cast<float>((ypos - cameraManager.GetLastMouseY()) * cameraManager.GetMouseSensitivity());
-                    
+                    auto yaw = static_cast<float>((xpos - cameraManager.GetLastMouseX()) *
+                                                  cameraManager.GetMouseSensitivity());
+                    auto pitch = static_cast<float>((ypos - cameraManager.GetLastMouseY()) *
+                                                    cameraManager.GetMouseSensitivity());
+
                     glm::quat newRotation = Utils::RotateQuaternion(cameraManager.GetOriginRotation(), pitch, yaw);
                     transform.SetRotation(newRotation);
                     cameraManager.SetOriginRotation(newRotation);
