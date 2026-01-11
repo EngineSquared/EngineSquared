@@ -181,29 +181,23 @@ class DefaultBehavior : public ICameraBehavior {
             inputManager.RegisterCursorPosCallback([](Engine::Core &core, double xpos, double ypos) {
                 auto &cameraManager = core.GetResource<Resource::CameraManager>();
                 auto &window = core.GetResource<Window::Resource::Window>();
-                bool cursorMasked = window.IsCursorMasked();
-                bool wasCursorMasked = cameraManager.WasCursorMasked();
-
-                bool shouldRotate = (cursorMasked || cameraManager.IsMouseDragging()) && cameraManager.HasValidCamera();
-                bool justBecameMasked = cursorMasked && !wasCursorMasked;
-
-                if (shouldRotate && !justBecameMasked)
-                {
-                    double deltaX = xpos - cameraManager.GetLastMouseX();
-                    double deltaY = ypos - cameraManager.GetLastMouseY();
-
-                    auto yaw = static_cast<float>(deltaX * cameraManager.GetMouseSensitivity());
-                    auto pitch = static_cast<float>(deltaY * cameraManager.GetMouseSensitivity());
-
+                
+                bool shouldRotate = (window.IsCursorMasked() || cameraManager.IsMouseDragging()) && 
+                                   cameraManager.HasValidCamera() && 
+                                   !(window.IsCursorMasked() && !cameraManager.WasCursorMasked());
+                
+                if (shouldRotate) {
                     auto entity = cameraManager.GetActiveCamera();
                     auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
+                    auto yaw = static_cast<float>((xpos - cameraManager.GetLastMouseX()) * cameraManager.GetMouseSensitivity());
+                    auto pitch = static_cast<float>((ypos - cameraManager.GetLastMouseY()) * cameraManager.GetMouseSensitivity());
+                    
                     glm::quat newRotation = Utils::RotateQuaternion(cameraManager.GetOriginRotation(), pitch, yaw);
                     transform.SetRotation(newRotation);
-
                     cameraManager.SetOriginRotation(newRotation);
                 }
                 cameraManager.SetLastMousePosition(xpos, ypos);
-                cameraManager.SetWasCursorMasked(cursorMasked);
+                cameraManager.SetWasCursorMasked(window.IsCursorMasked());
             });
 
             callbacksRegistered = true;
