@@ -1,8 +1,6 @@
 #pragma once
 
-#include <cstring>
 #include <stdexcept>
-#include <string>
 
 namespace CameraMovement {
 
@@ -23,14 +21,8 @@ namespace CameraMovement {
  * throw CameraMovementError("Failed to do something");
  * @endcode
  */
-class CameraMovementError : public std::exception {
-  public:
-    explicit CameraMovementError(const std::string &message) : msg("CameraMovement error: " + message){};
-
-    const char *what() const throw() override { return this->msg.c_str(); };
-
-  private:
-    std::string msg;
+class CameraMovementError : public std::runtime_error {
+  using std::runtime_error::runtime_error;
 };
 
 } // namespace CameraMovement
