@@ -7,4 +7,5 @@
 #include "plugin/PluginCameraMovement.hpp"
 #include "resource/CameraManager.hpp"
 #include "system/CameraControlSystem.hpp"
+#include "system/RegisterCameraCallbacksSystem.hpp"
 #include "utils/CameraUtils.hpp"

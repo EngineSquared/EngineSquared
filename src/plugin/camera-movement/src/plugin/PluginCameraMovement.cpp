@@ -3,7 +3,9 @@
 #include "plugin/PluginInput.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "resource/CameraManager.hpp"
+#include "scheduler/Startup.hpp"
 #include "system/CameraControlSystem.hpp"
+#include "system/RegisterCameraCallbacksSystem.hpp"
 
 namespace CameraMovement {
 
@@ -15,6 +17,7 @@ void Plugin::Bind()
 
     RegisterResource(Resource::CameraManager(GetCore()));
 
+    RegisterSystems<Engine::Scheduler::Startup>(System::RegisterCameraCallbacksSystem);
     RegisterSystems<Engine::Scheduler::Update>(System::CameraControlSystem);
 }
 

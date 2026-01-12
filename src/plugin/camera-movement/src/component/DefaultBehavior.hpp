@@ -11,7 +11,6 @@
 #include "core/Core.hpp"
 #include "resource/CameraManager.hpp"
 #include "resource/InputManager.hpp"
-#include "resource/Window.hpp"
 #include "utils/CameraUtils.hpp"
 
 namespace CameraMovement::Component {
@@ -34,7 +33,6 @@ class DefaultBehavior : public ICameraBehavior {
         auto &inputManager = core.GetResource<Input::Resource::InputManager>();
 
         HandleTranslation(inputManager, transform, manager.GetMovementSpeed(), deltaTime);
-        HandleRotation(inputManager, transform, manager);
         HandleJoystickInput(manager, transform, deltaTime);
     }
 
@@ -151,59 +149,6 @@ class DefaultBehavior : public ICameraBehavior {
             glm::quat currentRotation = transform.GetRotation();
             glm::quat newRotation = Utils::RotateQuaternion(currentRotation, pitch, yaw);
             transform.SetRotation(newRotation);
-        }
-    }
-
-    void HandleRotation(Input::Resource::InputManager &inputManager, Object::Component::Transform &transform,
-                        Resource::CameraManager &manager)
-    {
-        static bool callbacksRegistered = false;
-        if (!callbacksRegistered)
-        {
-            inputManager.RegisterMouseButtonCallback([](Engine::Core &core, int button, int action, int mods) {
-                if (button == GLFW_MOUSE_BUTTON_RIGHT)
-                {
-                    auto &cameraManager = core.GetResource<Resource::CameraManager>();
-                    if (action == GLFW_PRESS)
-                    {
-                        cameraManager.SetMouseDragging(true);
-                        auto entity = cameraManager.GetActiveCamera();
-                        auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
-                        cameraManager.SetOriginRotation(transform.GetRotation());
-                    }
-                    else if (action == GLFW_RELEASE)
-                    {
-                        cameraManager.SetMouseDragging(false);
-                    }
-                }
-            });
-
-            inputManager.RegisterCursorPosCallback([](Engine::Core &core, double xpos, double ypos) {
-                auto &cameraManager = core.GetResource<Resource::CameraManager>();
-                auto &window = core.GetResource<Window::Resource::Window>();
-
-                bool shouldRotate = (window.IsCursorMasked() || cameraManager.IsMouseDragging()) &&
-                                    cameraManager.HasValidCamera() &&
-                                    !(window.IsCursorMasked() && !cameraManager.WasCursorMasked());
-
-                if (shouldRotate)
-                {
-                    auto &transform =
-                        core.GetRegistry().get<Object::Component::Transform>(cameraManager.GetActiveCamera());
-                    auto yaw = static_cast<float>((xpos - cameraManager.GetLastMouseX()) *
-                                                  cameraManager.GetMouseSensitivity());
-                    auto pitch = static_cast<float>((ypos - cameraManager.GetLastMouseY()) *
-                                                    cameraManager.GetMouseSensitivity());
-
-                    glm::quat newRotation = Utils::RotateQuaternion(cameraManager.GetOriginRotation(), pitch, yaw);
-                    transform.SetRotation(newRotation);
-                    cameraManager.SetOriginRotation(newRotation);
-                }
-                cameraManager.SetLastMousePosition(xpos, ypos);
-                cameraManager.SetWasCursorMasked(window.IsCursorMasked());
-            });
-
-            callbacksRegistered = true;
         }
     }
 };
