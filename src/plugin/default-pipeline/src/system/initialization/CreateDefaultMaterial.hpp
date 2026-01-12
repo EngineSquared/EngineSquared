@@ -6,4 +6,4 @@ namespace DefaultPipeline::System {
 
 void CreateDefaultMaterial(Engine::Core &core);
 
-} // namespace Graphic::System
+} // namespace DefaultPipeline::System

@@ -19,4 +19,4 @@ void UpdateAmbientLight(Engine::Core &core)
     ambientLightResource.Update(core);
 }
 
-} // namespace Graphic::System
+} // namespace DefaultPipeline::System

@@ -57,8 +57,8 @@
 #include "exception/UnknownFormatType.hpp"
 #include "exception/UnsetAttributeTextureDescriptor.hpp"
 #include "exception/UnsupportedTextureFormatError.hpp"
-#include "exception/VertexAttributeOverlappingError.hpp"
 #include "exception/UpdateBufferError.hpp"
+#include "exception/VertexAttributeOverlappingError.hpp"
 
 // Plugin
 #include "plugin/PluginGraphic.hpp"

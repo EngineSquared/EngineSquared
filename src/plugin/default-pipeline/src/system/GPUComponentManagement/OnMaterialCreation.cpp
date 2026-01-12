@@ -34,7 +34,8 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     }
     else
     {
-        Graphic::Resource::Texture texture{context, material.ambientTexName, Graphic::Resource::Image(material.ambientTexName)};
+        Graphic::Resource::Texture texture{context, material.ambientTexName,
+                                           Graphic::Resource::Image(material.ambientTexName)};
         textureContainer.Add(textureId, std::move(texture));
         GPUMaterial.texture = textureId;
     }
@@ -55,13 +56,13 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     std::string bindGroupName = "MATERIAL_BIND_GROUP_" + entityString;
     entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
     Graphic::Resource::BindGroup bindGroup(core, "DEFAULT_RENDER_PASS_SHADER", 2,
-                                  {
-                                      {
-                                       0, Graphic::Resource::BindGroup::Asset::Type::Buffer,
-                                       materialBufferId, materialBufferSize,
-                                       },
-                                      {1, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0},
-                                      {2, Graphic::Resource::BindGroup::Asset::Type::Sampler, samplerId, 0},
+                                           {
+                                               {
+                                                0, Graphic::Resource::BindGroup::Asset::Type::Buffer,
+                                                materialBufferId, materialBufferSize,
+                                                },
+                                               {1, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0},
+                                               {2, Graphic::Resource::BindGroup::Asset::Type::Sampler, samplerId, 0},
     });
     bindGroupManager.Add(bindGroupId, std::move(bindGroup));
     GPUMaterial.bindGroup = bindGroupId;

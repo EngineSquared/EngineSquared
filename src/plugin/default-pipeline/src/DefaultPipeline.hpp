@@ -21,7 +21,6 @@
 #include "system/initialization/CreateDefaultRenderPipeline.hpp"
 #include "system/initialization/CreatePointLights.hpp"
 
-
 #include "system/GPUComponentManagement/OnCameraCreation.hpp"
 #include "system/GPUComponentManagement/OnCameraDestruction.hpp"
 #include "system/GPUComponentManagement/OnMaterialCreation.hpp"

@@ -14,4 +14,4 @@ struct GPUMaterial {
     Id sampler{};
     Id bindGroup{};
 };
-}; // namespace Graphic::Component
+}; // namespace DefaultPipeline::Component

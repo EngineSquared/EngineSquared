@@ -1,5 +1,4 @@
 #include "UpdatePointLights.hpp"
-#include "utils/PointLights.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "utils/PointLights.hpp"
 
@@ -11,4 +10,4 @@ void UpdatePointLights(Engine::Core &core)
     bufferManager.Get(Utils::POINT_LIGHTS_BUFFER_ID)->Update(core);
 }
 
-} // namespace Graphic::System
+} // namespace DefaultPipeline::System

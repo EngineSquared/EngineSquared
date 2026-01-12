@@ -80,7 +80,8 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
         return context.GetDevice()->createBuffer(bufferDesc);
     }
 
-    void _UpdateBuffer(const Object::Component::Transform &transformComponent, const Graphic::Resource::Context &context)
+    void _UpdateBuffer(const Object::Component::Transform &transformComponent,
+                       const Graphic::Resource::Context &context)
     {
         const glm::mat4 &modelMatrix = transformComponent.ComputeTransformationMatrix();
 
@@ -99,4 +100,4 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
     bool _isCreated = false;
     Engine::Entity _entity = Engine::Entity::entity_null_id;
 };
-} // namespace Graphic::Resource
+} // namespace DefaultPipeline::Resource

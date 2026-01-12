@@ -1,10 +1,9 @@
 #include "system/initialization/CreatePointLights.hpp"
-#include "resource/GPUBufferContainer.hpp"
 #include "resource/BindGroupManager.hpp"
+#include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
 #include "utils/AmbientLight.hpp"
 #include "utils/DefaultRenderPass.hpp"
-#include "resource/buffer/PointLightsBuffer.hpp"
 
 namespace DefaultPipeline::System {
 
@@ -30,4 +29,4 @@ void CreatePointLights(Engine::Core &core)
     });
     bindGroupManager.Add(Utils::LIGHTS_BIND_GROUP_ID, lightsBindGroup);
 }
-}
+} // namespace DefaultPipeline::System

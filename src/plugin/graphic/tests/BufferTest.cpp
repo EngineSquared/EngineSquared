@@ -1,15 +1,16 @@
 #include <gtest/gtest.h>
 
-#include "Graphic.hpp"
-#include "RenderingPipeline.hpp"
-#include "Object.hpp"
 #include "Engine.hpp"
+#include "Graphic.hpp"
+#include "Object.hpp"
+#include "RenderingPipeline.hpp"
 
 class GPUBufferTest : public Graphic::Resource::AGPUBuffer {
-    public:
+  public:
     explicit GPUBufferTest(std::array<int, 5> &&data) : _data(std::move(data)) {}
 
-    void Create(Engine::Core &core) override {
+    void Create(Engine::Core &core) override
+    {
         const auto &context = core.GetResource<Graphic::Resource::Context>();
 
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
@@ -21,7 +22,8 @@ class GPUBufferTest : public Graphic::Resource::AGPUBuffer {
         _buffer = context.deviceContext.GetDevice()->createBuffer(bufferDesc);
         _isCreated = true;
     }
-    void Destroy(Engine::Core &) override {
+    void Destroy(Engine::Core &) override
+    {
         if (_isCreated)
         {
             _isCreated = false;
@@ -29,7 +31,8 @@ class GPUBufferTest : public Graphic::Resource::AGPUBuffer {
         }
     }
     bool IsCreated(Engine::Core &) const override { return _isCreated; }
-    void Update(Engine::Core &core) override {
+    void Update(Engine::Core &core) override
+    {
         if (!_isCreated)
         {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU buffer that is not created.");

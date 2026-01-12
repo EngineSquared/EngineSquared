@@ -11,4 +11,4 @@ static inline const entt::hashed_string AMBIENT_LIGHT_BUFFER_ID{AMBIENT_LIGHT_BU
 static inline constexpr std::string_view AMBIENT_LIGHT_BIND_GROUP_NAME = "AMBIENT_LIGHT_BIND_GROUP";
 static inline const entt::hashed_string AMBIENT_LIGHT_BIND_GROUP_ID{AMBIENT_LIGHT_BIND_GROUP_NAME.data(),
                                                                     AMBIENT_LIGHT_BIND_GROUP_NAME.size()};
-} // namespace Graphic::Utils
+} // namespace DefaultPipeline::Utils

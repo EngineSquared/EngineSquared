@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
+#include "Graphic.hpp"
+#include "RenderingPipeline.hpp"
 #include "core/Core.hpp"
 #include "plugin/PluginDefaultPipeline.hpp"
-#include "RenderingPipeline.hpp"
-#include "Graphic.hpp"
 
 TEST(DefaultPipeline, Casual)
 {

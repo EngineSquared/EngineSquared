@@ -15,4 +15,4 @@ static inline const entt::hashed_string POINT_LIGHTS_BUFFER_ID{POINT_LIGHTS_BUFF
 static inline constexpr std::string_view LIGHTS_BIND_GROUP_NAME = "LIGHTS_BIND_GROUP";
 static inline const entt::hashed_string LIGHTS_BIND_GROUP_ID{LIGHTS_BIND_GROUP_NAME.data(),
                                                              LIGHTS_BIND_GROUP_NAME.size()};
-} // namespace Graphic::Utils
+} // namespace DefaultPipeline::Utils

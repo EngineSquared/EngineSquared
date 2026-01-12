@@ -13,4 +13,4 @@ void CreateAmbientLight(Engine::Core &core)
     ambientLight.Create(core);
 }
 
-} // namespace Graphic::System
+} // namespace DefaultPipeline::System

@@ -24,11 +24,11 @@ void DefaultPipeline::System::OnTransformCreation(Engine::Core &core, Engine::En
     std::string bindGroupName = "TRANSFORM_BIND_GROUP_" + entityString;
     entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
     Graphic::Resource::BindGroup bindGroup(core, "DEFAULT_RENDER_PASS_SHADER", 1,
-                                  {
-                                      {
-                                       0, Graphic::Resource::BindGroup::Asset::Type::Buffer,
-                                       transformBufferId, gpuBufferContainer.Get(transformBufferId)->GetBuffer().getSize(),
-                                       },
+                                           {
+                                               {
+                                                0, Graphic::Resource::BindGroup::Asset::Type::Buffer,
+                                                transformBufferId, gpuBufferContainer.Get(transformBufferId)->GetBuffer().getSize(),
+                                                },
     });
     bindGroupManager.Add(bindGroupId, std::move(bindGroup));
     GPUTransform.bindGroup = bindGroupId;

@@ -119,4 +119,4 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
     wgpu::Buffer _buffer;
     bool _isCreated = false;
 };
-} // namespace Graphic::Resource
+} // namespace DefaultPipeline::Resource

@@ -8,4 +8,4 @@ struct GPUMesh {
     Id pointBufferId{};
     Id indexBufferId{};
 };
-}; // namespace Graphic::Component
+}; // namespace DefaultPipeline::Component

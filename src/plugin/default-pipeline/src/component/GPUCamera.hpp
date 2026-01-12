@@ -41,4 +41,4 @@ struct GPUCamera {
         }
     }
 };
-}; // namespace Graphic::Component
+}; // namespace DefaultPipeline::Component

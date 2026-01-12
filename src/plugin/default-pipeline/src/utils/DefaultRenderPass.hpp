@@ -293,4 +293,4 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
         return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
     }
 };
-} // namespace Graphic::Utils
+} // namespace DefaultPipeline::Utils

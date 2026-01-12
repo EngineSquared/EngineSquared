@@ -68,4 +68,4 @@ class IndexGPUBuffer : public Graphic::Resource::AGPUBuffer {
     bool _isCreated = false;
     Engine::Entity _entity = Engine::Entity::entity_null_id;
 };
-} // namespace Graphic::Resource
+} // namespace DefaultPipeline::Resource

@@ -13,4 +13,4 @@ class Plugin : public Engine::APlugin {
 
     void Bind() final;
 };
-} // namespace PluginDefaultPipeline
+} // namespace DefaultPipeline

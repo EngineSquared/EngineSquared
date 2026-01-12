@@ -70,7 +70,8 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
     {
         if (!_isCreated)
         {
-            throw Graphic::Exception::UpdateBufferError("Cannot update a GPU ambient light buffer that is not created.");
+            throw Graphic::Exception::UpdateBufferError(
+                "Cannot update a GPU ambient light buffer that is not created.");
         }
 
         const auto &context = core.GetResource<Graphic::Resource::Context>();
@@ -92,7 +93,8 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
         return context.GetDevice()->createBuffer(bufferDesc);
     }
 
-    void _UpdateBuffer(const Graphic::Resource::Context &context, const Object::Component::AmbientLight &ambientLightComponent)
+    void _UpdateBuffer(const Graphic::Resource::Context &context,
+                       const Object::Component::AmbientLight &ambientLightComponent)
     {
         AmbientLightTransfer ambientLightTransfer(ambientLightComponent);
         context.queue->writeBuffer(_buffer, 0, std::addressof(ambientLightTransfer), AmbientLightTransfer::CPUSize());
@@ -103,4 +105,4 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
     Engine::Entity _entity = Engine::Entity::entity_null_id;
     std::string _debugName;
 };
-} // namespace Graphic::Resource
+} // namespace DefaultPipeline::Resource

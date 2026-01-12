@@ -22,4 +22,4 @@ struct AmbientLight {
     AmbientLightBuffer &GetLight(Engine::Core &core);
     Object::Component::AmbientLight _ambientLightComponent{};
 };
-} // namespace Graphic::Resource
+} // namespace DefaultPipeline::Resource

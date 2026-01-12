@@ -102,4 +102,4 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
     Engine::Entity _entity = Engine::Entity::entity_null_id;
     std::string _debugName;
 };
-} // namespace Graphic::Resource
+} // namespace DefaultPipeline::Resource
