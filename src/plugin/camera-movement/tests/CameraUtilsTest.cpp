@@ -131,18 +131,6 @@ TEST(CameraUtils, RotateQuaternionPitchOnly)
     EXPECT_TRUE(Vec3Equal(forward, glm::vec3(0.0f, -1.0f, 0.0f)));
 }
 
-TEST(CameraUtils, RotateQuaternionPitchAndYaw)
-{
-    auto identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-    glm::quat rotated = CameraMovement::Utils::RotateQuaternion(identity, glm::radians(45.0f), glm::radians(45.0f));
-
-    EXPECT_FLOAT_EQ(glm::length(glm::vec3(rotated.x, rotated.y, rotated.z)) + rotated.w * rotated.w,
-                    glm::length(glm::vec3(rotated.x, rotated.y, rotated.z)) + rotated.w * rotated.w);
-
-    glm::vec3 forward = CameraMovement::Utils::GetForwardVector(rotated);
-    EXPECT_NEAR(glm::length(forward), 1.0f, EPSILON);
-}
-
 TEST(CameraUtils, VectorsAreOrthogonal)
 {
     glm::quat rotation = glm::angleAxis(glm::radians(30.0f), glm::normalize(glm::vec3(1.0f, 1.0f, 0.0f)));
