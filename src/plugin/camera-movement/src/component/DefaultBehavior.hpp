@@ -142,7 +142,16 @@ class DefaultBehavior : public ICameraBehavior {
         float lookHorizontal = axes[PS5_R3_LR_AXIS];
         float lookVertical = axes[PS5_R3_UD_AXIS];
 
-        if (std::abs(lookHorizontal) > JOYSTICK_DEADZONE || std::abs(lookVertical) > JOYSTICK_DEADZONE)
+        if (std::abs(lookHorizontal) <= JOYSTICK_DEADZONE)
+        {
+            lookHorizontal = 0.0f;
+        }
+        if (std::abs(lookVertical) <= JOYSTICK_DEADZONE)
+        {
+            lookVertical = 0.0f;
+        }
+
+        if (lookHorizontal != 0.0f || lookVertical != 0.0f)
         {
             float yaw = lookHorizontal * JOYSTICK_LOOK_SENSITIVITY * deltaTime;
             float pitch = lookVertical * JOYSTICK_LOOK_SENSITIVITY * deltaTime;
