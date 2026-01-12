@@ -135,6 +135,7 @@ class DefaultBehavior : public ICameraBehavior {
 
         if (glm::length(movement) > 0.0f)
         {
+            movement = glm::normalize(movement);
             transform.SetPosition(transform.GetPosition() + movement * manager.GetMovementSpeed() * deltaTime);
         }
 
