@@ -46,17 +46,6 @@ target(plugin_name)
 
     add_includedirs("src", {public = true})
 
-target("PluginCameraMovementTests")
-    set_kind("static")
-    set_group(TEST_GROUP_NAME)
-    set_languages("cxx20")
-
-    add_packages(required_packages, "gtest")
-
-    add_deps(plugin_name)
-
-    add_includedirs("tests", {public = true})
-
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
     if name == "main" then
@@ -79,7 +68,6 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_packages(required_packages, "gtest")
 
         add_deps(plugin_name)
-        add_deps("PluginCameraMovementTests")
 
         add_includedirs("tests", {public = true})
 
