@@ -7,6 +7,7 @@
 #include "Engine.hpp"
 
 #include "Graphic.hpp"
+#include "DefaultPipeline.hpp"
 #include "Input.hpp"
 #include "Object.hpp"
 #include "RenderingPipeline.hpp"
@@ -121,7 +122,7 @@ int main(void)
 {
     Engine::Core core;
 
-    core.AddPlugins<Window::Plugin, Graphic::Plugin, Input::Plugin>();
+    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Input::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
         core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(

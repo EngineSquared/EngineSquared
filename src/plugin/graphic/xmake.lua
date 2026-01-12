@@ -14,7 +14,8 @@ local required_packages = {
     "glm",
     "glfw3webgpu",
     "stb",
-    "lodepng"
+    "lodepng",
+    "tinyobjloader"
 }
 
 local plugin_name = "PluginGraphic"
