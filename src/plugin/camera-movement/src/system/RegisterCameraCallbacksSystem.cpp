@@ -68,10 +68,8 @@ void CursorPosCallback(Engine::Core &core, double xpos, double ypos)
     if (shouldRotate)
     {
         auto &transform = core.GetRegistry().get<Object::Component::Transform>(cameraManager.GetActiveCamera());
-        auto yaw =
-            static_cast<float>((xpos - cameraManager.GetLastMouseX()) * cameraManager.GetMouseSensitivity());
-        auto pitch =
-            static_cast<float>((ypos - cameraManager.GetLastMouseY()) * cameraManager.GetMouseSensitivity());
+        auto yaw = static_cast<float>((xpos - cameraManager.GetLastMouseX()) * cameraManager.GetMouseSensitivity());
+        auto pitch = static_cast<float>((ypos - cameraManager.GetLastMouseY()) * cameraManager.GetMouseSensitivity());
 
         glm::quat newRotation = Utils::RotateQuaternion(cameraManager.GetOriginRotation(), pitch, yaw);
         transform.SetRotation(newRotation);
