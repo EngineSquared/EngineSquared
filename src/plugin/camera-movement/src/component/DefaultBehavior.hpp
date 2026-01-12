@@ -188,8 +188,7 @@ class DefaultBehavior : public ICameraBehavior {
 
                 if (shouldRotate)
                 {
-                    auto entity = cameraManager.GetActiveCamera();
-                    auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
+                    auto &transform = core.GetRegistry().get<Object::Component::Transform>(cameraManager.GetActiveCamera());
                     auto yaw = static_cast<float>((xpos - cameraManager.GetLastMouseX()) *
                                                   cameraManager.GetMouseSensitivity());
                     auto pitch = static_cast<float>((ypos - cameraManager.GetLastMouseY()) *

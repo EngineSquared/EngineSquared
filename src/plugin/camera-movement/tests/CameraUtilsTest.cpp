@@ -23,7 +23,7 @@ bool QuatEqual(const glm::quat &a, const glm::quat &b, float epsilon = EPSILON)
 
 TEST(CameraUtils, GetForwardVectorIdentity)
 {
-    glm::quat identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    auto identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     glm::vec3 forward = CameraMovement::Utils::GetForwardVector(identity);
 
     EXPECT_TRUE(Vec3Equal(forward, glm::vec3(0.0f, 0.0f, 1.0f)));
@@ -31,7 +31,7 @@ TEST(CameraUtils, GetForwardVectorIdentity)
 
 TEST(CameraUtils, GetRightVectorIdentity)
 {
-    glm::quat identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    auto identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     glm::vec3 right = CameraMovement::Utils::GetRightVector(identity);
 
     EXPECT_TRUE(Vec3Equal(right, glm::vec3(1.0f, 0.0f, 0.0f)));
@@ -39,7 +39,7 @@ TEST(CameraUtils, GetRightVectorIdentity)
 
 TEST(CameraUtils, GetUpVectorIdentity)
 {
-    glm::quat identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    auto identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     glm::vec3 up = CameraMovement::Utils::GetUpVector(identity);
 
     EXPECT_TRUE(Vec3Equal(up, glm::vec3(0.0f, 1.0f, 0.0f)));
@@ -107,7 +107,7 @@ TEST(CameraUtils, ComputeLookAtQuaternionLookingUp)
 
 TEST(CameraUtils, RotateQuaternionZeroPitchYaw)
 {
-    glm::quat identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    auto identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     glm::quat rotated = CameraMovement::Utils::RotateQuaternion(identity, 0.0f, 0.0f);
 
     EXPECT_TRUE(QuatEqual(rotated, identity));
@@ -115,7 +115,7 @@ TEST(CameraUtils, RotateQuaternionZeroPitchYaw)
 
 TEST(CameraUtils, RotateQuaternionYawOnly)
 {
-    glm::quat identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    auto identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     glm::quat rotated = CameraMovement::Utils::RotateQuaternion(identity, 0.0f, glm::radians(90.0f));
     glm::vec3 forward = CameraMovement::Utils::GetForwardVector(rotated);
 
@@ -124,7 +124,7 @@ TEST(CameraUtils, RotateQuaternionYawOnly)
 
 TEST(CameraUtils, RotateQuaternionPitchOnly)
 {
-    glm::quat identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    auto identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     glm::quat rotated = CameraMovement::Utils::RotateQuaternion(identity, glm::radians(90.0f), 0.0f);
     glm::vec3 forward = CameraMovement::Utils::GetForwardVector(rotated);
 
@@ -133,7 +133,7 @@ TEST(CameraUtils, RotateQuaternionPitchOnly)
 
 TEST(CameraUtils, RotateQuaternionPitchAndYaw)
 {
-    glm::quat identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    auto identity = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     glm::quat rotated = CameraMovement::Utils::RotateQuaternion(identity, glm::radians(45.0f), glm::radians(45.0f));
 
     EXPECT_FLOAT_EQ(glm::length(glm::vec3(rotated.x, rotated.y, rotated.z)) + rotated.w * rotated.w,
