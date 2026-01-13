@@ -26,4 +26,6 @@ void Physics::Plugin::Bind()
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::PhysicsUpdate);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::SyncTransformWithPhysics);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::SyncSoftBodyVertices);
+
+    RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownSoftBodySystem);
 }

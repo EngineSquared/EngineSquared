@@ -105,7 +105,7 @@ struct Vec3Hash {
 };
 
 /**
- * @brief Equality function for glm::vec3 with epsilon tolerance
+ * @brief Equality function for glm::vec3 (exact comparison)
  */
 struct Vec3Equal {
     bool operator()(const glm::vec3 &a, const glm::vec3 &b) const { return a.x == b.x && a.y == b.y && a.z == b.z; }
@@ -194,7 +194,8 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
                                                      const glm::vec3 &scale = glm::vec3(1.0f))
 {
     CreateSettingsResult result;
-    auto settings = new JPH::SoftBodySharedSettings();
+    result.settings = new JPH::SoftBodySharedSettings();
+    auto *settings = result.settings.GetPtr();
 
     // Deduplicate the mesh to get unique vertices and proper indices
     // This is necessary because OBJLoader creates "flat" meshes with duplicated vertices
@@ -323,7 +324,13 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
 {
     try
     {
-        auto &core = *registry.ctx().get<Engine::Core *>();
+        auto *corePtr = registry.ctx().get<Engine::Core *>();
+        if (!corePtr)
+        {
+            Log::Error("Cannot create SoftBody: Engine::Core not available");
+            return;
+        }
+        auto &core = *corePtr;
 
         auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
         if (!physicsManager.IsPhysicsActivated())
@@ -445,7 +452,10 @@ static void OnSoftBodyDestroy(entt::registry &registry, entt::entity entity)
 {
     try
     {
-        auto &core = *registry.ctx().get<Engine::Core *>();
+        auto *corePtr = registry.ctx().get<Engine::Core *>();
+        if (!corePtr)
+            return;
+        auto &core = *corePtr;
 
         auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
         if (!physicsManager.IsPhysicsActivated())
@@ -553,7 +563,11 @@ void SyncSoftBodyVertices(Engine::Core &core)
         // Jolt vertices are in WORLD scale (scaled by initialScale during creation)
         // We need to convert back to LOCAL mesh space by dividing by initialScale
         // Then the GPU will apply Transform.scale (which should match initialScale)
-        const glm::vec3 &invScale = glm::vec3(1.0f) / internal.initialScale;
+        // Prevent division by zero - use small epsilon for safety
+        constexpr float epsilon = 1e-6f;
+        glm::vec3 safeScale = glm::max(glm::abs(internal.initialScale), glm::vec3(epsilon));
+        safeScale *= glm::sign(internal.initialScale + glm::vec3(epsilon)); // Preserve sign
+        const glm::vec3 invScale = glm::vec3(1.0f) / safeScale;
 
         if (!internal.vertexMap.empty())
         {

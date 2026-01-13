@@ -23,6 +23,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <utility>
@@ -312,13 +313,13 @@ struct SoftBody {
 
         if (mass <= 0.0f)
         {
-            invMasses[vertexIndex] = 0.0f;
+            // mass <= 0 means pin the vertex, delegate to PinVertex
+            PinVertex(vertexIndex);
+            return;
         }
-        else
-        {
-            float safeMass = mass < kMinMass ? kMinMass : mass;
-            invMasses[vertexIndex] = 1.0f / safeMass;
-        }
+
+        float safeMass = mass < kMinMass ? kMinMass : mass;
+        invMasses[vertexIndex] = 1.0f / safeMass;
         pinnedVertices.erase(std::remove(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex),
                              pinnedVertices.end());
     }

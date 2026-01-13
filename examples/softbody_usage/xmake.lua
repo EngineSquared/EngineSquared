@@ -11,6 +11,7 @@ target("SoftBodyUsage")
     set_kind("binary")
 
     add_deps("EngineSquaredCore")
+    add_deps("PluginObject")
     add_deps("PluginGraphic")
     add_deps("PluginWindow")
     add_deps("PluginInput")

@@ -33,7 +33,7 @@ void EscapeKeySystem(Engine::Core &core)
 
 void CameraTranslationSystem(Engine::Core &core)
 {
-    const float cameraTranslationSpeed = 1.f;
+    const float cameraTranslationSpeed = 10.f;
     const float deltaTime = core.GetScheduler<Engine::Scheduler::FixedTimeUpdate>().GetTickRate();
     auto &inputManager = core.GetResource<Input::Resource::InputManager>();
 
@@ -142,14 +142,14 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     auto mesh = loader.GetMesh();
 
     // Create entity with Transform that includes scale
-    // The original teapot coords are ~40 units, scale to ~2 units using Transform
-    const float scaleFactor = 0.05f;
+    // The original teapot coords are quite large, so we scale it down
+    const float scaleFactor = 0.2f;
 
     auto teapot = core.CreateEntity();
     // Position, scale, and rotation are now handled by Transform
     // SoftBodySystem will automatically apply the scale to vertices
     teapot.AddComponent<Object::Component::Transform>(
-        core, Object::Component::Transform(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(scaleFactor)));
+        core, Object::Component::Transform(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(scaleFactor)));
 
     // Add Mesh (no manual scaling needed - Transform.scale will be applied by SoftBodySystem)
     teapot.AddComponent<Object::Component::Mesh>(core, std::move(mesh));
@@ -192,12 +192,16 @@ void CreateJellyCube(Engine::Core &core, const glm::vec3 &position, float size, 
 
     // Add SoftBody - auto-initializes from Mesh
     jellyCube.AddComponent<Physics::Component::SoftBody>(core, Physics::Component::SoftBody(settings));
+
+    Object::Component::Material mat;
+    mat.ambientTexName = FILES_PATH "texture.png";
+    jellyCube.AddComponent<Object::Component::Material>(core, mat);
 }
 
 void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
 {
     // New API: Use Object::Helper to create cloth mesh
-    auto cloth = Object::Helper::CreateCloth(core, 15, 15, 0.1f, position);
+    auto cloth = Object::Helper::CreateCloth(core, 50, 50, 1.f, position);
 
     // Configure cloth settings
     auto settings = Physics::Component::SoftBodySettings::Cloth(0.5f);
@@ -210,12 +214,16 @@ void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
     // Pin top row corners (vertex indices 0 and 14 for a 15-wide cloth)
     soft.PinVertex(0);  // Top-left corner
     soft.PinVertex(14); // Top-right corner
+
+    Object::Component::Material mat;
+    mat.ambientTexName = FILES_PATH "texture.png";
+    cloth.AddComponent<Object::Component::Material>(core, mat);
 }
 
 void Setup(Engine::Core &core)
 {
     CreateFloor(core);
-    // CreateFallingCube(core, 5.0f, 10.0f, 0.0f, 2.0f);
+    CreateFallingCube(core, 5.0f, 10.0f, 0.0f, 2.0f);
     CreateSoftbodyFromOBJ(core);
     CreateJellyCube(core, glm::vec3(-5.0f, 10.0f, 0.0f), 1.0f, 5);
     CreateClothDemo(core, glm::vec3(5.0f, 8.0f, 0.0f));
