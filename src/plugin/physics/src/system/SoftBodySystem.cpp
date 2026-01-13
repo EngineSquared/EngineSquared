@@ -425,13 +425,15 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
         // Add to physics system (activate)
         bodyInterface.AddBody(bodyID, JPH::EActivation::Activate);
 
-        // Store internal component with vertex mapping for sync
-        registry.emplace<Component::SoftBodyInternal>(entity, bodyID, std::move(settingsResult.vertexMap));
+        // Store internal component with vertex mapping AND initial scale for sync
+        // The initial scale is needed to convert Jolt vertices back to mesh local space
+        registry.emplace<Component::SoftBodyInternal>(entity, bodyID, std::move(settingsResult.vertexMap), scale);
 
         Log::Info(fmt::format(
-            "Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f})",
+            "Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f}), scale "
+            "({:.2f}, {:.2f}, {:.2f})",
             static_cast<uint32_t>(entity), mesh->vertices.size(), mesh->indices.size() / 3, position.GetX(),
-            position.GetY(), position.GetZ()));
+            position.GetY(), position.GetZ(), scale.x, scale.y, scale.z));
     }
     catch (const std::exception &e)
     {
@@ -548,8 +550,11 @@ void SyncSoftBodyVertices(Engine::Core &core)
         }
 
         // Use the vertex map to sync deduplicated Jolt vertices back to the original mesh
-        // Vertices are written in LOCAL space (relative to center of mass)
-        // The Transform handles world positioning
+        // Jolt vertices are in WORLD scale (scaled by initialScale during creation)
+        // We need to convert back to LOCAL mesh space by dividing by initialScale
+        // Then the GPU will apply Transform.scale (which should match initialScale)
+        const glm::vec3 &invScale = glm::vec3(1.0f) / internal.initialScale;
+
         if (!internal.vertexMap.empty())
         {
             // Use vertex map: original mesh vertices are mapped to deduplicated Jolt vertices
@@ -559,8 +564,9 @@ void SyncSoftBodyVertices(Engine::Core &core)
                 if (joltIdx < joltVertices.size())
                 {
                     const auto &v = joltVertices[joltIdx];
-                    // Local space only - Transform handles world position
-                    mesh->vertices[origIdx] = glm::vec3(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
+                    // Convert from Jolt world-scale space back to mesh local space
+                    glm::vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
+                    mesh->vertices[origIdx] = worldPos * invScale;
                 }
             }
         }
@@ -570,8 +576,9 @@ void SyncSoftBodyVertices(Engine::Core &core)
             for (size_t i = 0; i < joltVertices.size() && i < mesh->vertices.size(); ++i)
             {
                 const auto &v = joltVertices[i];
-                // Local space only - Transform handles world position
-                mesh->vertices[i] = glm::vec3(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
+                // Convert from Jolt world-scale space back to mesh local space
+                glm::vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
+                mesh->vertices[i] = worldPos * invScale;
             }
         }
     }

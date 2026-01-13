@@ -107,7 +107,7 @@ Engine::Entity CreateRope(Engine::Core &core, uint32_t segmentCount, float segme
     return entity;
 }
 
-Engine::Entity CreateJellyCube(Engine::Core &core, uint32_t gridSize, float spacing, const glm::vec3 &position,
+Engine::Entity CreateJellyCube(Engine::Core &core, float size, uint32_t gridSize, const glm::vec3 &position,
                                const glm::quat &rotation, const glm::vec3 &scale)
 {
     auto entity = core.CreateEntity();
@@ -115,6 +115,7 @@ Engine::Entity CreateJellyCube(Engine::Core &core, uint32_t gridSize, float spac
     auto transform = Component::Transform(position, scale, rotation);
     entity.AddComponent<Component::Transform>(core, transform);
 
+    float spacing = (gridSize > 1) ? size / static_cast<float>(gridSize - 1) : size;
     auto mesh = Utils::GenerateJellyCubeMesh(gridSize, spacing);
     entity.AddComponent<Component::Mesh>(core, std::move(mesh));
 

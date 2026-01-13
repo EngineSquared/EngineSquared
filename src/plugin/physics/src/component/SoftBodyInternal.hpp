@@ -25,6 +25,7 @@
 
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Body/BodyID.h>
+#include <glm/glm.hpp>
 #include <utility>
 #include <vector>
 
@@ -46,6 +47,10 @@ struct SoftBodyInternal {
     /// Used to sync Jolt simulation results back to the original mesh
     std::vector<uint32_t> vertexMap;
 
+    /// Initial scale applied to vertices during creation
+    /// Used to convert Jolt vertices (world-scale) back to local mesh space during sync
+    glm::vec3 initialScale = glm::vec3(1.0f);
+
     /**
      * @brief Default constructor (invalid body)
      */
@@ -63,6 +68,17 @@ struct SoftBodyInternal {
      * @param map Vertex mapping from original to deduplicated indices
      */
     SoftBodyInternal(JPH::BodyID id, std::vector<uint32_t> map) : bodyID(id), vertexMap(std::move(map)) {}
+
+    /**
+     * @brief Construct with body ID, vertex map, and initial scale
+     * @param id Jolt body ID
+     * @param map Vertex mapping from original to deduplicated indices
+     * @param scale Initial scale applied to vertices
+     */
+    SoftBodyInternal(JPH::BodyID id, std::vector<uint32_t> map, const glm::vec3 &scale)
+        : bodyID(id), vertexMap(std::move(map)), initialScale(scale)
+    {
+    }
 
     /**
      * @brief Check if body ID is valid

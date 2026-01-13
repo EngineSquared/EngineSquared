@@ -174,10 +174,10 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     teapot.AddComponent<Object::Component::Material>(core, mat);
 }
 
-void CreateJellyCube(Engine::Core &core, const glm::vec3 &position, uint32_t gridSize, float spacing)
+void CreateJellyCube(Engine::Core &core, const glm::vec3 &position, float size, uint32_t gridSize)
 {
     // Use Object::Helper to create volumetric jelly cube mesh
-    auto jellyCube = Object::Helper::CreateJellyCube(core, gridSize, spacing, position);
+    auto jellyCube = Object::Helper::CreateJellyCube(core, size, gridSize, position);
 
     // Configure jelly settings
     auto settings = Physics::Component::SoftBodySettings::Jelly();
@@ -217,7 +217,7 @@ void Setup(Engine::Core &core)
     CreateFloor(core);
     // CreateFallingCube(core, 5.0f, 10.0f, 0.0f, 2.0f);
     CreateSoftbodyFromOBJ(core);
-    CreateJellyCube(core, glm::vec3(-5.0f, 10.0f, 0.0f), 5, 0.2f);
+    CreateJellyCube(core, glm::vec3(-5.0f, 10.0f, 0.0f), 1.0f, 5);
     CreateClothDemo(core, glm::vec3(5.0f, 8.0f, 0.0f));
 
     auto camera = core.CreateEntity();

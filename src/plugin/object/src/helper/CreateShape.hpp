@@ -208,9 +208,12 @@ Engine::Entity CreateRope(Engine::Core &core, uint32_t segmentCount, float segme
  * Unlike CreateCube (which has only surface vertices), this creates internal vertices
  * needed for volumetric soft body simulation ("jelly" effect).
  *
+ * The spacing between vertices is automatically calculated as: size / (gridSize - 1)
+ *
  * @param core Engine core reference
+ * @param size Total size of the cube (same as CreateCube's size parameter)
  * @param gridSize Number of vertices per axis (minimum 2). Total vertices = gridSize³
- * @param spacing Distance between adjacent vertices (default: 0.1)
+ *                 Higher values = more detailed deformation but slower simulation
  * @param position Position in world space (default: origin)
  * @param rotation Rotation as quaternion (default: identity)
  * @param scale Scale factor (default: 1.0)
@@ -219,13 +222,13 @@ Engine::Entity CreateRope(Engine::Core &core, uint32_t segmentCount, float segme
  * @note For a standard cube soft body (surface-only deformation), use CreateCube instead.
  *       This function is specifically for volumetric "jelly" simulation.
  *
- * @example "Creating a jelly cube:"
+ * @example "Creating a 2-unit jelly cube with 5x5x5 grid:"
  * @code
- * auto jelly = Object::Helper::CreateJellyCube(core, 5, 0.2f, glm::vec3(0, 5, 0));
+ * auto jelly = Object::Helper::CreateJellyCube(core, 2.0f, 5, glm::vec3(0, 5, 0));
  * jelly.AddComponent<Physics::Component::SoftBody>(core, SoftBodySettings::Jelly());
  * @endcode
  */
-Engine::Entity CreateJellyCube(Engine::Core &core, uint32_t gridSize, float spacing = 0.1f,
+Engine::Entity CreateJellyCube(Engine::Core &core, float size, uint32_t gridSize = 5,
                                const glm::vec3 &position = glm::vec3(0.0f),
                                const glm::quat &rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
                                const glm::vec3 &scale = glm::vec3(1.0f));
