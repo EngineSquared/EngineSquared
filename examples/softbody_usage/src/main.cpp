@@ -141,19 +141,20 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     Object::OBJLoader loader(FILES_PATH "teapot.obj");
     auto mesh = loader.GetMesh();
 
-    // Scale down the teapot (original coords are ~40 units)
-    const float scaleFactor = 0.05f; // Results in ~2 unit teapot
-    for (auto &vertex : mesh.vertices)
-        vertex *= scaleFactor;
-
-    // Normalize normals after scaling
-    for (auto &normal : mesh.normals)
-        normal = glm::normalize(normal);
+    // Create entity with Transform that includes scale
+    // The original teapot coords are ~40 units, scale to ~2 units using Transform
+    const float scaleFactor = 0.05f;
 
     auto teapot = core.CreateEntity();
-    teapot.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 10.0f, 0.0f));
+    // Position, scale, and rotation are now handled by Transform
+    // SoftBodySystem will automatically apply the scale to vertices
+    teapot.AddComponent<Object::Component::Transform>(
+        core, Object::Component::Transform(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(scaleFactor)));
 
-    // Configure soft body settings
+    // Add Mesh (no manual scaling needed - Transform.scale will be applied by SoftBodySystem)
+    teapot.AddComponent<Object::Component::Mesh>(core, std::move(mesh));
+
+    // Configure soft body settings - SoftBody auto-initializes invMasses and edges from Mesh
     auto settings = Physics::Component::SoftBodySettings::Balloon(5000.0f);
     settings.edgeCompliance = 1.0e-5f;  // Very stiff edges
     settings.shearCompliance = 1.0e-5f; // Very stiff shear
@@ -164,17 +165,22 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     settings.friction = 0.5f;
     settings.restitution = 0.3f;
 
-    auto soft = Physics::Component::SoftBody::CreateFromMesh(mesh, settings);
+    // New simplified API: just pass settings, auto-detect Mesh
+    teapot.AddComponent<Physics::Component::SoftBody>(core, Physics::Component::SoftBody(settings));
 
-    teapot.AddComponent<Object::Component::Mesh>(core, std::move(mesh));
-    teapot.AddComponent<Physics::Component::SoftBody>(core, std::move(soft));
-    teapot.AddComponent<Object::Component::Material>(core);
+    // Material with doubleSided for soft body visibility
+    Object::Component::Material mat;
+    mat.doubleSided = true; // Render both sides for soft body deformation
+    teapot.AddComponent<Object::Component::Material>(core, mat);
 }
 
-void CreateJellycube()(Engine::Core &core, const glm::vec3 &position, float size, float mass)
+void CreateJellyCube(Engine::Core &core, const glm::vec3 &position, uint32_t gridSize, float spacing)
 {
-    auto jellyCube = Object::Helper::CreateCube(core, size, position);
-    auto settings = Physics::Component::SoftBodySettings::Cube(0.5f);
+    // Use Object::Helper to create volumetric jelly cube mesh
+    auto jellyCube = Object::Helper::CreateJellyCube(core, gridSize, spacing, position);
+
+    // Configure jelly settings
+    auto settings = Physics::Component::SoftBodySettings::Jelly();
     settings.edgeCompliance = 1.0e-4f;  // Stiff edges
     settings.shearCompliance = 1.0e-4f; // Stiff shear
     settings.bendCompliance = 1.0e-3f;  // Some bending
@@ -184,7 +190,26 @@ void CreateJellycube()(Engine::Core &core, const glm::vec3 &position, float size
     settings.friction = 0.5f;
     settings.restitution = 0.3f;
 
-    auto soft = Physics::Component::SoftBody::CreateCube(size, 10, settings);
+    // Add SoftBody - auto-initializes from Mesh
+    jellyCube.AddComponent<Physics::Component::SoftBody>(core, Physics::Component::SoftBody(settings));
+}
+
+void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
+{
+    // New API: Use Object::Helper to create cloth mesh
+    auto cloth = Object::Helper::CreateCloth(core, 15, 15, 0.1f, position);
+
+    // Configure cloth settings
+    auto settings = Physics::Component::SoftBodySettings::Cloth(0.5f);
+    settings.solverIterations = 8;
+    settings.vertexRadius = 0.02f;
+
+    // Add SoftBody with pins
+    auto &soft = cloth.AddComponent<Physics::Component::SoftBody>(core, Physics::Component::SoftBody(settings));
+
+    // Pin top row corners (vertex indices 0 and 14 for a 15-wide cloth)
+    soft.PinVertex(0);  // Top-left corner
+    soft.PinVertex(14); // Top-right corner
 }
 
 void Setup(Engine::Core &core)
@@ -192,7 +217,8 @@ void Setup(Engine::Core &core)
     CreateFloor(core);
     // CreateFallingCube(core, 5.0f, 10.0f, 0.0f, 2.0f);
     CreateSoftbodyFromOBJ(core);
-    CreateJellycube(core, glm::vec3(-5.0f, 10.0f, 0.0f), 2.0f, 0.5f);
+    CreateJellyCube(core, glm::vec3(-5.0f, 10.0f, 0.0f), 5, 0.2f);
+    CreateClothDemo(core, glm::vec3(5.0f, 8.0f, 0.0f));
 
     auto camera = core.CreateEntity();
 

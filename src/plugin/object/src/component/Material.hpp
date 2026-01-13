@@ -54,6 +54,21 @@ struct Material {
 
     std::string ambientTexName;
 
+    /**
+     * @brief Whether to render both sides of faces (disable back-face culling)
+     *
+     * When true, both front and back faces are rendered. This is useful for:
+     * - Soft bodies where the inside may become visible during deformation
+     * - Thin objects like cloth, leaves, or paper
+     * - Objects with inverted normals or non-manifold geometry
+     *
+     * When false (default), back faces are culled for better performance.
+     *
+     * @note The graphic plugin must check this flag and set CullMode::None
+     *       when doubleSided is true.
+     */
+    bool doubleSided = false;
+
     explicit Material() = default;
     ~Material() = default;
 

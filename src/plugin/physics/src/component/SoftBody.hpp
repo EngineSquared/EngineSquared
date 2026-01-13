@@ -211,7 +211,7 @@ struct SoftBodySettings {
  * - **Jolt**: Maintains internal vertex copy for simulation (unavoidable)
  *
  * The SoftBodySystem:
- * 1. On construct: Reads geometry from Mesh.vertices to create Jolt soft body
+ * 1. On construct: **Auto-detects** Mesh component and initializes physics data
  * 2. On update: Writes Jolt simulation results back to Mesh.vertices
  *
  * ## Usage
@@ -219,22 +219,26 @@ struct SoftBodySettings {
  * **From existing Mesh** (e.g., imported .obj):
  * @code
  * auto mesh = OBJLoader("model.obj").GetMesh();
- * auto softBody = SoftBody::CreateFromMesh(mesh, SoftBodySettings::Cloth());
- * softBody.PinVertex(0);  // Pin first vertex
- * entity.AddComponent<Object::Component::Mesh>(core, mesh);
- * entity.AddComponent<SoftBody>(core, softBody);
+ * auto teapot = core.CreateEntity();
+ * teapot.AddComponent<Transform>(core, position);
+ * teapot.AddComponent<Mesh>(core, mesh);
+ * teapot.AddComponent<SoftBody>(core, SoftBodySettings::Balloon(5000.0f));
  * @endcode
  *
- * **Procedural shapes**:
+ * **Procedural cloth** (using Object::Helper):
  * @code
- * auto [mesh, softBody] = SoftBody::CreateCloth(10, 10, 0.1f);
- * softBody.PinVertex(0);
- * softBody.PinVertex(9);
- * entity.AddComponent<Object::Component::Mesh>(core, mesh);
- * entity.AddComponent<SoftBody>(core, softBody);
+ * auto cloth = Object::Helper::CreateCloth(core, 10, 10, 0.1f, position);
+ * auto& soft = cloth.AddComponent<SoftBody>(core, SoftBodySettings::Cloth(0.5f));
+ * soft.PinVertex(0);   // Pin top-left corner
+ * soft.PinVertex(9);   // Pin top-right corner
  * @endcode
+ *
+ * **Note**: Collider components (BoxCollider, SphereCollider, etc.) are ignored for SoftBody.
+ * Use `SoftBodySettings::vertexRadius` for collision detection.
  *
  * @see Object::Component::Mesh
+ * @see Object::Helper::CreateCloth
+ * @see Object::Helper::CreateRope
  */
 struct SoftBody {
     //=========================================================================
@@ -334,49 +338,31 @@ struct SoftBody {
     [[nodiscard]] bool IsValid() const { return !invMasses.empty(); }
 
     //=========================================================================
-    // Factory methods
+    // Constructors
     //=========================================================================
 
     /**
-     * @brief Create a SoftBody from an existing Mesh
+     * @brief Default constructor - creates an empty SoftBody
      *
-     * Use this when you have a mesh (e.g., loaded from .obj) and want to make it deformable.
-     *
-     * @param mesh The mesh containing vertices and indices
+     * The SoftBody will be configured automatically when added to an entity
+     * that already has a Mesh component. The InitSoftBodySystem hook will:
+     * - Auto-detect the Mesh and initialize invMasses
+     * - Generate edge constraints from mesh faces
+     */
+    SoftBody() = default;
+
+    /**
+     * @brief Construct with specific settings
+     * @param settings Simulation settings (use factory methods like SoftBodySettings::Cloth())
+     */
+    explicit SoftBody(const SoftBodySettings &settings) : settings(settings) {}
+
+    /**
+     * @brief Construct with type and settings
+     * @param bodyType Type of soft body (affects internal processing)
      * @param settings Simulation settings
-     * @return SoftBody configured for the mesh
      */
-    static SoftBody CreateFromMesh(const Object::Component::Mesh &mesh,
-                                   const SoftBodySettings &settings = SoftBodySettings::Default());
-
-    /**
-     * @brief Create a cloth (2D grid)
-     * @param width Number of vertices along X axis
-     * @param height Number of vertices along Y axis
-     * @param spacing Distance between vertices
-     * @param stiffness Cloth stiffness [0, 1]
-     * @return Pair of (Mesh for rendering, SoftBody for physics)
-     */
-    static std::pair<Object::Component::Mesh, SoftBody> CreateCloth(uint32_t width, uint32_t height,
-                                                                    float spacing = 0.1f, float stiffness = 0.5f);
-
-    /**
-     * @brief Create a rope (1D chain)
-     * @param segmentCount Number of segments
-     * @param segmentLength Length of each segment
-     * @param stiffness Rope stiffness [0, 1]
-     * @return Pair of (Mesh for rendering, SoftBody for physics)
-     */
-    static std::pair<Object::Component::Mesh, SoftBody> CreateRope(uint32_t segmentCount, float segmentLength = 0.1f,
-                                                                   float stiffness = 0.9f);
-
-    /**
-     * @brief Create a volumetric cube
-     * @param gridSize Number of vertices per axis
-     * @param spacing Distance between vertices
-     * @return Pair of (Mesh for rendering, SoftBody for physics)
-     */
-    static std::pair<Object::Component::Mesh, SoftBody> CreateCube(uint32_t gridSize, float spacing = 0.1f);
+    SoftBody(SoftBodyType bodyType, const SoftBodySettings &settings) : type(bodyType), settings(settings) {}
 };
 
 } // namespace Physics::Component

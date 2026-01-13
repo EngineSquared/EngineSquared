@@ -23,12 +23,16 @@
 #include "system/SoftBodySystem.hpp"
 
 #include "Logger.hpp"
+#include "component/BoxCollider.hpp"
+#include "component/CapsuleCollider.hpp"
 #include "component/SoftBody.hpp"
 #include "component/SoftBodyInternal.hpp"
+#include "component/SphereCollider.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
 #include "utils/Layers.hpp"
 #include <fmt/format.h>
+#include <set>
 #include <unordered_map>
 
 #include "Object.hpp"
@@ -44,6 +48,47 @@ namespace Physics::System {
 //=============================================================================
 // Helper Functions
 //=============================================================================
+
+/**
+ * @brief Generate edge constraints from triangle face indices
+ *
+ * This function takes triangle indices and creates unique edge pairs
+ * for soft body constraint creation.
+ *
+ * @param faceIndices Triangle indices (size must be multiple of 3)
+ * @return Vector of unique edge pairs (vertex index A, vertex index B)
+ */
+static std::vector<std::pair<uint32_t, uint32_t>> GenerateEdgesFromFaces(const std::vector<uint32_t> &faceIndices)
+{
+    if (faceIndices.empty())
+        return {};
+
+    std::set<std::pair<uint32_t, uint32_t>> edgeSet;
+    for (size_t i = 0u; i + 2u < faceIndices.size(); i += 3u)
+    {
+        uint32_t v0 = faceIndices[i];
+        uint32_t v1 = faceIndices[i + 1u];
+        uint32_t v2 = faceIndices[i + 2u];
+
+        auto addEdge = [&edgeSet](uint32_t a, uint32_t b) {
+            if (a > b)
+                std::swap(a, b);
+            edgeSet.insert({a, b});
+        };
+
+        addEdge(v0, v1);
+        addEdge(v1, v2);
+        addEdge(v2, v0);
+    }
+
+    std::vector<std::pair<uint32_t, uint32_t>> edges;
+    edges.reserve(edgeSet.size());
+    for (const auto &edge : edgeSet)
+    {
+        edges.push_back(edge);
+    }
+    return edges;
+}
 
 /**
  * @brief Hash function for glm::vec3 to use in unordered_map
@@ -137,10 +182,16 @@ struct CreateSettingsResult {
  * @brief Convert SoftBody component to Jolt SoftBodySharedSettings
  * @param softBody The soft body component with settings and physics data
  * @param mesh The mesh containing vertices and face indices
+ * @param scale The scale factor from Transform to apply to vertices (default: 1.0)
  * @return CreateSettingsResult with settings and vertex mapping
+ *
+ * @note The scale is applied to mesh vertices before creating the Jolt soft body.
+ *       This allows users to use Transform.scale to resize soft bodies without
+ *       manually scaling the mesh vertices.
  */
 static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &softBody,
-                                                     const Object::Component::Mesh &mesh)
+                                                     const Object::Component::Mesh &mesh,
+                                                     const glm::vec3 &scale = glm::vec3(1.0f))
 {
     CreateSettingsResult result;
     auto settings = new JPH::SoftBodySharedSettings();
@@ -152,15 +203,19 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
     // Store the vertex map for later sync
     result.vertexMap = std::move(deduped.vertexMap);
 
-    Log::Info(fmt::format("SoftBody mesh: original {} vertices -> {} unique vertices, {} indices", mesh.vertices.size(),
-                          deduped.vertices.size(), deduped.indices.size()));
+    Log::Info(fmt::format("SoftBody mesh: original {} vertices -> {} unique vertices, {} indices (scale: {:.2f}, "
+                          "{:.2f}, {:.2f})",
+                          mesh.vertices.size(), deduped.vertices.size(), deduped.indices.size(), scale.x, scale.y,
+                          scale.z));
 
-    // Add unique vertices
+    // Add unique vertices with scale applied
     settings->mVertices.reserve(deduped.vertices.size());
     for (size_t i = 0; i < deduped.vertices.size(); ++i)
     {
         JPH::SoftBodySharedSettings::Vertex v;
-        v.mPosition = JPH::Float3(deduped.vertices[i].x, deduped.vertices[i].y, deduped.vertices[i].z);
+        // Apply scale to vertex positions
+        glm::vec3 scaledPos = deduped.vertices[i] * scale;
+        v.mPosition = JPH::Float3(scaledPos.x, scaledPos.y, scaledPos.z);
         v.mVelocity = JPH::Float3(0, 0, 0);
 
         // Map inverse mass from original vertices - find any original vertex that maps to this one
@@ -293,33 +348,64 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
             return;
         }
 
-        // Verify invMasses matches Mesh vertex count
-        if (softBody.invMasses.size() != mesh->vertices.size())
+        // Warn if Collider components are present (they are ignored for SoftBody)
+        if (registry.any_of<Component::BoxCollider, Component::SphereCollider, Component::CapsuleCollider>(entity))
+        {
+            Log::Warn("SoftBody: Collider components (BoxCollider, SphereCollider, CapsuleCollider) are ignored "
+                      "for soft bodies. Use SoftBodySettings::vertexRadius for collision detection.");
+        }
+
+        //=====================================================================
+        // Auto-initialization: Initialize invMasses and edges from Mesh
+        //=====================================================================
+        if (softBody.invMasses.empty())
+        {
+            // Auto-initialize invMasses from mesh vertex count
+            softBody.invMasses.resize(mesh->vertices.size(), 1.0f);
+            Log::Debug(fmt::format("SoftBody: Auto-initialized {} invMasses from Mesh", mesh->vertices.size()));
+        }
+        else if (softBody.invMasses.size() != mesh->vertices.size())
         {
             Log::Error(fmt::format("SoftBody: invMasses size ({}) doesn't match Mesh vertices size ({})",
                                    softBody.invMasses.size(), mesh->vertices.size()));
             return;
         }
 
-        // Validate mesh indices
-        if (mesh->indices.size() % 3 != 0)
+        // Auto-generate edges from faces if not provided
+        if (softBody.edges.empty() && !mesh->indices.empty())
         {
-            Log::Error("SoftBody: Mesh indices malformed (not multiple of 3)");
-            return;
+            if (mesh->indices.size() % 3 != 0)
+            {
+                Log::Error("SoftBody: Mesh indices malformed (not multiple of 3)");
+                return;
+            }
+            softBody.edges = GenerateEdgesFromFaces(mesh->indices);
+            Log::Debug(fmt::format("SoftBody: Auto-generated {} edges from Mesh faces", softBody.edges.size()));
         }
 
-        // Get position from Transform if available
+        // Apply pinned vertices (set invMass = 0 for pinned)
+        for (uint32_t pinnedIdx : softBody.pinnedVertices)
+        {
+            if (pinnedIdx < softBody.invMasses.size())
+            {
+                softBody.invMasses[pinnedIdx] = 0.0f;
+            }
+        }
+
+        // Get position, rotation, and scale from Transform if available
         JPH::RVec3 position = JPH::RVec3::sZero();
         JPH::Quat rotation = JPH::Quat::sIdentity();
+        glm::vec3 scale = glm::vec3(1.0f);
 
         if (auto *transform = registry.try_get<Object::Component::Transform>(entity))
         {
             position = Utils::ToJoltRVec3(transform->GetPosition());
             rotation = Utils::ToJoltQuat(transform->GetRotation());
+            scale = transform->GetScale();
         }
 
-        // Create shared settings from Mesh (includes deduplication and vertex mapping)
-        auto settingsResult = CreateJoltSharedSettings(softBody, *mesh);
+        // Create shared settings from Mesh (includes deduplication, vertex mapping, and scale application)
+        auto settingsResult = CreateJoltSharedSettings(softBody, *mesh, scale);
 
         // Create body settings
         auto creationSettings = CreateJoltCreationSettings(softBody, settingsResult.settings, position, rotation);

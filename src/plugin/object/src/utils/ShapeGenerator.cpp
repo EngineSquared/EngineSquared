@@ -454,4 +454,226 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
     return mesh;
 }
 
+//=============================================================================
+// Soft Body Mesh Generators
+//=============================================================================
+
+Component::Mesh GenerateClothMesh(uint32_t width, uint32_t height, float spacing)
+{
+    Component::Mesh mesh;
+
+    // Need at least a 2x2 grid to form triangles
+    if (width < 2u || height < 2u)
+    {
+        // Still create any vertices (0 or 1 sized grid) but do not generate faces
+        mesh.vertices.reserve(static_cast<size_t>(width) * height);
+        mesh.normals.reserve(static_cast<size_t>(width) * height);
+        mesh.texCoords.reserve(static_cast<size_t>(width) * height);
+
+        for (uint32_t y = 0u; y < height; ++y)
+        {
+            for (uint32_t x = 0u; x < width; ++x)
+            {
+                mesh.vertices.emplace_back(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing, 0.0f);
+                mesh.normals.emplace_back(0.0f, 0.0f, 1.0f); // Face +Z
+                float uDen = (width > 1u) ? static_cast<float>(width - 1u) : 1.0f;
+                float vDen = (height > 1u) ? static_cast<float>(height - 1u) : 1.0f;
+                mesh.texCoords.emplace_back(static_cast<float>(x) / uDen, static_cast<float>(y) / vDen);
+            }
+        }
+        return mesh;
+    }
+
+    // Generate vertices in XY plane
+    mesh.vertices.reserve(static_cast<size_t>(width) * height);
+    mesh.normals.reserve(static_cast<size_t>(width) * height);
+    mesh.texCoords.reserve(static_cast<size_t>(width) * height);
+
+    for (uint32_t y = 0u; y < height; ++y)
+    {
+        for (uint32_t x = 0u; x < width; ++x)
+        {
+            mesh.vertices.emplace_back(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing, 0.0f);
+            mesh.normals.emplace_back(0.0f, 0.0f, 1.0f); // Face +Z
+            float u = static_cast<float>(x) / static_cast<float>(width - 1u);
+            float v = static_cast<float>(y) / static_cast<float>(height - 1u);
+            mesh.texCoords.emplace_back(u, v);
+        }
+    }
+
+    // Generate faces (two triangles per quad)
+    mesh.indices.reserve(static_cast<size_t>(width - 1u) * (height - 1u) * 6u);
+    for (uint32_t y = 0u; y < height - 1u; ++y)
+    {
+        for (uint32_t x = 0u; x < width - 1u; ++x)
+        {
+            uint32_t topLeft = y * width + x;
+            uint32_t topRight = topLeft + 1u;
+            uint32_t bottomLeft = (y + 1u) * width + x;
+            uint32_t bottomRight = bottomLeft + 1u;
+
+            // CW winding to match renderer convention
+            mesh.indices.push_back(topLeft);
+            mesh.indices.push_back(topRight);
+            mesh.indices.push_back(bottomLeft);
+            mesh.indices.push_back(topRight);
+            mesh.indices.push_back(bottomRight);
+            mesh.indices.push_back(bottomLeft);
+        }
+    }
+
+    return mesh;
+}
+
+Component::Mesh GenerateRopeMesh(uint32_t segmentCount, float segmentLength)
+{
+    Component::Mesh mesh;
+
+    if (segmentCount == 0u)
+    {
+        // Single point rope
+        mesh.vertices.emplace_back(0.0f, 0.0f, 0.0f);
+        mesh.normals.emplace_back(0.0f, 0.0f, 1.0f);
+        mesh.texCoords.emplace_back(0.0f, 0.0f);
+        return mesh;
+    }
+
+    uint32_t vertexCount = segmentCount + 1u;
+    mesh.vertices.reserve(vertexCount);
+    mesh.normals.reserve(vertexCount);
+    mesh.texCoords.reserve(vertexCount);
+
+    for (uint32_t i = 0u; i < vertexCount; ++i)
+    {
+        mesh.vertices.emplace_back(0.0f, -static_cast<float>(i) * segmentLength, 0.0f);
+        mesh.normals.emplace_back(0.0f, 0.0f, 1.0f);
+        mesh.texCoords.emplace_back(0.0f, static_cast<float>(i) / static_cast<float>(segmentCount));
+    }
+
+    // No faces for rope (line rendering or soft body only)
+
+    return mesh;
+}
+
+Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
+{
+    Component::Mesh mesh;
+
+    // Need at least 2 points per axis to form surface quads
+    if (gridSize < 2u)
+    {
+        if (gridSize == 1u)
+        {
+            mesh.vertices.emplace_back(0.0f, 0.0f, 0.0f);
+            mesh.normals.emplace_back(0.0f, 1.0f, 0.0f);
+            mesh.texCoords.emplace_back(0.0f, 0.0f);
+        }
+        return mesh;
+    }
+
+    // Generate vertices in 3D grid
+    size_t totalVertices = static_cast<size_t>(gridSize) * gridSize * gridSize;
+    mesh.vertices.reserve(totalVertices);
+    mesh.normals.reserve(totalVertices);
+    mesh.texCoords.reserve(totalVertices);
+
+    for (uint32_t z = 0u; z < gridSize; ++z)
+    {
+        for (uint32_t y = 0u; y < gridSize; ++y)
+        {
+            for (uint32_t x = 0u; x < gridSize; ++x)
+            {
+                mesh.vertices.emplace_back(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing,
+                                           static_cast<float>(z) * spacing);
+                mesh.normals.emplace_back(0.0f, 1.0f, 0.0f); // Placeholder normal
+                float u = static_cast<float>(x) / static_cast<float>(gridSize - 1u);
+                float v = static_cast<float>(y) / static_cast<float>(gridSize - 1u);
+                mesh.texCoords.emplace_back(u, v);
+            }
+        }
+    }
+
+    auto getIndex = [gridSize](uint32_t x, uint32_t y, uint32_t z) -> uint32_t {
+        return z * gridSize * gridSize + y * gridSize + x;
+    };
+
+    // Generate surface faces for rendering (all 6 sides)
+    auto addFace = [&mesh](uint32_t tl, uint32_t tr, uint32_t bl, uint32_t br) {
+        mesh.indices.push_back(tl);
+        mesh.indices.push_back(tr);
+        mesh.indices.push_back(bl);
+        mesh.indices.push_back(tr);
+        mesh.indices.push_back(br);
+        mesh.indices.push_back(bl);
+    };
+
+    // Front face (z = 0)
+    for (uint32_t y = 0u; y < gridSize - 1u; ++y)
+    {
+        for (uint32_t x = 0u; x < gridSize - 1u; ++x)
+        {
+            addFace(getIndex(x, y, 0u), getIndex(x + 1u, y, 0u), getIndex(x, y + 1u, 0u), getIndex(x + 1u, y + 1u, 0u));
+        }
+    }
+
+    // Back face (z = gridSize - 1)
+    for (uint32_t y = 0u; y < gridSize - 1u; ++y)
+    {
+        for (uint32_t x = 0u; x < gridSize - 1u; ++x)
+        {
+            addFace(getIndex(x, y, gridSize - 1u), getIndex(x + 1u, y, gridSize - 1u),
+                    getIndex(x, y + 1u, gridSize - 1u), getIndex(x + 1u, y + 1u, gridSize - 1u));
+        }
+    }
+
+    // Left face (x = 0)
+    for (uint32_t z = 0u; z < gridSize - 1u; ++z)
+    {
+        for (uint32_t y = 0u; y < gridSize - 1u; ++y)
+        {
+            mesh.indices.push_back(getIndex(0u, y, z));
+            mesh.indices.push_back(getIndex(0u, y + 1u, z));
+            mesh.indices.push_back(getIndex(0u, y, z + 1u));
+            mesh.indices.push_back(getIndex(0u, y, z + 1u));
+            mesh.indices.push_back(getIndex(0u, y + 1u, z));
+            mesh.indices.push_back(getIndex(0u, y + 1u, z + 1u));
+        }
+    }
+
+    // Right face (x = gridSize - 1)
+    for (uint32_t z = 0u; z < gridSize - 1u; ++z)
+    {
+        for (uint32_t y = 0u; y < gridSize - 1u; ++y)
+        {
+            addFace(getIndex(gridSize - 1u, y, z), getIndex(gridSize - 1u, y, z + 1u),
+                    getIndex(gridSize - 1u, y + 1u, z), getIndex(gridSize - 1u, y + 1u, z + 1u));
+        }
+    }
+
+    // Bottom face (y = 0)
+    for (uint32_t z = 0u; z < gridSize - 1u; ++z)
+    {
+        for (uint32_t x = 0u; x < gridSize - 1u; ++x)
+        {
+            addFace(getIndex(x, 0u, z), getIndex(x + 1u, 0u, z), getIndex(x, 0u, z + 1u), getIndex(x + 1u, 0u, z + 1u));
+        }
+    }
+
+    // Top face (y = gridSize - 1)
+    for (uint32_t z = 0u; z < gridSize - 1u; ++z)
+    {
+        for (uint32_t x = 0u; x < gridSize - 1u; ++x)
+        {
+            mesh.indices.push_back(getIndex(x, gridSize - 1u, z));
+            mesh.indices.push_back(getIndex(x, gridSize - 1u, z + 1u));
+            mesh.indices.push_back(getIndex(x + 1u, gridSize - 1u, z));
+            mesh.indices.push_back(getIndex(x + 1u, gridSize - 1u, z));
+            mesh.indices.push_back(getIndex(x, gridSize - 1u, z + 1u));
+            mesh.indices.push_back(getIndex(x + 1u, gridSize - 1u, z + 1u));
+        }
+    }
+
+    return mesh;
+}
+
 } // namespace Object::Utils

@@ -6,9 +6,9 @@ Engine² is an ECS-based C++20 game engine using **entt** for entity management 
 
 ### Core Components
 - **`Engine::Core`** - Central registry managing entities, resources, schedulers, and plugins
-- **`Engine::Entity`** - Wrapper around `entt::entity` with helper methods for component management
+- **`Engine::Entity`** - Wrapper around `entt::entity` (32-bit ID with version bits) with helper methods
 - **Plugins** - Modular features extending `Engine::APlugin` (Physics, Graphic, Input, etc.)
-- **Schedulers** - Control system execution timing: `Startup`, `Update`, `FixedTimeUpdate`, `Shutdown`
+- **Schedulers** - Control system execution timing: `Startup`, `Update`, `FixedTimeUpdate`, `RelativeTimeUpdate`, `Shutdown`
 
 ### Plugin System Pattern
 Plugins follow a consistent structure in `src/plugin/<name>/`:
@@ -22,9 +22,10 @@ src/plugin/<name>/
 │   ├── component/      # ECS components
 │   ├── system/         # Systems (functions taking Engine::Core&)
 │   ├── resource/       # Singleton resources
+│   ├── event/          # Event structures (for Event plugin integration)
 │   ├── exception/      # Custom exceptions
 │   ├── helper/         # Public utility functions
-│   └── utils/          # Internal helpers
+│   └── utils/          # Internal helpers (not exposed in public API)
 └── tests/              # GTest unit tests
 ```
 
@@ -33,6 +34,7 @@ src/plugin/<name>/
 - **Components**: Plain structs registered via `entity.AddComponent<T>(core, ...)`
 - **Resources**: Singletons accessed via `core.GetResource<T>()` / `core.RegisterResource<T>()`
 - **Plugin dependencies**: Use `RequirePlugins<OtherPlugin>()` in `Bind()`
+- **EnTT Hooks**: Use `registry.on_construct<T>().connect<Handler>()` for automatic component lifecycle
 
 ## Build & Test Commands
 
@@ -77,10 +79,69 @@ void MyPlugin::Plugin::Bind() {
 }
 ```
 
-### Physics-Specific
-- Use `Physics::Utils::ToJoltVec3()` / `FromJoltVec3()` for GLM↔Jolt conversions
-- RigidBody hooks: Systems registered via `registry.on_construct<Component>().connect<Handler>`
-- Collision events buffered and processed via `ContactListenerImpl::ProcessBufferedEvents()`
+### Physics-Specific Patterns
+
+#### Public + Internal Component Pattern
+Physics uses a two-component pattern for Jolt integration:
+- **Public**: User-facing settings (e.g., `RigidBody`, `SoftBody`)
+- **Internal**: Jolt runtime data (e.g., `RigidBodyInternal` with `JPH::BodyID`)
+
+```cpp
+// User adds public component → hook creates internal automatically
+entity.AddComponent<Physics::Component::RigidBody>(core, RigidBody::CreateDynamic(5.0f));
+// System hook automatically creates RigidBodyInternal with Jolt BodyID
+```
+
+#### EnTT Hook Registration
+```cpp
+void InitMySystem(Engine::Core &core) {
+    auto &registry = core.GetRegistry();
+    registry.ctx().emplace<Engine::Core *>(&core);  // Store core for hook access
+
+    registry.on_construct<Component::MyComponent>().connect<&OnMyComponentConstruct>();
+    registry.on_destroy<Component::MyComponent>().connect<&OnMyComponentDestroy>();
+}
+```
+
+#### Type Conversions (GLM ↔ Jolt)
+```cpp
+#include "utils/JoltConversions.hpp"
+// GLM → Jolt
+JPH::Vec3 jv = Physics::Utils::ToJoltVec3(glmVec);
+JPH::Quat jq = Physics::Utils::ToJoltQuat(glmQuat);
+// Jolt → GLM
+glm::vec3 gv = Physics::Utils::FromJoltVec3(joltVec);
+glm::quat gq = Physics::Utils::FromJoltQuat(joltQuat);
+```
+
+#### Thread Safety in Contact Callbacks
+Jolt calls ContactListener from worker threads. Buffer events and flush on main thread:
+```cpp
+// In ContactListenerImpl - buffer events under mutex
+void OnContactAdded(...) {
+    std::scoped_lock lock(_bufferMutex);
+    _bufferedAdded.emplace_back(event);
+}
+
+// Called from PhysicsUpdate system (main thread)
+void ProcessBufferedEvents(Core &core) {
+    std::vector<Event> local;
+    { std::scoped_lock lock(_bufferMutex); local.swap(_buffered); }
+    for (auto &e : local) eventManager.PushEvent(e);
+}
+```
+
+## Event System
+
+Register callbacks with scheduler association:
+```cpp
+auto &em = core.GetResource<Event::Resource::EventManager>();
+// Process during FixedTimeUpdate
+em.RegisterCallback<MyEvent, Engine::Scheduler::FixedTimeUpdate>(
+    [](const MyEvent &e) { /* handler */ });
+// Or immediate execution (no scheduler)
+em.RegisterCallback<MyEvent>([](const MyEvent &e) { /* immediate */ });
+```
 
 ## Git Workflow
 
@@ -100,14 +161,23 @@ docs(readme): update build instructions
 Types: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `perf`
 
 ## Scheduler Execution Order
-Fixed order (not configurable): `Startup` → `Update` → `FixedTimeUpdate` → `Shutdown`
+
+Schedulers use topological sort with declared dependencies. Default order:
+`Startup` → `Update` → `FixedTimeUpdate` / `RelativeTimeUpdate` → `Shutdown`
+
+Configure with:
+```cpp
+core.SetSchedulerBefore<Scheduler::Update, Scheduler::FixedTimeUpdate>();
+core.SetSchedulerAfter<Scheduler::Shutdown, Scheduler::Update>();
+```
 
 ## Examples & Integration Tests
 The `examples/` folder contains integration tests and implementation documentation:
 - `basic_core_usage/` - Minimal engine setup
 - `physics_usage/` - RigidBody and collision examples
-- `softbody_usage/` - Soft body physics demo
+- `softbody_usage/` - Soft body physics demo (OBJ loading, pinning vertices)
 - `graphic_usage/` - Rendering pipeline examples
+- `graphic_usage_with_physics/` - Combined graphics + physics
 
 Use these as reference implementations when creating new features.
 
@@ -140,10 +210,10 @@ class MyModuleError : public std::runtime_error {
 void ProcessEntity(Engine::Core &core, Engine::Entity entity) {
     if (!entity.IsValid())
         return;
-    
+
     if (!entity.HasComponents<Component::Transform>(core))
         return;
-    
+
     // Main logic here...
 }
 ```

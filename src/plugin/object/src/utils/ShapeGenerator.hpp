@@ -90,4 +90,71 @@ Component::Mesh GenerateCylinderMesh(float radiusTop = 0.5f, float radiusBottom 
 Component::Mesh GenerateCapsuleMesh(float radius = 0.5f, float height = 1.0f, uint32_t segments = 32u,
                                     uint32_t heightSegments = 4u);
 
+/**
+ * @brief Generate a cloth mesh (2D grid in XY plane)
+ *
+ * Creates a grid of vertices suitable for soft body cloth simulation.
+ * The mesh is generated in the XY plane, facing +Z direction.
+ *
+ * @param width Number of vertices along X axis (minimum 2)
+ * @param height Number of vertices along Y axis (minimum 2)
+ * @param spacing Distance between adjacent vertices (default: 0.1)
+ * @return Component::Mesh The generated cloth mesh with vertices, normals, UVs, and indices
+ *
+ * @note For degenerate sizes (width < 2 or height < 2), returns vertices without faces.
+ *
+ * @example "Creating a cloth for soft body simulation:"
+ * @code
+ * auto mesh = Object::Utils::GenerateClothMesh(10, 10, 0.1f);
+ * entity.AddComponent<Mesh>(core, mesh);
+ * entity.AddComponent<SoftBody>(core, SoftBodySettings::Cloth(0.5f));
+ * @endcode
+ */
+Component::Mesh GenerateClothMesh(uint32_t width, uint32_t height, float spacing = 0.1f);
+
+/**
+ * @brief Generate a rope mesh (1D chain of vertices along -Y axis)
+ *
+ * Creates a line of vertices suitable for soft body rope simulation.
+ * The rope extends downward from origin along the -Y axis.
+ *
+ * @param segmentCount Number of segments (vertices = segmentCount + 1)
+ * @param segmentLength Length of each segment (default: 0.1)
+ * @return Component::Mesh The generated rope mesh with vertices and normals (no faces)
+ *
+ * @note Rope meshes have no faces/indices - they are meant for line rendering
+ *       or soft body simulation only.
+ *
+ * @example "Creating a rope for soft body simulation:"
+ * @code
+ * auto mesh = Object::Utils::GenerateRopeMesh(20, 0.1f);
+ * entity.AddComponent<Mesh>(core, mesh);
+ * entity.AddComponent<SoftBody>(core, SoftBodySettings::Rope(0.9f));
+ * @endcode
+ */
+Component::Mesh GenerateRopeMesh(uint32_t segmentCount, float segmentLength = 0.1f);
+
+/**
+ * @brief Generate a volumetric jelly cube mesh (3D grid)
+ *
+ * Creates a 3D grid of vertices (gridSize³ total) with surface faces for rendering.
+ * Unlike GenerateCubeMesh (surface-only), this creates internal vertices needed
+ * for volumetric soft body simulation.
+ *
+ * @param gridSize Number of vertices per axis (minimum 2). Total vertices = gridSize³
+ * @param spacing Distance between adjacent vertices (default: 0.1)
+ * @return Component::Mesh The generated cube mesh with surface faces
+ *
+ * @note Only surface faces are generated for rendering. Internal vertices are
+ *       used by the soft body physics system for volumetric simulation.
+ *
+ * @example "Creating a jelly cube:"
+ * @code
+ * auto mesh = Object::Utils::GenerateJellyCubeMesh(5, 0.2f);
+ * entity.AddComponent<Mesh>(core, mesh);
+ * entity.AddComponent<SoftBody>(core, SoftBodySettings::Jelly());
+ * @endcode
+ */
+Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing = 0.1f);
+
 } // namespace Object::Utils
