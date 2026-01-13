@@ -27,6 +27,7 @@
 #include "utils/DefaultSampler.hpp"
 #include "utils/DefaultTexture.hpp"
 #include "utils/EmptyTexture.hpp"
+#include "utils/EndRenderTexture.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/IValidable.hpp"
 #include "utils/shader/ABindGroupLayoutEntry.hpp"
@@ -38,7 +39,6 @@
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include "utils/shader/VertexBufferLayout.hpp"
-#include "utils/EndRenderTexture.hpp"
 
 // Exceptions
 #include "exception/AdapterCreationError.hpp"

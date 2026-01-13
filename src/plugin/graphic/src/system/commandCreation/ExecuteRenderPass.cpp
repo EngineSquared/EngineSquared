@@ -3,15 +3,13 @@
 #include "entity/Entity.hpp"
 #include "resource/RenderGraphContainer.hpp"
 
-static Graphic::Resource::RenderGraph &GetRenderGraph(
-    Engine::Core &core, const entt::hashed_string &name)
+static Graphic::Resource::RenderGraph &GetRenderGraph(Engine::Core &core, const entt::hashed_string &name)
 {
     auto &renderGraphContainer = core.GetResource<Graphic::Resource::RenderGraphContainer>();
 
     if (!renderGraphContainer.Contains(name))
     {
-        throw std::runtime_error(
-            fmt::format("RenderGraph '{}' not found in RenderGraphContainer.", name.data()));
+        throw std::runtime_error(fmt::format("RenderGraph '{}' not found in RenderGraphContainer.", name.data()));
     }
 
     return renderGraphContainer.Get(name);

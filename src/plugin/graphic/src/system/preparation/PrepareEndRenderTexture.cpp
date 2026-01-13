@@ -3,9 +3,9 @@
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/TextureContainer.hpp"
+#include "utils/EndRenderTexture.hpp"
 #include "utils/webgpu.hpp"
 #include <glm/vec2.hpp>
-#include "utils/EndRenderTexture.hpp"
 
 static void EnsurePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
                                               Graphic::Resource::TextureContainer &textureContainer)
