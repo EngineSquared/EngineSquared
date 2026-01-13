@@ -566,7 +566,11 @@ void SyncSoftBodyVertices(Engine::Core &core)
         // Prevent division by zero - use small epsilon for safety
         constexpr float epsilon = 1e-6f;
         glm::vec3 safeScale = glm::max(glm::abs(internal.initialScale), glm::vec3(epsilon));
-        safeScale *= glm::sign(internal.initialScale + glm::vec3(epsilon)); // Preserve sign
+        // Preserve sign from original scale (treat zero as positive)
+        auto signOrOne = [](float v) { return v < 0.0f ? -1.0f : 1.0f; };
+        safeScale *= glm::vec3(signOrOne(internal.initialScale.x),
+                               signOrOne(internal.initialScale.y),
+                               signOrOne(internal.initialScale.z));
         const glm::vec3 invScale = glm::vec3(1.0f) / safeScale;
 
         if (!internal.vertexMap.empty())

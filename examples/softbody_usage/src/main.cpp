@@ -200,20 +200,26 @@ void CreateJellyCube(Engine::Core &core, const glm::vec3 &position, float size, 
 
 void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
 {
-    // New API: Use Object::Helper to create cloth mesh
-    auto cloth = Object::Helper::CreateCloth(core, 50, 50, 1.f, position);
+    const uint32_t width = 50u;
+    const uint32_t height = 50u;
+
+    // Rotation to map cloth (generated in XY plane) into a vertical YZ plane (rotate +90° around Y)
+    const glm::quat rotation = glm::quat(glm::vec3(0.0f, glm::radians(90.0f), 0.0f));
+
+    auto cloth = Object::Helper::CreateCloth(core, width, height, 0.20f, position, rotation);
 
     // Configure cloth settings
     auto settings = Physics::Component::SoftBodySettings::Cloth(0.5f);
     settings.solverIterations = 8;
     settings.vertexRadius = 0.02f;
 
-    // Add SoftBody with pins
     auto &soft = cloth.AddComponent<Physics::Component::SoftBody>(core, Physics::Component::SoftBody(settings));
 
-    // Pin top row corners (vertex indices 0 and 14 for a 15-wide cloth)
-    soft.PinVertex(0);  // Top-left corner
-    soft.PinVertex(14); // Top-right corner
+    for (uint32_t x = 0u; x < width; ++x)
+    {
+        uint32_t idx = (height - 1u) * width + x;
+        soft.PinVertex(idx);
+    }
 
     Object::Component::Material mat;
     mat.ambientTexName = FILES_PATH "texture.png";
@@ -226,7 +232,7 @@ void Setup(Engine::Core &core)
     CreateFallingCube(core, 5.0f, 10.0f, 0.0f, 2.0f);
     CreateSoftbodyFromOBJ(core);
     CreateJellyCube(core, glm::vec3(-5.0f, 10.0f, 0.0f), 1.0f, 5);
-    CreateClothDemo(core, glm::vec3(5.0f, 8.0f, 0.0f));
+    CreateClothDemo(core, glm::vec3(5.0f, 10.0f, 0.0f));
 
     auto camera = core.CreateEntity();
 
