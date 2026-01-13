@@ -3,8 +3,6 @@
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
 
-using Graphic::System::END_RENDER_TEXTURE_ID;
-
 TEST(PrepareEndRenderTextureTest, CreatesTextureWhenWindowSystemIsNone)
 {
     Engine::Core core;
@@ -20,7 +18,7 @@ TEST(PrepareEndRenderTextureTest, CreatesTextureWhenWindowSystemIsNone)
         auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
 
         EXPECT_FALSE(context.surface.has_value());
-        EXPECT_TRUE(textureContainer.Contains(END_RENDER_TEXTURE_ID));
+        EXPECT_TRUE(textureContainer.Contains(Graphic::Utils::END_RENDER_TEXTURE_ID));
     });
 
     EXPECT_NO_THROW(core.RunSystems());

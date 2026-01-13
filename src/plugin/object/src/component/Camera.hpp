@@ -12,6 +12,5 @@ struct Camera {
     float fov = glm::radians(70.0f);
     float nearPlane = 0.1f;
     float farPlane = 100.0f;
-    ID pipeline{};
 };
 } // namespace Object::Component

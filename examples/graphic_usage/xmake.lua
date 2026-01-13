@@ -7,17 +7,13 @@ if is_plat("windows") then
 end
 
 
--- includes("../../xmake.lua")
+includes("../../xmake.lua")
 
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
 target("GraphicUsage")
     set_kind("binary")
 
-    add_deps("EngineSquaredCore")
-    add_deps("PluginGraphic")
-    add_deps("PluginWindow")
-    add_deps("PluginInput")
-    add_deps("PluginDefaultPipeline")
+    add_deps("EngineSquared")
 
     add_files("src/**.cpp")
 

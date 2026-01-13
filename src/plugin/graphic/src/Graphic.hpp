@@ -38,6 +38,7 @@
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
 #include "utils/shader/VertexBufferLayout.hpp"
+#include "utils/EndRenderTexture.hpp"
 
 // Exceptions
 #include "exception/AdapterCreationError.hpp"

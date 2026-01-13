@@ -9,6 +9,7 @@
 #include "Graphic.hpp"
 #include "Input.hpp"
 #include "Object.hpp"
+#include "DefaultPipeline.hpp"
 #include "RenderingPipeline.hpp"
 #include "plugin/PluginWindow.hpp"
 
@@ -109,7 +110,7 @@ void CameraRotationSystem(Engine::Core &core)
             {
             case GLFW_PRESS:
                 targetController.active = true;
-                targetController.startMouse = glm::vec2(mousePos.x, -window.GetSize().y + mousePos.y);
+                targetController.startMouse = glm::vec2(mousePos.x, mousePos.y - window.GetSize().y);
                 targetController.originRotation =
                     camera.GetComponents<Object::Component::Transform>(core).GetRotation();
                 break;
@@ -182,7 +183,7 @@ int main(void)
 {
     Engine::Core core;
 
-    core.AddPlugins<Window::Plugin, Graphic::Plugin, Input::Plugin>();
+    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Input::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
         core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(

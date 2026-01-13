@@ -7,6 +7,7 @@
 #include "resource/Window.hpp"
 #include "system/preparation/PrepareEndRenderTexture.hpp"
 #include "utils/DefaultRenderPass.hpp"
+#include "utils/EndRenderTexture.hpp"
 
 void DefaultPipeline::System::CreateDefaultRenderPipeline(Engine::Core &core)
 {
@@ -21,7 +22,7 @@ void DefaultPipeline::System::CreateDefaultRenderPipeline(Engine::Core &core)
                                                                    std::move(defaultShader));
         renderPass.BindShader(std::string(Utils::DEFAULT_RENDER_PASS_SHADER_NAME));
         Graphic::Resource::ColorOutput colorOutput;
-        colorOutput.textureId = Graphic::System::END_RENDER_TEXTURE_ID;
+        colorOutput.textureId = Graphic::Utils::END_RENDER_TEXTURE_ID;
         renderPass.AddOutput(0, std::move(colorOutput));
         Graphic::Resource::DepthOutput depthOutput;
         depthOutput.textureId = Graphic::System::END_DEPTH_RENDER_TEXTURE_ID;
@@ -34,5 +35,5 @@ void DefaultPipeline::System::CreateDefaultRenderPipeline(Engine::Core &core)
         renderGraph.Add(Utils::DEFAULT_RENDER_PASS_NAME, std::move(renderPass));
     }
 
-    renderPassContainer.Add(Utils::DEFAULT_RENDER_GRAPH_ID, std::move(renderGraph));
+    renderPassContainer.SetDefault(std::move(renderGraph));
 }
