@@ -156,7 +156,7 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
     void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
     {
         auto cameraView = core.GetRegistry().view<Component::GPUCamera>();
-        
+
         if (cameraView.empty())
         {
             Log::Error("DefaultRenderPass::UniqueRenderCallback: No camera with GPUCamera component found.");
