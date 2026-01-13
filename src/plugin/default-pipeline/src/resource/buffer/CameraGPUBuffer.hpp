@@ -14,7 +14,7 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
 
     void Create(Engine::Core &core) override
     {
-        const auto &gpuCamera = _entity.GetComponents<DefaultPipeline::Component::GPUCamera>(core);
+        const auto &gpuCamera = _entity.GetComponents<Component::GPUCamera>(core);
         const auto &context = core.GetResource<Graphic::Resource::Context>();
 
         _buffer = _CreateBuffer(context.deviceContext);

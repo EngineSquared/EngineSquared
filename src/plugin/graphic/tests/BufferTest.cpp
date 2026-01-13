@@ -2,7 +2,6 @@
 
 #include "Engine.hpp"
 #include "Graphic.hpp"
-#include "Object.hpp"
 #include "RenderingPipeline.hpp"
 
 class GPUBufferTest : public Graphic::Resource::AGPUBuffer {

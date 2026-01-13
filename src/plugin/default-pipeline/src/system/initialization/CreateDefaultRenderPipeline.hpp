@@ -4,4 +4,4 @@
 
 namespace DefaultPipeline::System {
 void CreateDefaultRenderPipeline(Engine::Core &core);
-}
+} // namespace DefaultPipeline::System

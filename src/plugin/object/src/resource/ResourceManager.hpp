@@ -181,7 +181,14 @@ template <typename ResourceType> class ResourceManager {
         defaultResource = ResourceType(std::forward<Args>(args)...);
     }
 
-    ResourceType &GetDefault()
+    /**
+     * @brief Get the default resource.
+     *
+     * @exception ResourceManagerError if no default resource is set.
+     *
+     * @return the default resource
+     */
+    [[nodiscard]] ResourceType &GetDefault()
     {
         if (!defaultResource.has_value())
             throw ResourceManagerError("No default resource is set.");
@@ -189,7 +196,14 @@ template <typename ResourceType> class ResourceManager {
         return *defaultResource;
     }
 
-    const ResourceType &GetDefault() const
+    /**
+     * @brief Get the default resource.
+     *
+     * @exception ResourceManagerError if no default resource is set.
+     *
+     * @return the default resource
+     */
+    [[nodiscard]] const ResourceType &GetDefault() const
     {
         if (!defaultResource.has_value())
             throw ResourceManagerError("No default resource is set.");

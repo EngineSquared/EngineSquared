@@ -7,4 +7,4 @@ namespace DefaultPipeline::System {
 
 void OnTransformCreation(Engine::Core &core, Engine::Entity entity);
 
-}
+} // namespace DefaultPipeline::System

@@ -7,4 +7,4 @@ namespace DefaultPipeline::System {
 
 void OnCameraDestruction(Engine::Core &core, Engine::Entity entity);
 
-}
+} // namespace DefaultPipeline::System

@@ -32,9 +32,11 @@ class IndexGPUBuffer : public Graphic::Resource::AGPUBuffer {
             "IndexGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
         bufferDesc.label = wgpu::StringView(label);
 
-        _buffer = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);
+        const auto &context = core.GetResource<Graphic::Resource::Context>();
 
-        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, indices.data(), bufferDesc.size);
+        _buffer = context.deviceContext.GetDevice()->createBuffer(bufferDesc);
+
+        context.queue->writeBuffer(_buffer, 0, indices.data(), bufferDesc.size);
 
         _isCreated = true;
     };

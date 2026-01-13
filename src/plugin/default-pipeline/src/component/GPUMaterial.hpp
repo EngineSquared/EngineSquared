@@ -1,8 +1,5 @@
 #pragma once
 
-#include "component/Camera.hpp"
-#include "component/Transform.hpp"
-#include "glm/glm.hpp"
 #include <entt/core/hashed_string.hpp>
 
 namespace DefaultPipeline::Component {
@@ -14,4 +11,4 @@ struct GPUMaterial {
     Id sampler{};
     Id bindGroup{};
 };
-}; // namespace DefaultPipeline::Component
+} // namespace DefaultPipeline::Component

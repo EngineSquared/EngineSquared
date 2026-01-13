@@ -43,12 +43,7 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
     {
         const auto &context = core.GetResource<Graphic::Resource::Context>();
 
-        wgpu::BufferDescriptor bufferDesc(wgpu::Default);
-        bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
-        bufferDesc.size = sizeof(PointLightsData);
-        bufferDesc.label = wgpu::StringView(_debugName);
-
-        _buffer = context.deviceContext.GetDevice()->createBuffer(bufferDesc);
+        _buffer = _CreateBuffer(context.deviceContext);
         _isCreated = true;
 
         PointLightsData data{};
@@ -116,6 +111,16 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
     static uint32_t GPUSize() { return sizeof(PointLightsData); }
 
   private:
+    wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
+    {
+        wgpu::BufferDescriptor bufferDesc(wgpu::Default);
+        bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
+        bufferDesc.size = sizeof(PointLightsData);
+        bufferDesc.label = wgpu::StringView(_debugName);
+
+        return context.GetDevice()->createBuffer(bufferDesc);
+    }
+
     wgpu::Buffer _buffer;
     bool _isCreated = false;
 };

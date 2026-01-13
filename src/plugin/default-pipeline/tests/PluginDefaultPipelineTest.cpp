@@ -5,7 +5,7 @@
 #include "core/Core.hpp"
 #include "plugin/PluginDefaultPipeline.hpp"
 
-TEST(DefaultPipeline, Casual)
+TEST(DefaultPipeline, SmokeTest)
 {
     Engine::Core core;
 

@@ -60,7 +60,8 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_packages("gtest", required_packages)
         add_links("gtest")
 
-        add_deps(plugin_name, target_dependencies)
+        add_deps(plugin_name)
+        add_deps(target_dependencies)
         add_files(file)
         add_files("tests/main.cpp")
 
