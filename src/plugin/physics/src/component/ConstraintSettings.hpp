@@ -25,8 +25,6 @@
 
 #include <cmath>
 #include <cstdint>
-#include <cmath>
-#include <cstdint>
 #include <limits>
 
 namespace Physics::Component {
