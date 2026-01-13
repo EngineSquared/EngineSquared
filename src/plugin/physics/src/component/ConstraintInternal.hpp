@@ -86,7 +86,11 @@ struct ConstraintInternal {
         : constraint(c), type(t), breakForce(force), breakTorque(torque)
     {
     }
+
     /**
+     * @brief Check if this component has a valid constraint
+     * @return true if the constraint pointer is valid
+     */
     [[nodiscard]] bool IsValid() const { return constraint != nullptr; }
 
     /**
