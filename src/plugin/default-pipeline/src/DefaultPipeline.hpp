@@ -15,7 +15,6 @@
 #include "resource/buffer/PointLightsBuffer.hpp"
 #include "resource/buffer/TransformGPUBuffer.hpp"
 
-#include "system/GPUComponentManagement/OnCameraCreation.hpp"
 #include "system/initialization/CreateAmbientLight.hpp"
 #include "system/initialization/CreateDefaultMaterial.hpp"
 #include "system/initialization/CreateDefaultRenderPipeline.hpp"

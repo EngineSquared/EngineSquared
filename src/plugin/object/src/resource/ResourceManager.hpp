@@ -181,6 +181,22 @@ template <typename ResourceType> class ResourceManager {
         defaultResource = ResourceType(std::forward<Args>(args)...);
     }
 
+    ResourceType &GetDefault()
+    {
+        if (!defaultResource.has_value())
+            throw ResourceManagerError("No default resource is set.");
+
+        return *defaultResource;
+    }
+
+    const ResourceType &GetDefault() const
+    {
+        if (!defaultResource.has_value())
+            throw ResourceManagerError("No default resource is set.");
+
+        return *defaultResource;
+    }
+
     /**
      * @brief Get the reference to a stored resource, or the default resource if it doesn't exist.
      *
