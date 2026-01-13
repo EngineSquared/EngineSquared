@@ -568,8 +568,7 @@ void SyncSoftBodyVertices(Engine::Core &core)
         glm::vec3 safeScale = glm::max(glm::abs(internal.initialScale), glm::vec3(epsilon));
         // Preserve sign from original scale (treat zero as positive)
         auto signOrOne = [](float v) { return v < 0.0f ? -1.0f : 1.0f; };
-        safeScale *= glm::vec3(signOrOne(internal.initialScale.x),
-                               signOrOne(internal.initialScale.y),
+        safeScale *= glm::vec3(signOrOne(internal.initialScale.x), signOrOne(internal.initialScale.y),
                                signOrOne(internal.initialScale.z));
         const glm::vec3 invScale = glm::vec3(1.0f) / safeScale;
 
