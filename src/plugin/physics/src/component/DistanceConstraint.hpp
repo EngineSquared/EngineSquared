@@ -205,8 +205,8 @@ struct DistanceConstraint {
      * @return Configured DistanceConstraint component
      */
     [[nodiscard]] static DistanceConstraint
-    CreateWithRange(Engine::EntityId a, Engine::EntityId b, float min, float max, const glm::vec3 &pointA = glm::vec3(0.0f),
-                    const glm::vec3 &pointB = glm::vec3(0.0f),
+    CreateWithRange(Engine::EntityId a, Engine::EntityId b, float min, float max,
+                    const glm::vec3 &pointA = glm::vec3(0.0f), const glm::vec3 &pointB = glm::vec3(0.0f),
                     const ConstraintSettings &constraintSettings = ConstraintSettings::Soft())
     {
         if (min > max)

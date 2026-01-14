@@ -111,8 +111,7 @@ void FinalizeConstraint(ConstraintContext &ctx, Engine::Entity entity, JPH::Cons
     Log::Debug(fmt::format("Created {} for entity {}", safeName, entity));
 }
 
-void DestroyConstraint(Engine::Core::Registry &registry, Engine::EntityId entity,
-                       const char *constraintName)
+void DestroyConstraint(Engine::Core::Registry &registry, Engine::EntityId entity, const char *constraintName)
 {
     const char *safeName = constraintName ? constraintName : "<constraint>";
     try

@@ -22,8 +22,7 @@ namespace Physics::Utils {
  */
 static constexpr inline const uint32_t ENTITY_ID_MASK =
     entt::entt_traits<uint32_t>::entity_mask
-        << (sizeof(uint32_t) * 8 -
-            std::popcount(entt::entt_traits<uint32_t>::entity_mask)) |
+        << (sizeof(uint32_t) * 8 - std::popcount(entt::entt_traits<uint32_t>::entity_mask)) |
     entt::entt_traits<uint32_t>::version_mask;
 
 void ContactListenerImpl::OnContactAdded(const JPH::Body &inBody1, const JPH::Body &inBody2,

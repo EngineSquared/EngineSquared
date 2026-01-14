@@ -174,9 +174,9 @@ struct PointConstraint {
     {
         PointConstraint constraint;
         constraint.bodyA = body;
-        constraint.bodyB = Engine::EntityId::Null();      // Invalid entity = world
-        constraint.localPointA = glm::vec3(0.0f); // Center of body
-        constraint.localPointB = worldPoint;      // World position
+        constraint.bodyB = Engine::EntityId::Null(); // Invalid entity = world
+        constraint.localPointA = glm::vec3(0.0f);    // Center of body
+        constraint.localPointB = worldPoint;         // World position
         constraint.settings = constraintSettings;
         constraint.broken = false;
         return constraint;

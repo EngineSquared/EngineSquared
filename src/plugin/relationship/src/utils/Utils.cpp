@@ -73,8 +73,7 @@ auto Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entity child)
 
 auto Relationship::Utils::GetParent(Engine::Core &core, Engine::Entity child) -> Engine::Entity
 {
-    const Relationship::Component::Relationship &childRS =
-        child.GetComponents<Relationship::Component::Relationship>();
+    const Relationship::Component::Relationship &childRS = child.GetComponents<Relationship::Component::Relationship>();
     if (not childRS.parent.IsValid())
     {
         Log::Warn(fmt::format("Entity {} has no parent", child));
