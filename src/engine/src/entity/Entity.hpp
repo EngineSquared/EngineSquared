@@ -1,10 +1,10 @@
 #pragma once
 
 #include "EntityToIDString.hpp"
+#include "Id.hpp"
 #include "Logger.hpp"
 #include "core/Core.hpp"
 #include <entt/entt.hpp>
-#include "Id.hpp"
 #include <typeindex>
 
 namespace Engine {
@@ -76,8 +76,7 @@ class Entity {
      * @param   args        parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      */
-    template <typename TComponent, typename... TArgs>
-    inline decltype(auto) AddComponentIfNotExists(TArgs &&...args)
+    template <typename TComponent, typename... TArgs> inline decltype(auto) AddComponentIfNotExists(TArgs &&...args)
     {
         if (this->HasComponents<TComponent>())
         {
@@ -97,8 +96,7 @@ class Entity {
      * @return  reference of the added component
      * @see     RemoveTemporaryComponents
      */
-    template <typename TTempComponent, typename... TArgs>
-    inline decltype(auto) AddTemporaryComponent(TArgs &&...args)
+    template <typename TTempComponent, typename... TArgs> inline decltype(auto) AddTemporaryComponent(TArgs &&...args)
     {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
@@ -139,8 +137,7 @@ class Entity {
      */
     template <typename TComponent> inline void RemoveComponent()
     {
-        Log::Debug(fmt::format("[EntityID:{}] RemoveComponent: {}", _id,
-                               typeid(TComponent).name()));
+        Log::Debug(fmt::format("[EntityID:{}] RemoveComponent: {}", _id, typeid(TComponent).name()));
         GetCore().GetRegistry().remove<TComponent>(this->_id);
     }
 
@@ -188,18 +185,12 @@ class Entity {
         return GetCore().GetRegistry().try_get<TComponent>(this->_id);
     }
 
-    bool operator==(const Entity &rhs) const {
-        return _id.value == rhs._id.value;
-    }
+    bool operator==(const Entity &rhs) const { return _id.value == rhs._id.value; }
 
   private:
-    Core &GetCore() {
-        return _core->get();
-    }
+    Core &GetCore() { return _core->get(); }
 
-    const Core &GetCore() const {
-        return _core->get();
-    }
+    const Core &GetCore() const { return _core->get(); }
 
     std::optional<std::reference_wrapper<Core>> _core;
     EntityId _id;

@@ -24,7 +24,8 @@ template <> struct entt_traits<Engine::EntityId> : entt_traits<entt::id_type> {
 template <> struct fmt::formatter<Engine::EntityId> : fmt::formatter<std::string> {
     template <typename FormatContext> auto format(const Engine::EntityId &entityId, FormatContext &ctx) const
     {
-        if (entityId.IsNull()) {
+        if (entityId.IsNull())
+        {
             return fmt::formatter<std::string>::format("null_entity", ctx);
         }
         return fmt::formatter<std::string>::format(Log::EntityToDebugString(entityId.value), ctx);
