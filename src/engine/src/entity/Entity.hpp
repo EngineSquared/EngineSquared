@@ -1,10 +1,10 @@
 #pragma once
 
 #include "EntityToIDString.hpp"
+#include "Id.hpp"
 #include "Logger.hpp"
 #include "core/Core.hpp"
 #include <entt/entt.hpp>
-#include "Id.hpp"
 #include <typeindex>
 
 namespace Engine {
@@ -71,8 +71,7 @@ class Entity {
      * @param   args        parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      */
-    template <typename TComponent, typename... TArgs>
-    inline decltype(auto) AddComponentIfNotExists(TArgs &&...args)
+    template <typename TComponent, typename... TArgs> inline decltype(auto) AddComponentIfNotExists(TArgs &&...args)
     {
         if (this->HasComponents<TComponent>())
         {
@@ -92,8 +91,7 @@ class Entity {
      * @return  reference of the added component
      * @see     RemoveTemporaryComponents
      */
-    template <typename TTempComponent, typename... TArgs>
-    inline decltype(auto) AddTemporaryComponent(TArgs &&...args)
+    template <typename TTempComponent, typename... TArgs> inline decltype(auto) AddTemporaryComponent(TArgs &&...args)
     {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
@@ -134,8 +132,7 @@ class Entity {
      */
     template <typename TComponent> inline void RemoveComponent()
     {
-        Log::Debug(fmt::format("[EntityID:{}] RemoveComponent: {}", _entity,
-                               typeid(TComponent).name()));
+        Log::Debug(fmt::format("[EntityID:{}] RemoveComponent: {}", _entity, typeid(TComponent).name()));
         _core.GetRegistry().remove<TComponent>(this->_entity);
     }
 
@@ -183,9 +180,7 @@ class Entity {
         return _core.GetRegistry().try_get<TComponent>(this->_entity);
     }
 
-    bool operator==(const Entity &rhs) const {
-        return _entity.value == rhs._entity.value;
-    }
+    bool operator==(const Entity &rhs) const { return _entity.value == rhs._entity.value; }
 
   private:
     Core &_core;

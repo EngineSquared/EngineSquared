@@ -41,13 +41,15 @@ Engine::Core::Core() : _registry(nullptr)
 
 Engine::Core::~Core() { Log::Debug("Destroy Core"); }
 
-Engine::EntityId Engine::Core::CreateEntity() {
+Engine::EntityId Engine::Core::CreateEntity()
+{
     EntityId entity = this->_registry->create();
     Log::Debug(fmt::format("[EntityID:{}] Entity Created", entity));
     return entity;
 }
 
-void Engine::Core::KillEntity(Engine::EntityId entity) {
+void Engine::Core::KillEntity(Engine::EntityId entity)
+{
     this->_registry->destroy(entity);
     Log::Debug(fmt::format("[EntityID:{}] Entity Destroyed", entity));
 }

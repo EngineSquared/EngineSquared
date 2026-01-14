@@ -9,10 +9,10 @@
 #include <vector>
 
 #include "Logger.hpp"
+#include "entity/EntityId.hpp"
 #include "plugin/IPlugin.hpp"
 #include "scheduler/SchedulerContainer.hpp"
 #include "scheduler/Update.hpp"
-#include "entity/EntityId.hpp"
 
 namespace Engine {
 
@@ -319,7 +319,7 @@ class Core {
      */
     template <typename TPlugin> void AddPlugin();
 
-    private:
+  private:
     std::unique_ptr<Registry> _registry;
     Engine::SchedulerContainer _schedulers;
     std::type_index _defaultScheduler = typeid(Engine::Scheduler::Update);
