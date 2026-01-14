@@ -106,7 +106,7 @@ void CameraRotationSystem(Engine::Core &core)
             {
             case GLFW_PRESS:
                 targetController.active = true;
-                targetController.startMouse = glm::vec2(mousePos.x, mousePos.y - window.GetSize().y);
+                targetController.startMouse = glm::vec2(mousePos.x, -window.GetSize().y + mousePos.y);
                 targetController.originRotation =
                     camera.GetComponents<Object::Component::Transform>(core).GetRotation();
                 break;
