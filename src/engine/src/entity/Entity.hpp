@@ -35,7 +35,7 @@ class Entity {
      */
     bool IsValid() const;
 
-    EntityId Id() const { return _id; }
+    inline EntityId Id() const { return _id; }
 
     /**
      * Utility method to add a component to an entity.

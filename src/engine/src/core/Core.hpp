@@ -20,11 +20,10 @@ template <typename T>
 concept CScheduler = std::derived_from<T, Scheduler::AScheduler>;
 
 class Core {
-  private:
+  public:
     using USystem = std::function<void(Core &)>;
     using Registry = entt::basic_registry<EntityId>;
 
-  public:
     Core();
     ~Core();
 

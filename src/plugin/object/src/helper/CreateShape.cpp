@@ -9,13 +9,13 @@ namespace Object::Helper {
 Engine::Entity CreateCube(Engine::Core &core, float size, const glm::vec3 &position, const glm::quat &rotation,
                           const glm::vec3 &scale)
 {
-    auto entity = core.CreateEntity();
+    auto entity = Engine::Entity(core, core.CreateEntity());
 
     auto transform = Component::Transform(position, scale, rotation);
-    entity.AddComponent<Component::Transform>(core, transform);
+    entity.AddComponent<Component::Transform>(transform);
 
     auto mesh = Utils::GenerateCubeMesh(size);
-    entity.AddComponent<Component::Mesh>(core, std::move(mesh));
+    entity.AddComponent<Component::Mesh>(std::move(mesh));
 
     return entity;
 }
@@ -23,13 +23,13 @@ Engine::Entity CreateCube(Engine::Core &core, float size, const glm::vec3 &posit
 Engine::Entity CreateSphere(Engine::Core &core, float radius, const glm::vec3 &position, uint32_t segments,
                             uint32_t rings)
 {
-    auto entity = core.CreateEntity();
+    auto entity = Engine::Entity(core, core.CreateEntity());
 
     auto transform = Component::Transform(position);
-    entity.AddComponent<Component::Transform>(core, transform);
+    entity.AddComponent<Component::Transform>(transform);
 
     auto mesh = Utils::GenerateSphereMesh(radius, segments, rings);
-    entity.AddComponent<Component::Mesh>(core, std::move(mesh));
+    entity.AddComponent<Component::Mesh>(std::move(mesh));
 
     return entity;
 }
@@ -37,13 +37,13 @@ Engine::Entity CreateSphere(Engine::Core &core, float radius, const glm::vec3 &p
 Engine::Entity CreatePlane(Engine::Core &core, float width, float depth, const glm::vec3 &position,
                            uint32_t subdivisionsX, uint32_t subdivisionsZ)
 {
-    auto entity = core.CreateEntity();
+    auto entity = Engine::Entity(core, core.CreateEntity());
 
     auto transform = Component::Transform(position);
-    entity.AddComponent<Component::Transform>(core, transform);
+    entity.AddComponent<Component::Transform>(transform);
 
     auto mesh = Utils::GeneratePlaneMesh(width, depth, subdivisionsX, subdivisionsZ);
-    entity.AddComponent<Component::Mesh>(core, std::move(mesh));
+    entity.AddComponent<Component::Mesh>(std::move(mesh));
 
     return entity;
 }
@@ -51,13 +51,13 @@ Engine::Entity CreatePlane(Engine::Core &core, float width, float depth, const g
 Engine::Entity CreateCylinder(Engine::Core &core, float radiusTop, float radiusBottom, float height,
                               const glm::vec3 &position, uint32_t segments)
 {
-    auto entity = core.CreateEntity();
+    auto entity = Engine::Entity(core, core.CreateEntity());
 
     auto transform = Component::Transform(position);
-    entity.AddComponent<Component::Transform>(core, transform);
+    entity.AddComponent<Component::Transform>(transform);
 
     auto mesh = Utils::GenerateCylinderMesh(radiusTop, radiusBottom, height, segments);
-    entity.AddComponent<Component::Mesh>(core, std::move(mesh));
+    entity.AddComponent<Component::Mesh>(std::move(mesh));
 
     return entity;
 }
@@ -65,13 +65,13 @@ Engine::Entity CreateCylinder(Engine::Core &core, float radiusTop, float radiusB
 Engine::Entity CreateCapsule(Engine::Core &core, float radius, float height, const glm::vec3 &position,
                              uint32_t segments, uint32_t heightSegments)
 {
-    auto entity = core.CreateEntity();
+    auto entity = Engine::Entity(core, core.CreateEntity());
 
     auto transform = Component::Transform(position);
-    entity.AddComponent<Component::Transform>(core, transform);
+    entity.AddComponent<Component::Transform>(transform);
 
     auto mesh = Utils::GenerateCapsuleMesh(radius, height, segments, heightSegments);
-    entity.AddComponent<Component::Mesh>(core, std::move(mesh));
+    entity.AddComponent<Component::Mesh>(std::move(mesh));
 
     return entity;
 }

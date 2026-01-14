@@ -2,7 +2,7 @@
 
 namespace Physics::System {
 
-std::optional<ConstraintContext> ConstraintContext::Create(entt::registry &registry, const char *constraintName)
+std::optional<ConstraintContext> ConstraintContext::Create(Engine::Core::Registry &registry, const char *constraintName)
 {
     const char *safeName = constraintName ? constraintName : "<constraint>";
     auto **corePtr = registry.ctx().find<Engine::Core *>();
@@ -39,11 +39,11 @@ std::optional<ConstraintContext> ConstraintContext::Create(entt::registry &regis
     return ConstraintContext{coreRef, registry, physicsManagerRef, physicsManagerRef.GetPhysicsSystem()};
 }
 
-Component::RigidBodyInternal *GetBodyInternal(entt::registry &registry, Engine::Entity entity,
+Component::RigidBodyInternal *GetBodyInternal(Engine::Core::Registry &registry, Engine::Entity entity,
                                               const char *constraintName, const char *bodyName)
 {
     const char *safeName = constraintName ? constraintName : "<constraint>";
-    auto *internal = registry.try_get<Component::RigidBodyInternal>(static_cast<entt::entity>(entity));
+    auto *internal = entity.TryGetComponent<Component::RigidBodyInternal>();
     if (!internal || !internal->IsValid())
     {
         Log::Error(fmt::format("{}: {} has no valid RigidBodyInternal", safeName, bodyName));
@@ -52,7 +52,7 @@ Component::RigidBodyInternal *GetBodyInternal(entt::registry &registry, Engine::
     return internal;
 }
 
-void FinalizeConstraint(ConstraintContext &ctx, entt::entity entity, JPH::Constraint *joltConstraint,
+void FinalizeConstraint(ConstraintContext &ctx, Engine::Entity entity, JPH::Constraint *joltConstraint,
                         Component::ConstraintType type, const Component::ConstraintSettings &settings,
                         const char *constraintName)
 {
@@ -82,15 +82,17 @@ void FinalizeConstraint(ConstraintContext &ctx, entt::entity entity, JPH::Constr
 
     try
     {
-        if (auto *existing = ctx.registry.try_get<Component::ConstraintInternal>(entity);
-            existing && existing->IsValid())
+        if (auto *existing = entity.TryGetComponent<Component::ConstraintInternal>(); existing && existing->IsValid())
         {
             ctx.physicsSystem.RemoveConstraint(existing->constraint);
-            ctx.registry.remove<Component::ConstraintInternal>(entity);
+            entity.RemoveComponent<Component::ConstraintInternal>();
         }
-
-        ctx.registry.emplace_or_replace<Component::ConstraintInternal>(entity, joltConstraint, type,
-                                                                       settings.breakForce, settings.breakTorque);
+        if (entity.HasComponents<Component::ConstraintInternal>())
+        {
+            entity.RemoveComponent<Component::ConstraintInternal>();
+        }
+        entity.AddComponent<Component::ConstraintInternal>(joltConstraint, type, settings.breakForce,
+                                                           settings.breakTorque);
     }
     catch (const std::exception &e)
     {
@@ -106,10 +108,11 @@ void FinalizeConstraint(ConstraintContext &ctx, entt::entity entity, JPH::Constr
         return;
     }
 
-    Log::Debug(fmt::format("Created {} for entity {}", safeName, entt::to_integral(entity)));
+    Log::Debug(fmt::format("Created {} for entity {}", safeName, entity));
 }
 
-void DestroyConstraint(entt::registry &registry, entt::entity entity, const char *constraintName)
+void DestroyConstraint(Engine::Core::Registry &registry, Engine::EntityId entity,
+                       const char *constraintName)
 {
     const char *safeName = constraintName ? constraintName : "<constraint>";
     try

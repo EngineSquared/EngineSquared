@@ -6,5 +6,5 @@ bool Engine::Entity::IsValid() const
     {
         return false;
     }
-    return GetCore().IsEntityValid(_entity);
+    return GetCore().IsEntityValid(Id());
 }

@@ -85,12 +85,12 @@ struct DistanceConstraint {
     /**
      * @brief First body entity (the entity this component is attached to)
      */
-    Engine::Entity bodyA = Engine::Entity{};
+    Engine::EntityId bodyA = Engine::EntityId::Null();
 
     /**
      * @brief Second body entity (the entity to connect to)
      */
-    Engine::Entity bodyB = Engine::Entity{}; // invalid => world (see IsWorldConstraint)
+    Engine::EntityId bodyB = Engine::EntityId::Null(); // invalid => world (see IsWorldConstraint)
 
     //========================================================================
     // Attachment Points
@@ -174,7 +174,7 @@ struct DistanceConstraint {
      * @return Configured DistanceConstraint component
      */
     [[nodiscard]] static DistanceConstraint
-    Create(Engine::Entity a, Engine::Entity b, float distance, const glm::vec3 &pointA = glm::vec3(0.0f),
+    Create(Engine::EntityId a, Engine::EntityId b, float distance, const glm::vec3 &pointA = glm::vec3(0.0f),
            const glm::vec3 &pointB = glm::vec3(0.0f),
            const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
@@ -205,7 +205,7 @@ struct DistanceConstraint {
      * @return Configured DistanceConstraint component
      */
     [[nodiscard]] static DistanceConstraint
-    CreateWithRange(Engine::Entity a, Engine::Entity b, float min, float max, const glm::vec3 &pointA = glm::vec3(0.0f),
+    CreateWithRange(Engine::EntityId a, Engine::EntityId b, float min, float max, const glm::vec3 &pointA = glm::vec3(0.0f),
                     const glm::vec3 &pointB = glm::vec3(0.0f),
                     const ConstraintSettings &constraintSettings = ConstraintSettings::Soft())
     {
@@ -237,13 +237,13 @@ struct DistanceConstraint {
      * @return Configured DistanceConstraint component
      */
     [[nodiscard]] static DistanceConstraint
-    CreateToWorld(Engine::Entity body, const glm::vec3 &worldPoint, float distance,
+    CreateToWorld(Engine::EntityId body, const glm::vec3 &worldPoint, float distance,
                   const glm::vec3 &localPoint = glm::vec3(0.0f),
                   const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
         DistanceConstraint constraint;
         constraint.bodyA = body;
-        constraint.bodyB = Engine::Entity(); // Invalid entity = world
+        constraint.bodyB = Engine::EntityId::Null(); // Invalid entity = world
         constraint.localPointA = localPoint;
         constraint.localPointB = worldPoint; // Used as world position
         constraint.minDistance = distance;
@@ -266,7 +266,7 @@ struct DistanceConstraint {
      * @return Configured DistanceConstraint component
      */
     [[nodiscard]] static DistanceConstraint
-    CreateAutoDistance(Engine::Entity a, Engine::Entity b, const glm::vec3 &pointA = glm::vec3(0.0f),
+    CreateAutoDistance(Engine::EntityId a, Engine::EntityId b, const glm::vec3 &pointA = glm::vec3(0.0f),
                        const glm::vec3 &pointB = glm::vec3(0.0f),
                        const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
@@ -286,7 +286,7 @@ struct DistanceConstraint {
      * @brief Check if this is a world constraint
      * @return true if bodyB is invalid (world constraint)
      */
-    [[nodiscard]] bool IsWorldConstraint() const { return !bodyB.IsValid(); }
+    [[nodiscard]] bool IsWorldConstraint() const { return bodyB.IsNull(); }
 
     /**
      * @brief Check if distances should be auto-detected

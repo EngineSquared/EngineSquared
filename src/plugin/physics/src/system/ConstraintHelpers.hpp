@@ -24,18 +24,18 @@ namespace Physics::System {
 
 struct ConstraintContext {
     Engine::Core &core;
-    entt::registry &registry;
+    Engine::Core::Registry &registry;
     Resource::PhysicsManager &physicsManager;
     JPH::PhysicsSystem &physicsSystem;
 
-    static std::optional<ConstraintContext> Create(entt::registry &registry, const char *constraintName);
+    static std::optional<ConstraintContext> Create(Engine::Core::Registry &registry, const char *constraintName);
 };
 
 template <typename ConstraintT>
 static bool ValidateConstraint(const ConstraintT &constraint, const char *constraintName)
 {
     const char *safeName = constraintName ? constraintName : "<constraint>";
-    if (!constraint.bodyA.IsValid())
+    if (!constraint.bodyA.IsNull())
     {
         Log::Error(fmt::format("{}: bodyA is invalid", safeName));
         return false;
@@ -50,7 +50,7 @@ static bool ValidateConstraint(const ConstraintT &constraint, const char *constr
     return true;
 }
 
-Component::RigidBodyInternal *GetBodyInternal(entt::registry &registry, Engine::Entity entity,
+Component::RigidBodyInternal *GetBodyInternal(Engine::Core::Registry &registry, Engine::EntityId entity,
                                               const char *constraintName, const char *bodyName);
 
 template <typename SettingsT, typename ConstraintT>
@@ -93,16 +93,17 @@ static JPH::Constraint *CreateJoltConstraint(ConstraintContext &ctx, SettingsT &
     return joltSettings.Create(*bodyA, *bodyB);
 }
 
-void FinalizeConstraint(ConstraintContext &ctx, entt::entity entity, JPH::Constraint *joltConstraint,
+void FinalizeConstraint(ConstraintContext &ctx, Engine::EntityId entity, JPH::Constraint *joltConstraint,
                         Component::ConstraintType type, const Component::ConstraintSettings &settings,
                         const char *constraintName);
 
-void DestroyConstraint(entt::registry &registry, entt::entity entity, const char *constraintName);
+void DestroyConstraint(Engine::Core::Registry &registry, Engine::EntityId entity, const char *constraintName);
 
 template <Component::ConstraintType TYPE, typename CompT, typename SettingsT, typename Configurator,
           typename ExtraValidate>
-static void CreateConstraintGeneric(entt::registry &registry, entt::entity entity, const char *constraintName,
-                                    Configurator &&configurator, ExtraValidate &&extraValidate)
+static void CreateConstraintGeneric(Engine::Core::Registry &registry, Engine::EntityId entity,
+                                    const char *constraintName, Configurator &&configurator,
+                                    ExtraValidate &&extraValidate)
 {
     const char *safeName = constraintName ? constraintName : "<constraint>";
     try
