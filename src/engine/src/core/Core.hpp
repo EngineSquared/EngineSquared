@@ -240,7 +240,7 @@ class Core {
     /**
      * Check if entity is valid in the context of the registry. It check if the id of the entity exist.
      */
-    bool IsEntityValid(EntityId entity);
+    bool IsEntityValid(EntityId entity) const;
 
     /**
      * @brief Adds multiple plugins to the core engine.

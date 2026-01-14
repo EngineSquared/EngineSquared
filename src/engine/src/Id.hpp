@@ -12,7 +12,7 @@ template <typename TDerived, typename TValue> struct BasicId {
     constexpr explicit(false) BasicId(TValue v = TDerived::NullValue()) : value{v} {}
 
     static constexpr BasicId Null() { return TDerived::Null(); }
-    constexpr bool IsNull() const { return value == Null(); }
+    constexpr bool IsNull() const { return value == TDerived::NullValue(); }
 };
 
 struct Id : public BasicId<Id, entt::id_type> {
@@ -26,7 +26,6 @@ static_assert(sizeof(Id) == sizeof(entt::id_type), "Id size must be equal to ent
 struct StringId : public BasicId<StringId, entt::hashed_string> {
     using ValueType = entt::hashed_string;
     constexpr explicit(false) StringId(ValueType v = NullValue()) : BasicId<StringId, ValueType>{v} {}
-    std::string_view ToStringView() const { return std::string_view(value.data(), value.size()); }
     static constexpr ValueType NullValue() { return entt::hashed_string{}; }
 };
 
@@ -44,6 +43,6 @@ template <> struct fmt::formatter<Engine::Id> : fmt::formatter<entt::id_type> {
 template <> struct fmt::formatter<Engine::StringId> : fmt::formatter<std::string_view> {
     template <typename FormatContext> auto format(const Engine::StringId &id, FormatContext &ctx) const
     {
-        return fmt::formatter<std::string_view>::format(id.ToStringView(), ctx);
+        return fmt::formatter<std::string_view>::format(std::string_view(id.value.data(), id.value.size()), ctx);
     }
 };

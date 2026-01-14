@@ -1,10 +1,10 @@
 #pragma once
 
 #include "EntityToIDString.hpp"
-#include "Id.hpp"
 #include "Logger.hpp"
 #include "core/Core.hpp"
 #include <entt/entt.hpp>
+#include "Id.hpp"
 #include <typeindex>
 
 namespace Engine {
@@ -21,7 +21,11 @@ class Entity {
      * @param   core    reference to the core
      * @param   entity  index value in the registry
      */
-    explicit(false) Entity(Core &core, EntityId entity = EntityId::Null()) : _core(core), _entity(entity) {}
+    explicit(false) Entity(Core &core, EntityId entityId) : _core(core), _id(entityId) {}
+
+    explicit Entity() : _core(std::nullopt), _id(EntityId::Null()) {}
+
+    static Entity Null() { return Entity{}; }
 
     ~Entity() = default;
 
@@ -31,6 +35,8 @@ class Entity {
      */
     bool IsValid() const;
 
+    EntityId Id() const { return _id; }
+
     /**
      * Utility method to add a component to an entity.
      *
@@ -39,12 +45,11 @@ class Entity {
      * @param   component   rvalue to add to registry
      * @return  reference of the added component
      */
-
     template <typename TComponent> inline decltype(auto) AddComponent(TComponent &&component)
     {
         // TODO: put this into core or custom registry
-        Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
-        return _core.GetRegistry().emplace<TComponent>(this->_entity, std::forward<TComponent>(component));
+        Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}", _id, typeid(TComponent).name()));
+        return GetCore().GetRegistry().emplace<TComponent>(this->_id, std::forward<TComponent>(component));
     }
 
     /**
@@ -58,8 +63,8 @@ class Entity {
      */
     template <typename TComponent, typename... TArgs> inline decltype(auto) AddComponent(TArgs &&...args)
     {
-        Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}", _entity, typeid(TComponent).name()));
-        return _core.GetRegistry().emplace<TComponent>(this->_entity, std::forward<TArgs>(args)...);
+        Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}", _id, typeid(TComponent).name()));
+        return GetCore().GetRegistry().emplace<TComponent>(this->_id, std::forward<TArgs>(args)...);
     }
 
     /**
@@ -71,7 +76,8 @@ class Entity {
      * @param   args        parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      */
-    template <typename TComponent, typename... TArgs> inline decltype(auto) AddComponentIfNotExists(TArgs &&...args)
+    template <typename TComponent, typename... TArgs>
+    inline decltype(auto) AddComponentIfNotExists(TArgs &&...args)
     {
         if (this->HasComponents<TComponent>())
         {
@@ -91,7 +97,8 @@ class Entity {
      * @return  reference of the added component
      * @see     RemoveTemporaryComponents
      */
-    template <typename TTempComponent, typename... TArgs> inline decltype(auto) AddTemporaryComponent(TArgs &&...args)
+    template <typename TTempComponent, typename... TArgs>
+    inline decltype(auto) AddTemporaryComponent(TArgs &&...args)
     {
         if (!temporaryComponent.contains(std::type_index(typeid(TTempComponent))))
         {
@@ -132,8 +139,9 @@ class Entity {
      */
     template <typename TComponent> inline void RemoveComponent()
     {
-        Log::Debug(fmt::format("[EntityID:{}] RemoveComponent: {}", _entity, typeid(TComponent).name()));
-        _core.GetRegistry().remove<TComponent>(this->_entity);
+        Log::Debug(fmt::format("[EntityID:{}] RemoveComponent: {}", _id,
+                               typeid(TComponent).name()));
+        GetCore().GetRegistry().remove<TComponent>(this->_id);
     }
 
     /**
@@ -144,7 +152,7 @@ class Entity {
      */
     template <typename... TComponent> inline bool HasComponents() const
     {
-        return _core.GetRegistry().all_of<TComponent...>(this->_entity);
+        return GetCore().GetRegistry().all_of<TComponent...>(this->_id);
     }
 
     /**
@@ -155,7 +163,7 @@ class Entity {
      */
     template <typename... TComponent> inline decltype(auto) GetComponents()
     {
-        return _core.GetRegistry().get<TComponent...>(this->_entity);
+        return GetCore().GetRegistry().get<TComponent...>(this->_id);
     }
 
     /**
@@ -166,7 +174,7 @@ class Entity {
      */
     template <typename... TComponent> inline decltype(auto) GetComponents() const
     {
-        return _core.GetRegistry().get<TComponent...>(this->_entity);
+        return GetCore().GetRegistry().get<TComponent...>(this->_id);
     }
 
     /**
@@ -177,15 +185,32 @@ class Entity {
      */
     template <typename TComponent> inline decltype(auto) TryGetComponent()
     {
-        return _core.GetRegistry().try_get<TComponent>(this->_entity);
+        return GetCore().GetRegistry().try_get<TComponent>(this->_id);
     }
 
-    bool operator==(const Entity &rhs) const { return _entity.value == rhs._entity.value; }
+    bool operator==(const Entity &rhs) const {
+        return _id.value == rhs._id.value;
+    }
 
   private:
-    Core &_core;
-    EntityId _entity;
+    Core &GetCore() {
+        return _core->get();
+    }
+
+    const Core &GetCore() const {
+        return _core->get();
+    }
+
+    std::optional<std::reference_wrapper<Core>> _core;
+    EntityId _id;
     inline static std::unordered_map<std::type_index, std::function<void(Core &)>> temporaryComponent = {};
 };
 
 } // namespace Engine
+
+template <> struct fmt::formatter<Engine::Entity> : fmt::formatter<Engine::EntityId> {
+    template <typename FormatContext> auto format(const Engine::Entity &entity, FormatContext &ctx) const
+    {
+        return fmt::formatter<Engine::EntityId>::format(entity.Id(), ctx);
+    }
+};

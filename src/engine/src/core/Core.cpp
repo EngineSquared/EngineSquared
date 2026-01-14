@@ -87,7 +87,7 @@ void Engine::Core::RunSystems()
     this->_schedulersToDelete.clear();
 }
 
-bool Engine::Core::IsEntityValid(Engine::EntityId entity) { return GetRegistry().valid(entity); }
+bool Engine::Core::IsEntityValid(Engine::EntityId entity) const { return GetRegistry().valid(entity); }
 
 void Engine::Core::ClearEntities() { this->_registry->clear(); }
 
