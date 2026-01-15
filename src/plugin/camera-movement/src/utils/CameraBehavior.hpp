@@ -1,17 +1,12 @@
 #pragma once
 
-namespace Engine {
-class Core;
-}
+#include "core/Core.hpp"
+#include "component/Camera.hpp"
+#include "component/Transform.hpp"
 
 namespace CameraMovement::Resource {
 class CameraManager;
 }
-
-namespace Object::Component {
-class Transform;
-class Camera;
-} // namespace Object::Component
 
 namespace CameraMovement::Utils {
 
