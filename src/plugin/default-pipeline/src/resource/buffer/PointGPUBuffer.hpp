@@ -71,8 +71,7 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
         const auto &normals = meshComponent.GetNormals();
         const auto &texCoords = meshComponent.GetTexCoords();
 
-        if (normals.size() != vertices.size() ||
-            texCoords.size() != vertices.size())
+        if (normals.size() != vertices.size() || texCoords.size() != vertices.size())
         {
             throw Graphic::Exception::UpdateBufferError(
                 "Cannot update GPU buffer: normals or texCoords size mismatch with vertices.");

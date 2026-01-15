@@ -317,8 +317,7 @@ struct SoftBody {
 
         float safeMass = mass < kMinMass ? kMinMass : mass;
         invMasses[vertexIndex] = 1.0f / safeMass;
-        pinnedVertices.erase(std::ranges::remove(pinnedVertices, vertexIndex).begin(),
-                             pinnedVertices.end());
+        pinnedVertices.erase(std::ranges::remove(pinnedVertices, vertexIndex).begin(), pinnedVertices.end());
     }
 
     /**

@@ -18,9 +18,9 @@
 
 constexpr std::string_view FILES_PATH =
 #ifdef PATH_ASSETS
-        PATH_ASSETS;
+    PATH_ASSETS;
 #else
-        "./assets/";
+    "./assets/";
 #endif
 
 void EscapeKeySystem(Engine::Core &core)

@@ -20,8 +20,8 @@
 
 #include "Physics.pch.hpp"
 
-#include "system/SoftBodySystem.hpp"
 #include "exception/SoftBodyError.hpp"
+#include "system/SoftBodySystem.hpp"
 
 #include "Logger.hpp"
 #include "component/BoxCollider.hpp"
@@ -284,7 +284,7 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
         for (const auto &[vertexA, vertexB] : softBody.edges)
         {
             settings->mEdgeConstraints.emplace_back(
-            JPH::SoftBodySharedSettings::Edge(vertexA, vertexB, softBody.settings.edgeCompliance));
+                JPH::SoftBodySharedSettings::Edge(vertexA, vertexB, softBody.settings.edgeCompliance));
         }
     }
 
@@ -581,7 +581,8 @@ void SyncSoftBodyVertices(Engine::Core &core)
         if (!internal.vertexMap.empty())
         {
             // Use vertex map: original mesh vertices are mapped to deduplicated Jolt vertices
-            for (size_t origIdx = 0u; origIdx < mesh->GetVertices().size() && origIdx < internal.vertexMap.size(); ++origIdx)
+            for (size_t origIdx = 0u; origIdx < mesh->GetVertices().size() && origIdx < internal.vertexMap.size();
+                 ++origIdx)
             {
                 uint32_t joltIdx = internal.vertexMap[origIdx];
                 if (joltIdx < joltVertices.size())

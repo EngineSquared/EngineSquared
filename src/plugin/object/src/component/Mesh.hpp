@@ -99,13 +99,9 @@ struct Mesh {
         _dirty = true;
     }
 
-    void ReserveVertices(size_t count)
-    {
-        vertices.reserve(count);
-    }
+    void ReserveVertices(size_t count) { vertices.reserve(count); }
 
-    template <typename... _Args>
-    void EmplaceVertices(_Args&&... __args)
+    template <typename... _Args> void EmplaceVertices(_Args &&...__args)
     {
         vertices.emplace_back(std::forward<_Args>(__args)...);
         _dirty = true;
@@ -126,13 +122,9 @@ struct Mesh {
         _dirty = true;
     }
 
-    void ReserveNormals(size_t count)
-    {
-        normals.reserve(count);
-    }
+    void ReserveNormals(size_t count) { normals.reserve(count); }
 
-    template <typename... _Args>
-    void EmplaceNormals(_Args&&... __args)
+    template <typename... _Args> void EmplaceNormals(_Args &&...__args)
     {
         normals.emplace_back(std::forward<_Args>(__args)...);
         _dirty = true;
@@ -153,13 +145,9 @@ struct Mesh {
         _dirty = true;
     }
 
-    void ReserveTexCoords(size_t count)
-    {
-        texCoords.reserve(count);
-    }
+    void ReserveTexCoords(size_t count) { texCoords.reserve(count); }
 
-    template <typename... _Args>
-    void EmplaceTexCoords(_Args&&... __args)
+    template <typename... _Args> void EmplaceTexCoords(_Args &&...__args)
     {
         texCoords.emplace_back(std::forward<_Args>(__args)...);
         _dirty = true;
@@ -180,13 +168,9 @@ struct Mesh {
         _dirty = true;
     }
 
-    void ReserveIndices(size_t count)
-    {
-        indices.reserve(count);
-    }
+    void ReserveIndices(size_t count) { indices.reserve(count); }
 
-    template <typename... _Args>
-    void EmplaceIndices(_Args&&... __args)
+    template <typename... _Args> void EmplaceIndices(_Args &&...__args)
     {
         indices.emplace_back(std::forward<_Args>(__args)...);
         _dirty = true;

@@ -117,17 +117,17 @@ Component::Mesh GenerateCubeMesh(float size)
     });
 
     mesh.SetIndices({// Front
-                    0, 1, 2, 2, 3, 0,
-                    // Back
-                    4, 5, 6, 6, 7, 4,
-                    // Top
-                    8, 9, 10, 10, 11, 8,
-                    // Bottom
-                    12, 13, 14, 14, 15, 12,
-                    // Right
-                    16, 17, 18, 18, 19, 16,
-                    // Left
-                    20, 21, 22, 22, 23, 20});
+                     0, 1, 2, 2, 3, 0,
+                     // Back
+                     4, 5, 6, 6, 7, 4,
+                     // Top
+                     8, 9, 10, 10, 11, 8,
+                     // Bottom
+                     12, 13, 14, 14, 15, 12,
+                     // Right
+                     16, 17, 18, 18, 19, 16,
+                     // Left
+                     20, 21, 22, 22, 23, 20});
 
     return mesh;
 }
@@ -164,7 +164,7 @@ Component::Mesh GenerateSphereMesh(float radius, uint32_t segments, uint32_t rin
             mesh.EmplaceNormals(normal);
 
             mesh.EmplaceTexCoords(static_cast<float>(seg) / static_cast<float>(segments),
-                                        static_cast<float>(ring) / static_cast<float>(rings));
+                                  static_cast<float>(ring) / static_cast<float>(rings));
         }
     }
 
@@ -394,7 +394,7 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
             glm::vec3 normal = glm::normalize(glm::vec3(r * cosT, y - centerY, r * sinT));
             mesh.EmplaceNormals(normal);
             mesh.EmplaceTexCoords(static_cast<float>(s) / static_cast<float>(segments),
-                                        (y + (radius + halfHeight)) / totalHeight);
+                                  (y + (radius + halfHeight)) / totalHeight);
         }
     };
 
@@ -583,7 +583,7 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
             for (uint32_t x = 0u; x < gridSize; ++x)
             {
                 mesh.EmplaceVertices(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing,
-                                           static_cast<float>(z) * spacing);
+                                     static_cast<float>(z) * spacing);
                 mesh.EmplaceNormals(0.0f, 1.0f, 0.0f); // Placeholder normal
                 float u = static_cast<float>(x) / static_cast<float>(gridSize - 1u);
                 float v = static_cast<float>(y) / static_cast<float>(gridSize - 1u);
