@@ -29,10 +29,7 @@
 #include <utility>
 #include <vector>
 
-// Forward declaration to avoid circular dependency
-namespace Object::Component {
-struct Mesh;
-}
+#include "component/Mesh.hpp"
 
 namespace Physics::Component {
 
@@ -289,7 +286,7 @@ struct SoftBody {
         if (vertexIndex < invMasses.size())
         {
             invMasses[vertexIndex] = 0.0f;
-            if (std::find(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex) == pinnedVertices.end())
+            if (std::ranges::find(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex) == pinnedVertices.end())
             {
                 pinnedVertices.push_back(vertexIndex);
             }
@@ -320,7 +317,7 @@ struct SoftBody {
 
         float safeMass = mass < kMinMass ? kMinMass : mass;
         invMasses[vertexIndex] = 1.0f / safeMass;
-        pinnedVertices.erase(std::remove(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex),
+        pinnedVertices.erase(std::ranges::remove(pinnedVertices, vertexIndex).begin(),
                              pinnedVertices.end());
     }
 

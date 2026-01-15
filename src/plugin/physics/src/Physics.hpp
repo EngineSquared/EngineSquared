@@ -7,6 +7,7 @@
 // Exceptions
 #include "exception/ConstraintError.hpp"
 #include "exception/RigidBodyError.hpp"
+#include "exception/SoftBodyError.hpp"
 
 // Components - Colliders
 #include "component/BoxCollider.hpp"

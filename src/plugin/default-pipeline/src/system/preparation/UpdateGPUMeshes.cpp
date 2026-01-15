@@ -24,15 +24,15 @@ void UpdateGPUMeshes(Engine::Core &core)
 
         auto &gpuMesh = view.get<Component::GPUMesh>(entity);
 
-        if (!gpuBufferContainer.Contains(gpuMesh.pointBufferId))
-            continue;
-
-        auto &buffer = gpuBufferContainer.Get(gpuMesh.pointBufferId);
-        if (!buffer || !buffer->IsCreated(core))
-            continue;
-
-        buffer->Update(core);
-        mesh.ClearDirty();
+        if (gpuBufferContainer.Contains(gpuMesh.pointBufferId))
+        {
+            auto &buffer = gpuBufferContainer.Get(gpuMesh.pointBufferId);
+            if (buffer && buffer->IsCreated(core))
+            {
+                buffer->Update(core);
+                mesh.ClearDirty();
+            }
+        }
     }
 }
 

@@ -16,10 +16,11 @@
 
 #include "export.h"
 
+constexpr std::string_view FILES_PATH =
 #ifdef PATH_ASSETS
-#    define FILES_PATH PATH_ASSETS
+        PATH_ASSETS;
 #else
-#    define FILES_PATH "./assets/"
+        "./assets/";
 #endif
 
 void EscapeKeySystem(Engine::Core &core)
@@ -133,13 +134,13 @@ void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass
     cube.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
 
     Object::Component::Material texture;
-    texture.ambientTexName = FILES_PATH "texture.png";
+    texture.ambientTexName = std::string(FILES_PATH) + "texture.png";
     cube.AddComponent<Object::Component::Material>(core, std::move(texture));
 }
 
 void CreateSoftbodyFromOBJ(Engine::Core &core)
 {
-    Object::OBJLoader loader(FILES_PATH "teapot.obj");
+    Object::OBJLoader loader(std::string(FILES_PATH) + "teapot.obj");
     auto mesh = loader.GetMesh();
 
     // Create entity with Transform that includes scale
@@ -193,7 +194,7 @@ void CreateJellyCube(Engine::Core &core, const glm::vec3 &position, float size, 
     jellyCube.AddComponent<Physics::Component::SoftBody>(core, Physics::Component::SoftBody(settings));
 
     Object::Component::Material mat;
-    mat.ambientTexName = FILES_PATH "texture.png";
+    mat.ambientTexName = std::string(FILES_PATH) + "texture.png";
     jellyCube.AddComponent<Object::Component::Material>(core, mat);
 }
 
@@ -220,7 +221,7 @@ void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
     }
 
     Object::Component::Material mat;
-    mat.ambientTexName = FILES_PATH "texture.png";
+    mat.ambientTexName = std::string(FILES_PATH) + "texture.png";
     cloth.AddComponent<Object::Component::Material>(core, mat);
 }
 

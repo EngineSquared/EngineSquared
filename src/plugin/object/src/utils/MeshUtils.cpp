@@ -24,43 +24,61 @@
 
 namespace Object::Utils {
 
+static void NormalizeVector(glm::vec3 &normal, float epsilon)
+{
+    const float lengthSq = glm::dot(normal, normal);
+    if (lengthSq > epsilon)
+    {
+        normal = normal / std::sqrt(lengthSq);
+    }
+    else
+    {
+        // Default to up vector for degenerate cases
+        normal = glm::vec3(0.0f, 1.0f, 0.0f);
+    }
+}
+
 void RecalculateNormals(Component::Mesh &mesh)
 {
+    const auto &vertices = mesh.GetVertices();
+    const auto &indices = mesh.GetIndices();
     // Guard clause: need vertices and indices
-    if (mesh.vertices.empty() || mesh.indices.empty())
+    if (vertices.empty() || indices.empty())
         return;
 
     // Guard clause: indices must form complete triangles
-    if (mesh.indices.size() % 3 != 0)
+    if (indices.size() % 3u != 0)
         return;
 
+    const auto &normals = mesh.GetNormals();
+
     // Ensure normals array is properly sized
-    if (mesh.normals.size() != mesh.vertices.size())
+    if (normals.size() != vertices.size())
     {
-        mesh.normals.resize(mesh.vertices.size());
+        mesh.SetNormals(std::vector<glm::vec3>(vertices.size()));
     }
 
     // Initialize all normals to zero
-    for (auto &normal : mesh.normals)
+    for (size_t i = 0u; i < normals.size(); ++i)
     {
-        normal = glm::vec3(0.0f);
+        mesh.SetNormalAt(i, glm::vec3(0.0f));
     }
 
     // Accumulate face normals for each vertex
-    const size_t triangleCount = mesh.indices.size() / 3;
-    for (size_t i = 0; i < triangleCount; ++i)
+    const size_t triangleCount = indices.size() / 3u;
+    for (size_t i = 0u; i < triangleCount; ++i)
     {
-        const uint32_t idx0 = mesh.indices[i * 3 + 0];
-        const uint32_t idx1 = mesh.indices[i * 3 + 1];
-        const uint32_t idx2 = mesh.indices[i * 3 + 2];
+        const uint32_t idx0 = indices[i * 3 + 0];
+        const uint32_t idx1 = indices[i * 3 + 1];
+        const uint32_t idx2 = indices[i * 3 + 2];
 
         // Bounds check
-        if (idx0 >= mesh.vertices.size() || idx1 >= mesh.vertices.size() || idx2 >= mesh.vertices.size())
+        if (idx0 >= vertices.size() || idx1 >= vertices.size() || idx2 >= vertices.size())
             continue;
 
-        const glm::vec3 &v0 = mesh.vertices[idx0];
-        const glm::vec3 &v1 = mesh.vertices[idx1];
-        const glm::vec3 &v2 = mesh.vertices[idx2];
+        const glm::vec3 &v0 = vertices[idx0];
+        const glm::vec3 &v1 = vertices[idx1];
+        const glm::vec3 &v2 = vertices[idx2];
 
         // Compute face normal using cross product
         // Edge vectors from v0
@@ -73,32 +91,25 @@ void RecalculateNormals(Component::Mesh &mesh)
         const glm::vec3 faceNormal = glm::cross(edge1, edge2);
 
         // Accumulate to each vertex of this face
-        mesh.normals[idx0] += faceNormal;
-        mesh.normals[idx1] += faceNormal;
-        mesh.normals[idx2] += faceNormal;
+        mesh.SetNormalAt(idx0, normals[idx0] + faceNormal);
+        mesh.SetNormalAt(idx1, normals[idx1] + faceNormal);
+        mesh.SetNormalAt(idx2, normals[idx2] + faceNormal);
     }
 
     // Normalize all vertex normals
     constexpr float epsilon = 1e-8f;
-    for (auto &normal : mesh.normals)
+    for (size_t i = 0u; i < normals.size(); ++i)
     {
-        const float lengthSq = glm::dot(normal, normal);
-        if (lengthSq > epsilon)
-        {
-            normal = normal / std::sqrt(lengthSq);
-        }
-        else
-        {
-            // Default to up vector for degenerate cases
-            normal = glm::vec3(0.0f, 1.0f, 0.0f);
-        }
+        glm::vec3 normal = normals[i];
+        NormalizeVector(normal, epsilon);
+        mesh.SetNormalAt(i, normal);
     }
 }
 
 bool ValidateMeshArraySizes(const Component::Mesh &mesh)
 {
-    const size_t vertexCount = mesh.vertices.size();
-    return mesh.normals.size() == vertexCount && mesh.texCoords.size() == vertexCount;
+    const size_t vertexCount = mesh.GetVertices().size();
+    return mesh.GetNormals().size() == vertexCount && mesh.GetTexCoords().size() == vertexCount;
 }
 
 } // namespace Object::Utils

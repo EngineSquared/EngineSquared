@@ -23,9 +23,7 @@
 
 #pragma once
 
-namespace Engine {
-class Core;
-}
+#include "core/Core.hpp"
 
 namespace Physics::System {
 

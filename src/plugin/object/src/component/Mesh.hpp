@@ -38,13 +38,15 @@ namespace Object::Component {
  * to signal that the GPU buffer needs to be updated.
  */
 struct Mesh {
-    std::vector<glm::vec3> vertices{};
-    std::vector<glm::vec3> normals{};
-    std::vector<glm::vec2> texCoords{};
-    std::vector<uint32_t> indices{};
-
     explicit Mesh() = default;
-    ~Mesh() = default;
+    ~Mesh()
+    {
+        vertices.clear();
+        normals.clear();
+        texCoords.clear();
+        indices.clear();
+        _dirty = false;
+    }
 
     // Move constructor
     Mesh(Mesh &&other) noexcept
@@ -74,16 +76,121 @@ struct Mesh {
     // Copy assignment operator
     Mesh &operator=(const Mesh &other) = default;
 
-    /**
-     * @brief Mark the mesh as dirty, indicating GPU buffer needs update.
-     *
-     * Call this method after modifying vertices, normals, or texCoords
-     * to ensure the GPU buffer is synchronized on the next render frame.
-     *
-     * @note This method is const because _dirty is mutable, allowing
-     *       modification tracking even on const mesh references.
-     */
-    void MarkDirty() const { _dirty = true; }
+    // Getters
+    [[nodiscard]] const std::vector<glm::vec3> &GetVertices() const { return vertices; }
+    [[nodiscard]] const std::vector<glm::vec3> &GetNormals() const { return normals; }
+    [[nodiscard]] const std::vector<glm::vec2> &GetTexCoords() const { return texCoords; }
+    [[nodiscard]] const std::vector<uint32_t> &GetIndices() const { return indices; }
+
+    // Setters
+
+    //---------------- Vertex Methods ----------------//
+    void SetVertices(const std::vector<glm::vec3> &newVertices)
+    {
+        vertices = newVertices;
+        _dirty = true;
+    }
+
+    void SetVertexAt(size_t index, const glm::vec3 &vertex)
+    {
+        if (index >= vertices.size())
+            return;
+        vertices[index] = vertex;
+        _dirty = true;
+    }
+
+    void ReserveVertices(size_t count)
+    {
+        vertices.reserve(count);
+    }
+
+    template <typename... _Args>
+    void EmplaceVertices(_Args&&... __args)
+    {
+        vertices.emplace_back(std::forward<_Args>(__args)...);
+        _dirty = true;
+    }
+
+    //---------------- Normal Methods ----------------//
+    void SetNormals(const std::vector<glm::vec3> &newNormals)
+    {
+        normals = newNormals;
+        _dirty = true;
+    }
+
+    void SetNormalAt(size_t index, const glm::vec3 &normal)
+    {
+        if (index >= normals.size())
+            return;
+        normals[index] = normal;
+        _dirty = true;
+    }
+
+    void ReserveNormals(size_t count)
+    {
+        normals.reserve(count);
+    }
+
+    template <typename... _Args>
+    void EmplaceNormals(_Args&&... __args)
+    {
+        normals.emplace_back(std::forward<_Args>(__args)...);
+        _dirty = true;
+    }
+
+    //---------------- TexCoord Methods ----------------//
+    void SetTexCoords(const std::vector<glm::vec2> &newTexCoords)
+    {
+        texCoords = newTexCoords;
+        _dirty = true;
+    }
+
+    void SetTexCoordAt(size_t index, const glm::vec2 &texCoord)
+    {
+        if (index >= texCoords.size())
+            return;
+        texCoords[index] = texCoord;
+        _dirty = true;
+    }
+
+    void ReserveTexCoords(size_t count)
+    {
+        texCoords.reserve(count);
+    }
+
+    template <typename... _Args>
+    void EmplaceTexCoords(_Args&&... __args)
+    {
+        texCoords.emplace_back(std::forward<_Args>(__args)...);
+        _dirty = true;
+    }
+
+    //---------------- Index Methods ----------------//
+    void SetIndices(const std::vector<uint32_t> &newIndices)
+    {
+        indices = newIndices;
+        _dirty = true;
+    }
+
+    void SetIndexAt(size_t index, uint32_t indexValue)
+    {
+        if (index >= indices.size())
+            return;
+        indices[index] = indexValue;
+        _dirty = true;
+    }
+
+    void ReserveIndices(size_t count)
+    {
+        indices.reserve(count);
+    }
+
+    template <typename... _Args>
+    void EmplaceIndices(_Args&&... __args)
+    {
+        indices.emplace_back(std::forward<_Args>(__args)...);
+        _dirty = true;
+    }
 
     /**
      * @brief Check if the mesh data has been modified since last GPU sync.
@@ -102,6 +209,11 @@ struct Mesh {
     void ClearDirty() const { _dirty = false; }
 
   private:
+    std::vector<glm::vec3> vertices{};
+    std::vector<glm::vec3> normals{};
+    std::vector<glm::vec2> texCoords{};
+    std::vector<uint32_t> indices{};
+
     /**
      * @brief Dirty flag for GPU synchronization optimization.
      *

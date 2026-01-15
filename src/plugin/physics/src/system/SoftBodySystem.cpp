@@ -21,6 +21,7 @@
 #include "Physics.pch.hpp"
 
 #include "system/SoftBodySystem.hpp"
+#include "exception/SoftBodyError.hpp"
 
 #include "Logger.hpp"
 #include "component/BoxCollider.hpp"
@@ -134,13 +135,14 @@ struct DeduplicatedMesh {
 static DeduplicatedMesh DeduplicateMesh(const Object::Component::Mesh &mesh)
 {
     DeduplicatedMesh result;
-    result.vertexMap.resize(mesh.vertices.size());
+    const auto &vertices = mesh.GetVertices();
+    result.vertexMap.resize(vertices.size());
 
     std::unordered_map<glm::vec3, uint32_t, Vec3Hash, Vec3Equal> vertexToIndex;
 
-    for (size_t i = 0; i < mesh.vertices.size(); ++i)
+    for (size_t i = 0; i < vertices.size(); ++i)
     {
-        const auto &vertex = mesh.vertices[i];
+        const auto &vertex = vertices[i];
 
         auto it = vertexToIndex.find(vertex);
         if (it != vertexToIndex.end())
@@ -151,7 +153,7 @@ static DeduplicatedMesh DeduplicateMesh(const Object::Component::Mesh &mesh)
         else
         {
             // New unique vertex
-            uint32_t newIndex = static_cast<uint32_t>(result.vertices.size());
+            auto newIndex = static_cast<uint32_t>(result.vertices.size());
             result.vertices.push_back(vertex);
             vertexToIndex[vertex] = newIndex;
             result.vertexMap[i] = newIndex;
@@ -159,8 +161,9 @@ static DeduplicatedMesh DeduplicateMesh(const Object::Component::Mesh &mesh)
     }
 
     // Remap indices to point to deduplicated vertices
-    result.indices.reserve(mesh.indices.size());
-    for (uint32_t idx : mesh.indices)
+    const auto &originalIndices = mesh.GetIndices();
+    result.indices.reserve(originalIndices.size());
+    for (uint32_t idx : originalIndices)
     {
         if (idx < result.vertexMap.size())
         {
@@ -207,7 +210,7 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
 
     Log::Info(fmt::format("SoftBody mesh: original {} vertices -> {} unique vertices, {} indices (scale: {:.2f}, "
                           "{:.2f}, {:.2f})",
-                          mesh.vertices.size(), deduped.vertices.size(), deduped.indices.size(), scale.x, scale.y,
+                          mesh.GetVertices().size(), deduped.vertices.size(), deduped.indices.size(), scale.x, scale.y,
                           scale.z));
 
     // Add unique vertices with scale applied
@@ -278,10 +281,10 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
     {
         // For rope/chain without faces, use edge constraints from SoftBody
         settings->mEdgeConstraints.reserve(softBody.edges.size());
-        for (const auto &edge : softBody.edges)
+        for (const auto &[vertexA, vertexB] : softBody.edges)
         {
             settings->mEdgeConstraints.emplace_back(
-                JPH::SoftBodySharedSettings::Edge(edge.first, edge.second, softBody.settings.edgeCompliance));
+            JPH::SoftBodySharedSettings::Edge(vertexA, vertexB, softBody.settings.edgeCompliance));
         }
     }
 
@@ -350,7 +353,9 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
             return;
         }
 
-        if (mesh->vertices.empty())
+        const auto &meshVertices = mesh->GetVertices();
+
+        if (meshVertices.empty())
         {
             Log::Error("SoftBody: Mesh has no vertices");
             return;
@@ -369,25 +374,25 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
         if (softBody.invMasses.empty())
         {
             // Auto-initialize invMasses from mesh vertex count
-            softBody.invMasses.resize(mesh->vertices.size(), 1.0f);
-            Log::Debug(fmt::format("SoftBody: Auto-initialized {} invMasses from Mesh", mesh->vertices.size()));
+            softBody.invMasses.resize(meshVertices.size(), 1.0f);
+            Log::Debug(fmt::format("SoftBody: Auto-initialized {} invMasses from Mesh", meshVertices.size()));
         }
-        else if (softBody.invMasses.size() != mesh->vertices.size())
+        else if (softBody.invMasses.size() != meshVertices.size())
         {
             Log::Error(fmt::format("SoftBody: invMasses size ({}) doesn't match Mesh vertices size ({})",
-                                   softBody.invMasses.size(), mesh->vertices.size()));
+                                   softBody.invMasses.size(), meshVertices.size()));
             return;
         }
 
         // Auto-generate edges from faces if not provided
-        if (softBody.edges.empty() && !mesh->indices.empty())
+        if (softBody.edges.empty() && !mesh->GetIndices().empty())
         {
-            if (mesh->indices.size() % 3 != 0)
+            if (mesh->GetIndices().size() % 3 != 0)
             {
                 Log::Error("SoftBody: Mesh indices malformed (not multiple of 3)");
                 return;
             }
-            softBody.edges = GenerateEdgesFromFaces(mesh->indices);
+            softBody.edges = GenerateEdgesFromFaces(mesh->GetIndices());
             Log::Debug(fmt::format("SoftBody: Auto-generated {} edges from Mesh faces", softBody.edges.size()));
         }
 
@@ -403,7 +408,7 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
         // Get position, rotation, and scale from Transform if available
         JPH::RVec3 position = JPH::RVec3::sZero();
         JPH::Quat rotation = JPH::Quat::sIdentity();
-        glm::vec3 scale = glm::vec3(1.0f);
+        auto scale = glm::vec3(1.0f);
 
         if (auto *transform = registry.try_get<Object::Component::Transform>(entity))
         {
@@ -440,10 +445,10 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
         Log::Info(fmt::format(
             "Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f}), scale "
             "({:.2f}, {:.2f}, {:.2f})",
-            static_cast<uint32_t>(entity), mesh->vertices.size(), mesh->indices.size() / 3, position.GetX(),
+            static_cast<uint32_t>(entity), meshVertices.size(), mesh->GetIndices().size() / 3, position.GetX(),
             position.GetY(), position.GetZ(), scale.x, scale.y, scale.z));
     }
-    catch (const std::exception &e)
+    catch (const Physics::Exception::SoftBodyError &e)
     {
         Log::Error(fmt::format("SoftBody error: {}", e.what()));
     }
@@ -474,7 +479,7 @@ static void OnSoftBodyDestroy(entt::registry &registry, entt::entity entity)
 
         registry.remove<Component::SoftBodyInternal>(entity);
     }
-    catch (const std::exception &e)
+    catch (const Physics::Exception::SoftBodyError &e)
     {
         Log::Error(fmt::format("SoftBody destroy error: {}", e.what()));
     }
@@ -548,7 +553,7 @@ void SyncSoftBodyVertices(Engine::Core &core)
 
         // Write to Mesh.vertices (used by graphics plugin for rendering)
         auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
-        if (!mesh || mesh->vertices.empty())
+        if (!mesh || mesh->GetVertices().empty())
             continue;
 
         // Update Transform with center of mass position (like RigidBody sync)
@@ -576,7 +581,7 @@ void SyncSoftBodyVertices(Engine::Core &core)
         if (!internal.vertexMap.empty())
         {
             // Use vertex map: original mesh vertices are mapped to deduplicated Jolt vertices
-            for (size_t origIdx = 0; origIdx < mesh->vertices.size() && origIdx < internal.vertexMap.size(); ++origIdx)
+            for (size_t origIdx = 0u; origIdx < mesh->GetVertices().size() && origIdx < internal.vertexMap.size(); ++origIdx)
             {
                 uint32_t joltIdx = internal.vertexMap[origIdx];
                 if (joltIdx < joltVertices.size())
@@ -584,27 +589,24 @@ void SyncSoftBodyVertices(Engine::Core &core)
                     const auto &v = joltVertices[joltIdx];
                     // Convert from Jolt world-scale space back to mesh local space
                     glm::vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
-                    mesh->vertices[origIdx] = worldPos * invScale;
+                    mesh->SetVertexAt(origIdx, worldPos * invScale);
                 }
             }
         }
         else
         {
             // Fallback: direct 1:1 mapping (for procedurally generated meshes)
-            for (size_t i = 0; i < joltVertices.size() && i < mesh->vertices.size(); ++i)
+            for (size_t i = 0u; i < joltVertices.size() && i < mesh->GetVertices().size(); ++i)
             {
                 const auto &v = joltVertices[i];
                 // Convert from Jolt world-scale space back to mesh local space
                 glm::vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
-                mesh->vertices[i] = worldPos * invScale;
+                mesh->SetVertexAt(i, worldPos * invScale);
             }
         }
 
         // Recalculate normals for correct lighting on deformed soft bodies
         Object::Utils::RecalculateNormals(*mesh);
-
-        // Mark mesh as dirty so GPU buffer gets updated
-        mesh->MarkDirty();
     }
 }
 

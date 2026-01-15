@@ -23,7 +23,7 @@ class IndexGPUBuffer : public Graphic::Resource::AGPUBuffer {
                 "Cannot create a GPU buffer for an entity without a Mesh component.");
         }
 
-        const auto &indices = meshComponent->indices;
+        const auto &indices = meshComponent->GetIndices();
 
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Index;
