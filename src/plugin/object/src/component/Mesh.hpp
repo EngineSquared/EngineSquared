@@ -48,8 +48,8 @@ struct Mesh {
 
     // Move constructor
     Mesh(Mesh &&other) noexcept
-        : vertices(std::move(other.vertices)), normals(std::move(other.normals)),
-          texCoords(std::move(other.texCoords)), indices(std::move(other.indices)), _dirty(other._dirty)
+        : vertices(std::move(other.vertices)), normals(std::move(other.normals)), texCoords(std::move(other.texCoords)),
+          indices(std::move(other.indices)), _dirty(other._dirty)
     {
         other._dirty = false;
     }
