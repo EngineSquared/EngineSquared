@@ -11,6 +11,9 @@
 #include "system/PhysicsUpdate.hpp"
 #include "system/RigidBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
+#include "system/VehicleControlSystem.hpp"
+#include "system/VehicleSystem.hpp"
+#include "system/WheelTransformSyncSystem.hpp"
 
 void Physics::Plugin::Bind()
 {
@@ -19,8 +22,11 @@ void Physics::Plugin::Bind()
     RegisterSystems<Engine::Scheduler::Startup>(System::InitJoltPhysics);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitPhysicsManager);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitRigidBodySystem);
+    RegisterSystems<Engine::Scheduler::Startup>(System::InitVehicleSystem);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitConstraintSystem);
 
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::PhysicsUpdate);
+    RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::VehicleControlSystem);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::SyncTransformWithPhysics);
+    RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::WheelTransformSyncSystem);
 }
