@@ -23,7 +23,7 @@ add_requires(
 -- Temporarily disabled due to build issues on Windows 11
 --add_requires("rmlui 6.0", { configs = { transform = true }, debug = is_mode("debug") })
 
-option("with_softbody_usage_example", {default = true , description = "Enable SoftBody Usage Example"})
+option("with_softbody_usage_example", {default = false , description = "Enable SoftBody Usage Example"})
 if has_config("with_softbody_usage_example") then
     includes("examples/softbody_usage/xmake.lua")
 end
