@@ -674,21 +674,21 @@ Component::Mesh GenerateWheelMesh(float radius, float width, uint32_t segments)
     Component::Mesh cylinderMesh = GenerateCylinderMesh(radius, radius, width, segments, 1u);
 
     Component::Mesh mesh;
-    mesh.vertices.reserve(cylinderMesh.vertices.size());
-    mesh.normals.reserve(cylinderMesh.normals.size());
-    mesh.texCoords = std::move(cylinderMesh.texCoords);
-    mesh.indices = std::move(cylinderMesh.indices);
+    mesh.ReserveVertices(cylinderMesh.GetVertices().size());
+    mesh.ReserveNormals(cylinderMesh.GetNormals().size());
+    mesh.SetTexCoords(std::move(cylinderMesh.GetTexCoords()));
+    mesh.SetIndices(std::move(cylinderMesh.GetIndices()));
 
     // Rotate -90 degrees around Z axis: (x, y, z) -> (y, -x, z)
     // This transforms Y-up cylinder to X-axis aligned wheel
-    for (const auto &vertex : cylinderMesh.vertices)
+    for (const auto &vertex : cylinderMesh.GetVertices())
     {
-        mesh.vertices.emplace_back(vertex.y, -vertex.x, vertex.z);
+        mesh.EmplaceVertices(vertex.y, -vertex.x, vertex.z);
     }
 
-    for (const auto &normal : cylinderMesh.normals)
+    for (const auto &normal : cylinderMesh.GetNormals())
     {
-        mesh.normals.emplace_back(normal.y, -normal.x, normal.z);
+        mesh.EmplaceNormals(normal.y, -normal.x, normal.z);
     }
 
     return mesh;
