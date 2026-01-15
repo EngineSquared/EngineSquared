@@ -2,7 +2,7 @@
 
 #include "Engine.hpp"
 
-namespace Graphic::System {
+namespace DefaultPipeline::System {
 
 /**
  * @brief Updates GPU mesh buffers for dynamic meshes (soft bodies, etc.)
@@ -12,4 +12,4 @@ namespace Graphic::System {
  */
 void UpdateGPUMeshes(Engine::Core &core);
 
-} // namespace Graphic::System
+} // namespace DefaultPipeline::System

@@ -10,14 +10,7 @@ add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
 target("SoftBodyUsage")
     set_kind("binary")
 
-    add_deps("EngineSquaredCore")
-    add_deps("PluginObject")
-    add_deps("PluginGraphic")
-    add_deps("PluginWindow")
-    add_deps("PluginInput")
-    add_deps("PluginPhysics")
-    add_deps("PluginEvent")
-    add_deps("UtilsTools")
+    add_deps("EngineSquared")
 
     add_files("src/**.cpp")
 

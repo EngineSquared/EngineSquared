@@ -1,11 +1,12 @@
 /**************************************************************************
- * EngineSquared - Graphic Plugin Usage With Physics Example
+ * EngineSquared - Graphic Plugin Usage With Physics SoftBody Example
  *
  * This example demonstrates how to use the Graphic and Physics plugins together.
  **************************************************************************/
 
 #include "Engine.hpp"
 
+#include "DefaultPipeline.hpp"
 #include "Graphic.hpp"
 #include "Input.hpp"
 #include "Object.hpp"
@@ -250,7 +251,7 @@ int main(void)
 {
     Engine::Core core;
 
-    core.AddPlugins<Window::Plugin, Graphic::Plugin, Input::Plugin, Physics::Plugin>();
+    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Input::Plugin, Physics::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
         core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(
@@ -264,7 +265,20 @@ int main(void)
 
     core.RegisterSystem<Engine::Scheduler::Startup>(Setup);
 
-    core.RunCore();
+    try
+    {
+        core.RunCore();
+    }
+    catch (const GraphicExampleError &e)
+    {
+        Log::Error(fmt::format("GraphicExampleError: {}", e.what()));
+        return EXIT_FAILURE;
+    }
+    catch (const std::exception &e)
+    {
+        Log::Error(fmt::format("Unhandled exception: {}", e.what()));
+        return EXIT_FAILURE;
+    }
 
     return 0;
 }
