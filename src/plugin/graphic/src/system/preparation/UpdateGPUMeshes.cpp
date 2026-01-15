@@ -32,10 +32,9 @@ void UpdateGPUMeshes(Engine::Core &core)
             if (buffer && buffer->IsCreated(core))
             {
                 buffer->Update(core);
+                mesh.ClearDirty();
             }
         }
-
-        mesh.ClearDirty();
     }
 }
 
