@@ -19,7 +19,6 @@ void Plugin::Bind()
 
     RegisterResource(Resource::CameraManager(GetCore()));
 
-    // Set a default behavior instance for the camera manager so the system can call Update on it directly.
     auto &cameraManager = GetCore().GetResource<Resource::CameraManager>();
     cameraManager.SetBehavior(std::make_shared<Component::DefaultBehavior>());
 
