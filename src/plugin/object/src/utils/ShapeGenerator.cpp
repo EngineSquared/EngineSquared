@@ -631,8 +631,7 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
     {
         for (uint32_t y = 0u; y < gridSize - 1u; ++y)
         {
-            addFace(getIndex(0u, y, z + 1u), getIndex(0u, y + 1u, z + 1u),
-                    getIndex(0u, y, z), getIndex(0u, y + 1u, z));
+            addFace(getIndex(0u, y, z + 1u), getIndex(0u, y + 1u, z + 1u), getIndex(0u, y, z), getIndex(0u, y + 1u, z));
         }
     }
 
