@@ -52,13 +52,15 @@ void RecalculateNormals(Component::Mesh &mesh)
     // Ensure normals array is properly sized
     if (mesh.GetNormals().size() != vertices.size())
     {
-        mesh.ReserveNormals(vertices.size());
+        mesh.SetNormals(std::vector<glm::vec3>(vertices.size(), glm::vec3(0.0f)));
     }
-
-    // Initialize all normals to zero
-    for (size_t i = 0u; i < vertices.size(); ++i)
+    else
     {
-        mesh.SetNormalAt(i, glm::vec3(0.0f));
+        // Initialize all normals to zero
+        for (size_t i = 0u; i < vertices.size(); ++i)
+        {
+            mesh.SetNormalAt(i, glm::vec3(0.0f));
+        }
     }
 
     const auto &normals = mesh.GetNormals();
