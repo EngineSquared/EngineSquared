@@ -17,6 +17,8 @@ target("GraphicUsage")
     add_deps("PluginGraphic")
     add_deps("PluginWindow")
     add_deps("PluginInput")
+    add_deps("PluginCameraMovement")
+    add_deps("EngineSquared")
 
     add_files("src/**.cpp")
 

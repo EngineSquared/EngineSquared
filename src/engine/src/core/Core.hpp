@@ -89,6 +89,14 @@ class Core {
     template <typename TResource> const TResource &GetResource() const;
 
     /**
+     * Check if a resource is registered in the core.
+     *
+     * @tparam  TResource   type of the resource to check
+     * @return  true if the resource is registered, false otherwise
+     */
+    template <typename TResource> bool HasResource() const;
+
+    /**
      * Delete a resource from the core.
      * Removes a previously registered resource from the registry context.
      *
