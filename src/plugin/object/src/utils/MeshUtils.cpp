@@ -42,18 +42,17 @@ void RecalculateNormals(Component::Mesh &mesh)
 {
     const auto &vertices = mesh.GetVertices();
     const auto &indices = mesh.GetIndices();
-    // Guard clause: need vertices and indices
+
     if (vertices.empty() || indices.empty())
         return;
 
-    // Guard clause: indices must form complete triangles
     if (indices.size() % 3u != 0)
         return;
 
     // Ensure normals array is properly sized
     if (mesh.GetNormals().size() != vertices.size())
     {
-        mesh.SetNormals(std::vector<glm::vec3>(vertices.size()));
+        mesh.ReserveNormals(vertices.size());
     }
 
     // Initialize all normals to zero
@@ -61,6 +60,8 @@ void RecalculateNormals(Component::Mesh &mesh)
     {
         mesh.SetNormalAt(i, glm::vec3(0.0f));
     }
+
+    const auto &normals = mesh.GetNormals();
 
     // Accumulate face normals for each vertex
     const size_t triangleCount = indices.size() / 3u;

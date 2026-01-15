@@ -597,16 +597,17 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
     };
 
     // Generate surface faces for rendering (all 6 sides)
+    // Counter-clockwise winding for outward-facing normals
     auto addFace = [&mesh](uint32_t tl, uint32_t tr, uint32_t bl, uint32_t br) {
         mesh.EmplaceIndices(tl);
-        mesh.EmplaceIndices(tr);
         mesh.EmplaceIndices(bl);
         mesh.EmplaceIndices(tr);
+        mesh.EmplaceIndices(tr);
+        mesh.EmplaceIndices(bl);
         mesh.EmplaceIndices(br);
-        mesh.EmplaceIndices(bl);
     };
 
-    // Front face (z = 0)
+    // Front face (z = 0) - facing +Z
     for (uint32_t y = 0u; y < gridSize - 1u; ++y)
     {
         for (uint32_t x = 0u; x < gridSize - 1u; ++x)
@@ -615,27 +616,27 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
         }
     }
 
-    // Back face (z = gridSize - 1)
+    // Back face (z = gridSize - 1) - facing -Z (reversed order)
     for (uint32_t y = 0u; y < gridSize - 1u; ++y)
     {
         for (uint32_t x = 0u; x < gridSize - 1u; ++x)
         {
-            addFace(getIndex(x, y, gridSize - 1u), getIndex(x + 1u, y, gridSize - 1u),
-                    getIndex(x, y + 1u, gridSize - 1u), getIndex(x + 1u, y + 1u, gridSize - 1u));
+            addFace(getIndex(x + 1u, y, gridSize - 1u), getIndex(x, y, gridSize - 1u),
+                    getIndex(x + 1u, y + 1u, gridSize - 1u), getIndex(x, y + 1u, gridSize - 1u));
         }
     }
 
-    // Left face (x = 0)
+    // Left face (x = 0) - facing -X (reversed order)
     for (uint32_t z = 0u; z < gridSize - 1u; ++z)
     {
         for (uint32_t y = 0u; y < gridSize - 1u; ++y)
         {
-            addFace(getIndex(0u, y, z), getIndex(0u, y + 1u, z),
-                    getIndex(0u, y, z + 1u), getIndex(0u, y + 1u, z + 1u));
+            addFace(getIndex(0u, y, z + 1u), getIndex(0u, y + 1u, z + 1u),
+                    getIndex(0u, y, z), getIndex(0u, y + 1u, z));
         }
     }
 
-    // Right face (x = gridSize - 1)
+    // Right face (x = gridSize - 1) - facing +X
     for (uint32_t z = 0u; z < gridSize - 1u; ++z)
     {
         for (uint32_t y = 0u; y < gridSize - 1u; ++y)
@@ -645,16 +646,16 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
         }
     }
 
-    // Bottom face (y = 0)
+    // Bottom face (y = 0) - facing -Y (reversed order)
     for (uint32_t z = 0u; z < gridSize - 1u; ++z)
     {
         for (uint32_t x = 0u; x < gridSize - 1u; ++x)
         {
-            addFace(getIndex(x, 0u, z), getIndex(x + 1u, 0u, z), getIndex(x, 0u, z + 1u), getIndex(x + 1u, 0u, z + 1u));
+            addFace(getIndex(x, 0u, z), getIndex(x, 0u, z + 1u), getIndex(x + 1u, 0u, z), getIndex(x + 1u, 0u, z + 1u));
         }
     }
 
-    // Top face (y = gridSize - 1)
+    // Top face (y = gridSize - 1) - facing +Y
     for (uint32_t z = 0u; z < gridSize - 1u; ++z)
     {
         for (uint32_t x = 0u; x < gridSize - 1u; ++x)
