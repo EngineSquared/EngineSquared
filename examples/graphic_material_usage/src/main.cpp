@@ -7,6 +7,7 @@
 #include "Engine.hpp"
 
 #include "CameraMovement.hpp"
+#include "DefaultPipeline.hpp"
 #include "Graphic.hpp"
 #include "Input.hpp"
 #include "Object.hpp"
