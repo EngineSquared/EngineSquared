@@ -15,13 +15,7 @@ class ICameraBehavior;
 
 namespace CameraMovement::Resource {
 
-/**
- * @brief Enum to define the behavior type of the camera.
- */
-enum class CameraBehaviorType {
-    Default,
-    DontMove,
-};
+
 
 /**
  * @brief CameraManager is a resource that manages the active camera entity.
@@ -33,7 +27,6 @@ class CameraManager {
   public:
     explicit CameraManager(Engine::Core &core)
         : _core(core), _cameraEntity(Engine::Entity::entity_null_id),
-          _behaviorType(CameraBehaviorType::Default),                                                    // NOSONAR
           _movementSpeed(5.0f), _mouseSensitivity(0.002f), _lastMouseX(0.0), _lastMouseY(0.0),           // NOSONAR
           _isMouseDragging(false),                                                                       // NOSONAR
           _wasCursorMasked(false), _originRotation(1.0f, 0.0f, 0.0f, 0.0f), _joystickId(GLFW_JOYSTICK_1) // NOSONAR
@@ -114,19 +107,7 @@ class CameraManager {
         return registry.all_of<Object::Component::Transform, Object::Component::Camera>(_cameraEntity);
     }
 
-    /**
-     * @brief Set the behavior type of the camera.
-     *
-     * @param type The behavior type.
-     */
-    void SetBehaviorType(CameraBehaviorType type) { _behaviorType = type; }
 
-    /**
-     * @brief Get the behavior type of the camera.
-     *
-     * @return The behavior type.
-     */
-    CameraBehaviorType GetBehaviorType() const { return _behaviorType; }
 
     /**
      * @brief Set the movement speed of the camera.
@@ -265,7 +246,6 @@ class CameraManager {
   private:
     Engine::Core &_core;
     Engine::Entity _cameraEntity;
-    CameraBehaviorType _behaviorType;
     float _movementSpeed;
     float _mouseSensitivity;
     double _lastMouseX;
