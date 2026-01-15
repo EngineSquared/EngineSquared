@@ -50,16 +50,14 @@ void RecalculateNormals(Component::Mesh &mesh)
     if (indices.size() % 3u != 0)
         return;
 
-    const auto &normals = mesh.GetNormals();
-
     // Ensure normals array is properly sized
-    if (normals.size() != vertices.size())
+    if (mesh.GetNormals().size() != vertices.size())
     {
         mesh.SetNormals(std::vector<glm::vec3>(vertices.size()));
     }
 
     // Initialize all normals to zero
-    for (size_t i = 0u; i < normals.size(); ++i)
+    for (size_t i = 0u; i < vertices.size(); ++i)
     {
         mesh.SetNormalAt(i, glm::vec3(0.0f));
     }

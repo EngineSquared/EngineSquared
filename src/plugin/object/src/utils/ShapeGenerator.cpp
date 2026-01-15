@@ -630,12 +630,8 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
     {
         for (uint32_t y = 0u; y < gridSize - 1u; ++y)
         {
-            mesh.EmplaceIndices(getIndex(0u, y, z));
-            mesh.EmplaceIndices(getIndex(0u, y + 1u, z));
-            mesh.EmplaceIndices(getIndex(0u, y, z + 1u));
-            mesh.EmplaceIndices(getIndex(0u, y, z + 1u));
-            mesh.EmplaceIndices(getIndex(0u, y + 1u, z));
-            mesh.EmplaceIndices(getIndex(0u, y + 1u, z + 1u));
+            addFace(getIndex(0u, y, z), getIndex(0u, y + 1u, z),
+                    getIndex(0u, y, z + 1u), getIndex(0u, y + 1u, z + 1u));
         }
     }
 
@@ -663,12 +659,8 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
     {
         for (uint32_t x = 0u; x < gridSize - 1u; ++x)
         {
-            mesh.EmplaceIndices(getIndex(x, gridSize - 1u, z));
-            mesh.EmplaceIndices(getIndex(x, gridSize - 1u, z + 1u));
-            mesh.EmplaceIndices(getIndex(x + 1u, gridSize - 1u, z));
-            mesh.EmplaceIndices(getIndex(x + 1u, gridSize - 1u, z));
-            mesh.EmplaceIndices(getIndex(x, gridSize - 1u, z + 1u));
-            mesh.EmplaceIndices(getIndex(x + 1u, gridSize - 1u, z + 1u));
+            addFace(getIndex(x, gridSize - 1u, z), getIndex(x + 1u, gridSize - 1u, z),
+                    getIndex(x, gridSize - 1u, z + 1u), getIndex(x + 1u, gridSize - 1u, z + 1u));
         }
     }
 

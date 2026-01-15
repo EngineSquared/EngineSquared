@@ -34,8 +34,8 @@ namespace Object::Component {
  * It contains the vertices and indices of the mesh.
  *
  * The mesh supports a dirty flag mechanism for efficient GPU updates.
- * When mesh data (vertices, normals, texCoords) is modified, call MarkDirty()
- * to signal that the GPU buffer needs to be updated.
+ * When mesh data is modified through the setter methods (SetVertices, SetVertexAt, etc.),
+ * the dirty flag is automatically set to signal that the GPU buffer needs to be updated.
  */
 struct Mesh {
     explicit Mesh() = default;
@@ -101,9 +101,9 @@ struct Mesh {
 
     void ReserveVertices(size_t count) { vertices.reserve(count); }
 
-    template <typename... _Args> void EmplaceVertices(_Args &&...__args)
+    template <typename... Args> void EmplaceVertices(Args&&... args)
     {
-        vertices.emplace_back(std::forward<_Args>(__args)...);
+        vertices.emplace_back(std::forward<Args>(args)...);
         _dirty = true;
     }
 
@@ -124,9 +124,9 @@ struct Mesh {
 
     void ReserveNormals(size_t count) { normals.reserve(count); }
 
-    template <typename... _Args> void EmplaceNormals(_Args &&...__args)
+    template <typename... Args> void EmplaceNormals(Args&&... args)
     {
-        normals.emplace_back(std::forward<_Args>(__args)...);
+        normals.emplace_back(std::forward<Args>(args)...);
         _dirty = true;
     }
 
@@ -147,9 +147,9 @@ struct Mesh {
 
     void ReserveTexCoords(size_t count) { texCoords.reserve(count); }
 
-    template <typename... _Args> void EmplaceTexCoords(_Args &&...__args)
+    template <typename... Args> void EmplaceTexCoords(Args&&... args)
     {
-        texCoords.emplace_back(std::forward<_Args>(__args)...);
+        texCoords.emplace_back(std::forward<Args>(args)...);
         _dirty = true;
     }
 
@@ -170,9 +170,9 @@ struct Mesh {
 
     void ReserveIndices(size_t count) { indices.reserve(count); }
 
-    template <typename... _Args> void EmplaceIndices(_Args &&...__args)
+    template <typename... Args> void EmplaceIndices(Args&&... args)
     {
-        indices.emplace_back(std::forward<_Args>(__args)...);
+        indices.emplace_back(std::forward<Args>(args)...);
         _dirty = true;
     }
 
