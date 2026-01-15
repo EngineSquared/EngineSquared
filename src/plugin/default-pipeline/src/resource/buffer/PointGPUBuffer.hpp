@@ -62,7 +62,8 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
         const auto &meshComponent = _entity.GetComponents<Object::Component::Mesh>(core);
         if (meshComponent.vertices.empty())
         {
-            throw Graphic::Exception::UpdateBufferError("Cannot update a GPU buffer from a Mesh component with no vertices.");
+            throw Graphic::Exception::UpdateBufferError(
+                "Cannot update a GPU buffer from a Mesh component with no vertices.");
         }
 
         if (meshComponent.normals.size() != meshComponent.vertices.size() ||
@@ -87,7 +88,8 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
             pointData.emplace_back(meshComponent.texCoords[i].y);
         }
 
-        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, pointData.data(), sizeof(float) * pointData.size());
+        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, pointData.data(),
+                                                                          sizeof(float) * pointData.size());
     };
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
