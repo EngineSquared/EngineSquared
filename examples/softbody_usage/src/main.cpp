@@ -143,7 +143,7 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
 
     // Create entity with Transform that includes scale
     // The original teapot coords are quite large, so we scale it down
-    const float scaleFactor = 0.2f;
+    const float scaleFactor = 0.05f;
 
     auto teapot = core.CreateEntity();
     // Position, scale, and rotation are now handled by Transform
@@ -168,9 +168,7 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     // New simplified API: just pass settings, auto-detect Mesh
     teapot.AddComponent<Physics::Component::SoftBody>(core, Physics::Component::SoftBody(settings));
 
-    // Material with doubleSided for soft body visibility
     Object::Component::Material mat;
-    mat.doubleSided = true; // Render both sides for soft body deformation
     teapot.AddComponent<Object::Component::Material>(core, mat);
 }
 
@@ -231,11 +229,11 @@ void Setup(Engine::Core &core)
     CreateFallingCube(core, 5.0f, 10.0f, 0.0f, 2.0f);
     CreateSoftbodyFromOBJ(core);
     CreateJellyCube(core, glm::vec3(-5.0f, 10.0f, 0.0f), 1.0f, 5);
-    CreateClothDemo(core, glm::vec3(5.0f, 10.0f, 0.0f));
+    CreateClothDemo(core, glm::vec3(5.0f, 12.0f, 0.0f));
 
     auto camera = core.CreateEntity();
 
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 5.0f, -10.0f));
+    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 5.0f, -15.0f));
     camera.AddComponent<Object::Component::Camera>(core);
 
     core.RegisterSystem(EscapeKeySystem);

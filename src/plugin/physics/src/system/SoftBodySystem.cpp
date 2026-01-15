@@ -542,7 +542,6 @@ void SyncSoftBodyVertices(Engine::Core &core)
 
         // Get body center of mass in world space
         JPH::RVec3 bodyPosition = body.GetCenterOfMassPosition();
-        const glm::vec3 centerOfMass = Utils::FromJoltRVec3(bodyPosition);
 
         // Update vertex positions (vertices are in local space relative to body center of mass)
         const auto &joltVertices = motionProps->GetVertices();
@@ -557,7 +556,7 @@ void SyncSoftBodyVertices(Engine::Core &core)
         auto *transform = registry.try_get<Object::Component::Transform>(entity);
         if (transform)
         {
-            transform->SetPosition(centerOfMass);
+            transform->SetPosition(Utils::FromJoltRVec3(bodyPosition));
             // Note: Soft bodies don't have a single rotation, so we leave it as-is
         }
 
@@ -585,8 +584,7 @@ void SyncSoftBodyVertices(Engine::Core &core)
                     const auto &v = joltVertices[joltIdx];
                     // Convert from Jolt world-scale space back to mesh local space
                     glm::vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
-                    glm::vec3 localPos = (worldPos - centerOfMass) * invScale;
-                    mesh->vertices[origIdx] = localPos;
+                    mesh->vertices[origIdx] = worldPos * invScale;
                 }
             }
         }
@@ -598,8 +596,7 @@ void SyncSoftBodyVertices(Engine::Core &core)
                 const auto &v = joltVertices[i];
                 // Convert from Jolt world-scale space back to mesh local space
                 glm::vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
-                glm::vec3 localPos = (worldPos - centerOfMass) * invScale;
-                mesh->vertices[i] = localPos;
+                mesh->vertices[i] = worldPos * invScale;
             }
         }
 
