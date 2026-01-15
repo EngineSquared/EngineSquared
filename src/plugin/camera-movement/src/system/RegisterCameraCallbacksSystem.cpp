@@ -84,8 +84,7 @@ void CursorPosCallback(Engine::Core &core, double xpos, double ypos)
 
 void RegisterCameraCallbacksSystem(Engine::Core &core)
 {
-    // Note: a method should be added in ESQ Core to check for resource existence
-    if (!core.GetRegistry().ctx().contains<Input::Resource::InputManager>())
+    if (!core.HasResource<Input::Resource::InputManager>())
     {
         Log::Warn("InputManager resource not found, cannot register camera callbacks");
         return;
