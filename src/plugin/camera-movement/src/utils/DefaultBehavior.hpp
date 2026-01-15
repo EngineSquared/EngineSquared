@@ -6,14 +6,14 @@
 #include <glm/glm.hpp>
 
 #include "component/Camera.hpp"
-#include "component/CameraBehavior.hpp"
+#include "utils/CameraBehavior.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "resource/CameraManager.hpp"
 #include "resource/InputManager.hpp"
 #include "utils/CameraUtils.hpp"
 
-namespace CameraMovement::Component {
+namespace CameraMovement::Utils {
 
 /**
  * @brief Default camera behavior with WASD movement and mouse look.
@@ -163,4 +163,4 @@ class DefaultBehavior : public ICameraBehavior {
     }
 };
 
-} // namespace CameraMovement::Component
+} // namespace CameraMovement::Utils

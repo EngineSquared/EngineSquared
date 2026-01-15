@@ -1,7 +1,7 @@
 #include "system/CameraControlSystem.hpp"
 
 #include "component/Camera.hpp"
-#include "component/CameraBehavior.hpp"
+#include "utils/CameraBehavior.hpp"
 #include "component/Transform.hpp"
 #include "resource/CameraManager.hpp"
 #include "scheduler/Update.hpp"

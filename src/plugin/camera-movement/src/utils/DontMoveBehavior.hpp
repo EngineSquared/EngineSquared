@@ -1,12 +1,12 @@
 #pragma once
 
 #include "component/Camera.hpp"
-#include "component/CameraBehavior.hpp"
+#include "utils/CameraBehavior.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "resource/CameraManager.hpp"
 
-namespace CameraMovement::Component {
+namespace CameraMovement::Utils {
 
 /**
  * @brief Camera behavior that does not move the camera.
@@ -23,4 +23,4 @@ class DontMoveBehavior : public ICameraBehavior {
     }
 };
 
-} // namespace CameraMovement::Component
+} // namespace CameraMovement::Utils

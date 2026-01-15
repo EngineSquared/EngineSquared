@@ -1,6 +1,6 @@
 #include "plugin/PluginCameraMovement.hpp"
 
-#include "component/DefaultBehavior.hpp"
+#include "utils/DefaultBehavior.hpp"
 #include "plugin/PluginInput.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "resource/CameraManager.hpp"
@@ -20,7 +20,7 @@ void Plugin::Bind()
     RegisterResource(Resource::CameraManager(GetCore()));
 
     auto &cameraManager = GetCore().GetResource<Resource::CameraManager>();
-    cameraManager.SetBehavior(std::make_shared<Component::DefaultBehavior>());
+    cameraManager.SetBehavior(std::make_shared<Utils::DefaultBehavior>());
 
     RegisterSystems<Engine::Scheduler::Startup>(System::RegisterCameraCallbacksSystem);
     RegisterSystems<Engine::Scheduler::Update>(System::CameraControlSystem);

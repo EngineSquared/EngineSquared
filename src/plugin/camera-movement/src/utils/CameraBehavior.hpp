@@ -13,7 +13,7 @@ class Transform;
 class Camera;
 } // namespace Object::Component
 
-namespace CameraMovement::Component {
+namespace CameraMovement::Utils {
 
 /**
  * @brief Base interface for camera behaviors.
@@ -37,4 +37,4 @@ class ICameraBehavior {
                         Object::Component::Camera &camera, float deltaTime) = 0;
 };
 
-} // namespace CameraMovement::Component
+} // namespace CameraMovement::Utils

@@ -9,7 +9,7 @@
 #include "entity/Entity.hpp"
 #include "exception/CameraMovementError.hpp"
 
-namespace CameraMovement::Component {
+namespace CameraMovement::Utils {
 class ICameraBehavior;
 }
 
@@ -250,7 +250,7 @@ class CameraManager {
      *
      * @param behavior Shared pointer to an implementation of ICameraBehavior.
      */
-    void SetBehavior(std::shared_ptr<CameraMovement::Component::ICameraBehavior> behavior)
+    void SetBehavior(std::shared_ptr<CameraMovement::Utils::ICameraBehavior> behavior)
     {
         _behavior = std::move(behavior);
     }
@@ -260,7 +260,7 @@ class CameraManager {
      *
      * @return Shared pointer to the current ICameraBehavior, or nullptr if none is set.
      */
-    std::shared_ptr<CameraMovement::Component::ICameraBehavior> GetBehavior() const { return _behavior; }
+    std::shared_ptr<CameraMovement::Utils::ICameraBehavior> GetBehavior() const { return _behavior; }
 
   private:
     Engine::Core &_core;
@@ -274,7 +274,7 @@ class CameraManager {
     bool _wasCursorMasked;
     glm::quat _originRotation;
     int _joystickId;
-    std::shared_ptr<CameraMovement::Component::ICameraBehavior> _behavior;
+    std::shared_ptr<CameraMovement::Utils::ICameraBehavior> _behavior; 
 };
 
 } // namespace CameraMovement::Resource
