@@ -18,6 +18,11 @@ void UpdateGPUMeshes(Engine::Core &core)
 
     for (auto entity : view)
     {
+        auto &mesh = view.get<Object::Component::Mesh>(entity);
+
+        if (!mesh.IsDirty())
+            continue;
+
         auto &gpuMesh = view.get<Component::GPUMesh>(entity);
 
         // Check if the point buffer exists and update it
@@ -29,6 +34,8 @@ void UpdateGPUMeshes(Engine::Core &core)
                 buffer->Update(core);
             }
         }
+
+        mesh.ClearDirty();
     }
 }
 

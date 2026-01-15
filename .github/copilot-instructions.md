@@ -1,5 +1,7 @@
 # Engine² Copilot Instructions
 
+> **Complete Architecture Reference**: See [docs/ANALYSIS.md](../docs/ANALYSIS.md) for detailed data flow diagrams and implementation patterns.
+
 ## Architecture Overview
 
 Engine² is an ECS-based C++20 game engine using **entt** for entity management and **Jolt Physics** for simulation and **WebGPU** for rendering.
@@ -19,7 +21,7 @@ src/plugin/<name>/
 │   ├── <Name>.hpp      # Public header aggregating all exports
 │   ├── <Name>.pch.hpp  # Precompiled header
 │   ├── plugin/Plugin<Name>.hpp  # Plugin class declaration
-│   ├── component/      # ECS components
+│   ├── component/      # ECS components (public user-facing)
 │   ├── system/         # Systems (functions taking Engine::Core&)
 │   ├── resource/       # Singleton resources
 │   ├── event/          # Event structures (for Event plugin integration)
@@ -233,6 +235,84 @@ CodeRabbit AI bot reviews all PRs with strict quality checks. To avoid issues:
 - `spdlog v1.16.0` - Logging (use `Log::Info()`, `Log::Debug()`, etc.)
 - `gtest v1.17.0` - Unit testing
 - `wgpu-native` - Graphics backend
+- `glfw3webgpu` - GLFW-WebGPU bridge
+- `stb`, `lodepng` - Image loading
+
+## Graphic Plugin Patterns
+
+### Public → GPU Component Pattern
+Graphic uses the same pattern as Physics for automatic GPU resource creation:
+```cpp
+// User adds Object::Component::Mesh → hook creates Graphic::Component::GPUMesh
+entity.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
+// System hook automatically creates:
+// - GPUMesh (with buffer IDs)
+// - PointGPUBuffer (vertex data)
+// - IndexGPUBuffer (index data)
+```
+
+### GPU Components
+| Component | Purpose | Contains |
+|-----------|---------|----------|
+| `GPUMesh` | Geometry | `pointBufferId`, `indexBufferId` |
+| `GPUTransform` | Model matrix | `modelMatrixBuffer`, `bindGroup` |
+| `GPUCamera` | View/Projection | `buffer`, `bindGroup`, `pipeline`, `targetTexture` |
+| `GPUMaterial` | Material data | `buffer`, `texture`, `sampler`, `bindGroup` |
+
+### RenderingPipeline Schedulers
+The Graphic plugin uses custom schedulers from RenderingPipeline:
+- `RenderingPipeline::Init` → GLFW setup (before Setup)
+- `RenderingPipeline::Setup` → WebGPU initialization (before Startup)
+- `RenderingPipeline::Preparation` → GPU buffer updates (after Update)
+- `RenderingPipeline::CommandCreation` → Render pass execution
+- `RenderingPipeline::Presentation` → Surface present
+
+### Creating Custom Render Passes
+```cpp
+class MyRenderPass : public ASingleExecutionRenderPass<MyRenderPass> {
+public:
+    MyRenderPass() : ASingleExecutionRenderPass("MY_PASS") {}
+
+    void UniqueRenderCallback(wgpu::RenderPassEncoder &pass, Core &core) override {
+        // Custom rendering logic
+    }
+};
+```
+
+### Default Shader Bind Groups
+| Group | Binding | Data |
+|-------|---------|------|
+| 0 | 0 | Camera (viewProjectionMatrix) |
+| 1 | 0 | Model (modelMatrix, normalMatrix) |
+| 2 | 0-2 | Material (emission, texture, sampler) |
+| 3 | 0-1 | Lights (ambient, point lights array) |
+
+### Key Graphic Constants
+```cpp
+// Default render pipeline
+Graphic::Utils::DEFAULT_RENDER_GRAPH_ID
+Graphic::Utils::DEFAULT_RENDER_PASS_SHADER_ID
+Graphic::Utils::DEFAULT_MATERIAL_BIND_GROUP_ID
+Graphic::Utils::LIGHTS_BIND_GROUP_ID
+
+// Textures
+System::END_RENDER_TEXTURE_ID
+System::END_DEPTH_RENDER_TEXTURE_ID
+```
+
+## JoltPhysics Reference (Local Clone)
+
+The project includes a local JoltPhysics clone at `JoltPhysics/` for reference:
+- `JoltPhysics/Jolt/Physics/Body/` - Body, BodyCreationSettings
+- `JoltPhysics/Jolt/Physics/SoftBody/` - SoftBodySharedSettings, SoftBodyCreationSettings
+- `JoltPhysics/Jolt/Physics/Constraints/` - All constraint types
+- `JoltPhysics/Samples/` - Official examples
+
+Key Jolt patterns:
+- Always include `<Jolt/Jolt.h>` first
+- Use `JPH::Ref<T>` for reference-counted Jolt objects
+- SoftBody requires `SoftBodySharedSettings::Optimize()` after constraint creation
+- Store `entt::entity` in `BodyCreationSettings::mUserData` for collision callbacks
 
 ## File Header Template
 All source files should include the standard MIT license header with `@file`, `@brief`, `@author`, `@version`, `@date` Doxygen tags.

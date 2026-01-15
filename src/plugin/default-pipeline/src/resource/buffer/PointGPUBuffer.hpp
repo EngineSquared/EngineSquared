@@ -22,6 +22,13 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
                 "Cannot create a GPU buffer for an entity without a Mesh component.");
         }
 
+        if (meshComponent->normals.size() != meshComponent->vertices.size() ||
+            meshComponent->texCoords.size() != meshComponent->vertices.size())
+        {
+            throw Exception::UpdateBufferError(
+                "Cannot create GPU buffer: normals or texCoords size mismatch with vertices.");
+        }
+
         std::vector<float> pointData;
 
         pointData.reserve(meshComponent->vertices.size() * 8);
@@ -75,11 +82,18 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
             throw Exception::UpdateBufferError("Cannot update a GPU buffer from a Mesh component with no vertices.");
         }
 
+        if (meshComponent.normals.size() != meshComponent.vertices.size() ||
+            meshComponent.texCoords.size() != meshComponent.vertices.size())
+        {
+            throw Exception::UpdateBufferError(
+                "Cannot update GPU buffer: normals or texCoords size mismatch with vertices.");
+        }
+
         // Update vertex data from mesh (for soft bodies and other dynamic meshes)
         std::vector<float> pointData;
-        pointData.reserve(meshComponent.vertices.size() * 8);
+        pointData.reserve(meshComponent.vertices.size() * 8u);
 
-        for (uint64_t i = 0; i < meshComponent.vertices.size(); ++i)
+        for (uint64_t i = 0u; i < meshComponent.vertices.size(); ++i)
         {
             pointData.emplace_back(meshComponent.vertices[i].x);
             pointData.emplace_back(meshComponent.vertices[i].y);

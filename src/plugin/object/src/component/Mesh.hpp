@@ -32,6 +32,10 @@ namespace Object::Component {
  *
  * This structure is used to represent a mesh.
  * It contains the vertices and indices of the mesh.
+ *
+ * The mesh supports a dirty flag mechanism for efficient GPU updates.
+ * When mesh data (vertices, normals, texCoords) is modified, call MarkDirty()
+ * to signal that the GPU buffer needs to be updated.
  */
 struct Mesh {
     std::vector<glm::vec3> vertices{};
@@ -43,13 +47,68 @@ struct Mesh {
     ~Mesh() = default;
 
     // Move constructor
-    Mesh(Mesh &&other) = default;
+    Mesh(Mesh &&other) noexcept
+        : vertices(std::move(other.vertices)), normals(std::move(other.normals)),
+          texCoords(std::move(other.texCoords)), indices(std::move(other.indices)), _dirty(other._dirty)
+    {
+        other._dirty = false;
+    }
+
     // Move assignment operator
-    Mesh &operator=(Mesh &&other) = default;
+    Mesh &operator=(Mesh &&other) noexcept
+    {
+        if (this != &other)
+        {
+            vertices = std::move(other.vertices);
+            normals = std::move(other.normals);
+            texCoords = std::move(other.texCoords);
+            indices = std::move(other.indices);
+            _dirty = other._dirty;
+            other._dirty = false;
+        }
+        return *this;
+    }
 
     // Copy constructor
     Mesh(const Mesh &mesh) = default;
     // Copy assignment operator
     Mesh &operator=(const Mesh &other) = default;
+
+    /**
+     * @brief Mark the mesh as dirty, indicating GPU buffer needs update.
+     *
+     * Call this method after modifying vertices, normals, or texCoords
+     * to ensure the GPU buffer is synchronized on the next render frame.
+     *
+     * @note This method is const because _dirty is mutable, allowing
+     *       modification tracking even on const mesh references.
+     */
+    void MarkDirty() const { _dirty = true; }
+
+    /**
+     * @brief Check if the mesh data has been modified since last GPU sync.
+     *
+     * @return true if mesh data was modified and GPU buffer needs update.
+     * @return false if mesh data is in sync with GPU buffer.
+     */
+    [[nodiscard]] bool IsDirty() const { return _dirty; }
+
+    /**
+     * @brief Clear the dirty flag after GPU buffer has been updated.
+     *
+     * Called by the graphics system after successfully updating the GPU buffer
+     * to indicate the mesh is now in sync.
+     */
+    void ClearDirty() const { _dirty = false; }
+
+  private:
+    /**
+     * @brief Dirty flag for GPU synchronization optimization.
+     *
+     * Mutable to allow modification tracking on const mesh references.
+     * When true, indicates that mesh data has changed and the GPU buffer
+     * needs to be updated.
+     */
+    mutable bool _dirty = false;
 };
 } // namespace Object::Component

@@ -217,8 +217,7 @@ void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
 
     for (uint32_t x = 0u; x < width; ++x)
     {
-        uint32_t idx = (height - 1u) * width + x;
-        soft.PinVertex(idx);
+        soft.PinVertex(x);
     }
 
     Object::Component::Material mat;
