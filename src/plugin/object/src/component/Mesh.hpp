@@ -72,9 +72,27 @@ struct Mesh {
     }
 
     // Copy constructor
-    Mesh(const Mesh &mesh) = default;
+    Mesh(const Mesh &mesh)
+    {
+        vertices = mesh.vertices;
+        normals = mesh.normals;
+        texCoords = mesh.texCoords;
+        indices = mesh.indices;
+        _dirty = mesh._dirty;
+    }
     // Copy assignment operator
-    Mesh &operator=(const Mesh &other) = default;
+    Mesh &operator=(const Mesh &other)
+    {
+        if (this != &other)
+        {
+            vertices = other.vertices;
+            normals = other.normals;
+            texCoords = other.texCoords;
+            indices = other.indices;
+            _dirty = other._dirty;
+        }
+        return *this;
+    }
 
     // Getters
     [[nodiscard]] const std::vector<glm::vec3> &GetVertices() const { return vertices; }

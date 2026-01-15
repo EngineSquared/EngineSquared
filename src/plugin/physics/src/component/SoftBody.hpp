@@ -286,7 +286,7 @@ struct SoftBody {
         if (vertexIndex < invMasses.size())
         {
             invMasses[vertexIndex] = 0.0f;
-            if (std::ranges::find(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex) == pinnedVertices.end())
+            if (std::ranges::find(pinnedVertices, vertexIndex) == pinnedVertices.end())
             {
                 pinnedVertices.push_back(vertexIndex);
             }

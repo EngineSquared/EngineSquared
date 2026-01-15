@@ -204,7 +204,7 @@ void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
     const uint32_t height = 50u;
 
     // Rotation to map cloth (generated in XY plane) into a vertical YZ plane (rotate +90° around Y)
-    const glm::quat rotation = glm::quat(glm::vec3(0.0f, glm::radians(90.0f), 0.0f));
+    const auto rotation = glm::quat(glm::vec3(0.0f, glm::radians(90.0f), 0.0f));
 
     auto cloth = Object::Helper::CreateCloth(core, width, height, 0.20f, position, rotation);
 

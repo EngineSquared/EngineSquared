@@ -206,6 +206,7 @@ TEST(Mesh, dirty_flag_on_setters_multiple)
     EXPECT_FALSE(mesh.IsDirty());
     mesh.EmplaceVertices(glm::vec3(1.0f, 2.0f, 3.0f));
     mesh.EmplaceNormals(glm::vec3(4.0f, 5.0f, 6.0f));
+    mesh.EmplaceTexCoords(glm::vec2(0.0f, 0.0f));
     EXPECT_TRUE(mesh.IsDirty());
     mesh.ClearDirty();
     EXPECT_FALSE(mesh.IsDirty());
