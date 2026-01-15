@@ -1,13 +1,13 @@
 #include "plugin/PluginCameraMovement.hpp"
 
-#include <memory>
+#include "component/DefaultBehavior.hpp"
 #include "plugin/PluginInput.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "resource/CameraManager.hpp"
-#include "component/DefaultBehavior.hpp"
 #include "scheduler/Startup.hpp"
 #include "system/CameraControlSystem.hpp"
 #include "system/RegisterCameraCallbacksSystem.hpp"
+#include <memory>
 
 namespace CameraMovement {
 

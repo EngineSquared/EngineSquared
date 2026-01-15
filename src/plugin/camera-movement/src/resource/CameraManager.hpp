@@ -250,7 +250,10 @@ class CameraManager {
      *
      * @param behavior Shared pointer to an implementation of ICameraBehavior.
      */
-    void SetBehavior(std::shared_ptr<CameraMovement::Component::ICameraBehavior> behavior) { _behavior = std::move(behavior); }
+    void SetBehavior(std::shared_ptr<CameraMovement::Component::ICameraBehavior> behavior)
+    {
+        _behavior = std::move(behavior);
+    }
 
     /**
      * @brief Get the current camera behavior instance.
