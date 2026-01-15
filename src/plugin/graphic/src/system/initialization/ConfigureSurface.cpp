@@ -18,6 +18,12 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
     wgpu::SurfaceConfiguration config(wgpu::Default);
     config.width = surfaceSize.x;
     config.height = surfaceSize.y;
+
+    if (config.width == 0)
+        config.width = 1;
+    if (config.height == 0)
+        config.height = 1;
+
     config.usage = wgpu::TextureUsage::RenderAttachment;
     config.format = context.surface->capabilities->formats[0];
     config.device = context.deviceContext.GetDevice().value();

@@ -20,6 +20,11 @@ template <typename TResource> inline TResource &Core::GetResource()
     return this->_registry->ctx().get<TResource>();
 }
 
+template <typename TResource> inline bool Core::HasResource() const
+{
+    return this->_registry->ctx().contains<TResource>();
+}
+
 template <typename TResource> inline void Core::DeleteResource() { this->_registry->ctx().erase<TResource>(); }
 
 template <typename TResource> inline const TResource &Core::GetResource() const

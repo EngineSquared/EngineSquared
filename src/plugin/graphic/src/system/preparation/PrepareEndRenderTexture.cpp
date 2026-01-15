@@ -3,6 +3,7 @@
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/TextureContainer.hpp"
+#include "utils/EndRenderTexture.hpp"
 #include "utils/webgpu.hpp"
 #include <glm/vec2.hpp>
 
@@ -10,7 +11,7 @@ static void EnsurePlaceholderEndRenderTexture(Graphic::Resource::Context &contex
                                               Graphic::Resource::TextureContainer &textureContainer)
 {
     wgpu::TextureDescriptor textureDesc(wgpu::Default);
-    std::string_view name(Graphic::System::END_RENDER_TEXTURE_ID.data(), Graphic::System::END_RENDER_TEXTURE_ID.size());
+    std::string_view name(Graphic::Utils::END_RENDER_TEXTURE_ID.data(), Graphic::Utils::END_RENDER_TEXTURE_ID.size());
     textureDesc.label = wgpu::StringView(name);
     textureDesc.size = {.width = 1920u, .height = 1080u, .depthOrArrayLayers = 1};
     textureDesc.format = wgpu::TextureFormat::BGRA8UnormSrgb;
@@ -21,14 +22,14 @@ static void EnsurePlaceholderEndRenderTexture(Graphic::Resource::Context &contex
 
     Graphic::Resource::Texture texture(context, textureDesc);
 
-    if (textureContainer.Contains(Graphic::System::END_RENDER_TEXTURE_ID))
+    if (textureContainer.Contains(Graphic::Utils::END_RENDER_TEXTURE_ID))
     {
-        auto &existingTexture = textureContainer.Get(Graphic::System::END_RENDER_TEXTURE_ID);
+        auto &existingTexture = textureContainer.Get(Graphic::Utils::END_RENDER_TEXTURE_ID);
         std::swap(existingTexture, texture);
     }
     else
     {
-        textureContainer.Add(Graphic::System::END_RENDER_TEXTURE_ID, std::move(texture));
+        textureContainer.Add(Graphic::Utils::END_RENDER_TEXTURE_ID, std::move(texture));
     }
 }
 
@@ -43,7 +44,6 @@ static void EnsureSurfaceEndRenderTexture(Graphic::Resource::Context &context,
 
     if (!context.surface->configured)
     {
-        // Surface not configured (likely OpenGL backend). Fallback to placeholder
         EnsurePlaceholderEndRenderTexture(context, textureContainer);
         return;
     }
@@ -67,14 +67,14 @@ static void EnsureSurfaceEndRenderTexture(Graphic::Resource::Context &context,
     wgpu::Texture currentTexture = surfaceTexture.texture;
     Graphic::Resource::Texture newTexture("end_render_texture", currentTexture, false);
 
-    if (textureContainer.Contains(Graphic::System::END_RENDER_TEXTURE_ID))
+    if (textureContainer.Contains(Graphic::Utils::END_RENDER_TEXTURE_ID))
     {
-        auto &texture = textureContainer.Get(Graphic::System::END_RENDER_TEXTURE_ID);
+        auto &texture = textureContainer.Get(Graphic::Utils::END_RENDER_TEXTURE_ID);
         std::swap(texture, newTexture);
     }
     else
     {
-        textureContainer.Add(Graphic::System::END_RENDER_TEXTURE_ID, std::move(newTexture));
+        textureContainer.Add(Graphic::Utils::END_RENDER_TEXTURE_ID, std::move(newTexture));
     }
 }
 
@@ -125,6 +125,6 @@ void Graphic::System::PrepareEndRenderTexture(Engine::Core &core)
         EnsureSurfaceEndRenderTexture(context, textureContainer);
     }
 
-    const auto &endRenderTexture = textureContainer.Get(END_RENDER_TEXTURE_ID);
+    const auto &endRenderTexture = textureContainer.Get(Utils::END_RENDER_TEXTURE_ID);
     EnsureDepthTexture(core, endRenderTexture.GetSize());
 }
