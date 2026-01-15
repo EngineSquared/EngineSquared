@@ -109,8 +109,9 @@ struct RigidBody {
     // Layer (for collision filtering)
     //========================================================================
 
-    /// Object layer for collision filtering
-    uint16_t objectLayer = 0; // 0 = MOVING layer by default
+    /// Object layer for collision filtering (0 = NON_MOVING, 1 = MOVING)
+    /// Use CreateDynamic/CreateStatic/CreateKinematic helpers for correct defaults
+    uint16_t objectLayer = 0;
 
     //========================================================================
     // Helper Methods
