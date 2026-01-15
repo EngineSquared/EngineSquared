@@ -2,8 +2,6 @@
 
 #include "component/Camera.hpp"
 #include "component/CameraBehavior.hpp"
-#include "component/DefaultBehavior.hpp"
-#include "component/DontMoveBehavior.hpp"
 #include "component/Transform.hpp"
 #include "resource/CameraManager.hpp"
 #include "scheduler/Update.hpp"
@@ -25,18 +23,8 @@ void CameraControlSystem(Engine::Core &core)
 
     float deltaTime = core.GetScheduler<Engine::Scheduler::Update>().GetDeltaTime();
 
-    static Component::DefaultBehavior defaultBehavior;
-    static Component::DontMoveBehavior dontMoveBehavior;
-
-    Component::ICameraBehavior *behavior = nullptr;
-
-    switch (cameraManager.GetBehaviorType())
-    {
-    case Resource::CameraBehaviorType::Default: behavior = &defaultBehavior; break;
-    case Resource::CameraBehaviorType::DontMove: behavior = &dontMoveBehavior; break;
-    }
-
-    if (behavior != nullptr)
+    auto behavior = cameraManager.GetBehavior();
+    if (behavior)
     {
         behavior->Update(core, cameraManager, transform, camera, deltaTime);
     }

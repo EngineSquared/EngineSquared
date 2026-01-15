@@ -1,12 +1,17 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
+#include <memory>
 
 #include "component/Camera.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "entity/Entity.hpp"
 #include "exception/CameraMovementError.hpp"
+
+namespace CameraMovement::Component {
+class ICameraBehavior;
+}
 
 namespace CameraMovement::Resource {
 
@@ -240,6 +245,20 @@ class CameraManager {
      */
     int GetJoystickId() const { return _joystickId; }
 
+    /**
+     * @brief Set the camera behavior instance.
+     *
+     * @param behavior Shared pointer to an implementation of ICameraBehavior.
+     */
+    void SetBehavior(std::shared_ptr<CameraMovement::Component::ICameraBehavior> behavior) { _behavior = std::move(behavior); }
+
+    /**
+     * @brief Get the current camera behavior instance.
+     *
+     * @return Shared pointer to the current ICameraBehavior, or nullptr if none is set.
+     */
+    std::shared_ptr<CameraMovement::Component::ICameraBehavior> GetBehavior() const { return _behavior; }
+
   private:
     Engine::Core &_core;
     Engine::Entity _cameraEntity;
@@ -252,6 +271,7 @@ class CameraManager {
     bool _wasCursorMasked;
     glm::quat _originRotation;
     int _joystickId;
+    std::shared_ptr<CameraMovement::Component::ICameraBehavior> _behavior;
 };
 
 } // namespace CameraMovement::Resource
