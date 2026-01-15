@@ -139,7 +139,7 @@ int main(void)
 {
     Engine::Core core;
 
-    core.AddPlugins<Window::Plugin, Graphic::Plugin, Input::Plugin, CameraMovement::Plugin>();
+    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Input::Plugin, CameraMovement::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
         core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(

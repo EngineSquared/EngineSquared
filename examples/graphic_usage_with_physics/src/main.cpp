@@ -10,6 +10,7 @@
 #include "Graphic.hpp"
 #include "Input.hpp"
 #include "Object.hpp"
+#include "DefaultPipeline.hpp"
 #include "Physics.hpp"
 #include "RenderingPipeline.hpp"
 #include "plugin/PluginWindow.hpp"
@@ -104,7 +105,7 @@ int main(void)
 {
     Engine::Core core;
 
-    core.AddPlugins<Window::Plugin, Graphic::Plugin, Input::Plugin, CameraMovement::Plugin, Physics::Plugin>();
+    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Input::Plugin, CameraMovement::Plugin, Physics::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
         core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(
