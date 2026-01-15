@@ -182,6 +182,36 @@ template <typename ResourceType> class ResourceManager {
     }
 
     /**
+     * @brief Get the default resource.
+     *
+     * @exception ResourceManagerError if no default resource is set.
+     *
+     * @return the default resource
+     */
+    [[nodiscard]] ResourceType &GetDefault()
+    {
+        if (!defaultResource.has_value())
+            throw ResourceManagerError("No default resource is set.");
+
+        return *defaultResource;
+    }
+
+    /**
+     * @brief Get the default resource.
+     *
+     * @exception ResourceManagerError if no default resource is set.
+     *
+     * @return the default resource
+     */
+    [[nodiscard]] const ResourceType &GetDefault() const
+    {
+        if (!defaultResource.has_value())
+            throw ResourceManagerError("No default resource is set.");
+
+        return *defaultResource;
+    }
+
+    /**
      * @brief Get the reference to a stored resource, or the default resource if it doesn't exist.
      *
      * @exception ResourceManagerError if the resource with given id doesn't exist and no default is set.

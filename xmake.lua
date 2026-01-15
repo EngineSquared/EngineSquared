@@ -40,6 +40,7 @@ includes("src/utils/function-container/xmake.lua")
 includes("src/utils/log/xmake.lua")
 includes("src/utils/tools/xmake.lua")
 includes("src/plugin/event/xmake.lua")
+includes("src/plugin/default-pipeline/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
@@ -61,6 +62,8 @@ target("EngineSquared")
     add_deps("UtilsTools")
     add_deps("PluginPhysics")
     add_deps("UtilsLog")
+    add_deps("PluginEvent")
+    add_deps("PluginDefaultPipeline")
 
     add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native")
 
