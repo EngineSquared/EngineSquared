@@ -72,14 +72,7 @@ struct Mesh {
     }
 
     // Copy constructor
-    Mesh(const Mesh &mesh)
-    {
-        vertices = mesh.vertices;
-        normals = mesh.normals;
-        texCoords = mesh.texCoords;
-        indices = mesh.indices;
-        _dirty = mesh._dirty;
-    }
+    Mesh(const Mesh &mesh) = default;
     // Copy assignment operator
     Mesh &operator=(const Mesh &other)
     {
