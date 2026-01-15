@@ -6,11 +6,11 @@
 #include <glm/glm.hpp>
 
 #include "component/Camera.hpp"
-#include "utils/CameraBehavior.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "resource/CameraManager.hpp"
 #include "resource/InputManager.hpp"
+#include "utils/CameraBehavior.hpp"
 #include "utils/CameraUtils.hpp"
 
 namespace CameraMovement::Utils {

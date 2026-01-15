@@ -1,10 +1,10 @@
 #include "system/CameraControlSystem.hpp"
 
 #include "component/Camera.hpp"
-#include "utils/CameraBehavior.hpp"
 #include "component/Transform.hpp"
 #include "resource/CameraManager.hpp"
 #include "scheduler/Update.hpp"
+#include "utils/CameraBehavior.hpp"
 
 namespace CameraMovement::System {
 

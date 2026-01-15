@@ -1,10 +1,10 @@
 #pragma once
 
 #include "component/Camera.hpp"
-#include "utils/CameraBehavior.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "resource/CameraManager.hpp"
+#include "utils/CameraBehavior.hpp"
 
 namespace CameraMovement::Utils {
 

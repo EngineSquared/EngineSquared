@@ -274,7 +274,7 @@ class CameraManager {
     bool _wasCursorMasked;
     glm::quat _originRotation;
     int _joystickId;
-    std::shared_ptr<CameraMovement::Utils::ICameraBehavior> _behavior; 
+    std::shared_ptr<CameraMovement::Utils::ICameraBehavior> _behavior;
 };
 
 } // namespace CameraMovement::Resource
