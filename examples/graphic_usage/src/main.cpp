@@ -29,13 +29,13 @@ void Setup(Engine::Core &core)
 {
     auto cube = core.CreateEntity();
 
-    cube.AddComponent<Object::Component::Transform>(core);
-    cube.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
+    cube.AddComponent<Object::Component::Transform>();
+    cube.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
 
     auto camera = core.CreateEntity();
 
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 0.0f, -2.0f));
-    camera.AddComponent<Object::Component::Camera>(core);
+    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -2.0f));
+    camera.AddComponent<Object::Component::Camera>();
 
     auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
     cameraManager.SetActiveCamera(camera);

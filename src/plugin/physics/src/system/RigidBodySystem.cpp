@@ -40,7 +40,7 @@ namespace Physics::System {
  *
  * @note If no collider is found, a DefaultCollider will be created automatically.
  */
-static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(entt::registry &registry, entt::entity entity)
+static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     if (auto *sphereCollider = registry.try_get<Component::SphereCollider>(entity))
     {
@@ -98,7 +98,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(entt::registry &regist
  *
  * If no collider exists, creates a DefaultCollider automatically.
  */
-static JPH::RefConst<JPH::Shape> GetOrCreateColliderShape(entt::registry &registry, entt::entity entity)
+static JPH::RefConst<JPH::Shape> GetOrCreateColliderShape(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     auto shape = CreateShapeFromColliders(registry, entity);
 
@@ -129,7 +129,7 @@ static JPH::RefConst<JPH::Shape> GetOrCreateColliderShape(entt::registry &regist
  * 2. Jolt physics body with all properties
  * 3. RigidBodyInternal component with BodyID
  */
-static void OnRigidBodyConstruct(entt::registry &registry, entt::entity entity)
+static void OnRigidBodyConstruct(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     try
     {
@@ -208,7 +208,7 @@ static void OnRigidBodyConstruct(entt::registry &registry, entt::entity entity)
  *
  * @note Colliders are NOT automatically removed (user may want to keep them)
  */
-static void OnRigidBodyDestroy(entt::registry &registry, entt::entity entity)
+static void OnRigidBodyDestroy(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     try
     {

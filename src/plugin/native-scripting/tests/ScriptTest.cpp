@@ -26,7 +26,7 @@ TEST(NativeScripting, CasualUse)
 
     auto e = core.CreateEntity();
 
-    e.AddComponent<NativeScripting::Component::NativeScripting>(core).Bind<TestScript>(core);
+    e.AddComponent<NativeScripting::Component::NativeScripting>().Bind<TestScript>(core);
 
     core.RunSystems();
 

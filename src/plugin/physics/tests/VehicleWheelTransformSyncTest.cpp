@@ -31,9 +31,8 @@ TEST(VehiclePlugin, WheelTransformSync)
     core.RunSystems();
 
     auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
-    floor.AddComponent<Physics::Component::BoxCollider>(core,
-                                                        Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f)));
-    floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
+    floor.AddComponent<Physics::Component::BoxCollider>(Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f)));
+    floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
 
     Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);
     Object::Component::Mesh wheelMesh = Object::Utils::GenerateWheelMesh(0.3f, 0.2f);
@@ -46,8 +45,7 @@ TEST(VehiclePlugin, WheelTransformSync)
                        .SetWheelMesh(Physics::Component::WheelIndex::RearRight, wheelMesh)
                        .Build(core);
 
-    auto &registry = core.GetRegistry();
-    const auto &vehicleInternal = vehicle.GetComponents<Physics::Component::VehicleInternal>(core);
+    const auto &vehicleInternal = vehicle.GetComponents<Physics::Component::VehicleInternal>();
 
     for (int i = 0; i < 50; ++i)
     {
@@ -59,7 +57,7 @@ TEST(VehiclePlugin, WheelTransformSync)
         auto wheelEntity = vehicleInternal.wheelEntities[i];
         ASSERT_TRUE(wheelEntity.IsValid());
 
-        auto *wheelTransform = registry.try_get<Object::Component::Transform>(wheelEntity);
+        auto *wheelTransform = wheelEntity.TryGetComponent<Object::Component::Transform>();
         ASSERT_NE(wheelTransform, nullptr);
 
         glm::vec3 wheelPos = wheelTransform->GetPosition();

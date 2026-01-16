@@ -33,28 +33,28 @@ void Setup(Engine::Core &core)
 
     // Default Material
     auto cube = core.CreateEntity();
-    cube.AddComponent<Object::Component::Transform>(core, glm::vec3(-2.0f, 0.0f, 0.0f));
-    cube.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
+    cube.AddComponent<Object::Component::Transform>(glm::vec3(-2.0f, 0.0f, 0.0f));
+    cube.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
 
     // Custom Material with Texture
     Object::Component::Material materialWithTexture;
     materialWithTexture.ambientTexName = "./asset/texture.png";
     auto cube1 = core.CreateEntity();
-    cube1.AddComponent<Object::Component::Transform>(core);
-    cube1.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
-    cube1.AddComponent<Object::Component::Material>(core, std::move(materialWithTexture));
+    cube1.AddComponent<Object::Component::Transform>();
+    cube1.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
+    cube1.AddComponent<Object::Component::Material>(std::move(materialWithTexture));
 
     // Custom Material without Texture
     Object::Component::Material materialWithoutTexture;
     auto cube2 = core.CreateEntity();
-    cube2.AddComponent<Object::Component::Transform>(core, glm::vec3(2.0f, 0.0f, 0.0f));
-    cube2.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
-    cube2.AddComponent<Object::Component::Material>(core, std::move(materialWithoutTexture));
+    cube2.AddComponent<Object::Component::Transform>(glm::vec3(2.0f, 0.0f, 0.0f));
+    cube2.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
+    cube2.AddComponent<Object::Component::Material>(std::move(materialWithoutTexture));
 
     // Camera
     auto camera = core.CreateEntity();
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 0.0f, -5.0f));
-    camera.AddComponent<Object::Component::Camera>(core);
+    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -5.0f));
+    camera.AddComponent<Object::Component::Camera>();
 
     auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
     cameraManager.SetActiveCamera(camera);

@@ -5,6 +5,6 @@
 
 namespace DefaultPipeline::System {
 
-void OnTransformDestruction(Engine::Core &core, Engine::Entity entity);
+void OnTransformDestruction(Engine::Core &core, Engine::EntityId entityId);
 
 } // namespace DefaultPipeline::System

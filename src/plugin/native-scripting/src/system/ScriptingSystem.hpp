@@ -15,7 +15,7 @@ void UpdateScripts(Engine::Core &core);
  * @param entity The entity whose script is to be destroyed.
  * @param registry The registry that manages the entity and its components.
  */
-void DestroyScript(entt::registry &registry, entt::entity entity);
+void DestroyScript(Engine::Core::Registry &registry, Engine::EntityId entity);
 
 /**
  * @brief Sets the callback function to be called when the scripting system is destroyed.

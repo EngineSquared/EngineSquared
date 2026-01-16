@@ -23,10 +23,7 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
                   "MaterialTransfer struct size does not match GPU requirements.");
 
   public:
-    explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity)
-    {
-        _debugName = prefix + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
-    }
+    explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity) { _UpdateDebugName(); }
 
     explicit MaterialGPUBuffer(void) = default;
 
@@ -55,12 +52,12 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU material buffer that is not created.");
         }
 
-        if (_entity == Engine::Entity::entity_null_id)
+        if (!_entity.IsValid())
         {
             return;
         }
 
-        const auto &materialComponent = _entity.GetComponents<Object::Component::Material>(core);
+        const auto &materialComponent = _entity.GetComponents<Object::Component::Material>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
         _UpdateBuffer(materialComponent, context);
     };
@@ -81,6 +78,8 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
     std::string_view GetDebugName() const { return _debugName; }
 
   private:
+    void _UpdateDebugName() { _debugName = fmt::format("{}{}", prefix, _entity); }
+
     wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
     {
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
@@ -99,7 +98,7 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
 
     wgpu::Buffer _buffer;
     bool _isCreated = false;
-    Engine::Entity _entity = Engine::Entity::entity_null_id;
+    Engine::Entity _entity = Engine::Entity::Null();
     std::string _debugName;
 };
 } // namespace DefaultPipeline::Resource

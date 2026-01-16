@@ -32,8 +32,8 @@ TEST(VehiclePlugin, VehicleSteering)
 
     auto floor = Object::Helper::CreatePlane(core, 50.0f, 50.0f, glm::vec3(0.0f, 0.0f, 0.0f));
     auto floorCollider = Physics::Component::BoxCollider(glm::vec3(25.0f, 0.5f, 25.0f));
-    floor.AddComponent<Physics::Component::BoxCollider>(core, floorCollider);
-    floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
+    floor.AddComponent<Physics::Component::BoxCollider>(floorCollider);
+    floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
 
     Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);
     Object::Component::Mesh wheelMesh = Object::Utils::GenerateWheelMesh(0.3f, 0.2f);
@@ -48,7 +48,7 @@ TEST(VehiclePlugin, VehicleSteering)
                        .Build(core);
 
     auto &registry = core.GetRegistry();
-    auto *controller = registry.try_get<Physics::Component::VehicleController>(vehicle);
+    auto *controller = vehicle.TryGetComponent<Physics::Component::VehicleController>();
     ASSERT_NE(controller, nullptr);
 
     controller->SetForward(2.0f);   // Should clamp to 1.0

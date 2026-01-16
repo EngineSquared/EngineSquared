@@ -19,6 +19,7 @@ target("GraphicUsageWithPhysics")
     add_deps("PluginCameraMovement")
     add_deps("PluginPhysics")
     add_deps("PluginEvent")
+    add_deps("PluginDefaultPipeline")
 
     add_files("src/**.cpp")
 

@@ -7,21 +7,20 @@
 #include "resource/buffer/TransformGPUBuffer.hpp"
 #include <string>
 
-void DefaultPipeline::System::OnTransformCreation(Engine::Core &core, Engine::Entity entity)
+void DefaultPipeline::System::OnTransformCreation(Engine::Core &core, Engine::EntityId entityId)
 {
-    const auto &transform = entity.GetComponents<Object::Component::Transform>(core);
-    auto &GPUTransform = entity.AddComponent<Component::GPUTransform>(core);
+    Engine::Entity entity{core, entityId};
+    const auto &transform = entity.GetComponents<Object::Component::Transform>();
+    auto &GPUTransform = entity.AddComponent<Component::GPUTransform>();
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
 
-    std::string entityString = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
-
-    std::string transformBufferName = "TRANSFORM_BUFFER_" + entityString;
+    std::string transformBufferName = fmt::format("TRANSFORM_BUFFER_{}", entity);
     entt::hashed_string transformBufferId{transformBufferName.data(), transformBufferName.size()};
     gpuBufferContainer.Add(transformBufferId, std::make_unique<Resource::TransformGPUBuffer>(entity));
     gpuBufferContainer.Get(transformBufferId)->Create(core);
     GPUTransform.modelMatrixBuffer = transformBufferId;
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
-    std::string bindGroupName = "TRANSFORM_BIND_GROUP_" + entityString;
+    std::string bindGroupName = fmt::format("TRANSFORM_BIND_GROUP_{}", entity);
     entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
     Graphic::Resource::BindGroup bindGroup(core, "DEFAULT_RENDER_PASS_SHADER", 1,
                                            {

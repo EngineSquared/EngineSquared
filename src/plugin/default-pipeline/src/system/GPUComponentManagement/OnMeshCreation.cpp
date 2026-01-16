@@ -6,21 +6,20 @@
 #include "resource/buffer/PointGPUBuffer.hpp"
 #include <string>
 
-void DefaultPipeline::System::OnMeshCreation(Engine::Core &core, Engine::Entity entity)
+void DefaultPipeline::System::OnMeshCreation(Engine::Core &core, Engine::EntityId entityId)
 {
-    const auto &mesh = entity.GetComponents<Object::Component::Mesh>(core);
-    auto &GPUMesh = entity.AddComponent<Component::GPUMesh>(core);
+    Engine::Entity entity{core, entityId};
+    const auto &mesh = entity.GetComponents<Object::Component::Mesh>();
+    auto &GPUMesh = entity.AddComponent<Component::GPUMesh>();
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
 
-    std::string entityString = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
-
-    std::string pointBufferName = "POINT_BUFFER_" + entityString;
+    std::string pointBufferName = fmt::format("POINT_BUFFER_{}", entity);
     entt::hashed_string pointBufferUUID{pointBufferName.data(), pointBufferName.size()};
     gpuBufferContainer.Add(pointBufferUUID, std::make_unique<Resource::PointGPUBuffer>(entity));
     gpuBufferContainer.Get(pointBufferUUID)->Create(core);
     GPUMesh.pointBufferId = pointBufferUUID;
 
-    std::string indexBufferName = "INDEX_BUFFER_" + entityString;
+    std::string indexBufferName = fmt::format("INDEX_BUFFER_{}", entity);
     entt::hashed_string indexBufferUUID{indexBufferName.data(), indexBufferName.size()};
     gpuBufferContainer.Add(indexBufferUUID, std::make_unique<Resource::IndexGPUBuffer>(entity));
     gpuBufferContainer.Get(indexBufferUUID)->Create(core);

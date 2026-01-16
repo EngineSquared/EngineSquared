@@ -79,14 +79,14 @@ struct FixedConstraint {
      * This should be the entity that owns this constraint component.
      * World constraints are encoded by setting `bodyB` invalid (see CreateToWorld()).
      */
-    Engine::Entity bodyA;
+    Engine::EntityId bodyA = Engine::EntityId::Null();
 
     /**
      * @brief Second body entity (the entity to connect to)
      *
      * The other entity involved in the constraint.
      */
-    Engine::Entity bodyB;
+    Engine::EntityId bodyB = Engine::EntityId::Null();
 
     //========================================================================
     // Attachment Points
@@ -145,7 +145,7 @@ struct FixedConstraint {
      * @return Configured FixedConstraint component
      */
     [[nodiscard]] static FixedConstraint
-    Create(Engine::Entity a, Engine::Entity b, const glm::vec3 &pointA = glm::vec3(0.0f),
+    Create(Engine::EntityId a, Engine::EntityId b, const glm::vec3 &pointA = glm::vec3(0.0f),
            const glm::vec3 &pointB = glm::vec3(0.0f),
            const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
@@ -170,12 +170,12 @@ struct FixedConstraint {
      * @return Configured FixedConstraint component
      */
     [[nodiscard]] static FixedConstraint
-    CreateToWorld(Engine::Entity body, const glm::vec3 &worldPoint,
+    CreateToWorld(Engine::EntityId body, const glm::vec3 &worldPoint,
                   const ConstraintSettings &constraintSettings = ConstraintSettings::Rigid())
     {
         FixedConstraint constraint;
         constraint.bodyA = body;
-        constraint.bodyB = Engine::Entity(); // Invalid entity = world
+        constraint.bodyB = Engine::EntityId(); // Invalid entity = world
         constraint.localPointA = glm::vec3(0.0f);
         constraint.localPointB = worldPoint; // Used as world position
         constraint.settings = constraintSettings;
@@ -187,7 +187,7 @@ struct FixedConstraint {
      * @brief Check if this is a world constraint (body to world, not body to body)
      * @return true if bodyB is invalid (world constraint)
      */
-    [[nodiscard]] bool IsWorldConstraint() const { return !bodyB.IsValid(); }
+    [[nodiscard]] bool IsWorldConstraint() const { return bodyB.IsNull(); }
 };
 
 } // namespace Physics::Component

@@ -3,12 +3,13 @@
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
 
-void DefaultPipeline::System::OnTransformDestruction(Engine::Core &core, Engine::Entity entity)
+void DefaultPipeline::System::OnTransformDestruction(Engine::Core &core, Engine::EntityId entityId)
 {
-    if (!entity.HasComponents<Component::GPUTransform>(core))
+    Engine::Entity entity{core, entityId};
+    if (!entity.HasComponents<Component::GPUTransform>())
         return;
 
-    const auto &transformComponent = entity.GetComponents<Component::GPUTransform>(core);
+    const auto &transformComponent = entity.GetComponents<Component::GPUTransform>();
 
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
@@ -18,5 +19,5 @@ void DefaultPipeline::System::OnTransformDestruction(Engine::Core &core, Engine:
     if (bindGroupManager.Contains(transformComponent.bindGroup))
         bindGroupManager.Remove(transformComponent.bindGroup);
 
-    entity.RemoveComponent<Component::GPUTransform>(core);
+    entity.RemoveComponent<Component::GPUTransform>();
 }

@@ -29,7 +29,7 @@ namespace Physics::System {
 // Fixed Constraint Handler
 //=============================================================================
 
-static void OnFixedConstraintConstruct(entt::registry &registry, entt::entity entity)
+static void OnFixedConstraintConstruct(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     constexpr const char *NAME = "FixedConstraint";
 
@@ -44,7 +44,7 @@ static void OnFixedConstraintConstruct(entt::registry &registry, entt::entity en
         [](auto const &) { return true; });
 }
 
-static void OnFixedConstraintDestroy(entt::registry &registry, entt::entity entity)
+static void OnFixedConstraintDestroy(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     DestroyConstraint(registry, entity, "FixedConstraint");
 }
@@ -53,7 +53,7 @@ static void OnFixedConstraintDestroy(entt::registry &registry, entt::entity enti
 // Distance Constraint Handler
 //=============================================================================
 
-static void OnDistanceConstraintConstruct(entt::registry &registry, entt::entity entity)
+static void OnDistanceConstraintConstruct(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     constexpr const char *NAME = "DistanceConstraint";
 
@@ -84,7 +84,7 @@ static void OnDistanceConstraintConstruct(entt::registry &registry, entt::entity
         });
 }
 
-static void OnDistanceConstraintDestroy(entt::registry &registry, entt::entity entity)
+static void OnDistanceConstraintDestroy(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     DestroyConstraint(registry, entity, "DistanceConstraint");
 }
@@ -93,7 +93,7 @@ static void OnDistanceConstraintDestroy(entt::registry &registry, entt::entity e
 // Point Constraint Handler
 //=============================================================================
 
-static void OnPointConstraintConstruct(entt::registry &registry, entt::entity entity)
+static void OnPointConstraintConstruct(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     constexpr const char *NAME = "PointConstraint";
 
@@ -107,7 +107,7 @@ static void OnPointConstraintConstruct(entt::registry &registry, entt::entity en
         [](auto const &) { return true; });
 }
 
-static void OnPointConstraintDestroy(entt::registry &registry, entt::entity entity)
+static void OnPointConstraintDestroy(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     DestroyConstraint(registry, entity, "PointConstraint");
 }

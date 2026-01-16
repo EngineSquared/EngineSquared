@@ -18,8 +18,8 @@ void CameraControlSystem(Engine::Core &core)
     }
 
     auto entity = cameraManager.GetActiveCamera();
-    auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
-    auto &camera = core.GetRegistry().get<Object::Component::Camera>(entity);
+    auto &transform = entity.GetComponents<Object::Component::Transform>();
+    auto &camera = entity.GetComponents<Object::Component::Camera>();
 
     float deltaTime = core.GetScheduler<Engine::Scheduler::Update>().GetDeltaTime();
 

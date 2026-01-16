@@ -13,16 +13,16 @@
 #include <filesystem>
 #include <string>
 
-void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Entity entity)
+void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::EntityId entityId)
 {
+    Engine::Entity entity{core, entityId};
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
-    const auto &material = entity.GetComponents<Object::Component::Material>(core);
+    const auto &material = entity.GetComponents<Object::Component::Material>();
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
     auto &samplerContainer = core.GetResource<Graphic::Resource::SamplerContainer>();
     const auto &context = core.GetResource<Graphic::Resource::Context>();
 
-    auto &GPUMaterial = entity.AddComponent<Component::GPUMaterial>(core);
-    const std::string entityString = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
+    auto &GPUMaterial = entity.AddComponent<Component::GPUMaterial>();
 
     entt::hashed_string textureId{material.ambientTexName.data(), material.ambientTexName.size()};
     entt::hashed_string samplerId{material.ambientTexName.data(), material.ambientTexName.size()};
@@ -53,7 +53,7 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     GPUMaterial.buffer = materialBufferId;
 
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
-    std::string bindGroupName = "MATERIAL_BIND_GROUP_" + entityString;
+    std::string bindGroupName = fmt::format("MATERIAL_BIND_GROUP_{}", entity);
     entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
     Graphic::Resource::BindGroup bindGroup(core, "DEFAULT_RENDER_PASS_SHADER", 2,
                                            {
