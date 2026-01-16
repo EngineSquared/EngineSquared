@@ -5,9 +5,9 @@
 // Temp
 #include <iostream>
 
-auto Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> void
+auto Relationship::Utils::SetChildOf(Engine::Entity child, Engine::Entity parent) -> void
 {
-    if (IsChildOf(core, parent, child))
+    if (IsChildOf(parent, child))
     {
         Log::Warn(fmt::format("Entity {} is already a child of the parent {}", child, parent));
         return;
@@ -30,25 +30,27 @@ auto Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity child, E
     newChildRS.parent = parent;
 }
 
-auto Relationship::Utils::IsChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> bool
+auto Relationship::Utils::IsChildOf(Engine::Entity child, Engine::Entity parent) -> bool
 {
     const Relationship::Component::Relationship *childRS =
         child.TryGetComponent<Relationship::Component::Relationship>();
     return childRS && childRS->parent == parent;
 }
 
-auto Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entity child) -> void
+auto Relationship::Utils::RemoveParent(Engine::Entity child) -> void
 {
-    Engine::Entity parent = GetParent(core, child);
-    if (parent == Engine::Entity::Null())
+    Engine::Entity parent = GetParent(child);
+    if (parent == Engine::Entity::Null()) {
+        Log::Warn(fmt::format("Entity {} has no parent to remove", child));
         return;
+    }
     auto &childRS = child.GetComponents<Relationship::Component::Relationship>();
     auto &parentRS = parent.GetComponents<Relationship::Component::Relationship>();
 
     parentRS.children--;
     if (parentRS.first == child)
     {
-        if (childRS.next.IsValid())
+        if (!childRS.next.IsValid())
         {
             parentRS.first = Engine::Entity::Null();
         }
@@ -71,12 +73,11 @@ auto Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entity child)
     }
 }
 
-auto Relationship::Utils::GetParent(Engine::Core &core, Engine::Entity child) -> Engine::Entity
+auto Relationship::Utils::GetParent(Engine::Entity child) -> Engine::Entity
 {
     const Relationship::Component::Relationship &childRS = child.GetComponents<Relationship::Component::Relationship>();
-    if (childRS.parent.IsValid())
+    if (!childRS.parent.IsValid())
     {
-        Log::Warn(fmt::format("Entity {} has no parent", child));
         return Engine::Entity::Null();
     }
     return childRS.parent;
