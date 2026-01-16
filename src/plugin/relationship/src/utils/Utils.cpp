@@ -40,7 +40,8 @@ auto Relationship::Utils::IsChildOf(Engine::Entity child, Engine::Entity parent)
 auto Relationship::Utils::RemoveParent(Engine::Entity child) -> void
 {
     Engine::Entity parent = GetParent(child);
-    if (parent == Engine::Entity::Null()) {
+    if (parent == Engine::Entity::Null())
+    {
         Log::Warn(fmt::format("Entity {} has no parent to remove", child));
         return;
     }
