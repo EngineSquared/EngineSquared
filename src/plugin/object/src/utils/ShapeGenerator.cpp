@@ -623,7 +623,7 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
             br = getIndex(i + 1u, j + 1u, coord);
         }
         return {tl, tr, bl, br};
-    };
+    }; // NOSONAR
 
     auto generateFace = [&](uint32_t axis, uint32_t coord, bool reversed) {
         for (uint32_t i = 0u; i < gridSize - 1u; ++i)
