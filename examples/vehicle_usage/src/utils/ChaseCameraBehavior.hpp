@@ -50,6 +50,9 @@ class ChaseCameraBehavior : public CameraMovement::Utils::ICameraBehavior {
         glm::vec3 cameraTarget = vehiclePos + vehicleForward * cameraLookAhead + glm::vec3(0.0f, 0.5f, 0.0f);
 
         transform.SetPosition(cameraPosition);
+
+        glm::quat lookRotation = CameraMovement::Utils::ComputeLookAtQuaternion(cameraPosition, cameraTarget, glm::vec3(0.0f, 1.0f, 0.0f));
+        transform.SetRotation(lookRotation);
     }
 
     Engine::Entity GetVehicleEntity() const { return _vehicleEntity; }
