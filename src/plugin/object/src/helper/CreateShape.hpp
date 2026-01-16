@@ -156,7 +156,7 @@ struct CreateCapsuleInfo {
     glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f); /// Rotation as quaternion (default: identity)
     glm::vec3 scale = glm::vec3(1.0f);                      /// Scale factor (default: 1.0)
     uint32_t segments = 32u;                                /// Number of radial segments (default: 32)
-    uint32_t heightSegments = 4u;                           /// Number of vertical segments for the cylinder (default: 4)
+    uint32_t heightSegments = 4u; /// Number of vertical segments for the cylinder (default: 4)
 };
 
 /**

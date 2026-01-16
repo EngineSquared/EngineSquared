@@ -129,10 +129,8 @@ void PrintSimulationStep(uint32_t step, Engine::Core &core)
         }
     });
 
-    std::cout << "\n[Step " << step << "] "
-              << "Dynamic: " << dynamicBodies << " | "
-              << "Static: " << staticBodies << " | "
-              << "Kinematic: " << kinematicBodies << std::endl;
+    std::cout << "\n[Step " << step << "] " << "Dynamic: " << dynamicBodies << " | " << "Static: " << staticBodies
+              << " | " << "Kinematic: " << kinematicBodies << std::endl;
 }
 
 struct CounterComponent {
