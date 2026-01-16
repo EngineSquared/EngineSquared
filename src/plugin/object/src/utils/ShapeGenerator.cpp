@@ -603,34 +603,40 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
         mesh.EmplaceIndices(br);
     };
 
+    auto getQuadIndices = [&](uint32_t axis, uint32_t coord, uint32_t i, uint32_t j) -> std::array<uint32_t, 4> {
+        uint32_t tl = 0u, tr = 0u, bl = 0u, br = 0u;
+
+        if (axis == 0u) // X-axis face
+        {
+            tl = getIndex(coord, i, j);
+            tr = getIndex(coord, i + 1u, j);
+            bl = getIndex(coord, i, j + 1u);
+            br = getIndex(coord, i + 1u, j + 1u);
+        }
+        else if (axis == 1u) // Y-axis face
+        {
+            tl = getIndex(i, coord, j);
+            tr = getIndex(i + 1u, coord, j);
+            bl = getIndex(i, coord, j + 1u);
+            br = getIndex(i + 1u, coord, j + 1u);
+        }
+        else // Z-axis face
+        {
+            tl = getIndex(i, j, coord);
+            tr = getIndex(i + 1u, j, coord);
+            bl = getIndex(i, j + 1u, coord);
+            br = getIndex(i + 1u, j + 1u, coord);
+        }
+
+        return {tl, tr, bl, br};
+    };
+
     auto generateFace = [&](uint32_t axis, uint32_t coord, bool reversed) {
         for (uint32_t i = 0u; i < gridSize - 1u; ++i)
         {
             for (uint32_t j = 0u; j < gridSize - 1u; ++j)
             {
-                uint32_t tl, tr, bl, br;
-                if (axis == 0u) // X-axis face
-                {
-                    tl = getIndex(coord, i, j);
-                    tr = getIndex(coord, i + 1u, j);
-                    bl = getIndex(coord, i, j + 1u);
-                    br = getIndex(coord, i + 1u, j + 1u);
-                }
-                else if (axis == 1u) // Y-axis face
-                {
-                    tl = getIndex(i, coord, j);
-                    tr = getIndex(i + 1u, coord, j);
-                    bl = getIndex(i, coord, j + 1u);
-                    br = getIndex(i + 1u, coord, j + 1u);
-                }
-                else // Z-axis face
-                {
-                    tl = getIndex(i, j, coord);
-                    tr = getIndex(i + 1u, j, coord);
-                    bl = getIndex(i, j + 1u, coord);
-                    br = getIndex(i + 1u, j + 1u, coord);
-                }
-
+                auto [tl, tr, bl, br] = getQuadIndices(axis, coord, i, j);
                 if (reversed)
                 {
                     addFace(tl, bl, tr, br);
