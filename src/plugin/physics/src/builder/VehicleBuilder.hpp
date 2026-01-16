@@ -186,7 +186,8 @@ template <> class VehicleBuilder<4> {
         }
 
         Engine::Entity chassis{core, core.CreateEntity()};
-        chassis.AddComponent<Object::Component::Transform>(Object::Component::Transform(_chassisPosition, _chassisScale, _chassisRotation));
+        chassis.AddComponent<Object::Component::Transform>(
+            Object::Component::Transform(_chassisPosition, _chassisScale, _chassisRotation));
         chassis.AddComponent<Object::Component::Mesh>(_chassisMesh);
 
         std::array<Engine::Entity, 4> wheelEntities;
@@ -198,7 +199,8 @@ template <> class VehicleBuilder<4> {
             glm::quat wheelRotation =
                 _chassisRotation * glm::angleAxis(glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
-            wheelEntities[i].AddComponent<Object::Component::Transform>(Object::Component::Transform(worldWheelPos, glm::vec3(1.0f), wheelRotation));
+            wheelEntities[i].AddComponent<Object::Component::Transform>(
+                Object::Component::Transform(worldWheelPos, glm::vec3(1.0f), wheelRotation));
             wheelEntities[i].AddComponent<Object::Component::Mesh>(_wheelMeshes[i]);
         }
 

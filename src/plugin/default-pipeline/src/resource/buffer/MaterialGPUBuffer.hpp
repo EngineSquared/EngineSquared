@@ -82,10 +82,7 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
     std::string_view GetDebugName() const { return _debugName; }
 
   private:
-    void _UpdateDebugName()
-    {
-        _debugName = fmt::format("{}{}", prefix, _entity);
-    }
+    void _UpdateDebugName() { _debugName = fmt::format("{}{}", prefix, _entity); }
 
     wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
     {

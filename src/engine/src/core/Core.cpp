@@ -1,8 +1,8 @@
 #include "Engine.pch.hpp"
 
 #include "core/Core.hpp"
-#include "resource/Time.hpp"
 #include "entity/Entity.hpp"
+#include "resource/Time.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
 #include "scheduler/RelativeTimeUpdate.hpp"
 #include "scheduler/Shutdown.hpp"

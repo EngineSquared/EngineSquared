@@ -53,7 +53,8 @@ struct EntityId : Id {
      * @param   args        parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      */
-    template <typename TComponent, typename... TArgs> inline decltype(auto) AddComponentIfNotExists(Engine::Core &core, TArgs &&...args)
+    template <typename TComponent, typename... TArgs>
+    inline decltype(auto) AddComponentIfNotExists(Engine::Core &core, TArgs &&...args)
     {
         if (this->HasComponents<TComponent>(core))
         {

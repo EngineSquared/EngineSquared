@@ -14,7 +14,6 @@ void DefaultPipeline::System::OnTransformCreation(Engine::Core &core, Engine::En
     auto &GPUTransform = entity.AddComponent<Component::GPUTransform>();
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
 
-
     std::string transformBufferName = fmt::format("TRANSFORM_BUFFER_{}", entity);
     entt::hashed_string transformBufferId{transformBufferName.data(), transformBufferName.size()};
     gpuBufferContainer.Add(transformBufferId, std::make_unique<Resource::TransformGPUBuffer>(entity));

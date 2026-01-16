@@ -1,8 +1,8 @@
 #pragma once
 
 #include "core/Core.hpp"
-#include "utils/AmbientLight.hpp"
 #include "entity/Entity.hpp"
+#include "utils/AmbientLight.hpp"
 
 namespace DefaultPipeline::Resource {
 class AmbientLightBuffer;
