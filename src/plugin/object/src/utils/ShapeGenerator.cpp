@@ -604,15 +604,12 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
     };
 
     auto getQuadIndices = [&](uint32_t axis, uint32_t coord, uint32_t i, uint32_t j) -> std::array<uint32_t, 4> {
-        uint32_t tl = 0u, tr = 0u, bl = 0u, br = 0u;
+        uint32_t tl = getIndex(coord, i, j);
+        uint32_t tr = getIndex(coord, i + 1u, j);
+        uint32_t bl = getIndex(coord, i, j + 1u);
+        uint32_t br = getIndex(coord, i + 1u, j + 1u);
 
-        if (axis == 0u) // X-axis face
-        {
-            tl = getIndex(coord, i, j);
-            tr = getIndex(coord, i + 1u, j);
-            bl = getIndex(coord, i, j + 1u);
-            br = getIndex(coord, i + 1u, j + 1u);
-        }
+        if (axis == 0u); // X-axis face
         else if (axis == 1u) // Y-axis face
         {
             tl = getIndex(i, coord, j);
