@@ -604,26 +604,19 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
     };
 
     auto getQuadIndices = [&](uint32_t axis, uint32_t coord, uint32_t i, uint32_t j) -> std::array<uint32_t, 4> {
-        uint32_t tl = getIndex(coord, i, j);
-        uint32_t tr = getIndex(coord, i + 1u, j);
-        uint32_t bl = getIndex(coord, i, j + 1u);
-        uint32_t br = getIndex(coord, i + 1u, j + 1u);
-        if (axis == 1u) // Y-axis face
+        switch (axis)
         {
-            tl = getIndex(i, coord, j);
-            tr = getIndex(i + 1u, coord, j);
-            bl = getIndex(i, coord, j + 1u);
-            br = getIndex(i + 1u, coord, j + 1u);
+        case 0u:
+            return {getIndex(coord, i, j), getIndex(coord, i + 1u, j), getIndex(coord, i, j + 1u),
+                    getIndex(coord, i + 1u, j + 1u)};
+        case 1u:
+            return {getIndex(i, coord, j), getIndex(i + 1u, coord, j), getIndex(i, coord, j + 1u),
+                    getIndex(i + 1u, coord, j + 1u)};
+        default:
+            return {getIndex(i, j, coord), getIndex(i + 1u, j, coord), getIndex(i, j + 1u, coord),
+                    getIndex(i + 1u, j + 1u, coord)};
         }
-        else if (axis != 0u) // Z-axis face
-        {
-            tl = getIndex(i, j, coord);
-            tr = getIndex(i + 1u, j, coord);
-            bl = getIndex(i, j + 1u, coord);
-            br = getIndex(i + 1u, j + 1u, coord);
-        }
-        return {tl, tr, bl, br};
-    }; // NOSONAR
+    };
 
     auto generateFace = [&](uint32_t axis, uint32_t coord, bool reversed) {
         for (uint32_t i = 0u; i < gridSize - 1u; ++i)
