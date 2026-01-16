@@ -608,7 +608,6 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
         uint32_t tr = getIndex(coord, i + 1u, j);
         uint32_t bl = getIndex(coord, i, j + 1u);
         uint32_t br = getIndex(coord, i + 1u, j + 1u);
-
         if (axis == 1u) // Y-axis face
         {
             tl = getIndex(i, coord, j);

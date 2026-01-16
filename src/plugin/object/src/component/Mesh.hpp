@@ -51,7 +51,7 @@ struct Mesh {
     // Move constructor
     Mesh(Mesh &&other) noexcept
         : vertices(std::move(other.vertices)), normals(std::move(other.normals)), texCoords(std::move(other.texCoords)),
-          indices(std::move(other.indices)), _dirty(other._dirty)
+          indices(std::move(other.indices)), _dirty(true)
     {
         other._dirty = false;
     }
@@ -65,14 +65,19 @@ struct Mesh {
             normals = std::move(other.normals);
             texCoords = std::move(other.texCoords);
             indices = std::move(other.indices);
-            _dirty = other._dirty;
+            _dirty = true;
             other._dirty = false;
         }
         return *this;
     }
 
     // Copy constructor
-    Mesh(const Mesh &mesh) = default;
+    Mesh(const Mesh &other) noexcept
+        : vertices(other.vertices), normals(other.normals), texCoords(other.texCoords), indices(other.indices),
+          _dirty(true)
+    {
+    }
+
     // Copy assignment operator
     Mesh &operator=(const Mesh &other)
     {
@@ -82,7 +87,7 @@ struct Mesh {
             normals = other.normals;
             texCoords = other.texCoords;
             indices = other.indices;
-            _dirty = other._dirty;
+            _dirty = true;
         }
         return *this;
     }
