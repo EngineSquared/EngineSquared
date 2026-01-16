@@ -23,10 +23,7 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
                   "MaterialTransfer struct size does not match GPU requirements.");
 
   public:
-    explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity)
-    {
-        _UpdateDebugName();
-    }
+    explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity) { _UpdateDebugName(); }
 
     explicit MaterialGPUBuffer(void) = default;
 
