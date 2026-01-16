@@ -3,6 +3,7 @@
 // Resources
 #include "resource/AGPUBuffer.hpp"
 #include "resource/ARenderPass.hpp"
+#include "resource/ASingleExecutionRenderPass.hpp"
 #include "resource/BindGroup.hpp"
 #include "resource/BindGroupManager.hpp"
 #include "resource/Context.hpp"
@@ -18,7 +19,6 @@
 #include "resource/Shader.hpp"
 #include "resource/ShaderContainer.hpp"
 #include "resource/ShaderDescriptor.hpp"
-#include "resource/ASingleExecutionRenderPass.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"

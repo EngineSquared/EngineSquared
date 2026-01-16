@@ -2,15 +2,15 @@
 
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
-#include "core/Core.hpp"
-#include "plugin/PluginDefaultPipeline.hpp"
-#include "utils/ConfigureHeadlessGraphics.hpp"
-#include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
-#include "resource/pass/GBuffer.hpp"
-#include "component/Transform.hpp"
 #include "component/Camera.hpp"
 #include "component/Mesh.hpp"
+#include "component/Transform.hpp"
+#include "core/Core.hpp"
+#include "plugin/PluginDefaultPipeline.hpp"
+#include "resource/pass/GBuffer.hpp"
+#include "utils/ConfigureHeadlessGraphics.hpp"
 #include "utils/ShapeGenerator.hpp"
+#include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
 
 void TestSystem(Engine::Core &core)
 {
@@ -18,7 +18,8 @@ void TestSystem(Engine::Core &core)
 
     auto cube = core.CreateEntity();
 
-    cube.AddComponent<Object::Component::Transform>(core).SetRotation(glm::quat(glm::vec3(glm::radians(10.f), glm::radians(45.0f), 0.0f)));
+    cube.AddComponent<Object::Component::Transform>(core).SetRotation(
+        glm::quat(glm::vec3(glm::radians(10.f), glm::radians(45.0f), 0.0f)));
     cube.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
 
     auto camera = core.CreateEntity();

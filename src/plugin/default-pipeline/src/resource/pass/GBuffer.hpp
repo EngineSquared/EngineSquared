@@ -17,14 +17,14 @@
 
 namespace DefaultPipeline::Resource {
 static inline constexpr std::string_view GBUFFER_PASS_OUTPUT_NORMAL = "GBUFFER_PASS_OUTPUT_NORMAL";
-static inline const entt::hashed_string GBUFFER_PASS_OUTPUT_NORMAL_ID{
-    GBUFFER_PASS_OUTPUT_NORMAL.data(), GBUFFER_PASS_OUTPUT_NORMAL.size()};
+static inline const entt::hashed_string GBUFFER_PASS_OUTPUT_NORMAL_ID{GBUFFER_PASS_OUTPUT_NORMAL.data(),
+                                                                      GBUFFER_PASS_OUTPUT_NORMAL.size()};
 static inline constexpr std::string_view GBUFFER_PASS_OUTPUT_ALBEDO = "GBUFFER_PASS_OUTPUT_ALBEDO";
-static inline const entt::hashed_string GBUFFER_PASS_OUTPUT_ALBEDO_ID{
-    GBUFFER_PASS_OUTPUT_ALBEDO.data(), GBUFFER_PASS_OUTPUT_ALBEDO.size()};
+static inline const entt::hashed_string GBUFFER_PASS_OUTPUT_ALBEDO_ID{GBUFFER_PASS_OUTPUT_ALBEDO.data(),
+                                                                      GBUFFER_PASS_OUTPUT_ALBEDO.size()};
 static inline constexpr std::string_view GBUFFER_PASS_OUTPUT_DEPTH = "GBUFFER_PASS_OUTPUT_DEPTH";
-static inline const entt::hashed_string GBUFFER_PASS_OUTPUT_DEPTH_ID{
-    GBUFFER_PASS_OUTPUT_DEPTH.data(), GBUFFER_PASS_OUTPUT_DEPTH.size()};
+static inline const entt::hashed_string GBUFFER_PASS_OUTPUT_DEPTH_ID{GBUFFER_PASS_OUTPUT_DEPTH.data(),
+                                                                     GBUFFER_PASS_OUTPUT_DEPTH.size()};
 static inline constexpr std::string_view GBUFFER_PASS_NAME = "GBUFFER_PASS_NAME";
 static inline constexpr std::string_view GBUFFER_SHADER_NAME = "GBUFFER_SHADER_NAME";
 static inline const entt::hashed_string GBUFFER_SHADER_ID =
