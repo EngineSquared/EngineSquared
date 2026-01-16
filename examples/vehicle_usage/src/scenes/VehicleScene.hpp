@@ -4,4 +4,4 @@
 
 void CreateCheckeredFloor(Engine::Core &core);
 
-void CreateVehicle(Engine::Core &core);
+Engine::Entity CreateVehicle(Engine::Core &core);

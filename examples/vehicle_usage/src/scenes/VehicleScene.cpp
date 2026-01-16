@@ -51,7 +51,7 @@ void CreateCheckeredFloor(Engine::Core &core)
 /**
  * @brief Create a drivable vehicle using VehicleBuilder
  */
-void CreateVehicle(Engine::Core &core)
+Engine::Entity CreateVehicle(Engine::Core &core)
 {
     Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);
     Object::Component::Mesh wheelMesh = Object::Utils::GenerateWheelMesh(0.4f, 0.3f);
@@ -91,4 +91,5 @@ void CreateVehicle(Engine::Core &core)
     vehicleEntity.AddComponent<Object::Component::Material>(core, chassisMaterial);
 
     vehicleEntity.AddComponent<PlayerVehicle>(core);
+    return vehicleEntity;
 }

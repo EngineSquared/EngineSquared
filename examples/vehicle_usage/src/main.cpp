@@ -18,6 +18,8 @@
 
 #include "component/PlayerVehicle.hpp"
 #include "scenes/VehicleScene.hpp"
+#include "system/VehicleInput.hpp"
+#include "utils/ChaseCameraBehavior.hpp"
 
 void EscapeKeySystem(Engine::Core &core)
 {
@@ -32,7 +34,7 @@ void EscapeKeySystem(Engine::Core &core)
 void Setup(Engine::Core &core)
 {
     CreateCheckeredFloor(core);
-    CreateVehicle(core);
+    auto vehicle = CreateVehicle(core);
 
     auto camera = core.CreateEntity();
 
@@ -44,6 +46,11 @@ void Setup(Engine::Core &core)
     cameraManager.SetMovementSpeed(3.0f);
 
     core.RegisterSystem(EscapeKeySystem);
+
+    core.RegisterSystem<Engine::Scheduler::FixedTimeUpdate>(VehicleInput);
+
+    auto chaseBehavior = std::make_shared<ChaseCameraBehavior>(vehicle);
+    cameraManager.SetBehavior(chaseBehavior);
 }
 
 class GraphicExampleError : public std::runtime_error {
