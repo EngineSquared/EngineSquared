@@ -37,13 +37,13 @@ class InputManager {
      *
      * @note The callback will be called when a key is pressed or released.
      */
-    template <typename TCallable> inline void RegisterKeyCallback(TCallable callback)
+    template <typename TCallable> inline FunctionUtils::FunctionID RegisterKeyCallback(TCallable callback)
     {
         using KeyCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int, int, int, int>;
         std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int, int, int, int>> keyCallback =
             std::make_unique<KeyCallback>(callback);
 
-        _keyCallbacks->AddFunction(std::move(keyCallback));
+        return _keyCallbacks->AddFunction(std::move(keyCallback));
     }
 
     /**
@@ -53,13 +53,13 @@ class InputManager {
      *
      * @note The callback will be called when a character is typed.
      */
-    template <typename TCallable> inline void RegisterCharCallback(TCallable callback)
+    template <typename TCallable> inline FunctionUtils::FunctionID RegisterCharCallback(TCallable callback)
     {
         using CharCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, unsigned int>;
         std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, unsigned int>> charCallback =
             std::make_unique<CharCallback>(callback);
 
-        _charCallbacks->AddFunction(std::move(charCallback));
+        return _charCallbacks->AddFunction(std::move(charCallback));
     }
 
     /**
@@ -69,13 +69,13 @@ class InputManager {
      *
      * @note The callback will be called when a character is typed with modifiers.
      */
-    template <typename TCallable> inline void RegisterCharModsCallback(TCallable callback)
+    template <typename TCallable> inline FunctionUtils::FunctionID RegisterCharModsCallback(TCallable callback)
     {
         using CharModsCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, unsigned int, int>;
         std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, unsigned int, int>> charModsCallback =
             std::make_unique<CharModsCallback>(callback);
 
-        _charModsCallbacks->AddFunction(std::move(charModsCallback));
+        return _charModsCallbacks->AddFunction(std::move(charModsCallback));
     }
 
     /**
@@ -117,13 +117,13 @@ class InputManager {
      *
      * @note The callback will be called when the cursor enters or leaves the window.
      */
-    template <typename TCallable> inline void RegisterCursorEnterCallback(TCallable callback)
+    template <typename TCallable> inline FunctionUtils::FunctionID RegisterCursorEnterCallback(TCallable callback)
     {
         using CursorEnterCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int>;
         std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int>> cursorEnterCallback =
             std::make_unique<CursorEnterCallback>(callback);
 
-        _cursorEnterCallbacks->AddFunction(std::move(cursorEnterCallback));
+        return _cursorEnterCallbacks->AddFunction(std::move(cursorEnterCallback));
     }
 
     /**
@@ -133,13 +133,13 @@ class InputManager {
      *
      * @note The callback will be called when the mouse wheel is scrolled.
      */
-    template <typename TCallable> inline void RegisterScrollCallback(TCallable callback)
+    template <typename TCallable> inline FunctionUtils::FunctionID RegisterScrollCallback(TCallable callback)
     {
         using ScrollCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, double, double>;
         std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, double, double>> scrollCallback =
             std::make_unique<ScrollCallback>(callback);
 
-        _scrollCallbacks->AddFunction(std::move(scrollCallback));
+        return _scrollCallbacks->AddFunction(std::move(scrollCallback));
     }
 
     /**
@@ -149,13 +149,13 @@ class InputManager {
      *
      * @note The callback will be called when a file is dropped on the window.
      */
-    template <typename TCallable> inline void RegisterDropCallback(TCallable callback)
+    template <typename TCallable> inline FunctionUtils::FunctionID RegisterDropCallback(TCallable callback)
     {
         using DropCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int, const char **>;
         std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int, const char **>> dropCallback =
             std::make_unique<DropCallback>(callback);
 
-        _dropCallbacks->AddFunction(std::move(dropCallback));
+        return _dropCallbacks->AddFunction(std::move(dropCallback));
     }
 
     /**
