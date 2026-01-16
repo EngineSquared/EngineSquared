@@ -16,7 +16,7 @@ int main(void)
 
     core.AddPlugins<NativeScripting::Plugin>();
 
-    Engine::Entity e{core, core.CreateEntity()};
+    auto e = core.CreateEntity();
 
     e.AddComponent<NativeScripting::Component::NativeScripting>().Bind<TestScript>(core);
 

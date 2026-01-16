@@ -185,7 +185,7 @@ template <> class VehicleBuilder<4> {
             throw Exception::VehicleBuilderError("Gearbox must have at least one forward gear and one reverse gear");
         }
 
-        Engine::Entity chassis{core, core.CreateEntity()};
+        auto chassis = core.CreateEntity();
         chassis.AddComponent<Object::Component::Transform>(
             Object::Component::Transform(_chassisPosition, _chassisScale, _chassisRotation));
         chassis.AddComponent<Object::Component::Mesh>(_chassisMesh);
@@ -193,7 +193,7 @@ template <> class VehicleBuilder<4> {
         std::array<Engine::Entity, 4> wheelEntities;
         for (size_t i = 0; i < 4; ++i)
         {
-            wheelEntities[i] = Engine::Entity{core, core.CreateEntity()};
+            wheelEntities[i] = core.CreateEntity();
 
             glm::vec3 worldWheelPos = _chassisPosition + _chassisRotation * _wheelPositions[i];
             glm::quat wheelRotation =

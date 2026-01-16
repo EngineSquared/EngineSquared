@@ -38,7 +38,7 @@ class Entity {
 
     inline EntityId Id() const { return _entityId; }
 
-    inline operator EntityId() const { return _entityId; }
+    explicit(false) inline operator EntityId() const { return _entityId; }
 
     /**
      * Utility method to add a component to an entity.

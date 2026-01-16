@@ -8,7 +8,7 @@ set_languages("c++20")
 add_rules("mode.debug", "mode.release")
 
 -- build against the repo's EngineSquared
--- includes("../../xmake.lua")
+includes("../../xmake.lua")
 
 -- add /W4 for windows
 if is_plat("windows") then

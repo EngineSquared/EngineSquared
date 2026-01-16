@@ -27,15 +27,15 @@ void EscapeKeySystem(Engine::Core &core)
 
 void Setup(Engine::Core &core)
 {
-    Engine::Entity cube{core, core.CreateEntity()};
+    auto cube = core.CreateEntity();
     cube.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, 0.0f));
     cube.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
 
-    Engine::Entity plane{core, core.CreateEntity()};
+    auto plane = core.CreateEntity();
     plane.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, -1.0f, 0.0f));
     plane.AddComponent<Object::Component::Mesh>(Object::Utils::GeneratePlaneMesh(5.0f, 5.0f, 10u, 10u));
 
-    Engine::Entity camera{core, core.CreateEntity()};
+    auto camera = core.CreateEntity();
     camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -5.0f));
     camera.AddComponent<Object::Component::Camera>();
 
@@ -43,11 +43,11 @@ void Setup(Engine::Core &core)
     cameraManager.SetActiveCamera(camera);
     cameraManager.SetMovementSpeed(3.0f);
 
-    Engine::Entity ambientLight{core, core.CreateEntity()};
+    auto ambientLight = core.CreateEntity();
     ambientLight.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 1.0f, 0.0f));
     ambientLight.AddComponent<Object::Component::AmbientLight>(Object::Component::AmbientLight{glm::vec3(0.1f)});
 
-    Engine::Entity redPointLight{core, core.CreateEntity()};
+    auto redPointLight = core.CreateEntity();
     redPointLight.AddComponent<Object::Component::Transform>(glm::vec3(-2.0f, 0.4f, -1.0f));
     redPointLight.AddComponent<Object::Component::PointLight>(
         Object::Component::PointLight{.color = glm::vec3(1.0f, 0.2f, 0.2f),
@@ -55,7 +55,7 @@ void Setup(Engine::Core &core)
                                       .radius = 2.0f,
                                       .falloff = 1.0f});
 
-    Engine::Entity bluePointLight{core, core.CreateEntity()};
+    auto bluePointLight = core.CreateEntity();
     bluePointLight.AddComponent<Object::Component::Transform>(glm::vec3(2.0f, 0.4f, -1.0f));
     bluePointLight.AddComponent<Object::Component::PointLight>(
         Object::Component::PointLight{.color = glm::vec3(0.2f, 0.2f, 1.0f),
@@ -63,7 +63,7 @@ void Setup(Engine::Core &core)
                                       .radius = 2.0f,
                                       .falloff = 1.0f});
 
-    Engine::Entity greenPointLight{core, core.CreateEntity()};
+    auto greenPointLight = core.CreateEntity();
     greenPointLight.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.4f, 2.0f));
     greenPointLight.AddComponent<Object::Component::PointLight>(
         Object::Component::PointLight{.color = glm::vec3(0.2f, 1.0f, 0.2f),

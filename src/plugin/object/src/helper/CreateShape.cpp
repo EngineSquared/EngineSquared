@@ -9,7 +9,7 @@ namespace Object::Helper {
 Engine::Entity CreateCube(Engine::Core &core, float size, const glm::vec3 &position, const glm::quat &rotation,
                           const glm::vec3 &scale)
 {
-    auto entity = Engine::Entity(core, core.CreateEntity());
+    auto entity = core.CreateEntity();
 
     auto transform = Component::Transform(position, scale, rotation);
     entity.AddComponent<Component::Transform>(transform);
@@ -23,7 +23,7 @@ Engine::Entity CreateCube(Engine::Core &core, float size, const glm::vec3 &posit
 Engine::Entity CreateSphere(Engine::Core &core, float radius, const glm::vec3 &position, uint32_t segments,
                             uint32_t rings)
 {
-    auto entity = Engine::Entity(core, core.CreateEntity());
+    auto entity = core.CreateEntity();
 
     auto transform = Component::Transform(position);
     entity.AddComponent<Component::Transform>(transform);
@@ -37,7 +37,7 @@ Engine::Entity CreateSphere(Engine::Core &core, float radius, const glm::vec3 &p
 Engine::Entity CreatePlane(Engine::Core &core, float width, float depth, const glm::vec3 &position,
                            uint32_t subdivisionsX, uint32_t subdivisionsZ)
 {
-    auto entity = Engine::Entity(core, core.CreateEntity());
+    auto entity = core.CreateEntity();
 
     auto transform = Component::Transform(position);
     entity.AddComponent<Component::Transform>(transform);
@@ -51,7 +51,7 @@ Engine::Entity CreatePlane(Engine::Core &core, float width, float depth, const g
 Engine::Entity CreateCylinder(Engine::Core &core, float radiusTop, float radiusBottom, float height,
                               const glm::vec3 &position, uint32_t segments)
 {
-    auto entity = Engine::Entity(core, core.CreateEntity());
+    auto entity = core.CreateEntity();
 
     auto transform = Component::Transform(position);
     entity.AddComponent<Component::Transform>(transform);
@@ -65,7 +65,7 @@ Engine::Entity CreateCylinder(Engine::Core &core, float radiusTop, float radiusB
 Engine::Entity CreateCapsule(Engine::Core &core, float radius, float height, const glm::vec3 &position,
                              uint32_t segments, uint32_t heightSegments)
 {
-    auto entity = Engine::Entity(core, core.CreateEntity());
+    auto entity = core.CreateEntity();
 
     auto transform = Component::Transform(position);
     entity.AddComponent<Component::Transform>(transform);

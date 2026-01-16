@@ -24,7 +24,7 @@ TEST(PhysicsPlugin, CubeFallingOnPlane)
     core.AddPlugins<Physics::Plugin>();
     core.RunSystems();
 
-    auto plane = Engine::Entity{core, core.CreateEntity()};
+    auto plane = core.CreateEntity();
     {
         Object::Component::Transform transform;
         transform.SetPosition(0.0f, 0.0f, 0.0f);
@@ -41,7 +41,7 @@ TEST(PhysicsPlugin, CubeFallingOnPlane)
         plane.AddComponent<Physics::Component::BoxCollider>(collider);
     }
 
-    auto cube = Engine::Entity{core, core.CreateEntity()};
+    auto cube = core.CreateEntity();
     float startY = 10.0f;
     {
         Object::Component::Transform transform;

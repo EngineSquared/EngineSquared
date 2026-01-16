@@ -16,7 +16,7 @@ TEST(Core, TemporaryComponent)
 {
     Core core;
 
-    auto entity = Engine::Entity{core, core.CreateEntity()};
+    auto entity = core.CreateEntity();
 
     entity.AddTemporaryComponent<TempComponent>();
 

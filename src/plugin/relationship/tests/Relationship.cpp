@@ -8,7 +8,7 @@ TEST(Relationship, initialization)
 {
     Engine::Core core;
 
-    auto entity = Engine::Entity{core, core.CreateEntity()};
+    auto entity = core.CreateEntity();
 
     auto &relationship = entity.AddComponent<Relationship::Component::Relationship>();
 
@@ -23,8 +23,8 @@ TEST(Relationship, one_child)
 {
     Engine::Core core;
 
-    auto child = Engine::Entity{core, core.CreateEntity()};
-    auto parent = Engine::Entity{core, core.CreateEntity()};
+    auto child = core.CreateEntity();
+    auto parent = core.CreateEntity();
 
     child.AddComponent<Relationship::Component::Relationship>();
     parent.AddComponent<Relationship::Component::Relationship>();
@@ -44,10 +44,10 @@ TEST(Relationship, multiple_children)
 {
     Engine::Core core;
 
-    auto child1 = Engine::Entity{core, core.CreateEntity()};
-    auto child2 = Engine::Entity{core, core.CreateEntity()};
-    auto child3 = Engine::Entity{core, core.CreateEntity()};
-    auto parent = Engine::Entity{core, core.CreateEntity()};
+    auto child1 = core.CreateEntity();
+    auto child2 = core.CreateEntity();
+    auto child3 = core.CreateEntity();
+    auto parent = core.CreateEntity();
 
     child1.AddComponent<Relationship::Component::Relationship>();
     child2.AddComponent<Relationship::Component::Relationship>();
@@ -113,8 +113,8 @@ TEST(Relationship, remove_parent)
 {
     Engine::Core core;
 
-    auto child = Engine::Entity{core, core.CreateEntity()};
-    auto parent = Engine::Entity{core, core.CreateEntity()};
+    auto child = core.CreateEntity();
+    auto parent = core.CreateEntity();
 
     child.AddComponent<Relationship::Component::Relationship>();
     parent.AddComponent<Relationship::Component::Relationship>();

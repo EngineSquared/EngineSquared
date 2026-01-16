@@ -9,8 +9,8 @@ int main(void)
 {
     Engine::Core core;
 
-    Engine::Entity parent{core, core.CreateEntity()};
-    Engine::Entity child{core, core.CreateEntity()};
+    auto parent = core.CreateEntity();
+    auto child = core.CreateEntity();
 
     parent.AddComponent<Relationship::Component::Relationship>();
     parent.AddComponent<TestComponent>();
