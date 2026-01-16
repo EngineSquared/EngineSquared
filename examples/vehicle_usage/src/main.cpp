@@ -16,8 +16,8 @@
 #include "plugin/PluginWindow.hpp"
 #include "resource/Window.hpp"
 
-#include "scenes/VehicleScene.hpp"
 #include "component/PlayerVehicle.hpp"
+#include "scenes/VehicleScene.hpp"
 
 void EscapeKeySystem(Engine::Core &core)
 {

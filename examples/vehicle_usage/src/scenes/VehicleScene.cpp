@@ -4,11 +4,11 @@
 #include "Object.hpp"
 #include "Physics.hpp"
 #include "builder/VehicleBuilder.hpp"
-#include "component/VehicleController.hpp"
 #include "component/Transform.hpp"
+#include "component/VehicleController.hpp"
 
-#include <iostream>
 #include <glm/glm.hpp>
+#include <iostream>
 
 /**
  * @brief Create a checkered floor (200x200 meters) with alternating grey tiles
@@ -30,8 +30,7 @@ void CreateCheckeredFloor(Engine::Core &core)
             float posZ = startOffset + (z * tileSize) + (tileSize / 2.0f);
 
             bool isLightTile = (x + z) % 2 == 0;
-            glm::vec3 color = isLightTile ? glm::vec3(0.8f, 0.8f, 0.8f)
-                                            : glm::vec3(0.4f, 0.4f, 0.4f);
+            glm::vec3 color = isLightTile ? glm::vec3(0.8f, 0.8f, 0.8f) : glm::vec3(0.4f, 0.4f, 0.4f);
 
             auto tile = Object::Helper::CreatePlane(core, tileSize, tileSize, glm::vec3(posX, 0.0f, posZ));
 
@@ -71,18 +70,18 @@ void CreateVehicle(Engine::Core &core)
 
     Physics::Builder::VehicleBuilder<4> builder;
     auto vehicleEntity = builder.SetChassisMesh(chassisMesh, glm::vec3(0.0f, 2.0f, 0.0f))
-                            .SetWheelMesh(Physics::Component::WheelIndex::FrontLeft, wheelMesh)
-                            .SetWheelMesh(Physics::Component::WheelIndex::FrontRight, wheelMesh)
-                            .SetWheelMesh(Physics::Component::WheelIndex::RearLeft, wheelMesh)
-                            .SetWheelMesh(Physics::Component::WheelIndex::RearRight, wheelMesh)
-                            .SetWheelSettings(Physics::Component::WheelIndex::FrontLeft, frontWheel)
-                            .SetWheelSettings(Physics::Component::WheelIndex::FrontRight, frontWheel)
-                            .SetWheelSettings(Physics::Component::WheelIndex::RearLeft, rearWheel)
-                            .SetWheelSettings(Physics::Component::WheelIndex::RearRight, rearWheel)
-                            .SetDrivetrain(Physics::Component::DrivetrainType::RWD)
-                            .SetChassisMass(1200.0f)
-                            .SetChassisHalfExtents(glm::vec3(1.0f, 0.4f, 2.0f))
-                            .Build(core);
+                             .SetWheelMesh(Physics::Component::WheelIndex::FrontLeft, wheelMesh)
+                             .SetWheelMesh(Physics::Component::WheelIndex::FrontRight, wheelMesh)
+                             .SetWheelMesh(Physics::Component::WheelIndex::RearLeft, wheelMesh)
+                             .SetWheelMesh(Physics::Component::WheelIndex::RearRight, wheelMesh)
+                             .SetWheelSettings(Physics::Component::WheelIndex::FrontLeft, frontWheel)
+                             .SetWheelSettings(Physics::Component::WheelIndex::FrontRight, frontWheel)
+                             .SetWheelSettings(Physics::Component::WheelIndex::RearLeft, rearWheel)
+                             .SetWheelSettings(Physics::Component::WheelIndex::RearRight, rearWheel)
+                             .SetDrivetrain(Physics::Component::DrivetrainType::RWD)
+                             .SetChassisMass(1200.0f)
+                             .SetChassisHalfExtents(glm::vec3(1.0f, 0.4f, 2.0f))
+                             .Build(core);
 
     Object::Component::Material chassisMaterial;
     chassisMaterial.diffuse = glm::vec3(0.8f, 0.2f, 0.2f);
