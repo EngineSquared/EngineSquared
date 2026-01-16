@@ -1,0 +1,95 @@
+#include "scenes/VehicleScene.hpp"
+#include "component/PlayerVehicle.hpp"
+
+#include "Object.hpp"
+#include "Physics.hpp"
+#include "builder/VehicleBuilder.hpp"
+#include "component/VehicleController.hpp"
+#include "component/Transform.hpp"
+
+#include <iostream>
+#include <glm/glm.hpp>
+
+/**
+ * @brief Create a checkered floor (200x200 meters) with alternating grey tiles
+ */
+void CreateCheckeredFloor(Engine::Core &core)
+{
+    const float tileSize = 10.0f;
+    const int tilesPerSide = 20; // 20 tiles * 10m = 200m
+    const float totalSize = tileSize * tilesPerSide;
+    const float startOffset = -totalSize / 2.0f;
+
+    std::cout << "Creating " << tilesPerSide << "x" << tilesPerSide << " checkered floor..." << std::endl;
+
+    for (int x = 0; x < tilesPerSide; ++x)
+    {
+        for (int z = 0; z < tilesPerSide; ++z)
+        {
+            float posX = startOffset + (x * tileSize) + (tileSize / 2.0f);
+            float posZ = startOffset + (z * tileSize) + (tileSize / 2.0f);
+
+            bool isLightTile = (x + z) % 2 == 0;
+            glm::vec3 color = isLightTile ? glm::vec3(0.8f, 0.8f, 0.8f)
+                                            : glm::vec3(0.4f, 0.4f, 0.4f);
+
+            auto tile = Object::Helper::CreatePlane(core, tileSize, tileSize, glm::vec3(posX, 0.0f, posZ));
+
+            Object::Component::Material tileMaterial;
+            tileMaterial.diffuse = color;
+            tileMaterial.ambient = color * 0.3f;
+            tileMaterial.specular = glm::vec3(0.1f);
+            tileMaterial.shininess = 16.0f;
+            tile.AddComponent<Object::Component::Material>(core, tileMaterial);
+
+            auto boxCollider = Physics::Component::BoxCollider(glm::vec3(tileSize / 2.0f, 0.1f, tileSize / 2.0f));
+            tile.AddComponent<Physics::Component::BoxCollider>(core, boxCollider);
+            tile.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
+        }
+    }
+}
+
+/**
+ * @brief Create a drivable vehicle using VehicleBuilder
+ */
+void CreateVehicle(Engine::Core &core)
+{
+    Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);
+    Object::Component::Mesh wheelMesh = Object::Utils::GenerateWheelMesh(0.4f, 0.3f);
+
+    Physics::Component::WheelSettings frontWheel = Physics::Component::WheelSettings::CreateFrontWheel();
+    frontWheel.radius = 0.4f;
+    frontWheel.width = 0.3f;
+    frontWheel.longitudinalFriction = 2.5f;
+    frontWheel.lateralFriction = 2.0f;
+
+    Physics::Component::WheelSettings rearWheel = Physics::Component::WheelSettings::CreateRearWheel();
+    rearWheel.radius = 0.4f;
+    rearWheel.width = 0.3f;
+    rearWheel.longitudinalFriction = 2.5f;
+    rearWheel.lateralFriction = 2.0f;
+
+    Physics::Builder::VehicleBuilder<4> builder;
+    auto vehicleEntity = builder.SetChassisMesh(chassisMesh, glm::vec3(0.0f, 2.0f, 0.0f))
+                            .SetWheelMesh(Physics::Component::WheelIndex::FrontLeft, wheelMesh)
+                            .SetWheelMesh(Physics::Component::WheelIndex::FrontRight, wheelMesh)
+                            .SetWheelMesh(Physics::Component::WheelIndex::RearLeft, wheelMesh)
+                            .SetWheelMesh(Physics::Component::WheelIndex::RearRight, wheelMesh)
+                            .SetWheelSettings(Physics::Component::WheelIndex::FrontLeft, frontWheel)
+                            .SetWheelSettings(Physics::Component::WheelIndex::FrontRight, frontWheel)
+                            .SetWheelSettings(Physics::Component::WheelIndex::RearLeft, rearWheel)
+                            .SetWheelSettings(Physics::Component::WheelIndex::RearRight, rearWheel)
+                            .SetDrivetrain(Physics::Component::DrivetrainType::RWD)
+                            .SetChassisMass(1200.0f)
+                            .SetChassisHalfExtents(glm::vec3(1.0f, 0.4f, 2.0f))
+                            .Build(core);
+
+    Object::Component::Material chassisMaterial;
+    chassisMaterial.diffuse = glm::vec3(0.8f, 0.2f, 0.2f);
+    chassisMaterial.ambient = glm::vec3(0.24f, 0.06f, 0.06f);
+    chassisMaterial.specular = glm::vec3(0.3f);
+    chassisMaterial.shininess = 32.0f;
+    vehicleEntity.AddComponent<Object::Component::Material>(core, chassisMaterial);
+
+    vehicleEntity.AddComponent<PlayerVehicle>(core);
+}
