@@ -558,7 +558,6 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
 {
     Component::Mesh mesh;
 
-    // Need at least 2 points per axis to form surface quads
     if (gridSize < 2u)
     {
         if (gridSize == 1u)
@@ -570,7 +569,6 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
         return mesh;
     }
 
-    // Generate vertices in 3D grid
     size_t totalVertices = static_cast<size_t>(gridSize) * gridSize * gridSize;
     mesh.ReserveVertices(totalVertices);
     mesh.ReserveNormals(totalVertices);
@@ -584,7 +582,7 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
             {
                 mesh.EmplaceVertices(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing,
                                      static_cast<float>(z) * spacing);
-                mesh.EmplaceNormals(0.0f, 1.0f, 0.0f); // Placeholder normal
+                mesh.EmplaceNormals(0.0f, 1.0f, 0.0f);
                 float u = static_cast<float>(x) / static_cast<float>(gridSize - 1u);
                 float v = static_cast<float>(y) / static_cast<float>(gridSize - 1u);
                 mesh.EmplaceTexCoords(u, v);
@@ -596,8 +594,6 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
         return z * gridSize * gridSize + y * gridSize + x;
     };
 
-    // Generate surface faces for rendering (all 6 sides)
-    // Counter-clockwise winding for outward-facing normals
     auto addFace = [&mesh](uint32_t tl, uint32_t tr, uint32_t bl, uint32_t br) {
         mesh.EmplaceIndices(tl);
         mesh.EmplaceIndices(bl);
@@ -607,62 +603,52 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
         mesh.EmplaceIndices(br);
     };
 
-    // Front face (z = 0) - facing +Z
-    for (uint32_t y = 0u; y < gridSize - 1u; ++y)
-    {
-        for (uint32_t x = 0u; x < gridSize - 1u; ++x)
+    auto generateFace = [&](uint32_t axis, uint32_t coord, bool reversed) {
+        for (uint32_t i = 0u; i < gridSize - 1u; ++i)
         {
-            addFace(getIndex(x, y, 0u), getIndex(x + 1u, y, 0u), getIndex(x, y + 1u, 0u), getIndex(x + 1u, y + 1u, 0u));
-        }
-    }
+            for (uint32_t j = 0u; j < gridSize - 1u; ++j)
+            {
+                uint32_t tl, tr, bl, br;
+                if (axis == 0u) // X-axis face
+                {
+                    tl = getIndex(coord, i, j);
+                    tr = getIndex(coord, i + 1u, j);
+                    bl = getIndex(coord, i, j + 1u);
+                    br = getIndex(coord, i + 1u, j + 1u);
+                }
+                else if (axis == 1u) // Y-axis face
+                {
+                    tl = getIndex(i, coord, j);
+                    tr = getIndex(i + 1u, coord, j);
+                    bl = getIndex(i, coord, j + 1u);
+                    br = getIndex(i + 1u, coord, j + 1u);
+                }
+                else // Z-axis face
+                {
+                    tl = getIndex(i, j, coord);
+                    tr = getIndex(i + 1u, j, coord);
+                    bl = getIndex(i, j + 1u, coord);
+                    br = getIndex(i + 1u, j + 1u, coord);
+                }
 
-    // Back face (z = gridSize - 1) - facing -Z (reversed order)
-    for (uint32_t y = 0u; y < gridSize - 1u; ++y)
-    {
-        for (uint32_t x = 0u; x < gridSize - 1u; ++x)
-        {
-            addFace(getIndex(x + 1u, y, gridSize - 1u), getIndex(x, y, gridSize - 1u),
-                    getIndex(x + 1u, y + 1u, gridSize - 1u), getIndex(x, y + 1u, gridSize - 1u));
+                if (reversed)
+                {
+                    addFace(tl, bl, tr, br);
+                }
+                else
+                {
+                    addFace(tl, tr, bl, br);
+                }
+            }
         }
-    }
+    };
 
-    // Left face (x = 0) - facing -X (reversed order)
-    for (uint32_t z = 0u; z < gridSize - 1u; ++z)
-    {
-        for (uint32_t y = 0u; y < gridSize - 1u; ++y)
-        {
-            addFace(getIndex(0u, y, z + 1u), getIndex(0u, y + 1u, z + 1u), getIndex(0u, y, z), getIndex(0u, y + 1u, z));
-        }
-    }
-
-    // Right face (x = gridSize - 1) - facing +X
-    for (uint32_t z = 0u; z < gridSize - 1u; ++z)
-    {
-        for (uint32_t y = 0u; y < gridSize - 1u; ++y)
-        {
-            addFace(getIndex(gridSize - 1u, y, z), getIndex(gridSize - 1u, y, z + 1u),
-                    getIndex(gridSize - 1u, y + 1u, z), getIndex(gridSize - 1u, y + 1u, z + 1u));
-        }
-    }
-
-    // Bottom face (y = 0) - facing -Y (reversed order)
-    for (uint32_t z = 0u; z < gridSize - 1u; ++z)
-    {
-        for (uint32_t x = 0u; x < gridSize - 1u; ++x)
-        {
-            addFace(getIndex(x, 0u, z), getIndex(x, 0u, z + 1u), getIndex(x + 1u, 0u, z), getIndex(x + 1u, 0u, z + 1u));
-        }
-    }
-
-    // Top face (y = gridSize - 1) - facing +Y
-    for (uint32_t z = 0u; z < gridSize - 1u; ++z)
-    {
-        for (uint32_t x = 0u; x < gridSize - 1u; ++x)
-        {
-            addFace(getIndex(x, gridSize - 1u, z), getIndex(x + 1u, gridSize - 1u, z),
-                    getIndex(x, gridSize - 1u, z + 1u), getIndex(x + 1u, gridSize - 1u, z + 1u));
-        }
-    }
+    generateFace(0u, 0u, false);            // Front (X=0)
+    generateFace(0u, gridSize - 1u, true);  // Back (X=gridSize-1)
+    generateFace(1u, 0u, true);             // Left (Y=0)
+    generateFace(1u, gridSize - 1u, false); // Right (Y=gridSize-1)
+    generateFace(2u, 0u, true);             // Bottom (Z=0)
+    generateFace(2u, gridSize - 1u, false); // Top (Z=gridSize-1)
 
     return mesh;
 }
@@ -676,8 +662,8 @@ Component::Mesh GenerateWheelMesh(float radius, float width, uint32_t segments)
     Component::Mesh mesh;
     mesh.ReserveVertices(cylinderMesh.GetVertices().size());
     mesh.ReserveNormals(cylinderMesh.GetNormals().size());
-    mesh.SetTexCoords(std::move(cylinderMesh.GetTexCoords()));
-    mesh.SetIndices(std::move(cylinderMesh.GetIndices()));
+    mesh.SetTexCoords(cylinderMesh.GetTexCoords());
+    mesh.SetIndices(cylinderMesh.GetIndices());
 
     // Rotate -90 degrees around Z axis: (x, y, z) -> (y, -x, z)
     // This transforms Y-up cylinder to X-axis aligned wheel

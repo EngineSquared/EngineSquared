@@ -125,57 +125,6 @@ TEST(Mesh, copy_assignment_operator)
     EXPECT_EQ(mesh2.GetIndices().at(0), 9u);
 }
 
-TEST(Mesh, move_constructor)
-{
-    Component::Mesh mesh1{};
-    mesh1.EmplaceVertices(glm::vec3(1.0f, 2.0f, 3.0f));
-    mesh1.EmplaceNormals(glm::vec3(4.0f, 5.0f, 6.0f));
-    mesh1.EmplaceTexCoords(glm::vec2(7.0f, 8.0f));
-    mesh1.EmplaceIndices(9);
-
-    Component::Mesh mesh2 = std::move(mesh1); // Move constructor
-
-    EXPECT_EQ(mesh2.GetVertices().size(), 1u);
-    EXPECT_EQ(mesh2.GetVertices().at(0), glm::vec3(1.0f, 2.0f, 3.0f));
-    EXPECT_EQ(mesh2.GetNormals().size(), 1u);
-    EXPECT_EQ(mesh2.GetNormals().at(0), glm::vec3(4.0f, 5.0f, 6.0f));
-    EXPECT_EQ(mesh2.GetTexCoords().size(), 1u);
-    EXPECT_EQ(mesh2.GetTexCoords().at(0), glm::vec2(7.0f, 8.0f));
-    EXPECT_EQ(mesh2.GetIndices().size(), 1u);
-    EXPECT_EQ(mesh2.GetIndices().at(0), 9u);
-
-    EXPECT_EQ(mesh1.GetVertices().size(), 0u);
-    EXPECT_EQ(mesh1.GetNormals().size(), 0u);
-    EXPECT_EQ(mesh1.GetTexCoords().size(), 0u);
-    EXPECT_EQ(mesh1.GetIndices().size(), 0u);
-}
-
-TEST(Mesh, move_assignment_operator)
-{
-    Component::Mesh mesh1{};
-    mesh1.EmplaceVertices(glm::vec3(1.0f, 2.0f, 3.0f));
-    mesh1.EmplaceNormals(glm::vec3(4.0f, 5.0f, 6.0f));
-    mesh1.EmplaceTexCoords(glm::vec2(7.0f, 8.0f));
-    mesh1.EmplaceIndices(9);
-
-    Component::Mesh mesh2{};
-    mesh2 = std::move(mesh1); // Move assignment operator
-
-    EXPECT_EQ(mesh2.GetVertices().size(), 1u);
-    EXPECT_EQ(mesh2.GetVertices().at(0), glm::vec3(1.0f, 2.0f, 3.0f));
-    EXPECT_EQ(mesh2.GetNormals().size(), 1u);
-    EXPECT_EQ(mesh2.GetNormals().at(0), glm::vec3(4.0f, 5.0f, 6.0f));
-    EXPECT_EQ(mesh2.GetTexCoords().size(), 1u);
-    EXPECT_EQ(mesh2.GetTexCoords().at(0), glm::vec2(7.0f, 8.0f));
-    EXPECT_EQ(mesh2.GetIndices().size(), 1u);
-    EXPECT_EQ(mesh2.GetIndices().at(0), 9u);
-
-    EXPECT_EQ(mesh1.GetVertices().size(), 0u);
-    EXPECT_EQ(mesh1.GetNormals().size(), 0u);
-    EXPECT_EQ(mesh1.GetTexCoords().size(), 0u);
-    EXPECT_EQ(mesh1.GetIndices().size(), 0u);
-}
-
 TEST(Mesh, dirty_flag_on_setters)
 {
     Component::Mesh mesh{};

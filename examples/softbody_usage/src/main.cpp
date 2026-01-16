@@ -38,7 +38,8 @@ void EscapeKeySystem(Engine::Core &core)
 void CreateFloor(Engine::Core &core)
 {
     // Create floor like Jolt samples: position at Y=-1, half-extent Y=1, so surface is at Y=0
-    auto floor = Object::Helper::CreatePlane(core, 200.0f, 200.0f, glm::vec3(0.0f, -1.0f, 0.0f));
+    auto floor =
+        Object::Helper::CreatePlane(core, {.width = 200.0f, .depth = 200.0f, .position = glm::vec3(0.0f, -1.0f, 0.0f)});
 
     // Half-extent 100x1x100 like Jolt samples (surface at Y = -1 + 1 = 0)
     auto boxCollider = Physics::Component::BoxCollider(glm::vec3(100.0f, 1.0f, 100.0f));
@@ -49,7 +50,7 @@ void CreateFloor(Engine::Core &core)
 
 void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass)
 {
-    auto cube = Object::Helper::CreateCube(core, 1.0f, glm::vec3(x, y, z));
+    auto cube = Object::Helper::CreateCube(core, {.size = 1.0f, .position = glm::vec3(x, y, z)});
 
     auto rigidBody = Physics::Component::RigidBody::CreateDynamic(mass);
     rigidBody.friction = 0.5f;
@@ -100,7 +101,7 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
 void CreateJellyCube(Engine::Core &core, const glm::vec3 &position, float size, uint32_t gridSize)
 {
     // Use Object::Helper to create volumetric jelly cube mesh
-    auto jellyCube = Object::Helper::CreateJellyCube(core, size, gridSize, position);
+    auto jellyCube = Object::Helper::CreateJellyCube(core, {.size = size, .gridSize = gridSize, .position = position});
 
     // Configure jelly settings
     auto settings = Physics::Component::SoftBodySettings::Jelly();
@@ -129,7 +130,8 @@ void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
     // Rotation to map cloth (generated in XY plane) into a vertical YZ plane (rotate +90° around Y)
     const auto rotation = glm::quat(glm::vec3(0.0f, glm::radians(90.0f), 0.0f));
 
-    auto cloth = Object::Helper::CreateCloth(core, width, height, 0.20f, position, rotation);
+    auto cloth = Object::Helper::CreateCloth(
+        core, {.width = width, .height = height, .spacing = 0.20f, .position = position, .rotation = rotation});
 
     // Configure cloth settings
     auto settings = Physics::Component::SoftBodySettings::Cloth(0.5f);
@@ -181,8 +183,8 @@ int main(void)
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
         core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(
-            [](WGPUDevice const *, WGPUErrorType type, WGPUStringView message, WGPU_NULLABLE void *,
-               WGPU_NULLABLE void *) {
+            [](WGPUDevice const *, WGPUErrorType type, WGPUStringView message, WGPU_NULLABLE void *, // NOSONAR
+               WGPU_NULLABLE void *) {                                                               // NOSONAR
                 Log::Error(fmt::format("Custom uncaptured device error: type {:x} ({})", static_cast<uint32_t>(type),
                                        std::string(message.data, message.length)));
                 throw GraphicExampleError("Custom uncaptured device error occurred");
