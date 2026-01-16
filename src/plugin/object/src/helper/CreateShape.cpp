@@ -52,7 +52,8 @@ Engine::Entity CreateCylinder(Engine::Core &core, CreateCylinderInfo info)
     auto transform = Component::Transform(info.position, info.scale, info.rotation);
     entity.AddComponent<Component::Transform>(core, transform);
 
-    auto mesh = Utils::GenerateCylinderMesh(info.radiusTop, info.radiusBottom, info.height, info.segments, info.heightSegments);
+    auto mesh =
+        Utils::GenerateCylinderMesh(info.radiusTop, info.radiusBottom, info.height, info.segments, info.heightSegments);
     entity.AddComponent<Component::Mesh>(core, std::move(mesh));
 
     return entity;

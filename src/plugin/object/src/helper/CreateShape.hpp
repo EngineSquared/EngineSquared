@@ -141,8 +141,9 @@ struct CreateCylinderInfo {
  *
  * @example "Creating a cylinder entity:"
  * @code
- * auto cylinder = Object::Helper::CreateCylinder(core, { .radiusTop = 0.5f, .radiusBottom = 0.5f, .height = 2.0f, .position = glm::vec3(0, 1, 0), .heightSegments = 1u });
- * cylinder.AddComponent<Physics::RigidBody>(core, Physics::RigidBody::CreateDynamic());
+ * auto cylinder = Object::Helper::CreateCylinder(core, { .radiusTop = 0.5f, .radiusBottom = 0.5f, .height = 2.0f,
+ * .position = glm::vec3(0, 1, 0), .heightSegments = 1u }); cylinder.AddComponent<Physics::RigidBody>(core,
+ * Physics::RigidBody::CreateDynamic());
  * @endcode
  */
 Engine::Entity CreateCylinder(Engine::Core &core, CreateCylinderInfo info = {});
@@ -193,8 +194,8 @@ struct CreateClothInfo {
  *
  * @example "Creating a cloth for soft body simulation:"
  * @code
- * auto cloth = Object::Helper::CreateCloth(core, { .width = 10, .height = 10, .spacing = 0.1f, .position = glm::vec3(0, 5, 0) });
- * auto& soft = cloth.AddComponent<Physics::Component::SoftBody>(core, SoftBodySettings::Cloth(0.5f));
+ * auto cloth = Object::Helper::CreateCloth(core, { .width = 10, .height = 10, .spacing = 0.1f, .position = glm::vec3(0,
+ * 5, 0) }); auto& soft = cloth.AddComponent<Physics::Component::SoftBody>(core, SoftBodySettings::Cloth(0.5f));
  * soft.PinVertex(0);  // Pin top-left corner
  * soft.PinVertex(9);  // Pin top-right corner
  * @endcode
@@ -224,8 +225,8 @@ struct CreateRopeInfo {
  *
  * @example "Creating a rope for soft body simulation:"
  * @code
- * auto rope = Object::Helper::CreateRope(core, { .segmentCount = 20, .segmentLength = 0.1f, .position = glm::vec3(0, 5, 0) });
- * auto& soft = rope.AddComponent<Physics::Component::SoftBody>(core, SoftBodySettings::Rope(0.9f));
+ * auto rope = Object::Helper::CreateRope(core, { .segmentCount = 20, .segmentLength = 0.1f, .position = glm::vec3(0, 5,
+ * 0) }); auto& soft = rope.AddComponent<Physics::Component::SoftBody>(core, SoftBodySettings::Rope(0.9f));
  * soft.PinVertex(0);  // Pin top of rope
  * @endcode
  */
