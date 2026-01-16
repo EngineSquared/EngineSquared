@@ -48,7 +48,7 @@ auto Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entity child)
     parentRS.children--;
     if (parentRS.first == child)
     {
-        if (not childRS.next.IsValid())
+        if (childRS.next.IsValid())
         {
             parentRS.first = Engine::Entity::Null();
         }
@@ -74,7 +74,7 @@ auto Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entity child)
 auto Relationship::Utils::GetParent(Engine::Core &core, Engine::Entity child) -> Engine::Entity
 {
     const Relationship::Component::Relationship &childRS = child.GetComponents<Relationship::Component::Relationship>();
-    if (not childRS.parent.IsValid())
+    if (childRS.parent.IsValid())
     {
         Log::Warn(fmt::format("Entity {} has no parent", child));
         return Engine::Entity::Null();

@@ -34,10 +34,6 @@ static_assert(sizeof(StringId) == sizeof(StringId::ValueType),
               "StringId size must be equal to entt::hashed_string size");
 } // namespace Engine
 
-// template <> struct entt::entt_traits<Engine::Id> : entt::entt_traits<entt::id_type> {
-//     using value_type = Engine::Id;
-// };
-
 namespace entt {
 template <> struct entt_traits<Engine::Id> : entt_traits<entt::id_type> {
     using value_type = Engine::Id;

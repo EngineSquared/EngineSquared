@@ -162,8 +162,7 @@ void RunningPhysicsSimulationSystem(Engine::Core &core)
                 const Object::Component::Transform &transform) {
                 if (rb.motionType != Physics::Component::MotionType::Dynamic)
                     return;
-                const auto &position =
-                    Engine::Entity{core, entity}.GetComponents<Object::Component::Transform>().GetPosition();
+                const auto &position = transform.GetPosition();
                 std::cout << "    Entity " << entity << ": (" << position.x << ", " << position.y << ", " << position.z
                           << ")" << std::endl;
             });

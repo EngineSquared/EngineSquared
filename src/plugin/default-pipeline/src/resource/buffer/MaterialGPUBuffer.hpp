@@ -25,7 +25,6 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
   public:
     explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity)
     {
-        _entity = entity;
         _UpdateDebugName();
     }
 
