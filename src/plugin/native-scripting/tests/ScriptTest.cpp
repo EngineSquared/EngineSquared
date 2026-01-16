@@ -24,9 +24,9 @@ TEST(NativeScripting, CasualUse)
     core.RegisterResource<ActionHistory>({});
     core.AddPlugins<NativeScripting::Plugin>();
 
-    auto e = core.CreateEntity();
+    auto e = Engine::Entity{core, core.CreateEntity()};
 
-    e.AddComponent<NativeScripting::Component::NativeScripting>(core).Bind<TestScript>(core);
+    e.AddComponent<NativeScripting::Component::NativeScripting>().Bind<TestScript>(core);
 
     core.RunSystems();
 

@@ -31,8 +31,8 @@ TEST(VehiclePlugin, VehicleGravityDrop)
 
     auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
     auto floorCollider = Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f));
-    floor.AddComponent<Physics::Component::BoxCollider>(core, floorCollider);
-    floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
+    floor.AddComponent<Physics::Component::BoxCollider>(floorCollider);
+    floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
 
     Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);
     Object::Component::Mesh wheelMesh = Object::Utils::GenerateWheelMesh(0.3f, 0.2f);
@@ -48,7 +48,7 @@ TEST(VehiclePlugin, VehicleGravityDrop)
                        .Build(core);
 
     auto &registry = core.GetRegistry();
-    auto *transform = registry.try_get<Object::Component::Transform>(vehicle);
+    auto *transform = vehicle.TryGetComponent<Object::Component::Transform>();
     ASSERT_NE(transform, nullptr);
 
     float startY = transform->GetPosition().y;

@@ -5,6 +5,6 @@
 
 namespace DefaultPipeline::System {
 
-void OnCameraCreation(Engine::Core &core, Engine::Entity entity);
+void OnCameraCreation(Engine::Core &core, Engine::EntityId entityId);
 
 } // namespace DefaultPipeline::System

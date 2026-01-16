@@ -14,7 +14,7 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
     void Create(Engine::Core &core) override
     {
 
-        auto meshComponent = _entity.TryGetComponent<Object::Component::Mesh>(core);
+        auto meshComponent = _entity.TryGetComponent<Object::Component::Mesh>();
 
         if (!meshComponent)
         {
@@ -41,8 +41,7 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Vertex;
         bufferDesc.size = sizeof(float) * pointData.size();
-        std::string label =
-            "PointGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
+        std::string label = fmt::format("PointGPUBuffer_{}", _entity);
         bufferDesc.label = wgpu::StringView(label);
 
         const auto &context = core.GetResource<Graphic::Resource::Context>();
@@ -69,7 +68,7 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU buffer that is not created.");
         }
 
-        const auto &meshComponent = _entity.GetComponents<Object::Component::Mesh>(core);
+        const auto &meshComponent = _entity.GetComponents<Object::Component::Mesh>();
 
         // For now, we will not implement dynamic resizing of the buffer. As we should have a way to know if the size
         // changed. And it would be so heavy to check every frame every vertex position, normal and texCoord.
@@ -80,6 +79,6 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
   private:
     wgpu::Buffer _buffer;
     bool _isCreated = false;
-    Engine::Entity _entity = Engine::Entity::entity_null_id;
+    Engine::Entity _entity = Engine::Entity::Null();
 };
 } // namespace DefaultPipeline::Resource

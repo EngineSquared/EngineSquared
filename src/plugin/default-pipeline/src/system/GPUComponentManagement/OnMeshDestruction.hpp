@@ -5,6 +5,6 @@
 
 namespace DefaultPipeline::System {
 
-void OnMeshDestruction(Engine::Core &core, Engine::Entity entity);
+void OnMeshDestruction(Engine::Core &core, Engine::EntityId entityId);
 
 } // namespace DefaultPipeline::System

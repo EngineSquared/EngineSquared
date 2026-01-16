@@ -36,7 +36,7 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
     ~TransformGPUBuffer() override = default;
     void Create(Engine::Core &core) override
     {
-        const auto &transformComponent = _entity.GetComponents<Object::Component::Transform>(core);
+        const auto &transformComponent = _entity.GetComponents<Object::Component::Transform>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
 
         _buffer = _CreateBuffer(context.deviceContext);
@@ -60,7 +60,7 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU transform buffer that is not created.");
         }
 
-        const auto &transformComponent = _entity.GetComponents<Object::Component::Transform>(core);
+        const auto &transformComponent = _entity.GetComponents<Object::Component::Transform>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
         _UpdateBuffer(transformComponent, context);
     };
@@ -73,8 +73,7 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
         bufferDesc.size = sizeof(TransformGPUData);
-        const std::string label =
-            "TransformGPUBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
+        const std::string label = fmt::format("TransformGPUBuffer_{}", _entity);
         bufferDesc.label = wgpu::StringView(label);
 
         return context.GetDevice()->createBuffer(bufferDesc);
@@ -98,6 +97,6 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
 
     wgpu::Buffer _buffer;
     bool _isCreated = false;
-    Engine::Entity _entity = Engine::Entity::entity_null_id;
+    Engine::Entity _entity = Engine::Entity::Null();
 };
 } // namespace DefaultPipeline::Resource

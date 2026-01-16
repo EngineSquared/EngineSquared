@@ -9,12 +9,14 @@
 #include <vector>
 
 #include "Logger.hpp"
-#include "entity/EntityId.hpp"
 #include "plugin/IPlugin.hpp"
 #include "scheduler/SchedulerContainer.hpp"
 #include "scheduler/Update.hpp"
+#include "Id.hpp"
 
 namespace Engine {
+
+class Entity;
 
 template <typename T>
 concept CScheduler = std::derived_from<T, Scheduler::AScheduler>;
@@ -22,7 +24,7 @@ concept CScheduler = std::derived_from<T, Scheduler::AScheduler>;
 class Core {
   public:
     using USystem = std::function<void(Core &)>;
-    using Registry = entt::basic_registry<EntityId>;
+    using Registry = entt::basic_registry<Id>;
 
     Core();
     ~Core();
@@ -48,14 +50,14 @@ class Core {
      *
      * @return  The entity created.
      */
-    EntityId CreateEntity();
+    Entity CreateEntity();
 
     /**
      * Kill an entity. It will remove all components from the entity.
      *
      * @param   entity  The entity to kill.
      */
-    void KillEntity(EntityId entity);
+    void KillEntity(Id entity);
 
     /**
      * Store a resource instance.
@@ -247,7 +249,7 @@ class Core {
     /**
      * Check if entity is valid in the context of the registry. It check if the id of the entity exist.
      */
-    bool IsEntityValid(EntityId entity) const;
+    bool IsEntityValid(Id entity) const;
 
     /**
      * @brief Adds multiple plugins to the core engine.

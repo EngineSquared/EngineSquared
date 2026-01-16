@@ -50,8 +50,7 @@ static bool ValidateConstraint(const ConstraintT &constraint, const char *constr
     return true;
 }
 
-Component::RigidBodyInternal *GetBodyInternal(Engine::Core::Registry &registry, Engine::EntityId entity,
-                                              const char *constraintName, const char *bodyName);
+Component::RigidBodyInternal *GetBodyInternal(Engine::Entity entity, const char *constraintName, const char *bodyName);
 
 template <typename SettingsT, typename ConstraintT>
 static JPH::Constraint *CreateJoltConstraint(ConstraintContext &ctx, SettingsT &joltSettings,
@@ -73,7 +72,7 @@ static JPH::Constraint *CreateJoltConstraint(ConstraintContext &ctx, SettingsT &
         return joltSettings.Create(lockA.GetBody(), JPH::Body::sFixedToWorld);
     }
 
-    auto *internalB = GetBodyInternal(ctx.registry, constraint.bodyB, constraintName, "bodyB");
+    auto *internalB = GetBodyInternal(Engine::Entity{ctx.core, constraint.bodyB}, constraintName, "bodyB");
     if (!internalB)
         return nullptr;
 
@@ -93,7 +92,7 @@ static JPH::Constraint *CreateJoltConstraint(ConstraintContext &ctx, SettingsT &
     return joltSettings.Create(*bodyA, *bodyB);
 }
 
-void FinalizeConstraint(ConstraintContext &ctx, Engine::EntityId entity, JPH::Constraint *joltConstraint,
+void FinalizeConstraint(ConstraintContext &ctx, Engine::Entity entity, JPH::Constraint *joltConstraint,
                         Component::ConstraintType type, const Component::ConstraintSettings &settings,
                         const char *constraintName);
 
@@ -121,7 +120,7 @@ static void CreateConstraintGeneric(Engine::Core::Registry &registry, Engine::En
         if (!extraValidate(constraint))
             return;
 
-        auto *internalA = GetBodyInternal(ctx.registry, constraint.bodyA, safeName, "bodyA");
+        auto *internalA = GetBodyInternal(Engine::Entity{ctx.core, constraint.bodyA}, safeName, "bodyA");
         if (!internalA)
             return;
 
@@ -131,7 +130,7 @@ static void CreateConstraintGeneric(Engine::Core::Registry &registry, Engine::En
         configurator(constraint, joltSettings);
 
         auto *joltConstraint = CreateJoltConstraint(ctx, joltSettings, constraint, internalA, safeName);
-        FinalizeConstraint(ctx, entity, joltConstraint, TYPE, constraint.settings, safeName);
+        FinalizeConstraint(ctx, Engine::Entity{ctx.core, entity}, joltConstraint, TYPE, constraint.settings, safeName);
     }
     catch (const Physics::Exception::ConstraintError &e)
     {

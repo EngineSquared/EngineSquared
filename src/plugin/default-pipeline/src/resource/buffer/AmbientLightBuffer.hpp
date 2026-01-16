@@ -26,14 +26,9 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
                   "AmbientLightTransfer struct size does not match GPU requirements.");
 
   public:
-    explicit AmbientLightBuffer(Engine::Entity entity = Engine::Entity{}) : _entity(entity)
+    explicit AmbientLightBuffer(Engine::Entity entity = Engine::Entity::Null()) : _entity(entity)
     {
-        std::string entityName = "NULL_ENTITY";
-        if (_entity.IsValid())
-        {
-            entityName = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
-        }
-        _debugName = fmt::format("{}{}", prefix, entityName);
+        _UpdateDebugName();
     }
 
     ~AmbientLightBuffer() override = default;
@@ -56,15 +51,19 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
     bool IsCreated(Engine::Core &core) const override { return _isCreated; };
     void Update(Engine::Core &core) override
     {
-        if (_entity == Engine::Entity::entity_null_id)
+        if (_entity.IsValid() == false)
         {
             return;
         }
-        const auto &ambientLight = _entity.GetComponents<Object::Component::AmbientLight>(core);
+        const auto &ambientLight = _entity.GetComponents<Object::Component::AmbientLight>();
         SetValue(core, ambientLight);
     };
 
-    void SetEntity(Engine::Entity entity) { _entity = entity; }
+    void SetEntity(Engine::Entity entity)
+    {
+        _entity = entity;
+        _UpdateDebugName();
+    }
 
     void SetValue(const Engine::Core &core, const Object::Component::AmbientLight &ambientLight)
     {
@@ -83,6 +82,8 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
     std::string_view GetDebugName() const { return _debugName; }
 
   private:
+    inline void _UpdateDebugName() { _debugName = fmt::format("{}{}", prefix, _entity); }
+
     wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
     {
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
@@ -102,7 +103,7 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
 
     wgpu::Buffer _buffer;
     bool _isCreated = false;
-    Engine::Entity _entity = Engine::Entity::entity_null_id;
+    Engine::Entity _entity = Engine::Entity::Null();
     std::string _debugName;
 };
 } // namespace DefaultPipeline::Resource

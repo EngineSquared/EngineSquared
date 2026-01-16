@@ -2,6 +2,7 @@
 
 #include "core/Core.hpp"
 #include "utils/AmbientLight.hpp"
+#include "entity/Entity.hpp"
 
 namespace DefaultPipeline::Resource {
 class AmbientLightBuffer;

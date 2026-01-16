@@ -1,8 +1,8 @@
 #include "Engine.pch.hpp"
 
 #include "core/Core.hpp"
-#include "entity/Entity.hpp"
 #include "resource/Time.hpp"
+#include "entity/Entity.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
 #include "scheduler/RelativeTimeUpdate.hpp"
 #include "scheduler/Shutdown.hpp"
@@ -41,14 +41,14 @@ Engine::Core::Core() : _registry(nullptr)
 
 Engine::Core::~Core() { Log::Debug("Destroy Core"); }
 
-Engine::EntityId Engine::Core::CreateEntity()
+Engine::Entity Engine::Core::CreateEntity()
 {
     EntityId entity = this->_registry->create();
     Log::Debug(fmt::format("[EntityID:{}] Entity Created", entity));
-    return entity;
+    return Entity{*this, entity};
 }
 
-void Engine::Core::KillEntity(Engine::EntityId entity)
+void Engine::Core::KillEntity(Engine::Id entity)
 {
     this->_registry->destroy(entity);
     Log::Debug(fmt::format("[EntityID:{}] Entity Destroyed", entity));
@@ -87,7 +87,7 @@ void Engine::Core::RunSystems()
     this->_schedulersToDelete.clear();
 }
 
-bool Engine::Core::IsEntityValid(Engine::EntityId entity) const { return GetRegistry().valid(entity); }
+bool Engine::Core::IsEntityValid(Engine::Id entity) const { return GetRegistry().valid(entity); }
 
 void Engine::Core::ClearEntities() { this->_registry->clear(); }
 

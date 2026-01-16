@@ -24,40 +24,40 @@ TEST(PhysicsPlugin, CubeFallingOnPlane)
     core.AddPlugins<Physics::Plugin>();
     core.RunSystems();
 
-    Engine::Entity plane = core.CreateEntity();
+    auto plane = Engine::Entity{core, core.CreateEntity()};
     {
         Object::Component::Transform transform;
         transform.SetPosition(0.0f, 0.0f, 0.0f);
-        plane.AddComponent<Object::Component::Transform>(core, transform);
+        plane.AddComponent<Object::Component::Transform>(transform);
 
         Physics::Component::RigidBody rigidBody;
         rigidBody.motionType = Physics::Component::MotionType::Static;
         rigidBody.objectLayer = Physics::Utils::Layers::NON_MOVING;
         rigidBody.restitution = 1.0f;
-        plane.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
+        plane.AddComponent<Physics::Component::RigidBody>(rigidBody);
 
         Physics::Component::BoxCollider collider;
         collider.halfExtents = glm::vec3(50.0f, 1.0f, 50.0f);
-        plane.AddComponent<Physics::Component::BoxCollider>(core, collider);
+        plane.AddComponent<Physics::Component::BoxCollider>(collider);
     }
 
-    Engine::Entity cube = core.CreateEntity();
+    auto cube = Engine::Entity{core, core.CreateEntity()};
     float startY = 10.0f;
     {
         Object::Component::Transform transform;
         transform.SetPosition(0.0f, startY, 0.0f);
-        cube.AddComponent<Object::Component::Transform>(core, transform);
+        cube.AddComponent<Object::Component::Transform>(transform);
 
         Physics::Component::RigidBody rigidBody;
         rigidBody.objectLayer = Physics::Utils::Layers::MOVING;
         rigidBody.motionType = Physics::Component::MotionType::Dynamic;
         rigidBody.mass = 1.0f;
         rigidBody.restitution = 1.0f;
-        cube.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
+        cube.AddComponent<Physics::Component::RigidBody>(rigidBody);
 
         Physics::Component::BoxCollider collider;
         collider.halfExtents = glm::vec3(0.5f, 0.5f, 0.5f);
-        cube.AddComponent<Physics::Component::BoxCollider>(core, collider);
+        cube.AddComponent<Physics::Component::BoxCollider>(collider);
     }
 
     bool collisionAdded = false;
@@ -84,7 +84,7 @@ TEST(PhysicsPlugin, CubeFallingOnPlane)
         core.RunSystems();
     }
 
-    const auto &cubeTransform = cube.GetComponents<Object::Component::Transform>(core);
+    const auto &cubeTransform = cube.GetComponents<Object::Component::Transform>();
     EXPECT_LT(cubeTransform.GetPosition().y, startY);
     EXPECT_TRUE(collisionAdded);
     EXPECT_TRUE(collisionRemoved);

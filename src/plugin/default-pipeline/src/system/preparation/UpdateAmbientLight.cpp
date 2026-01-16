@@ -13,7 +13,7 @@ void UpdateAmbientLight(Engine::Core &core)
         ambientLightResource.SetEntity(core, Engine::Entity{});
     else
     {
-        Engine::Entity ambientLightEntity{view.front()};
+        Engine::Entity ambientLightEntity{core, view.front()};
         ambientLightResource.SetEntity(core, ambientLightEntity);
     }
     ambientLightResource.Update(core);

@@ -34,7 +34,7 @@ void MouseButtonCallback(Engine::Core &core, int button, int action, int /* mods
         if (cameraManager.HasValidCamera())
         {
             auto entity = cameraManager.GetActiveCamera();
-            auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
+            auto &transform = entity.GetComponents<Object::Component::Transform>();
             cameraManager.SetOriginRotation(transform.GetRotation());
         }
     }
@@ -67,7 +67,7 @@ void CursorPosCallback(Engine::Core &core, double xpos, double ypos)
 
     if (shouldRotate)
     {
-        auto &transform = core.GetRegistry().get<Object::Component::Transform>(cameraManager.GetActiveCamera());
+        auto &transform = cameraManager.GetActiveCamera().GetComponents<Object::Component::Transform>();
         auto yaw = static_cast<float>((xpos - cameraManager.GetLastMouseX()) * cameraManager.GetMouseSensitivity());
         auto pitch = static_cast<float>((ypos - cameraManager.GetLastMouseY()) * cameraManager.GetMouseSensitivity());
 

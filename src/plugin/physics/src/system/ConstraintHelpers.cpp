@@ -39,8 +39,7 @@ std::optional<ConstraintContext> ConstraintContext::Create(Engine::Core::Registr
     return ConstraintContext{coreRef, registry, physicsManagerRef, physicsManagerRef.GetPhysicsSystem()};
 }
 
-Component::RigidBodyInternal *GetBodyInternal(Engine::Core::Registry &registry, Engine::Entity entity,
-                                              const char *constraintName, const char *bodyName)
+Component::RigidBodyInternal *GetBodyInternal(Engine::Entity entity, const char *constraintName, const char *bodyName)
 {
     const char *safeName = constraintName ? constraintName : "<constraint>";
     auto *internal = entity.TryGetComponent<Component::RigidBodyInternal>();
@@ -133,7 +132,7 @@ void DestroyConstraint(Engine::Core::Registry &registry, Engine::EntityId entity
         physicsManagerRef.GetPhysicsSystem().RemoveConstraint(constraint);
         registry.remove<Component::ConstraintInternal>(entity);
 
-        Log::Debug(fmt::format("Destroyed {} for entity {}", safeName, entt::to_integral(entity)));
+        Log::Debug(fmt::format("Destroyed {} for entity {}", safeName, entity));
     }
     catch (const Physics::Exception::ConstraintError &e)
     {

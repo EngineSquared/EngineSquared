@@ -25,6 +25,15 @@ add_requires(
 
 set_languages("c++20")
 
+includes("examples/basic_core_usage/xmake.lua")
+includes("examples/graphic_light_usage/xmake.lua")
+includes("examples/graphic_material_usage/xmake.lua")
+includes("examples/graphic_usage/xmake.lua")
+includes("examples/graphic_usage_with_physics/xmake.lua")
+includes("examples/nativescripting_usage/xmake.lua")
+includes("examples/physics_usage/xmake.lua")
+includes("examples/relationships_usage/xmake.lua")
+
 includes("src/engine/xmake.lua")
 includes("src/plugin/input/xmake.lua")
 includes("src/plugin/native-scripting/xmake.lua")

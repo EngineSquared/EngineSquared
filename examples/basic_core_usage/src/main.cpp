@@ -14,9 +14,9 @@ int main(void)
 {
     Engine::Core core;
 
-    auto entity = core.CreateEntity();
+    Engine::Entity entity{core, core.CreateEntity()};
 
-    entity.AddComponent<TestComponent>(core, 42);
+    entity.AddComponent<TestComponent>(42);
 
     core.RegisterSystem(TestSystem);
 

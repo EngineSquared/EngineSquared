@@ -54,7 +54,7 @@ TEST(VehiclePlugin, VehicleCreation)
     EXPECT_TRUE(registry.all_of<Object::Component::Transform>(vehicle));
 
     // Verify vehicle internal data is valid
-    const auto &vehicleInternal = vehicle.GetComponents<Physics::Component::VehicleInternal>(core);
+    const auto &vehicleInternal = vehicle.GetComponents<Physics::Component::VehicleInternal>();
     EXPECT_TRUE(vehicleInternal.IsValid());
     EXPECT_NE(vehicleInternal.vehicleConstraint, nullptr);
     EXPECT_NE(vehicleInternal.vehicleConstraint->GetController(), nullptr);
