@@ -18,7 +18,7 @@
 #include "resource/Shader.hpp"
 #include "resource/ShaderContainer.hpp"
 #include "resource/ShaderDescriptor.hpp"
-#include "resource/SingleExecutionRenderPass.hpp"
+#include "resource/ASingleExecutionRenderPass.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"

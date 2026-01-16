@@ -6,6 +6,7 @@
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/webgpu.hpp"
 #include <functional>
+#include <glm/gtc/packing.hpp>
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 
@@ -39,10 +40,39 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
         }
         glm::u8vec4 pixel;
         // Here we assume the texture format is RGBA8Unorm (4 bytes per pixel)
-        pixel.r = mapped[i * 4 + 0];
-        pixel.g = mapped[i * 4 + 1];
-        pixel.b = mapped[i * 4 + 2];
-        pixel.a = mapped[i * 4 + 3];
+        switch (data->format)
+        {
+        case wgpu::TextureFormat::RGBA8Unorm:
+            pixel.r = mapped[i * 4 + 0];
+            pixel.g = mapped[i * 4 + 1];
+            pixel.b = mapped[i * 4 + 2];
+            pixel.a = mapped[i * 4 + 3];
+            break;
+        case wgpu::TextureFormat::BGRA8Unorm:
+            pixel.b = mapped[i * 4 + 0];
+            pixel.g = mapped[i * 4 + 1];
+            pixel.r = mapped[i * 4 + 2];
+            pixel.a = mapped[i * 4 + 3];
+            break;
+        case wgpu::TextureFormat::RGBA16Float: {
+            uint16_t r = *(reinterpret_cast<uint16_t *>(&mapped[i * 8 + 0]));
+            uint16_t g = *(reinterpret_cast<uint16_t *>(&mapped[i * 8 + 2]));
+            uint16_t b = *(reinterpret_cast<uint16_t *>(&mapped[i * 8 + 4]));
+            uint16_t a = *(reinterpret_cast<uint16_t *>(&mapped[i * 8 + 6]));
+            pixel.r = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(r), 0.0f, 1.0f) * 255.0f);
+            pixel.g = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(g), 0.0f, 1.0f) * 255.0f);
+            pixel.b = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(b), 0.0f, 1.0f) * 255.0f);
+            pixel.a = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(a), 0.0f, 1.0f) * 255.0f);
+            break;
+        }
+        case wgpu::TextureFormat::Depth32Float: {
+            float depth = *(reinterpret_cast<float *>(&mapped[i * 4]));
+            uint8_t depthByte = static_cast<uint8_t>(std::clamp(depth, 0.0f, 1.0f) * 255.0f);
+            pixel = glm::u8vec4(depthByte, depthByte, depthByte, 255);
+            break;
+        }
+        default: throw Exception::UnsupportedTextureFormatError("Texture format not supported for retrieval.");
+        }
         data->data.pixels.push_back(pixel);
     }
     buf.unmap();
@@ -166,7 +196,15 @@ class Texture {
         srcView.texture = _webgpuTexture;
         srcView.mipLevel = 0;
         srcView.origin = {0, 0, 0};
-        srcView.aspect = wgpu::TextureAspect::All;
+        if (_webgpuTexture.getFormat() == wgpu::TextureFormat::Depth24Plus ||
+            _webgpuTexture.getFormat() == wgpu::TextureFormat::Depth24PlusStencil8 ||
+            _webgpuTexture.getFormat() == wgpu::TextureFormat::Depth32Float ||
+            _webgpuTexture.getFormat() == wgpu::TextureFormat::Depth32FloatStencil8)
+        {
+            srcView.aspect = wgpu::TextureAspect::DepthOnly;
+        }
+        else
+            srcView.aspect = wgpu::TextureAspect::All;
 
         wgpu::TexelCopyBufferInfo dstView(wgpu::Default);
         dstView.buffer = readbackBuffer;

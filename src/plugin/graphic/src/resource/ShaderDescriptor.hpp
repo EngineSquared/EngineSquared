@@ -175,6 +175,7 @@ class ShaderDescriptor : public Utils::IValidable {
                                     error.severity);
             }
         }
+
         return errors;
     }
 

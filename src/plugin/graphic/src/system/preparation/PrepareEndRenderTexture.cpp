@@ -101,7 +101,7 @@ static void EnsureDepthTexture(Engine::Core &core, const glm::uvec2 &requiredSiz
     textureDesc.dimension = wgpu::TextureDimension::_2D;
     textureDesc.mipLevelCount = 1;
     textureDesc.sampleCount = 1;
-    textureDesc.format = wgpu::TextureFormat::Depth24Plus;
+    textureDesc.format = wgpu::TextureFormat::Depth32Float;
     textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
                         wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
     textureDesc.viewFormats = nullptr;

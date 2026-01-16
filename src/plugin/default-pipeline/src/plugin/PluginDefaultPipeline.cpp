@@ -29,7 +29,7 @@ void DefaultPipeline::Plugin::Bind()
     SetupGPUComponent<Object::Component::Material, Component::GPUMaterial, &System::OnMaterialCreation,
                       &System::OnMaterialDestruction>(this->GetCore());
 
-    RegisterSystems<RenderingPipeline::Setup>(System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial,
+    RegisterSystems<RenderingPipeline::Setup>(System::CreateDefaultRenderPipeline, System::Create3DGraph, System::CreateDefaultMaterial,
                                               System::CreateAmbientLight, System::CreatePointLights);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::UpdateGPUTransforms, System::UpdateGPUCameras,

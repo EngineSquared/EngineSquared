@@ -25,9 +25,7 @@ namespace DefaultPipeline::Resource {
 struct TransformGPUData {
     glm::mat4 modelMatrix;
     // mat3x3 in WGSL has each column aligned to 16 bytes, so we use vec4 for each column
-    glm::vec4 normalMatrixCol0;
-    glm::vec4 normalMatrixCol1;
-    glm::vec4 normalMatrixCol2;
+    glm::mat4 normalMatrix;
 };
 
 class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
@@ -85,13 +83,11 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
     {
         const glm::mat4 &modelMatrix = transformComponent.ComputeTransformationMatrix();
 
-        const glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
+        const glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelMatrix));
 
         TransformGPUData gpuData;
         gpuData.modelMatrix = modelMatrix;
-        gpuData.normalMatrixCol0 = glm::vec4(normalMatrix[0], 0.0f);
-        gpuData.normalMatrixCol1 = glm::vec4(normalMatrix[1], 0.0f);
-        gpuData.normalMatrixCol2 = glm::vec4(normalMatrix[2], 0.0f);
+        gpuData.normalMatrix = normalMatrix;
 
         context.queue->writeBuffer(_buffer, 0, &gpuData, sizeof(TransformGPUData));
     }
