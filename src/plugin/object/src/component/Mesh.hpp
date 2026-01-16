@@ -72,7 +72,7 @@ struct Mesh {
     }
 
     // Copy constructor
-    Mesh(const Mesh &other) noexcept
+    Mesh(const Mesh &other)
         : vertices(other.vertices), normals(other.normals), texCoords(other.texCoords), indices(other.indices),
           _dirty(true)
     {
