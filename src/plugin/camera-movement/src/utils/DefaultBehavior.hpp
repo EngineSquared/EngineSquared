@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#include "Logger.hpp"
 #include "component/Camera.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
@@ -13,7 +14,6 @@
 #include "resource/Window.hpp"
 #include "utils/CameraBehavior.hpp"
 #include "utils/CameraUtils.hpp"
-#include "Logger.hpp"
 
 namespace CameraMovement::Utils {
 
@@ -31,8 +31,7 @@ class DefaultBehavior : public ICameraBehavior {
     /**
      * @brief Construct and register camera-related input callbacks.
      */
-    explicit DefaultBehavior(Engine::Core &core)
-        : _core(&core), _mouseButtonCallbackId(0), _cursorPosCallbackId(0)
+    explicit DefaultBehavior(Engine::Core &core) : _core(&core), _mouseButtonCallbackId(0), _cursorPosCallbackId(0)
     {
         if (!core.HasResource<Input::Resource::InputManager>())
         {
@@ -260,7 +259,8 @@ class DefaultBehavior : public ICameraBehavior {
         {
             auto &transform = core.GetRegistry().get<Object::Component::Transform>(cameraManager.GetActiveCamera());
             auto yaw = static_cast<float>((xpos - cameraManager.GetLastMouseX()) * cameraManager.GetMouseSensitivity());
-            auto pitch = static_cast<float>((ypos - cameraManager.GetLastMouseY()) * cameraManager.GetMouseSensitivity());
+            auto pitch =
+                static_cast<float>((ypos - cameraManager.GetLastMouseY()) * cameraManager.GetMouseSensitivity());
 
             glm::quat newRotation = Utils::RotateQuaternion(cameraManager.GetOriginRotation(), pitch, yaw);
             transform.SetRotation(newRotation);

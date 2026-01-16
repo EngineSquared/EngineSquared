@@ -6,14 +6,13 @@
 #include <glm/glm.hpp>
 
 #include "component/Camera.hpp"
-#include "component/Transform.hpp"
 #include "component/PlayerVehicle.hpp"
+#include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "resource/CameraManager.hpp"
 #include "resource/InputManager.hpp"
 #include "utils/CameraBehavior.hpp"
 #include "utils/CameraUtils.hpp"
-
 
 /**
  * @brief Chase camera behavior for vehicles.
@@ -23,13 +22,13 @@ class ChaseCameraBehavior : public CameraMovement::Utils::ICameraBehavior {
     ChaseCameraBehavior(Engine::Entity vehicleEntity) : _vehicleEntity(vehicleEntity) {}
     ~ChaseCameraBehavior() override = default;
 
-    void Update(Engine::Core &core, CameraMovement::Resource::CameraManager &manager, Object::Component::Transform &transform,
-                Object::Component::Camera &camera, float deltaTime) override
+    void Update(Engine::Core &core, CameraMovement::Resource::CameraManager &manager,
+                Object::Component::Transform &transform, Object::Component::Camera &camera, float deltaTime) override
     {
         auto &registry = core.GetRegistry();
 
         auto vehicleView = registry.view<PlayerVehicle, Object::Component::Transform, Physics::Component::RigidBody>();
-        
+
         // We assume there is at least one player vehicle. We take the first one
         if (vehicleView.begin() == vehicleView.end())
             return;
@@ -51,19 +50,11 @@ class ChaseCameraBehavior : public CameraMovement::Utils::ICameraBehavior {
         glm::vec3 cameraTarget = vehiclePos + vehicleForward * cameraLookAhead + glm::vec3(0.0f, 0.5f, 0.0f);
 
         transform.SetPosition(cameraPosition);
-
-        
     }
 
-    Engine::Entity GetVehicleEntity() const
-    {
-        return _vehicleEntity;
-    }
+    Engine::Entity GetVehicleEntity() const { return _vehicleEntity; }
 
-    void SetVehicleEntity(Engine::Entity vehicleEntity)
-    {
-        _vehicleEntity = vehicleEntity;
-    }
+    void SetVehicleEntity(Engine::Entity vehicleEntity) { _vehicleEntity = vehicleEntity; }
 
   private:
     Engine::Entity _vehicleEntity;
