@@ -85,13 +85,13 @@ class InputManager {
      *
      * @note The callback will be called when a mouse button is pressed or released.
      */
-    template <typename TCallable> inline void RegisterMouseButtonCallback(TCallable callback)
+    template <typename TCallable> inline FunctionUtils::FunctionID RegisterMouseButtonCallback(TCallable callback)
     {
         using MouseButtonCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, int, int, int>;
         std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, int, int, int>> mouseButtonCallback =
             std::make_unique<MouseButtonCallback>(callback);
 
-        _mouseButtonCallbacks->AddFunction(std::move(mouseButtonCallback));
+        return _mouseButtonCallbacks->AddFunction(std::move(mouseButtonCallback));
     }
 
     /**
@@ -101,13 +101,13 @@ class InputManager {
      *
      * @note The callback will be called when the cursor position changes.
      */
-    template <typename TCallable> inline void RegisterCursorPosCallback(TCallable callback)
+    template <typename TCallable> inline FunctionUtils::FunctionID RegisterCursorPosCallback(TCallable callback)
     {
         using CursorPosCallback = FunctionUtils::CallableFunction<TCallable, void, Engine::Core &, double, double>;
         std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &, double, double>> cursorPosCallback =
             std::make_unique<CursorPosCallback>(callback);
 
-        _cursorPosCallbacks->AddFunction(std::move(cursorPosCallback));
+        return _cursorPosCallbacks->AddFunction(std::move(cursorPosCallback));
     }
 
     /**

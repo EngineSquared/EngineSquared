@@ -20,9 +20,8 @@ void Plugin::Bind()
     RegisterResource(Resource::CameraManager(GetCore()));
 
     auto &cameraManager = GetCore().GetResource<Resource::CameraManager>();
-    cameraManager.SetBehavior(std::make_shared<Utils::DefaultBehavior>());
+    cameraManager.SetBehavior(std::make_shared<Utils::DefaultBehavior>(GetCore()));
 
-    RegisterSystems<Engine::Scheduler::Startup>(System::RegisterCameraCallbacksSystem);
     RegisterSystems<Engine::Scheduler::Update>(System::CameraControlSystem);
 }
 
