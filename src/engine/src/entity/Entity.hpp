@@ -17,7 +17,7 @@ namespace Engine {
 class Entity {
   public:
     /**
-     * Create a ES Entity from entity_entityId_type
+     * Create an Entity from EntityId
      *
      * @param   core    reference to the core
      * @param   entity  index value in the registry
@@ -44,7 +44,6 @@ class Entity {
      * Utility method to add a component to an entity.
      *
      * @tparam  TComponent  type to add to registry
-     * @param   core        registry used to store the component
      * @param   component   rvalue to add to registry
      * @return  reference of the added component
      */
@@ -58,7 +57,6 @@ class Entity {
      *
      * @tparam  TComponent  type to add to registry
      * @tparam  TArgs       type used to create the component
-     * @param   core        registry used to store the component
      * @param   args        parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      */
@@ -72,7 +70,6 @@ class Entity {
      *
      * @tparam  TComponent  type to add to registry
      * @tparam  TArgs       type used to create the component
-     * @param   core        registry used to store the component
      * @param   args        parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      */
@@ -87,7 +84,6 @@ class Entity {
      *
      * @tparam  TTempComponent  type to add to registry
      * @tparam  TArgs           type used to create the component
-     * @param   core            registry used to store the component
      * @param   args            parameters used to instanciate component directly in registry memory
      * @return  reference of the added component
      * @see     RemoveTemporaryComponents
@@ -100,7 +96,6 @@ class Entity {
     /**
      * System to remove all temporary component from the registry.
      *
-     * @param   core    registry used to store the component
      * @return  void
      * @see     AddTemporaryComponent
      */
@@ -110,7 +105,6 @@ class Entity {
      * Utility method to remove a component from an entity.
      *
      * @tparam  TComponent  type to remove from registry
-     * @param   core        registry used to store the component
      */
     template <typename TComponent> inline void RemoveComponent()
     {
