@@ -30,7 +30,7 @@ TEST(VehiclePlugin, VehicleSteering)
 
     core.GetScheduler<Engine::Scheduler::Startup>().RunSystems();
 
-    auto floor = Object::Helper::CreatePlane(core, 50.0f, 50.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    auto floor = Object::Helper::CreatePlane(core, { .width = 50.0f, .depth = 50.0f, .position = glm::vec3(0.0f, 0.0f, 0.0f)});
     auto floorCollider = Physics::Component::BoxCollider(glm::vec3(25.0f, 0.5f, 25.0f));
     floor.AddComponent<Physics::Component::BoxCollider>(core, floorCollider);
     floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
