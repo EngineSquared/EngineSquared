@@ -107,16 +107,6 @@ int main(void)
 
     core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Input::Plugin, CameraMovement::Plugin, Physics::Plugin>();
 
-    core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
-        core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(
-            [](WGPUDevice const *, WGPUErrorType type, WGPUStringView message, WGPU_NULLABLE void *,
-               WGPU_NULLABLE void *) {
-                Log::Error(fmt::format("Custom uncaptured device error: type {:x} ({})", static_cast<uint32_t>(type),
-                                       std::string(message.data, message.length)));
-                throw GraphicExampleError("Custom uncaptured device error occurred");
-            });
-    });
-
     core.RegisterSystem<Engine::Scheduler::Startup>(Setup);
 
     core.RunCore();

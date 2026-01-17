@@ -13,6 +13,9 @@
 
 /**
  * @brief Create a checkered floor (200x200 meters) with alternating grey tiles
+ *
+ * Uses a single large physics body to avoid ghost collisions at tile edges,
+ * while creating separate visual tiles for the checkered pattern.
  */
 void CreateCheckeredFloor(Engine::Core &core)
 {
@@ -23,6 +26,14 @@ void CreateCheckeredFloor(Engine::Core &core)
 
     std::cout << "Creating " << tilesPerSide << "x" << tilesPerSide << " checkered floor..." << std::endl;
 
+    // Create a single large physics floor to avoid ghost collisions at tile edges
+    auto floorPhysics = core.CreateEntity();
+    floorPhysics.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 0.0f, 0.0f));
+    auto floorCollider = Physics::Component::BoxCollider(glm::vec3(totalSize / 2.0f, 0.1f, totalSize / 2.0f));
+    floorPhysics.AddComponent<Physics::Component::BoxCollider>(core, floorCollider);
+    floorPhysics.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
+
+    // Create visual tiles (no physics) for the checkered pattern
     for (int x = 0; x < tilesPerSide; ++x)
     {
         for (int z = 0; z < tilesPerSide; ++z)
@@ -45,9 +56,7 @@ void CreateCheckeredFloor(Engine::Core &core)
             tileMaterial.ambientTexName = Graphic::Utils::DEFAULT_TEXTURE_NAME;
             tile.AddComponent<Object::Component::Material>(core, tileMaterial);
 
-            auto boxCollider = Physics::Component::BoxCollider(glm::vec3(tileSize / 2.0f, 0.1f, tileSize / 2.0f));
-            tile.AddComponent<Physics::Component::BoxCollider>(core, boxCollider);
-            tile.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
+            // No physics on visual tiles - single floor body handles collision
         }
     }
 }
