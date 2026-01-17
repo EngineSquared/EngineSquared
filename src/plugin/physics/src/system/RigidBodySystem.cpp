@@ -176,7 +176,7 @@ static void OnRigidBodyConstruct(entt::registry &registry, entt::entity entity)
             bodySettings.mMassPropertiesOverride.mMass = rigidBody.mass;
         }
 
-        auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyInterface();
+        auto &bodyInterface = physicsManager.GetBodyInterface();
         JPH::Body *body = bodyInterface.CreateBody(bodySettings);
 
         if (!body)
@@ -222,7 +222,7 @@ static void OnRigidBodyDestroy(entt::registry &registry, entt::entity entity)
         if (!internalComponent || !internalComponent->IsValid())
             return;
 
-        auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyInterface();
+        auto &bodyInterface = physicsManager.GetBodyInterface();
         bodyInterface.RemoveBody(internalComponent->bodyID);
         bodyInterface.DestroyBody(internalComponent->bodyID);
 

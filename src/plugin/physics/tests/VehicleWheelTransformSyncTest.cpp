@@ -30,7 +30,8 @@ TEST(VehiclePlugin, WheelTransformSync)
     core.AddPlugins<Physics::Plugin>();
     core.RunSystems();
 
-    auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    auto floor =
+        Object::Helper::CreatePlane(core, {.width = 20.0f, .depth = 20.0f, .position = glm::vec3(0.0f, 0.0f, 0.0f)});
     floor.AddComponent<Physics::Component::BoxCollider>(core,
                                                         Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f)));
     floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
