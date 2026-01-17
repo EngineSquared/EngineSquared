@@ -20,6 +20,8 @@
 #include "scenes/VehicleScene.hpp"
 #include "system/VehicleInput.hpp"
 #include "utils/ChaseCameraBehavior.hpp"
+#include "resource/CameraControlSystemManager.hpp"
+
 
 void EscapeKeySystem(Engine::Core &core)
 {
@@ -51,6 +53,13 @@ void Setup(Engine::Core &core)
 
     auto chaseBehavior = std::make_shared<ChaseCameraBehavior>(vehicle);
     cameraManager.SetBehavior(chaseBehavior);
+
+    auto &fixedTimeScheduler = core.GetScheduler<Engine::Scheduler::FixedTimeUpdate>();
+    fixedTimeScheduler.SetTickRate(1.0f / 120.0f);
+
+    auto &cameraControlSystemManager =
+        core.GetResource<CameraMovement::Resource::CameraControlSystemManager>();
+    cameraControlSystemManager.SetCameraControlSystemScheduler<Engine::Scheduler::FixedTimeUpdate>(core);
 }
 
 class GraphicExampleError : public std::runtime_error {

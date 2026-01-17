@@ -3,6 +3,7 @@
 #include "exception/CameraMovementError.hpp"
 #include "plugin/PluginCameraMovement.hpp"
 #include "resource/CameraManager.hpp"
+#include "resource/CameraControlSystemManager.hpp"
 #include "system/CameraControlSystem.hpp"
 #include "utils/CameraBehavior.hpp"
 #include "utils/CameraUtils.hpp"
