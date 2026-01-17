@@ -46,7 +46,8 @@ class DefaultBehavior : public ICameraBehavior {
 
     ~DefaultBehavior() override
     {
-        try {
+        try
+        {
             if (!_core)
             {
                 return;
@@ -66,7 +67,9 @@ class DefaultBehavior : public ICameraBehavior {
             {
                 inputManager.DeleteCursorPosCallback(_cursorPosCallbackId);
             }
-        } catch (const std::exception &e) {
+        }
+        catch (const std::exception &e)
+        {
             Log::Error(fmt::format("Exception in DefaultBehavior destructor: {}", e.what()));
         }
     }

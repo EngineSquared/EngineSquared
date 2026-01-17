@@ -45,9 +45,10 @@ void CreateCheckeredFloor(Engine::Core &core)
             // Use a black / grey checker pattern
             glm::vec3 color = isLightTile ? glm::vec3(0.6f, 0.6f, 0.6f) : glm::vec3(0.0f, 0.0f, 0.0f);
 
-            auto tile = Object::Helper::CreatePlane(core, {.width = tileSize, .depth = tileSize,
-                                                            .position = glm::vec3(posX, 0.0f, posZ),
-                                                            .rotation = glm::vec3(0.0f, 0.0f, 0.0f)});
+            auto tile = Object::Helper::CreatePlane(core, {.width = tileSize,
+                                                           .depth = tileSize,
+                                                           .position = glm::vec3(posX, 0.0f, posZ),
+                                                           .rotation = glm::vec3(0.0f, 0.0f, 0.0f)});
 
             Object::Component::Material tileMaterial;
             tileMaterial.diffuse = color;
