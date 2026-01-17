@@ -1,8 +1,8 @@
 #include "scenes/VehicleScene.hpp"
 #include "component/PlayerVehicle.hpp"
 
-#include "Object.hpp"
 #include "Graphic.hpp"
+#include "Object.hpp"
 #include "Physics.hpp"
 #include "builder/VehicleBuilder.hpp"
 #include "component/Transform.hpp"
