@@ -2,6 +2,7 @@
 #include "component/PlayerVehicle.hpp"
 
 #include "Object.hpp"
+#include "Graphic.hpp"
 #include "Physics.hpp"
 #include "builder/VehicleBuilder.hpp"
 #include "component/Transform.hpp"
@@ -30,7 +31,8 @@ void CreateCheckeredFloor(Engine::Core &core)
             float posZ = startOffset + (z * tileSize) + (tileSize / 2.0f);
 
             bool isLightTile = (x + z) % 2 == 0;
-            glm::vec3 color = isLightTile ? glm::vec3(0.8f, 0.8f, 0.8f) : glm::vec3(0.4f, 0.4f, 0.4f);
+            // Use a black / grey checker pattern
+            glm::vec3 color = isLightTile ? glm::vec3(0.6f, 0.6f, 0.6f) : glm::vec3(0.0f, 0.0f, 0.0f);
 
             auto tile = Object::Helper::CreatePlane(core, tileSize, tileSize, glm::vec3(posX, 0.0f, posZ));
 
@@ -39,6 +41,8 @@ void CreateCheckeredFloor(Engine::Core &core)
             tileMaterial.ambient = color * 0.3f;
             tileMaterial.specular = glm::vec3(0.1f);
             tileMaterial.shininess = 16.0f;
+            // Use engine default texture (1x1) so material color is used without external textures
+            tileMaterial.ambientTexName = Graphic::Utils::DEFAULT_TEXTURE_NAME;
             tile.AddComponent<Object::Component::Material>(core, tileMaterial);
 
             auto boxCollider = Physics::Component::BoxCollider(glm::vec3(tileSize / 2.0f, 0.1f, tileSize / 2.0f));
@@ -84,10 +88,13 @@ Engine::Entity CreateVehicle(Engine::Core &core)
                              .Build(core);
 
     Object::Component::Material chassisMaterial;
-    chassisMaterial.diffuse = glm::vec3(0.8f, 0.2f, 0.2f);
-    chassisMaterial.ambient = glm::vec3(0.24f, 0.06f, 0.06f);
+    // Light blue car color
+    chassisMaterial.diffuse = glm::vec3(0.4f, 0.7f, 0.95f);
+    chassisMaterial.ambient = chassisMaterial.diffuse * 0.3f;
     chassisMaterial.specular = glm::vec3(0.3f);
     chassisMaterial.shininess = 32.0f;
+    // Use engine default texture to avoid missing texture warnings while keeping a plain material
+    chassisMaterial.ambientTexName = Graphic::Utils::DEFAULT_TEXTURE_NAME;
     vehicleEntity.AddComponent<Object::Component::Material>(core, chassisMaterial);
 
     vehicleEntity.AddComponent<PlayerVehicle>(core);
