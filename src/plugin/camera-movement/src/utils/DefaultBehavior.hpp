@@ -46,24 +46,28 @@ class DefaultBehavior : public ICameraBehavior {
 
     ~DefaultBehavior() override
     {
-        if (!_core)
-        {
-            return;
-        }
+        try {
+            if (!_core)
+            {
+                return;
+            }
 
-        if (!_core->HasResource<Input::Resource::InputManager>())
-        {
-            return;
-        }
+            if (!_core->HasResource<Input::Resource::InputManager>())
+            {
+                return;
+            }
 
-        auto &inputManager = _core->GetResource<Input::Resource::InputManager>();
-        if (_mouseButtonCallbackId != 0)
-        {
-            inputManager.DeleteMouseButtonCallback(_mouseButtonCallbackId);
-        }
-        if (_cursorPosCallbackId != 0)
-        {
-            inputManager.DeleteCursorPosCallback(_cursorPosCallbackId);
+            auto &inputManager = _core->GetResource<Input::Resource::InputManager>();
+            if (_mouseButtonCallbackId != 0)
+            {
+                inputManager.DeleteMouseButtonCallback(_mouseButtonCallbackId);
+            }
+            if (_cursorPosCallbackId != 0)
+            {
+                inputManager.DeleteCursorPosCallback(_cursorPosCallbackId);
+            }
+        } catch (const std::exception &e) {
+            Log::Error(fmt::format("Exception in DefaultBehavior destructor: {}", e.what()));
         }
     }
 
