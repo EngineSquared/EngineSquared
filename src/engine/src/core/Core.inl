@@ -48,10 +48,7 @@ template <CScheduler TScheduler> inline TScheduler &Core::GetScheduler()
     return this->_schedulers.GetScheduler<TScheduler>();
 }
 
-inline Scheduler::AScheduler &Core::GetScheduler(std::type_index id)
-{
-    return *(this->_schedulers.GetScheduler(id));
-}
+inline Scheduler::AScheduler &Core::GetScheduler(std::type_index id) { return *(this->_schedulers.GetScheduler(id)); }
 
 template <CScheduler TScheduler, typename... Systems> inline decltype(auto) Core::RegisterSystem(Systems... systems)
 {

@@ -134,7 +134,7 @@ class Core {
 
     /**
      * Get a scheduler from the registry by its type index.
-     * 
+     *
      * @param id The type index of the scheduler to get.
      * @return The scheduler.
      */

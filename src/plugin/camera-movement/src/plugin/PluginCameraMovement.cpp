@@ -2,8 +2,8 @@
 
 #include "plugin/PluginInput.hpp"
 #include "plugin/PluginWindow.hpp"
-#include "resource/CameraManager.hpp"
 #include "resource/CameraControlSystemManager.hpp"
+#include "resource/CameraManager.hpp"
 #include "scheduler/Startup.hpp"
 #include "system/CameraControlSystem.hpp"
 #include "utils/DefaultBehavior.hpp"

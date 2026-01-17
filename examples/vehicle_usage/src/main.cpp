@@ -17,11 +17,10 @@
 #include "resource/Window.hpp"
 
 #include "component/PlayerVehicle.hpp"
+#include "resource/CameraControlSystemManager.hpp"
 #include "scenes/VehicleScene.hpp"
 #include "system/VehicleInput.hpp"
 #include "utils/ChaseCameraBehavior.hpp"
-#include "resource/CameraControlSystemManager.hpp"
-
 
 void EscapeKeySystem(Engine::Core &core)
 {
@@ -57,8 +56,7 @@ void Setup(Engine::Core &core)
     auto &fixedTimeScheduler = core.GetScheduler<Engine::Scheduler::FixedTimeUpdate>();
     fixedTimeScheduler.SetTickRate(1.0f / 120.0f);
 
-    auto &cameraControlSystemManager =
-        core.GetResource<CameraMovement::Resource::CameraControlSystemManager>();
+    auto &cameraControlSystemManager = core.GetResource<CameraMovement::Resource::CameraControlSystemManager>();
     cameraControlSystemManager.SetCameraControlSystemScheduler<Engine::Scheduler::FixedTimeUpdate>(core);
 }
 
