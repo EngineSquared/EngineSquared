@@ -17,6 +17,15 @@ namespace CameraMovement::Utils {
  */
 class ICameraBehavior {
   public:
+    ICameraBehavior() = default;
+    /**
+     * @brief Optional constructor that receives the engine core.
+     *
+     * Implementations may use this constructor to register callbacks or systems
+     * tied to the engine core during construction.
+     */
+    explicit ICameraBehavior(Engine::Core & /*core*/) {}
+
     virtual ~ICameraBehavior() = default;
 
     /**

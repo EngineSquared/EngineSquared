@@ -5,11 +5,13 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#include "Logger.hpp"
 #include "component/Camera.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "resource/CameraManager.hpp"
 #include "resource/InputManager.hpp"
+#include "resource/Window.hpp"
 #include "utils/CameraBehavior.hpp"
 #include "utils/CameraUtils.hpp"
 
@@ -25,7 +27,52 @@ namespace CameraMovement::Utils {
 class DefaultBehavior : public ICameraBehavior {
   public:
     DefaultBehavior() = default;
-    ~DefaultBehavior() override = default;
+
+    /**
+     * @brief Construct and register camera-related input callbacks.
+     */
+    explicit DefaultBehavior(Engine::Core &core) : _core(&core), _mouseButtonCallbackId(0), _cursorPosCallbackId(0)
+    {
+        if (!core.HasResource<Input::Resource::InputManager>())
+        {
+            Log::Warn("InputManager resource not found, cannot register camera callbacks");
+            return;
+        }
+
+        auto &inputManager = core.GetResource<Input::Resource::InputManager>();
+        _mouseButtonCallbackId = inputManager.RegisterMouseButtonCallback(MouseButtonCallback);
+        _cursorPosCallbackId = inputManager.RegisterCursorPosCallback(CursorPosCallback);
+    }
+
+    ~DefaultBehavior() override
+    {
+        try
+        {
+            if (!_core)
+            {
+                return;
+            }
+
+            if (!_core->HasResource<Input::Resource::InputManager>())
+            {
+                return;
+            }
+
+            auto &inputManager = _core->GetResource<Input::Resource::InputManager>();
+            if (_mouseButtonCallbackId != 0)
+            {
+                inputManager.DeleteMouseButtonCallback(_mouseButtonCallbackId);
+            }
+            if (_cursorPosCallbackId != 0)
+            {
+                inputManager.DeleteCursorPosCallback(_cursorPosCallbackId);
+            }
+        }
+        catch (const std::exception &e)
+        {
+            Log::Error(fmt::format("Exception in DefaultBehavior destructor: {}", e.what()));
+        }
+    }
 
     void Update(Engine::Core &core, Resource::CameraManager &manager, Object::Component::Transform &transform,
                 Object::Component::Camera &camera, float deltaTime) override
@@ -161,6 +208,79 @@ class DefaultBehavior : public ICameraBehavior {
             transform.SetRotation(newRotation);
         }
     }
+
+  private:
+    static void MouseButtonCallback(Engine::Core &core, int button, int action, int /* mods */)
+    {
+        if (button != GLFW_MOUSE_BUTTON_RIGHT)
+        {
+            return;
+        }
+
+        if (!core.GetRegistry().ctx().contains<Resource::CameraManager>())
+        {
+            Log::Warn("CameraManager resource not found in MouseButtonCallback");
+            return;
+        }
+
+        auto &cameraManager = core.GetResource<Resource::CameraManager>();
+
+        if (action == GLFW_PRESS)
+        {
+            cameraManager.SetMouseDragging(true);
+            if (cameraManager.HasValidCamera())
+            {
+                auto entity = cameraManager.GetActiveCamera();
+                auto &transform = core.GetRegistry().get<Object::Component::Transform>(entity);
+                cameraManager.SetOriginRotation(transform.GetRotation());
+            }
+        }
+        else if (action == GLFW_RELEASE)
+        {
+            cameraManager.SetMouseDragging(false);
+        }
+    }
+
+    static void CursorPosCallback(Engine::Core &core, double xpos, double ypos)
+    {
+        if (!core.GetRegistry().ctx().contains<Resource::CameraManager>())
+        {
+            Log::Warn("CameraManager resource not found in CursorPosCallback");
+            return;
+        }
+
+        if (!core.GetRegistry().ctx().contains<Window::Resource::Window>())
+        {
+            Log::Warn("Window resource not found in CursorPosCallback");
+            return;
+        }
+
+        auto &cameraManager = core.GetResource<Resource::CameraManager>();
+        auto &window = core.GetResource<Window::Resource::Window>();
+
+        bool shouldRotate = (window.IsCursorMasked() || cameraManager.IsMouseDragging()) &&
+                            cameraManager.HasValidCamera() &&
+                            !(window.IsCursorMasked() && !cameraManager.WasCursorMasked());
+
+        if (shouldRotate)
+        {
+            auto &transform = core.GetRegistry().get<Object::Component::Transform>(cameraManager.GetActiveCamera());
+            auto yaw = static_cast<float>((xpos - cameraManager.GetLastMouseX()) * cameraManager.GetMouseSensitivity());
+            auto pitch =
+                static_cast<float>((ypos - cameraManager.GetLastMouseY()) * cameraManager.GetMouseSensitivity());
+
+            glm::quat newRotation = Utils::RotateQuaternion(cameraManager.GetOriginRotation(), pitch, yaw);
+            transform.SetRotation(newRotation);
+            cameraManager.SetOriginRotation(newRotation);
+        }
+
+        cameraManager.SetLastMousePosition(xpos, ypos);
+        cameraManager.SetWasCursorMasked(window.IsCursorMasked());
+    }
+
+    Engine::Core *_core = nullptr;
+    FunctionUtils::FunctionID _mouseButtonCallbackId;
+    FunctionUtils::FunctionID _cursorPosCallbackId;
 };
 
 } // namespace CameraMovement::Utils

@@ -239,6 +239,26 @@ template <> class VehicleBuilder<4> {
         return *this;
     }
 
+    /**
+     * @brief Set the collision tester type for wheel-ground detection
+     */
+    VehicleBuilder &SetCollisionTesterType(Component::CollisionTesterType type)
+    {
+        _vehicle.collisionTesterType = type;
+        return *this;
+    }
+
+    /**
+     * @brief Set the convex radius fraction for CastCylinder tester
+     *
+     * @param fraction Value between 0.0 and 1.0 (default: 0.5)
+     */
+    VehicleBuilder &SetConvexRadiusFraction(float fraction)
+    {
+        _vehicle.convexRadiusFraction = fraction;
+        return *this;
+    }
+
   private:
     Component::Vehicle _vehicle = Component::Vehicle::CreateDefaultCar();
 
