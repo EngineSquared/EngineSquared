@@ -322,8 +322,8 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
         for (uint32_t seg = 0u; seg < segments; ++seg)
         {
             mesh.EmplaceIndices(centerTop);
-            mesh.EmplaceIndices(centerTop + seg + 1u);
             mesh.EmplaceIndices(centerTop + seg + 2u);
+            mesh.EmplaceIndices(centerTop + seg + 1u);
         }
     }
 
@@ -350,8 +350,8 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
     for (uint32_t seg = 0u; seg < segments; ++seg)
     {
         mesh.EmplaceIndices(centerBottom);
-        mesh.EmplaceIndices(centerBottom + seg + 2u);
         mesh.EmplaceIndices(centerBottom + seg + 1u);
+        mesh.EmplaceIndices(centerBottom + seg + 2u);
     }
 
     return mesh;
