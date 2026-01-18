@@ -19,6 +19,7 @@
 #include "resource/GraphicSettings.hpp"
 #include "resource/InputManager.hpp"
 #include "resource/UIContext.hpp"
+#include "resource/Window.hpp"
 #include "scheduler/Init.hpp"
 #include "scheduler/Startup.hpp"
 #include "spdlog/fmt/bundled/format.h"
@@ -39,6 +40,9 @@ void EscapeKeySystem(Engine::Core &core)
 
 void Setup(Engine::Core &core)
 {
+    auto &window = core.GetResource<Window::Resource::Window>();
+    window.SetSize(1280, 720);
+
     auto camera = core.CreateEntity();
 
     camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0F, 0.0F, -2.0F));

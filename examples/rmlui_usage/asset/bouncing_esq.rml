@@ -6,7 +6,6 @@
         <div id="dvd-container" class="dvd-container">
             <div id="dvd-content" class="dvd-content">
                 <div id="dvd-logo"></div>
-                <div id="dvd-logo-hover"></div>
             </div>
         </div>
 	</body>

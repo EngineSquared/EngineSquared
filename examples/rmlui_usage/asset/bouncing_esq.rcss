@@ -36,26 +36,6 @@
     animation: 9s linear infinite alternate dvd-x, 6s linear infinite alternate dvd-y;
 }
 
-#dvd-logo-hover {
-    position: absolute;
-    width: 64dp;
-    height: 64dp;
-    left: 80dp;
-    top: 0dp;
-    decorator: image("texture.png" cover);
-    transform: scale(1.0);
-    transition: transform 0.15s cubic-out;
-}
-
-#dvd-logo-hover:hover {
-    transform: scale(1.2) translate(0px, -6px);
-    transform-origin: center center 0;
-}
-
-#dvd-logo-hover:active {
-    image-color: rgb(255, 0, 0);
-}
-
 #dvd-content {
     position: absolute;
     left: 0dp;

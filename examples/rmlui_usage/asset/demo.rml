@@ -4,6 +4,8 @@
 		<title>Demo</title>
 		<link type="text/template" href="window.rml" />
 		<link type="text/template" href="bouncing_esq.rml" />
+		<link type="text/template" href="hover_esq.rml" />
+		<link type="text/template" href="animated_text.rml" />
 		<style>
 			body {
 				width: 300dp;
@@ -29,6 +31,12 @@
 		This is a sample.
 		<div template="bouncing_esq">
 			<template content="bouncing_esq" src="bouncing_esq"></template>
+		</div>
+		<div template="hover_esq">
+			<template content="hover_esq" src="hover_esq"></template>
+		</div>
+		<div template="animated_text">
+			<template content="animated_text" src="animated_text"></template>
 		</div>
 	</body>
 </rml>

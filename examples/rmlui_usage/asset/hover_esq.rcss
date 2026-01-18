@@ -1,0 +1,33 @@
+@keyframes hover-pulse {
+    0% { transform: scale(1.0); }
+    100% { transform: scale(1.0); }
+}
+
+#hover-container {
+    position: absolute;
+    left: 80dp;
+    top: 80dp;
+    width: 64dp;
+    height: 64dp;
+    z-index: 3;
+}
+
+#hover-logo {
+    position: absolute;
+    width: 64dp;
+    height: 64dp;
+    left: 0dp;
+    top: 0dp;
+    decorator: image("texture.png" cover);
+    transform: scale(1.0);
+    transition: transform 0.15s cubic-out;
+}
+
+#hover-logo:hover {
+    transform: scale(1.2) translate(0px, -6px);
+    transform-origin: center center 0;
+}
+
+#hover-logo:active {
+    image-color: rgb(255, 0, 0);
+}
