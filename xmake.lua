@@ -20,8 +20,7 @@ add_requires(
     "glfw3webgpu v1.3.0-alpha",
     { debug = is_mode("debug") }
 )
--- Temporarily disabled due to build issues on Windows 11
---add_requires("rmlui 6.0", { configs = { transform = true }, debug = is_mode("debug") })
+add_requires("rmlui 6.2", { configs = { transform = true }, debug = is_mode("debug") })
 
 set_languages("c++20")
 
@@ -35,6 +34,7 @@ includes("src/plugin/sound/xmake.lua")
 includes("src/plugin/window/xmake.lua")
 includes("src/plugin/rendering-pipeline/xmake.lua")
 includes("src/plugin/graphic/xmake.lua")
+includes("src/plugin/rmlui/xmake.lua")
 includes("src/plugin/physics/xmake.lua")
 includes("src/utils/function-container/xmake.lua")
 includes("src/utils/log/xmake.lua")
@@ -60,6 +60,7 @@ target("EngineSquared")
     add_deps("PluginNativeScripting")
     add_deps("PluginRenderingPipeline")
     add_deps("PluginGraphic")
+    add_deps("PluginRmlui")
     add_deps("UtilsTools")
     add_deps("PluginPhysics")
     add_deps("PluginCameraMovement")

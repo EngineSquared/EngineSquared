@@ -17,3 +17,8 @@
 **/.DS_Store
 **/src/.DS_Store
 **/_codeql_detected_source_root
+
+# linter
+.cache
+.cache-*/
+.cache-*/
