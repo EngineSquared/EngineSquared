@@ -12,6 +12,9 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
     heightSegments = std::max(1u, heightSegments);
 
     float halfHeight = height * 0.5f;
+    float slopeAngle = std::atan2(radiusBottom - radiusTop, height);
+    float cosSlope = std::cos(slopeAngle);
+    float sinSlope = std::sin(slopeAngle);
 
     uint32_t sideVertexCount = (heightSegments + 1u) * (segments + 1u);
     uint32_t capVertexCount = 2u * (segments + 2u); // Top and bottom caps (center + ring)
@@ -35,7 +38,7 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
             glm::vec3 vertex(radius * cosTheta, y, radius * sinTheta);
             mesh.EmplaceVertices(vertex);
 
-            glm::vec3 normal = glm::normalize(glm::vec3(cosTheta, 0.0f, sinTheta));
+            glm::vec3 normal = glm::normalize(glm::vec3(cosTheta * cosSlope, sinSlope, sinTheta * cosSlope));
             mesh.EmplaceNormals(normal);
 
             mesh.EmplaceTexCoords(static_cast<float>(seg) / static_cast<float>(segments), t);
