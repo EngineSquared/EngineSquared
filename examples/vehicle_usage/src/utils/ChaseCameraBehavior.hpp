@@ -19,7 +19,7 @@
  */
 class ChaseCameraBehavior : public CameraMovement::Utils::ICameraBehavior {
   public:
-    ChaseCameraBehavior(Engine::Entity vehicleEntity) : _vehicleEntity(vehicleEntity) {}
+    explicit ChaseCameraBehavior(Engine::Entity vehicleEntity) : _vehicleEntity(vehicleEntity) {}
     ~ChaseCameraBehavior() override = default;
 
     void Update(Engine::Core &core, CameraMovement::Resource::CameraManager &manager,

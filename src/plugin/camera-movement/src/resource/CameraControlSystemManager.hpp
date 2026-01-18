@@ -20,7 +20,7 @@ class CameraControlSystemManager {
         _cameraControlSystemID =
             std::get<0>(core.RegisterSystem<Engine::Scheduler::Update>(System::CameraControlSystem));
     }
-    ~CameraControlSystemManager() {}
+    ~CameraControlSystemManager() = default;
 
     /**
      * @brief Set the CameraControlSystem to use a different scheduler.

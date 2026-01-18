@@ -69,6 +69,9 @@ void CreateCheckeredFloor(Engine::Core &core)
  */
 Engine::Entity CreateVehicle(Engine::Core &core)
 {
+    using enum Physics::Component::WheelIndex;
+    using enum Physics::Component::DrivetrainType;
+
     Object::Component::Mesh chassisMesh = Object::Utils::GenerateBoxMesh(1.0f, 0.8f, 2.0f);
     Object::Component::Mesh wheelMesh = Object::Utils::GenerateWheelMesh(0.4f, 0.3f);
 
@@ -86,15 +89,15 @@ Engine::Entity CreateVehicle(Engine::Core &core)
 
     Physics::Builder::VehicleBuilder<4> builder;
     auto vehicleEntity = builder.SetChassisMesh(chassisMesh, glm::vec3(0.0f, 2.0f, 0.0f))
-                             .SetWheelMesh(Physics::Component::WheelIndex::FrontLeft, wheelMesh)
-                             .SetWheelMesh(Physics::Component::WheelIndex::FrontRight, wheelMesh)
-                             .SetWheelMesh(Physics::Component::WheelIndex::RearLeft, wheelMesh)
-                             .SetWheelMesh(Physics::Component::WheelIndex::RearRight, wheelMesh)
-                             .SetWheelSettings(Physics::Component::WheelIndex::FrontLeft, frontWheel)
-                             .SetWheelSettings(Physics::Component::WheelIndex::FrontRight, frontWheel)
-                             .SetWheelSettings(Physics::Component::WheelIndex::RearLeft, rearWheel)
-                             .SetWheelSettings(Physics::Component::WheelIndex::RearRight, rearWheel)
-                             .SetDrivetrain(Physics::Component::DrivetrainType::RWD)
+                             .SetWheelMesh(FrontLeft, wheelMesh)
+                             .SetWheelMesh(FrontRight, wheelMesh)
+                             .SetWheelMesh(RearLeft, wheelMesh)
+                             .SetWheelMesh(RearRight, wheelMesh)
+                             .SetWheelSettings(FrontLeft, frontWheel)
+                             .SetWheelSettings(FrontRight, frontWheel)
+                             .SetWheelSettings(RearLeft, rearWheel)
+                             .SetWheelSettings(RearRight, rearWheel)
+                             .SetDrivetrain(RWD)
                              .SetChassisMass(1200.0f)
                              .SetChassisHalfExtents(glm::vec3(1.0f, 0.4f, 2.0f))
                              .Build(core);
