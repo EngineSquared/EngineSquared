@@ -499,7 +499,7 @@ void InitSoftBodySystem(Engine::Core &core)
     registry.on_construct<Component::SoftBody>().connect<&OnSoftBodyConstruct>();
     registry.on_destroy<Component::SoftBody>().connect<&OnSoftBodyDestroy>();
 
-    Log::Info("SoftBodySystem initialized");
+    Log::Debug("SoftBodySystem initialized");
 }
 
 void ShutdownSoftBodySystem(Engine::Core &core)
@@ -510,7 +510,7 @@ void ShutdownSoftBodySystem(Engine::Core &core)
     registry.on_construct<Component::SoftBody>().disconnect<&OnSoftBodyConstruct>();
     registry.on_destroy<Component::SoftBody>().disconnect<&OnSoftBodyDestroy>();
 
-    Log::Info("SoftBodySystem shutdown");
+    Log::Debug("SoftBodySystem shutdown");
 }
 
 void SyncSoftBodyVertices(Engine::Core &core)
