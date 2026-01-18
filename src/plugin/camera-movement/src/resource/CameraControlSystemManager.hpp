@@ -17,8 +17,8 @@ class CameraControlSystemManager {
   public:
     explicit CameraControlSystemManager(Engine::Core &core)
     {
-      _cameraControlSystemID =
-        std::get<0>(core.RegisterSystem<Engine::Scheduler::Update>(System::CameraControlSystem));
+        _cameraControlSystemID =
+            std::get<0>(core.RegisterSystem<Engine::Scheduler::Update>(System::CameraControlSystem));
     }
     ~CameraControlSystemManager() = default;
 
@@ -30,11 +30,11 @@ class CameraControlSystemManager {
      */
     template <Engine::CScheduler TScheduler> void SetCameraControlSystemScheduler(Engine::Core &core)
     {
-      if (_currentScheduler == std::type_index(typeid(TScheduler)))
-        return;
-      core.GetScheduler(_currentScheduler).Disable(_cameraControlSystemID);
-      _cameraControlSystemID = std::get<0>(core.RegisterSystem<TScheduler>(System::CameraControlSystem));
-      _currentScheduler = std::type_index(typeid(TScheduler));
+        if (_currentScheduler == std::type_index(typeid(TScheduler)))
+            return;
+        core.GetScheduler(_currentScheduler).Disable(_cameraControlSystemID);
+        _cameraControlSystemID = std::get<0>(core.RegisterSystem<TScheduler>(System::CameraControlSystem));
+        _currentScheduler = std::type_index(typeid(TScheduler));
     }
 
   private:
