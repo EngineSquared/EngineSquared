@@ -208,9 +208,7 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
         using enum Component::CollisionTesterType;
         switch (vehicle.collisionTesterType)
         {
-        case Ray:
-            collisionTester = new JPH::VehicleCollisionTesterRay(Utils::Layers::MOVING);
-            break;
+        case Ray: collisionTester = new JPH::VehicleCollisionTesterRay(Utils::Layers::MOVING); break;
         case CastSphere:
             collisionTester =
                 new JPH::VehicleCollisionTesterCastSphere(Utils::Layers::MOVING, 0.5f * vehicle.wheels[0].width);
