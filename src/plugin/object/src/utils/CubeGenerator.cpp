@@ -4,9 +4,6 @@
 
 namespace Object::Utils {
 
-Component::Mesh GenerateCubeMesh(float size)
-{
-    return GenerateBoxMesh(size, size, size);
-}
+Component::Mesh GenerateCubeMesh(float size) { return GenerateBoxMesh(size, size, size); }
 
 } // namespace Object::Utils
