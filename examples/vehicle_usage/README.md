@@ -6,7 +6,7 @@
 
 2. Add the following option inside root xmake:
 ```lua
-option("with_vehicle_usage_example", {default = false, description = "Enable Physics Usage Example"})
+option("with_vehicle_usage_example", {default = false, description = "Enable Vehicle Usage Example"})
 
 if has_config("with_vehicle_usage_example") then
     includes("examples/vehicle_usage/xmake.lua")
