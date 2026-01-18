@@ -255,6 +255,10 @@ template <> class VehicleBuilder<4> {
      */
     VehicleBuilder &SetConvexRadiusFraction(float fraction)
     {
+        if (fraction < 0.0f || fraction > 1.0f)
+        {
+            throw Exception::VehicleBuilderError("Convex radius fraction must be between 0.0 and 1.0");
+        }
         _vehicle.convexRadiusFraction = fraction;
         return *this;
     }
