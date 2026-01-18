@@ -163,12 +163,12 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
             const auto &matrix = *_transform;
             const float pos_z = 0.0F;
             const float pos_w = 1.0F;
-            const float transformed_x = (matrix[0][0] * pos_x) + (matrix[1][0] * pos_y) + (matrix[2][0] * pos_z) +
-                                        (matrix[3][0] * pos_w);
-            const float transformed_y = (matrix[0][1] * pos_x) + (matrix[1][1] * pos_y) + (matrix[2][1] * pos_z) +
-                                        (matrix[3][1] * pos_w);
-            const float transformed_w = (matrix[0][3] * pos_x) + (matrix[1][3] * pos_y) + (matrix[2][3] * pos_z) +
-                                        (matrix[3][3] * pos_w);
+            const float transformed_x =
+                (matrix[0][0] * pos_x) + (matrix[1][0] * pos_y) + (matrix[2][0] * pos_z) + (matrix[3][0] * pos_w);
+            const float transformed_y =
+                (matrix[0][1] * pos_x) + (matrix[1][1] * pos_y) + (matrix[2][1] * pos_z) + (matrix[3][1] * pos_w);
+            const float transformed_w =
+                (matrix[0][3] * pos_x) + (matrix[1][3] * pos_y) + (matrix[2][3] * pos_z) + (matrix[3][3] * pos_w);
 
             if (transformed_w != 0.0F)
             {
