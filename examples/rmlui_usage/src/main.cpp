@@ -4,7 +4,6 @@
  * This example demonstrates how to use the Rmlui plugin.
  **************************************************************************/
 
-
 #include "GLFW/glfw3.h"
 #include "Logger.hpp"
 #include "component/Camera.hpp"

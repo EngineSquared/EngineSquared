@@ -8,7 +8,8 @@
 void Rmlui::System::BindInputCallbacks(Engine::Core &core)
 {
     static bool registered = false;
-    if (registered) {
+    if (registered)
+    {
         Log::Warn("Rmlui input callbacks already registered");
         return;
     }

@@ -294,7 +294,7 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
 
     const auto &context = _core.GetResource<Graphic::Resource::Context>();
     const std::string textureName = fmt::format("rmlui_texture_{}", _textureCounter);
-    
+
     _textureCounter += 1UL;
     texture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, textureName, image);
 
@@ -322,15 +322,9 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
 
 void RenderInterface::ReleaseTexture(Rml::TextureHandle textureHandle) { _textures.erase(textureHandle); }
 
-void RenderInterface::EnableScissorRegion(bool enable)
-{
-    _scissorEnabled = enable;
-}
+void RenderInterface::EnableScissorRegion(bool enable) { _scissorEnabled = enable; }
 
-void RenderInterface::SetScissorRegion(Rml::Rectanglei region)
-{
-    _scissorRegion = region;
-}
+void RenderInterface::SetScissorRegion(Rml::Rectanglei region) { _scissorRegion = region; }
 
 void RenderInterface::SetScissor(Rml::Rectanglei region, bool vertically_flip)
 {

@@ -11,7 +11,4 @@ void Rmlui::System::Init(Engine::Core &core)
         core);
 }
 
-void Rmlui::System::Destroy(Engine::Core &core)
-{
-    core.GetResource<Rmlui::Resource::UIContext>().Destroy(core);
-}
+void Rmlui::System::Destroy(Engine::Core &core) { core.GetResource<Rmlui::Resource::UIContext>().Destroy(core); }

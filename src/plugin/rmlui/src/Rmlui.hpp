@@ -15,5 +15,5 @@
 #include "system/BindInputCallbacks.hpp"
 #include "system/EventSystems.hpp"
 #include "system/InitUI.hpp"
-#include "system/initialization/CreateRmluiRenderPipeline.hpp"
 #include "system/UpdateUI.hpp"
+#include "system/initialization/CreateRmluiRenderPipeline.hpp"

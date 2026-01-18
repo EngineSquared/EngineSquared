@@ -7,8 +7,8 @@
 #include "resource/Shader.hpp"
 #include "resource/SingleExecutionRenderPass.hpp"
 
-#include "utils/webgpu.hpp"
 #include "utils/RenderInterface.hpp"
+#include "utils/webgpu.hpp"
 
 #include <entt/core/hashed_string.hpp>
 #include <string_view>
