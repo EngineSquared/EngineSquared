@@ -69,7 +69,7 @@ void CreateCheckeredFloor(Engine::Core &core)
  */
 Engine::Entity CreateVehicle(Engine::Core &core)
 {
-    Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);
+    Object::Component::Mesh chassisMesh = Object::Utils::GenerateBoxMesh(1.0f, 0.8f, 2.0f);
     Object::Component::Mesh wheelMesh = Object::Utils::GenerateWheelMesh(0.4f, 0.3f);
 
     Physics::Component::WheelSettings frontWheel = Physics::Component::WheelSettings::CreateFrontWheel();

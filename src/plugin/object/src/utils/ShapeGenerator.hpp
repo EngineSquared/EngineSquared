@@ -16,6 +16,9 @@
  * This file provides helper functions to create common 3D shapes like cubes,
  * spheres, planes, etc. with proper vertices, normals, texture coordinates,
  * and indices.
+ * 
+ * Note: for compile efficiency, it is recommended to include only the specific
+ * shape generator headers you need instead of this umbrella header.
  *
  * @author @EngineSquared
  * @version 0.1.1
@@ -31,6 +34,7 @@
 
 #include <glm/glm.hpp>
 
+#include "BoxGenerator.hpp"
 #include "CapsuleGenerator.hpp"
 #include "ClothGenerator.hpp"
 #include "CubeGenerator.hpp"
