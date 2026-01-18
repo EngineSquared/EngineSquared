@@ -1,7 +1,6 @@
 #include "JellyCubeGenerator.hpp"
 #include "Object.pch.hpp"
 
-
 namespace Object::Utils {
 
 Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)

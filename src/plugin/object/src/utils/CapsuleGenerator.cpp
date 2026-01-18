@@ -1,7 +1,6 @@
 #include "CapsuleGenerator.hpp"
 #include "Object.pch.hpp"
 
-
 namespace Object::Utils {
 
 Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segments, uint32_t heightSegments)

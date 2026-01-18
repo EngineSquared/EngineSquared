@@ -1,7 +1,6 @@
 #include "PlaneGenerator.hpp"
 #include "Object.pch.hpp"
 
-
 namespace Object::Utils {
 
 Component::Mesh GeneratePlaneMesh(float width, float depth, uint32_t subdivisionsX, uint32_t subdivisionsZ)

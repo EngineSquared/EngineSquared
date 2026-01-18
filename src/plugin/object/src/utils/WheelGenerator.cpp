@@ -2,7 +2,6 @@
 #include "CylinderGenerator.hpp"
 #include "Object.pch.hpp"
 
-
 namespace Object::Utils {
 
 Component::Mesh GenerateWheelMesh(float radius, float width, uint32_t segments)

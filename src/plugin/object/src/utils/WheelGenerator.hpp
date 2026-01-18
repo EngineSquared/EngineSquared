@@ -1,8 +1,8 @@
 #pragma once
 
 #include "component/Mesh.hpp"
-#include <glm/glm.hpp>
 #include <cstdint>
+#include <glm/glm.hpp>
 
 namespace Object::Utils {
 

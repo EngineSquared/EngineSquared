@@ -1,7 +1,6 @@
 #include "CubeGenerator.hpp"
 #include "Object.pch.hpp"
 
-
 namespace Object::Utils {
 
 Component::Mesh GenerateCubeMesh(float size)

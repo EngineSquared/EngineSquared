@@ -31,12 +31,12 @@
 
 #include <glm/glm.hpp>
 
-#include "CubeGenerator.hpp"
-#include "SphereGenerator.hpp"
-#include "PlaneGenerator.hpp"
-#include "CylinderGenerator.hpp"
 #include "CapsuleGenerator.hpp"
 #include "ClothGenerator.hpp"
-#include "RopeGenerator.hpp"
+#include "CubeGenerator.hpp"
+#include "CylinderGenerator.hpp"
 #include "JellyCubeGenerator.hpp"
+#include "PlaneGenerator.hpp"
+#include "RopeGenerator.hpp"
+#include "SphereGenerator.hpp"
 #include "WheelGenerator.hpp"

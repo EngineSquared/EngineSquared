@@ -1,7 +1,6 @@
 #include "RopeGenerator.hpp"
 #include "Object.pch.hpp"
 
-
 namespace Object::Utils {
 
 Component::Mesh GenerateRopeMesh(uint32_t segmentCount, float segmentLength)

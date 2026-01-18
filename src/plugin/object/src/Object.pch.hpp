@@ -1,9 +1,9 @@
 // Precompiled header for the Object plugin
 
 // stdlib
-#include <stdexcept>
 #include <cmath>
 #include <limits>
+#include <stdexcept>
 
 // External libraries
 #include "spdlog/spdlog.h"

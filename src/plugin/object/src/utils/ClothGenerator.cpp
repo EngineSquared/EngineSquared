@@ -1,8 +1,6 @@
 #include "ClothGenerator.hpp"
 #include "Object.pch.hpp"
 
-
-
 namespace Object::Utils {
 
 Component::Mesh GenerateClothMesh(uint32_t width, uint32_t height, float spacing)
