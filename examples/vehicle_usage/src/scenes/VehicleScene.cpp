@@ -42,8 +42,8 @@ void CreateCheckeredFloor(Engine::Core &core)
             float posZ = startOffset + (z * tileSize) + (tileSize / 2.0f);
 
             bool isLightTile = (x + z) % 2 == 0;
-            // Use a black / grey checker pattern
-            glm::vec3 color = isLightTile ? glm::vec3(0.6f, 0.6f, 0.6f) : glm::vec3(0.0f, 0.0f, 0.0f);
+            // Use a dark / light grey checker pattern
+            glm::vec3 color = isLightTile ? glm::vec3(0.6f, 0.6f, 0.6f) : glm::vec3(0.2f, 0.2f, 0.2f);
 
             auto tile = Object::Helper::CreatePlane(core, {.width = tileSize,
                                                            .depth = tileSize,
