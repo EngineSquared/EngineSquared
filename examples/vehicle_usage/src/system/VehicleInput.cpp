@@ -18,29 +18,37 @@ void VehicleInput(Engine::Core &core)
 
         controller.ResetInputs();
 
+        float forward = 0.0f;
+        float steering = 0.0f;
+        float handbrake = 0.0f;
+
         if (inputManager.IsKeyPressed(GLFW_KEY_W) || inputManager.IsKeyPressed(GLFW_KEY_Z))
         {
-            controller.SetForward(1.0f);
+            forward += 1.0f;
         }
 
         if (inputManager.IsKeyPressed(GLFW_KEY_S))
         {
-            controller.SetForward(-1.0f);
+            forward -= 1.0f;
         }
 
         if (inputManager.IsKeyPressed(GLFW_KEY_A) || inputManager.IsKeyPressed(GLFW_KEY_Q))
         {
-            controller.SetSteering(1.0f);
+            steering += 1.0f;
         }
 
         if (inputManager.IsKeyPressed(GLFW_KEY_D))
         {
-            controller.SetSteering(-1.0f);
+            steering -= 1.0f;
         }
 
         if (inputManager.IsKeyPressed(GLFW_KEY_SPACE))
         {
-            controller.SetHandBrake(1.0f);
+            handbrake = 1.0f;
         }
+
+        controller.SetForward(forward);
+        controller.SetSteering(steering);
+        controller.SetHandBrake(handbrake);
     }
 }
