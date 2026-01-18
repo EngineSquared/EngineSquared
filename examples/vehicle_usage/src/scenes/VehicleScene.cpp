@@ -99,7 +99,7 @@ Engine::Entity CreateVehicle(Engine::Core &core)
                              .SetWheelSettings(RearRight, rearWheel)
                              .SetDrivetrain(RWD)
                              .SetChassisMass(1200.0f)
-                             .SetChassisHalfExtents(glm::vec3(1.0f, 0.4f, 2.0f))
+                             .SetChassisHalfExtents(glm::vec3(0.5f, 0.4f, 1.0f))
                              .Build(core);
 
     Object::Component::Material chassisMaterial;
