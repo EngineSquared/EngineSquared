@@ -7,6 +7,11 @@ Component::Mesh GenerateSphereMesh(float radius, uint32_t segments, uint32_t rin
 {
     Component::Mesh mesh;
 
+    if (radius <= 0.0f)
+    {
+        return mesh;
+    }
+
     segments = std::max(3u, segments);
     rings = std::max(2u, rings);
 
