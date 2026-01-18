@@ -49,10 +49,11 @@ template <CScheduler TScheduler> inline TScheduler &Core::GetScheduler()
     return this->_schedulers.GetScheduler<TScheduler>();
 }
 
-inline Scheduler::AScheduler &Core::GetScheduler(std::type_index id) {
-    if (!this->_schedulers.Contains(id)) {
-        throw Exception::MissingSchedulerError(
-            fmt::format("Scheduler not found in the core: {}", id.name()));
+inline Scheduler::AScheduler &Core::GetScheduler(std::type_index id)
+{
+    if (!this->_schedulers.Contains(id))
+    {
+        throw Exception::MissingSchedulerError(fmt::format("Scheduler not found in the core: {}", id.name()));
     }
     return *(this->_schedulers.GetScheduler(id));
 }
