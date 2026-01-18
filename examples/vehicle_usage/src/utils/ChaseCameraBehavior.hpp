@@ -27,14 +27,7 @@ class ChaseCameraBehavior : public CameraMovement::Utils::ICameraBehavior {
     {
         auto &registry = core.GetRegistry();
 
-        auto vehicleView = registry.view<PlayerVehicle, Object::Component::Transform, Physics::Component::RigidBody>();
-
-        // We assume there is at least one player vehicle. We take the first one
-        if (vehicleView.begin() == vehicleView.end())
-            return;
-
-        auto vehicleEntity = vehicleView.front();
-        auto &vehicleTransform = vehicleView.get<Object::Component::Transform>(vehicleEntity);
+        auto &vehicleTransform = registry.get<Object::Component::Transform>(GetVehicleEntity());
 
         glm::vec3 vehiclePos = vehicleTransform.GetPosition();
         glm::quat vehicleRot = vehicleTransform.GetRotation();
