@@ -155,8 +155,37 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
     std::vector<Rml::Vertex> translatedVertices = geometry.vertices;
     for (auto &vertex : translatedVertices)
     {
-        vertex.position.x += translation.x;
-        vertex.position.y += translation.y;
+        const float pos_x = vertex.position.x + translation.x;
+        const float pos_y = vertex.position.y + translation.y;
+
+        if (_transform.has_value())
+        {
+            const auto &matrix = *_transform;
+            const float pos_z = 0.0F;
+            const float pos_w = 1.0F;
+            const float transformed_x = (matrix[0][0] * pos_x) + (matrix[1][0] * pos_y) + (matrix[2][0] * pos_z) +
+                                        (matrix[3][0] * pos_w);
+            const float transformed_y = (matrix[0][1] * pos_x) + (matrix[1][1] * pos_y) + (matrix[2][1] * pos_z) +
+                                        (matrix[3][1] * pos_w);
+            const float transformed_w = (matrix[0][3] * pos_x) + (matrix[1][3] * pos_y) + (matrix[2][3] * pos_z) +
+                                        (matrix[3][3] * pos_w);
+
+            if (transformed_w != 0.0F)
+            {
+                vertex.position.x = transformed_x / transformed_w;
+                vertex.position.y = transformed_y / transformed_w;
+            }
+            else
+            {
+                vertex.position.x = transformed_x;
+                vertex.position.y = transformed_y;
+            }
+        }
+        else
+        {
+            vertex.position.x = pos_x;
+            vertex.position.y = pos_y;
+        }
     }
 
     std::vector<uint32_t> indices;
@@ -401,7 +430,13 @@ void RenderInterface::DrawFullscreenQuad() { /* TODO: Implement */ }
 
 void RenderInterface::SetTransform(const Rml::Matrix4f *new_transform)
 {
-    (void) new_transform;
-    /* TODO: Implement */
+    if (new_transform != nullptr)
+    {
+        _transform = *new_transform;
+    }
+    else
+    {
+        _transform.reset();
+    }
 }
 } // namespace Rmlui::Utils

@@ -1,0 +1,66 @@
+@keyframes dvd-x {
+    0% { left: 0%; }
+    100% { left: 100%; }
+}
+
+@keyframes dvd-y {
+    0% { top: 0%; }
+    100% { top: 100%; }
+}
+
+#dvd-container {
+    position: absolute;
+    left: 0dp;
+    top: 0dp;
+    right: 0dp;
+    bottom: 0dp;
+    z-index: 3;
+}
+
+#dvd-bounds {
+    position: absolute;
+    left: 0dp;
+    top: 0dp;
+    right: 64dp;
+    bottom: 64dp;
+    overflow: hidden;
+}
+
+#dvd-logo {
+    position: absolute;
+    width: 64dp;
+    height: 64dp;
+    left: 0dp;
+    top: 0dp;
+    decorator: image("texture.png" cover);
+    animation: 9s linear infinite alternate dvd-x, 6s linear infinite alternate dvd-y;
+}
+
+#dvd-logo-hover {
+    position: absolute;
+    width: 64dp;
+    height: 64dp;
+    left: 80dp;
+    top: 0dp;
+    decorator: image("texture.png" cover);
+    transform: scale(1.0);
+    transition: transform 0.15s cubic-out;
+}
+
+#dvd-logo-hover:hover {
+    transform: scale(1.2) translate(0px, -6px);
+    transform-origin: center center 0;
+}
+
+#dvd-logo-hover:active {
+    image-color: rgb(255, 0, 0);
+}
+
+#dvd-content {
+    position: absolute;
+    left: 0dp;
+    top: 0dp;
+    right: 0dp;
+    bottom: 0dp;
+    z-index: 2;
+}

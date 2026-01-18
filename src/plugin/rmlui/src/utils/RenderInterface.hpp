@@ -5,6 +5,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <unordered_map>
 #include <vector>
 
@@ -84,5 +85,6 @@ class RenderInterface : public Rmlui::Utils::IRenderer {
     wgpu::BindGroup _screenBindGroup;
     bool _scissorEnabled = false;
     Rml::Rectanglei _scissorRegion;
+    std::optional<Rml::Matrix4f> _transform;
 };
 } // namespace Rmlui::Utils
