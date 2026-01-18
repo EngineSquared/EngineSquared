@@ -85,12 +85,12 @@ Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
         }
     };
 
-    generateFace(0u, 0u, false);            // Front (X=0)
-    generateFace(0u, gridSize - 1u, true);  // Back (X=gridSize-1)
-    generateFace(1u, 0u, true);             // Left (Y=0)
-    generateFace(1u, gridSize - 1u, false); // Right (Y=gridSize-1)
-    generateFace(2u, 0u, true);             // Bottom (Z=0)
-    generateFace(2u, gridSize - 1u, false); // Top (Z=gridSize-1)
+    generateFace(0u, 0u, false);
+    generateFace(0u, gridSize - 1u, true);
+    generateFace(1u, 0u, true);
+    generateFace(1u, gridSize - 1u, false);
+    generateFace(2u, 0u, true);
+    generateFace(2u, gridSize - 1u, false);
 
     return mesh;
 }
