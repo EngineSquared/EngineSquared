@@ -22,6 +22,22 @@ enum class DrivetrainType : uint8_t {
 };
 
 /**
+ * @brief Collision tester type for vehicle wheel collision detection
+ *
+ * Determines how wheel-ground collision is detected.
+ * CastCylinder is recommended for most use cases as it handles
+ * internal edges between adjacent static bodies (e.g., floor tiles) better.
+ */
+enum class CollisionTesterType : uint8_t {
+    /// Simple raycast - fastest but prone to ghost collisions on tiled floors
+    Ray,
+    /// Sphere cast - better than ray, good for rough terrain
+    CastSphere,
+    /// Cylinder cast - most accurate, best for tiled floors and complex terrain (default)
+    CastCylinder
+};
+
+/**
  * @brief Gearbox configuration for vehicle transmission
  */
 struct GearboxSettings {
@@ -99,6 +115,13 @@ struct Vehicle {
 
     /// Wheel positions relative to chassis center
     std::array<glm::vec3, 4> wheelPositions = GetDefaultWheelPositions();
+
+    /// Collision tester type for wheel-ground detection (default: CastCylinder)
+    CollisionTesterType collisionTesterType = CollisionTesterType::CastCylinder;
+
+    /// Convex radius fraction for CastCylinder tester (0.0 to 1.0)
+    /// Higher values help prevent ghost collisions (default: 0.5, increase if needed)
+    float convexRadiusFraction = 0.5f;
 
     /**
      * @brief Get default wheel positions relative to chassis center
