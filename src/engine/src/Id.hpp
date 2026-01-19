@@ -6,6 +6,20 @@
 
 namespace Engine {
 
+/**
+ * @brief A CRTP (Curiously Recurring Template Pattern) base class for creating strongly-typed ID wrappers.
+ *
+ * This template provides a common interface for ID types by wrapping a value type with type-safe operations.
+ * Derived classes should implement static NullValue() and Null() methods to define null/invalid ID semantics.
+ *
+ * @tparam TDerived The derived class type (CRTP pattern)
+ * @tparam TValue The underlying value type for the ID (e.g., int, uint64_t, etc.)
+ *
+ * @note The constructor is explicitly(false), allowing implicit conversions from TValue to BasicId.
+ * @note Derived classes must provide:
+ *       - static constexpr TValue NullValue() - Returns the value representing a null/invalid ID
+ *       - static constexpr TDerived Null() - Returns a null instance of the derived type
+ */
 template <typename TDerived, typename TValue> struct BasicId {
     TValue value;
 
@@ -15,6 +29,20 @@ template <typename TDerived, typename TValue> struct BasicId {
     constexpr bool IsNull() const { return value == TDerived::NullValue(); }
 };
 
+/**
+ * @brief A strongly-typed identifier wrapper based on entt::id_type.
+ *
+ * This structure provides a type-safe wrapper around EnTT's id_type, offering implicit conversion
+ * to the underlying type for seamless integration with EnTT components. It inherits from BasicId
+ * to provide null checking and other common ID operations.
+ *
+ * @note Supports implicit construction from entt::id_type values
+ * @note Supports implicit conversion back to entt::id_type for compatibility
+ * @note Size is guaranteed to match entt::id_type through static assertion
+ *
+ * @see BasicId for base functionality
+ * @see StringId for string-based identifiers
+ */
 struct Id : public BasicId<Id, entt::id_type> {
     using ValueType = entt::id_type;
     constexpr explicit(false) Id(ValueType v = NullValue()) : BasicId<Id, ValueType>{v} {}
@@ -24,6 +52,23 @@ struct Id : public BasicId<Id, entt::id_type> {
 
 static_assert(sizeof(Id) == sizeof(Id::ValueType), "Id size must be equal to entt::id_type size");
 
+/**
+ * @brief A strongly-typed string identifier wrapper based on entt::hashed_string.
+ *
+ * This structure provides a type-safe wrapper around EnTT's hashed_string, designed for efficient
+ * compile-time and runtime string hashing. Unlike Id, this is specifically for string-based
+ * identifiers and does not provide implicit conversion to the underlying type.
+ *
+ * String hashing allows for fast comparisons while maintaining human-readable identifiers during
+ * development and debugging.
+ *
+ * @note Supports implicit construction from entt::hashed_string values
+ * @note Size is guaranteed to match entt::hashed_string through static assertion
+ * @note Useful for named resources, tags, and other string-based identification schemes
+ *
+ * @see BasicId for base functionality
+ * @see Id for numeric identifiers
+ */
 struct StringId : public BasicId<StringId, entt::hashed_string> {
     using ValueType = entt::hashed_string;
     constexpr explicit(false) StringId(ValueType v = NullValue()) : BasicId<StringId, ValueType>{v} {}

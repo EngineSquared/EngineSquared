@@ -9,10 +9,27 @@
 #include <typeindex>
 
 namespace Engine {
+
 /**
- * Contains a single value which must correspond to an index in a registry.
+ * @class Entity
+ * @brief Wrapper class providing a convenient interface for entity manipulation in the ECS system.
  *
- * Should be used as a wrapper / container of an entt::entity
+ * Entity acts as a handle to an entity in the registry, combining a Core reference with an EntityId.
+ * It provides utility methods to add, remove, and query components, and maintains context relative
+ * to the Core it belongs to.
+ *
+ * Key features:
+ * - Supports both valid entities (with Core reference) and null entities
+ * - Implicit conversion to/from EntityId
+ * - Null entities created via Entity::Null()
+ *
+ * @code
+ * Entity entity{core, entityId};
+ * entity.AddComponent<Transform>(position, rotation);
+ * if (entity.HasComponents<Transform, Renderable>()) {
+ *     auto& transform = entity.GetComponents<Transform>();
+ * }
+ * @endcode
  */
 class Entity {
   public:

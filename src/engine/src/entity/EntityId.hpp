@@ -4,6 +4,15 @@
 #include <fmt/format.h>
 
 namespace Engine {
+/**
+ * @brief Represents a unique identifier for an entity in the Engine's entity-component system.
+ *
+ * An EntityId is just Id with utility methods to manage components associated with the entity.
+ *
+ * @note EntityId maintains the same memory footprint as its underlying ValueType.
+ * @see Id
+ * @see Engine::Core
+ */
 
 struct EntityId : Id {
     using ValueType = Id::ValueType;
