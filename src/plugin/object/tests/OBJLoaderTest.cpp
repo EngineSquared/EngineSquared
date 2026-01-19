@@ -15,16 +15,16 @@ TEST(OBJLoaderTest, load_obj_file)
         OBJLoader loader(OBJ_FILE_PATH "cube.obj");
         Component::Mesh mesh = loader.GetMesh();
 
-        EXPECT_FALSE(mesh.vertices.empty());
-        EXPECT_FALSE(mesh.indices.empty());
-        EXPECT_FALSE(mesh.normals.empty());
-        EXPECT_FALSE(mesh.texCoords.empty());
+        EXPECT_FALSE(mesh.GetVertices().empty());
+        EXPECT_FALSE(mesh.GetIndices().empty());
+        EXPECT_FALSE(mesh.GetNormals().empty());
+        EXPECT_FALSE(mesh.GetTexCoords().empty());
 
         Component::Mesh mesh2 = loader.GetMesh();
-        EXPECT_EQ(mesh.vertices, mesh2.vertices);
-        EXPECT_EQ(mesh.indices, mesh2.indices);
-        EXPECT_EQ(mesh.normals, mesh2.normals);
-        EXPECT_EQ(mesh.texCoords, mesh2.texCoords);
+        EXPECT_EQ(mesh.GetVertices(), mesh2.GetVertices());
+        EXPECT_EQ(mesh.GetIndices(), mesh2.GetIndices());
+        EXPECT_EQ(mesh.GetNormals(), mesh2.GetNormals());
+        EXPECT_EQ(mesh.GetTexCoords(), mesh2.GetTexCoords());
     });
 }
 
@@ -44,20 +44,20 @@ TEST(OBJLoaderTest, get_shapes_iterable_and_consistent)
 
         for (auto [mesh, material] : shapes)
         {
-            EXPECT_FALSE(mesh.vertices.empty());
-            EXPECT_FALSE(mesh.indices.empty());
-            EXPECT_FALSE(mesh.normals.empty());
-            EXPECT_FALSE(mesh.texCoords.empty());
+            EXPECT_FALSE(mesh.GetVertices().empty());
+            EXPECT_FALSE(mesh.GetIndices().empty());
+            EXPECT_FALSE(mesh.GetNormals().empty());
+            EXPECT_FALSE(mesh.GetTexCoords().empty());
             EXPECT_TRUE(material.name.empty());
         }
 
         for (const auto &shape : shapes)
         {
             const auto &mesh = shape.GetMesh();
-            EXPECT_FALSE(mesh.vertices.empty());
-            EXPECT_FALSE(mesh.indices.empty());
-            EXPECT_FALSE(mesh.normals.empty());
-            EXPECT_FALSE(mesh.texCoords.empty());
+            EXPECT_FALSE(mesh.GetVertices().empty());
+            EXPECT_FALSE(mesh.GetIndices().empty());
+            EXPECT_FALSE(mesh.GetNormals().empty());
+            EXPECT_FALSE(mesh.GetTexCoords().empty());
             EXPECT_TRUE(shape.GetMaterial().name.empty());
         }
 
@@ -65,8 +65,8 @@ TEST(OBJLoaderTest, get_shapes_iterable_and_consistent)
         EXPECT_EQ(shapes.size(), shapes2.size());
         for (size_t i = 0; i < shapes.size(); ++i)
         {
-            EXPECT_EQ(shapes[i].mesh.vertices, shapes2[i].mesh.vertices);
-            EXPECT_EQ(shapes[i].mesh.indices, shapes2[i].mesh.indices);
+            EXPECT_EQ(shapes[i].mesh.GetVertices(), shapes2[i].mesh.GetVertices());
+            EXPECT_EQ(shapes[i].mesh.GetIndices(), shapes2[i].mesh.GetIndices());
         }
     });
 }
@@ -119,10 +119,10 @@ TEST(OBJLoaderTest, get_shapes_materials_consistent)
 
         for (const auto &[mesh, material] : shapes)
         {
-            EXPECT_FALSE(mesh.vertices.empty());
-            EXPECT_FALSE(mesh.indices.empty());
-            EXPECT_FALSE(mesh.normals.empty());
-            EXPECT_FALSE(mesh.texCoords.empty());
+            EXPECT_FALSE(mesh.GetVertices().empty());
+            EXPECT_FALSE(mesh.GetIndices().empty());
+            EXPECT_FALSE(mesh.GetNormals().empty());
+            EXPECT_FALSE(mesh.GetTexCoords().empty());
             EXPECT_FALSE(material.name.empty());
 
             const auto it = std::find_if(materials.begin(), materials.end(),

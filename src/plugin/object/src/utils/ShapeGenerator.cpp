@@ -12,7 +12,7 @@ Component::Mesh GenerateCubeMesh(float size)
 
     float halfSize = size * 0.5f;
 
-    mesh.vertices = {
+    mesh.SetVertices({
         // Front face (+Z)
         {-halfSize, -halfSize, halfSize },
         {halfSize,  -halfSize, halfSize },
@@ -48,9 +48,9 @@ Component::Mesh GenerateCubeMesh(float size)
         {-halfSize, -halfSize, halfSize },
         {-halfSize, halfSize,  halfSize },
         {-halfSize, halfSize,  -halfSize}
-    };
+    });
 
-    mesh.normals = {
+    mesh.SetNormals({
         // Front face
         {0,  0,  1 },
         {0,  0,  1 },
@@ -81,9 +81,9 @@ Component::Mesh GenerateCubeMesh(float size)
         {-1, 0,  0 },
         {-1, 0,  0 },
         {-1, 0,  0 }
-    };
+    });
 
-    mesh.texCoords = {
+    mesh.SetTexCoords({
         // Front face
         {0, 0},
         {1, 0},
@@ -114,20 +114,20 @@ Component::Mesh GenerateCubeMesh(float size)
         {1, 0},
         {1, 1},
         {0, 1}
-    };
+    });
 
-    mesh.indices = {// Front
-                    0, 1, 2, 2, 3, 0,
-                    // Back
-                    4, 5, 6, 6, 7, 4,
-                    // Top
-                    8, 9, 10, 10, 11, 8,
-                    // Bottom
-                    12, 13, 14, 14, 15, 12,
-                    // Right
-                    16, 17, 18, 18, 19, 16,
-                    // Left
-                    20, 21, 22, 22, 23, 20};
+    mesh.SetIndices({// Front
+                     0, 1, 2, 2, 3, 0,
+                     // Back
+                     4, 5, 6, 6, 7, 4,
+                     // Top
+                     8, 9, 10, 10, 11, 8,
+                     // Bottom
+                     12, 13, 14, 14, 15, 12,
+                     // Right
+                     16, 17, 18, 18, 19, 16,
+                     // Left
+                     20, 21, 22, 22, 23, 20});
 
     return mesh;
 }
@@ -140,10 +140,10 @@ Component::Mesh GenerateSphereMesh(float radius, uint32_t segments, uint32_t rin
     rings = std::max(2u, rings);
 
     uint32_t vertexCount = (rings + 1u) * (segments + 1u);
-    mesh.vertices.reserve(vertexCount);
-    mesh.normals.reserve(vertexCount);
-    mesh.texCoords.reserve(vertexCount);
-    mesh.indices.reserve(rings * segments * 6u);
+    mesh.ReserveVertices(vertexCount);
+    mesh.ReserveNormals(vertexCount);
+    mesh.ReserveTexCoords(vertexCount);
+    mesh.ReserveIndices(rings * segments * 6u);
 
     for (uint32_t ring = 0u; ring <= rings; ++ring)
     {
@@ -158,13 +158,13 @@ Component::Mesh GenerateSphereMesh(float radius, uint32_t segments, uint32_t rin
             float cosTheta = std::cos(theta);
 
             glm::vec3 vertex(radius * sinPhi * cosTheta, radius * cosPhi, radius * sinPhi * sinTheta);
-            mesh.vertices.emplace_back(vertex);
+            mesh.EmplaceVertices(vertex);
 
             glm::vec3 normal = glm::normalize(vertex);
-            mesh.normals.emplace_back(normal);
+            mesh.EmplaceNormals(normal);
 
-            mesh.texCoords.emplace_back(static_cast<float>(seg) / static_cast<float>(segments),
-                                        static_cast<float>(ring) / static_cast<float>(rings));
+            mesh.EmplaceTexCoords(static_cast<float>(seg) / static_cast<float>(segments),
+                                  static_cast<float>(ring) / static_cast<float>(rings));
         }
     }
 
@@ -175,13 +175,13 @@ Component::Mesh GenerateSphereMesh(float radius, uint32_t segments, uint32_t rin
             uint32_t current = ring * (segments + 1u) + seg;
             uint32_t next = current + segments + 1u;
 
-            mesh.indices.emplace_back(current);
-            mesh.indices.emplace_back(next);
-            mesh.indices.emplace_back(current + 1u);
+            mesh.EmplaceIndices(current);
+            mesh.EmplaceIndices(next);
+            mesh.EmplaceIndices(current + 1u);
 
-            mesh.indices.emplace_back(current + 1u);
-            mesh.indices.emplace_back(next);
-            mesh.indices.emplace_back(next + 1u);
+            mesh.EmplaceIndices(current + 1u);
+            mesh.EmplaceIndices(next);
+            mesh.EmplaceIndices(next + 1u);
         }
     }
 
@@ -199,10 +199,10 @@ Component::Mesh GeneratePlaneMesh(float width, float depth, uint32_t subdivision
     float halfDepth = depth * 0.5f;
 
     uint32_t vertexCount = (subdivisionsX + 1u) * (subdivisionsZ + 1u);
-    mesh.vertices.reserve(vertexCount);
-    mesh.normals.reserve(vertexCount);
-    mesh.texCoords.reserve(vertexCount);
-    mesh.indices.reserve(subdivisionsX * subdivisionsZ * 6u);
+    mesh.ReserveVertices(vertexCount);
+    mesh.ReserveNormals(vertexCount);
+    mesh.ReserveTexCoords(vertexCount);
+    mesh.ReserveIndices(subdivisionsX * subdivisionsZ * 6u);
 
     for (uint32_t z = 0u; z <= subdivisionsZ; ++z)
     {
@@ -214,11 +214,11 @@ Component::Mesh GeneratePlaneMesh(float width, float depth, uint32_t subdivision
             float xPos = -halfWidth + (static_cast<float>(x) / static_cast<float>(subdivisionsX)) * width;
             float u = static_cast<float>(x) / static_cast<float>(subdivisionsX);
 
-            mesh.vertices.emplace_back(xPos, 0.0f, zPos);
+            mesh.EmplaceVertices(xPos, 0.0f, zPos);
 
-            mesh.normals.emplace_back(0.0f, 1.0f, 0.0f);
+            mesh.EmplaceNormals(0.0f, 1.0f, 0.0f);
 
-            mesh.texCoords.emplace_back(u, v);
+            mesh.EmplaceTexCoords(u, v);
         }
     }
 
@@ -231,13 +231,13 @@ Component::Mesh GeneratePlaneMesh(float width, float depth, uint32_t subdivision
             uint32_t bottomLeft = (z + 1u) * (subdivisionsX + 1u) + x;
             uint32_t bottomRight = bottomLeft + 1u;
 
-            mesh.indices.emplace_back(topLeft);
-            mesh.indices.emplace_back(bottomLeft);
-            mesh.indices.emplace_back(topRight);
+            mesh.EmplaceIndices(topLeft);
+            mesh.EmplaceIndices(bottomLeft);
+            mesh.EmplaceIndices(topRight);
 
-            mesh.indices.emplace_back(topRight);
-            mesh.indices.emplace_back(bottomLeft);
-            mesh.indices.emplace_back(bottomRight);
+            mesh.EmplaceIndices(topRight);
+            mesh.EmplaceIndices(bottomLeft);
+            mesh.EmplaceIndices(bottomRight);
         }
     }
 
@@ -256,10 +256,10 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
 
     uint32_t sideVertexCount = (heightSegments + 1u) * (segments + 1u);
     uint32_t capVertexCount = 2u * (segments + 2u); // Top and bottom caps (center + ring)
-    mesh.vertices.reserve(sideVertexCount + capVertexCount);
-    mesh.normals.reserve(sideVertexCount + capVertexCount);
-    mesh.texCoords.reserve(sideVertexCount + capVertexCount);
-    mesh.indices.reserve(heightSegments * segments * 6u + segments * 6u); // Sides + caps
+    mesh.ReserveVertices(sideVertexCount + capVertexCount);
+    mesh.ReserveNormals(sideVertexCount + capVertexCount);
+    mesh.ReserveTexCoords(sideVertexCount + capVertexCount);
+    mesh.ReserveIndices(heightSegments * segments * 6u + segments * 6u); // Sides + caps
 
     for (uint32_t h = 0u; h <= heightSegments; ++h)
     {
@@ -274,12 +274,12 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
             float sinTheta = std::sin(theta);
 
             glm::vec3 vertex(radius * cosTheta, y, radius * sinTheta);
-            mesh.vertices.emplace_back(vertex);
+            mesh.EmplaceVertices(vertex);
 
             glm::vec3 normal = glm::normalize(glm::vec3(cosTheta, 0.0f, sinTheta));
-            mesh.normals.emplace_back(normal);
+            mesh.EmplaceNormals(normal);
 
-            mesh.texCoords.emplace_back(static_cast<float>(seg) / static_cast<float>(segments), t);
+            mesh.EmplaceTexCoords(static_cast<float>(seg) / static_cast<float>(segments), t);
         }
     }
 
@@ -290,23 +290,23 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
             uint32_t current = h * (segments + 1u) + seg;
             uint32_t next = current + segments + 1u;
 
-            mesh.indices.emplace_back(current);
-            mesh.indices.emplace_back(next);
-            mesh.indices.emplace_back(current + 1u);
+            mesh.EmplaceIndices(current);
+            mesh.EmplaceIndices(next);
+            mesh.EmplaceIndices(current + 1u);
 
-            mesh.indices.emplace_back(current + 1u);
-            mesh.indices.emplace_back(next);
-            mesh.indices.emplace_back(next + 1u);
+            mesh.EmplaceIndices(current + 1u);
+            mesh.EmplaceIndices(next);
+            mesh.EmplaceIndices(next + 1u);
         }
     }
 
     // Generate top cap (if radius > 0)
     if (radiusTop > 0.0f)
     {
-        auto centerTop = static_cast<uint32_t>(mesh.vertices.size());
-        mesh.vertices.emplace_back(0.0f, halfHeight, 0.0f);
-        mesh.normals.emplace_back(0.0f, 1.0f, 0.0f);
-        mesh.texCoords.emplace_back(0.5f, 0.5f);
+        auto centerTop = static_cast<uint32_t>(mesh.GetVertices().size());
+        mesh.EmplaceVertices(0.0f, halfHeight, 0.0f);
+        mesh.EmplaceNormals(0.0f, 1.0f, 0.0f);
+        mesh.EmplaceTexCoords(0.5f, 0.5f);
 
         for (uint32_t seg = 0; seg <= segments; ++seg)
         {
@@ -314,16 +314,16 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
             float cosTheta = std::cos(theta);
             float sinTheta = std::sin(theta);
 
-            mesh.vertices.emplace_back(radiusTop * cosTheta, halfHeight, radiusTop * sinTheta);
-            mesh.normals.emplace_back(0.0f, 1.0f, 0.0f);
-            mesh.texCoords.emplace_back(0.5f + 0.5f * cosTheta, 0.5f + 0.5f * sinTheta);
+            mesh.EmplaceVertices(radiusTop * cosTheta, halfHeight, radiusTop * sinTheta);
+            mesh.EmplaceNormals(0.0f, 1.0f, 0.0f);
+            mesh.EmplaceTexCoords(0.5f + 0.5f * cosTheta, 0.5f + 0.5f * sinTheta);
         }
 
         for (uint32_t seg = 0u; seg < segments; ++seg)
         {
-            mesh.indices.emplace_back(centerTop);
-            mesh.indices.emplace_back(centerTop + seg + 1u);
-            mesh.indices.emplace_back(centerTop + seg + 2u);
+            mesh.EmplaceIndices(centerTop);
+            mesh.EmplaceIndices(centerTop + seg + 1u);
+            mesh.EmplaceIndices(centerTop + seg + 2u);
         }
     }
 
@@ -331,10 +331,10 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
     if (radiusBottom <= 0.0f)
         return mesh;
 
-    auto centerBottom = static_cast<uint32_t>(mesh.vertices.size());
-    mesh.vertices.emplace_back(0.0f, -halfHeight, 0.0f);
-    mesh.normals.emplace_back(0.0f, -1.0f, 0.0f);
-    mesh.texCoords.emplace_back(0.5f, 0.5f);
+    auto centerBottom = static_cast<uint32_t>(mesh.GetVertices().size());
+    mesh.EmplaceVertices(0.0f, -halfHeight, 0.0f);
+    mesh.EmplaceNormals(0.0f, -1.0f, 0.0f);
+    mesh.EmplaceTexCoords(0.5f, 0.5f);
 
     for (uint32_t seg = 0u; seg <= segments; ++seg)
     {
@@ -342,16 +342,16 @@ Component::Mesh GenerateCylinderMesh(float radiusTop, float radiusBottom, float 
         float cosTheta = std::cos(theta);
         float sinTheta = std::sin(theta);
 
-        mesh.vertices.emplace_back(radiusBottom * cosTheta, -halfHeight, radiusBottom * sinTheta);
-        mesh.normals.emplace_back(0.0f, -1.0f, 0.0f);
-        mesh.texCoords.emplace_back(0.5f + 0.5f * cosTheta, 0.5f + 0.5f * sinTheta);
+        mesh.EmplaceVertices(radiusBottom * cosTheta, -halfHeight, radiusBottom * sinTheta);
+        mesh.EmplaceNormals(0.0f, -1.0f, 0.0f);
+        mesh.EmplaceTexCoords(0.5f + 0.5f * cosTheta, 0.5f + 0.5f * sinTheta);
     }
 
     for (uint32_t seg = 0u; seg < segments; ++seg)
     {
-        mesh.indices.emplace_back(centerBottom);
-        mesh.indices.emplace_back(centerBottom + seg + 2u);
-        mesh.indices.emplace_back(centerBottom + seg + 1u);
+        mesh.EmplaceIndices(centerBottom);
+        mesh.EmplaceIndices(centerBottom + seg + 2u);
+        mesh.EmplaceIndices(centerBottom + seg + 1u);
     }
 
     return mesh;
@@ -379,9 +379,9 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
 
     uint32_t ringCount = capRings + (heightSegments + 1u) + capRings;
     uint32_t vertexEstimate = ringCount * (segments + 1u);
-    mesh.vertices.reserve(vertexEstimate);
-    mesh.normals.reserve(vertexEstimate);
-    mesh.texCoords.reserve(vertexEstimate);
+    mesh.ReserveVertices(vertexEstimate);
+    mesh.ReserveNormals(vertexEstimate);
+    mesh.ReserveTexCoords(vertexEstimate);
 
     auto addRing = [&](float y, float r, float centerY) {
         for (uint32_t s = 0; s <= segments; ++s)
@@ -390,11 +390,11 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
             float cosT = std::cos(theta);
             float sinT = std::sin(theta);
             glm::vec3 vertex(r * cosT, y, r * sinT);
-            mesh.vertices.emplace_back(vertex);
+            mesh.EmplaceVertices(vertex);
             glm::vec3 normal = glm::normalize(glm::vec3(r * cosT, y - centerY, r * sinT));
-            mesh.normals.emplace_back(normal);
-            mesh.texCoords.emplace_back(static_cast<float>(s) / static_cast<float>(segments),
-                                        (y + (radius + halfHeight)) / totalHeight);
+            mesh.EmplaceNormals(normal);
+            mesh.EmplaceTexCoords(static_cast<float>(s) / static_cast<float>(segments),
+                                  (y + (radius + halfHeight)) / totalHeight);
         }
     };
 
@@ -441,15 +441,207 @@ Component::Mesh GenerateCapsuleMesh(float radius, float height, uint32_t segment
             uint32_t i2 = nextStart + s;
             uint32_t i3 = nextStart + s + 1u;
 
-            mesh.indices.emplace_back(i0);
-            mesh.indices.emplace_back(i2);
-            mesh.indices.emplace_back(i1);
-
-            mesh.indices.emplace_back(i1);
-            mesh.indices.emplace_back(i2);
-            mesh.indices.emplace_back(i3);
+            mesh.EmplaceIndices(i0);
+            mesh.EmplaceIndices(i2);
+            mesh.EmplaceIndices(i1);
+            mesh.EmplaceIndices(i1);
+            mesh.EmplaceIndices(i2);
+            mesh.EmplaceIndices(i3);
         }
     }
+
+    return mesh;
+}
+
+//=============================================================================
+// Soft Body Mesh Generators
+//=============================================================================
+
+Component::Mesh GenerateClothMesh(uint32_t width, uint32_t height, float spacing)
+{
+    Component::Mesh mesh;
+
+    // Need at least a 2x2 grid to form triangles
+    if (width < 2u || height < 2u)
+    {
+        // Still create any vertices (0 or 1 sized grid) but do not generate faces
+        mesh.ReserveVertices(static_cast<size_t>(width) * height);
+        mesh.ReserveNormals(static_cast<size_t>(width) * height);
+        mesh.ReserveTexCoords(static_cast<size_t>(width) * height);
+
+        for (uint32_t y = 0u; y < height; ++y)
+        {
+            for (uint32_t x = 0u; x < width; ++x)
+            {
+                mesh.EmplaceVertices(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing, 0.0f);
+                mesh.EmplaceNormals(0.0f, 0.0f, 1.0f); // Face +Z
+                float uDen = (width > 1u) ? static_cast<float>(width - 1u) : 1.0f;
+                float vDen = (height > 1u) ? static_cast<float>(height - 1u) : 1.0f;
+                mesh.EmplaceTexCoords(static_cast<float>(x) / uDen, static_cast<float>(y) / vDen);
+            }
+        }
+        return mesh;
+    }
+
+    // Generate vertices in XY plane
+    mesh.ReserveVertices(static_cast<size_t>(width) * height);
+    mesh.ReserveNormals(static_cast<size_t>(width) * height);
+    mesh.ReserveTexCoords(static_cast<size_t>(width) * height);
+
+    for (uint32_t y = 0u; y < height; ++y)
+    {
+        for (uint32_t x = 0u; x < width; ++x)
+        {
+            mesh.EmplaceVertices(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing, 0.0f);
+            mesh.EmplaceNormals(0.0f, 0.0f, 1.0f); // Face +Z
+            float u = static_cast<float>(x) / static_cast<float>(width - 1u);
+            float v = static_cast<float>(y) / static_cast<float>(height - 1u);
+            mesh.EmplaceTexCoords(u, v);
+        }
+    }
+
+    // Generate faces (two triangles per quad)
+    mesh.ReserveIndices(static_cast<size_t>(width - 1u) * (height - 1u) * 6u);
+    for (uint32_t y = 0u; y < height - 1u; ++y)
+    {
+        for (uint32_t x = 0u; x < width - 1u; ++x)
+        {
+            uint32_t topLeft = y * width + x;
+            uint32_t topRight = topLeft + 1u;
+            uint32_t bottomLeft = (y + 1u) * width + x;
+            uint32_t bottomRight = bottomLeft + 1u;
+
+            // CW winding to match renderer convention
+            mesh.EmplaceIndices(topLeft);
+            mesh.EmplaceIndices(topRight);
+            mesh.EmplaceIndices(bottomLeft);
+            mesh.EmplaceIndices(topRight);
+            mesh.EmplaceIndices(bottomRight);
+            mesh.EmplaceIndices(bottomLeft);
+        }
+    }
+
+    return mesh;
+}
+
+Component::Mesh GenerateRopeMesh(uint32_t segmentCount, float segmentLength)
+{
+    Component::Mesh mesh;
+
+    if (segmentCount == 0u)
+    {
+        // Single point rope
+        mesh.EmplaceVertices(0.0f, 0.0f, 0.0f);
+        mesh.EmplaceNormals(0.0f, 0.0f, 1.0f);
+        mesh.EmplaceTexCoords(0.0f, 0.0f);
+        return mesh;
+    }
+
+    uint32_t vertexCount = segmentCount + 1u;
+    mesh.ReserveVertices(vertexCount);
+    mesh.ReserveNormals(vertexCount);
+    mesh.ReserveTexCoords(vertexCount);
+
+    for (uint32_t i = 0u; i < vertexCount; ++i)
+    {
+        mesh.EmplaceVertices(0.0f, -static_cast<float>(i) * segmentLength, 0.0f);
+        mesh.EmplaceNormals(0.0f, 0.0f, 1.0f);
+        mesh.EmplaceTexCoords(0.0f, static_cast<float>(i) / static_cast<float>(segmentCount));
+    }
+
+    // No faces for rope (line rendering or soft body only)
+
+    return mesh;
+}
+
+Component::Mesh GenerateJellyCubeMesh(uint32_t gridSize, float spacing)
+{
+    Component::Mesh mesh;
+
+    if (gridSize < 2u)
+    {
+        if (gridSize == 1u)
+        {
+            mesh.EmplaceVertices(0.0f, 0.0f, 0.0f);
+            mesh.EmplaceNormals(0.0f, 1.0f, 0.0f);
+            mesh.EmplaceTexCoords(0.0f, 0.0f);
+        }
+        return mesh;
+    }
+
+    size_t totalVertices = static_cast<size_t>(gridSize) * gridSize * gridSize;
+    mesh.ReserveVertices(totalVertices);
+    mesh.ReserveNormals(totalVertices);
+    mesh.ReserveTexCoords(totalVertices);
+
+    for (uint32_t z = 0u; z < gridSize; ++z)
+    {
+        for (uint32_t y = 0u; y < gridSize; ++y)
+        {
+            for (uint32_t x = 0u; x < gridSize; ++x)
+            {
+                mesh.EmplaceVertices(static_cast<float>(x) * spacing, static_cast<float>(y) * spacing,
+                                     static_cast<float>(z) * spacing);
+                mesh.EmplaceNormals(0.0f, 1.0f, 0.0f);
+                float u = static_cast<float>(x) / static_cast<float>(gridSize - 1u);
+                float v = static_cast<float>(y) / static_cast<float>(gridSize - 1u);
+                mesh.EmplaceTexCoords(u, v);
+            }
+        }
+    }
+
+    auto getIndex = [gridSize](uint32_t x, uint32_t y, uint32_t z) {
+        return z * gridSize * gridSize + y * gridSize + x;
+    };
+
+    auto addFace = [&mesh](uint32_t tl, uint32_t tr, uint32_t bl, uint32_t br) {
+        mesh.EmplaceIndices(tl);
+        mesh.EmplaceIndices(bl);
+        mesh.EmplaceIndices(tr);
+        mesh.EmplaceIndices(tr);
+        mesh.EmplaceIndices(bl);
+        mesh.EmplaceIndices(br);
+    };
+
+    auto getQuadIndices = [&](uint32_t axis, uint32_t coord, uint32_t i, uint32_t j) -> std::array<uint32_t, 4> {
+        switch (axis)
+        {
+        case 0u:
+            return {getIndex(coord, i, j), getIndex(coord, i + 1u, j), getIndex(coord, i, j + 1u),
+                    getIndex(coord, i + 1u, j + 1u)};
+        case 1u:
+            return {getIndex(i, coord, j), getIndex(i + 1u, coord, j), getIndex(i, coord, j + 1u),
+                    getIndex(i + 1u, coord, j + 1u)};
+        default:
+            return {getIndex(i, j, coord), getIndex(i + 1u, j, coord), getIndex(i, j + 1u, coord),
+                    getIndex(i + 1u, j + 1u, coord)};
+        }
+    };
+
+    auto generateFace = [&](uint32_t axis, uint32_t coord, bool reversed) {
+        for (uint32_t i = 0u; i < gridSize - 1u; ++i)
+        {
+            for (uint32_t j = 0u; j < gridSize - 1u; ++j)
+            {
+                auto [tl, tr, bl, br] = getQuadIndices(axis, coord, i, j);
+                if (reversed)
+                {
+                    addFace(tl, bl, tr, br);
+                }
+                else
+                {
+                    addFace(tl, tr, bl, br);
+                }
+            }
+        }
+    };
+
+    generateFace(0u, 0u, false);            // Front (X=0)
+    generateFace(0u, gridSize - 1u, true);  // Back (X=gridSize-1)
+    generateFace(1u, 0u, true);             // Left (Y=0)
+    generateFace(1u, gridSize - 1u, false); // Right (Y=gridSize-1)
+    generateFace(2u, 0u, true);             // Bottom (Z=0)
+    generateFace(2u, gridSize - 1u, false); // Top (Z=gridSize-1)
 
     return mesh;
 }
@@ -461,21 +653,21 @@ Component::Mesh GenerateWheelMesh(float radius, float width, uint32_t segments)
     Component::Mesh cylinderMesh = GenerateCylinderMesh(radius, radius, width, segments, 1u);
 
     Component::Mesh mesh;
-    mesh.vertices.reserve(cylinderMesh.vertices.size());
-    mesh.normals.reserve(cylinderMesh.normals.size());
-    mesh.texCoords = std::move(cylinderMesh.texCoords);
-    mesh.indices = std::move(cylinderMesh.indices);
+    mesh.ReserveVertices(cylinderMesh.GetVertices().size());
+    mesh.ReserveNormals(cylinderMesh.GetNormals().size());
+    mesh.SetTexCoords(cylinderMesh.GetTexCoords());
+    mesh.SetIndices(cylinderMesh.GetIndices());
 
     // Rotate -90 degrees around Z axis: (x, y, z) -> (y, -x, z)
     // This transforms Y-up cylinder to X-axis aligned wheel
-    for (const auto &vertex : cylinderMesh.vertices)
+    for (const auto &vertex : cylinderMesh.GetVertices())
     {
-        mesh.vertices.emplace_back(vertex.y, -vertex.x, vertex.z);
+        mesh.EmplaceVertices(vertex.y, -vertex.x, vertex.z);
     }
 
-    for (const auto &normal : cylinderMesh.normals)
+    for (const auto &normal : cylinderMesh.GetNormals())
     {
-        mesh.normals.emplace_back(normal.y, -normal.x, normal.z);
+        mesh.EmplaceNormals(normal.y, -normal.x, normal.z);
     }
 
     return mesh;

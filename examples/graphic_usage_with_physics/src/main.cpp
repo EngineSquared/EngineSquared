@@ -29,7 +29,8 @@ void EscapeKeySystem(Engine::Core &core)
 void CreateFloor(Engine::Core &core)
 {
     // Align visual plane with physics surface at y = 0.0
-    auto floor = Object::Helper::CreatePlane(core, 20.0f, 20.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    auto floor =
+        Object::Helper::CreatePlane(core, {.width = 20.0f, .depth = 20.0f, .position = glm::vec3(0.0f, 0.0f, 0.0f)});
 
     auto boxCollider = Physics::Component::BoxCollider(glm::vec3(10.0f, 1.0f, 10.0f));
     // Shift collider down so its top surface lies at y = 0.0 (matches the plane visual)
@@ -41,7 +42,7 @@ void CreateFloor(Engine::Core &core)
 
 void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass)
 {
-    auto cube = Object::Helper::CreateCube(core, 1.0f, glm::vec3(x, y, z));
+    auto cube = Object::Helper::CreateCube(core, {.size = 1.0f, .position = glm::vec3(x, y, z)});
 
     auto rigidBody = Physics::Component::RigidBody::CreateDynamic(mass);
     rigidBody.friction = 0.5f;
@@ -51,7 +52,7 @@ void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass
 
 void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
 {
-    auto ball = Object::Helper::CreateSphere(core, 0.5f, glm::vec3(x, y, z));
+    auto ball = Object::Helper::CreateSphere(core, {.radius = 0.5f, .position = glm::vec3(x, y, z)});
 
     auto collider = Physics::Component::SphereCollider(0.5f);
     ball.AddComponent<Physics::Component::SphereCollider>(collider);
@@ -65,7 +66,8 @@ void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
 void CreateCharacterCapsule(Engine::Core &core, float x, float y, float z)
 {
     // Create a visual capsule that matches the physics capsule (cylinder height = 1.5, radius = 0.25)
-    auto character = Object::Helper::CreateCapsule(core, 0.25f, 1.5f, glm::vec3(x, y, z), 32u, 4u);
+    auto character = Object::Helper::CreateCapsule(
+        core, {.radius = 0.25f, .height = 1.5f, .position = glm::vec3(x, y, z), .segments = 32u, .heightSegments = 4u});
 
     auto capsuleCollider = Physics::Component::CapsuleCollider(0.75f, 0.25f);
     character.AddComponent<Physics::Component::CapsuleCollider>(capsuleCollider);

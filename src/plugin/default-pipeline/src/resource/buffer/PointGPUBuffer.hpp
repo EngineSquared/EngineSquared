@@ -22,34 +22,24 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
                 "Cannot create a GPU buffer for an entity without a Mesh component.");
         }
 
-        std::vector<float> pointData;
-
-        pointData.reserve(meshComponent->vertices.size() * 8);
-
-        for (uint64_t i = 0; i < meshComponent->vertices.size(); ++i)
+        if (meshComponent->GetNormals().size() != meshComponent->GetVertices().size() ||
+            meshComponent->GetTexCoords().size() != meshComponent->GetVertices().size())
         {
-            pointData.emplace_back(meshComponent->vertices[i].x);
-            pointData.emplace_back(meshComponent->vertices[i].y);
-            pointData.emplace_back(meshComponent->vertices[i].z);
-            pointData.emplace_back(meshComponent->normals[i].x);
-            pointData.emplace_back(meshComponent->normals[i].y);
-            pointData.emplace_back(meshComponent->normals[i].z);
-            pointData.emplace_back(meshComponent->texCoords[i].x);
-            pointData.emplace_back(meshComponent->texCoords[i].y);
+            throw Graphic::Exception::UpdateBufferError(
+                "Cannot create GPU buffer: normals or texCoords size mismatch with vertices.");
         }
 
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Vertex;
-        bufferDesc.size = sizeof(float) * pointData.size();
+        bufferDesc.size = sizeof(float) * meshComponent->GetVertices().size() * 8;
         std::string label = fmt::format("PointGPUBuffer_{}", _entity);
         bufferDesc.label = wgpu::StringView(label);
 
         const auto &context = core.GetResource<Graphic::Resource::Context>();
         _buffer = context.deviceContext.GetDevice()->createBuffer(bufferDesc);
 
-        context.queue->writeBuffer(_buffer, 0, pointData.data(), bufferDesc.size);
-
         _isCreated = true;
+        Update(core);
     };
     void Destroy(Engine::Core &core) override
     {
@@ -69,9 +59,40 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
         }
 
         const auto &meshComponent = _entity.GetComponents<Object::Component::Mesh>();
+        const auto &vertices = meshComponent.GetVertices();
 
-        // For now, we will not implement dynamic resizing of the buffer. As we should have a way to know if the size
-        // changed. And it would be so heavy to check every frame every vertex position, normal and texCoord.
+        if (vertices.empty())
+        {
+            throw Graphic::Exception::UpdateBufferError(
+                "Cannot update a GPU buffer from a Mesh component with no vertices.");
+        }
+
+        const auto &normals = meshComponent.GetNormals();
+        const auto &texCoords = meshComponent.GetTexCoords();
+
+        if (normals.size() != vertices.size() || texCoords.size() != vertices.size())
+        {
+            throw Graphic::Exception::UpdateBufferError(
+                "Cannot update GPU buffer: normals or texCoords size mismatch with vertices.");
+        }
+
+        std::vector<float> pointData;
+        pointData.reserve(vertices.size() * 8u);
+
+        for (uint64_t i = 0u; i < vertices.size(); ++i)
+        {
+            pointData.emplace_back(vertices[i].x);
+            pointData.emplace_back(vertices[i].y);
+            pointData.emplace_back(vertices[i].z);
+            pointData.emplace_back(normals[i].x);
+            pointData.emplace_back(normals[i].y);
+            pointData.emplace_back(normals[i].z);
+            pointData.emplace_back(texCoords[i].x);
+            pointData.emplace_back(texCoords[i].y);
+        }
+
+        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, pointData.data(),
+                                                                          sizeof(float) * pointData.size());
     };
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
