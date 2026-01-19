@@ -124,6 +124,14 @@ class Core {
     template <CScheduler TScheduler> TScheduler &GetScheduler();
 
     /**
+     * Get a scheduler from the registry by its type index.
+     *
+     * @param id The type index of the scheduler to get.
+     * @return The scheduler.
+     */
+    Scheduler::AScheduler &GetScheduler(std::type_index id);
+
+    /**
      * @brief Sets the execution order of two schedulers, ensuring that TSchedulerA
      *        is executed before TSchedulerB.
      *

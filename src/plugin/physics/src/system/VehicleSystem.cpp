@@ -203,7 +203,25 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
         }
     }
 
-    JPH::Ref<JPH::VehicleCollisionTester> collisionTester = new JPH::VehicleCollisionTesterRay(Utils::Layers::MOVING);
+    JPH::Ref<JPH::VehicleCollisionTester> collisionTester;
+
+    {
+        using enum Component::CollisionTesterType;
+        switch (vehicle.collisionTesterType)
+        {
+        case Ray: collisionTester = new JPH::VehicleCollisionTesterRay(Utils::Layers::MOVING); break;
+        case CastSphere:
+            collisionTester =
+                new JPH::VehicleCollisionTesterCastSphere(Utils::Layers::MOVING, 0.5f * vehicle.wheels[0].width);
+            break;
+        case CastCylinder:
+        default:
+            collisionTester =
+                new JPH::VehicleCollisionTesterCastCylinder(Utils::Layers::MOVING, vehicle.convexRadiusFraction);
+            break;
+        }
+    }
+
     vehicleConstraint->SetVehicleCollisionTester(collisionTester);
 
     physicsManager.GetPhysicsSystem().AddConstraint(vehicleConstraint);
