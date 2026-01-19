@@ -446,8 +446,8 @@ static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::Entity
         Log::Info(fmt::format(
             "Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f}), scale "
             "({:.2f}, {:.2f}, {:.2f})",
-            entity, meshVertices.size(), mesh->GetIndices().size() / 3, position.GetX(),
-            position.GetY(), position.GetZ(), scale.x, scale.y, scale.z));
+            entity, meshVertices.size(), mesh->GetIndices().size() / 3, position.GetX(), position.GetY(),
+            position.GetZ(), scale.x, scale.y, scale.z));
     }
     catch (const Physics::Exception::SoftBodyError &e)
     {
