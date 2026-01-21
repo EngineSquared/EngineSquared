@@ -23,7 +23,7 @@ void WheelTransformSyncSystem(Engine::Core &core)
 
         for (size_t i = 0; i < 4; ++i)
         {
-            Engine::Entity wheelEntity = internal.wheelEntities[i];
+            Engine::Entity wheelEntity{core, internal.wheelEntities[i]};
             if (wheelEntity.IsValid() == false)
                 continue;
 

@@ -24,7 +24,7 @@ namespace CameraMovement::Resource {
 class CameraManager {
   public:
     explicit CameraManager(Engine::Core &core)
-        : _core(core), _cameraEntity(Engine::Entity::Null()), _movementSpeed(5.0f), _mouseSensitivity(0.002f),
+        : _core(core), _cameraEntity(std::nullopt), _movementSpeed(5.0f), _mouseSensitivity(0.002f),
           _lastMouseX(0.0), _lastMouseY(0.0),                                                            // NOSONAR
           _isMouseDragging(false),                                                                       // NOSONAR
           _wasCursorMasked(false), _originRotation(1.0f, 0.0f, 0.0f, 0.0f), _joystickId(GLFW_JOYSTICK_1) // NOSONAR
@@ -65,18 +65,18 @@ class CameraManager {
      */
     Engine::Entity GetActiveCamera() const
     {
-        if (!_cameraEntity.IsValid())
+        if (!_cameraEntity.has_value() || !_cameraEntity->IsValid())
         {
-            throw CameraMovementError(fmt::format("Camera entity is invalid: {}", _cameraEntity));
+            throw CameraMovementError(fmt::format("Camera entity is invalid: {}", *_cameraEntity));
         }
 
         auto &registry = _core.GetRegistry();
-        if (!_cameraEntity.HasComponents<Object::Component::Transform, Object::Component::Camera>())
+        if (!_cameraEntity->HasComponents<Object::Component::Transform, Object::Component::Camera>())
         {
             throw CameraMovementError("Camera entity is missing required components");
         }
 
-        return _cameraEntity;
+        return *_cameraEntity;
     }
 
     /**
@@ -86,13 +86,13 @@ class CameraManager {
      */
     bool HasValidCamera() const
     {
-        if (!_cameraEntity.IsValid())
+        if (!_cameraEntity.has_value() || !_cameraEntity->IsValid())
         {
             return false;
         }
 
         auto &registry = _core.GetRegistry();
-        return _cameraEntity.HasComponents<Object::Component::Transform, Object::Component::Camera>();
+        return _cameraEntity->HasComponents<Object::Component::Transform, Object::Component::Camera>();
     }
 
     /**
@@ -231,7 +231,7 @@ class CameraManager {
 
   private:
     Engine::Core &_core;
-    Engine::Entity _cameraEntity;
+    std::optional<Engine::Entity> _cameraEntity;
     float _movementSpeed;
     float _mouseSensitivity;
     double _lastMouseX;

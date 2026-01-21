@@ -28,7 +28,7 @@ struct VehicleInternal {
     JPH::Ref<JPH::VehicleCollisionTester> collisionTester;
 
     /// Entity IDs of the 4 wheel entities (for transform sync)
-    std::array<Engine::Entity, 4> wheelEntities;
+    std::array<Engine::EntityId, 4> wheelEntities;
 
     /// Jolt BodyIDs for the 4 wheel collision bodies
     std::array<JPH::BodyID, 4> wheelBodyIDs;

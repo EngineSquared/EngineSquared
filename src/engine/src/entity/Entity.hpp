@@ -41,10 +41,6 @@ class Entity {
      */
     explicit(false) Entity(Core &core, EntityId entityId) : _core(core), _entityId(entityId) {}
 
-    explicit Entity() : _core(std::nullopt), _entityId(EntityId::Null()) {}
-
-    static Entity Null() { return Entity{}; }
-
     ~Entity() = default;
 
     /**

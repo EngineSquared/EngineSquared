@@ -5,8 +5,7 @@ void NativeScripting::System::UpdateScripts(Engine::Core &core)
     core.GetRegistry().view<Component::NativeScripting>().each([&core](auto entity, auto &nsComponent) {
         if (!nsComponent.seInstance.get())
         {
-            nsComponent.Instantiate();
-            nsComponent.seInstance->entity = Engine::Entity{core, entity};
+            nsComponent.Instantiate(Engine::Entity{core, entity});
             nsComponent.OnCreate(nsComponent.seInstance.get());
         }
 

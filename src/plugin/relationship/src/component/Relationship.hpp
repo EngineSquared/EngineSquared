@@ -32,12 +32,12 @@ struct Relationship {
     // @brief number of children of the entity
     std::size_t children = 0;
     // @brief first child of the entity
-    Engine::Entity first = Engine::Entity::Null();
+    std::optional<Engine::Entity> first = std::nullopt;
     // @brief previous sibling of the entity
-    Engine::Entity prev = Engine::Entity::Null();
+    std::optional<Engine::Entity> prev = std::nullopt;
     // @brief next sibling of the entity
-    Engine::Entity next = Engine::Entity::Null();
+    std::optional<Engine::Entity> next = std::nullopt;
     // @brief parent of the entity
-    Engine::Entity parent = Engine::Entity::Null();
+    std::optional<Engine::Entity> parent = std::nullopt;
 };
 } // namespace Relationship::Component

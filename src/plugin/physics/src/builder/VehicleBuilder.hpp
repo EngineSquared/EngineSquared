@@ -190,7 +190,7 @@ template <> class VehicleBuilder<4> {
             Object::Component::Transform(_chassisPosition, _chassisScale, _chassisRotation));
         chassis.AddComponent<Object::Component::Mesh>(_chassisMesh);
 
-        std::array<Engine::Entity, 4> wheelEntities;
+        std::array<Engine::EntityId, 4> wheelEntities;
         for (size_t i = 0; i < 4; ++i)
         {
             wheelEntities[i] = core.CreateEntity();
@@ -199,9 +199,9 @@ template <> class VehicleBuilder<4> {
             glm::quat wheelRotation =
                 _chassisRotation * glm::angleAxis(glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
-            wheelEntities[i].AddComponent<Object::Component::Transform>(
+            wheelEntities[i].AddComponent<Object::Component::Transform>(core,
                 Object::Component::Transform(worldWheelPos, glm::vec3(1.0f), wheelRotation));
-            wheelEntities[i].AddComponent<Object::Component::Mesh>(_wheelMeshes[i]);
+            wheelEntities[i].AddComponent<Object::Component::Mesh>(core, _wheelMeshes[i]);
         }
 
         auto chassisRigidBody = Component::RigidBody::CreateDynamic(_chassisMass);

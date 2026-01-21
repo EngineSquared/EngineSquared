@@ -23,6 +23,12 @@ struct EntityId : Id {
     static constexpr EntityId Null() { return EntityId{NullValue()}; }
 
     /**
+     * Check whenever if entity id is a valid id.
+     * @return  entity's validity
+     */
+    inline bool IsValid(const Engine::Core &core) const { return core.IsEntityValid(value); }
+
+    /**
      * Utility method to add a component to an entity.
      *
      * @tparam  TComponent  type to add to registry

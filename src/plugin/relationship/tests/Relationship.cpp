@@ -13,10 +13,10 @@ TEST(Relationship, initialization)
     auto &relationship = entity.AddComponent<Relationship::Component::Relationship>();
 
     ASSERT_TRUE(relationship.children == 0);
-    ASSERT_FALSE(relationship.first.IsValid());
-    ASSERT_FALSE(relationship.prev.IsValid());
-    ASSERT_FALSE(relationship.next.IsValid());
-    ASSERT_FALSE(relationship.parent.IsValid());
+    ASSERT_FALSE(relationship.first.has_value());
+    ASSERT_FALSE(relationship.prev.has_value());
+    ASSERT_FALSE(relationship.next.has_value());
+    ASSERT_FALSE(relationship.parent.has_value());
 }
 
 TEST(Relationship, one_child)
@@ -54,7 +54,7 @@ TEST(Relationship, multiple_children)
     parent.AddComponent<Relationship::Component::Relationship>();
 
     ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>().children, 0);
-    ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>().first, Engine::Entity::Null());
+    ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>().first.has_value(), false);
     ASSERT_FALSE(Relationship::Utils::IsChildOf(child1, parent));
     ASSERT_FALSE(Relationship::Utils::IsChildOf(child2, parent));
     ASSERT_FALSE(Relationship::Utils::IsChildOf(child3, parent));
@@ -102,7 +102,7 @@ TEST(Relationship, multiple_children)
     Relationship::Utils::RemoveParent(child1);
 
     ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>().children, 0);
-    ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>().first, Engine::Entity::Null());
+    ASSERT_EQ(parent.GetComponents<Relationship::Component::Relationship>().first.has_value(), false);
     ASSERT_FALSE(Relationship::Utils::IsChildOf(child1, parent));
     ASSERT_FALSE(Relationship::Utils::IsChildOf(child2, parent));
     ASSERT_FALSE(Relationship::Utils::IsChildOf(child3, parent));

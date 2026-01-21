@@ -97,6 +97,6 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
 
     wgpu::Buffer _buffer;
     bool _isCreated = false;
-    Engine::Entity _entity = Engine::Entity::Null();
+    Engine::Entity _entity;
 };
 } // namespace DefaultPipeline::Resource

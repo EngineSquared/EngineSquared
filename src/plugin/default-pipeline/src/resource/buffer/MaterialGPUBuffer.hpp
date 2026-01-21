@@ -25,7 +25,7 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
   public:
     explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity) { _UpdateDebugName(); }
 
-    explicit MaterialGPUBuffer(void) = default;
+    explicit MaterialGPUBuffer(void) { _UpdateDebugName(); }
 
     ~MaterialGPUBuffer() override = default;
     void Create(Engine::Core &core) override
@@ -52,12 +52,12 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU material buffer that is not created.");
         }
 
-        if (!_entity.IsValid())
+        if (!_entity.has_value())
         {
             return;
         }
 
-        const auto &materialComponent = _entity.GetComponents<Object::Component::Material>();
+        const auto &materialComponent = _entity->GetComponents<Object::Component::Material>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
         _UpdateBuffer(materialComponent, context);
     };
@@ -78,7 +78,13 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
     std::string_view GetDebugName() const { return _debugName; }
 
   private:
-    void _UpdateDebugName() { _debugName = fmt::format("{}{}", prefix, _entity); }
+    void _UpdateDebugName()
+    {
+        if (_entity.has_value())
+            _debugName = fmt::format("{}{}", prefix, *_entity);
+        else
+            _debugName = prefix + "Default";
+    }
 
     wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
     {
@@ -98,7 +104,7 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
 
     wgpu::Buffer _buffer;
     bool _isCreated = false;
-    Engine::Entity _entity = Engine::Entity::Null();
+    std::optional<Engine::Entity> _entity;
     std::string _debugName;
 };
 } // namespace DefaultPipeline::Resource

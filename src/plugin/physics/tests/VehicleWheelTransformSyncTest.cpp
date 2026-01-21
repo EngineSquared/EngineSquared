@@ -56,9 +56,9 @@ TEST(VehiclePlugin, WheelTransformSync)
     for (size_t i = 0; i < 4; ++i)
     {
         auto wheelEntity = vehicleInternal.wheelEntities[i];
-        ASSERT_TRUE(wheelEntity.IsValid());
+        ASSERT_TRUE(wheelEntity.IsValid(core));
 
-        auto *wheelTransform = wheelEntity.TryGetComponent<Object::Component::Transform>();
+        auto *wheelTransform = wheelEntity.TryGetComponent<Object::Component::Transform>(core);
         ASSERT_NE(wheelTransform, nullptr);
 
         glm::vec3 wheelPos = wheelTransform->GetPosition();

@@ -26,10 +26,9 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
                   "AmbientLightTransfer struct size does not match GPU requirements.");
 
   public:
-    explicit AmbientLightBuffer(Engine::Entity entity = Engine::Entity::Null()) : _entity(entity)
-    {
-        _UpdateDebugName();
-    }
+    explicit AmbientLightBuffer(Engine::Entity entity) : _entity(entity) { _UpdateDebugName(); }
+
+    explicit AmbientLightBuffer(void) { _UpdateDebugName(); }
 
     ~AmbientLightBuffer() override = default;
     void Create(Engine::Core &core) override
@@ -51,11 +50,11 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
     bool IsCreated(Engine::Core &core) const override { return _isCreated; };
     void Update(Engine::Core &core) override
     {
-        if (_entity.IsValid() == false)
+        if (!_entity.has_value() || _entity->IsValid() == false)
         {
             return;
         }
-        const auto &ambientLight = _entity.GetComponents<Object::Component::AmbientLight>();
+        const auto &ambientLight = _entity->GetComponents<Object::Component::AmbientLight>();
         SetValue(core, ambientLight);
     };
 
@@ -82,7 +81,17 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
     std::string_view GetDebugName() const { return _debugName; }
 
   private:
-    inline void _UpdateDebugName() { _debugName = fmt::format("{}{}", prefix, _entity); }
+    inline void _UpdateDebugName()
+    {
+        if (_entity.has_value())
+        {
+            _debugName = fmt::format("{}{}", prefix, *_entity);
+        }
+        else
+        {
+            _debugName = fmt::format("{}{}", prefix, "<no_entity>");
+        }
+    }
 
     wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
     {
@@ -103,7 +112,7 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
 
     wgpu::Buffer _buffer;
     bool _isCreated = false;
-    Engine::Entity _entity = Engine::Entity::Null();
+    std::optional<Engine::Entity> _entity;
     std::string _debugName;
 };
 } // namespace DefaultPipeline::Resource

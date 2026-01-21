@@ -9,9 +9,7 @@ void UpdateAmbientLight(Engine::Core &core)
 {
     auto &ambientLightResource = core.GetResource<Resource::AmbientLight>();
     auto view = core.GetRegistry().view<Object::Component::AmbientLight>();
-    if (view.empty())
-        ambientLightResource.SetEntity(core, Engine::Entity{});
-    else
+    if (!view.empty())
     {
         Engine::Entity ambientLightEntity{core, view.front()};
         ambientLightResource.SetEntity(core, ambientLightEntity);

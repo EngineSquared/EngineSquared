@@ -79,7 +79,7 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
         return;
     }
 
-    std::array<Engine::Entity, 4> wheelEntities = vehicle.wheelEntities;
+    std::array<Engine::EntityId, 4> wheelEntities = vehicle.wheelEntities;
     std::array<JPH::BodyID, 4> wheelBodyIDs{};
 
     JPH::WheeledVehicleControllerSettings controllerSettings;
