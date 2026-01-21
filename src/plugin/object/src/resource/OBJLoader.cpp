@@ -27,16 +27,16 @@ OBJLoader::OBJLoader(const std::string &filepath, const std::string &mtlSearchPa
 
 Component::Mesh OBJLoader::GetMesh()
 {
-    if (!_mesh.vertices.empty())
+    if (!_mesh.GetVertices().empty())
         return _mesh;
 
     const auto &attrib = _reader.GetAttrib();
     const auto &shapes = _reader.GetShapes();
 
-    _mesh.vertices.reserve(attrib.vertices.size() / 3u);
-    _mesh.normals.reserve(attrib.normals.size() / 3u);
-    _mesh.texCoords.reserve(attrib.texcoords.size() / 2u);
-    _mesh.indices.reserve(shapes.size() * 3u);
+    _mesh.ReserveVertices(attrib.vertices.size() / 3u);
+    _mesh.ReserveNormals(attrib.normals.size() / 3u);
+    _mesh.ReserveTexCoords(attrib.texcoords.size() / 2u);
+    _mesh.ReserveIndices(shapes.size() * 3u);
 
     for (size_t shape = 0u; shape < shapes.size(); ++shape)
     {
@@ -70,10 +70,10 @@ std::vector<Resource::Shape> OBJLoader::GetShapes()
         Resource::Shape shapeResource;
         Component::Mesh &mesh = shapeResource.mesh;
 
-        mesh.vertices.reserve(attrib.vertices.size() / 3u);
-        mesh.normals.reserve(attrib.normals.size() / 3u);
-        mesh.texCoords.reserve(attrib.texcoords.size() / 2u);
-        mesh.indices.reserve(shapes[shape].mesh.indices.size());
+        mesh.ReserveVertices(attrib.vertices.size() / 3u);
+        mesh.ReserveNormals(attrib.normals.size() / 3u);
+        mesh.ReserveTexCoords(attrib.texcoords.size() / 2u);
+        mesh.ReserveIndices(shapes[shape].mesh.indices.size());
 
         size_t index_offset = 0u;
 
@@ -134,11 +134,11 @@ void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj
             auto vertex_x = static_cast<float>(attrib.vertices[3u * vertex_index + 0u]);
             auto vertex_y = static_cast<float>(attrib.vertices[3u * vertex_index + 1u]);
             auto vertex_z = static_cast<float>(attrib.vertices[3u * vertex_index + 2u]);
-            mesh.vertices.emplace_back(vertex_x, vertex_y, vertex_z);
+            mesh.EmplaceVertices(vertex_x, vertex_y, vertex_z);
         }
         else
         {
-            mesh.vertices.emplace_back(0.0f, 0.0f, 0.0f);
+            mesh.EmplaceVertices(0.0f, 0.0f, 0.0f);
         }
 
         if (idx.normal_index >= 0)
@@ -147,11 +147,11 @@ void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj
             auto normal_x = static_cast<float>(attrib.normals[3u * normal_index + 0u]);
             auto normal_y = static_cast<float>(attrib.normals[3u * normal_index + 1u]);
             auto normal_z = static_cast<float>(attrib.normals[3u * normal_index + 2u]);
-            mesh.normals.emplace_back(normal_x, normal_y, normal_z);
+            mesh.EmplaceNormals(normal_x, normal_y, normal_z);
         }
         else
         {
-            mesh.normals.emplace_back(0.0f, 0.0f, 0.0f);
+            mesh.EmplaceNormals(0.0f, 0.0f, 0.0f);
         }
 
         if (idx.texcoord_index >= 0)
@@ -159,14 +159,14 @@ void OBJLoader::ProcessMeshFace(Component::Mesh &mesh, const std::vector<tinyobj
             auto texcoord_index = static_cast<size_t>(idx.texcoord_index);
             auto texcoord_x = static_cast<float>(attrib.texcoords[2u * texcoord_index + 0u]);
             auto texcoord_y = static_cast<float>(attrib.texcoords[2u * texcoord_index + 1u]);
-            mesh.texCoords.emplace_back(texcoord_x, texcoord_y);
+            mesh.EmplaceTexCoords(texcoord_x, texcoord_y);
         }
         else
         {
-            mesh.texCoords.emplace_back(0.0f, 0.0f);
+            mesh.EmplaceTexCoords(0.0f, 0.0f);
         }
 
-        mesh.indices.emplace_back(static_cast<uint32_t>(mesh.vertices.size() - 1u));
+        mesh.EmplaceIndices(static_cast<uint32_t>(mesh.GetVertices().size() - 1u));
     }
 }
 

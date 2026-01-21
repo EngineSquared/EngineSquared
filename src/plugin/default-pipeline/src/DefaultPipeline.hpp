@@ -37,6 +37,7 @@
 #include "system/preparation/UpdateAmbientLight.hpp"
 #include "system/preparation/UpdateGPUCameras.hpp"
 #include "system/preparation/UpdateGPUMaterials.hpp"
+#include "system/preparation/UpdateGPUMeshes.hpp"
 #include "system/preparation/UpdateGPUTransforms.hpp"
 #include "system/preparation/UpdatePointLights.hpp"
 

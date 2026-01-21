@@ -21,7 +21,7 @@ void SyncTransformWithPhysics(Engine::Core &core)
     if (!physicsManager.IsPhysicsActivated())
         return;
 
-    auto &bodyInterface = physicsManager.GetPhysicsSystem().GetBodyInterface();
+    auto &bodyInterface = physicsManager.GetBodyInterface();
     auto &registry = core.GetRegistry();
 
     auto view = registry.view<Component::RigidBody, Component::RigidBodyInternal, Object::Component::Transform>();

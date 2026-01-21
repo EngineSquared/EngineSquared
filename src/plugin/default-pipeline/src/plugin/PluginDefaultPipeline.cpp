@@ -34,6 +34,6 @@ void DefaultPipeline::Plugin::Bind()
                                               System::CreatePointLights);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::UpdateGPUTransforms, System::UpdateGPUCameras,
-                                                    System::UpdateGPUMaterials, System::UpdateAmbientLight,
-                                                    System::UpdatePointLights);
+                                                    System::UpdateGPUMaterials, System::UpdateGPUMeshes,
+                                                    System::UpdateAmbientLight, System::UpdatePointLights);
 }
