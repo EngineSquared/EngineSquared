@@ -36,7 +36,8 @@ wgpu::TextureDescriptor CreateGBufferPassOutputDepthTextureDescriptor(glm::uvec2
     descriptor.size = {size.x, size.y, 1};
     descriptor.dimension = wgpu::TextureDimension::_2D;
     descriptor.format = wgpu::TextureFormat::Depth32Float;
-    descriptor.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
+        descriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
+                       wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
     return descriptor;
 }
 
@@ -67,8 +68,8 @@ static void CreateGBufferTextures(Engine::Core &core)
                                                                 &context](const Window::Event::OnResize &event) {
             auto descriptor = CreateGBufferPassOutputAlbedoTextureDescriptor({event.newSize.x, event.newSize.y});
             Graphic::Resource::Texture resizedTexture(context, descriptor);
-            textureContainer.Remove(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID);
-            textureContainer.Add(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID, std::move(resizedTexture));
+            textureContainer.Remove(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_ALBEDO_ID);
+            textureContainer.Add(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_ALBEDO_ID, std::move(resizedTexture));
         });
     }
     {
@@ -79,8 +80,8 @@ static void CreateGBufferTextures(Engine::Core &core)
                                                                 &context](const Window::Event::OnResize &event) {
             auto descriptor = CreateGBufferPassOutputDepthTextureDescriptor({event.newSize.x, event.newSize.y});
             Graphic::Resource::Texture resizedTexture(context, descriptor);
-            textureContainer.Remove(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID);
-            textureContainer.Add(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID, std::move(resizedTexture));
+            textureContainer.Remove(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID);
+            textureContainer.Add(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID, std::move(resizedTexture));
         });
     }
 }

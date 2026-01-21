@@ -73,7 +73,7 @@ fn vs_main(
   var output : VertexToFragment;
   let worldPosition = (object.model * vec4(position, 1.0)).xyz;
   output.Position = camera.viewProjectionMatrix * vec4(worldPosition, 1.0);
-  output.fragNormal = normalize((object.normal * vec4(normal, 1.0)).xyz);
+  output.fragNormal = normalize((object.normal * vec4(normal, 0.0)).xyz);
   output.fragUV = uv;
   return output;
 }

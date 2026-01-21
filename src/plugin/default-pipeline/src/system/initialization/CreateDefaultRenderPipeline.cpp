@@ -1,6 +1,5 @@
 #include "system/initialization/CreateDefaultRenderPipeline.hpp"
 #include "resource/ARenderPass.hpp"
-#include "resource/ASingleExecutionRenderPass.hpp"
 #include "resource/RenderGraph.hpp"
 #include "resource/RenderGraphContainer.hpp"
 #include "resource/ShaderContainer.hpp"
