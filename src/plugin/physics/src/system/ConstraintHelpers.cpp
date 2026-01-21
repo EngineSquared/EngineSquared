@@ -81,13 +81,11 @@ void FinalizeConstraint(ConstraintContext &ctx, Engine::Entity entity, JPH::Cons
 
     try
     {
-        if (auto *existing = entity.TryGetComponent<Component::ConstraintInternal>(); existing && existing->IsValid())
+        auto *existing = entity.TryGetComponent<Component::ConstraintInternal>();
+        if (existing)
         {
-            ctx.physicsSystem.RemoveConstraint(existing->constraint);
-            entity.RemoveComponent<Component::ConstraintInternal>();
-        }
-        if (entity.HasComponents<Component::ConstraintInternal>())
-        {
+            if (existing->IsValid())
+                ctx.physicsSystem.RemoveConstraint(existing->constraint);
             entity.RemoveComponent<Component::ConstraintInternal>();
         }
         entity.AddComponent<Component::ConstraintInternal>(joltConstraint, type, settings.breakForce,
