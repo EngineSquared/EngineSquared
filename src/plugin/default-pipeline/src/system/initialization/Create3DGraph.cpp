@@ -36,7 +36,7 @@ wgpu::TextureDescriptor CreateGBufferPassOutputDepthTextureDescriptor(glm::uvec2
     descriptor.size = {size.x, size.y, 1};
     descriptor.dimension = wgpu::TextureDimension::_2D;
     descriptor.format = wgpu::TextureFormat::Depth32Float;
-        descriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
+    descriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
                        wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
     return descriptor;
 }
