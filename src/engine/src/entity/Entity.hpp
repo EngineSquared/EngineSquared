@@ -119,10 +119,7 @@ class Entity {
      *
      * @tparam  TComponent  type to remove from registry
      */
-    template <typename TComponent> inline void RemoveComponent()
-    {
-        _entityId.RemoveComponent<TComponent>(GetCore());
-    }
+    template <typename TComponent> inline void RemoveComponent() { _entityId.RemoveComponent<TComponent>(GetCore()); }
 
     /**
      * Check if entity have one or multiple component's type.
