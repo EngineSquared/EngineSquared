@@ -47,7 +47,7 @@ class Entity {
      * Check whenever if entity id is a valid id.
      * @return  entity's validity
      */
-    bool IsValid() const;
+    bool IsAlive() const;
 
     inline EntityId Id() const { return _entityId; }
 
@@ -62,7 +62,7 @@ class Entity {
      */
     template <typename TComponent> inline decltype(auto) AddComponent(TComponent &&component)
     {
-        return _entityId.AddComponent(_core.value(), std::forward<TComponent>(component));
+        return _entityId.AddComponent(GetCore(), std::forward<TComponent>(component));
     }
 
     /**
@@ -75,7 +75,7 @@ class Entity {
      */
     template <typename TComponent, typename... TArgs> inline decltype(auto) AddComponent(TArgs &&...args)
     {
-        return _entityId.AddComponent<TComponent>(_core.value(), std::forward<TArgs>(args)...);
+        return _entityId.AddComponent<TComponent>(GetCore(), std::forward<TArgs>(args)...);
     }
 
     /**
@@ -88,7 +88,7 @@ class Entity {
      */
     template <typename TComponent, typename... TArgs> inline decltype(auto) AddComponentIfNotExists(TArgs &&...args)
     {
-        return _entityId.AddComponentIfNotExists<TComponent>(_core.value(), std::forward<TArgs>(args)...);
+        return _entityId.AddComponentIfNotExists<TComponent>(GetCore(), std::forward<TArgs>(args)...);
     }
 
     /**
@@ -103,7 +103,7 @@ class Entity {
      */
     template <typename TTempComponent, typename... TArgs> inline decltype(auto) AddTemporaryComponent(TArgs &&...args)
     {
-        return _entityId.AddTemporaryComponent<TTempComponent>(_core.value(), std::forward<TArgs>(args)...);
+        return _entityId.AddTemporaryComponent<TTempComponent>(GetCore(), std::forward<TArgs>(args)...);
     }
 
     /**
@@ -121,7 +121,7 @@ class Entity {
      */
     template <typename TComponent> inline void RemoveComponent()
     {
-        _entityId.RemoveComponent<TComponent>(_core.value());
+        _entityId.RemoveComponent<TComponent>(GetCore());
     }
 
     /**
@@ -173,11 +173,9 @@ class Entity {
     bool operator==(const EntityId &rhs) const { return _entityId.value == rhs.value; }
 
   private:
-    Core &GetCore() { return _core->get(); }
+    inline constexpr Core &GetCore() const { return _core.get(); }
 
-    const Core &GetCore() const { return _core->get(); }
-
-    std::optional<std::reference_wrapper<Core>> _core;
+    std::reference_wrapper<Core> _core;
     EntityId _entityId;
     inline static std::unordered_map<std::type_index, std::function<void(Core &)>> temporaryComponent = {};
 };

@@ -43,7 +43,7 @@ class CameraManager {
      */
     void SetActiveCamera(Engine::Entity entity)
     {
-        if (!entity.IsValid())
+        if (!entity.IsAlive())
         {
             throw CameraMovementError("Camera entity is invalid");
         }
@@ -65,7 +65,7 @@ class CameraManager {
      */
     Engine::Entity GetActiveCamera() const
     {
-        if (!_cameraEntity.has_value() || !_cameraEntity->IsValid())
+        if (!_cameraEntity.has_value() || !_cameraEntity->IsAlive())
         {
             throw CameraMovementError(fmt::format("Camera entity is invalid: {}", *_cameraEntity));
         }
@@ -86,7 +86,7 @@ class CameraManager {
      */
     bool HasValidCamera() const
     {
-        if (!_cameraEntity.has_value() || !_cameraEntity->IsValid())
+        if (!_cameraEntity.has_value() || !_cameraEntity->IsAlive())
         {
             return false;
         }

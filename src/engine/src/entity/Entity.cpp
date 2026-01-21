@@ -1,10 +1,6 @@
 #include "entity/Entity.hpp"
 
-bool Engine::Entity::IsValid() const
+bool Engine::Entity::IsAlive() const
 {
-    if (!_core.has_value())
-    {
-        return false;
-    }
-    return GetCore().IsEntityValid(Id());
+    return GetCore().IsEntityValid(_entityId);
 }

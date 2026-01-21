@@ -50,7 +50,7 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
     bool IsCreated(Engine::Core &core) const override { return _isCreated; };
     void Update(Engine::Core &core) override
     {
-        if (!_entity.has_value() || _entity->IsValid() == false)
+        if (!_entity.has_value() || _entity->IsAlive() == false)
         {
             return;
         }

@@ -43,7 +43,7 @@ TEST(VehiclePlugin, VehicleCreation)
                        .SetDrivetrain(Physics::Component::DrivetrainType::RWD)
                        .Build(core);
 
-    ASSERT_TRUE(vehicle.IsValid());
+    ASSERT_TRUE(vehicle.IsAlive());
 
     // Verify components exist
     auto &registry = core.GetRegistry();
