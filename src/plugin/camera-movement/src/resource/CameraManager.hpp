@@ -58,8 +58,8 @@ class CameraManager {
     {
         if (!_cameraEntity.has_value() || !_cameraEntity->IsAlive())
         {
-            throw CameraMovementError(fmt::format("Camera entity is invalid: {}",
-                                                  _cameraEntity.has_value() ? "not alive" : "not set"));
+            throw CameraMovementError(
+                fmt::format("Camera entity is invalid: {}", _cameraEntity.has_value() ? "not alive" : "not set"));
         }
 
         auto &registry = _core.GetRegistry();

@@ -175,7 +175,7 @@ struct FixedConstraint {
     {
         FixedConstraint constraint;
         constraint.bodyA = body;
-        constraint.bodyB = Engine::EntityId::Null(); //P Invalid entity = world
+        constraint.bodyB = Engine::EntityId::Null(); // P Invalid entity = world
         constraint.localPointA = glm::vec3(0.0f);
         constraint.localPointB = worldPoint; // Used as world position
         constraint.settings = constraintSettings;
