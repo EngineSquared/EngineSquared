@@ -460,9 +460,9 @@ static void OnSoftBodyDestroy(Engine::Core::Registry &registry, Engine::EntityId
     try
     {
         auto *corePtr = registry.ctx().get<Engine::Core *>();
-        Engine::Entity entity{*corePtr, entityId};
         if (!corePtr)
             return;
+        Engine::Entity entity{*corePtr, entityId};
         auto &core = *corePtr;
 
         auto &physicsManager = core.GetResource<Resource::PhysicsManager>();

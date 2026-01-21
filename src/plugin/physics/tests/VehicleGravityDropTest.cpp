@@ -48,7 +48,6 @@ TEST(VehiclePlugin, VehicleGravityDrop)
                        .SetChassisMass(1000.0f)
                        .Build(core);
 
-    auto &registry = core.GetRegistry();
     auto *transform = vehicle.TryGetComponent<Object::Component::Transform>();
     ASSERT_NE(transform, nullptr);
 

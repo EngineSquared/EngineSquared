@@ -1,6 +1,6 @@
 #pragma once
 
-#include "entity/Entity.hpp"
+#include "entity/EntityId.hpp"
 #include <Jolt/Physics/Body/BodyID.h>
 #include <Jolt/Physics/Vehicle/VehicleCollisionTester.h>
 #include <Jolt/Physics/Vehicle/VehicleConstraint.h>

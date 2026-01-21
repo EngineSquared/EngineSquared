@@ -2,9 +2,6 @@
 #include "Logger.hpp"
 #include <fmt/format.h>
 
-// Temp
-#include <iostream>
-
 auto Relationship::Utils::SetChildOf(Engine::Entity child, Engine::Entity parent) -> void
 {
     if (IsChildOf(parent, child))

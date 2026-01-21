@@ -13,8 +13,8 @@ void UpdateAmbientLight(Engine::Core &core)
     {
         Engine::Entity ambientLightEntity{core, view.front()};
         ambientLightResource.SetEntity(core, ambientLightEntity);
+        ambientLightResource.Update(core);
     }
-    ambientLightResource.Update(core);
 }
 
 } // namespace DefaultPipeline::System

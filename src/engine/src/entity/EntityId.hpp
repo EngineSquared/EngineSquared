@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Id.hpp"
+#include "core/Core.hpp"
 #include <fmt/format.h>
 
 namespace Engine {

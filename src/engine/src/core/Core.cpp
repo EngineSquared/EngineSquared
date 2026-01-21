@@ -50,6 +50,11 @@ Engine::Entity Engine::Core::CreateEntity()
 
 void Engine::Core::KillEntity(Engine::Id entity)
 {
+    if (!IsEntityValid(entity))
+    {
+        Log::Warn(fmt::format("[EntityID:{}] KillEntity ignored: invalid entity", entity));
+        return;
+    }
     this->_registry->destroy(entity);
     Log::Debug(fmt::format("[EntityID:{}] Entity Destroyed", entity));
 }

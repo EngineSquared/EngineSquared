@@ -1,7 +1,7 @@
 #pragma once
 
 #include "component/WheelSettings.hpp"
-#include "entity/Entity.hpp"
+#include "entity/EntityId.hpp"
 #include <Jolt/Physics/Vehicle/VehicleAntiRollBar.h>
 #include <Jolt/Physics/Vehicle/VehicleConstraint.h>
 #include <array>

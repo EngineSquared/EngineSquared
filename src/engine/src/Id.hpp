@@ -25,7 +25,7 @@ template <typename TDerived, typename TValue> struct BasicId {
 
     constexpr explicit(false) BasicId(TValue v = TDerived::NullValue()) : value{v} {}
 
-    static constexpr BasicId Null() { return TDerived::Null(); }
+    static constexpr TDerived Null() { return TDerived::Null(); }
     constexpr bool IsNull() const { return value == TDerived::NullValue(); }
 };
 
@@ -48,6 +48,7 @@ struct Id : public BasicId<Id, entt::id_type> {
     constexpr explicit(false) Id(ValueType v = NullValue()) : BasicId<Id, ValueType>{v} {}
     constexpr operator ValueType() const { return value; }
     static constexpr ValueType NullValue() { return entt::null; }
+    static constexpr Id Null() { return Id{NullValue()}; }
 };
 
 static_assert(sizeof(Id) == sizeof(Id::ValueType), "Id size must be equal to entt::id_type size");
@@ -73,6 +74,7 @@ struct StringId : public BasicId<StringId, entt::hashed_string> {
     using ValueType = entt::hashed_string;
     constexpr explicit(false) StringId(ValueType v = NullValue()) : BasicId<StringId, ValueType>{v} {}
     static constexpr ValueType NullValue() { return entt::hashed_string{}; }
+    static constexpr StringId Null() { return StringId{NullValue()}; }
 };
 
 static_assert(sizeof(StringId) == sizeof(StringId::ValueType),

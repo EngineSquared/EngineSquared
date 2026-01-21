@@ -40,7 +40,6 @@ class CameraManager {
             throw CameraMovementError("Camera entity is invalid");
         }
 
-        auto &registry = _core.GetRegistry();
         if (!entity.HasComponents<Object::Component::Transform, Object::Component::Camera>())
         {
             throw CameraMovementError("Camera entity must have both Transform and Camera components");

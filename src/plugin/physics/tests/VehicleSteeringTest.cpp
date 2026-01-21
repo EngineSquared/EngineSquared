@@ -48,7 +48,6 @@ TEST(VehiclePlugin, VehicleSteering)
                        .SetDrivetrain(Physics::Component::DrivetrainType::AWD)
                        .Build(core);
 
-    auto &registry = core.GetRegistry();
     auto *controller = vehicle.TryGetComponent<Physics::Component::VehicleController>();
     ASSERT_NE(controller, nullptr);
 

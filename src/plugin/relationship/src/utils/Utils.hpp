@@ -53,7 +53,7 @@ auto RemoveParent(Engine::Entity child) -> void;
  * Get the parent of an entity.
  *
  * @param   child   child entity
- * @return  parent entity
+ * @return  the parent entity, or nullopt if the entity has no parent
  */
 auto GetParent(Engine::Entity child) -> std::optional<Engine::Entity>;
 } // namespace Relationship::Utils

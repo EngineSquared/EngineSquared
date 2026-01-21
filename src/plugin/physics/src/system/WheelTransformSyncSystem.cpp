@@ -24,7 +24,7 @@ void WheelTransformSyncSystem(Engine::Core &core)
         for (size_t i = 0; i < 4; ++i)
         {
             Engine::Entity wheelEntity{core, internal.wheelEntities[i]};
-            if (wheelEntity.IsAlive() == false)
+            if (!wheelEntity.IsAlive())
                 continue;
 
             auto *wheelTransform = wheelEntity.TryGetComponent<Object::Component::Transform>();

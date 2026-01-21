@@ -83,7 +83,7 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
         if (_entity.has_value())
             _debugName = fmt::format("{}{}", prefix, *_entity);
         else
-            _debugName = prefix + "Default";
+            _debugName = fmt::format("{}{}", prefix, "Default");
     }
 
     wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
