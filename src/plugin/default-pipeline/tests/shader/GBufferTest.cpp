@@ -59,6 +59,15 @@ TEST(DefaultPipeline, SmokeTest)
 
     core.RegisterSystem(TestSystem);
 
+    core.RegisterSystem<RenderingPipeline::CommandCreation>(
+        [](Engine::Core &core) {
+            auto &renderPassContainer = core.GetResource<Graphic::Resource::RenderGraphContainer>();
+            if (renderPassContainer.Contains(DefaultPipeline::Resource::GBUFFER_PASS_ID)) {
+                renderPassContainer.Get(DefaultPipeline::Resource::GBUFFER_PASS_ID).Execute(core);
+            }
+        }
+    );
+
     core.RegisterSystem<RenderingPipeline::Presentation>(ExtractTextures);
 
     core.RunSystems();

@@ -19,12 +19,11 @@ namespace DefaultPipeline::Resource {
  *
  * Layout (WGSL std140 alignment):
  * - modelMatrix: mat4x4<f32> (64 bytes, offset 0)
- * - normalMatrix: mat3x3<f32> (48 bytes, offset 64) - each column is 16-byte aligned
- * Total: 112 bytes
+ * - normalMatrix: mat4x4<f32> (64 bytes, offset 64)
+ * Total: 128 bytes
  */
 struct TransformGPUData {
     glm::mat4 modelMatrix;
-    // mat3x3 in WGSL has each column aligned to 16 bytes, so we use vec4 for each column
     glm::mat4 normalMatrix;
 };
 

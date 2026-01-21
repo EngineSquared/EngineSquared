@@ -3,6 +3,7 @@
 #include "resource/EventManager.hpp"
 #include "resource/RenderGraphContainer.hpp"
 #include "resource/pass/GBuffer.hpp"
+#include "utils/DefaultRenderPass.hpp"
 
 wgpu::TextureDescriptor CreateGBufferPassOutputNormalTextureDescriptor(glm::uvec2 size)
 {
@@ -127,5 +128,5 @@ void DefaultPipeline::System::Create3DGraph(Engine::Core &core)
 
     CreateGBufferTextures(core);
     auto renderGraph = CreateGraph(core);
-    renderPassContainer.SetDefault(std::move(renderGraph));
+    renderPassContainer.Add(Resource::GBUFFER_PASS_ID, std::move(renderGraph));
 }

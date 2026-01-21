@@ -26,6 +26,7 @@ static inline constexpr std::string_view GBUFFER_PASS_OUTPUT_DEPTH = "GBUFFER_PA
 static inline const entt::hashed_string GBUFFER_PASS_OUTPUT_DEPTH_ID{GBUFFER_PASS_OUTPUT_DEPTH.data(),
                                                                      GBUFFER_PASS_OUTPUT_DEPTH.size()};
 static inline constexpr std::string_view GBUFFER_PASS_NAME = "GBUFFER_PASS_NAME";
+static inline const entt::hashed_string GBUFFER_PASS_ID{GBUFFER_PASS_NAME.data(), GBUFFER_PASS_NAME.size()};
 static inline constexpr std::string_view GBUFFER_SHADER_NAME = "GBUFFER_SHADER_NAME";
 static inline const entt::hashed_string GBUFFER_SHADER_ID =
     entt::hashed_string{GBUFFER_SHADER_NAME.data(), GBUFFER_SHADER_NAME.size()};
