@@ -42,6 +42,12 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
         // Here we assume the texture format is RGBA8Unorm (4 bytes per pixel)
         switch (data->format)
         {
+        case wgpu::TextureFormat::RGBA8UnormSrgb:
+            pixel.r = mapped[i * 4 + 0];
+            pixel.g = mapped[i * 4 + 1];
+            pixel.b = mapped[i * 4 + 2];
+            pixel.a = mapped[i * 4 + 3];
+            break;
         case wgpu::TextureFormat::RGBA8Unorm:
             pixel.r = mapped[i * 4 + 0];
             pixel.g = mapped[i * 4 + 1];
