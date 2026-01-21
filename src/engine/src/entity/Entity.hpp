@@ -170,7 +170,7 @@ class Entity {
     bool operator==(const EntityId &rhs) const { return _entityId.value == rhs.value; }
 
   private:
-    inline constexpr Core &GetCore() const { return _core.get(); }
+    constexpr Core &GetCore() const { return _core.get(); }
 
     std::reference_wrapper<Core> _core;
     EntityId _entityId;

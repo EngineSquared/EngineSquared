@@ -24,7 +24,7 @@ int main(void)
             [&core](TestComponent &testComponent, Relationship::Component::Relationship &relationship) {
                 if (relationship.first.IsValid())
                 {
-                    auto child = relationship.first;
+                    auto &child = relationship.first;
                     auto &component = child.GetComponents<TestComponent>();
                     component.value = testComponent.value * 2;
                 }

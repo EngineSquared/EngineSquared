@@ -23,15 +23,7 @@ namespace CameraMovement::Resource {
  */
 class CameraManager {
   public:
-    explicit CameraManager(Engine::Core &core)
-        : _core(core), _cameraEntity(std::nullopt), _movementSpeed(5.0f), _mouseSensitivity(0.002f), _lastMouseX(0.0),
-          _lastMouseY(0.0),                                                                              // NOSONAR
-          _isMouseDragging(false),                                                                       // NOSONAR
-          _wasCursorMasked(false), _originRotation(1.0f, 0.0f, 0.0f, 0.0f), _joystickId(GLFW_JOYSTICK_1) // NOSONAR
-    {
-        // sonar can't decide itself to choose whether it should be in initializer list or constructor body, so we
-        // disable it
-    }
+    explicit CameraManager(Engine::Core &core) : _core(core) {}
 
     ~CameraManager() = default;
 
@@ -231,15 +223,15 @@ class CameraManager {
 
   private:
     Engine::Core &_core;
-    std::optional<Engine::Entity> _cameraEntity;
-    float _movementSpeed;
-    float _mouseSensitivity;
-    double _lastMouseX;
-    double _lastMouseY;
-    bool _isMouseDragging;
-    bool _wasCursorMasked;
-    glm::quat _originRotation;
-    int _joystickId;
+    std::optional<Engine::Entity> _cameraEntity = std::nullopt;
+    float _movementSpeed = 5.0f;
+    float _mouseSensitivity = 0.002f;
+    double _lastMouseX = 0.0;
+    double _lastMouseY = 0.0;
+    bool _isMouseDragging = false;
+    bool _wasCursorMasked = false;
+    glm::quat _originRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    int _joystickId = GLFW_JOYSTICK_1;
     std::shared_ptr<CameraMovement::Utils::ICameraBehavior> _behavior;
 };
 

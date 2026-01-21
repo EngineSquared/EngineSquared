@@ -5,7 +5,7 @@
 namespace NativeScripting::Utils {
 class ScriptableEntity {
   public:
-    ScriptableEntity(Engine::Entity ent) : entity(ent) {}
+    explicit ScriptableEntity(Engine::Entity ent) : entity(ent) {}
     virtual ~ScriptableEntity() = default;
     template <typename T> T &GetComponent(Engine::Core &core) { return entity.GetComponents<T>(core); }
 
