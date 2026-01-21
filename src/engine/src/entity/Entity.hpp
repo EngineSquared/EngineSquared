@@ -174,7 +174,6 @@ class Entity {
 
     std::reference_wrapper<Core> _core;
     EntityId _entityId;
-    inline static std::unordered_map<std::type_index, std::function<void(Core &)>> temporaryComponent = {};
 };
 
 } // namespace Engine
