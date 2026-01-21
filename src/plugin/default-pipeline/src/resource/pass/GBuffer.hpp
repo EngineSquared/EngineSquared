@@ -121,8 +121,6 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
             const auto &transformBindGroup = bindGroupManager.Get(transform.bindGroup);
             renderPass.setBindGroup(transformBindGroup.GetLayoutIndex(), transformBindGroup.GetBindGroup(), 0, nullptr);
 
-            // TODO: create a system that will add the component if not present before rendering to avoid checking every
-            // frame if the component exists
             entt::hashed_string gpuMaterialId{};
             if (entity.HasComponents<Component::GPUMaterial>(core))
             {
