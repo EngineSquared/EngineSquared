@@ -14,8 +14,6 @@
 
 void TestSystem(Engine::Core &core)
 {
-    auto entity = core.CreateEntity();
-
     auto cube = core.CreateEntity();
 
     cube.AddComponent<Object::Component::Transform>(core).SetRotation(

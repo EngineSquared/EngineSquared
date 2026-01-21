@@ -5,6 +5,8 @@
 #include "resource/Image.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/webgpu.hpp"
+#include <array>
+#include <bit>
 #include <functional>
 #include <glm/gtc/packing.hpp>
 #include <glm/vec2.hpp>
@@ -61,10 +63,10 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
             pixel.a = mapped[i * 4 + 3];
             break;
         case wgpu::TextureFormat::RGBA16Float: {
-            uint16_t r = *(reinterpret_cast<uint16_t *>(&mapped[i * 8 + 0]));
-            uint16_t g = *(reinterpret_cast<uint16_t *>(&mapped[i * 8 + 2]));
-            uint16_t b = *(reinterpret_cast<uint16_t *>(&mapped[i * 8 + 4]));
-            uint16_t a = *(reinterpret_cast<uint16_t *>(&mapped[i * 8 + 6]));
+            auto r = std::bit_cast<uint16_t>(std::array<uint8_t, 2>{mapped[i * 8 + 0], mapped[i * 8 + 1]});
+            auto g = std::bit_cast<uint16_t>(std::array<uint8_t, 2>{mapped[i * 8 + 2], mapped[i * 8 + 3]});
+            auto b = std::bit_cast<uint16_t>(std::array<uint8_t, 2>{mapped[i * 8 + 4], mapped[i * 8 + 5]});
+            auto a = std::bit_cast<uint16_t>(std::array<uint8_t, 2>{mapped[i * 8 + 6], mapped[i * 8 + 7]});
             pixel.r = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(r), 0.0f, 1.0f) * 255.0f);
             pixel.g = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(g), 0.0f, 1.0f) * 255.0f);
             pixel.b = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(b), 0.0f, 1.0f) * 255.0f);
@@ -72,7 +74,8 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
             break;
         }
         case wgpu::TextureFormat::Depth32Float: {
-            float depth = *(reinterpret_cast<float *>(&mapped[i * 4]));
+            auto depth = std::bit_cast<float>(
+                std::array<uint8_t, 4>{mapped[i * 4 + 0], mapped[i * 4 + 1], mapped[i * 4 + 2], mapped[i * 4 + 3]});
             uint8_t depthByte = static_cast<uint8_t>(std::clamp(depth, 0.0f, 1.0f) * 255.0f);
             pixel = glm::u8vec4(depthByte, depthByte, depthByte, 255);
             break;
