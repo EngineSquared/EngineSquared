@@ -6,6 +6,8 @@
 #include "resource/CameraManager.hpp"
 #include "scheduler/Startup.hpp"
 #include "system/CameraControlSystem.hpp"
+#include "system/ResetCameraBehavior.hpp"
+#include "scheduler/Shutdown.hpp"
 #include "utils/DefaultBehavior.hpp"
 #include <memory>
 
@@ -23,6 +25,7 @@ void Plugin::Bind()
     cameraManager.SetBehavior(std::make_shared<Utils::DefaultBehavior>(GetCore()));
 
     RegisterResource(Resource::CameraControlSystemManager(GetCore()));
+    RegisterSystems<Engine::Scheduler::Shutdown>(System::ResetCameraBehavior);
 }
 
 } // namespace CameraMovement
