@@ -3,8 +3,8 @@
 		<link type="text/rcss" href="hover_esq.rcss" />
 	</head>
 	<body class="hover_esq">
-		<div id="hover-container">
-			<div id="hover-logo"></div>
+		<div class="hover-container">
+			<div class="hover-logo"></div>
 		</div>
 	</body>
 </template>

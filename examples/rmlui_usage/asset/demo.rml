@@ -1,11 +1,11 @@
 <rml>
 <head>
-<link type="text/template" href="../../window.rml"/>
+<link type="text/template" href="./window.rml"/>
 <title>Demo Sample</title>
 <style>
 @spritesheet demo-sheet
 {
-	src: ../../invader.tga;
+	src: invader.tga;
 
 	window-outer: 0px 0px 144px 151px;
 
@@ -156,7 +156,7 @@ p.title
 {
 	width: 64dp;
 	height: 64dp;
-	decorator: image( ../../high_scores_alien_1.tga );
+	decorator: image( high_scores_alien_1.tga );
 }
 #decorators .image-invader
 {
@@ -746,16 +746,16 @@ form .nav-auto, form input.checkbox, form input.radio
 
 	<h1>Image elements</h1>
 	<div class="center">
-		<img src="../../high_scores_defender.tga" class="clickable" onclick="change_color"/>
+		<img src="high_scores_defender.tga" class="clickable" onclick="change_color"/>
 		<img sprite="icon-game" style="vertical-align: 10dp;"/>
-		<img src="../../high_scores_defender.tga" style="image-color: #fc5;" rect="0 0 64 64"/>
-		<img src="../../high_scores_defender.tga" style="image-color: #9c5;" rect="64 0 64 64"/>
+		<img src="high_scores_defender.tga" style="image-color: #fc5;" rect="0 0 64 64"/>
+		<img src="high_scores_defender.tga" style="image-color: #9c5;" rect="64 0 64 64"/>
 	</div>
 	<p>The 'img' elements are separate from decorators, but we describe them here for completeness. They can be declared as in html. Additionally, a 'rect' attribute can be used to crop the image. The element can also display sprites declared in a sprite sheet.</p>
 
 	<h1>Sprite sheets</h1>
 	<p>Sprite sheets are defined by an image source and a collection of sprites, and can be declared in RCSS. Sprites are essentially rectangles into the given image. For example, the following image</p>
-	<img src="../../invader.tga" rect="0 0 500 435" style="margin-top: 10dp; margin-bottom: 10dp;"/>
+	<img src="invader.tga" rect="0 0 500 435" style="margin-top: 10dp; margin-bottom: 10dp;"/>
 	<p>is used to render most sprites in this demo. Sprites can be used in decorators and image elements as if they were separate images.</p>
 </panel>
 <tab>Font effects</tab>
@@ -783,10 +783,10 @@ form .nav-auto, form input.checkbox, form input.radio
 	<h1>Transitions</h1>
 	<p>Hover over the following to see an animation performed by the transition property in RCSS.</p>
 	<div id="transition">
-		<img class="alien alien1" src="../../high_scores_alien_1.tga"/>
-		<img class="alien alien2" src="../../high_scores_alien_2.tga"/>
-		<img class="alien alien3" src="../../high_scores_alien_3.tga"/>
-		<div class="ray"><img class="defender" src="../../high_scores_defender.tga"/></div>
+		<img class="alien alien1" src="high_scores_alien_1.tga"/>
+		<img class="alien alien2" src="high_scores_alien_2.tga"/>
+		<img class="alien alien3" src="high_scores_alien_3.tga"/>
+		<div class="ray"><img class="defender" src="high_scores_defender.tga"/></div>
 		<div style="height: 110%;"/>
 	</div>
 

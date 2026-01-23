@@ -1,4 +1,5 @@
 #include "resource/UIContext.hpp"
+#include "RmlUi/Core/ElementDocument.h"
 #include "resource/Window.hpp"
 
 #include <GLFW/glfw3.h>
@@ -184,8 +185,9 @@ void UIContext::Destroy(Engine::Core &core)
         _document->Close();
         _document = nullptr;
     }
-    for (auto *document : _overlayDocuments)
+    for (auto const &[path, document] : _overlayDocuments)
     {
+        (void) path;
         if (document != nullptr)
         {
             document->Close();
@@ -275,9 +277,19 @@ void UIContext::LoadDocument(const std::string &docPath)
         _document->Close();
         _document = nullptr;
     }
-
-    _context->UnloadAllDocuments();
+    for (auto const &[path, document] : _overlayDocuments)
+    {
+        (void) path;
+        if (document != nullptr)
+        {
+            document->Close();
+        }
+    }
     _overlayDocuments.clear();
+    if (!_debuggerInitialized)
+    {
+        _context->UnloadAllDocuments();
+    }
     _document = _context->LoadDocument(docPath);
     if (_document == nullptr)
     {
@@ -297,6 +309,11 @@ bool UIContext::LoadOverlayDocument(const std::string &docPath)
         return false;
     }
 
+    if (_overlayDocuments.contains(docPath))
+    {
+        return true;
+    }
+
     auto *document = _context->LoadDocument(docPath);
     if (document == nullptr)
     {
@@ -304,11 +321,30 @@ bool UIContext::LoadOverlayDocument(const std::string &docPath)
     }
 
     document->Show();
-    _overlayDocuments.push_back(document);
+    _overlayDocuments.emplace(docPath, document);
+    return true;
+}
+
+bool UIContext::UnloadOverlayDocument(const std::string &docPath)
+{
+    auto it = _overlayDocuments.find(docPath);
+    if (it == _overlayDocuments.end())
+    {
+        return false;
+    }
+    if (it->second != nullptr)
+    {
+        it->second->Close();
+    }
+    _overlayDocuments.erase(it);
     return true;
 }
 
 const std::string &UIContext::GetTitle() const { return _titleCache; }
+
+Rml::ElementDocument *UIContext::GetDocument() { return _document; }
+
+const Rml::ElementDocument *UIContext::GetDocument() const { return _document; }
 
 void UIContext::EnableDebugger(bool enable)
 {
@@ -340,8 +376,9 @@ Rml::Element *UIContext::GetElementById(const std::string &elementId)
         return element;
     }
 
-    for (auto *document : _overlayDocuments)
+    for (auto &[path, document] : _overlayDocuments)
     {
+        (void) path;
         if (document == nullptr)
         {
             continue;

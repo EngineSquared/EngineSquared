@@ -6,6 +6,7 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "AUIContext.hpp"
@@ -33,7 +34,10 @@ class UIContext : public AUIContext {
     void SetFont(const std::string &fontPath) override;
     void LoadDocument(const std::string &docPath) override;
     bool LoadOverlayDocument(const std::string &docPath);
+    bool UnloadOverlayDocument(const std::string &docPath);
     const std::string &GetTitle() const override;
+    Rml::ElementDocument *GetDocument();
+    const Rml::ElementDocument *GetDocument() const;
     void EnableDebugger(bool enable);
     Rml::Element *GetElementById(const std::string &elementId);
     bool RegisterEventListener(Rml::Element &element, const Rml::String &eventType,
@@ -51,7 +55,7 @@ class UIContext : public AUIContext {
   private:
     Rml::Context *_context = nullptr;
     Rml::ElementDocument *_document = nullptr;
-    std::vector<Rml::ElementDocument *> _overlayDocuments;
+    std::unordered_map<std::string, Rml::ElementDocument *> _overlayDocuments;
     std::string _titleCache;
     bool _debuggerInitialized = false;
     std::vector<std::unique_ptr<Rml::EventListener>> _eventListeners;

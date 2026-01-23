@@ -1,6 +1,6 @@
 <rml>
 <head>
-<link type="text/template" href="../../window.rml"/>
+<link type="text/template" href="./window.rml"/>
 <title>Transform Sample</title>
 <style>
 body

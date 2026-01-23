@@ -4,12 +4,14 @@
 
 #include "DemoCommon.hpp"
 #include "Logger.hpp"
+#include "core/Core.hpp"
 #include "plugin/PluginCameraMovement.hpp"
 #include "plugin/PluginDefaultPipeline.hpp"
 #include "plugin/PluginInput.hpp"
 #include "plugin/PluginRmlui.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/UIContext.hpp"
 #include "scheduler/Init.hpp"
 #include "scheduler/Startup.hpp"
 #include "spdlog/fmt/bundled/format.h"
@@ -31,7 +33,7 @@ void Setup(Engine::Core &core)
 
     auto &rmluiContext = core.GetResource<Rmlui::Resource::UIContext>();
     RmluiUsage::Demo::LoadDefaultFonts(rmluiContext);
-    rmluiContext.LoadDocument("asset/transform/data/transform.rml");
+    rmluiContext.LoadDocument("asset/transform.rml");
     RmluiUsage::Demo::AttachHoverOverlay(rmluiContext, "Transform");
     rmluiContext.EnableDebugger(true);
     core.RegisterSystem(RmluiUsage::Demo::EscapeKeySystem);

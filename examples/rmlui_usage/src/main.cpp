@@ -21,6 +21,7 @@
 #include "resource/UIContext.hpp"
 #include "resource/Window.hpp"
 #include "scheduler/Init.hpp"
+#include "scheduler/Preparation.hpp"
 #include "scheduler/Startup.hpp"
 #include "spdlog/fmt/bundled/format.h"
 #include "webgpu.h"
@@ -58,17 +59,76 @@ void Setup(Engine::Core &core)
     rmluiContext.SetFont("asset/LatoLatin-Italic.ttf");
     rmluiContext.SetFont("asset/LatoLatin-BoldItalic.ttf");
     rmluiContext.SetFont("asset/NotoEmoji-Regular.ttf");
-    rmluiContext.LoadDocument("asset/demo/data/demo.rml");
-    rmluiContext.LoadOverlayDocument("asset/animation/data/animation.rml");
-    rmluiContext.LoadOverlayDocument("asset/transform/data/transform.rml");
-    rmluiContext.LoadOverlayDocument("asset/hover_overlay.rml");
-    if (auto *hoverLogo = rmluiContext.GetElementById("hover-logo"))
-    {
-        rmluiContext.RegisterEventListener(*hoverLogo, "click",
-                                            [](auto &) { Log::Info("hover-logo clicked"); });
-    }
     rmluiContext.EnableDebugger(true);
+    rmluiContext.LoadDocument("asset/hover_overlay.rml");
+
+    struct OverlayState {
+        bool demo = true;
+        bool animation = false;
+        bool transform = false;
+        bool demoDirty = false;
+        bool animationDirty = false;
+        bool transformDirty = false;
+    };
+
+    auto &overlayState = core.RegisterResource<OverlayState>(OverlayState{});
+    rmluiContext.LoadOverlayDocument("asset/demo.rml");
+
+    if (auto *hoverLogo = rmluiContext.GetElementById("hover-logo-demo"))
+    {
+        rmluiContext.RegisterEventListener(*hoverLogo, "click", [&overlayState](auto &) {
+            Log::Info("Demo overlay toggled");
+            overlayState.demo = !overlayState.demo;
+            overlayState.demoDirty = true;
+        });
+    }
+    if (auto *hoverLogo = rmluiContext.GetElementById("hover-logo-animation"))
+    {
+        rmluiContext.RegisterEventListener(*hoverLogo, "click", [&overlayState](auto &) {
+            Log::Info("Animation overlay toggled");
+            overlayState.animation = !overlayState.animation;
+            overlayState.animationDirty = true;
+        });
+    }
+    if (auto *hoverLogo = rmluiContext.GetElementById("hover-logo-transform"))
+    {
+        rmluiContext.RegisterEventListener(*hoverLogo, "click", [&overlayState](auto &) {
+            Log::Info("Transform overlay toggled");
+            overlayState.transform = !overlayState.transform;
+            overlayState.transformDirty = true;
+        });
+    }
     core.RegisterSystem(EscapeKeySystem);
+
+    core.RegisterSystem<RenderingPipeline::Preparation>([](Engine::Core &core) {
+        auto &state = core.GetResource<OverlayState>();
+        auto &ui = core.GetResource<Rmlui::Resource::UIContext>();
+
+        if (state.demoDirty)
+        {
+            state.demoDirty = false;
+            if (state.demo)
+                ui.LoadOverlayDocument("asset/demo.rml");
+            else
+                ui.UnloadOverlayDocument("asset/demo.rml");
+        }
+        if (state.animationDirty)
+        {
+            state.animationDirty = false;
+            if (state.animation)
+                ui.LoadOverlayDocument("asset/animation.rml");
+            else
+                ui.UnloadOverlayDocument("asset/animation.rml");
+        }
+        if (state.transformDirty)
+        {
+            state.transformDirty = false;
+            if (state.transform)
+                ui.LoadOverlayDocument("asset/transform.rml");
+            else
+                ui.UnloadOverlayDocument("asset/transform.rml");
+        }
+    });
 }
 
 class RmluiExampleError : public std::runtime_error {

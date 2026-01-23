@@ -1,6 +1,6 @@
 <rml>
 <head>
-	<link type="text/template" href="../../window.rml"/>
+	<link type="text/template" href="./window.rml"/>
 	<title>Animation Sample</title>
 	<style>
 		body.window

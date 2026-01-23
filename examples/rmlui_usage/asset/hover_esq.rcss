@@ -3,16 +3,16 @@
     100% { transform: scale(1.0); }
 }
 
-#hover-container {
+.hover-container {
     position: absolute;
     left: 80dp;
     top: 80dp;
     width: 64dp;
-    height: 64dp;
+    height: 88dp;
     z-index: 3;
 }
 
-#hover-logo {
+.hover-logo {
     position: absolute;
     width: 64dp;
     height: 64dp;
@@ -23,11 +23,26 @@
     transition: transform 0.15s cubic-out;
 }
 
-#hover-logo:hover {
+.hover-logo:hover {
     transform: scale(1.2) translate(0px, -6px);
     transform-origin: center center 0;
 }
 
-#hover-logo:active {
+.hover-logo:active {
     image-color: rgb(255, 0, 0);
+}
+
+.hover-label {
+    position: absolute;
+    top: 68dp;
+    left: 0dp;
+    width: 64dp;
+    text-align: center;
+    color: #ffffff;
+    font-size: 12dp;
+    font-family: "LatoLatin";
+    z-index: 4;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 4dp;
+    padding: 2dp 0dp;
 }
