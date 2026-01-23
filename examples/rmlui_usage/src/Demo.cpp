@@ -40,9 +40,9 @@
 #include <RmlUi/Core/StyleSheetContainer.h>
 #include <RmlUi/Core/TransformPrimitive.h>
 
-#include <cstdint>
 #include <array>
 #include <cmath>
+#include <cstdint>
 #include <cstdlib>
 #include <memory>
 #include <stdexcept>
@@ -448,8 +448,8 @@ class DemoEventListener : public Rml::EventListener {
 
     void HandleTweenDuration(Rml::Event &event)
     {
-        const auto duration = static_cast<float>(
-            std::atof(rmlui_static_cast<Rml::ElementFormControl *>(element)->GetValue().c_str()));
+        const auto duration =
+            static_cast<float>(std::atof(rmlui_static_cast<Rml::ElementFormControl *>(element)->GetValue().c_str()));
 
         TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
         tweeningParameters.duration = duration;
