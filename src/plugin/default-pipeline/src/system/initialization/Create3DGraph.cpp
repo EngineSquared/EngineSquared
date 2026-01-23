@@ -4,9 +4,8 @@
 #include "resource/RenderGraphContainer.hpp"
 #include "resource/Window.hpp"
 #include "resource/pass/GBuffer.hpp"
-#include "utils/DefaultRenderPass.hpp"
 #include "system/WindowSystem.hpp"
-#include "resource/Window.hpp"
+#include "utils/DefaultRenderPass.hpp"
 
 /**
  * @brief Creates a texture descriptor for the G-buffer normal output.
