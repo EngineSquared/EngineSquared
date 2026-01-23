@@ -232,7 +232,7 @@ class CameraManager {
     bool _wasCursorMasked = false;
     glm::quat _originRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     int _joystickId = GLFW_JOYSTICK_1;
-    std::shared_ptr<CameraMovement::Utils::ICameraBehavior> _behavior;
+    std::shared_ptr<CameraMovement::Utils::ICameraBehavior> _behavior = nullptr;
 };
 
 } // namespace CameraMovement::Resource

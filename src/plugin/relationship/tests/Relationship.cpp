@@ -135,3 +135,12 @@ TEST(Relationship, remove_parent)
 
     ASSERT_EQ(Relationship::Utils::GetParent(child), parent);
 }
+
+TEST(Relationship, get_parent_of_child_without_relationship_component)
+{
+    Engine::Core core;
+
+    auto child = core.CreateEntity();
+
+    ASSERT_EQ(Relationship::Utils::GetParent(child), std::nullopt);
+}
