@@ -23,16 +23,24 @@ struct CallbackData {
 };
 
 /**
- * @brief Callback invoked when a readback buffer mapping completes; converts mapped texture data into RGBA8 pixels stored in the provided CallbackData.
+ * @brief Callback invoked when a readback buffer mapping completes; converts mapped texture data into RGBA8 pixels
+ * stored in the provided CallbackData.
  *
  * @param status Result of the mapAsync operation.
  * @param message Optional message produced by the mapping operation.
- * @param userdata1 Pointer to a CallbackData instance that will receive the resulting Image pixels and control flags (must be a valid CallbackData*).
+ * @param userdata1 Pointer to a CallbackData instance that will receive the resulting Image pixels and control flags
+ * (must be a valid CallbackData*).
  * @param userdata2 Unused.
  *
- * If @p status is not success the function logs the failure, sets CallbackData::done to true and returns. If mapping succeeded the function reads the mapped buffer, iterates over texels while skipping per-row padding, converts each texel to a 4-channel 8-bit RGBA pixel according to CallbackData::format, appends pixels to CallbackData::data.pixels, unmaps the buffer, and marks CallbackData::done true. Supported source formats: RGBA8UnormSrgb, RGBA8Unorm, BGRA8Unorm, RGBA16Float (per-channel half floats unpacked, clamped to [0,1], and scaled to 0–255), and Depth32Float (depth mapped to a grayscale RGBA with alpha=255).
+ * If @p status is not success the function logs the failure, sets CallbackData::done to true and returns. If mapping
+ * succeeded the function reads the mapped buffer, iterates over texels while skipping per-row padding, converts each
+ * texel to a 4-channel 8-bit RGBA pixel according to CallbackData::format, appends pixels to CallbackData::data.pixels,
+ * unmaps the buffer, and marks CallbackData::done true. Supported source formats: RGBA8UnormSrgb, RGBA8Unorm,
+ * BGRA8Unorm, RGBA16Float (per-channel half floats unpacked, clamped to [0,1], and scaled to 0–255), and Depth32Float
+ * (depth mapped to a grayscale RGBA with alpha=255).
  *
- * @throws Exception::UnsupportedTextureFormatError If the texture format in CallbackData is not supported for retrieval.
+ * @throws Exception::UnsupportedTextureFormatError If the texture format in CallbackData is not supported for
+ * retrieval.
  */
 static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView message, void *userdata1, void *userdata2)
 {

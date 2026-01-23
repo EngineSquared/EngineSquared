@@ -95,11 +95,11 @@ fn fs_main(
 class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
   public:
     /**
- * @brief Constructs a GBuffer render pass with an optional name.
- *
- * @param name Human-readable name for the render pass; defaults to GBUFFER_PASS_NAME.
- */
-explicit GBuffer(std::string_view name = GBUFFER_PASS_NAME) : ASingleExecutionRenderPass<GBuffer>(name) {}
+     * @brief Constructs a GBuffer render pass with an optional name.
+     *
+     * @param name Human-readable name for the render pass; defaults to GBUFFER_PASS_NAME.
+     */
+    explicit GBuffer(std::string_view name = GBUFFER_PASS_NAME) : ASingleExecutionRenderPass<GBuffer>(name) {}
 
     /**
      * @brief Render all entities with GPUTransform and GPUMesh into the G-buffer using the active camera.

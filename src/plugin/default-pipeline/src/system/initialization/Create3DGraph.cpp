@@ -9,7 +9,8 @@
  * @brief Creates a texture descriptor for the G-buffer normal output.
  *
  * @param size Texture dimensions in pixels as (width, height).
- * @return wgpu::TextureDescriptor Descriptor for a 2D RGBA16Float normal render target configured with TextureBinding, RenderAttachment, CopySrc, and CopyDst usage flags.
+ * @return wgpu::TextureDescriptor Descriptor for a 2D RGBA16Float normal render target configured with TextureBinding,
+ * RenderAttachment, CopySrc, and CopyDst usage flags.
  */
 wgpu::TextureDescriptor CreateGBufferPassOutputNormalTextureDescriptor(glm::uvec2 size)
 {
@@ -46,7 +47,8 @@ wgpu::TextureDescriptor CreateGBufferPassOutputAlbedoTextureDescriptor(glm::uvec
  * @brief Creates a 2D depth texture descriptor for the G-buffer depth output.
  *
  * @param size Width and height of the texture in pixels (x = width, y = height).
- * @return wgpu::TextureDescriptor Descriptor configured as a 2D Depth32Float texture labeled for the G-buffer depth output with usages: TextureBinding, RenderAttachment, CopySrc, and CopyDst.
+ * @return wgpu::TextureDescriptor Descriptor configured as a 2D Depth32Float texture labeled for the G-buffer depth
+ * output with usages: TextureBinding, RenderAttachment, CopySrc, and CopyDst.
  */
 wgpu::TextureDescriptor CreateGBufferPassOutputDepthTextureDescriptor(glm::uvec2 size)
 {
