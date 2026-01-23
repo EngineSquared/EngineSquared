@@ -45,5 +45,5 @@ void DefaultPipeline::System::OnCameraCreation(Engine::Core &core, Engine::Entit
              cameraUniformBuffer->get()->GetBuffer().getSize()}
     });
     gpuCameraComponentInContainer.bindGroup = bindGroupId;
-    core.GetResource<Graphic::Resource::BindGroupManager>().Add(bindGroupId, cameraBindGroup);
+    core.GetResource<Graphic::Resource::BindGroupManager>().Add(bindGroupId, std::move(cameraBindGroup));
 }
