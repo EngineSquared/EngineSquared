@@ -20,7 +20,7 @@ class SystemInterface : public Rml::SystemInterface {
     void GetClipboardText(Rml::String &text) override;
 
   private:
-    std::chrono::steady_clock::time_point _startTime;
+    std::chrono::steady_clock::time_point _startTime = std::chrono::steady_clock::now();
     std::string _clipboard;
 };
 } // namespace Rmlui::Utils

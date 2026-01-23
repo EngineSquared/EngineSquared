@@ -1,10 +1,15 @@
 #pragma once
 
 #include <RmlUi/Core.h>
+#include <RmlUi/Core/EventListener.h>
 
+#include <functional>
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "AUIContext.hpp"
+#include "RmlUi/Config/Config.h"
 #include "RmlUi/Core/Context.h"
 #include "core/Core.hpp"
 
@@ -28,6 +33,9 @@ class UIContext : public AUIContext {
     void LoadDocument(const std::string &docPath) override;
     const std::string &GetTitle() const override;
     void EnableDebugger(bool enable);
+    Rml::Element *GetElementById(const std::string &elementId);
+    bool RegisterEventListener(Rml::Element &element, const Rml::String &eventType,
+                               std::function<void(Rml::Event &)> callback, bool useCapture = false);
 
     bool ProcessKey(int key, int action, int mods) override;
     bool ProcessText(unsigned int codepoint) override;
@@ -43,6 +51,7 @@ class UIContext : public AUIContext {
     Rml::ElementDocument *_document = nullptr;
     std::string _titleCache;
     bool _debuggerInitialized = false;
+    std::vector<std::unique_ptr<Rml::EventListener>> _eventListeners;
 
     bool _isReady() const;
 };

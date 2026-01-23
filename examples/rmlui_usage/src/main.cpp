@@ -59,6 +59,11 @@ void Setup(Engine::Core &core)
     rmluiContext.SetFont("asset/LatoLatin-BoldItalic.ttf");
     rmluiContext.SetFont("asset/NotoEmoji-Regular.ttf");
     rmluiContext.LoadDocument("asset/demo.rml");
+    if (auto *hoverLogo = rmluiContext.GetElementById("hover-logo"))
+    {
+        rmluiContext.RegisterEventListener(*hoverLogo, "click",
+                                            [](auto &) { Log::Info("hover-logo clicked"); });
+    }
     rmluiContext.EnableDebugger(true);
     core.RegisterSystem(EscapeKeySystem);
 }

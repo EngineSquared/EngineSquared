@@ -16,6 +16,8 @@
 #include "RmlUi/Core/Vertex.h"
 
 #include "resource/Context.hpp"
+#include "exception/FileReadingError.hpp"
+#include "exception/UnknownFileError.hpp"
 #include "resource/Image.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "resource/ShaderContainer.hpp"
@@ -49,7 +51,7 @@ void UpdateScreenBuffer(Engine::Core &core, wgpu::Buffer const &buffer)
 wgpu::BindGroup CreateTextureBindGroup(Engine::Core &core, const wgpu::BindGroupLayout &layout,
                                        const Graphic::Resource::Texture &texture, const wgpu::Sampler &sampler)
 {
-    wgpu::BindGroupEntry entries[2] = {};
+    std::array<wgpu::BindGroupEntry, 2> entries = {};
     entries[0].binding = 0;
     entries[0].textureView = texture.GetDefaultView();
     entries[1].binding = 1;
@@ -58,7 +60,7 @@ wgpu::BindGroup CreateTextureBindGroup(Engine::Core &core, const wgpu::BindGroup
     wgpu::BindGroupDescriptor descriptor(wgpu::Default);
     descriptor.layout = layout;
     descriptor.entryCount = 2;
-    descriptor.entries = entries;
+    descriptor.entries = entries.data();
 
     const auto &context = core.GetResource<Graphic::Resource::Context>();
     return context.deviceContext.GetDevice()->createBindGroup(descriptor);
@@ -84,7 +86,7 @@ void RenderInterface::FlushDrawCommands(wgpu::RenderPassEncoder const &renderPas
             renderSize.y = textureSize.y;
         }
     }
-    for (auto &command : _drawCommands)
+    for (auto const &command : _drawCommands)
     {
         if (command.textureBindGroup != nullptr)
         {
@@ -207,27 +209,7 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
     wgpu::Buffer indexBuffer = device.createBuffer(indexDesc);
     queue.writeBuffer(indexBuffer, 0, indices.data(), indexDesc.size);
 
-    wgpu::BindGroup textureBindGroup = nullptr;
-    if (texture_handle != 0UL)
-    {
-        auto textureIt = _textures.find(texture_handle);
-        if (textureIt != _textures.end())
-        {
-            auto &texture = *textureIt->second;
-            if (texture.bindGroup == nullptr)
-            {
-                const auto &shaders = _core.GetResource<Graphic::Resource::ShaderContainer>();
-                if (shaders.Contains(Rmlui::Utils::RMLUI_RENDER_PASS_SHADER_ID) && texture.gpuTexture &&
-                    (texture.sampler != nullptr))
-                {
-                    const auto &shader = shaders.Get(Rmlui::Utils::RMLUI_RENDER_PASS_SHADER_ID);
-                    texture.bindGroup = CreateTextureBindGroup(_core, shader.GetBindGroupLayout(0), *texture.gpuTexture,
-                                                               texture.sampler);
-                }
-            }
-            textureBindGroup = texture.bindGroup;
-        }
-    }
+    wgpu::BindGroup textureBindGroup = ResolveTextureBindGroup(texture_handle);
 
     if (textureBindGroup == nullptr && _defaultTexture)
     {
@@ -250,6 +232,41 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
     _drawCommands.push_back(cmd);
 }
 
+wgpu::BindGroup RenderInterface::ResolveTextureBindGroup(Rml::TextureHandle texture_handle)
+{
+    if (texture_handle == 0UL)
+    {
+        return nullptr;
+    }
+
+    auto textureIt = _textures.find(texture_handle);
+    if (textureIt == _textures.end())
+    {
+        return nullptr;
+    }
+
+    auto &texture = *textureIt->second;
+    if (texture.bindGroup != nullptr)
+    {
+        return texture.bindGroup;
+    }
+
+    const auto &shaders = _core.GetResource<Graphic::Resource::ShaderContainer>();
+    if (!shaders.Contains(Rmlui::Utils::RMLUI_RENDER_PASS_SHADER_ID))
+    {
+        return nullptr;
+    }
+    if (!texture.gpuTexture || (texture.sampler == nullptr))
+    {
+        return nullptr;
+    }
+
+    const auto &shader = shaders.Get(Rmlui::Utils::RMLUI_RENDER_PASS_SHADER_ID);
+    texture.bindGroup =
+        CreateTextureBindGroup(_core, shader.GetBindGroupLayout(0), *texture.gpuTexture, texture.sampler);
+    return texture.bindGroup;
+}
+
 void RenderInterface::ReleaseGeometry(Rml::CompiledGeometryHandle handle) { _geometries.erase(handle); }
 
 Rml::TextureHandle RenderInterface::LoadTexture(Rml::Vector2i &texture_dimensions, const Rml::String &source)
@@ -270,7 +287,13 @@ Rml::TextureHandle RenderInterface::LoadTexture(Rml::Vector2i &texture_dimension
         const size_t size_in_bytes = image.pixels.size() * sizeof(image.pixels[0]);
         return CreateTexture(Rml::Span<const Rml::byte>(bytes, size_in_bytes), texture_dimensions);
     }
-    catch (const std::exception &error)
+    catch (const Graphic::Exception::UnknownFileError &error)
+    {
+        texture_dimensions = Rml::Vector2i(0, 0);
+        Log::Warn(fmt::format("Rmlui failed to load texture '{}': {}", source, error.what()));
+        return 0;
+    }
+    catch (const Graphic::Exception::FileReadingError &error)
     {
         texture_dimensions = Rml::Vector2i(0, 0);
         Log::Warn(fmt::format("Rmlui failed to load texture '{}': {}", source, error.what()));

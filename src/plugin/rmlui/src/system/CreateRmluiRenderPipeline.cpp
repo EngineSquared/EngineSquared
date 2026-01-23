@@ -4,7 +4,7 @@
 #include "Logger.hpp"
 #include "core/Core.hpp"
 
-#include "system/initialization/CreateRmluiRenderPipeline.hpp"
+#include "system/CreateRmluiRenderPipeline.hpp"
 
 #include "resource/ARenderPass.hpp"
 #include "resource/Context.hpp"

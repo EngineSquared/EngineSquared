@@ -6,7 +6,7 @@
 #include <chrono>
 
 namespace Rmlui::Utils {
-SystemInterface::SystemInterface() : _startTime(std::chrono::steady_clock::now()) {}
+SystemInterface::SystemInterface() = default;
 
 double SystemInterface::GetElapsedTime()
 {

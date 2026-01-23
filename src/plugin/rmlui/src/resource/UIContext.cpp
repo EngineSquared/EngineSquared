@@ -1,25 +1,47 @@
 #include "resource/UIContext.hpp"
-#include "RmlUi/Debugger/Debugger.h"
 #include "resource/Window.hpp"
 
 #include <GLFW/glfw3.h>
+#include <functional>
+#include <memory>
 #include <string>
+#include <utility>
 
 #include "Logger.hpp"
 #include "core/Core.hpp"
 #include "fmt/format.h"
 #include "spdlog/fmt/bundled/format.h"
 
+#include "RmlUi/Config/Config.h"
+#include "RmlUi/Debugger/Debugger.h"
 #include "RmlUi/Core/Core.h"
 #include "RmlUi/Core/Input.h"
 #include "RmlUi/Core/Math.h"
 #include "RmlUi/Core/Types.h"
+#include "RmlUi/Core/Event.h"
+#include "RmlUi/Core/EventListener.h"
 
 #include "exception/CreateRmlContextError.hpp"
 #include "exception/ReadRmlDocumentError.hpp"
 
 namespace Rmlui::Resource {
 namespace {
+class CallbackEventListener final : public Rml::EventListener {
+  public:
+    explicit CallbackEventListener(std::function<void(Rml::Event &)> callback) : _callback(std::move(callback)) {}
+
+    void ProcessEvent(Rml::Event &event) override
+    {
+        if (_callback)
+        {
+            _callback(event);
+        }
+    }
+
+  private:
+    std::function<void(Rml::Event &)> _callback;
+};
+
 Rml::Input::KeyIdentifier ToRmlKey(int key)
 {
     using KI = Rml::Input::KeyIdentifier;
@@ -169,6 +191,7 @@ void UIContext::Destroy(Engine::Core &core)
     }
     _titleCache.clear();
     Rml::Shutdown();
+    _eventListeners.clear();
 }
 
 void UIContext::Update(Engine::Core &core)
@@ -276,6 +299,25 @@ void UIContext::EnableDebugger(bool enable)
     {
         Rml::Debugger::SetVisible(enable);
     }
+}
+
+Rml::Element *UIContext::GetElementById(const std::string &elementId)
+{
+    if (_document == nullptr)
+    {
+        return nullptr;
+    }
+
+    return _document->GetElementById(elementId);
+}
+
+bool UIContext::RegisterEventListener(Rml::Element &element, const Rml::String &eventType,
+                                      std::function<void(Rml::Event &)> callback, bool useCapture)
+{
+    auto listener = std::make_unique<CallbackEventListener>(std::move(callback));
+    element.AddEventListener(eventType, listener.get(), useCapture);
+    _eventListeners.push_back(std::move(listener));
+    return true;
 }
 
 bool UIContext::ProcessKey(int key, int action, int mods)

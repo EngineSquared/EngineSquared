@@ -73,6 +73,8 @@ class RenderInterface : public Rmlui::Utils::IRenderer {
         Rml::Rectanglei scissorRegion;
     };
 
+    wgpu::BindGroup ResolveTextureBindGroup(Rml::TextureHandle texture_handle);
+
     static RenderInterface *_active;
 
     Engine::Core &_core;
