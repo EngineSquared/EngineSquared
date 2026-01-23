@@ -7,18 +7,18 @@
 
 void Rmlui::System::BindInputCallbacks(Engine::Core &core)
 {
-    static bool registered = false;
-    if (registered)
+    auto &uiContext = core.GetResource<Rmlui::Resource::UIContext>();
+    if (uiContext.AreInputCallbacksRegistered())
     {
-        Log::Warn("Rmlui input callbacks already registered");
+        Log::Warn("Rmlui input callbacks already registered for this core");
         return;
     }
-    registered = true;
+    uiContext.SetInputCallbacksRegistered(true);
 
     auto &input = core.GetResource<Input::Resource::InputManager>();
 
     input.RegisterKeyCallback([](Engine::Core &context, int key, int scancode, int action, int mods) {
-        (void) scancode; // Might not be useful?
+        (void) scancode;
         context.GetResource<Rmlui::Resource::UIContext>().ProcessKey(key, action, mods);
     });
 

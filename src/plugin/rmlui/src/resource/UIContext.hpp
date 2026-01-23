@@ -42,6 +42,8 @@ class UIContext : public AUIContext {
     Rml::Element *GetElementById(const std::string &elementId);
     bool RegisterEventListener(Rml::Element &element, const Rml::String &eventType,
                                std::function<void(Rml::Event &)> callback, bool useCapture = false);
+    bool AreInputCallbacksRegistered() const;
+    void SetInputCallbacksRegistered(bool registered);
 
     bool ProcessKey(int key, int action, int mods) override;
     bool ProcessText(unsigned int codepoint) override;
@@ -59,6 +61,7 @@ class UIContext : public AUIContext {
     std::string _titleCache;
     bool _debuggerInitialized = false;
     std::vector<std::unique_ptr<Rml::EventListener>> _eventListeners;
+    bool _inputCallbacksRegistered = false;
 
     bool _isReady() const;
 };

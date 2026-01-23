@@ -1,12 +1,11 @@
 #pragma once
 
-#include <concepts>
 #include <memory>
 #include <string>
 #include <type_traits>
-
 #include <RmlUi/Core.h>
 
+#include "exception/CreateRmlContextError.hpp"
 #include "RmlUi/Core/RenderInterface.h"
 #include "RmlUi/Core/SystemInterface.h"
 #include "core/Core.hpp"
@@ -23,6 +22,10 @@ class AUIContext {
   public:
     template <CSystemInterface TSystemInterface, CRenderInterface TRenderInterface> void Init(Engine::Core &core)
     {
+        if (_systemInterface != nullptr || _renderInterface != nullptr)
+        {
+            throw Exception::CreateRmlContextError("The Rmlui context has already been initialized");
+        }
         _systemInterface = std::make_unique<TSystemInterface>();
         _renderInterface = std::make_unique<TRenderInterface>(core);
         _setup(core);

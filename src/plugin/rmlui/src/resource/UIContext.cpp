@@ -205,6 +205,7 @@ void UIContext::Destroy(Engine::Core & /*core*/)
     _titleCache.clear();
     Rml::Shutdown();
     _eventListeners.clear();
+    _inputCallbacksRegistered = false;
 }
 
 void UIContext::Update(Engine::Core &core)
@@ -403,6 +404,10 @@ bool UIContext::RegisterEventListener(Rml::Element &element, const Rml::String &
     _eventListeners.push_back(std::move(listener));
     return true;
 }
+
+bool UIContext::AreInputCallbacksRegistered() const { return _inputCallbacksRegistered; }
+
+void UIContext::SetInputCallbacksRegistered(bool registered) { _inputCallbacksRegistered = registered; }
 
 bool UIContext::ProcessKey(int key, int action, int mods)
 {
