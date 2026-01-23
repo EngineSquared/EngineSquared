@@ -15,7 +15,7 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
 
     void Create(Engine::Core &core) override
     {
-        const auto &gpuCamera = _entity.GetComponents<Component::GPUCamera>(core);
+        const auto &gpuCamera = _entity.GetComponents<Component::GPUCamera>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
 
         _buffer = _CreateBuffer(context.deviceContext);
@@ -43,7 +43,7 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU camera buffer that is not created.");
         }
-        const auto &cameraComponent = _entity.GetComponents<Component::GPUCamera>(core);
+        const auto &cameraComponent = _entity.GetComponents<Component::GPUCamera>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
         _UpdateBuffer(cameraComponent, context);
     }
@@ -54,8 +54,7 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
     wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
     {
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
-        std::string label =
-            "CameraUniformBuffer_" + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(_entity));
+        std::string label = fmt::format("CameraUniformBuffer_{}", _entity);
         bufferDesc.label = wgpu::StringView(label);
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
         bufferDesc.size = sizeof(glm::mat4);

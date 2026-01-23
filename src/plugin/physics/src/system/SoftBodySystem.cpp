@@ -324,11 +324,12 @@ CreateJoltCreationSettings(const Component::SoftBody &softBody,
 // Soft Body Lifecycle Handlers
 //=============================================================================
 
-static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
+static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::EntityId entityId)
 {
     try
     {
         auto *corePtr = registry.ctx().get<Engine::Core *>();
+        Engine::Entity entity{*corePtr, entityId};
         if (!corePtr)
         {
             Log::Error("Cannot create SoftBody: Engine::Core not available");
@@ -343,10 +344,10 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
             return;
         }
 
-        auto &softBody = registry.get<Component::SoftBody>(entity);
+        auto &softBody = entity.GetComponents<Component::SoftBody>();
 
         // SoftBody requires a Mesh component for geometry
-        auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
+        auto *mesh = entity.TryGetComponent<Object::Component::Mesh>();
         if (!mesh)
         {
             Log::Error("SoftBody: No Mesh component found. Add Mesh component before SoftBody.");
@@ -445,8 +446,8 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
         Log::Info(fmt::format(
             "Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f}), scale "
             "({:.2f}, {:.2f}, {:.2f})",
-            static_cast<uint32_t>(entity), meshVertices.size(), mesh->GetIndices().size() / 3, position.GetX(),
-            position.GetY(), position.GetZ(), scale.x, scale.y, scale.z));
+            entity, meshVertices.size(), mesh->GetIndices().size() / 3, position.GetX(), position.GetY(),
+            position.GetZ(), scale.x, scale.y, scale.z));
     }
     catch (const Physics::Exception::SoftBodyError &e)
     {
@@ -454,20 +455,21 @@ static void OnSoftBodyConstruct(entt::registry &registry, entt::entity entity)
     }
 }
 
-static void OnSoftBodyDestroy(entt::registry &registry, entt::entity entity)
+static void OnSoftBodyDestroy(Engine::Core::Registry &registry, Engine::EntityId entityId)
 {
     try
     {
         auto *corePtr = registry.ctx().get<Engine::Core *>();
         if (!corePtr)
             return;
+        Engine::Entity entity{*corePtr, entityId};
         auto &core = *corePtr;
 
         auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
         if (!physicsManager.IsPhysicsActivated())
             return;
 
-        auto *internal = registry.try_get<Component::SoftBodyInternal>(entity);
+        auto *internal = entity.TryGetComponent<Component::SoftBodyInternal>();
         if (!internal || !internal->IsValid())
             return;
 
@@ -475,9 +477,9 @@ static void OnSoftBodyDestroy(entt::registry &registry, entt::entity entity)
         bodyInterface.RemoveBody(internal->bodyID);
         bodyInterface.DestroyBody(internal->bodyID);
 
-        Log::Debug(fmt::format("Destroyed SoftBody for entity {}", static_cast<uint32_t>(entity)));
+        Log::Debug(fmt::format("Destroyed SoftBody for entity {}", entity));
 
-        registry.remove<Component::SoftBodyInternal>(entity);
+        entity.RemoveComponent<Component::SoftBodyInternal>();
     }
     catch (const Physics::Exception::SoftBodyError &e)
     {
