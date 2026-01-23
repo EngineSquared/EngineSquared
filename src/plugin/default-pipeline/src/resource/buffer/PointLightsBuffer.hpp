@@ -37,7 +37,9 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
 
   public:
     PointLightsBuffer() = default;
-    ~PointLightsBuffer() override = default;
+    ~PointLightsBuffer() override {
+        Destroy();
+    }
 
     void Create(Engine::Core &core) override
     {
@@ -52,6 +54,11 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
     }
 
     void Destroy(Engine::Core &core) override
+    {
+        Destroy();
+    }
+
+    void Destroy()
     {
         if (_isCreated)
         {

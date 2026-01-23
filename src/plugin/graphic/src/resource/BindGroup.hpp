@@ -37,7 +37,21 @@ class BindGroup {
         _bindGroup = _CreateBindGroup(core);
     }
 
-    wgpu::BindGroup GetBindGroup() const { return _bindGroup; }
+    BindGroup(const BindGroup &other) = delete;
+    BindGroup(BindGroup &&other) noexcept
+        : _shaderId(other._shaderId), _layoutIndex(other._layoutIndex), _assets(std::move(other._assets)),
+          _entries(std::move(other._entries)), _bindGroup(other._bindGroup)
+    {
+        other._bindGroup = nullptr;
+    }
+
+    ~BindGroup()
+    {
+        if (_bindGroup)
+            _bindGroup.release();
+    }
+
+    const wgpu::BindGroup &GetBindGroup() const { return _bindGroup; }
 
     uint32_t GetLayoutIndex() const { return _layoutIndex; }
 
@@ -87,6 +101,8 @@ class BindGroup {
 
         auto &deviceContext = core.GetResource<Graphic::Resource::Context>();
         auto bindGroup = deviceContext.deviceContext.GetDevice()->createBindGroup(descriptor);
+
+        layout.release();
 
         if (!bindGroup)
             throw Exception::BindGroupCreationError("Failed to create BindGroup");

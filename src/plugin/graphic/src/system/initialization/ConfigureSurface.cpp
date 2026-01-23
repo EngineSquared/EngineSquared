@@ -33,11 +33,15 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
     if (context.adapter.has_value())
     {
         wgpu::AdapterInfo info(wgpu::Default);
+        // TODO: create a class to handle RAII release properly
         if (context.adapter->getInfo(&info) == wgpu::Status::Success)
         {
-            if (info.backendType == wgpu::BackendType::OpenGL || info.backendType == wgpu::BackendType::OpenGLES)
+            if (info.backendType == wgpu::BackendType::OpenGL || info.backendType == wgpu::BackendType::OpenGLES) {
+                info.freeMembers();
                 return;
+            }
         }
+        info.freeMembers();
     }
 
     context.surface->value->configure(config);

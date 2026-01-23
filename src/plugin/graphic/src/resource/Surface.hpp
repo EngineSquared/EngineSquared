@@ -34,6 +34,7 @@ struct Surface {
         }
         if (capabilities.has_value())
         {
+            capabilities->freeMembers();
             capabilities.reset();
         }
         configured = false;

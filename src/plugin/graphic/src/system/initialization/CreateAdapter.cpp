@@ -9,9 +9,13 @@
 static std::optional<wgpu::BackendType> getBackendType(const wgpu::Adapter &adapter)
 {
     wgpu::AdapterInfo info(wgpu::Default);
-    if (adapter.getInfo(&info) != wgpu::Status::Success)
+    if (adapter.getInfo(&info) != wgpu::Status::Success) {
+        info.freeMembers();
         return std::nullopt;
-    return info.backendType;
+    }
+    wgpu::BackendType backendType = info.backendType;
+    info.freeMembers();
+    return backendType;
 }
 
 static std::optional<wgpu::Adapter> findVulkanAdapter(const Graphic::Resource::Context &context)
@@ -27,10 +31,19 @@ static std::optional<wgpu::Adapter> findVulkanAdapter(const Graphic::Resource::C
     {
         wgpu::AdapterInfo info(wgpu::Default);
         if (cand.getInfo(&info) != wgpu::Status::Success)
+        {
+            info.freeMembers();
             continue;
+        }
         if (info.backendType == wgpu::BackendType::Vulkan)
+        {
+            info.freeMembers();
+            adapters.data()->release();
             return cand;
+        }
+        info.freeMembers();
     }
+    adapters.data()->release();
     return std::nullopt;
 }
 

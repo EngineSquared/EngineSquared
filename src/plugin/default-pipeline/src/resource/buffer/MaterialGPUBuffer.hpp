@@ -30,7 +30,9 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
 
     explicit MaterialGPUBuffer(void) = default;
 
-    ~MaterialGPUBuffer() override = default;
+    ~MaterialGPUBuffer() override {
+        Destroy();
+    }
     void Create(Engine::Core &core) override
     {
         const auto &context = core.GetResource<Graphic::Resource::Context>();
@@ -40,12 +42,16 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
     };
     void Destroy(Engine::Core &core) override
     {
+        Destroy();
+    };
+
+    void Destroy() {
         if (_isCreated)
         {
             _isCreated = false;
             _buffer.release();
         }
-    };
+    }
 
     bool IsCreated(Engine::Core &core) const override { return _isCreated; };
     void Update(Engine::Core &core) override

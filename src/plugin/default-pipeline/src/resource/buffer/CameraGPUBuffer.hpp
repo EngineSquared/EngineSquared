@@ -11,6 +11,9 @@ namespace DefaultPipeline::Resource {
 class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
   public:
     explicit CameraGPUBuffer(Engine::Entity entity) : _entity(entity) {}
+    ~CameraGPUBuffer() override {
+        Destroy();
+    }
 
     void Create(Engine::Core &core) override
     {
@@ -24,6 +27,11 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
     }
 
     void Destroy(Engine::Core &) override
+    {
+        Destroy();
+    }
+
+    void Destroy()
     {
         if (_isCreated)
         {

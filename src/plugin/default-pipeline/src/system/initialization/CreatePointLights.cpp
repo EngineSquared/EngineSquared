@@ -27,6 +27,6 @@ void CreatePointLights(Engine::Core &core)
                                                      {1, Graphic::Resource::BindGroup::Asset::Type::Buffer,
                                                       Utils::POINT_LIGHTS_BUFFER_ID,  pointLightsBufferSize }
     });
-    bindGroupManager.Add(Utils::LIGHTS_BIND_GROUP_ID, lightsBindGroup);
+    bindGroupManager.Add(Utils::LIGHTS_BIND_GROUP_ID, std::move(lightsBindGroup));
 }
 } // namespace DefaultPipeline::System
