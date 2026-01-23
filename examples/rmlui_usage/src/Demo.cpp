@@ -116,8 +116,7 @@ class DemoWindow : public Rml::EventListener {
                 styleSheetContent = kSandboxDefaultRcss;
             }
 
-            Rml::StreamMemory stream(reinterpret_cast<Rml::byte *>(styleSheetContent.data()),
-                                     styleSheetContent.size());
+            Rml::StreamMemory stream(reinterpret_cast<Rml::byte *>(styleSheetContent.data()), styleSheetContent.size());
             stream.SetSourceURL("sandbox://default_rcss");
 
             rmlBasicStyleSheet = Rml::MakeShared<Rml::StyleSheetContainer>();
@@ -127,8 +126,8 @@ class DemoWindow : public Rml::EventListener {
         if (auto *source =
                 rmlui_dynamic_cast<Rml::ElementFormControl *>(document->GetElementById("sandbox_rcss_source")))
         {
-            Rml::String value =
-                "/* Write your RCSS here */\n\n/* body { color: #fea; background: #224; }\nimg { image-color: red; } */";
+            Rml::String value = "/* Write your RCSS here */\n\n/* body { color: #fea; background: #224; }\nimg { "
+                                "image-color: red; } */";
             source->SetValue(value);
             SetSandboxStylesheet(value);
         }
@@ -318,10 +317,10 @@ class DemoEventListener : public Rml::EventListener {
             const Rml::Vector2f mousePos = {event.GetParameter("mouse_x", 0.0F), event.GetParameter("mouse_y", 0.0F)};
             if (Rml::Element *child = element->GetFirstChild())
             {
-                Rml::Vector2f newPos =
-                    mousePos - element->GetAbsoluteOffset() -
-                    Rml::Vector2f(0.35F * child->GetClientWidth(), 0.9F * child->GetClientHeight());
-                Rml::Property destination = Rml::Transform::MakeProperty({Rml::Transforms::Translate2D(newPos.x, newPos.y)});
+                Rml::Vector2f newPos = mousePos - element->GetAbsoluteOffset() -
+                                       Rml::Vector2f(0.35F * child->GetClientWidth(), 0.9F * child->GetClientHeight());
+                Rml::Property destination =
+                    Rml::Transform::MakeProperty({Rml::Transforms::Translate2D(newPos.x, newPos.y)});
 
                 const TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
                 if (tweeningParameters.duration <= 0)
@@ -338,17 +337,17 @@ class DemoEventListener : public Rml::EventListener {
         else if (value == "tween_function")
         {
             static const Rml::SmallUnorderedMap<Rml::String, Rml::Tween::Type> tweeningFunctions = {
-                {"back", Rml::Tween::Back},
-                {"bounce", Rml::Tween::Bounce},
-                {"circular", Rml::Tween::Circular},
-                {"cubic", Rml::Tween::Cubic},
-                {"elastic", Rml::Tween::Elastic},
+                {"back",        Rml::Tween::Back       },
+                {"bounce",      Rml::Tween::Bounce     },
+                {"circular",    Rml::Tween::Circular   },
+                {"cubic",       Rml::Tween::Cubic      },
+                {"elastic",     Rml::Tween::Elastic    },
                 {"exponential", Rml::Tween::Exponential},
-                {"linear", Rml::Tween::Linear},
-                {"quadratic", Rml::Tween::Quadratic},
-                {"quartic", Rml::Tween::Quartic},
-                {"quintic", Rml::Tween::Quintic},
-                {"sine", Rml::Tween::Sine},
+                {"linear",      Rml::Tween::Linear     },
+                {"quadratic",   Rml::Tween::Quadratic  },
+                {"quartic",     Rml::Tween::Quartic    },
+                {"quintic",     Rml::Tween::Quintic    },
+                {"sine",        Rml::Tween::Sine       },
             };
 
             const Rml::String value = event.GetParameter("value", Rml::String());
@@ -388,8 +387,8 @@ class DemoEventListener : public Rml::EventListener {
         }
         else if (value == "tween_duration")
         {
-            const auto value =
-                static_cast<float>(std::atof(rmlui_static_cast<Rml::ElementFormControl *>(element)->GetValue().c_str()));
+            const auto value = static_cast<float>(
+                std::atof(rmlui_static_cast<Rml::ElementFormControl *>(element)->GetValue().c_str()));
 
             TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
             tweeningParameters.duration = value;
@@ -406,7 +405,14 @@ class DemoEventListener : public Rml::EventListener {
             auto *elRatingEmoji = element->GetElementById("rating_emoji");
             if ((elRating != nullptr) && (elRatingEmoji != nullptr))
             {
-                enum { Sad, Mediocre, Exciting, Celebrate, Champion, CountEmojis };
+                enum {
+                    Sad,
+                    Mediocre,
+                    Exciting,
+                    Celebrate,
+                    Champion,
+                    CountEmojis
+                };
                 static const char *emojis[CountEmojis] = {"😢", "😐", "😮", "😎", "🏆"};
                 int value = event.GetParameter("value", 50);
 
@@ -455,7 +461,8 @@ class DemoEventListener : public Rml::EventListener {
         }
         else if (value == "set_sandbox_body")
         {
-            if (auto *source = rmlui_dynamic_cast<Rml::ElementFormControl *>(element->GetElementById("sandbox_rml_source")))
+            if (auto *source =
+                    rmlui_dynamic_cast<Rml::ElementFormControl *>(element->GetElementById("sandbox_rml_source")))
             {
                 auto value = source->GetValue();
                 demoWindow->SetSandboxBody(value);

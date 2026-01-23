@@ -14,13 +14,13 @@
 #include "spdlog/fmt/bundled/format.h"
 
 #include "RmlUi/Config/Config.h"
-#include "RmlUi/Debugger/Debugger.h"
 #include "RmlUi/Core/Core.h"
+#include "RmlUi/Core/Event.h"
+#include "RmlUi/Core/EventListener.h"
 #include "RmlUi/Core/Input.h"
 #include "RmlUi/Core/Math.h"
 #include "RmlUi/Core/Types.h"
-#include "RmlUi/Core/Event.h"
-#include "RmlUi/Core/EventListener.h"
+#include "RmlUi/Debugger/Debugger.h"
 
 #include "exception/CreateRmlContextError.hpp"
 #include "exception/ReadRmlDocumentError.hpp"

@@ -15,9 +15,9 @@
 #include "RmlUi/Core/Types.h"
 #include "RmlUi/Core/Vertex.h"
 
-#include "resource/Context.hpp"
 #include "exception/FileReadingError.hpp"
 #include "exception/UnknownFileError.hpp"
+#include "resource/Context.hpp"
 #include "resource/Image.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "resource/ShaderContainer.hpp"
