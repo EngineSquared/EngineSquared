@@ -66,9 +66,8 @@ class RmluiRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<Rml
     explicit RmluiRenderPass() : ASingleExecutionRenderPass(RMLUI_RENDER_PASS_NAME) {}
     virtual ~RmluiRenderPass() = default;
 
-    void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
+    void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core & /*core*/) override
     {
-        (void) core; // TODO: Might not be needed in the context
         auto *renderer = RenderInterface::GetActive();
         if (renderer == nullptr)
         {

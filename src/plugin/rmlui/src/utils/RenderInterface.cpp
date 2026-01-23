@@ -380,7 +380,25 @@ void RenderInterface::SetScissorRegion(Rml::Rectanglei region) { _scissorRegion 
 
 void RenderInterface::SetScissor(Rml::Rectanglei region, bool vertically_flip)
 {
-    (void) vertically_flip; // TODO: Need to handle it
+    if (vertically_flip)
+    {
+        auto renderSize = _core.GetResource<Window::Resource::Window>().GetSize();
+        if (_core.HasResource<Graphic::Resource::TextureContainer>())
+        {
+            auto &textures = _core.GetResource<Graphic::Resource::TextureContainer>();
+            if (textures.Contains(Graphic::Utils::END_RENDER_TEXTURE_ID))
+            {
+                const auto &endTexture = textures.Get(Graphic::Utils::END_RENDER_TEXTURE_ID);
+                const auto textureSize = endTexture.GetSize();
+                renderSize.x = textureSize.x;
+                renderSize.y = textureSize.y;
+            }
+        }
+
+        const auto height = static_cast<int>(renderSize.y);
+        region = Rml::Rectanglei::FromCorners({region.Left(), height - region.Bottom()},
+                                              {region.Right(), height - region.Top()});
+    }
     _scissorRegion = region;
 }
 

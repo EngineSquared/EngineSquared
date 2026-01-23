@@ -181,10 +181,8 @@ void UIContext::_setup(Engine::Core &core)
     _context->SetDimensions(Rml::Vector2i(static_cast<int>(windowSize.x), static_cast<int>(windowSize.y)));
 }
 
-void UIContext::Destroy(Engine::Core &core)
+void UIContext::Destroy(Engine::Core & /*core*/)
 {
-    (void) core; // TODO: Might not be needed in the context
-
     if (_document != nullptr)
     {
         _document->Close();
@@ -468,11 +466,21 @@ bool UIContext::ProcessMouseButton(int button, int action, int mods)
 
 bool UIContext::ProcessMouseWheel(double xoffset, double yoffset, int mods)
 {
-    (void) xoffset; // TODO: Need to check and handle if needed
     if (_context == nullptr)
     {
         return false;
     }
-    return _context->ProcessMouseWheel(static_cast<float>(yoffset), ToRmlModifiers(mods));
+
+    const int modifiers = ToRmlModifiers(mods);
+    bool handled = false;
+    if (xoffset != 0.0)
+    {
+        handled |= _context->ProcessMouseWheel(static_cast<float>(xoffset), modifiers | Rml::Input::KM_SHIFT);
+    }
+    if (yoffset != 0.0)
+    {
+        handled |= _context->ProcessMouseWheel(static_cast<float>(yoffset), modifiers);
+    }
+    return handled;
 }
 } // namespace Rmlui::Resource
