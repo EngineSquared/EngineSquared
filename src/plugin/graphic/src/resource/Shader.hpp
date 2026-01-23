@@ -47,7 +47,8 @@ class Shader {
         wgpu::BlendState blendState(wgpu::Default);
         if (name == "RMLUI_RENDER_PASS_SHADER")
         {
-            blendState.color.srcFactor = wgpu::BlendFactor::One;
+            // RmlUi outputs non-premultiplied color.
+            blendState.color.srcFactor = wgpu::BlendFactor::SrcAlpha;
             blendState.color.dstFactor = wgpu::BlendFactor::OneMinusSrcAlpha;
             blendState.color.operation = wgpu::BlendOperation::Add;
             blendState.alpha.srcFactor = wgpu::BlendFactor::One;
