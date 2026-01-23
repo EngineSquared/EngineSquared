@@ -6,6 +6,7 @@
 #include "component/Camera.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
+#include "entity/Entity.hpp"
 #include "glm/ext/vector_float3.hpp"
 #include "resource/CameraManager.hpp"
 #include "resource/InputManager.hpp"
@@ -35,8 +36,8 @@ inline void ConfigureWindowAndCamera(Engine::Core &core, uint32_t width, uint32_
 
     auto camera = core.CreateEntity();
     constexpr float kDefaultCameraZ = -2.0F;
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0F, 0.0F, kDefaultCameraZ));
-    camera.AddComponent<Object::Component::Camera>(core);
+    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0F, 0.0F, kDefaultCameraZ));
+    camera.AddComponent<Object::Component::Camera>();
 
     auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
     cameraManager.SetActiveCamera(camera);
