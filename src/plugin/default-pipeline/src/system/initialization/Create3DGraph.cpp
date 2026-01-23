@@ -4,6 +4,7 @@
 #include "resource/RenderGraphContainer.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include "utils/DefaultRenderPass.hpp"
+#include "resource/Window.hpp"
 
 /**
  * @brief Creates a texture descriptor for the G-buffer normal output.
@@ -73,13 +74,14 @@ wgpu::TextureDescriptor CreateGBufferPassOutputDepthTextureDescriptor(glm::uvec2
  */
 static void CreateGBufferTextures(Engine::Core &core)
 {
-    // TODO: resize on window resize
     const auto &context = core.GetResource<Graphic::Resource::Context>();
+    const auto &window = core.GetResource<Window::Resource::Window>();
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
     auto &eventManager = core.GetResource<Event::Resource::EventManager>();
 
+    const auto windowSize = window.GetSize();
     {
-        auto descriptor = CreateGBufferPassOutputNormalTextureDescriptor({800, 800});
+        auto descriptor = CreateGBufferPassOutputNormalTextureDescriptor(windowSize);
         Graphic::Resource::Texture defaultTexture(context, descriptor);
         textureContainer.Add(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID, std::move(defaultTexture));
         eventManager.RegisterCallback<Window::Event::OnResize>([&core, &textureContainer,
@@ -91,7 +93,7 @@ static void CreateGBufferTextures(Engine::Core &core)
         });
     }
     {
-        auto descriptor = CreateGBufferPassOutputAlbedoTextureDescriptor({800, 800});
+        auto descriptor = CreateGBufferPassOutputAlbedoTextureDescriptor(windowSize);
         Graphic::Resource::Texture defaultTexture(context, descriptor);
         textureContainer.Add(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_ALBEDO_ID, std::move(defaultTexture));
         eventManager.RegisterCallback<Window::Event::OnResize>([&core, &textureContainer,
@@ -103,7 +105,7 @@ static void CreateGBufferTextures(Engine::Core &core)
         });
     }
     {
-        auto descriptor = CreateGBufferPassOutputDepthTextureDescriptor({800, 800});
+        auto descriptor = CreateGBufferPassOutputDepthTextureDescriptor(windowSize);
         Graphic::Resource::Texture defaultTexture(context, descriptor);
         textureContainer.Add(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID, std::move(defaultTexture));
         eventManager.RegisterCallback<Window::Event::OnResize>([&core, &textureContainer,

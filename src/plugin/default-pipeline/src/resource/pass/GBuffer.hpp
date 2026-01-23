@@ -184,7 +184,7 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
                                                                    .setMinBindingSize(sizeof(glm::mat4))
                                                                    .setVisibility(wgpu::ShaderStage::Vertex)
                                                                    .setBinding(0));
-        // Model buffer contains: mat4 modelMatrix (64 bytes) + 3 * vec4 normalMatrix columns (48 bytes) = 112 bytes
+        // Model buffer contains: mat4 modelMatrix (64 bytes) + mat4 normalMatrix (64 bytes) = 128 bytes
         auto modelLayout = Graphic::Utils::BindGroupLayout("Model").addEntry(
             Graphic::Utils::BufferBindGroupLayoutEntry("model")
                 .setType(wgpu::BufferBindingType::Uniform)
