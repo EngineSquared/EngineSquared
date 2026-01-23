@@ -24,16 +24,16 @@ class Shader {
 
     Shader(Shader &&other) noexcept
     {
-        descriptor = std::move(other.descriptor);
-        pipeline = std::move(other.pipeline);
+        descriptor = other.descriptor;
+        pipeline = other.pipeline;
         other.pipeline = nullptr;
     }
-    Shader &operator=(Shader &&other)
+    Shader &operator=(Shader &&other) noexcept
     {
         if (this != &other)
         {
-            descriptor = std::move(other.descriptor);
-            pipeline = std::move(other.pipeline);
+            descriptor = other.descriptor;
+            pipeline = other.pipeline;
             other.pipeline = nullptr;
         }
         return *this;
