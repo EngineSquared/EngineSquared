@@ -74,7 +74,8 @@ auto Relationship::Utils::RemoveParent(Engine::Entity child) -> void
 
 auto Relationship::Utils::GetParent(Engine::Entity child) -> std::optional<Engine::Entity>
 {
-    const Relationship::Component::Relationship *childRS = child.TryGetComponent<Relationship::Component::Relationship>();
+    const Relationship::Component::Relationship *childRS =
+        child.TryGetComponent<Relationship::Component::Relationship>();
     if (!childRS)
     {
         return std::nullopt;
