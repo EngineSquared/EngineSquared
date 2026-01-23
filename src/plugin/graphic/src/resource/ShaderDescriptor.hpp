@@ -111,6 +111,19 @@ class ShaderDescriptor : public Utils::IValidable {
         return *this;
     }
 
+    /**
+     * @brief Validate the ShaderDescriptor and all contained layouts/states.
+     *
+     * Performs checks for required top-level fields and aggregates validation
+     * results from vertex buffer layouts, bind group layouts, color target
+     * states, and optional depth-stencil state. Missing shader source is reported
+     * with severity Error; missing name, vertex/fragment entry points or vertex
+     * buffer layouts are reported with severity Warning.
+     *
+     * @return std::vector<Utils::ValidationError> A list of validation errors found; empty if none.
+     * Each returned error's `location` is prefixed with contextual information such as
+     * "ShaderDescriptor", "ShaderDescriptor::(i)...", or "ShaderDescriptor::DepthStencil".
+     */
     std::vector<Utils::ValidationError> validate(void) const override
     {
         std::vector<Utils::ValidationError> errors;

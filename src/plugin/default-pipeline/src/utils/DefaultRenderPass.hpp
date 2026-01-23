@@ -211,6 +211,18 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
         }
     }
 
+    /**
+     * @brief Builds and returns the default render-pass shader configured for the engine's pipeline.
+     *
+     * Constructs a ShaderDescriptor with bind group layouts for camera, model, material, and lights,
+     * configures the vertex buffer layout and color/depth outputs, validates the descriptor, and
+     * creates a Graphic::Resource::Shader from the descriptor.
+     *
+     * @param graphicContext Graphics resource context used to create the shader.
+     * @return Graphic::Resource::Shader Shader instance configured for the default render pass.
+     *
+     * @note Descriptor validation is performed; any validation warnings or errors are logged before shader creation.
+     */
     static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext)
     {
         Graphic::Resource::ShaderDescriptor shaderDescriptor;
