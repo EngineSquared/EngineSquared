@@ -156,10 +156,10 @@ body.window
 	padding-bottom: 20dp;
 
 	min-width: 250dp;
-	max-width: 1920dp;
+	max-width: 800dp;
 
 	min-height: 135dp;
-	max-height: 1080dp;
+	max-height: 700dp;
 }
 
 div#title_bar

@@ -184,6 +184,14 @@ void UIContext::Destroy(Engine::Core &core)
         _document->Close();
         _document = nullptr;
     }
+    for (auto *document : _overlayDocuments)
+    {
+        if (document != nullptr)
+        {
+            document->Close();
+        }
+    }
+    _overlayDocuments.clear();
     if (_context != nullptr)
     {
         Rml::RemoveContext(_context->GetName());
@@ -269,6 +277,7 @@ void UIContext::LoadDocument(const std::string &docPath)
     }
 
     _context->UnloadAllDocuments();
+    _overlayDocuments.clear();
     _document = _context->LoadDocument(docPath);
     if (_document == nullptr)
     {
@@ -279,6 +288,24 @@ void UIContext::LoadDocument(const std::string &docPath)
     _document->SetProperty("width", "100%");
     _document->SetProperty("height", "100%");
     _titleCache = _document->GetTitle();
+}
+
+bool UIContext::LoadOverlayDocument(const std::string &docPath)
+{
+    if (_context == nullptr)
+    {
+        return false;
+    }
+
+    auto *document = _context->LoadDocument(docPath);
+    if (document == nullptr)
+    {
+        return false;
+    }
+
+    document->Show();
+    _overlayDocuments.push_back(document);
+    return true;
 }
 
 const std::string &UIContext::GetTitle() const { return _titleCache; }
@@ -308,7 +335,24 @@ Rml::Element *UIContext::GetElementById(const std::string &elementId)
         return nullptr;
     }
 
-    return _document->GetElementById(elementId);
+    if (auto *element = _document->GetElementById(elementId))
+    {
+        return element;
+    }
+
+    for (auto *document : _overlayDocuments)
+    {
+        if (document == nullptr)
+        {
+            continue;
+        }
+        if (auto *element = document->GetElementById(elementId))
+        {
+            return element;
+        }
+    }
+
+    return nullptr;
 }
 
 bool UIContext::RegisterEventListener(Rml::Element &element, const Rml::String &eventType,

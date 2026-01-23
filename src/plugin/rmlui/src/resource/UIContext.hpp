@@ -11,6 +11,7 @@
 #include "AUIContext.hpp"
 #include "RmlUi/Config/Config.h"
 #include "RmlUi/Core/Context.h"
+#include "RmlUi/Core/ElementDocument.h"
 #include "core/Core.hpp"
 
 namespace Rmlui::Resource {
@@ -31,6 +32,7 @@ class UIContext : public AUIContext {
 
     void SetFont(const std::string &fontPath) override;
     void LoadDocument(const std::string &docPath) override;
+    bool LoadOverlayDocument(const std::string &docPath);
     const std::string &GetTitle() const override;
     void EnableDebugger(bool enable);
     Rml::Element *GetElementById(const std::string &elementId);
@@ -49,6 +51,7 @@ class UIContext : public AUIContext {
   private:
     Rml::Context *_context = nullptr;
     Rml::ElementDocument *_document = nullptr;
+    std::vector<Rml::ElementDocument *> _overlayDocuments;
     std::string _titleCache;
     bool _debuggerInitialized = false;
     std::vector<std::unique_ptr<Rml::EventListener>> _eventListeners;

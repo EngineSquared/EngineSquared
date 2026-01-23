@@ -1,8 +1,0 @@
-<template name="animated_text" content="content">
-	<head>
-		<link type="text/rcss" href="animated_text.rcss" />
-	</head>
-	<body class="animated_text">
-		<div id="animated-text">Engine Squared</div>
-	</body>
-</template>

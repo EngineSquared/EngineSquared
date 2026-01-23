@@ -1,0 +1,10 @@
+<rml>
+	<head>
+		<link type="text/template" href="hover_esq.rml" />
+	</head>
+	<body>
+		<div template="hover_esq">
+			<template content="hover_esq" src="hover_esq"></template>
+		</div>
+	</body>
+</rml>
