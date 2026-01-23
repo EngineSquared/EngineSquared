@@ -12,6 +12,6 @@
 namespace Window::Event {
 
 struct OnResize {
-    glm::ivec2 newSize;
+    glm::uvec2 newSize;
 };
 } // namespace Window::Event
