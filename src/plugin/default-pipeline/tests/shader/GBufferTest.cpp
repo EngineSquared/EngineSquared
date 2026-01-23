@@ -16,14 +16,14 @@ void TestSystem(Engine::Core &core)
 {
     auto cube = core.CreateEntity();
 
-    cube.AddComponent<Object::Component::Transform>(core).SetRotation(
+    cube.AddComponent<Object::Component::Transform>().SetRotation(
         glm::quat(glm::vec3(glm::radians(10.f), glm::radians(45.0f), 0.0f)));
-    cube.AddComponent<Object::Component::Mesh>(core, Object::Utils::GenerateCubeMesh());
+    cube.AddComponent<Object::Component::Mesh>( Object::Utils::GenerateCubeMesh());
 
     auto camera = core.CreateEntity();
 
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 0.0f, -2.0f));
-    camera.AddComponent<Object::Component::Camera>(core).fov = glm::radians(90.0f);
+    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -2.0f));
+    camera.AddComponent<Object::Component::Camera>().fov = glm::radians(90.0f);
 }
 
 void ExtractTextures(Engine::Core &core)

@@ -107,8 +107,8 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
             Log::Error("GBuffer::UniqueRenderCallback: No camera with GPUCamera component found.");
             return;
         }
-        Engine::Entity camera{cameraView.front()};
-        const auto &cameraGPUComponent = camera.GetComponents<Component::GPUCamera>(core);
+        Engine::Entity camera{core, cameraView.front()};
+        const auto &cameraGPUComponent = camera.GetComponents<Component::GPUCamera>();
 
         const auto &cameraBindGroup = bindGroupManager.Get(cameraGPUComponent.bindGroup);
         renderPass.setBindGroup(0, cameraBindGroup.GetBindGroup(), 0, nullptr);
@@ -117,15 +117,15 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
 
         for (auto &&[e, transform, gpuMesh] : view.each())
         {
-            Engine::Entity entity{e};
+            Engine::Entity entity{core, e};
 
             const auto &transformBindGroup = bindGroupManager.Get(transform.bindGroup);
             renderPass.setBindGroup(transformBindGroup.GetLayoutIndex(), transformBindGroup.GetBindGroup(), 0, nullptr);
 
             entt::hashed_string gpuMaterialId{};
-            if (entity.HasComponents<Component::GPUMaterial>(core))
+            if (entity.HasComponents<Component::GPUMaterial>())
             {
-                const auto &materialComponent = entity.GetComponents<Component::GPUMaterial>(core);
+                const auto &materialComponent = entity.GetComponents<Component::GPUMaterial>();
                 gpuMaterialId = materialComponent.bindGroup;
             }
             else
