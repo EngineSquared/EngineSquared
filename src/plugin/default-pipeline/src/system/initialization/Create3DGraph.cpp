@@ -2,9 +2,9 @@
 #include "event/OnResize.hpp"
 #include "resource/EventManager.hpp"
 #include "resource/RenderGraphContainer.hpp"
+#include "resource/Window.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include "utils/DefaultRenderPass.hpp"
-#include "resource/Window.hpp"
 
 /**
  * @brief Creates a texture descriptor for the G-buffer normal output.
