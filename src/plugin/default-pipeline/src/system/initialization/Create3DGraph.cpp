@@ -5,6 +5,8 @@
 #include "resource/Window.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include "utils/DefaultRenderPass.hpp"
+#include "system/WindowSystem.hpp"
+#include "resource/Window.hpp"
 
 /**
  * @brief Creates a texture descriptor for the G-buffer normal output.
@@ -75,11 +77,14 @@ wgpu::TextureDescriptor CreateGBufferPassOutputDepthTextureDescriptor(glm::uvec2
 static void CreateGBufferTextures(Engine::Core &core)
 {
     const auto &context = core.GetResource<Graphic::Resource::Context>();
-    const auto &window = core.GetResource<Window::Resource::Window>();
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
     auto &eventManager = core.GetResource<Event::Resource::EventManager>();
 
-    const auto windowSize = window.GetSize();
+    glm::uvec2 windowSize{Window::System::DEFAULT_WIDTH, Window::System::DEFAULT_HEIGHT};
+    if (core.HasResource<Window::Resource::Window>())
+    {
+        windowSize = core.GetResource<Window::Resource::Window>().GetSize();
+    }
     {
         auto descriptor = CreateGBufferPassOutputNormalTextureDescriptor(windowSize);
         Graphic::Resource::Texture defaultTexture(context, descriptor);
