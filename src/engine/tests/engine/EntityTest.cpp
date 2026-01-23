@@ -18,20 +18,20 @@ TEST(Core, TemporaryComponent)
 
     auto entity = core.CreateEntity();
 
-    entity.AddTemporaryComponent<TempComponent>(core);
+    entity.AddTemporaryComponent<TempComponent>();
 
-    ASSERT_TRUE(entity.HasComponents<TempComponent>(core));
-
-    Entity::RemoveTemporaryComponents(core);
-
-    ASSERT_FALSE(entity.HasComponents<TempComponent>(core));
-
-    entity.AddTemporaryComponent<TempComponentWithAttribut>(core, 1);
-
-    ASSERT_TRUE(entity.HasComponents<TempComponentWithAttribut>(core));
-    ASSERT_EQ(entity.GetComponents<TempComponentWithAttribut>(core).a, 1);
+    ASSERT_TRUE(entity.HasComponents<TempComponent>());
 
     Entity::RemoveTemporaryComponents(core);
 
-    ASSERT_FALSE(entity.HasComponents<TempComponentWithAttribut>(core));
+    ASSERT_FALSE(entity.HasComponents<TempComponent>());
+
+    entity.AddTemporaryComponent<TempComponentWithAttribut>(1);
+
+    ASSERT_TRUE(entity.HasComponents<TempComponentWithAttribut>());
+    ASSERT_EQ(entity.GetComponents<TempComponentWithAttribut>().a, 1);
+
+    Entity::RemoveTemporaryComponents(core);
+
+    ASSERT_FALSE(entity.HasComponents<TempComponentWithAttribut>());
 }

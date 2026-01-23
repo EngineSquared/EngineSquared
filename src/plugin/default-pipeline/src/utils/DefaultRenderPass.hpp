@@ -162,9 +162,9 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
             Log::Error("DefaultRenderPass::UniqueRenderCallback: No camera with GPUCamera component found.");
             return;
         }
-        Engine::Entity camera(cameraView.front());
+        Engine::Entity camera{core, cameraView.front()};
 
-        const auto &cameraGPUComponent = camera.GetComponents<Component::GPUCamera>(core);
+        const auto &cameraGPUComponent = camera.GetComponents<Component::GPUCamera>();
         const auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
 
         const auto &cameraBindGroup = bindGroupManager.Get(cameraGPUComponent.bindGroup);
@@ -180,7 +180,7 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
 
         for (auto &&[e, transform, gpuMesh] : view.each())
         {
-            Engine::Entity entity(e);
+            Engine::Entity entity{core, e};
 
             const auto &transformBindgroup = bindgroupContainer.Get(transform.bindGroup);
             renderPass.setBindGroup(transformBindgroup.GetLayoutIndex(), transformBindgroup.GetBindGroup(), 0, nullptr);
@@ -188,9 +188,9 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
             // TODO: create a system that will add the component if not present before rendering to avoid checking every
             // frame if the component exists
             entt::hashed_string gpuMaterialId{};
-            if (entity.HasComponents<Component::GPUMaterial>(core))
+            if (entity.HasComponents<Component::GPUMaterial>())
             {
-                const auto &materialComponent = entity.GetComponents<Component::GPUMaterial>(core);
+                const auto &materialComponent = entity.GetComponents<Component::GPUMaterial>();
                 gpuMaterialId = materialComponent.bindGroup;
             }
             else

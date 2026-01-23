@@ -28,36 +28,32 @@ namespace Relationship::Utils {
 /**
  * Set the child of an entity to another entity.
  *
- * @param   core    core of the engine
  * @param   parent  parent entity
  * @param   child   child entity
  */
-auto SetChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> void;
+auto SetChildOf(Engine::Entity child, Engine::Entity parent) -> void;
 
 /**
  * Check if an entity is a child of another entity.
  *
- * @param   core    core of the engine
  * @param   parent  parent entity
  * @param   child   child entity
  * @return  true if the child is a child of the parent
  */
-auto IsChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> bool;
+auto IsChildOf(Engine::Entity child, Engine::Entity parent) -> bool;
 
 /**
  * Remove the parent of an entity.
  *
- * @param   core    core of the engine
  * @param   child   child entity
  */
-auto RemoveParent(Engine::Core &core, Engine::Entity child) -> void;
+auto RemoveParent(Engine::Entity child) -> void;
 
 /**
  * Get the parent of an entity.
  *
- * @param   core    core of the engine
  * @param   child   child entity
- * @return  parent entity
+ * @return  the parent entity, or nullopt if the entity has no parent
  */
-auto GetParent(Engine::Core &core, Engine::Entity child) -> Engine::Entity;
+auto GetParent(Engine::Entity child) -> std::optional<Engine::Entity>;
 } // namespace Relationship::Utils

@@ -5,6 +5,6 @@
 
 namespace DefaultPipeline::System {
 
-void OnMaterialCreation(Engine::Core &core, Engine::Entity entity);
+void OnMaterialCreation(Engine::Core &core, Engine::EntityId entityId);
 
 } // namespace DefaultPipeline::System

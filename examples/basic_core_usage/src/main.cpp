@@ -16,7 +16,7 @@ int main(void)
 
     auto entity = core.CreateEntity();
 
-    entity.AddComponent<TestComponent>(core, 42);
+    entity.AddComponent<TestComponent>(42);
 
     core.RegisterSystem(TestSystem);
 

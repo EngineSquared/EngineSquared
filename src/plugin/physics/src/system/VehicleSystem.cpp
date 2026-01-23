@@ -58,9 +58,10 @@ static void CreateJoltWheelSettings(JPH::WheelSettingsWV &joltWheel, const Compo
  * Note: Jolt's WheeledVehicle does NOT use separate physics bodies for wheels.
  * Wheels are simulated via raycasts/shape casts from the chassis.
  */
-static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
+static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityId entityId)
 {
     auto &core = registry.ctx().get<Engine::Core *>();
+    auto entity = Engine::Entity{*core, entityId};
     auto &physicsManager = core->GetResource<Resource::PhysicsManager>();
 
     if (!physicsManager.IsPhysicsActivated())
@@ -69,16 +70,16 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
         return;
     }
 
-    auto &vehicle = registry.get<Component::Vehicle>(entity);
+    auto &vehicle = entity.GetComponents<Component::Vehicle>();
 
-    auto *chassisInternal = registry.try_get<Component::RigidBodyInternal>(entity);
+    auto *chassisInternal = entity.TryGetComponent<Component::RigidBodyInternal>();
     if (!chassisInternal || !chassisInternal->IsValid())
     {
         Log::Error("Cannot create Vehicle: Chassis must have a valid RigidBody component");
         return;
     }
 
-    std::array<Engine::Entity, 4> wheelEntities = vehicle.wheelEntities;
+    std::array<Engine::EntityId, 4> wheelEntities = vehicle.wheelEntities;
     std::array<JPH::BodyID, 4> wheelBodyIDs{};
 
     JPH::WheeledVehicleControllerSettings controllerSettings;
@@ -226,14 +227,14 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
     physicsManager.GetPhysicsSystem().AddConstraint(vehicleConstraint);
     physicsManager.GetPhysicsSystem().AddStepListener(vehicleConstraint);
 
-    auto &vehicleInternal = registry.emplace<Component::VehicleInternal>(entity);
+    auto &vehicleInternal = entity.AddComponent<Component::VehicleInternal>();
     vehicleInternal.vehicleConstraint = vehicleConstraint;
     vehicleInternal.collisionTester = collisionTester;
     vehicleInternal.wheelEntities = wheelEntities;
     vehicleInternal.wheelBodyIDs = wheelBodyIDs;
     vehicleInternal.chassisBodyID = chassisInternal->bodyID;
 
-    Log::Debug(fmt::format("Created Vehicle for entity {}", static_cast<uint32_t>(entity)));
+    Log::Debug(fmt::format("Created Vehicle for entity {}", entity));
 }
 
 /**
@@ -243,15 +244,16 @@ static void OnVehicleConstruct(entt::registry &registry, entt::entity entity)
  * 1. Jolt VehicleConstraint
  * 2. VehicleInternal component
  */
-static void OnVehicleDestroy(entt::registry &registry, entt::entity entity)
+static void OnVehicleDestroy(Engine::Core::Registry &registry, Engine::EntityId entityId)
 {
     auto &core = registry.ctx().get<Engine::Core *>();
     auto &physicsManager = core->GetResource<Resource::PhysicsManager>();
+    auto entity = Engine::Entity{*core, entityId};
 
     if (!physicsManager.IsPhysicsActivated())
         return;
 
-    auto *vehicleInternal = registry.try_get<Component::VehicleInternal>(entity);
+    auto *vehicleInternal = entity.TryGetComponent<Component::VehicleInternal>();
     if (!vehicleInternal || !vehicleInternal->IsValid())
         return;
 
@@ -260,9 +262,8 @@ static void OnVehicleDestroy(entt::registry &registry, entt::entity entity)
 
     vehicleInternal->vehicleConstraint = nullptr;
 
-    Log::Debug(fmt::format("Destroyed Vehicle for entity {}", static_cast<uint32_t>(entity)));
-
-    registry.remove<Component::VehicleInternal>(entity);
+    Log::Debug(fmt::format("Destroyed Vehicle for entity {}", entity));
+    entity.RemoveComponent<Component::VehicleInternal>();
 }
 
 void InitVehicleSystem(Engine::Core &core)

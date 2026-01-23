@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/Core.hpp"
+#include "entity/Entity.hpp"
 #include "utils/AmbientLight.hpp"
 
 namespace DefaultPipeline::Resource {

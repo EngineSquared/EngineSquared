@@ -10,6 +10,8 @@ struct ActionHistory {
 
 class TestScript : public NativeScripting::Utils::ScriptableEntity {
   public:
+    using NativeScripting::Utils::ScriptableEntity::ScriptableEntity;
+
     void OnCreate(Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnCreate"); }
 
     void OnUpdate(Engine::Core &core) { core.GetResource<ActionHistory>().actions.emplace_back("OnUpdate"); }
@@ -26,7 +28,7 @@ TEST(NativeScripting, CasualUse)
 
     auto e = core.CreateEntity();
 
-    e.AddComponent<NativeScripting::Component::NativeScripting>(core).Bind<TestScript>(core);
+    e.AddComponent<NativeScripting::Component::NativeScripting>().Bind<TestScript>(core);
 
     core.RunSystems();
 
