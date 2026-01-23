@@ -8,18 +8,24 @@ struct Surface {
     explicit Surface(std::optional<wgpu::Surface> surface = std::nullopt) : value(surface) {}
     ~Surface() = default;
 
-    std::optional<wgpu::Surface> value;
-    std::optional<wgpu::SurfaceCapabilities> capabilities;
+    std::optional<wgpu::Surface> value = std::nullopt;
+    std::optional<wgpu::SurfaceCapabilities> capabilities = std::nullopt;
     bool configured = false;
 
     inline wgpu::Status updateCapabilities(wgpu::Adapter &adapter)
     {
+        wgpu::SurfaceCapabilities caps;
+        if (!value.has_value())
+        {
+            Log::Error("Cannot update surface capabilities: surface is not created");
+            return wgpu::Status::Error;
+        }
+        wgpu::Status status = value->getCapabilities(adapter, &caps);
         if (capabilities.has_value())
         {
             Log::Warn("Surface capabilities already requested, overwriting");
+            capabilities->freeMembers();
         }
-        wgpu::SurfaceCapabilities caps;
-        wgpu::Status status = value->getCapabilities(adapter, &caps);
         capabilities = caps;
         return status;
     }
@@ -33,6 +39,7 @@ struct Surface {
         }
         if (capabilities.has_value())
         {
+            capabilities->freeMembers();
             capabilities.reset();
         }
         configured = false;

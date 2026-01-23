@@ -11,7 +11,7 @@ namespace DefaultPipeline::Resource {
 class IndexGPUBuffer : public Graphic::Resource::AGPUBuffer {
   public:
     explicit IndexGPUBuffer(Engine::Entity entity) : _entity(entity) {}
-    ~IndexGPUBuffer() override = default;
+    ~IndexGPUBuffer() override { Destroy(); }
     void Create(Engine::Core &core) override
     {
 
@@ -39,14 +39,16 @@ class IndexGPUBuffer : public Graphic::Resource::AGPUBuffer {
 
         _isCreated = true;
     };
-    void Destroy(Engine::Core &core) override
+    void Destroy(Engine::Core &core) override { Destroy(); };
+
+    void Destroy()
     {
         if (_isCreated)
         {
             _isCreated = false;
             _buffer.release();
         }
-    };
+    }
 
     bool IsCreated(Engine::Core &core) const override { return _isCreated; };
     void Update(Engine::Core &core) override
