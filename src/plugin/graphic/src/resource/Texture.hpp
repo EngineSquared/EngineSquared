@@ -45,11 +45,6 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
         switch (data->format)
         {
         case wgpu::TextureFormat::RGBA8UnormSrgb:
-            pixel.r = mapped[i * 4 + 0];
-            pixel.g = mapped[i * 4 + 1];
-            pixel.b = mapped[i * 4 + 2];
-            pixel.a = mapped[i * 4 + 3];
-            break;
         case wgpu::TextureFormat::RGBA8Unorm:
             pixel.r = mapped[i * 4 + 0];
             pixel.g = mapped[i * 4 + 1];
@@ -76,7 +71,7 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
         case wgpu::TextureFormat::Depth32Float: {
             auto depth = std::bit_cast<float>(
                 std::array<uint8_t, 4>{mapped[i * 4 + 0], mapped[i * 4 + 1], mapped[i * 4 + 2], mapped[i * 4 + 3]});
-            uint8_t depthByte = static_cast<uint8_t>(std::clamp(depth, 0.0f, 1.0f) * 255.0f);
+            auto depthByte = static_cast<uint8_t>(std::clamp(depth, 0.0f, 1.0f) * 255.0f);
             pixel = glm::u8vec4(depthByte, depthByte, depthByte, 255);
             break;
         }
