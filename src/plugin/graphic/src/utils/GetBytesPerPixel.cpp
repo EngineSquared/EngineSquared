@@ -3,6 +3,13 @@
 
 namespace Graphic::Utils {
 
+/**
+ * @brief Determines the number of bytes per pixel for a given wgpu texture format.
+ *
+ * @param format The wgpu::TextureFormat to evaluate.
+ * @return uint32_t Number of bytes stored per pixel for the specified format.
+ * @throws Exception::UnsupportedTextureFormatError If the format is not supported by this mapping.
+ */
 uint32_t GetBytesPerPixel(wgpu::TextureFormat format)
 {
     switch (format)

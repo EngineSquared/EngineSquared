@@ -22,6 +22,18 @@ struct CallbackData {
     bool done = false;
 };
 
+/**
+ * @brief Callback invoked when a readback buffer mapping completes; converts mapped texture data into RGBA8 pixels stored in the provided CallbackData.
+ *
+ * @param status Result of the mapAsync operation.
+ * @param message Optional message produced by the mapping operation.
+ * @param userdata1 Pointer to a CallbackData instance that will receive the resulting Image pixels and control flags (must be a valid CallbackData*).
+ * @param userdata2 Unused.
+ *
+ * If @p status is not success the function logs the failure, sets CallbackData::done to true and returns. If mapping succeeded the function reads the mapped buffer, iterates over texels while skipping per-row padding, converts each texel to a 4-channel 8-bit RGBA pixel according to CallbackData::format, appends pixels to CallbackData::data.pixels, unmaps the buffer, and marks CallbackData::done true. Supported source formats: RGBA8UnormSrgb, RGBA8Unorm, BGRA8Unorm, RGBA16Float (per-channel half floats unpacked, clamped to [0,1], and scaled to 0–255), and Depth32Float (depth mapped to a grayscale RGBA with alpha=255).
+ *
+ * @throws Exception::UnsupportedTextureFormatError If the texture format in CallbackData is not supported for retrieval.
+ */
 static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView message, void *userdata1, void *userdata2)
 {
     auto data = static_cast<CallbackData *>(userdata1);
@@ -181,6 +193,15 @@ class Texture {
                            textureSize);
     }
 
+    /**
+     * @brief Reads back the GPU texture and returns it as an Image.
+     *
+     * Copies the texture to a CPU-readable buffer, converts the source texel format into 4-channel
+     * RGBA byte pixels, and returns an Image populated with those pixels. Depth formats are
+     * mapped to grayscale RGBA (depth -> luminance, alpha = 255).
+     *
+     * @return Image The retrieved image with width and height matching the texture and 4 channels (RGBA).
+     */
     Image RetrieveImage(const Context &context) const
     {
         const wgpu::Queue &queue = context.queue.value();

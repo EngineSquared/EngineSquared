@@ -76,6 +76,17 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
         return context.GetDevice()->createBuffer(bufferDesc);
     }
 
+    /**
+     * @brief Update the GPU buffer with the entity's current model and normal matrices.
+     *
+     * Computes the model matrix from the provided Transform component, derives the normal
+     * matrix as the transpose of the inverse of the model matrix, packs both into a
+     * TransformGPUData instance, and writes the data to the GPU buffer at offset 0 using
+     * the provided graphics context queue.
+     *
+     * @param transformComponent Component used to compute the model transformation matrix.
+     * @param context Graphics context containing the queue used to write to the GPU buffer.
+     */
     void _UpdateBuffer(const Object::Component::Transform &transformComponent,
                        const Graphic::Resource::Context &context)
     {

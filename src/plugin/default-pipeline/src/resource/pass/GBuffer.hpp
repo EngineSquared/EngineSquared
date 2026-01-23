@@ -94,8 +94,25 @@ fn fs_main(
 
 class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
   public:
-    explicit GBuffer(std::string_view name = GBUFFER_PASS_NAME) : ASingleExecutionRenderPass<GBuffer>(name) {}
+    /**
+ * @brief Constructs a GBuffer render pass with an optional name.
+ *
+ * @param name Human-readable name for the render pass; defaults to GBUFFER_PASS_NAME.
+ */
+explicit GBuffer(std::string_view name = GBUFFER_PASS_NAME) : ASingleExecutionRenderPass<GBuffer>(name) {}
 
+    /**
+     * @brief Render all entities with GPUTransform and GPUMesh into the G-buffer using the active camera.
+     *
+     * Binds the first available camera's bind group, then for each entity with GPUTransform and GPUMesh:
+     * binds the entity's transform and material bind groups (falls back to the default material if none),
+     * binds the vertex and index buffers, and issues an indexed draw call to populate the G-buffer outputs.
+     *
+     * If no entity exposes a GPUCamera component, logs an error and returns without drawing.
+     *
+     * @param renderPass The render pass encoder used to record bind-group bindings, buffer bindings, and draw commands.
+     * @param core Engine core providing access to resources and the entity registry.
+     */
     void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
     {
         const auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
@@ -146,6 +163,17 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
         }
     }
 
+    /**
+     * @brief Constructs and returns a shader configured for the G-buffer pass.
+     *
+     * The shader includes vertex and fragment entry points ("vs_main", "fs_main"),
+     * bind-group layouts for camera, model, and material, a vertex buffer layout
+     * with position/normal/uv attributes, two color outputs (normal as RGBA16Float
+     * and albedo as BGRA8Unorm), and a depth output (Depth32Float).
+     *
+     * @param graphicContext Graphics resource context used to create the shader.
+     * @return Graphic::Resource::Shader A shader instance configured for the G-buffer rendering pass.
+     */
     static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext)
     {
         Graphic::Resource::ShaderDescriptor shaderDescriptor;

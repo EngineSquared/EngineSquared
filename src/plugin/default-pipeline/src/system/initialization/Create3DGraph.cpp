@@ -5,6 +5,12 @@
 #include "resource/pass/GBuffer.hpp"
 #include "utils/DefaultRenderPass.hpp"
 
+/**
+ * @brief Creates a texture descriptor for the G-buffer normal output.
+ *
+ * @param size Texture dimensions in pixels as (width, height).
+ * @return wgpu::TextureDescriptor Descriptor for a 2D RGBA16Float normal render target configured with TextureBinding, RenderAttachment, CopySrc, and CopyDst usage flags.
+ */
 wgpu::TextureDescriptor CreateGBufferPassOutputNormalTextureDescriptor(glm::uvec2 size)
 {
     wgpu::TextureDescriptor descriptor{wgpu::Default};
@@ -17,6 +23,13 @@ wgpu::TextureDescriptor CreateGBufferPassOutputNormalTextureDescriptor(glm::uvec
     return descriptor;
 }
 
+/**
+ * @brief Create a 2D BGRA8Unorm texture descriptor for the G-buffer albedo output.
+ *
+ * @param size Width and height of the texture in pixels.
+ * @return wgpu::TextureDescriptor Descriptor configured with size (width, height, 1), 2D dimension,
+ *         BGRA8Unorm format, and usage flags: TextureBinding, RenderAttachment, CopySrc, CopyDst.
+ */
 wgpu::TextureDescriptor CreateGBufferPassOutputAlbedoTextureDescriptor(glm::uvec2 size)
 {
     wgpu::TextureDescriptor descriptor{wgpu::Default};
@@ -29,6 +42,12 @@ wgpu::TextureDescriptor CreateGBufferPassOutputAlbedoTextureDescriptor(glm::uvec
     return descriptor;
 }
 
+/**
+ * @brief Creates a 2D depth texture descriptor for the G-buffer depth output.
+ *
+ * @param size Width and height of the texture in pixels (x = width, y = height).
+ * @return wgpu::TextureDescriptor Descriptor configured as a 2D Depth32Float texture labeled for the G-buffer depth output with usages: TextureBinding, RenderAttachment, CopySrc, and CopyDst.
+ */
 wgpu::TextureDescriptor CreateGBufferPassOutputDepthTextureDescriptor(glm::uvec2 size)
 {
     wgpu::TextureDescriptor descriptor{wgpu::Default};
@@ -41,6 +60,15 @@ wgpu::TextureDescriptor CreateGBufferPassOutputDepthTextureDescriptor(glm::uvec2
     return descriptor;
 }
 
+/**
+ * @brief Creates and registers G-buffer render target textures and their resize handlers.
+ *
+ * Initializes default normal (RGBA16F), albedo (BGRA8Unorm), and depth (Depth32Float) textures at 800×800,
+ * stores them in the engine's TextureContainer under the pipeline's G-buffer output IDs, and registers
+ * Window::Event::OnResize callbacks that recreate and replace each texture when the window size changes.
+ *
+ * @param core Engine core used to access Graphic::Resource::Context, TextureContainer, and EventManager.
+ */
 static void CreateGBufferTextures(Engine::Core &core)
 {
     // TODO: resize on window resize
@@ -86,6 +114,15 @@ static void CreateGBufferTextures(Engine::Core &core)
     }
 }
 
+/**
+ * @brief Constructs a render graph containing a configured G-buffer pass.
+ *
+ * Builds a RenderGraph with a single GBuffer pass that has its shader bound and three outputs:
+ * normal, albedo, and depth (the depth output sets clear depth to 1.0).
+ *
+ * @param core Reference to the engine core used to access graphics resources and containers.
+ * @return Graphic::Resource::RenderGraph The constructed render graph with the GBuffer pass added.
+ */
 static Graphic::Resource::RenderGraph CreateGraph(Engine::Core &core)
 {
     Graphic::Resource::RenderGraph renderGraph{};
@@ -123,6 +160,16 @@ static Graphic::Resource::RenderGraph CreateGraph(Engine::Core &core)
     return renderGraph;
 }
 
+/**
+ * @brief Builds the G-buffer render graph, creates its associated textures, and registers the graph with the engine.
+ *
+ * This function ensures G-buffer textures are created (and wired to window resize events), constructs the render
+ * graph containing the GBuffer pass, and stores the resulting render graph in the core's RenderGraphContainer
+ * under the GBUFFER_PASS_ID.
+ *
+ * @param core Reference to the engine core used to access and register rendering resources (render graph container,
+ *             texture container, and event manager).
+ */
 void DefaultPipeline::System::Create3DGraph(Engine::Core &core)
 {
     auto &renderPassContainer = core.GetResource<Graphic::Resource::RenderGraphContainer>();
