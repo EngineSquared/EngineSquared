@@ -5,6 +5,6 @@
 
 namespace DefaultPipeline::System {
 
-void OnMaterialDestruction(Engine::Core &core, Engine::Entity entity);
+void OnMaterialDestruction(Engine::Core &core, Engine::EntityId entityId);
 
 } // namespace DefaultPipeline::System

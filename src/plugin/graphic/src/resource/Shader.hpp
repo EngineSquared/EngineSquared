@@ -13,10 +13,31 @@ namespace Graphic::Resource {
 
 class Shader {
   public:
-    virtual ~Shader() = default;
+    virtual ~Shader()
+    {
+        if (pipeline != nullptr)
+        {
+            pipeline.release();
+            pipeline = nullptr;
+        }
+    }
 
-    Shader(Shader &&) noexcept = default;
-    Shader &operator=(Shader &&) = default;
+    Shader(Shader &&other) noexcept
+    {
+        descriptor = other.descriptor;
+        pipeline = other.pipeline;
+        other.pipeline = nullptr;
+    }
+    Shader &operator=(Shader &&other) noexcept
+    {
+        if (this != &other)
+        {
+            descriptor = other.descriptor;
+            pipeline = other.pipeline;
+            other.pipeline = nullptr;
+        }
+        return *this;
+    }
 
     Shader(const Shader &) = delete;
     Shader &operator=(const Shader &) = delete;
@@ -102,12 +123,20 @@ class Shader {
 
         shader.pipeline = device.createRenderPipeline(pipelineDescriptor);
 
+        shaderModule.release();
+        wgpu::PipelineLayout(pipelineDescriptor.layout).release();
+        for (auto layout : bindGroupLayouts)
+        {
+            wgpu::BindGroupLayout(layout).release();
+        }
+
         return shader;
     }
 
     inline const ShaderDescriptor &GetDescriptor() const { return descriptor; }
     inline wgpu::BindGroupLayout GetBindGroupLayout(uint32_t groupIndex = 0) const
     {
+        // TODO: Create an appropriate class to handle RAII release
         return pipeline.getBindGroupLayout(groupIndex);
     }
 
@@ -144,7 +173,7 @@ class Shader {
     }
 
     ShaderDescriptor descriptor;
-    wgpu::RenderPipeline pipeline;
+    wgpu::RenderPipeline pipeline = nullptr;
 };
 
 } // namespace Graphic::Resource

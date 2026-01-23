@@ -2,10 +2,12 @@
 
 #include "plugin/PluginInput.hpp"
 #include "plugin/PluginWindow.hpp"
+#include "resource/CameraControlSystemManager.hpp"
 #include "resource/CameraManager.hpp"
+#include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
 #include "system/CameraControlSystem.hpp"
-#include "system/RegisterCameraCallbacksSystem.hpp"
+#include "system/ResetCameraBehavior.hpp"
 #include "utils/DefaultBehavior.hpp"
 #include <memory>
 
@@ -20,10 +22,10 @@ void Plugin::Bind()
     RegisterResource(Resource::CameraManager(GetCore()));
 
     auto &cameraManager = GetCore().GetResource<Resource::CameraManager>();
-    cameraManager.SetBehavior(std::make_shared<Utils::DefaultBehavior>());
+    cameraManager.SetBehavior(std::make_shared<Utils::DefaultBehavior>(GetCore()));
 
-    RegisterSystems<Engine::Scheduler::Startup>(System::RegisterCameraCallbacksSystem);
-    RegisterSystems<Engine::Scheduler::Update>(System::CameraControlSystem);
+    RegisterResource(Resource::CameraControlSystemManager(GetCore()));
+    RegisterSystems<Engine::Scheduler::Shutdown>(System::ResetCameraBehavior);
 }
 
 } // namespace CameraMovement

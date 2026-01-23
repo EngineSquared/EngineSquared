@@ -1,7 +1,7 @@
 #pragma once
 
 #include "component/WheelSettings.hpp"
-#include "entity/Entity.hpp"
+#include "entity/EntityId.hpp"
 #include <Jolt/Physics/Vehicle/VehicleAntiRollBar.h>
 #include <Jolt/Physics/Vehicle/VehicleConstraint.h>
 #include <array>
@@ -19,6 +19,22 @@ enum class DrivetrainType : uint8_t {
     FWD,
     /// Rear-Wheel Drive - power to rear wheels only
     RWD
+};
+
+/**
+ * @brief Collision tester type for vehicle wheel collision detection
+ *
+ * Determines how wheel-ground collision is detected.
+ * CastCylinder is recommended for most use cases as it handles
+ * internal edges between adjacent static bodies (e.g., floor tiles) better.
+ */
+enum class CollisionTesterType : uint8_t {
+    /// Simple raycast - fastest but prone to ghost collisions on tiled floors
+    Ray,
+    /// Sphere cast - better than ray, good for rough terrain
+    CastSphere,
+    /// Cylinder cast - most accurate, best for tiled floors and complex terrain (default)
+    CastCylinder
 };
 
 /**
@@ -95,10 +111,17 @@ struct Vehicle {
     RollbarSettings rollbar;
 
     /// Wheel entities for visual representation
-    std::array<Engine::Entity, 4> wheelEntities;
+    std::array<Engine::EntityId, 4> wheelEntities;
 
     /// Wheel positions relative to chassis center
     std::array<glm::vec3, 4> wheelPositions = GetDefaultWheelPositions();
+
+    /// Collision tester type for wheel-ground detection (default: CastCylinder)
+    CollisionTesterType collisionTesterType = CollisionTesterType::CastCylinder;
+
+    /// Convex radius fraction for CastCylinder tester (0.0 to 1.0)
+    /// Higher values help prevent ghost collisions (default: 0.5, increase if needed)
+    float convexRadiusFraction = 0.5f;
 
     /**
      * @brief Get default wheel positions relative to chassis center

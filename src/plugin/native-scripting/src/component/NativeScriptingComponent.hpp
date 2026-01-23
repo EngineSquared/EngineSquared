@@ -11,7 +11,7 @@ namespace NativeScripting::Component {
 struct NativeScripting {
     std::unique_ptr<Utils::ScriptableEntity> seInstance = nullptr;
 
-    std::function<void()> Instantiate;
+    std::function<void(Engine::Entity)> Instantiate;
     std::function<void()> DestroyInstance;
 
     std::function<void(Utils::ScriptableEntity *)> OnCreate;
@@ -20,7 +20,7 @@ struct NativeScripting {
 
     template <typename T> void Bind(Engine::Core &core)
     {
-        Instantiate = [this]() { seInstance = std::make_unique<T>(); };
+        Instantiate = [this, &core](Engine::Entity entity) { seInstance = std::make_unique<T>(entity); };
         DestroyInstance = [this]() { seInstance.reset(); };
 
         OnCreate = [&core](Utils::ScriptableEntity *instance) { static_cast<T *>(instance)->OnCreate(core); };

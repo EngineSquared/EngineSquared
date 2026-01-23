@@ -26,17 +26,11 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
                   "AmbientLightTransfer struct size does not match GPU requirements.");
 
   public:
-    explicit AmbientLightBuffer(Engine::Entity entity = Engine::Entity{}) : _entity(entity)
-    {
-        std::string entityName = "NULL_ENTITY";
-        if (_entity.IsValid())
-        {
-            entityName = Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
-        }
-        _debugName = fmt::format("{}{}", prefix, entityName);
-    }
+    explicit AmbientLightBuffer(Engine::Entity entity) : _entity(entity) { _UpdateDebugName(); }
 
-    ~AmbientLightBuffer() override = default;
+    explicit AmbientLightBuffer(void) { _UpdateDebugName(); }
+
+    ~AmbientLightBuffer() override { Destroy(); }
     void Create(Engine::Core &core) override
     {
         const auto &context = core.GetResource<Graphic::Resource::Context>();
@@ -44,27 +38,33 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
         _buffer = _CreateBuffer(context.deviceContext);
         _isCreated = true;
     };
-    void Destroy(Engine::Core &core) override
+    void Destroy(Engine::Core &core) override { Destroy(); };
+
+    void Destroy()
     {
         if (_isCreated)
         {
             _isCreated = false;
             _buffer.release();
         }
-    };
+    }
 
     bool IsCreated(Engine::Core &core) const override { return _isCreated; };
     void Update(Engine::Core &core) override
     {
-        if (_entity == Engine::Entity::entity_null_id)
+        if (!_entity.has_value() || _entity->IsAlive() == false)
         {
             return;
         }
-        const auto &ambientLight = _entity.GetComponents<Object::Component::AmbientLight>(core);
+        const auto &ambientLight = _entity->GetComponents<Object::Component::AmbientLight>();
         SetValue(core, ambientLight);
     };
 
-    void SetEntity(Engine::Entity entity) { _entity = entity; }
+    void SetEntity(Engine::Entity entity)
+    {
+        _entity = entity;
+        _UpdateDebugName();
+    }
 
     void SetValue(const Engine::Core &core, const Object::Component::AmbientLight &ambientLight)
     {
@@ -83,6 +83,18 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
     std::string_view GetDebugName() const { return _debugName; }
 
   private:
+    inline void _UpdateDebugName()
+    {
+        if (_entity.has_value())
+        {
+            _debugName = fmt::format("{}{}", prefix, *_entity);
+        }
+        else
+        {
+            _debugName = fmt::format("{}{}", prefix, "<no_entity>");
+        }
+    }
+
     wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
     {
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
@@ -102,7 +114,7 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
 
     wgpu::Buffer _buffer;
     bool _isCreated = false;
-    Engine::Entity _entity = Engine::Entity::entity_null_id;
+    std::optional<Engine::Entity> _entity;
     std::string _debugName;
 };
 } // namespace DefaultPipeline::Resource

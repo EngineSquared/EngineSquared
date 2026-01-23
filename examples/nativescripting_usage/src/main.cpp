@@ -18,7 +18,7 @@ int main(void)
 
     auto e = core.CreateEntity();
 
-    e.AddComponent<NativeScripting::Component::NativeScripting>(core).Bind<TestScript>(core);
+    e.AddComponent<NativeScripting::Component::NativeScripting>().Bind<TestScript>(core);
 
     for (int i = 0; i < 5; ++i)
     {

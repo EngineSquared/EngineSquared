@@ -11,7 +11,7 @@
 Engine::Core::Core() : _registry(nullptr)
 {
     Log::Debug("Create Core");
-    this->_registry = std::make_unique<entt::registry>();
+    this->_registry = std::make_unique<Registry>();
 
     this->RegisterResource<Resource::Time>(Resource::Time());
 
@@ -41,9 +41,23 @@ Engine::Core::Core() : _registry(nullptr)
 
 Engine::Core::~Core() { Log::Debug("Destroy Core"); }
 
-Engine::Entity Engine::Core::CreateEntity() { return static_cast<Engine::Entity>(this->_registry->create()); }
+Engine::Entity Engine::Core::CreateEntity()
+{
+    EntityId entity = this->_registry->create();
+    Log::Debug(fmt::format("[EntityID:{}] Entity Created", entity));
+    return Entity{*this, entity};
+}
 
-void Engine::Core::KillEntity(Engine::Entity &entity) { this->_registry->destroy(static_cast<entt::entity>(entity)); }
+void Engine::Core::KillEntity(Engine::Id entity)
+{
+    if (!IsEntityValid(entity))
+    {
+        Log::Warn(fmt::format("[EntityID:{}] KillEntity ignored: invalid entity", entity));
+        return;
+    }
+    this->_registry->destroy(entity);
+    Log::Debug(fmt::format("[EntityID:{}] Entity Destroyed", entity));
+}
 
 bool Engine::Core::IsRunning() { return _running; }
 
@@ -78,7 +92,7 @@ void Engine::Core::RunSystems()
     this->_schedulersToDelete.clear();
 }
 
-bool Engine::Core::IsEntityValid(entt::entity entity) { return GetRegistry().valid(entity); }
+bool Engine::Core::IsEntityValid(Engine::Id entity) const { return GetRegistry().valid(entity); }
 
 void Engine::Core::ClearEntities() { this->_registry->clear(); }
 

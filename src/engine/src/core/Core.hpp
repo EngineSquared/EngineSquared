@@ -8,33 +8,24 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Id.hpp"
 #include "Logger.hpp"
 #include "plugin/IPlugin.hpp"
 #include "scheduler/SchedulerContainer.hpp"
 #include "scheduler/Update.hpp"
 
 namespace Engine {
-/**
- * The registry is used to create, kill and manage entities.
- * It is also used to register and get components. These registered components can be used by systems.
- * After registering all the components and systems, the user can call the RunSystems() method to run all the systems.
- * To use ECS, you need to create a registry and register all the components and systems you need and after that
- * you can create entities and add components to them.
- */
 
-/* Forward declaration to the Engine::Entity class
- * Required to avoid include loop between Entity and Core headers
- */
 class Entity;
 
 template <typename T>
 concept CScheduler = std::derived_from<T, Scheduler::AScheduler>;
 
 class Core {
-  private:
-    using USystem = std::function<void(Core &)>;
-
   public:
+    using USystem = std::function<void(Core &)>;
+    using Registry = entt::basic_registry<Id>;
+
     Core();
     ~Core();
 
@@ -44,7 +35,7 @@ class Core {
      *
      * @return  registry that contains all components.
      */
-    inline entt::registry &GetRegistry() { return *_registry; }
+    inline Registry &GetRegistry() { return *_registry; }
 
     /**
      * Get the entt::registry that contains all components.
@@ -52,21 +43,21 @@ class Core {
      *
      * @return  registry that contains all components.
      */
-    inline const entt::registry &GetRegistry() const { return *_registry; }
+    inline const Registry &GetRegistry() const { return *_registry; }
 
     /**
      * Create an entity.
      *
      * @return  The entity created.
      */
-    Engine::Entity CreateEntity();
+    Entity CreateEntity();
 
     /**
      * Kill an entity. It will remove all components from the entity.
      *
      * @param   entity  The entity to kill.
      */
-    void KillEntity(Engine::Entity &entity);
+    void KillEntity(Id entity);
 
     /**
      * Store a resource instance.
@@ -131,6 +122,14 @@ class Core {
      * @return The scheduler.
      */
     template <CScheduler TScheduler> TScheduler &GetScheduler();
+
+    /**
+     * Get a scheduler from the registry by its type index.
+     *
+     * @param id The type index of the scheduler to get.
+     * @return The scheduler.
+     */
+    Scheduler::AScheduler &GetScheduler(std::type_index id);
 
     /**
      * @brief Sets the execution order of two schedulers, ensuring that TSchedulerA
@@ -258,7 +257,7 @@ class Core {
     /**
      * Check if entity is valid in the context of the registry. It check if the id of the entity exist.
      */
-    bool IsEntityValid(entt::entity entity);
+    bool IsEntityValid(Id entity) const;
 
     /**
      * @brief Adds multiple plugins to the core engine.
@@ -338,7 +337,7 @@ class Core {
     template <typename TPlugin> void AddPlugin();
 
   private:
-    std::unique_ptr<entt::registry> _registry;
+    std::unique_ptr<Registry> _registry;
     Engine::SchedulerContainer _schedulers;
     std::type_index _defaultScheduler = typeid(Engine::Scheduler::Update);
     std::vector<std::type_index> _schedulersToDelete;

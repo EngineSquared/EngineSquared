@@ -23,14 +23,11 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
                   "MaterialTransfer struct size does not match GPU requirements.");
 
   public:
-    explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity)
-    {
-        _debugName = prefix + Log::EntityToDebugString(static_cast<Engine::Entity::entity_id_type>(entity));
-    }
+    explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity) { _UpdateDebugName(); }
 
-    explicit MaterialGPUBuffer(void) = default;
+    explicit MaterialGPUBuffer(void) { _UpdateDebugName(); }
 
-    ~MaterialGPUBuffer() override = default;
+    ~MaterialGPUBuffer() override { Destroy(); }
     void Create(Engine::Core &core) override
     {
         const auto &context = core.GetResource<Graphic::Resource::Context>();
@@ -38,14 +35,16 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
         _buffer = _CreateBuffer(context.deviceContext);
         _isCreated = true;
     };
-    void Destroy(Engine::Core &core) override
+    void Destroy(Engine::Core &core) override { Destroy(); };
+
+    void Destroy()
     {
         if (_isCreated)
         {
             _isCreated = false;
             _buffer.release();
         }
-    };
+    }
 
     bool IsCreated(Engine::Core &core) const override { return _isCreated; };
     void Update(Engine::Core &core) override
@@ -55,12 +54,12 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU material buffer that is not created.");
         }
 
-        if (_entity == Engine::Entity::entity_null_id)
+        if (!_entity.has_value())
         {
             return;
         }
 
-        const auto &materialComponent = _entity.GetComponents<Object::Component::Material>(core);
+        const auto &materialComponent = _entity->GetComponents<Object::Component::Material>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
         _UpdateBuffer(materialComponent, context);
     };
@@ -81,6 +80,14 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
     std::string_view GetDebugName() const { return _debugName; }
 
   private:
+    void _UpdateDebugName()
+    {
+        if (_entity.has_value())
+            _debugName = fmt::format("{}{}", prefix, *_entity);
+        else
+            _debugName = fmt::format("{}{}", prefix, "Default");
+    }
+
     wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
     {
         wgpu::BufferDescriptor bufferDesc(wgpu::Default);
@@ -99,7 +106,7 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
 
     wgpu::Buffer _buffer;
     bool _isCreated = false;
-    Engine::Entity _entity = Engine::Entity::entity_null_id;
+    std::optional<Engine::Entity> _entity;
     std::string _debugName;
 };
 } // namespace DefaultPipeline::Resource

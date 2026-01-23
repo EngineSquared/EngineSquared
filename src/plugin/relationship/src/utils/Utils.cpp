@@ -2,19 +2,15 @@
 #include "Logger.hpp"
 #include <fmt/format.h>
 
-// Temp
-#include <iostream>
-
-auto Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> void
+auto Relationship::Utils::SetChildOf(Engine::Entity child, Engine::Entity parent) -> void
 {
-    if (IsChildOf(core, parent, child))
+    if (IsChildOf(parent, child))
     {
-        Log::Warn(fmt::format("Entity {} is already a child of the parent {}", Engine::Entity::entity_id_type(child),
-                              Engine::Entity::entity_id_type(parent)));
+        Log::Warn(fmt::format("Entity {} is already a child of the parent {}", child, parent));
         return;
     }
-    auto &parentRS = parent.AddComponentIfNotExists<Relationship::Component::Relationship>(core);
-    auto &newChildRS = child.AddComponentIfNotExists<Relationship::Component::Relationship>(core);
+    auto &parentRS = parent.AddComponentIfNotExists<Relationship::Component::Relationship>();
+    auto &newChildRS = child.AddComponentIfNotExists<Relationship::Component::Relationship>();
 
     parentRS.children++;
     if (parentRS.children == 1)
@@ -24,63 +20,69 @@ auto Relationship::Utils::SetChildOf(Engine::Core &core, Engine::Entity child, E
         return;
     }
 
-    auto &firstChildRS = parentRS.first.GetComponents<Relationship::Component::Relationship>(core);
+    auto &firstChildRS = parentRS.first->GetComponents<Relationship::Component::Relationship>();
     firstChildRS.prev = child;
     newChildRS.next = parentRS.first;
     parentRS.first = child;
     newChildRS.parent = parent;
 }
 
-auto Relationship::Utils::IsChildOf(Engine::Core &core, Engine::Entity child, Engine::Entity parent) -> bool
+auto Relationship::Utils::IsChildOf(Engine::Entity child, Engine::Entity parent) -> bool
 {
     const Relationship::Component::Relationship *childRS =
-        child.TryGetComponent<Relationship::Component::Relationship>(core);
+        child.TryGetComponent<Relationship::Component::Relationship>();
     return childRS && childRS->parent == parent;
 }
 
-auto Relationship::Utils::RemoveParent(Engine::Core &core, Engine::Entity child) -> void
+auto Relationship::Utils::RemoveParent(Engine::Entity child) -> void
 {
-    Engine::Entity parent = GetParent(core, child);
-    if (parent == Engine::Entity::entity_null_id)
+    std::optional<Engine::Entity> parentOpt = GetParent(child);
+    if (!parentOpt.has_value())
+    {
+        Log::Warn(fmt::format("Entity {} has no parent to remove", child));
         return;
-    auto &childRS = child.GetComponents<Relationship::Component::Relationship>(core);
-    auto &parentRS = parent.GetComponents<Relationship::Component::Relationship>(core);
+    }
+    Engine::Entity parent = parentOpt.value();
+    auto &childRS = child.GetComponents<Relationship::Component::Relationship>();
+    auto &parentRS = parent.GetComponents<Relationship::Component::Relationship>();
 
     parentRS.children--;
     if (parentRS.first == child)
     {
-        if (childRS.next == Engine::Entity::entity_null_id)
+        if (!childRS.next.has_value())
         {
-            parentRS.first = Engine::Entity::entity_null_id;
+            parentRS.first = std::nullopt;
         }
         else
         {
-            auto &secondChildRS = childRS.next.GetComponents<Relationship::Component::Relationship>(core);
-            secondChildRS.prev = Engine::Entity::entity_null_id;
+            auto &secondChildRS = childRS.next->GetComponents<Relationship::Component::Relationship>();
+            secondChildRS.prev = std::nullopt;
             parentRS.first = childRS.next;
         }
     }
 
-    childRS.parent = Engine::Entity::entity_null_id;
-    if (childRS.prev != Engine::Entity::entity_null_id)
+    childRS.parent = std::nullopt;
+    if (childRS.prev.has_value())
     {
-        childRS.prev.GetComponents<Relationship::Component::Relationship>(core).next = childRS.next;
+        childRS.prev->GetComponents<Relationship::Component::Relationship>().next = childRS.next;
     }
-    if (childRS.next != Engine::Entity::entity_null_id)
+    if (childRS.next.has_value())
     {
-        childRS.next.GetComponents<Relationship::Component::Relationship>(core).prev = childRS.prev;
+        childRS.next->GetComponents<Relationship::Component::Relationship>().prev = childRS.prev;
     }
 }
 
-auto Relationship::Utils::GetParent(Engine::Core &core, Engine::Entity child) -> Engine::Entity
+auto Relationship::Utils::GetParent(Engine::Entity child) -> std::optional<Engine::Entity>
 {
-    const Relationship::Component::Relationship &childRS =
-        child.GetComponents<Relationship::Component::Relationship>(core);
-
-    if (childRS.parent == Engine::Entity::entity_null_id)
+    const Relationship::Component::Relationship *childRS =
+        child.TryGetComponent<Relationship::Component::Relationship>();
+    if (!childRS)
     {
-        Log::Warn(fmt::format("Entity {} has no parent", Engine::Entity::entity_id_type(child)));
-        return Engine::Entity::entity_null_id;
+        return std::nullopt;
     }
-    return childRS.parent;
+    if (!childRS->parent.has_value())
+    {
+        return std::nullopt;
+    }
+    return childRS->parent;
 }

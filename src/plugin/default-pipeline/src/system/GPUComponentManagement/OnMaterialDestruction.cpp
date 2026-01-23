@@ -3,12 +3,14 @@
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
 
-void DefaultPipeline::System::OnMaterialDestruction(Engine::Core &core, Engine::Entity entity)
+void DefaultPipeline::System::OnMaterialDestruction(Engine::Core &core, Engine::EntityId entityId)
 {
-    if (!entity.HasComponents<Component::GPUMaterial>(core))
+    Engine::Entity entity{core, entityId};
+
+    if (!entity.HasComponents<Component::GPUMaterial>())
         return;
 
-    const auto &materialComponent = entity.GetComponents<Component::GPUMaterial>(core);
+    const auto &materialComponent = entity.GetComponents<Component::GPUMaterial>();
 
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
@@ -18,5 +20,5 @@ void DefaultPipeline::System::OnMaterialDestruction(Engine::Core &core, Engine::
     if (bindGroupManager.Contains(materialComponent.bindGroup))
         bindGroupManager.Remove(materialComponent.bindGroup);
 
-    entity.RemoveComponent<Component::GPUMaterial>(core);
+    entity.RemoveComponent<Component::GPUMaterial>();
 }

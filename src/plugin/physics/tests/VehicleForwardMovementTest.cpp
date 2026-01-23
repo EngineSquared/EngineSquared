@@ -35,8 +35,8 @@ TEST(VehiclePlugin, VehicleForwardMovement)
     auto floor =
         Object::Helper::CreatePlane(core, {.width = 50.0f, .depth = 50.0f, .position = glm::vec3(0.0f, 0.0f, 0.0f)});
     auto floorCollider = Physics::Component::BoxCollider(glm::vec3(25.0f, 0.5f, 25.0f));
-    floor.AddComponent<Physics::Component::BoxCollider>(core, floorCollider);
-    floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
+    floor.AddComponent<Physics::Component::BoxCollider>(floorCollider);
+    floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
 
     // Create vehicle on floor
     Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);
@@ -67,8 +67,6 @@ TEST(VehiclePlugin, VehicleForwardMovement)
                        .SetChassisMass(1000.0f)
                        .Build(core);
 
-    auto &registry = core.GetRegistry();
-
     // Let vehicle settle on ground
     for (int i = 0; i < 50; ++i)
     {
@@ -76,12 +74,12 @@ TEST(VehiclePlugin, VehicleForwardMovement)
     }
 
     // Record starting position
-    auto *transform = registry.try_get<Object::Component::Transform>(vehicle);
+    auto *transform = vehicle.TryGetComponent<Object::Component::Transform>();
     ASSERT_NE(transform, nullptr);
     glm::vec3 startPos = transform->GetPosition();
 
     // Apply forward input
-    auto *controller = registry.try_get<Physics::Component::VehicleController>(vehicle);
+    auto *controller = vehicle.TryGetComponent<Physics::Component::VehicleController>();
     ASSERT_NE(controller, nullptr);
     controller->SetForward(1.0f); // Full throttle
 

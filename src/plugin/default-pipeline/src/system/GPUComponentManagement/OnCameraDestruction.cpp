@@ -3,12 +3,14 @@
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
 
-void DefaultPipeline::System::OnCameraDestruction(Engine::Core &core, Engine::Entity entity)
+void DefaultPipeline::System::OnCameraDestruction(Engine::Core &core, Engine::EntityId entityId)
 {
-    if (!entity.HasComponents<Component::GPUCamera>(core))
+    Engine::Entity entity{core, entityId};
+
+    if (!entity.HasComponents<Component::GPUCamera>())
         return;
 
-    const auto &cameraComponent = entity.GetComponents<Component::GPUCamera>(core);
+    const auto &cameraComponent = entity.GetComponents<Component::GPUCamera>();
 
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
@@ -18,5 +20,5 @@ void DefaultPipeline::System::OnCameraDestruction(Engine::Core &core, Engine::En
     if (bindGroupManager.Contains(cameraComponent.bindGroup))
         bindGroupManager.Remove(cameraComponent.bindGroup);
 
-    entity.RemoveComponent<Component::GPUCamera>(core);
+    entity.RemoveComponent<Component::GPUCamera>();
 }

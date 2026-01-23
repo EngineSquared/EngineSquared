@@ -185,12 +185,12 @@ template <> class VehicleBuilder<4> {
             throw Exception::VehicleBuilderError("Gearbox must have at least one forward gear and one reverse gear");
         }
 
-        Engine::Entity chassis = core.CreateEntity();
+        auto chassis = core.CreateEntity();
         chassis.AddComponent<Object::Component::Transform>(
-            core, Object::Component::Transform(_chassisPosition, _chassisScale, _chassisRotation));
-        chassis.AddComponent<Object::Component::Mesh>(core, _chassisMesh);
+            Object::Component::Transform(_chassisPosition, _chassisScale, _chassisRotation));
+        chassis.AddComponent<Object::Component::Mesh>(_chassisMesh);
 
-        std::array<Engine::Entity, 4> wheelEntities;
+        std::array<Engine::EntityId, 4> wheelEntities;
         for (size_t i = 0; i < 4; ++i)
         {
             wheelEntities[i] = core.CreateEntity();
@@ -207,16 +207,16 @@ template <> class VehicleBuilder<4> {
         auto chassisRigidBody = Component::RigidBody::CreateDynamic(_chassisMass);
         chassisRigidBody.friction = 0.5f;
         chassisRigidBody.restitution = 0.1f;
-        chassis.AddComponent<Component::RigidBody>(core, chassisRigidBody);
+        chassis.AddComponent<Component::RigidBody>(chassisRigidBody);
 
-        chassis.AddComponent<Component::BoxCollider>(core, Component::BoxCollider(_chassisHalfExtents));
+        chassis.AddComponent<Component::BoxCollider>(Component::BoxCollider(_chassisHalfExtents));
 
         _vehicle.wheelEntities = wheelEntities;
         _vehicle.wheelPositions = _wheelPositions;
 
-        chassis.AddComponent<Component::Vehicle>(core, _vehicle);
+        chassis.AddComponent<Component::Vehicle>(_vehicle);
 
-        chassis.AddComponent<Component::VehicleController>(core);
+        chassis.AddComponent<Component::VehicleController>();
 
         return chassis;
     }
@@ -236,6 +236,30 @@ template <> class VehicleBuilder<4> {
     VehicleBuilder &SetChassisHalfExtents(const glm::vec3 &halfExtents)
     {
         _chassisHalfExtents = halfExtents;
+        return *this;
+    }
+
+    /**
+     * @brief Set the collision tester type for wheel-ground detection
+     */
+    VehicleBuilder &SetCollisionTesterType(Component::CollisionTesterType type)
+    {
+        _vehicle.collisionTesterType = type;
+        return *this;
+    }
+
+    /**
+     * @brief Set the convex radius fraction for CastCylinder tester
+     *
+     * @param fraction Value between 0.0 and 1.0 (default: 0.5)
+     */
+    VehicleBuilder &SetConvexRadiusFraction(float fraction)
+    {
+        if (fraction < 0.0f || fraction > 1.0f)
+        {
+            throw Exception::VehicleBuilderError("Convex radius fraction must be between 0.0 and 1.0");
+        }
+        _vehicle.convexRadiusFraction = fraction;
         return *this;
     }
 
