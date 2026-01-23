@@ -13,7 +13,8 @@ void Graphic::System::Present(Engine::Core &core)
     context.surface->value->present();
     {
         auto &textureContainer = core.GetResource<Resource::TextureContainer>();
-        if (textureContainer.Contains(Utils::END_RENDER_TEXTURE_ID)) {
+        if (textureContainer.Contains(Utils::END_RENDER_TEXTURE_ID))
+        {
             textureContainer.Get(Utils::END_RENDER_TEXTURE_ID).TakeOwnership();
             textureContainer.Remove(Utils::END_RENDER_TEXTURE_ID);
         }
