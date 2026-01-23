@@ -1,7 +1,7 @@
 #pragma once
 
 #include "component/WheelSettings.hpp"
-#include "entity/Entity.hpp"
+#include "entity/EntityId.hpp"
 #include <Jolt/Physics/Vehicle/VehicleAntiRollBar.h>
 #include <Jolt/Physics/Vehicle/VehicleConstraint.h>
 #include <array>
@@ -111,7 +111,7 @@ struct Vehicle {
     RollbarSettings rollbar;
 
     /// Wheel entities for visual representation
-    std::array<Engine::Entity, 4> wheelEntities;
+    std::array<Engine::EntityId, 4> wheelEntities;
 
     /// Wheel positions relative to chassis center
     std::array<glm::vec3, 4> wheelPositions = GetDefaultWheelPositions();

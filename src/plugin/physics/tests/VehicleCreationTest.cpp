@@ -43,18 +43,18 @@ TEST(VehiclePlugin, VehicleCreation)
                        .SetDrivetrain(Physics::Component::DrivetrainType::RWD)
                        .Build(core);
 
-    ASSERT_TRUE(vehicle.IsValid());
+    ASSERT_TRUE(vehicle.IsAlive());
 
     // Verify components exist
     auto &registry = core.GetRegistry();
-    EXPECT_TRUE(registry.all_of<Physics::Component::Vehicle>(vehicle));
-    EXPECT_TRUE(registry.all_of<Physics::Component::VehicleInternal>(vehicle));
-    EXPECT_TRUE(registry.all_of<Physics::Component::VehicleController>(vehicle));
-    EXPECT_TRUE(registry.all_of<Physics::Component::RigidBody>(vehicle));
-    EXPECT_TRUE(registry.all_of<Object::Component::Transform>(vehicle));
+    EXPECT_TRUE(vehicle.HasComponents<Physics::Component::Vehicle>());
+    EXPECT_TRUE(vehicle.HasComponents<Physics::Component::VehicleInternal>());
+    EXPECT_TRUE(vehicle.HasComponents<Physics::Component::VehicleController>());
+    EXPECT_TRUE(vehicle.HasComponents<Physics::Component::RigidBody>());
+    EXPECT_TRUE(vehicle.HasComponents<Object::Component::Transform>());
 
     // Verify vehicle internal data is valid
-    const auto &vehicleInternal = vehicle.GetComponents<Physics::Component::VehicleInternal>(core);
+    const auto &vehicleInternal = vehicle.GetComponents<Physics::Component::VehicleInternal>();
     EXPECT_TRUE(vehicleInternal.IsValid());
     EXPECT_NE(vehicleInternal.vehicleConstraint, nullptr);
     EXPECT_NE(vehicleInternal.vehicleConstraint->GetController(), nullptr);

@@ -28,9 +28,9 @@ void CreateFloor(Engine::Core &core)
         Object::Helper::CreatePlane(core, {.width = 20.0f, .depth = 20.0f, .position = glm::vec3(0.0f, 0.0f, 0.0f)});
 
     auto boxCollider = Physics::Component::BoxCollider(glm::vec3(10.0f, 0.5f, 10.0f));
-    floor.AddComponent<Physics::Component::BoxCollider>(core, boxCollider);
+    floor.AddComponent<Physics::Component::BoxCollider>(boxCollider);
 
-    floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
+    floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
 
     std::cout << "- Floor created (static body with mesh)" << std::endl;
 }
@@ -49,7 +49,7 @@ void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass
     auto rigidBody = Physics::Component::RigidBody::CreateDynamic(mass);
     rigidBody.friction = 0.5f;
     rigidBody.restitution = 0.3f; // Some bounce
-    cube.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
+    cube.AddComponent<Physics::Component::RigidBody>(rigidBody);
 
     std::cout << "- Cube created at (" << x << ", " << y << ", " << z << ") with mass " << mass << "kg (with mesh)"
               << std::endl;
@@ -67,12 +67,12 @@ void CreateBouncyBall(Engine::Core &core, float x, float y, float z)
     auto ball = Object::Helper::CreateSphere(core, {.radius = 0.5f, .position = glm::vec3(x, y, z)});
 
     auto collider = Physics::Component::BoxCollider(glm::vec3(0.5f, 0.5f, 0.5f));
-    ball.AddComponent<Physics::Component::BoxCollider>(core, collider);
+    ball.AddComponent<Physics::Component::BoxCollider>(collider);
 
     auto rigidBody = Physics::Component::RigidBody::CreateDynamic(1.0f);
     rigidBody.restitution = 0.8f; // 80% bounce
     rigidBody.friction = 0.2f;    // Low friction
-    ball.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
+    ball.AddComponent<Physics::Component::RigidBody>(rigidBody);
 
     std::cout << "- Bouncy ball created at (" << x << ", " << y << ", " << z << ") with mesh" << std::endl;
 }
@@ -90,17 +90,16 @@ void CreateMovingPlatform(Engine::Core &core)
                                                       .scale = glm::vec3(3.0f, 0.3f, 3.0f)}); // Scale to make it flat
 
     auto collider = Physics::Component::BoxCollider(glm::vec3(3.0f, 0.3f, 3.0f));
-    platform.AddComponent<Physics::Component::BoxCollider>(core, collider);
+    platform.AddComponent<Physics::Component::BoxCollider>(collider);
 
-    platform.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateKinematic());
+    platform.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateKinematic());
 
     std::cout << "- Kinematic platform created with mesh" << std::endl;
 }
 
-void OnCollisionAdded(Engine::Core &core, const Physics::Event::CollisionAddedEvent &event)
+void OnCollisionAdded(const Physics::Event::CollisionAddedEvent &event)
 {
-    std::cout << "Collision detected between Entity " << static_cast<uint32_t>(event.entity1) << " and Entity "
-              << static_cast<uint32_t>(event.entity2) << std::endl;
+    std::cout << "Collision detected between Entity " << event.entity1 << " and Entity " << event.entity2 << std::endl;
 }
 
 void RegisterCollisionLoggerSystem(Engine::Core &core)
@@ -161,13 +160,13 @@ void RunningPhysicsSimulationSystem(Engine::Core &core)
 
         std::cout << "  - Dynamic body positions:" << std::endl;
         core.GetRegistry().view<Physics::Component::RigidBody, Object::Component::Transform>().each(
-            [&](Engine::Entity entity, const Physics::Component::RigidBody &rb,
+            [&](Engine::EntityId entity, const Physics::Component::RigidBody &rb,
                 const Object::Component::Transform &transform) {
                 if (rb.motionType != Physics::Component::MotionType::Dynamic)
                     return;
-
-                std::cout << "    Entity " << static_cast<uint32_t>(entity) << ": (" << transform.GetPosition().x
-                          << ", " << transform.GetPosition().y << ", " << transform.GetPosition().z << ")" << std::endl;
+                const auto &position = transform.GetPosition();
+                std::cout << "    Entity " << entity << ": (" << position.x << ", " << position.y << ", " << position.z
+                          << ")" << std::endl;
             });
     });
 }
@@ -197,7 +196,7 @@ void CreatePhysicsWorldSystem(Engine::Core &core)
     std::cout << "\n✓ Scene setup complete!\n" << std::endl;
 
     auto counter = core.CreateEntity();
-    counter.AddComponent<CounterComponent>(core, 0u);
+    counter.AddComponent<CounterComponent>(0u);
 }
 
 /**
@@ -208,12 +207,12 @@ void CleanupDemonstrationSystem(Engine::Core &core)
     std::cout << "\nCleaning up entities..." << std::endl;
     int removedCount = 0;
     core.GetRegistry().view<Physics::Component::RigidBody>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
+        [&](Engine::EntityId entity, [[maybe_unused]] const Physics::Component::RigidBody &rb) {
             core.KillEntity(entity);
             removedCount++;
         });
     core.GetRegistry().view<CounterComponent>().each(
-        [&](Engine::Entity entity, [[maybe_unused]] const CounterComponent &cc) {
+        [&](Engine::EntityId entity, [[maybe_unused]] const CounterComponent &cc) {
             core.KillEntity(entity);
             removedCount++;
         });

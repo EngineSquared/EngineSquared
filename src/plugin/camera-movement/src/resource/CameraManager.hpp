@@ -23,15 +23,7 @@ namespace CameraMovement::Resource {
  */
 class CameraManager {
   public:
-    explicit CameraManager(Engine::Core &core)
-        : _core(core), _cameraEntity(Engine::Entity::entity_null_id), _movementSpeed(5.0f), _mouseSensitivity(0.002f),
-          _lastMouseX(0.0), _lastMouseY(0.0),                                                            // NOSONAR
-          _isMouseDragging(false),                                                                       // NOSONAR
-          _wasCursorMasked(false), _originRotation(1.0f, 0.0f, 0.0f, 0.0f), _joystickId(GLFW_JOYSTICK_1) // NOSONAR
-    {
-        // sonar can't decide itself to choose whether it should be in initializer list or constructor body, so we
-        // disable it
-    }
+    explicit CameraManager(Engine::Core &core) : _core(core) {}
 
     ~CameraManager() = default;
 
@@ -43,13 +35,12 @@ class CameraManager {
      */
     void SetActiveCamera(Engine::Entity entity)
     {
-        if (!entity.IsValid())
+        if (!entity.IsAlive())
         {
             throw CameraMovementError("Camera entity is invalid");
         }
 
-        auto &registry = _core.GetRegistry();
-        if (!registry.all_of<Object::Component::Transform, Object::Component::Camera>(entity))
+        if (!entity.HasComponents<Object::Component::Transform, Object::Component::Camera>())
         {
             throw CameraMovementError("Camera entity must have both Transform and Camera components");
         }
@@ -65,23 +56,19 @@ class CameraManager {
      */
     Engine::Entity GetActiveCamera() const
     {
-        if (_cameraEntity == Engine::Entity::entity_null_id)
+        if (!_cameraEntity.has_value() || !_cameraEntity->IsAlive())
         {
-            throw CameraMovementError("Camera entity is not set");
-        }
-
-        if (!_cameraEntity.IsValid())
-        {
-            throw CameraMovementError("Camera entity is invalid");
+            throw CameraMovementError(
+                fmt::format("Camera entity is invalid: {}", _cameraEntity.has_value() ? "not alive" : "not set"));
         }
 
         auto &registry = _core.GetRegistry();
-        if (!registry.all_of<Object::Component::Transform, Object::Component::Camera>(_cameraEntity))
+        if (!_cameraEntity->HasComponents<Object::Component::Transform, Object::Component::Camera>())
         {
             throw CameraMovementError("Camera entity is missing required components");
         }
 
-        return _cameraEntity;
+        return *_cameraEntity;
     }
 
     /**
@@ -91,18 +78,13 @@ class CameraManager {
      */
     bool HasValidCamera() const
     {
-        if (_cameraEntity == Engine::Entity::entity_null_id)
-        {
-            return false;
-        }
-
-        if (!_cameraEntity.IsValid())
+        if (!_cameraEntity.has_value() || !_cameraEntity->IsAlive())
         {
             return false;
         }
 
         auto &registry = _core.GetRegistry();
-        return registry.all_of<Object::Component::Transform, Object::Component::Camera>(_cameraEntity);
+        return _cameraEntity->HasComponents<Object::Component::Transform, Object::Component::Camera>();
     }
 
     /**
@@ -241,16 +223,16 @@ class CameraManager {
 
   private:
     Engine::Core &_core;
-    Engine::Entity _cameraEntity;
-    float _movementSpeed;
-    float _mouseSensitivity;
-    double _lastMouseX;
-    double _lastMouseY;
-    bool _isMouseDragging;
-    bool _wasCursorMasked;
-    glm::quat _originRotation;
-    int _joystickId;
-    std::shared_ptr<CameraMovement::Utils::ICameraBehavior> _behavior;
+    std::optional<Engine::Entity> _cameraEntity = std::nullopt;
+    float _movementSpeed = 5.0f;
+    float _mouseSensitivity = 0.002f;
+    double _lastMouseX = 0.0;
+    double _lastMouseY = 0.0;
+    bool _isMouseDragging = false;
+    bool _wasCursorMasked = false;
+    glm::quat _originRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    int _joystickId = GLFW_JOYSTICK_1;
+    std::shared_ptr<CameraMovement::Utils::ICameraBehavior> _behavior = nullptr;
 };
 
 } // namespace CameraMovement::Resource

@@ -5,6 +5,6 @@
 
 namespace DefaultPipeline::System {
 
-void OnTransformCreation(Engine::Core &core, Engine::Entity entity);
+void OnTransformCreation(Engine::Core &core, Engine::EntityId entityId);
 
 } // namespace DefaultPipeline::System

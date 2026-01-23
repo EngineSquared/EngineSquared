@@ -2,11 +2,10 @@
 
 void NativeScripting::System::UpdateScripts(Engine::Core &core)
 {
-    core.GetRegistry().view<Component::NativeScripting>().each([](auto entity, auto &nsComponent) {
+    core.GetRegistry().view<Component::NativeScripting>().each([&core](auto entity, auto &nsComponent) {
         if (!nsComponent.seInstance.get())
         {
-            nsComponent.Instantiate();
-            nsComponent.seInstance->entity = entity;
+            nsComponent.Instantiate(Engine::Entity{core, entity});
             nsComponent.OnCreate(nsComponent.seInstance.get());
         }
 
@@ -14,7 +13,7 @@ void NativeScripting::System::UpdateScripts(Engine::Core &core)
     });
 }
 
-void NativeScripting::System::DestroyScript(entt::registry &registry, entt::entity entity)
+void NativeScripting::System::DestroyScript(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
     const auto &script = registry.get<Component::NativeScripting>(entity);
     script.OnDestroy(script.seInstance.get());
