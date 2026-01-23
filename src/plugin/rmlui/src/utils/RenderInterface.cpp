@@ -467,7 +467,11 @@ void RenderInterface::EndFrame()
     // Keep active renderer for render pass execution.
 }
 
-void RenderInterface::DrawFullscreenQuad() { /* TODO: Implement */ }
+void RenderInterface::DrawFullscreenQuad()
+{
+    // No usage of it yet.
+    // Unless we plan to add effects/post‑processing that need a full‑screen pass, it can stay unimplemented.
+}
 
 void RenderInterface::SetTransform(const Rml::Matrix4f *new_transform)
 {
