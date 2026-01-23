@@ -197,6 +197,43 @@ void UpdateAnimationOverlay(Engine::Core &core)
     }
 }
 
+void ApplyOverlayState(Engine::Core &core)
+{
+    auto &state = core.GetResource<OverlayState>();
+    auto &ui = core.GetResource<Rmlui::Resource::UIContext>();
+
+    if (state.demoDirty)
+    {
+        state.demoDirty = false;
+        if (state.demo)
+            ui.LoadOverlayDocument("asset/demo.rml");
+        else
+            ui.UnloadOverlayDocument("asset/demo.rml");
+    }
+    if (state.animationDirty)
+    {
+        state.animationDirty = false;
+        if (state.animation)
+            ui.LoadOverlayDocument("asset/animation.rml");
+        else
+            ui.UnloadOverlayDocument("asset/animation.rml");
+        state.animationInitialized = false;
+    }
+    if (state.transformDirty)
+    {
+        state.transformDirty = false;
+        if (state.transform)
+            ui.LoadOverlayDocument("asset/transform.rml");
+        else
+            ui.UnloadOverlayDocument("asset/transform.rml");
+    }
+
+    if (state.animation && !state.animationInitialized)
+    {
+        InitializeAnimationOverlay(ui, state);
+    }
+}
+
 void Setup(Engine::Core &core)
 {
     auto &window = core.GetResource<Window::Resource::Window>();
@@ -250,41 +287,7 @@ void Setup(Engine::Core &core)
     core.RegisterSystem(EscapeKeySystem);
     core.RegisterSystem<RenderingPipeline::PreUpdate>(UpdateAnimationOverlay);
 
-    core.RegisterSystem<RenderingPipeline::Preparation>([](Engine::Core &core) {
-        auto &state = core.GetResource<OverlayState>();
-        auto &ui = core.GetResource<Rmlui::Resource::UIContext>();
-
-        if (state.demoDirty)
-        {
-            state.demoDirty = false;
-            if (state.demo)
-                ui.LoadOverlayDocument("asset/demo.rml");
-            else
-                ui.UnloadOverlayDocument("asset/demo.rml");
-        }
-        if (state.animationDirty)
-        {
-            state.animationDirty = false;
-            if (state.animation)
-                ui.LoadOverlayDocument("asset/animation.rml");
-            else
-                ui.UnloadOverlayDocument("asset/animation.rml");
-            state.animationInitialized = false;
-        }
-        if (state.transformDirty)
-        {
-            state.transformDirty = false;
-            if (state.transform)
-                ui.LoadOverlayDocument("asset/transform.rml");
-            else
-                ui.UnloadOverlayDocument("asset/transform.rml");
-        }
-
-        if (state.animation && !state.animationInitialized)
-        {
-            InitializeAnimationOverlay(ui, state);
-        }
-    });
+    core.RegisterSystem<RenderingPipeline::Preparation>(ApplyOverlayState);
 }
 
 class RmluiExampleError : public std::runtime_error {

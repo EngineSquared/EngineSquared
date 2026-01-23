@@ -41,11 +41,14 @@
 #include <RmlUi/Core/TransformPrimitive.h>
 
 #include <cstdint>
+#include <array>
+#include <cmath>
 #include <cstdlib>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace demo_setup {
 static const Rml::String kSandboxDefaultRcss = R"(
@@ -86,9 +89,9 @@ class DemoWindow : public Rml::EventListener {
         if (auto *source =
                 rmlui_dynamic_cast<Rml::ElementFormControl *>(document->GetElementById("sandbox_rml_source")))
         {
-            auto value = source->GetValue();
-            value += "<p>Write your RML here</p>\n\n<!-- <img src=\"asset/high_scores_alien_1.tga\"/> -->";
-            source->SetValue(value);
+            auto rmlValue = source->GetValue();
+            rmlValue += "<p>Write your RML here</p>\n\n<!-- <img src=\"asset/high_scores_alien_1.tga\"/> -->";
+            source->SetValue(rmlValue);
         }
 
         if (auto *target = document->GetElementById("sandbox_target"))
@@ -107,7 +110,7 @@ class DemoWindow : public Rml::EventListener {
             {
                 size_t length = fileInterface->Length(handle);
                 styleSheetContent.resize(length);
-                fileInterface->Read(reinterpret_cast<void *>(styleSheetContent.data()), length, handle);
+                fileInterface->Read(static_cast<void *>(styleSheetContent.data()), length, handle);
                 fileInterface->Close(handle);
                 styleSheetContent += kSandboxDefaultRcss;
             }
@@ -126,10 +129,10 @@ class DemoWindow : public Rml::EventListener {
         if (auto *source =
                 rmlui_dynamic_cast<Rml::ElementFormControl *>(document->GetElementById("sandbox_rcss_source")))
         {
-            Rml::String value = "/* Write your RCSS here */\n\n/* body { color: #fea; background: #224; }\nimg { "
-                                "image-color: red; } */";
-            source->SetValue(value);
-            SetSandboxStylesheet(value);
+            Rml::String rcssValue = "/* Write your RCSS here */\n\n/* body { color: #fea; background: #224; }\nimg { "
+                                    "image-color: red; } */";
+            source->SetValue(rcssValue);
+            SetSandboxStylesheet(rcssValue);
         }
 
         gauge = document->GetElementById("gauge");
@@ -168,7 +171,7 @@ class DemoWindow : public Rml::EventListener {
 
             const float valueBegin = 0.09F;
             const float valueEnd = 1.0F - valueBegin;
-            float valueMapped = valueBegin + (valueGauge * (valueEnd - valueBegin));
+            float valueMapped = std::lerp(valueBegin, valueEnd, valueGauge);
             gauge->SetAttribute("value", valueMapped);
 
             auto valueGaugeStr = Rml::CreateString("%d %%", Rml::Math::RoundToInteger(valueGauge * 100.F));
@@ -270,6 +273,13 @@ class DemoWindow : public Rml::EventListener {
 
     void SetTweeningParameters(TweeningParameters inTweeningParameters) { tweeningParameters = inTweeningParameters; }
 
+    Rml::EventListener *RegisterListener(std::unique_ptr<Rml::EventListener> listener)
+    {
+        auto *raw = listener.get();
+        eventListeners.emplace_back(std::move(listener));
+        return raw;
+    }
+
   private:
     Engine::Core *engineCore = nullptr;
     Rml::Context *context = nullptr;
@@ -284,12 +294,13 @@ class DemoWindow : public Rml::EventListener {
     Rml::String submitMessage;
 
     TweeningParameters tweeningParameters;
+    std::vector<std::unique_ptr<Rml::EventListener>> eventListeners;
 };
 
 class DemoEventListener : public Rml::EventListener {
   public:
-    DemoEventListener(const Rml::String &value, Rml::Element *element, DemoWindow *demoWindow)
-        : value(value), element(element), demoWindow(demoWindow)
+    DemoEventListener(const Rml::String &listenerValue, Rml::Element *element, DemoWindow *demoWindow)
+        : value(listenerValue), element(element), demoWindow(demoWindow)
     {
     }
 
@@ -302,193 +313,229 @@ class DemoEventListener : public Rml::EventListener {
 
         if (value == "change_color")
         {
-            const TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
-            const Rml::Colourb color(static_cast<Rml::byte>(Rml::Math::RandomInteger(255)),
-                                     static_cast<Rml::byte>(Rml::Math::RandomInteger(255)),
-                                     static_cast<Rml::byte>(Rml::Math::RandomInteger(255)));
-
-            element->Animate("image-color", Rml::Property(color, Rml::Unit::COLOUR), tweeningParameters.duration,
-                             Rml::Tween(tweeningParameters.type, tweeningParameters.direction));
-
-            event.StopPropagation();
+            HandleChangeColor(event);
+            return;
         }
-        else if (value == "move_child")
+        if (value == "move_child")
         {
-            const Rml::Vector2f mousePos = {event.GetParameter("mouse_x", 0.0F), event.GetParameter("mouse_y", 0.0F)};
-            if (Rml::Element *child = element->GetFirstChild())
-            {
-                Rml::Vector2f newPos = mousePos - element->GetAbsoluteOffset() -
-                                       Rml::Vector2f(0.35F * child->GetClientWidth(), 0.9F * child->GetClientHeight());
-                Rml::Property destination =
-                    Rml::Transform::MakeProperty({Rml::Transforms::Translate2D(newPos.x, newPos.y)});
-
-                const TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
-                if (tweeningParameters.duration <= 0)
-                {
-                    child->SetProperty(Rml::PropertyId::Transform, destination);
-                }
-                else
-                {
-                    child->Animate("transform", destination, tweeningParameters.duration,
-                                   Rml::Tween(tweeningParameters.type, tweeningParameters.direction));
-                }
-            }
+            HandleMoveChild(event);
+            return;
         }
-        else if (value == "tween_function")
+        if (value == "tween_function")
         {
-            static const Rml::SmallUnorderedMap<Rml::String, Rml::Tween::Type> tweeningFunctions = {
-                {"back",        Rml::Tween::Back       },
-                {"bounce",      Rml::Tween::Bounce     },
-                {"circular",    Rml::Tween::Circular   },
-                {"cubic",       Rml::Tween::Cubic      },
-                {"elastic",     Rml::Tween::Elastic    },
-                {"exponential", Rml::Tween::Exponential},
-                {"linear",      Rml::Tween::Linear     },
-                {"quadratic",   Rml::Tween::Quadratic  },
-                {"quartic",     Rml::Tween::Quartic    },
-                {"quintic",     Rml::Tween::Quintic    },
-                {"sine",        Rml::Tween::Sine       },
-            };
-
-            const Rml::String value = event.GetParameter("value", Rml::String());
-            auto it = tweeningFunctions.find(value);
-            if (it != tweeningFunctions.end())
-            {
-                TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
-                tweeningParameters.type = it->second;
-                demoWindow->SetTweeningParameters(tweeningParameters);
-            }
-            else
-            {
-                Log::Error("Unknown tween function");
-            }
+            HandleTweenFunction(event);
+            return;
         }
-        else if (value == "tween_direction")
+        if (value == "tween_direction")
         {
-            const Rml::String value = event.GetParameter("value", Rml::String());
-            TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
-            if (value == "in")
-            {
-                tweeningParameters.direction = Rml::Tween::In;
-            }
-            else if (value == "out")
-            {
-                tweeningParameters.direction = Rml::Tween::Out;
-            }
-            else if (value == "in-out")
-            {
-                tweeningParameters.direction = Rml::Tween::InOut;
-            }
-            else
-            {
-                Log::Error("Unknown tween direction");
-            }
-            demoWindow->SetTweeningParameters(tweeningParameters);
+            HandleTweenDirection(event);
+            return;
         }
-        else if (value == "tween_duration")
+        if (value == "tween_duration")
         {
-            const auto value = static_cast<float>(
-                std::atof(rmlui_static_cast<Rml::ElementFormControl *>(element)->GetValue().c_str()));
-
-            TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
-            tweeningParameters.duration = value;
-            demoWindow->SetTweeningParameters(tweeningParameters);
-
-            if (auto *elDuration = element->GetElementById("duration"))
-            {
-                elDuration->SetInnerRML(Rml::CreateString("%2.2f", value));
-            }
+            HandleTweenDuration(event);
+            return;
         }
-        else if (value == "rating")
+        if (value == "rating")
         {
-            auto *elRating = element->GetElementById("rating");
-            auto *elRatingEmoji = element->GetElementById("rating_emoji");
-            if ((elRating != nullptr) && (elRatingEmoji != nullptr))
-            {
-                enum {
-                    Sad,
-                    Mediocre,
-                    Exciting,
-                    Celebrate,
-                    Champion,
-                    CountEmojis
-                };
-                static const char *emojis[CountEmojis] = {"😢", "😐", "😮", "😎", "🏆"};
-                int value = event.GetParameter("value", 50);
-
-                Rml::String emoji;
-                if (value <= 0)
-                {
-                    emoji = emojis[Sad];
-                }
-                else if (value < 50)
-                {
-                    emoji = emojis[Mediocre];
-                }
-                else if (value < 75)
-                {
-                    emoji = emojis[Exciting];
-                }
-                else if (value < 100)
-                {
-                    emoji = emojis[Celebrate];
-                }
-                else
-                {
-                    emoji = emojis[Champion];
-                }
-
-                elRating->SetInnerRML(Rml::CreateString("%d%%", value));
-                elRatingEmoji->SetInnerRML(emoji);
-            }
+            HandleRating(event);
+            return;
         }
-        else if (value == "submit_form")
+        if (value == "submit_form")
         {
-            const auto &params = event.GetParameters();
-            Rml::String output = "<p>";
-            for (const auto &entry : params)
-            {
-                auto escaped = Rml::StringUtilities::EncodeRml(entry.second.Get<Rml::String>());
-                if (entry.first == "message")
-                {
-                    escaped = "<br/>" + escaped;
-                }
-                output += "<strong>" + entry.first + "</strong>: " + escaped + "<br/>";
-            }
-            output += "</p>";
-
-            demoWindow->SubmitForm(output);
+            HandleSubmitForm(event);
+            return;
         }
-        else if (value == "set_sandbox_body")
+        if (value == "set_sandbox_body")
         {
-            if (auto *source =
-                    rmlui_dynamic_cast<Rml::ElementFormControl *>(element->GetElementById("sandbox_rml_source")))
-            {
-                auto value = source->GetValue();
-                demoWindow->SetSandboxBody(value);
-            }
+            HandleSetSandboxBody();
+            return;
         }
-        else if (value == "set_sandbox_style")
+        if (value == "set_sandbox_style")
         {
-            if (auto *source =
-                    rmlui_dynamic_cast<Rml::ElementFormControl *>(element->GetElementById("sandbox_rcss_source")))
-            {
-                auto value = source->GetValue();
-                demoWindow->SetSandboxStylesheet(value);
-            }
+            HandleSetSandboxStyle();
+            return;
         }
-        else if (value == "cancel_selection_on_escape")
+        if (value == "cancel_selection_on_escape")
         {
-            if (event.GetParameter("key_identifier", 0) == Rml::Input::KeyIdentifier::KI_ESCAPE)
-            {
-                event.StopPropagation();
-            }
+            HandleCancelSelectionOnEscape(event);
+            return;
         }
     }
 
-    void OnDetach(Rml::Element * /*element*/) override { delete this; }
+    void OnDetach(Rml::Element * /*element*/) override
+    {
+        // No need to delete anything here
+    }
 
   private:
+    void HandleChangeColor(Rml::Event &event)
+    {
+        const TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
+        const Rml::Colourb color(static_cast<Rml::byte>(Rml::Math::RandomInteger(255)),
+                                 static_cast<Rml::byte>(Rml::Math::RandomInteger(255)),
+                                 static_cast<Rml::byte>(Rml::Math::RandomInteger(255)));
+
+        element->Animate("image-color", Rml::Property(color, Rml::Unit::COLOUR), tweeningParameters.duration,
+                         Rml::Tween(tweeningParameters.type, tweeningParameters.direction));
+
+        event.StopPropagation();
+    }
+
+    void HandleMoveChild(Rml::Event &event)
+    {
+        const Rml::Vector2f mousePos = {event.GetParameter("mouse_x", 0.0F), event.GetParameter("mouse_y", 0.0F)};
+        if (Rml::Element *child = element->GetFirstChild())
+        {
+            Rml::Vector2f newPos = mousePos - element->GetAbsoluteOffset() -
+                                   Rml::Vector2f(0.35F * child->GetClientWidth(), 0.9F * child->GetClientHeight());
+            Rml::Property destination =
+                Rml::Transform::MakeProperty({Rml::Transforms::Translate2D(newPos.x, newPos.y)});
+
+            const TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
+            if (tweeningParameters.duration <= 0)
+                child->SetProperty(Rml::PropertyId::Transform, destination);
+            else
+                child->Animate("transform", destination, tweeningParameters.duration,
+                               Rml::Tween(tweeningParameters.type, tweeningParameters.direction));
+        }
+    }
+
+    void HandleTweenFunction(Rml::Event &event)
+    {
+        static const Rml::SmallUnorderedMap<Rml::String, Rml::Tween::Type> tweeningFunctions = {
+            {"back",        Rml::Tween::Back       },
+            {"bounce",      Rml::Tween::Bounce     },
+            {"circular",    Rml::Tween::Circular   },
+            {"cubic",       Rml::Tween::Cubic      },
+            {"elastic",     Rml::Tween::Elastic    },
+            {"exponential", Rml::Tween::Exponential},
+            {"linear",      Rml::Tween::Linear     },
+            {"quadratic",   Rml::Tween::Quadratic  },
+            {"quartic",     Rml::Tween::Quartic    },
+            {"quintic",     Rml::Tween::Quintic    },
+            {"sine",        Rml::Tween::Sine       },
+        };
+
+        const Rml::String selection = event.GetParameter("value", Rml::String());
+        auto it = tweeningFunctions.find(selection);
+        if (it != tweeningFunctions.end())
+        {
+            TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
+            tweeningParameters.type = it->second;
+            demoWindow->SetTweeningParameters(tweeningParameters);
+        }
+        else
+        {
+            Log::Error("Unknown tween function");
+        }
+    }
+
+    void HandleTweenDirection(Rml::Event &event)
+    {
+        const Rml::String selection = event.GetParameter("value", Rml::String());
+        TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
+        if (selection == "in")
+            tweeningParameters.direction = Rml::Tween::In;
+        else if (selection == "out")
+            tweeningParameters.direction = Rml::Tween::Out;
+        else if (selection == "in-out")
+            tweeningParameters.direction = Rml::Tween::InOut;
+        else
+            Log::Error("Unknown tween direction");
+        demoWindow->SetTweeningParameters(tweeningParameters);
+    }
+
+    void HandleTweenDuration(Rml::Event &event)
+    {
+        const auto duration = static_cast<float>(
+            std::atof(rmlui_static_cast<Rml::ElementFormControl *>(element)->GetValue().c_str()));
+
+        TweeningParameters tweeningParameters = demoWindow->GetTweeningParameters();
+        tweeningParameters.duration = duration;
+        demoWindow->SetTweeningParameters(tweeningParameters);
+
+        if (auto *elDuration = element->GetElementById("duration"))
+        {
+            elDuration->SetInnerRML(Rml::CreateString("%2.2f", duration));
+        }
+    }
+
+    void HandleRating(Rml::Event &event)
+    {
+        auto *elRating = element->GetElementById("rating");
+        auto *elRatingEmoji = element->GetElementById("rating_emoji");
+        if ((elRating == nullptr) || (elRatingEmoji == nullptr))
+            return;
+
+        enum class RatingEmoji : uint8_t {
+            Sad,
+            Mediocre,
+            Exciting,
+            Celebrate,
+            Champion
+        };
+        static constexpr std::array<const char *, 5> emojis = {"😢", "😐", "😮", "😎", "🏆"};
+        int ratingValue = event.GetParameter("value", 50);
+
+        Rml::String emoji;
+        if (ratingValue <= 0)
+            emoji = emojis[static_cast<size_t>(RatingEmoji::Sad)];
+        else if (ratingValue < 50)
+            emoji = emojis[static_cast<size_t>(RatingEmoji::Mediocre)];
+        else if (ratingValue < 75)
+            emoji = emojis[static_cast<size_t>(RatingEmoji::Exciting)];
+        else if (ratingValue < 100)
+            emoji = emojis[static_cast<size_t>(RatingEmoji::Celebrate)];
+        else
+            emoji = emojis[static_cast<size_t>(RatingEmoji::Champion)];
+
+        elRating->SetInnerRML(Rml::CreateString("%d%%", ratingValue));
+        elRatingEmoji->SetInnerRML(emoji);
+    }
+
+    void HandleSubmitForm(Rml::Event &event)
+    {
+        const auto &params = event.GetParameters();
+        Rml::String output = "<p>";
+        for (const auto &entry : params)
+        {
+            auto escaped = Rml::StringUtilities::EncodeRml(entry.second.Get<Rml::String>());
+            if (entry.first == "message")
+                escaped = "<br/>" + escaped;
+            output += "<strong>" + entry.first + "</strong>: " + escaped + "<br/>";
+        }
+        output += "</p>";
+        demoWindow->SubmitForm(output);
+    }
+
+    void HandleSetSandboxBody()
+    {
+        if (auto *source = rmlui_dynamic_cast<Rml::ElementFormControl *>(element->GetElementById("sandbox_rml_source")))
+        {
+            auto bodyValue = source->GetValue();
+            demoWindow->SetSandboxBody(bodyValue);
+        }
+    }
+
+    void HandleSetSandboxStyle()
+    {
+        if (auto *source =
+                rmlui_dynamic_cast<Rml::ElementFormControl *>(element->GetElementById("sandbox_rcss_source")))
+        {
+            auto styleValue = source->GetValue();
+            demoWindow->SetSandboxStylesheet(styleValue);
+        }
+    }
+
+    void HandleCancelSelectionOnEscape(Rml::Event &event)
+    {
+        if (event.GetParameter("key_identifier", 0) == Rml::Input::KeyIdentifier::KI_ESCAPE)
+        {
+            event.StopPropagation();
+        }
+    }
+
     Rml::String value;
     Rml::Element *element = nullptr;
     DemoWindow *demoWindow = nullptr;
@@ -498,9 +545,10 @@ class DemoEventListenerInstancer : public Rml::EventListenerInstancer {
   public:
     explicit DemoEventListenerInstancer(DemoWindow *demoWindow) : demoWindow(demoWindow) {}
 
-    Rml::EventListener *InstanceEventListener(const Rml::String &value, Rml::Element *element) override
+    Rml::EventListener *InstanceEventListener(const Rml::String &listenerValue, Rml::Element *element) override
     {
-        return new DemoEventListener(value, element, demoWindow);
+        auto listener = std::make_unique<DemoEventListener>(listenerValue, element, demoWindow);
+        return demoWindow->RegisterListener(std::move(listener));
     }
 
   private:
@@ -508,10 +556,10 @@ class DemoEventListenerInstancer : public Rml::EventListenerInstancer {
 };
 
 struct DemoState {
-    DemoWindow window;
+    std::unique_ptr<DemoWindow> window = std::make_unique<DemoWindow>();
     DemoEventListenerInstancer instancer;
 
-    DemoState() : instancer(&window) {}
+    DemoState() : instancer(window.get()) {}
 };
 
 class RmluiExampleError : public std::runtime_error {
@@ -523,7 +571,7 @@ void UpdateDemoWindow(Engine::Core &core)
 {
     if (core.HasResource<DemoState>())
     {
-        core.GetResource<DemoState>().window.Update();
+        core.GetResource<DemoState>().window->Update();
     }
 }
 
@@ -544,10 +592,10 @@ void Setup(Engine::Core &core)
         throw RmluiExampleError("Failed to load demo document");
     }
 
-    state.window.Initialize(core, *document);
-    document->AddEventListener(Rml::EventId::Keydown, &state.window);
-    document->AddEventListener(Rml::EventId::Keyup, &state.window);
-    document->AddEventListener(Rml::EventId::Animationend, &state.window);
+    state.window->Initialize(core, *document);
+    document->AddEventListener(Rml::EventId::Keydown, state.window.get());
+    document->AddEventListener(Rml::EventId::Keyup, state.window.get());
+    document->AddEventListener(Rml::EventId::Animationend, state.window.get());
 
     RmluiUsage::Demo::AttachHoverOverlay(rmluiContext, "Demo");
     rmluiContext.EnableDebugger(true);

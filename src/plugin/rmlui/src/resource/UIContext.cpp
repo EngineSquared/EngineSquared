@@ -6,6 +6,7 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <utility>
 
 #include "Logger.hpp"
@@ -64,55 +65,59 @@ Rml::Input::KeyIdentifier ToRmlKey(int key)
         return static_cast<KI>(static_cast<int>(KI::KI_NUMPAD0) + (key - GLFW_KEY_KP_0));
     }
 
-    switch (key)
+    static const std::unordered_map<int, KI> kKeyMap = {
+        {GLFW_KEY_SPACE, KI::KI_SPACE},
+        {GLFW_KEY_APOSTROPHE, KI::KI_OEM_7},
+        {GLFW_KEY_COMMA, KI::KI_OEM_COMMA},
+        {GLFW_KEY_MINUS, KI::KI_OEM_MINUS},
+        {GLFW_KEY_PERIOD, KI::KI_OEM_PERIOD},
+        {GLFW_KEY_SLASH, KI::KI_OEM_2},
+        {GLFW_KEY_SEMICOLON, KI::KI_OEM_1},
+        {GLFW_KEY_EQUAL, KI::KI_OEM_PLUS},
+        {GLFW_KEY_LEFT_BRACKET, KI::KI_OEM_4},
+        {GLFW_KEY_BACKSLASH, KI::KI_OEM_5},
+        {GLFW_KEY_RIGHT_BRACKET, KI::KI_OEM_6},
+        {GLFW_KEY_GRAVE_ACCENT, KI::KI_OEM_3},
+        {GLFW_KEY_ENTER, KI::KI_RETURN},
+        {GLFW_KEY_ESCAPE, KI::KI_ESCAPE},
+        {GLFW_KEY_BACKSPACE, KI::KI_BACK},
+        {GLFW_KEY_TAB, KI::KI_TAB},
+        {GLFW_KEY_INSERT, KI::KI_INSERT},
+        {GLFW_KEY_DELETE, KI::KI_DELETE},
+        {GLFW_KEY_RIGHT, KI::KI_RIGHT},
+        {GLFW_KEY_LEFT, KI::KI_LEFT},
+        {GLFW_KEY_DOWN, KI::KI_DOWN},
+        {GLFW_KEY_UP, KI::KI_UP},
+        {GLFW_KEY_PAGE_UP, KI::KI_PRIOR},
+        {GLFW_KEY_PAGE_DOWN, KI::KI_NEXT},
+        {GLFW_KEY_HOME, KI::KI_HOME},
+        {GLFW_KEY_END, KI::KI_END},
+        {GLFW_KEY_CAPS_LOCK, KI::KI_CAPITAL},
+        {GLFW_KEY_SCROLL_LOCK, KI::KI_SCROLL},
+        {GLFW_KEY_NUM_LOCK, KI::KI_NUMLOCK},
+        {GLFW_KEY_PRINT_SCREEN, KI::KI_SNAPSHOT},
+        {GLFW_KEY_PAUSE, KI::KI_PAUSE},
+        {GLFW_KEY_KP_DECIMAL, KI::KI_DECIMAL},
+        {GLFW_KEY_KP_DIVIDE, KI::KI_DIVIDE},
+        {GLFW_KEY_KP_MULTIPLY, KI::KI_MULTIPLY},
+        {GLFW_KEY_KP_SUBTRACT, KI::KI_SUBTRACT},
+        {GLFW_KEY_KP_ADD, KI::KI_ADD},
+        {GLFW_KEY_KP_ENTER, KI::KI_NUMPADENTER},
+        {GLFW_KEY_LEFT_SHIFT, KI::KI_LSHIFT},
+        {GLFW_KEY_RIGHT_SHIFT, KI::KI_RSHIFT},
+        {GLFW_KEY_LEFT_CONTROL, KI::KI_LCONTROL},
+        {GLFW_KEY_RIGHT_CONTROL, KI::KI_RCONTROL},
+        {GLFW_KEY_LEFT_ALT, KI::KI_LMENU},
+        {GLFW_KEY_RIGHT_ALT, KI::KI_RMENU},
+        {GLFW_KEY_LEFT_SUPER, KI::KI_LWIN},
+        {GLFW_KEY_RIGHT_SUPER, KI::KI_RWIN},
+    };
+
+    if (const auto it = kKeyMap.find(key); it != kKeyMap.end())
     {
-    case GLFW_KEY_SPACE: return KI::KI_SPACE;
-    case GLFW_KEY_APOSTROPHE: return KI::KI_OEM_7;
-    case GLFW_KEY_COMMA: return KI::KI_OEM_COMMA;
-    case GLFW_KEY_MINUS: return KI::KI_OEM_MINUS;
-    case GLFW_KEY_PERIOD: return KI::KI_OEM_PERIOD;
-    case GLFW_KEY_SLASH: return KI::KI_OEM_2;
-    case GLFW_KEY_SEMICOLON: return KI::KI_OEM_1;
-    case GLFW_KEY_EQUAL: return KI::KI_OEM_PLUS;
-    case GLFW_KEY_LEFT_BRACKET: return KI::KI_OEM_4;
-    case GLFW_KEY_BACKSLASH: return KI::KI_OEM_5;
-    case GLFW_KEY_RIGHT_BRACKET: return KI::KI_OEM_6;
-    case GLFW_KEY_GRAVE_ACCENT: return KI::KI_OEM_3;
-    case GLFW_KEY_ENTER: return KI::KI_RETURN;
-    case GLFW_KEY_ESCAPE: return KI::KI_ESCAPE;
-    case GLFW_KEY_BACKSPACE: return KI::KI_BACK;
-    case GLFW_KEY_TAB: return KI::KI_TAB;
-    case GLFW_KEY_INSERT: return KI::KI_INSERT;
-    case GLFW_KEY_DELETE: return KI::KI_DELETE;
-    case GLFW_KEY_RIGHT: return KI::KI_RIGHT;
-    case GLFW_KEY_LEFT: return KI::KI_LEFT;
-    case GLFW_KEY_DOWN: return KI::KI_DOWN;
-    case GLFW_KEY_UP: return KI::KI_UP;
-    case GLFW_KEY_PAGE_UP: return KI::KI_PRIOR;
-    case GLFW_KEY_PAGE_DOWN: return KI::KI_NEXT;
-    case GLFW_KEY_HOME: return KI::KI_HOME;
-    case GLFW_KEY_END: return KI::KI_END;
-    case GLFW_KEY_CAPS_LOCK: return KI::KI_CAPITAL;
-    case GLFW_KEY_SCROLL_LOCK: return KI::KI_SCROLL;
-    case GLFW_KEY_NUM_LOCK: return KI::KI_NUMLOCK;
-    case GLFW_KEY_PRINT_SCREEN: return KI::KI_SNAPSHOT;
-    case GLFW_KEY_PAUSE: return KI::KI_PAUSE;
-    case GLFW_KEY_KP_DECIMAL: return KI::KI_DECIMAL;
-    case GLFW_KEY_KP_DIVIDE: return KI::KI_DIVIDE;
-    case GLFW_KEY_KP_MULTIPLY: return KI::KI_MULTIPLY;
-    case GLFW_KEY_KP_SUBTRACT: return KI::KI_SUBTRACT;
-    case GLFW_KEY_KP_ADD: return KI::KI_ADD;
-    case GLFW_KEY_KP_ENTER: return KI::KI_NUMPADENTER;
-    case GLFW_KEY_LEFT_SHIFT: return KI::KI_LSHIFT;
-    case GLFW_KEY_RIGHT_SHIFT: return KI::KI_RSHIFT;
-    case GLFW_KEY_LEFT_CONTROL: return KI::KI_LCONTROL;
-    case GLFW_KEY_RIGHT_CONTROL: return KI::KI_RCONTROL;
-    case GLFW_KEY_LEFT_ALT: return KI::KI_LMENU;
-    case GLFW_KEY_RIGHT_ALT: return KI::KI_RMENU;
-    case GLFW_KEY_LEFT_SUPER: return KI::KI_LWIN;
-    case GLFW_KEY_RIGHT_SUPER: return KI::KI_RWIN;
-    default: return KI::KI_UNKNOWN;
+        return it->second;
     }
+    return KI::KI_UNKNOWN;
 }
 
 int ToRmlModifiers(int mods)
