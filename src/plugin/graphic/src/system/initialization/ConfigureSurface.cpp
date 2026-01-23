@@ -41,8 +41,8 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
                 info.freeMembers();
                 return;
             }
+            info.freeMembers();
         }
-        info.freeMembers();
     }
 
     context.surface->value->configure(config);

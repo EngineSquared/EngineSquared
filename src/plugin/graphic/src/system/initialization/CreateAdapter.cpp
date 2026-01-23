@@ -44,7 +44,8 @@ static std::optional<wgpu::Adapter> findVulkanAdapter(const Graphic::Resource::C
         }
         info.freeMembers();
     }
-    adapters.data()->release();
+    for (auto &adapter : adapters)
+        adapter.release();
     return std::nullopt;
 }
 

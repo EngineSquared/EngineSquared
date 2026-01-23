@@ -15,6 +15,11 @@ struct Surface {
     inline wgpu::Status updateCapabilities(wgpu::Adapter &adapter)
     {
         wgpu::SurfaceCapabilities caps;
+        if (!value.has_value())
+        {
+            Log::Error("Cannot update surface capabilities: surface is not created");
+            return wgpu::Status::Error;
+        }
         wgpu::Status status = value->getCapabilities(adapter, &caps);
         if (capabilities.has_value())
         {
