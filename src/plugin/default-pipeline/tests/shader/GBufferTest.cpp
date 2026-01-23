@@ -40,10 +40,9 @@ void ExtractTextures(Engine::Core &core)
     auto &depthTexture = textures.Get(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID);
     auto depthImage = depthTexture.RetrieveImage(context);
 
-    // Uncomment to save the images
-    // normalImage.ToPng("GBUFFER_NORMAL.png");
-    // albedoImage.ToPng("GBUFFER_ALBEDO.png");
-    // depthImage.ToPng("GBUFFER_DEPTH.png");
+    normalImage.ToPng("GBUFFER_NORMAL.png");
+    albedoImage.ToPng("GBUFFER_ALBEDO.png");
+    depthImage.ToPng("GBUFFER_DEPTH.png");
 }
 
 TEST(DefaultPipeline, SmokeTest)
@@ -67,7 +66,8 @@ TEST(DefaultPipeline, SmokeTest)
         }
     });
 
-    core.RegisterSystem<RenderingPipeline::Presentation>(ExtractTextures);
+    // Uncomment to save the images
+    // core.RegisterSystem<RenderingPipeline::Presentation>(ExtractTextures);
 
     core.RunSystems();
 
