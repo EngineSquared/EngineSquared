@@ -18,7 +18,7 @@ void TestSystem(Engine::Core &core)
 
     cube.AddComponent<Object::Component::Transform>().SetRotation(
         glm::quat(glm::vec3(glm::radians(10.f), glm::radians(45.0f), 0.0f)));
-    cube.AddComponent<Object::Component::Mesh>( Object::Utils::GenerateCubeMesh());
+    cube.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
 
     auto camera = core.CreateEntity();
 
