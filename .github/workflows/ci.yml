@@ -255,20 +255,20 @@ jobs:
       - name: Run tests (Linux)
         if: contains(runner.os, 'linux')
         run: |
-          xmake test -y -D
+          xmake test -y -vD
         timeout-minutes: 120
 
       - name: Run tests (Windows)
         if: contains(runner.os, 'windows')
         shell: pwsh
         run: |
-          xmake test -y -D
+          xmake test -y -vD
         timeout-minutes: 120
 
       - name: Run tests (macOS)
         if: contains(runner.os, 'macos')
         run: |
-          xmake test -y -D
+          xmake test -y -vD
         timeout-minutes: 120
 
 
