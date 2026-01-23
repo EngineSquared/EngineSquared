@@ -4,10 +4,10 @@
 #include "plugin/PluginWindow.hpp"
 #include "resource/CameraControlSystemManager.hpp"
 #include "resource/CameraManager.hpp"
+#include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
 #include "system/CameraControlSystem.hpp"
 #include "system/ResetCameraBehavior.hpp"
-#include "scheduler/Shutdown.hpp"
 #include "utils/DefaultBehavior.hpp"
 #include <memory>
 

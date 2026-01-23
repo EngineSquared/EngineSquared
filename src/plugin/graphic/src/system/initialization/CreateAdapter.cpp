@@ -9,7 +9,8 @@
 static std::optional<wgpu::BackendType> getBackendType(const wgpu::Adapter &adapter)
 {
     wgpu::AdapterInfo info(wgpu::Default);
-    if (adapter.getInfo(&info) != wgpu::Status::Success) {
+    if (adapter.getInfo(&info) != wgpu::Status::Success)
+    {
         info.freeMembers();
         return std::nullopt;
     }

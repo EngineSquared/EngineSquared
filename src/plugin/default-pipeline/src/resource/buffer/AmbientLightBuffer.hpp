@@ -36,10 +36,7 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
         _debugName = fmt::format("{}{}", prefix, entityName);
     }
 
-    ~AmbientLightBuffer() override
-    {
-        Destroy();
-    }
+    ~AmbientLightBuffer() override { Destroy(); }
     void Create(Engine::Core &core) override
     {
         const auto &context = core.GetResource<Graphic::Resource::Context>();
@@ -47,10 +44,7 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
         _buffer = _CreateBuffer(context.deviceContext);
         _isCreated = true;
     };
-    void Destroy(Engine::Core &core) override
-    {
-        Destroy();
-    };
+    void Destroy(Engine::Core &core) override { Destroy(); };
 
     void Destroy()
     {

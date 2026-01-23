@@ -13,7 +13,8 @@ namespace Graphic::Resource {
 
 class Shader {
   public:
-    virtual ~Shader() {
+    virtual ~Shader()
+    {
         if (pipeline != nullptr)
         {
             pipeline.release();
@@ -21,12 +22,14 @@ class Shader {
         }
     }
 
-    Shader(Shader &&other) noexcept {
+    Shader(Shader &&other) noexcept
+    {
         descriptor = std::move(other.descriptor);
         pipeline = std::move(other.pipeline);
         other.pipeline = nullptr;
     }
-    Shader &operator=(Shader &&other) {
+    Shader &operator=(Shader &&other)
+    {
         if (this != &other)
         {
             descriptor = std::move(other.descriptor);

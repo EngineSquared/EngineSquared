@@ -10,9 +10,7 @@ namespace DefaultPipeline::Resource {
 class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
   public:
     explicit PointGPUBuffer(Engine::Entity entity) : _entity(entity) {}
-    ~PointGPUBuffer() override {
-        Destroy();
-    }
+    ~PointGPUBuffer() override { Destroy(); }
     void Create(Engine::Core &core) override
     {
 
@@ -44,10 +42,7 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
         _isCreated = true;
         Update(core);
     };
-    void Destroy(Engine::Core &core) override
-    {
-        Destroy();
-    };
+    void Destroy(Engine::Core &core) override { Destroy(); };
 
     void Destroy()
     {

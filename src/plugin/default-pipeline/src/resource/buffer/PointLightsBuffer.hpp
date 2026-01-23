@@ -37,9 +37,7 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
 
   public:
     PointLightsBuffer() = default;
-    ~PointLightsBuffer() override {
-        Destroy();
-    }
+    ~PointLightsBuffer() override { Destroy(); }
 
     void Create(Engine::Core &core) override
     {
@@ -53,10 +51,7 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
         context.queue->writeBuffer(_buffer, 0, &data, sizeof(PointLightsData));
     }
 
-    void Destroy(Engine::Core &core) override
-    {
-        Destroy();
-    }
+    void Destroy(Engine::Core &core) override { Destroy(); }
 
     void Destroy()
     {

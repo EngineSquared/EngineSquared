@@ -33,9 +33,7 @@ struct TransformGPUData {
 class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
   public:
     explicit TransformGPUBuffer(Engine::Entity entity) : _entity(entity) {}
-    ~TransformGPUBuffer() override {
-        Destroy();
-    };
+    ~TransformGPUBuffer() override { Destroy(); };
     void Create(Engine::Core &core) override
     {
         const auto &transformComponent = _entity.GetComponents<Object::Component::Transform>(core);
@@ -45,10 +43,7 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
         _UpdateBuffer(transformComponent, context);
         _isCreated = true;
     };
-    void Destroy(Engine::Core &core) override
-    {
-        Destroy();
-    };
+    void Destroy(Engine::Core &core) override { Destroy(); };
 
     void Destroy()
     {
