@@ -27,10 +27,7 @@ target("PluginRmlui")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
     add_packages(required_packages)
-    add_linkdirs("$(package:rmlui):installdir()/lib")
     add_links("rmlui_debugger", "rmlui")
-    add_linkdirs("$(package:freetype):installdir()/lib")
-    add_linkdirs("$(package:zlib):installdir()/lib")
     if is_plat("windows") then
         add_links("freetype", "zlib")
     else

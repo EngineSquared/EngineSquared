@@ -113,6 +113,8 @@ TEST(RmluiDocument, LoadOverlayDocument)
     });
 
     core.RegisterSystem(LoadOverlayDocumentTest);
+
+    EXPECT_NO_THROW(core.RunSystems());
 }
 
 TEST(RmluiDocument, FailedLoadOverlayDocument)
@@ -127,6 +129,8 @@ TEST(RmluiDocument, FailedLoadOverlayDocument)
     });
 
     core.RegisterSystem(LoadOverlayDocumentFailureTest);
+
+    EXPECT_NO_THROW(core.RunSystems());
 }
 
 TEST(RmluiDocument, UnloadOverlayDocument)
@@ -141,4 +145,6 @@ TEST(RmluiDocument, UnloadOverlayDocument)
     });
 
     core.RegisterSystem(UnloadOverlayDocumentTest);
+
+    EXPECT_NO_THROW(core.RunSystems());
 }

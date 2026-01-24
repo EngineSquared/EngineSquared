@@ -32,6 +32,11 @@ void LoadFontFailureTest(Engine::Core &core)
     testLogger->set_level(spdlog::level::warn);
     spdlog::set_default_logger(testLogger);
 
+    struct LoggerGuard {
+        std::shared_ptr<spdlog::logger> prev;
+        ~LoggerGuard() { spdlog::set_default_logger(prev); }
+    } guard{previousLogger};
+
     uiContext.SetFont("asset/missing.ttf");
 
     spdlog::set_default_logger(previousLogger);

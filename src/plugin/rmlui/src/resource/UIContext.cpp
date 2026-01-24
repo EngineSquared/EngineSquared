@@ -1,5 +1,6 @@
 #include "resource/UIContext.hpp"
 #include "RmlUi/Core/ElementDocument.h"
+#include "resource/InputManager.hpp"
 #include "resource/Window.hpp"
 
 #include <GLFW/glfw3.h>
@@ -181,8 +182,35 @@ void UIContext::_setup(Engine::Core &core)
     _context->SetDimensions(Rml::Vector2i(static_cast<int>(windowSize.x), static_cast<int>(windowSize.y)));
 }
 
-void UIContext::Destroy(Engine::Core & /*core*/)
+void UIContext::Destroy(Engine::Core &core)
 {
+    if (_inputCallbacksRegistered && core.HasResource<Input::Resource::InputManager>())
+    {
+        auto &input = core.GetResource<Input::Resource::InputManager>();
+        if (_inputCallbackIds.keyCallbackId)
+        {
+            input.DeleteKeyCallback(*_inputCallbackIds.keyCallbackId);
+        }
+        if (_inputCallbackIds.charCallbackId)
+        {
+            input.DeleteCharCallback(*_inputCallbackIds.charCallbackId);
+        }
+        if (_inputCallbackIds.mouseButtonCallbackId)
+        {
+            input.DeleteMouseButtonCallback(*_inputCallbackIds.mouseButtonCallbackId);
+        }
+        if (_inputCallbackIds.cursorPosCallbackId)
+        {
+            input.DeleteCursorPosCallback(*_inputCallbackIds.cursorPosCallbackId);
+        }
+        if (_inputCallbackIds.scrollCallbackId)
+        {
+            input.DeleteScrollCallback(*_inputCallbackIds.scrollCallbackId);
+        }
+    }
+    _inputCallbackIds = {};
+    _inputCallbacksRegistered = false;
+
     if (_document != nullptr)
     {
         _document->Close();
@@ -276,6 +304,15 @@ void UIContext::LoadDocument(const std::string &docPath)
         return;
     }
 
+    for (auto &entry : _eventListeners)
+    {
+        if (entry.element != nullptr)
+        {
+            entry.element->RemoveEventListener(entry.eventType, entry.listener.get(), entry.useCapture);
+        }
+    }
+    _eventListeners.clear();
+
     if (_document != nullptr)
     {
         _document->Close();
@@ -310,7 +347,8 @@ bool UIContext::LoadOverlayDocument(const std::string &docPath)
 {
     if (_context == nullptr)
     {
-        return false;
+        throw Rmlui::Exception::ReadRmlDocumentError(
+                        fmt::format("Rmlui can not load overlay document due to not being initialized: {}", docPath));
     }
 
     if (_overlayDocuments.contains(docPath))
@@ -321,7 +359,8 @@ bool UIContext::LoadOverlayDocument(const std::string &docPath)
     auto *document = _context->LoadDocument(docPath);
     if (document == nullptr)
     {
-        return false;
+        throw Rmlui::Exception::ReadRmlDocumentError(
+                        fmt::format("Rmlui can not load overlay document: {}", docPath));
     }
 
     document->Show();
@@ -332,9 +371,11 @@ bool UIContext::LoadOverlayDocument(const std::string &docPath)
 bool UIContext::UnloadOverlayDocument(const std::string &docPath)
 {
     auto it = _overlayDocuments.find(docPath);
+
     if (it == _overlayDocuments.end())
     {
-        return false;
+        throw Rmlui::Exception::ReadRmlDocumentError(
+                        fmt::format("Rmlui can not unload overlay document due to not being loaded: {}", docPath));
     }
     if (it->second != nullptr)
     {
@@ -424,6 +465,8 @@ bool UIContext::UnregisterEventListener(Rml::Element &element, const Rml::String
     }
     return false;
 }
+
+void UIContext::SetInputCallbackIds(const InputCallbackIds &ids) { _inputCallbackIds = ids; }
 
 bool UIContext::AreInputCallbacksRegistered() const { return _inputCallbacksRegistered; }
 

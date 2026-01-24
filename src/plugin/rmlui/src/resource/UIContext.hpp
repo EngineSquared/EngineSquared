@@ -5,11 +5,13 @@
 
 #include <functional>
 #include <memory>
+#include <optional>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
 #include "AUIContext.hpp"
+#include "FunctionID.hpp"
 #include "RmlUi/Config/Config.h"
 #include "RmlUi/Core/Context.h"
 #include "RmlUi/Core/ElementDocument.h"
@@ -18,6 +20,14 @@
 namespace Rmlui::Resource {
 class UIContext : public AUIContext {
   public:
+    struct InputCallbackIds {
+        std::optional<FunctionUtils::FunctionID> keyCallbackId;
+        std::optional<FunctionUtils::FunctionID> charCallbackId;
+        std::optional<FunctionUtils::FunctionID> mouseButtonCallbackId;
+        std::optional<FunctionUtils::FunctionID> cursorPosCallbackId;
+        std::optional<FunctionUtils::FunctionID> scrollCallbackId;
+    };
+
     UIContext() = default;
     ~UIContext() override = default;
 
@@ -43,6 +53,7 @@ class UIContext : public AUIContext {
     bool RegisterEventListener(Rml::Element &element, const Rml::String &eventType,
                                std::function<void(Rml::Event &)> callback, bool useCapture = false);
     bool UnregisterEventListener(Rml::Element &element, const Rml::String &eventType);
+    void SetInputCallbackIds(const InputCallbackIds &ids);
     bool AreInputCallbacksRegistered() const;
     void SetInputCallbacksRegistered(bool registered);
 
@@ -69,6 +80,7 @@ class UIContext : public AUIContext {
     std::string _titleCache;
     bool _debuggerInitialized = false;
     std::vector<EventListenerEntry> _eventListeners;
+    InputCallbackIds _inputCallbackIds;
     bool _inputCallbacksRegistered = false;
 
     bool _isReady() const;
