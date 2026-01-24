@@ -28,17 +28,20 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     entt::hashed_string textureId{material.ambientTexName.data(), material.ambientTexName.size()};
     entt::hashed_string samplerId{material.ambientTexName.data(), material.ambientTexName.size()};
 
-    if (std::filesystem::exists(material.ambientTexName) == false)
-    {
-        Log::Warn(fmt::format("Material texture file not found: {}", material.ambientTexName));
-        GPUMaterial.texture = entt::hashed_string{};
-    }
-    else
+    if (std::filesystem::exists(material.ambientTexName))
     {
         Graphic::Resource::Texture texture{context, material.ambientTexName,
                                            Graphic::Resource::Image(material.ambientTexName)};
         textureContainer.Add(textureId, std::move(texture));
         GPUMaterial.texture = textureId;
+    }
+    else if (textureContainer.Contains(textureId))
+    {
+        GPUMaterial.texture = textureId;
+    }
+    else if (!material.ambientTexName.empty())
+    {
+        Log::Warn(fmt::format("Texture '{}' not found as file or in texture container", material.ambientTexName));
     }
 
     Graphic::Resource::Sampler sampler{context.deviceContext.GetDevice().value()};
