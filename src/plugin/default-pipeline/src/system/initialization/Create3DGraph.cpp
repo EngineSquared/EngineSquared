@@ -138,33 +138,6 @@ static void CreateGBufferTextures(Engine::Core &core)
     }
 }
 
-static void CreateDeferredTextures(Engine::Core &core)
-{
-    const auto &context = core.GetResource<Graphic::Resource::Context>();
-    auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
-    auto &eventManager = core.GetResource<Event::Resource::EventManager>();
-
-    glm::uvec2 windowSize{Window::System::DEFAULT_WIDTH, Window::System::DEFAULT_HEIGHT};
-    if (core.HasResource<Window::Resource::Window>())
-    {
-        windowSize = core.GetResource<Window::Resource::Window>().GetSize();
-    }
-    {
-        wgpu::TextureDescriptor descriptor = CreateDeferredPassOutputTextureDescriptor(windowSize);
-
-        Graphic::Resource::Texture defaultTexture(context, descriptor);
-        textureContainer.Add(DefaultPipeline::Resource::DEFERRED_PASS_OUTPUT_ID, std::move(defaultTexture));
-        eventManager.RegisterCallback<Window::Event::OnResize>(
-            [&core, &textureContainer, &context](const Window::Event::OnResize &event) {
-                wgpu::TextureDescriptor descriptor =
-                    CreateDeferredPassOutputTextureDescriptor({event.newSize.x, event.newSize.y});
-                Graphic::Resource::Texture resizedTexture(context, descriptor);
-                textureContainer.Remove(DefaultPipeline::Resource::DEFERRED_PASS_OUTPUT_ID);
-                textureContainer.Add(DefaultPipeline::Resource::DEFERRED_PASS_OUTPUT_ID, std::move(resizedTexture));
-            });
-    }
-}
-
 static void CreateDeferredTexturesBindingGroup(Engine::Core &core)
 {
     const auto &context = core.GetResource<Graphic::Resource::Context>();
@@ -285,7 +258,6 @@ void DefaultPipeline::System::Create3DGraph(Engine::Core &core)
     auto &renderPassContainer = core.GetResource<Graphic::Resource::RenderGraphContainer>();
 
     CreateGBufferTextures(core);
-    CreateDeferredTextures(core);
     auto renderGraph = CreateGraph(core);
     CreateDeferredTexturesBindingGroup(core);
     renderPassContainer.SetDefault(std::move(renderGraph));

@@ -28,9 +28,9 @@ static inline constexpr std::string_view DEFERRED_SHADER_NAME = "DEFERRED_SHADER
 static inline const entt::hashed_string DEFERRED_SHADER_ID =
     entt::hashed_string{DEFERRED_SHADER_NAME.data(), DEFERRED_SHADER_NAME.size()};
 
-static inline constexpr std::string_view DEFERRED_BINDGROUP_TEXTURES_NAME = "DEFERRED_SHADER";
+static inline constexpr std::string_view DEFERRED_BINDGROUP_TEXTURES_NAME = "DEFERRED_BINDGROUP_TEXTURES";
 static inline const entt::hashed_string DEFERRED_BINDGROUP_TEXTURES_ID =
-    entt::hashed_string{DEFERRED_SHADER_NAME.data(), DEFERRED_SHADER_NAME.size()};
+    entt::hashed_string{DEFERRED_BINDGROUP_TEXTURES_NAME.data(), DEFERRED_BINDGROUP_TEXTURES_NAME.size()};
 
 static inline constexpr std::string_view DEFERRED_SHADE_CONTENT = R"(
 const MAX_POINT_LIGHTS: u32 = 64u;
@@ -93,8 +93,8 @@ fn vs_main(
 ) -> VertexToFragment {
     var coord : vec4f;
     const pos = array(
-        vec2(1.0, -1.0), vec2(-1.0, -1.0), vec2(-1.0, 1.0),
-        vec2(1.0, -1.0), vec2(-1.0, 1.0), vec2(1.0, 1.0),
+        vec2(-1.0, -1.0), vec2(-1.0, 1.0), vec2(1.0, -1.0),
+        vec2(-1.0, 1.0), vec2(1.0, 1.0), vec2(1.0, -1.0)
     );
 
     coord = vec4f(pos[input.VertexIndex], 0.9, 1.0);

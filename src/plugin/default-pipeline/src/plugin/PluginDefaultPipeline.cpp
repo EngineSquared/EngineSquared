@@ -21,9 +21,6 @@ static void SetupGPUComponent(Engine::Core &core)
  * lifecycle events to GPU creation/destruction handlers for camera, mesh, transform,
  * and material components, and registers the rendering setup and preparation systems.
  *
- * The setup systems registered include: CreateDefaultRenderPipeline, Create3DGraph,
- * CreateDefaultMaterial, CreateAmbientLight, and CreatePointLights.
- *
  * The preparation systems registered include: UpdateGPUTransforms, UpdateGPUCameras,
  * UpdateGPUMaterials, UpdateGPUMeshes, UpdateAmbientLight, and UpdatePointLights.
  */
