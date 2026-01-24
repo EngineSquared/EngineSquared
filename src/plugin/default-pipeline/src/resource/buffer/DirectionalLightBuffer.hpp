@@ -69,10 +69,7 @@ class DirectionalLightBuffer : public Graphic::Resource::AGPUBuffer {
     std::string_view GetDebugName() const { return _debugName; }
 
   private:
-    inline void _UpdateDebugName()
-    {
-        _debugName = fmt::format("{}{}", prefix, _entity);
-    }
+    inline void _UpdateDebugName() { _debugName = fmt::format("{}{}", prefix, _entity); }
 
     wgpu::Buffer _CreateBuffer(const Graphic::Resource::DeviceContext &context)
     {

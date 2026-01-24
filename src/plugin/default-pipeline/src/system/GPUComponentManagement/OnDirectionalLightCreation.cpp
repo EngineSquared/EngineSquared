@@ -1,7 +1,7 @@
 #include "system/GPUComponentManagement/OnDirectionalLightCreation.hpp"
 #include "Logger.hpp"
-#include "component/GPUDirectionalLight.hpp"
 #include "component/DirectionalLight.hpp"
+#include "component/GPUDirectionalLight.hpp"
 #include "resource/BindGroup.hpp"
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
@@ -32,7 +32,6 @@ void DefaultPipeline::System::OnDirectionalLightCreation(Engine::Core &core, Eng
     gpuBufferContainer.Add(directionalLightBufferId, std::move(directionalLightBuffer));
     GPUDirectionalLight.buffer = directionalLightBufferId;
 
-    
     // std::string bindGroupName = fmt::format("MATERIAL_BIND_GROUP_{}", entity);
     // entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
     // Graphic::Resource::BindGroup bindGroup(core, bindGroupName, Resource::GBUFFER_SHADER_ID, 2,

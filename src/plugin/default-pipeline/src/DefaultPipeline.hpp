@@ -1,10 +1,10 @@
 #pragma once
 
 #include "component/GPUCamera.hpp"
+#include "component/GPUDirectionalLight.hpp"
 #include "component/GPUMaterial.hpp"
 #include "component/GPUMesh.hpp"
 #include "component/GPUTransform.hpp"
-#include "component/GPUDirectionalLight.hpp"
 
 #include "plugin/PluginDefaultPipeline.hpp"
 
@@ -12,12 +12,12 @@
 
 #include "resource/buffer/AmbientLightBuffer.hpp"
 #include "resource/buffer/CameraGPUBuffer.hpp"
+#include "resource/buffer/DirectionalLightBuffer.hpp"
 #include "resource/buffer/IndexGPUBuffer.hpp"
 #include "resource/buffer/MaterialGPUBuffer.hpp"
 #include "resource/buffer/PointGPUBuffer.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
 #include "resource/buffer/TransformGPUBuffer.hpp"
-#include "resource/buffer/DirectionalLightBuffer.hpp"
 
 #include "resource/pass/Deferred.hpp"
 #include "resource/pass/GBuffer.hpp"
@@ -30,14 +30,14 @@
 
 #include "system/GPUComponentManagement/OnCameraCreation.hpp"
 #include "system/GPUComponentManagement/OnCameraDestruction.hpp"
+#include "system/GPUComponentManagement/OnDirectionalLightCreation.hpp"
+#include "system/GPUComponentManagement/OnDirectionalLightDestruction.hpp"
 #include "system/GPUComponentManagement/OnMaterialCreation.hpp"
 #include "system/GPUComponentManagement/OnMaterialDestruction.hpp"
 #include "system/GPUComponentManagement/OnMeshCreation.hpp"
 #include "system/GPUComponentManagement/OnMeshDestruction.hpp"
 #include "system/GPUComponentManagement/OnTransformCreation.hpp"
 #include "system/GPUComponentManagement/OnTransformDestruction.hpp"
-#include "system/GPUComponentManagement/OnDirectionalLightCreation.hpp"
-#include "system/GPUComponentManagement/OnDirectionalLightDestruction.hpp"
 
 #include "system/preparation/UpdateAmbientLight.hpp"
 #include "system/preparation/UpdateGPUCameras.hpp"
