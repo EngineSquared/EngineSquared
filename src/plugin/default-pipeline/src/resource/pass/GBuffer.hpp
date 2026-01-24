@@ -201,22 +201,22 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
                 .setMinBindingSize(sizeof(glm::mat4) + sizeof(glm::mat4))
                 .setVisibility(wgpu::ShaderStage::Vertex)
                 .setBinding(0));
-        auto materialLayout = Graphic::Utils::BindGroupLayout("Material")
-                                  .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("material")
-                                                .setType(wgpu::BufferBindingType::Uniform)
-                                                .setMinBindingSize(
-                                                    Resource::MaterialGPUBuffer::MaterialTransfer::GPUSize())
-                                                .setVisibility(wgpu::ShaderStage::Fragment)
-                                                .setBinding(0))
-                                  .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("materialTexture")
-                                                .setSampleType(wgpu::TextureSampleType::Float)
-                                                .setViewDimension(wgpu::TextureViewDimension::_2D)
-                                                .setVisibility(wgpu::ShaderStage::Fragment)
-                                                .setBinding(1))
-                                  .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("materialSampler")
-                                                .setType(wgpu::SamplerBindingType::Filtering)
-                                                .setVisibility(wgpu::ShaderStage::Fragment)
-                                                .setBinding(2));
+        auto materialLayout =
+            Graphic::Utils::BindGroupLayout("Material")
+                .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("material")
+                              .setType(wgpu::BufferBindingType::Uniform)
+                              .setMinBindingSize(Resource::MaterialGPUBuffer::MaterialTransfer::GPUSize())
+                              .setVisibility(wgpu::ShaderStage::Fragment)
+                              .setBinding(0))
+                .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("materialTexture")
+                              .setSampleType(wgpu::TextureSampleType::Float)
+                              .setViewDimension(wgpu::TextureViewDimension::_2D)
+                              .setVisibility(wgpu::ShaderStage::Fragment)
+                              .setBinding(1))
+                .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("materialSampler")
+                              .setType(wgpu::SamplerBindingType::Filtering)
+                              .setVisibility(wgpu::ShaderStage::Fragment)
+                              .setBinding(2));
 
         auto vertexLayout = Graphic::Utils::VertexBufferLayout()
                                 .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)

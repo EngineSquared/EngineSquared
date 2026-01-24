@@ -21,7 +21,10 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
 
         explicit MaterialTransfer(const Object::Component::Material &material)
             : ambient(material.ambient, 1.0f), diffuse(material.diffuse, 1.0f), specular(material.specular, 1.0f),
-              transmittance(material.transmittance, 1.0f), emission(material.emission, 1.0f), shininess(material.shininess) {}
+              transmittance(material.transmittance, 1.0f), emission(material.emission, 1.0f),
+              shininess(material.shininess)
+        {
+        }
 
         static uint32_t CPUSize() { return sizeof(MaterialTransfer); }
         static uint32_t GPUSize() { return sizeof(MaterialTransfer); }
