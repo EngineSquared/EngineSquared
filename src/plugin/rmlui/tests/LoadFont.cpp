@@ -3,6 +3,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <utility>
 
 #include "core/Core.hpp"
 #include "plugin/PluginRmlui.hpp"
@@ -33,9 +34,18 @@ void LoadFontFailureTest(Engine::Core &core)
     spdlog::set_default_logger(testLogger);
 
     struct LoggerGuard {
-        std::shared_ptr<spdlog::logger> prev;
+        explicit LoggerGuard(std::shared_ptr<spdlog::logger> previous) : prev(std::move(previous)) {}
         ~LoggerGuard() { spdlog::set_default_logger(prev); }
-    } guard{previousLogger};
+
+        LoggerGuard(const LoggerGuard &) = delete;
+        LoggerGuard &operator=(const LoggerGuard &) = delete;
+        LoggerGuard(LoggerGuard &&) = delete;
+        LoggerGuard &operator=(LoggerGuard &&) = delete;
+
+        std::shared_ptr<spdlog::logger> prev;
+    };
+
+    LoggerGuard guard(previousLogger);
 
     uiContext.SetFont("asset/missing.ttf");
 

@@ -187,23 +187,23 @@ void UIContext::Destroy(Engine::Core &core)
     if (_inputCallbacksRegistered && core.HasResource<Input::Resource::InputManager>())
     {
         auto &input = core.GetResource<Input::Resource::InputManager>();
-        if (_inputCallbackIds.keyCallbackId)
+        if (_inputCallbackIds.keyCallbackId.has_value())
         {
             input.DeleteKeyCallback(*_inputCallbackIds.keyCallbackId);
         }
-        if (_inputCallbackIds.charCallbackId)
+        if (_inputCallbackIds.charCallbackId.has_value())
         {
             input.DeleteCharCallback(*_inputCallbackIds.charCallbackId);
         }
-        if (_inputCallbackIds.mouseButtonCallbackId)
+        if (_inputCallbackIds.mouseButtonCallbackId.has_value())
         {
             input.DeleteMouseButtonCallback(*_inputCallbackIds.mouseButtonCallbackId);
         }
-        if (_inputCallbackIds.cursorPosCallbackId)
+        if (_inputCallbackIds.cursorPosCallbackId.has_value())
         {
             input.DeleteCursorPosCallback(*_inputCallbackIds.cursorPosCallbackId);
         }
-        if (_inputCallbackIds.scrollCallbackId)
+        if (_inputCallbackIds.scrollCallbackId.has_value())
         {
             input.DeleteScrollCallback(*_inputCallbackIds.scrollCallbackId);
         }
