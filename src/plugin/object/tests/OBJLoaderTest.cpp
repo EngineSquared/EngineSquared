@@ -42,7 +42,7 @@ TEST(OBJLoaderTest, get_shapes_iterable_and_consistent)
         auto shapes = loader.GetShapes();
         EXPECT_FALSE(shapes.empty());
 
-        for (auto [mesh, material] : shapes)
+        for (auto [mesh, material, name] : shapes)
         {
             EXPECT_FALSE(mesh.GetVertices().empty());
             EXPECT_FALSE(mesh.GetIndices().empty());
@@ -117,7 +117,7 @@ TEST(OBJLoaderTest, get_shapes_materials_consistent)
         auto materials = loader.GetMaterials();
         EXPECT_FALSE(materials.empty());
 
-        for (const auto &[mesh, material] : shapes)
+        for (const auto &[mesh, material, name] : shapes)
         {
             EXPECT_FALSE(mesh.GetVertices().empty());
             EXPECT_FALSE(mesh.GetIndices().empty());
