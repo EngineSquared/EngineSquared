@@ -348,7 +348,7 @@ bool UIContext::LoadOverlayDocument(const std::string &docPath)
     if (_context == nullptr)
     {
         throw Rmlui::Exception::ReadRmlDocumentError(
-                        fmt::format("Rmlui can not load overlay document due to not being initialized: {}", docPath));
+            fmt::format("Rmlui can not load overlay document due to not being initialized: {}", docPath));
     }
 
     if (_overlayDocuments.contains(docPath))
@@ -359,8 +359,7 @@ bool UIContext::LoadOverlayDocument(const std::string &docPath)
     auto *document = _context->LoadDocument(docPath);
     if (document == nullptr)
     {
-        throw Rmlui::Exception::ReadRmlDocumentError(
-                        fmt::format("Rmlui can not load overlay document: {}", docPath));
+        throw Rmlui::Exception::ReadRmlDocumentError(fmt::format("Rmlui can not load overlay document: {}", docPath));
     }
 
     document->Show();
@@ -375,7 +374,7 @@ bool UIContext::UnloadOverlayDocument(const std::string &docPath)
     if (it == _overlayDocuments.end())
     {
         throw Rmlui::Exception::ReadRmlDocumentError(
-                        fmt::format("Rmlui can not unload overlay document due to not being loaded: {}", docPath));
+            fmt::format("Rmlui can not unload overlay document due to not being loaded: {}", docPath));
     }
     if (it->second != nullptr)
     {

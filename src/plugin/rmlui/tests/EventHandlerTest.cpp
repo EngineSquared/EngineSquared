@@ -33,9 +33,7 @@ void UnregisterEventListenerTest(Engine::Core &core)
     ASSERT_NO_THROW(uiContext.LoadDocument(testAssetPath));
 
     ASSERT_NO_THROW(
-        uiContext.RegisterEventListener(*uiContext.GetElementById("test"), "click", [](auto &) {
-            EXPECT_TRUE(true);
-        }));
+        uiContext.RegisterEventListener(*uiContext.GetElementById("test"), "click", [](auto &) { EXPECT_TRUE(true); }));
 
     ASSERT_TRUE(uiContext.UnregisterEventListener(*uiContext.GetElementById("test"), "click"));
 
