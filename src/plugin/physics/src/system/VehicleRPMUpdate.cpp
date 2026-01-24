@@ -3,8 +3,8 @@
 #include "system/VehicleRPMUpdate.hpp"
 
 #include "component/VehicleInternal.hpp"
-#include "resource/VehicleTelemetry.hpp"
 #include "resource/PhysicsManager.hpp"
+#include "resource/VehicleTelemetry.hpp"
 
 #include <Jolt/Physics/Vehicle/WheeledVehicleController.h>
 

@@ -7,7 +7,7 @@ SoundManager::~SoundManager()
 {
     // Teardown order: engine first (if it owns/manages device context), then device
     {
-        std::scoped_lock lock(soundsMutex);  // Protect map iteration during destruction
+        std::scoped_lock lock(soundsMutex); // Protect map iteration during destruction
         for (auto &[name, sound] : _soundsToPlay)
         {
             {

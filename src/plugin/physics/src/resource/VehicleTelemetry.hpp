@@ -6,9 +6,9 @@
 
 #pragma once
 
+#include <functional>
 #include <optional>
 #include <unordered_map>
-#include <functional>
 
 #include "Engine.hpp"
 
@@ -27,20 +27,20 @@ class VehicleTelemetry {
     void Clear(Engine::EntityId entity) { _rpmByEntity.erase(entity); }
 
   private:
-  struct EntityIdHash {
-    size_t operator()(const Engine::EntityId &id) const noexcept
-    {
-      using VT = Engine::EntityId::ValueType;
-      return std::hash<VT>{}(static_cast<VT>(id));
-    }
-  };
-  struct EntityIdEqual {
-    bool operator()(const Engine::EntityId &a, const Engine::EntityId &b) const noexcept
-    {
-      return static_cast<Engine::EntityId::ValueType>(a) == static_cast<Engine::EntityId::ValueType>(b);
-    }
-  };
-  std::unordered_map<Engine::EntityId, float, EntityIdHash, EntityIdEqual> _rpmByEntity;
+    struct EntityIdHash {
+        size_t operator()(const Engine::EntityId &id) const noexcept
+        {
+            using VT = Engine::EntityId::ValueType;
+            return std::hash<VT>{}(static_cast<VT>(id));
+        }
+    };
+    struct EntityIdEqual {
+        bool operator()(const Engine::EntityId &a, const Engine::EntityId &b) const noexcept
+        {
+            return static_cast<Engine::EntityId::ValueType>(a) == static_cast<Engine::EntityId::ValueType>(b);
+        }
+    };
+    std::unordered_map<Engine::EntityId, float, EntityIdHash, EntityIdEqual> _rpmByEntity;
 };
 
 } // namespace Physics::Resource

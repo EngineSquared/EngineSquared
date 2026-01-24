@@ -5,6 +5,7 @@
 #include "plugin/PhysicsPlugin.hpp"
 #include "plugin/PluginEvent.hpp"
 
+#include "resource/VehicleTelemetry.hpp"
 #include "system/ConstraintSystem.hpp"
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
@@ -13,10 +14,9 @@
 #include "system/SoftBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
 #include "system/VehicleControlSystem.hpp"
-#include "system/VehicleSystem.hpp"
 #include "system/VehicleRPMUpdate.hpp"
+#include "system/VehicleSystem.hpp"
 #include "system/WheelTransformSyncSystem.hpp"
-#include "resource/VehicleTelemetry.hpp"
 
 void Physics::Plugin::Bind()
 {
