@@ -44,8 +44,8 @@ void Rmlui::System::CreateRmluiRenderPipeline(Engine::Core &core)
     renderPass.AddOutput(0, std::move(colorOutput));
 
     renderGraph.Add(Utils::RMLUI_RENDER_PASS_NAME, std::move(renderPass));
-    if (renderGraph.Contains("DEFAULT_RENDER_PASS"))
+    if (renderGraph.Contains("DEFERRED_PASS"))
     {
-        renderGraph.SetDependency("DEFAULT_RENDER_PASS", Utils::RMLUI_RENDER_PASS_NAME);
+        renderGraph.SetDependency("DEFERRED_PASS", Utils::RMLUI_RENDER_PASS_NAME);
     }
 }
