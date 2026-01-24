@@ -1,0 +1,10 @@
+<rml>
+	<head>
+		<link type="text/rcss" href="test.rcss" />
+	</head>
+	<body>
+		<div class="test-container">
+			<div id="test" class="test-box"></div>
+		</div>
+	</body>
+</rml>

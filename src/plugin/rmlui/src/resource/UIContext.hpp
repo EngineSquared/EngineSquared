@@ -42,6 +42,7 @@ class UIContext : public AUIContext {
     Rml::Element *GetElementById(const std::string &elementId);
     bool RegisterEventListener(Rml::Element &element, const Rml::String &eventType,
                                std::function<void(Rml::Event &)> callback, bool useCapture = false);
+    bool UnregisterEventListener(Rml::Element &element, const Rml::String &eventType);
     bool AreInputCallbacksRegistered() const;
     void SetInputCallbacksRegistered(bool registered);
 
@@ -55,12 +56,19 @@ class UIContext : public AUIContext {
     void _setup(Engine::Core &core) override;
 
   private:
+    struct EventListenerEntry {
+        Rml::Element *element = nullptr;
+        Rml::String eventType;
+        bool useCapture = false;
+        std::unique_ptr<Rml::EventListener> listener;
+    };
+
     Rml::Context *_context = nullptr;
     Rml::ElementDocument *_document = nullptr;
     std::unordered_map<std::string, Rml::ElementDocument *> _overlayDocuments;
     std::string _titleCache;
     bool _debuggerInitialized = false;
-    std::vector<std::unique_ptr<Rml::EventListener>> _eventListeners;
+    std::vector<EventListenerEntry> _eventListeners;
     bool _inputCallbacksRegistered = false;
 
     bool _isReady() const;

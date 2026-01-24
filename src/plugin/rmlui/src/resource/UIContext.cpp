@@ -401,8 +401,28 @@ bool UIContext::RegisterEventListener(Rml::Element &element, const Rml::String &
 {
     auto listener = std::make_unique<CallbackEventListener>(std::move(callback));
     element.AddEventListener(eventType, listener.get(), useCapture);
-    _eventListeners.push_back(std::move(listener));
+    _eventListeners.push_back(UIContext::EventListenerEntry{
+        .element = &element,
+        .eventType = eventType,
+        .useCapture = useCapture,
+        .listener = std::move(listener),
+    });
     return true;
+}
+
+bool UIContext::UnregisterEventListener(Rml::Element &element, const Rml::String &eventType)
+{
+    for (auto it = _eventListeners.begin(); it != _eventListeners.end(); ++it)
+    {
+        if (it->element != &element || it->eventType != eventType)
+        {
+            continue;
+        }
+        element.RemoveEventListener(eventType, it->listener.get());
+        _eventListeners.erase(it);
+        return true;
+    }
+    return false;
 }
 
 bool UIContext::AreInputCallbacksRegistered() const { return _inputCallbacksRegistered; }
