@@ -72,7 +72,11 @@ target("EngineSquared")
 
     add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native",
                  "rmlui", "freetype", "zlib")
-    add_links("freetype", "z")
+    if is_plat("windows") then
+        add_links("freetype", "zlib")
+    else
+        add_links("freetype", "z")
+    end
 
     if is_mode("debug") then
         add_defines("DEBUG")
@@ -102,7 +106,11 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_files(file)
         add_files("tests/main.cpp")
         add_packages("entt", "glfw", "glm", "gtest", "spdlog", "tinyobjloader", "fmt", "rmlui", "freetype", "zlib")
-        add_links("freetype", "z")
+        if is_plat("windows") then
+            add_links("freetype", "zlib")
+        else
+            add_links("freetype", "z")
+        end
         add_links("gtest")
         add_deps("EngineSquared")
         add_includedirs("src")

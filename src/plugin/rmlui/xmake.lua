@@ -31,7 +31,11 @@ target("PluginRmlui")
     add_links("rmlui_debugger", "rmlui")
     add_linkdirs("$(package:freetype):installdir()/lib")
     add_linkdirs("$(package:zlib):installdir()/lib")
-    add_links("freetype", "z")
+    if is_plat("windows") then
+        add_links("freetype", "zlib")
+    else
+        add_links("freetype", "z")
+    end
     if is_plat("linux") then
         add_ldflags("-Wl,--start-group", "-lrmlui_debugger", "-lrmlui", "-lfreetype", "-lz", "-Wl,--end-group",
                     {force = true})
