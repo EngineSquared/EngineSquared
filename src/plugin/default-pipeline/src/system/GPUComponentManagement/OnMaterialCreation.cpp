@@ -38,6 +38,10 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     {
         GPUMaterial.texture = textureId;
     }
+    else if (!material.ambientTexName.empty())
+    {
+        Log::Warn(fmt::format("Texture '{}' not found as file or in texture container", material.ambientTexName));
+    }
 
     Graphic::Resource::Sampler sampler{context.deviceContext.GetDevice().value()};
     samplerContainer.Add(samplerId, std::move(sampler));
