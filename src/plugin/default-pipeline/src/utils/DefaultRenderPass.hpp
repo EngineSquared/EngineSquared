@@ -13,6 +13,7 @@
 #include "resource/buffer/PointLightsBuffer.hpp"
 #include "utils/AmbientLight.hpp"
 #include "utils/DefaultMaterial.hpp"
+#include "resource/buffer/CameraGPUBuffer.hpp"
 #include "utils/PointLights.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
@@ -32,6 +33,8 @@ const MAX_POINT_LIGHTS: u32 = 64u;
 
 struct Camera {
     viewProjectionMatrix : mat4x4<f32>,
+    invViewProjectionMatrix : mat4x4<f32>,
+    position : vec3f,
 };
 
 struct Model {
@@ -42,30 +45,6 @@ struct Model {
 struct Material {
     emission: vec3f,
     padding: f32,
-};
-
-struct AmbientLight {
-    color : vec3f,
-    padding : f32,
-};
-
-struct GPUPointLight {
-    position: vec3f,
-    intensity: f32,
-    color: vec3f,
-    radius: f32,
-    falloff: f32,
-    _padding1: f32,
-    _padding2: f32,
-    _padding3: f32,
-};
-
-struct PointLightsData {
-    lights: array<GPUPointLight, MAX_POINT_LIGHTS>,
-    count: u32,
-    _padding1: f32,
-    _padding2: f32,
-    _padding3: f32,
 };
 
 @group(0) @binding(0) var<uniform> camera : Camera;
@@ -230,8 +209,8 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
         auto cameraLayout = Graphic::Utils::BindGroupLayout("CameraLayout")
                                 .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("camera")
                                               .setType(wgpu::BufferBindingType::Uniform)
-                                              .setMinBindingSize(sizeof(glm::mat4))
-                                              .setVisibility(wgpu::ShaderStage::Vertex)
+                                              .setMinBindingSize(Resource::CameraGPUBuffer::CameraTransfer::GPUSize())
+                                              .setVisibility(wgpu::ShaderStage::Fragment | wgpu::ShaderStage::Vertex)
                                               .setBinding(0));
         // Model buffer contains: mat4 modelMatrix (64 bytes) + 3 * vec4 normalMatrix columns (48 bytes) = 112 bytes
         auto modelLayout = Graphic::Utils::BindGroupLayout("ModelLayout")

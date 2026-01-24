@@ -1,11 +1,17 @@
 #include "system/initialization/Create3DGraph.hpp"
 #include "event/OnResize.hpp"
+#include "resource/Context.hpp"
 #include "resource/EventManager.hpp"
 #include "resource/RenderGraphContainer.hpp"
+#include "resource/ShaderContainer.hpp"
+#include "resource/TextureContainer.hpp"
 #include "resource/Window.hpp"
+#include "resource/pass/Deferred.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include "system/WindowSystem.hpp"
 #include "utils/DefaultRenderPass.hpp"
+#include "utils/EndRenderTexture.hpp"
+
 
 /**
  * @brief Creates a texture descriptor for the G-buffer normal output.
@@ -59,6 +65,18 @@ wgpu::TextureDescriptor CreateGBufferPassOutputDepthTextureDescriptor(glm::uvec2
     descriptor.size = {size.x, size.y, 1};
     descriptor.dimension = wgpu::TextureDimension::_2D;
     descriptor.format = wgpu::TextureFormat::Depth32Float;
+    descriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
+                       wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
+    return descriptor;
+}
+
+wgpu::TextureDescriptor CreateDeferredPassOutputTextureDescriptor(glm::uvec2 size)
+{
+    wgpu::TextureDescriptor descriptor{wgpu::Default};
+    descriptor.label = wgpu::StringView(DefaultPipeline::Resource::DEFERRED_PASS_OUTPUT);
+    descriptor.size = {size.x, size.y, 1};
+    descriptor.dimension = wgpu::TextureDimension::_2D;
+    descriptor.format = wgpu::TextureFormat::RGBA16Float;
     descriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
                        wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
     return descriptor;
@@ -122,6 +140,64 @@ static void CreateGBufferTextures(Engine::Core &core)
     }
 }
 
+static void CreateDeferredTextures(Engine::Core &core)
+{
+    const auto &context = core.GetResource<Graphic::Resource::Context>();
+    auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
+    auto &eventManager = core.GetResource<Event::Resource::EventManager>();
+
+    glm::uvec2 windowSize{Window::System::DEFAULT_WIDTH, Window::System::DEFAULT_HEIGHT};
+    if (core.HasResource<Window::Resource::Window>())
+    {
+        windowSize = core.GetResource<Window::Resource::Window>().GetSize();
+    }
+    {
+        wgpu::TextureDescriptor descriptor = CreateDeferredPassOutputTextureDescriptor(windowSize);
+
+        Graphic::Resource::Texture defaultTexture(context, descriptor);
+        textureContainer.Add(DefaultPipeline::Resource::DEFERRED_PASS_OUTPUT_ID, std::move(defaultTexture));
+        eventManager.RegisterCallback<Window::Event::OnResize>(
+            [&core, &textureContainer, &context](const Window::Event::OnResize &event) {
+                wgpu::TextureDescriptor descriptor =
+                    CreateDeferredPassOutputTextureDescriptor({event.newSize.x, event.newSize.y});
+                Graphic::Resource::Texture resizedTexture(context, descriptor);
+                textureContainer.Remove(DefaultPipeline::Resource::DEFERRED_PASS_OUTPUT_ID);
+                textureContainer.Add(DefaultPipeline::Resource::DEFERRED_PASS_OUTPUT_ID, std::move(resizedTexture));
+            });
+    }
+}
+
+static void CreateDeferredTexturesBindingGroup(Engine::Core &core)
+{
+    const auto &context = core.GetResource<Graphic::Resource::Context>();
+    auto &shaderContainer = core.GetResource<Graphic::Resource::ShaderContainer>();
+
+    Graphic::Resource::BindGroup texturesBindGroup(
+        core, DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_NAME, DefaultPipeline::Resource::DEFERRED_SHADER_ID, 1,
+        {
+            {0, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID, 0},
+            {1, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_ALBEDO_ID, 0},
+            {2, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID, 0}
+        });
+    core.GetResource<Graphic::Resource::BindGroupManager>().Add(DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_ID, std::move(texturesBindGroup));
+
+    auto &eventManager = core.GetResource<Event::Resource::EventManager>();
+    eventManager.RegisterCallback<Window::Event::OnResize>(
+        [&core](const Window::Event::OnResize &event) {
+            auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
+            bindGroupManager.Remove(DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_ID);
+
+            Graphic::Resource::BindGroup texturesBindGroup(
+                core, DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_NAME, DefaultPipeline::Resource::DEFERRED_SHADER_ID, 1,
+                {
+                    {0, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID, 0},
+                    {1, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_ALBEDO_ID, 0},
+                    {2, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID, 0}
+                });
+            bindGroupManager.Add(DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_ID, std::move(texturesBindGroup));
+        });
+}
+
 /**
  * @brief Constructs a render graph containing a configured G-buffer pass.
  *
@@ -135,6 +211,7 @@ static Graphic::Resource::RenderGraph CreateGraph(Engine::Core &core)
 {
     Graphic::Resource::RenderGraph renderGraph{};
     {
+        // GBUFFER
         DefaultPipeline::Resource::GBuffer GBufferPass{};
 
         {
@@ -165,6 +242,26 @@ static Graphic::Resource::RenderGraph CreateGraph(Engine::Core &core)
         }
         renderGraph.Add(DefaultPipeline::Resource::GBUFFER_PASS_NAME, std::move(GBufferPass));
     }
+    {
+        // DEFERRED
+        DefaultPipeline::Resource::Deferred deferredPass{};
+        {
+            auto DeferredShader =
+                DefaultPipeline::Resource::Deferred::CreateShader(core.GetResource<Graphic::Resource::Context>());
+            core.GetResource<Graphic::Resource::ShaderContainer>().Add(DefaultPipeline::Resource::DEFERRED_SHADER_ID,
+                                                                       std::move(DeferredShader));
+            deferredPass.BindShader(DefaultPipeline::Resource::DEFERRED_SHADER_NAME);
+        }
+        {
+            Graphic::Resource::ColorOutput output;
+            output.textureId = Graphic::Utils::END_RENDER_TEXTURE_ID;
+            deferredPass.AddOutput(0, std::move(output));
+        }
+        renderGraph.Add(DefaultPipeline::Resource::DEFERRED_PASS_NAME, std::move(deferredPass));
+    }
+
+    renderGraph.SetDependency(DefaultPipeline::Resource::GBUFFER_PASS_NAME,
+                              DefaultPipeline::Resource::DEFERRED_PASS_NAME);
     return renderGraph;
 }
 
@@ -183,6 +280,8 @@ void DefaultPipeline::System::Create3DGraph(Engine::Core &core)
     auto &renderPassContainer = core.GetResource<Graphic::Resource::RenderGraphContainer>();
 
     CreateGBufferTextures(core);
+    CreateDeferredTextures(core);
     auto renderGraph = CreateGraph(core);
-    renderPassContainer.Add(Resource::GBUFFER_PASS_ID, std::move(renderGraph));
+    CreateDeferredTexturesBindingGroup(core);
+    renderPassContainer.SetDefault(std::move(renderGraph));
 }

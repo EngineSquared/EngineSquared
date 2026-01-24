@@ -6,6 +6,7 @@
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/TransformGPUBuffer.hpp"
 #include <string>
+#include "resource/pass/GBuffer.hpp"
 
 void DefaultPipeline::System::OnTransformCreation(Engine::Core &core, Engine::EntityId entityId)
 {
@@ -22,7 +23,7 @@ void DefaultPipeline::System::OnTransformCreation(Engine::Core &core, Engine::En
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
     std::string bindGroupName = fmt::format("TRANSFORM_BIND_GROUP_{}", entity);
     entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
-    Graphic::Resource::BindGroup bindGroup(core, "DEFAULT_RENDER_PASS_SHADER", 1,
+    Graphic::Resource::BindGroup bindGroup(core, bindGroupName, Resource::GBUFFER_SHADER_ID, 1,
                                            {
                                                {
                                                 0, Graphic::Resource::BindGroup::Asset::Type::Buffer,

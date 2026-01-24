@@ -7,10 +7,12 @@
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "plugin/PluginDefaultPipeline.hpp"
+#include "resource/pass/Deferred.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include "utils/ConfigureHeadlessGraphics.hpp"
 #include "utils/ShapeGenerator.hpp"
 #include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
+#include "component/AmbientLight.hpp"
 
 void TestSystem(Engine::Core &core)
 {
@@ -24,6 +26,17 @@ void TestSystem(Engine::Core &core)
 
     camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -2.0f));
     camera.AddComponent<Object::Component::Camera>().fov = glm::radians(90.0f);
+
+    auto ambientLight = core.CreateEntity();
+    ambientLight.AddComponent<Object::Component::AmbientLight>().color = glm::vec3(0.2f);
+
+    auto bluePointLight = core.CreateEntity();
+    bluePointLight.AddComponent<Object::Component::Transform>(glm::vec3(3.0f, 0.0f, 0.0f));
+    bluePointLight.AddComponent<Object::Component::PointLight>(
+        Object::Component::PointLight{.color = glm::vec3(0.2f, 0.2f, 1.0f),
+                                      .intensity = 50.0f,
+                                      .radius = 10.0f,
+                                      .falloff = 1.0f});
 }
 
 void ExtractTextures(Engine::Core &core)
@@ -40,9 +53,13 @@ void ExtractTextures(Engine::Core &core)
     auto &depthTexture = textures.Get(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID);
     auto depthImage = depthTexture.RetrieveImage(context);
 
+    auto &outputTexture = textures.Get(DefaultPipeline::Resource::DEFERRED_PASS_OUTPUT_ID);
+    auto deferredOutputImage = outputTexture.RetrieveImage(context);
+
     normalImage.ToPng("GBUFFER_NORMAL.png");
     albedoImage.ToPng("GBUFFER_ALBEDO.png");
     depthImage.ToPng("GBUFFER_DEPTH.png");
+    deferredOutputImage.ToPng("DEFERRED_OUTPUT.png");
 }
 
 TEST(DefaultPipeline, SmokeTest)
@@ -58,16 +75,16 @@ TEST(DefaultPipeline, SmokeTest)
 
     core.RegisterSystem(TestSystem);
 
-    core.RegisterSystem<RenderingPipeline::CommandCreation>([](Engine::Core &core) {
-        auto &renderPassContainer = core.GetResource<Graphic::Resource::RenderGraphContainer>();
-        if (renderPassContainer.Contains(DefaultPipeline::Resource::GBUFFER_PASS_ID))
-        {
-            renderPassContainer.Get(DefaultPipeline::Resource::GBUFFER_PASS_ID).Execute(core);
-        }
-    });
+    // core.RegisterSystem<RenderingPipeline::CommandCreation>([](Engine::Core &core) {
+    //     auto &renderPassContainer = core.GetResource<Graphic::Resource::RenderGraphContainer>();
+    //     if (renderPassContainer.Contains(DefaultPipeline::Resource::GBUFFER_PASS_ID))
+    //     {
+    //         renderPassContainer.Get(DefaultPipeline::Resource::GBUFFER_PASS_ID).Execute(core);
+    //     }
+    // });
 
     // Uncomment to save the images
-    // core.RegisterSystem<RenderingPipeline::Presentation>(ExtractTextures);
+    core.RegisterSystem<RenderingPipeline::Presentation>(ExtractTextures);
 
     core.RunSystems();
 

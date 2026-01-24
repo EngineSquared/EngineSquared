@@ -55,8 +55,8 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
     std::string bindGroupName = fmt::format("MATERIAL_BIND_GROUP_{}", entity);
     entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
-    Graphic::Resource::BindGroup bindGroup(core, "DEFAULT_RENDER_PASS_SHADER", 2,
-                                           {
+    Graphic::Resource::BindGroup bindGroup(core, bindGroupName, "DEFAULT_RENDER_PASS_SHADER", 2,
+                                            {
                                                {
                                                 0, Graphic::Resource::BindGroup::Asset::Type::Buffer,
                                                 materialBufferId, materialBufferSize,

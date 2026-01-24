@@ -7,7 +7,8 @@
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/MaterialGPUBuffer.hpp"
 #include "utils/DefaultMaterial.hpp"
-#include "utils/DefaultRenderPass.hpp"
+#include "resource/pass/GBuffer.hpp"
+// #include "utils/DefaultRenderPass.hpp"
 #include "utils/DefaultSampler.hpp"
 #include "utils/DefaultTexture.hpp"
 
@@ -28,7 +29,7 @@ void DefaultPipeline::System::CreateDefaultMaterial(Engine::Core &core)
     gpuBufferContainer.Add(Utils::DEFAULT_MATERIAL_ID, std::move(materialBuffer));
 
     Graphic::Resource::BindGroup bindGroup(
-        core, Utils::DEFAULT_RENDER_PASS_SHADER_ID, 2,
+        core, Utils::DEFAULT_MATERIAL_BIND_GROUP_NAME, Resource::GBUFFER_SHADER_ID, 2,
         {
             {
              0, Graphic::Resource::BindGroup::Asset::Type::Buffer,

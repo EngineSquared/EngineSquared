@@ -8,6 +8,7 @@
 #include "core/Core.hpp"
 #include "entity/Entity.hpp"
 #include "resource/ASingleExecutionRenderPass.hpp"
+#include "resource/buffer/CameraGPUBuffer.hpp"
 #include "utils/DefaultMaterial.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
@@ -33,6 +34,8 @@ static inline const entt::hashed_string GBUFFER_SHADER_ID =
 static inline constexpr std::string_view GBUFFER_SHADE_CONTENT = R"(
 struct Camera {
   viewProjectionMatrix : mat4x4<f32>,
+  invViewProjectionMatrix : mat4x4<f32>,
+  position : vec3f,
 }
 
 struct Object {
@@ -178,12 +181,12 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
     {
         Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
-        auto cameraLayout =
-            Graphic::Utils::BindGroupLayout("Camera").addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("camera")
-                                                                   .setType(wgpu::BufferBindingType::Uniform)
-                                                                   .setMinBindingSize(sizeof(glm::mat4))
-                                                                   .setVisibility(wgpu::ShaderStage::Vertex)
-                                                                   .setBinding(0));
+        auto cameraLayout = Graphic::Utils::BindGroupLayout("Camera").addEntry(
+            Graphic::Utils::BufferBindGroupLayoutEntry("camera")
+                .setType(wgpu::BufferBindingType::Uniform)
+                .setMinBindingSize(Resource::CameraGPUBuffer::CameraTransfer::GPUSize())
+                .setVisibility(wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment)
+                .setBinding(0));
         // Model buffer contains: mat4 modelMatrix (64 bytes) + mat4 normalMatrix (64 bytes) = 128 bytes
         auto modelLayout = Graphic::Utils::BindGroupLayout("Model").addEntry(
             Graphic::Utils::BufferBindGroupLayoutEntry("model")
@@ -235,6 +238,7 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
             .addVertexBufferLayout(vertexLayout)
             .addOutputColorFormat(normalOutput)
             .addOutputColorFormat(albedoOutput)
+            .setCullMode(wgpu::CullMode::None)
             .setOutputDepthFormat(depthOutput);
         const auto validations = shaderDescriptor.validate();
         if (!validations.empty())
