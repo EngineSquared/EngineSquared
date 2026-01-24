@@ -44,7 +44,7 @@ struct Object {
 }
 
 struct Material {
-    emission: vec3f,
+    ambient: vec3f,
     padding: f32,
 };
 
@@ -89,7 +89,7 @@ fn fs_main(
     var output : GBufferOutput;
     var uv = vec2f(1.0 - fragUV.x, 1.0 - fragUV.y);
     output.normal = vec4(normalize(fragNormal), 1.0);
-    output.albedo = vec4(textureSample(texture, textureSampler, uv).rgb, 1.0);
+    output.albedo = vec4(textureSample(texture, textureSampler, uv).rgb * material.ambient, 1.0);
 
     return output;
 }
