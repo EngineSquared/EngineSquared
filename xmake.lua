@@ -12,6 +12,7 @@ add_requires(
     "glm 1.0.1",
     "glfw 3.4",
     "freetype",
+    "zlib",
     "stb 2025.03.14",
     "joltphysics v5.4.0",
     "miniaudio 0.11.23",
@@ -70,8 +71,8 @@ target("EngineSquared")
     add_deps("PluginRmlui")
 
     add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native",
-                 "rmlui", "freetype")
-    add_links("freetype")
+                 "rmlui", "freetype", "zlib")
+    add_links("freetype", "z")
 
     if is_mode("debug") then
         add_defines("DEBUG")
@@ -100,8 +101,8 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_languages("cxx20")
         add_files(file)
         add_files("tests/main.cpp")
-        add_packages("entt", "glfw", "glm", "gtest", "spdlog", "tinyobjloader", "fmt", "rmlui", "freetype")
-        add_links("freetype")
+        add_packages("entt", "glfw", "glm", "gtest", "spdlog", "tinyobjloader", "fmt", "rmlui", "freetype", "zlib")
+        add_links("freetype", "z")
         add_links("gtest")
         add_deps("EngineSquared")
         add_includedirs("src")

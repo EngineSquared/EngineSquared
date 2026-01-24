@@ -8,6 +8,7 @@ local required_packages = {
     "spdlog",
     "glm",
     "freetype",
+    "zlib",
     "lodepng",
     "stb",
     "wgpu-native"
@@ -29,9 +30,10 @@ target("PluginRmlui")
     add_linkdirs("$(package:rmlui):installdir()/lib")
     add_links("rmlui_debugger", "rmlui")
     add_linkdirs("$(package:freetype):installdir()/lib")
-    add_links("freetype")
+    add_linkdirs("$(package:zlib):installdir()/lib")
+    add_links("freetype", "z")
     if is_plat("linux") then
-        add_ldflags("-Wl,--start-group", "-lrmlui_debugger", "-lrmlui", "-lfreetype", "-Wl,--end-group",
+        add_ldflags("-Wl,--start-group", "-lrmlui_debugger", "-lrmlui", "-lfreetype", "-lz", "-Wl,--end-group",
                     {force = true})
     end
     add_deps(target_dependencies)
