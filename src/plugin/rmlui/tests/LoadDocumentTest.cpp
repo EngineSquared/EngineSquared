@@ -148,3 +148,19 @@ TEST(RmluiDocument, UnloadOverlayDocument)
 
     EXPECT_NO_THROW(core.RunSystems());
 }
+
+TEST(RmluiDocument, FailedUnloadOverlayDocument)
+{
+    Engine::Core core;
+
+    core.AddPlugins<Rmlui::Plugin>();
+
+    core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &coreRef) {
+        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Graphic::Resource::WindowSystem::None);
+    });
+
+    core.RegisterSystem(UnloadOverlayDocumentFailureTest);
+
+    EXPECT_NO_THROW(core.RunSystems());
+}

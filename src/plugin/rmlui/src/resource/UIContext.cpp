@@ -458,7 +458,7 @@ bool UIContext::UnregisterEventListener(Rml::Element &element, const Rml::String
         {
             continue;
         }
-        element.RemoveEventListener(eventType, it->listener.get());
+        element.RemoveEventListener(eventType, it->listener.get(), it->useCapture);
         _eventListeners.erase(it);
         return true;
     }
