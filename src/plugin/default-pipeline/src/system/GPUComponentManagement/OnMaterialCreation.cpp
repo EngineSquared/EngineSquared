@@ -44,8 +44,11 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
         Log::Warn(fmt::format("Texture '{}' not found as file or in texture container", material.diffuseTexName));
     }
 
-    Graphic::Resource::Sampler sampler{context.deviceContext.GetDevice().value()};
-    samplerContainer.Add(samplerId, std::move(sampler));
+    if (!samplerContainer.Contains(samplerId))
+    {
+        Graphic::Resource::Sampler sampler{context.deviceContext.GetDevice().value()};
+        samplerContainer.Add(samplerId, std::move(sampler));
+    }
     GPUMaterial.sampler = samplerId;
 
     auto materialBuffer = std::make_unique<Resource::MaterialGPUBuffer>(entity);
