@@ -23,7 +23,6 @@
 #include "system/initialization/Create3DGraph.hpp"
 #include "system/initialization/CreateAmbientLight.hpp"
 #include "system/initialization/CreateDefaultMaterial.hpp"
-#include "system/initialization/CreateDefaultRenderPipeline.hpp"
 #include "system/initialization/CreatePointLights.hpp"
 
 #include "system/GPUComponentManagement/OnCameraCreation.hpp"
@@ -43,5 +42,4 @@
 #include "system/preparation/UpdatePointLights.hpp"
 
 #include "utils/AmbientLight.hpp"
-#include "utils/DefaultRenderPass.hpp"
 #include "utils/PointLights.hpp"

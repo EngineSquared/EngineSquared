@@ -2,7 +2,6 @@
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/AmbientLightBuffer.hpp"
-#include "utils/DefaultRenderPass.hpp"
 
 namespace DefaultPipeline::Resource {
 

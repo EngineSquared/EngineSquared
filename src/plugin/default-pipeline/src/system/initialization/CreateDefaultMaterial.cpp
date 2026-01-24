@@ -8,7 +8,6 @@
 #include "resource/buffer/MaterialGPUBuffer.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include "utils/DefaultMaterial.hpp"
-// #include "utils/DefaultRenderPass.hpp"
 #include "utils/DefaultSampler.hpp"
 #include "utils/DefaultTexture.hpp"
 

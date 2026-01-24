@@ -9,7 +9,6 @@
 #include "resource/pass/Deferred.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include "system/WindowSystem.hpp"
-#include "utils/DefaultRenderPass.hpp"
 #include "utils/EndRenderTexture.hpp"
 
 /**
