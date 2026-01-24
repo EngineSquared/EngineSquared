@@ -1,0 +1,10 @@
+<template name="hover_esq" content="content">
+	<head>
+		<link type="text/rcss" href="hover_esq.rcss" />
+	</head>
+	<body class="hover_esq">
+		<div class="hover-container">
+			<div class="hover-logo"></div>
+		</div>
+	</body>
+</template>
