@@ -435,6 +435,10 @@ void RenderInterface::BeginFrame()
         descriptor.entryCount = 1UL;
         descriptor.entries = &entry;
 
+        if (_screenBindGroup != nullptr)
+        {
+            _screenBindGroup.release();
+        }
         _screenBindGroup = device.createBindGroup(descriptor);
 
         if (!_defaultTexture)
