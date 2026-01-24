@@ -68,6 +68,7 @@ std::vector<Resource::Shape> OBJLoader::GetShapes()
     for (size_t shape = 0u; shape < shapes.size(); ++shape)
     {
         Resource::Shape shapeResource;
+        shapeResource.name = shapes[shape].name;
         Component::Mesh &mesh = shapeResource.mesh;
 
         mesh.ReserveVertices(attrib.vertices.size() / 3u);
@@ -181,6 +182,7 @@ void OBJLoader::SetMaterialProperties(Component::Material &material, const tinyo
     material.shininess = mat.shininess;
     material.ior = mat.ior;
     material.dissolve = mat.dissolve;
+    material.ambientTexName = mat.ambient_texname;
 }
 
 } // namespace Object
