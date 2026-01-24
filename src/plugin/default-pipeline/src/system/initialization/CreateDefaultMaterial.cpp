@@ -18,7 +18,6 @@ void DefaultPipeline::System::CreateDefaultMaterial(Engine::Core &core)
     auto materialBuffer = std::make_unique<Resource::MaterialGPUBuffer>();
     materialBuffer->Create(core);
     Object::Component::Material defaultMaterial;
-    defaultMaterial.ambient = glm::vec3(0.5f, 0.5f, 0.5f);
     defaultMaterial.ambientTexName = Graphic::Utils::DEFAULT_TEXTURE_NAME;
     materialBuffer->SetMaterial(core, defaultMaterial);
 
