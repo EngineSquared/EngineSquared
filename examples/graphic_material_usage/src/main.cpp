@@ -36,7 +36,7 @@ void Setup(Engine::Core &core)
     cube.AddComponent<Object::Component::Transform>(glm::vec3(-2.0f, 0.0f, 0.0f));
     cube.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
 
-    // Custom Material with Texture
+    // Custom Material from file
     Object::Component::Material materialWithTexture;
     materialWithTexture.ambientTexName = "./asset/texture.png";
     auto cube1 = core.CreateEntity();
@@ -44,12 +44,26 @@ void Setup(Engine::Core &core)
     cube1.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
     cube1.AddComponent<Object::Component::Material>(std::move(materialWithTexture));
 
+    // Custom Material from local texture
+    Object::Component::Material materialFromLocalTexture;
+    materialFromLocalTexture.ambientTexName = "LocalTextureName";
+    auto &textureManager = core.GetResource<Graphic::Resource::TextureContainer>();
+    auto texture = Graphic::Resource::Texture(core.GetResource<Graphic::Resource::Context>(), "LocalTexture",
+                                              glm::uvec2(255, 255), [](glm::uvec2 pos) {
+                                                return glm::u8vec4(pos.x, pos.y, 0, 255);
+                                              });
+    textureManager.Add("LocalTextureName", std::move(texture));
+    auto cube2 = core.CreateEntity();
+    cube2.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 2.0f, 0.0f));
+    cube2.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
+    cube2.AddComponent<Object::Component::Material>(std::move(materialFromLocalTexture));
+
     // Custom Material without Texture
     Object::Component::Material materialWithoutTexture;
-    auto cube2 = core.CreateEntity();
-    cube2.AddComponent<Object::Component::Transform>(glm::vec3(2.0f, 0.0f, 0.0f));
-    cube2.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
-    cube2.AddComponent<Object::Component::Material>(std::move(materialWithoutTexture));
+    auto cube3 = core.CreateEntity();
+    cube3.AddComponent<Object::Component::Transform>(glm::vec3(2.0f, 0.0f, 0.0f));
+    cube3.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
+    cube3.AddComponent<Object::Component::Material>(std::move(materialWithoutTexture));
 
     // Camera
     auto camera = core.CreateEntity();
