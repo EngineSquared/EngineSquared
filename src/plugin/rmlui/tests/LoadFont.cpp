@@ -47,7 +47,8 @@ TEST(RmluiFont, GlobalRun)
     core.AddPlugins<Rmlui::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &coreRef) {
-        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
+        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Graphic::Resource::WindowSystem::None);
     });
 
     core.RegisterSystem(LoadFontTest);
@@ -62,7 +63,8 @@ TEST(RmluiFont, FailedLoad)
     core.AddPlugins<Rmlui::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &coreRef) {
-        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
+        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Graphic::Resource::WindowSystem::None);
     });
 
     core.RegisterSystem(LoadFontFailureTest);

@@ -5,8 +5,8 @@
 #include "core/Core.hpp"
 #include "plugin/PluginRmlui.hpp"
 #include "resource/GraphicSettings.hpp"
-#include "scheduler/Init.hpp"
 #include "resource/UIContext.hpp"
+#include "scheduler/Init.hpp"
 
 void RegisterEventListenerTest(Engine::Core &core)
 {
@@ -16,9 +16,8 @@ void RegisterEventListenerTest(Engine::Core &core)
 
     ASSERT_NO_THROW(uiContext.LoadDocument(testAssetPath));
 
-    ASSERT_NO_THROW(uiContext.RegisterEventListener(*uiContext.GetElementById("test"), "click", [](auto &) {
-        EXPECT_TRUE(true);
-    }));
+    ASSERT_NO_THROW(
+        uiContext.RegisterEventListener(*uiContext.GetElementById("test"), "click", [](auto &) { EXPECT_TRUE(true); }));
 
     ASSERT_TRUE(uiContext.AreInputCallbacksRegistered());
 }
@@ -43,6 +42,7 @@ TEST(RmluiEventHandler, GlobalRun)
     core.AddPlugins<Rmlui::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &coreRef) {
-        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
+        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Graphic::Resource::WindowSystem::None);
     });
 }

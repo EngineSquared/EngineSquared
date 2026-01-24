@@ -76,7 +76,8 @@ TEST(RmluiDocument, GlobalRun)
     core.AddPlugins<Rmlui::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &coreRef) {
-        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
+        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Graphic::Resource::WindowSystem::None);
     });
 
     core.RegisterSystem(LoadDocumentTest);
@@ -91,7 +92,8 @@ TEST(RmluiDocument, FailedLoad)
     core.AddPlugins<Rmlui::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &coreRef) {
-        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
+        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Graphic::Resource::WindowSystem::None);
     });
 
     core.RegisterSystem(LoadDocumentFailureTest);
@@ -106,7 +108,8 @@ TEST(RmluiDocument, LoadOverlayDocument)
     core.AddPlugins<Rmlui::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &coreRef) {
-        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
+        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Graphic::Resource::WindowSystem::None);
     });
 
     core.RegisterSystem(LoadOverlayDocumentTest);
@@ -119,7 +122,8 @@ TEST(RmluiDocument, FailedLoadOverlayDocument)
     core.AddPlugins<Rmlui::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &coreRef) {
-        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
+        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Graphic::Resource::WindowSystem::None);
     });
 
     core.RegisterSystem(LoadOverlayDocumentFailureTest);
@@ -132,7 +136,8 @@ TEST(RmluiDocument, UnloadOverlayDocument)
     core.AddPlugins<Rmlui::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &coreRef) {
-        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
+        coreRef.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(
+            Graphic::Resource::WindowSystem::None);
     });
 
     core.RegisterSystem(UnloadOverlayDocumentTest);
