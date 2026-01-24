@@ -28,8 +28,11 @@ target("PluginRmlui")
     add_packages(required_packages)
     add_linkdirs("$(package:rmlui):installdir()/lib")
     add_links("rmlui_debugger", "rmlui")
+    add_linkdirs("$(package:freetype):installdir()/lib")
+    add_links("freetype")
     if is_plat("linux") then
-        add_ldflags("-Wl,--start-group", "-lrmlui_debugger", "-lrmlui", "-Wl,--end-group", {force = true})
+        add_ldflags("-Wl,--start-group", "-lrmlui_debugger", "-lrmlui", "-lfreetype", "-Wl,--end-group",
+                    {force = true})
     end
     add_deps(target_dependencies)
 
