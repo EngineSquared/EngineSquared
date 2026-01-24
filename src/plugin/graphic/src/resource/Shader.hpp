@@ -66,6 +66,16 @@ class Shader {
         std::vector<wgpu::ColorTargetState> colorTargets;
         colorTargets.reserve(descriptor.getOutputColorFormats().size());
         wgpu::BlendState blendState(wgpu::Default);
+        if (name == "RMLUI_RENDER_PASS_SHADER")
+        {
+            // RmlUi outputs non-premultiplied color.
+            blendState.color.srcFactor = wgpu::BlendFactor::SrcAlpha;
+            blendState.color.dstFactor = wgpu::BlendFactor::OneMinusSrcAlpha;
+            blendState.color.operation = wgpu::BlendOperation::Add;
+            blendState.alpha.srcFactor = wgpu::BlendFactor::One;
+            blendState.alpha.dstFactor = wgpu::BlendFactor::OneMinusSrcAlpha;
+            blendState.alpha.operation = wgpu::BlendOperation::Add;
+        }
         for (const auto &format : descriptor.getOutputColorFormats())
         {
             wgpu::ColorTargetState colorTarget(wgpu::Default);

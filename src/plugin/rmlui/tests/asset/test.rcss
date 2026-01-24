@@ -1,0 +1,13 @@
+.test-container {
+    position: absolute;
+    left: 0dp;
+    top: 0dp;
+    width: 100dp;
+    height: 100dp;
+}
+
+.test-box {
+    width: 100dp;
+    height: 100dp;
+    background-color: red;
+}

@@ -11,6 +11,8 @@ add_requires(
     "tinyobjloader v2.0.0rc13",
     "glm 1.0.1",
     "glfw 3.4",
+    "freetype",
+    "zlib",
     "stb 2025.03.14",
     "joltphysics v5.4.0",
     "miniaudio 0.11.23",
@@ -20,8 +22,7 @@ add_requires(
     { debug = is_mode("debug") }
 )
 add_requires("fmt 12.1.0", { configs = { header_only = true }, debug = is_mode("debug") })
--- Temporarily disabled due to build issues on Windows 11
---add_requires("rmlui 6.0", { configs = { transform = true }, debug = is_mode("debug") })
+add_requires("rmlui 6.2", { configs = { transform = true, font_effects = true }, debug = is_mode("debug") })
 
 set_languages("c++20")
 
@@ -42,6 +43,7 @@ includes("src/utils/tools/xmake.lua")
 includes("src/plugin/event/xmake.lua")
 includes("src/plugin/camera-movement/xmake.lua")
 includes("src/plugin/default-pipeline/xmake.lua")
+includes("src/plugin/rmlui/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
@@ -66,8 +68,15 @@ target("EngineSquared")
     add_deps("UtilsLog")
     add_deps("PluginEvent")
     add_deps("PluginDefaultPipeline")
+    add_deps("PluginRmlui")
 
-    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native")
+    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native",
+                 "rmlui", "freetype", "zlib")
+    if is_plat("windows") then
+        add_links("freetype", "zlib")
+    else
+        add_links("freetype", "z")
+    end
 
     if is_mode("debug") then
         add_defines("DEBUG")
@@ -96,7 +105,12 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         set_languages("cxx20")
         add_files(file)
         add_files("tests/main.cpp")
-        add_packages("entt", "glfw", "glm", "gtest", "spdlog", "tinyobjloader", "fmt")
+        add_packages("entt", "glfw", "glm", "gtest", "spdlog", "tinyobjloader", "fmt", "rmlui", "freetype", "zlib")
+        if is_plat("windows") then
+            add_links("freetype", "zlib")
+        else
+            add_links("freetype", "z")
+        end
         add_links("gtest")
         add_deps("EngineSquared")
         add_includedirs("src")
