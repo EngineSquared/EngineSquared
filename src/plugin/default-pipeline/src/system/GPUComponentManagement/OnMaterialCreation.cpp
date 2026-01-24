@@ -25,13 +25,13 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
 
     auto &GPUMaterial = entity.AddComponent<Component::GPUMaterial>();
 
-    entt::hashed_string textureId{material.ambientTexName.data(), material.ambientTexName.size()};
-    entt::hashed_string samplerId{material.ambientTexName.data(), material.ambientTexName.size()};
+    entt::hashed_string textureId{material.diffuseTexName.data(), material.diffuseTexName.size()};
+    entt::hashed_string samplerId{material.diffuseTexName.data(), material.diffuseTexName.size()};
 
-    if (std::filesystem::exists(material.ambientTexName))
+    if (std::filesystem::exists(material.diffuseTexName))
     {
-        Graphic::Resource::Texture texture{context, material.ambientTexName,
-                                           Graphic::Resource::Image(material.ambientTexName)};
+        Graphic::Resource::Texture texture{context, material.diffuseTexName,
+                                           Graphic::Resource::Image(material.diffuseTexName)};
         textureContainer.Add(textureId, std::move(texture));
         GPUMaterial.texture = textureId;
     }
@@ -39,9 +39,9 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     {
         GPUMaterial.texture = textureId;
     }
-    else if (!material.ambientTexName.empty())
+    else if (!material.diffuseTexName.empty())
     {
-        Log::Warn(fmt::format("Texture '{}' not found as file or in texture container", material.ambientTexName));
+        Log::Warn(fmt::format("Texture '{}' not found as file or in texture container", material.diffuseTexName));
     }
 
     Graphic::Resource::Sampler sampler{context.deviceContext.GetDevice().value()};

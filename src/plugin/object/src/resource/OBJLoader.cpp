@@ -182,7 +182,7 @@ void OBJLoader::SetMaterialProperties(Component::Material &material, const tinyo
     material.shininess = mat.shininess;
     material.ior = mat.ior;
     material.dissolve = mat.dissolve;
-    material.ambientTexName = mat.ambient_texname;
+    material.diffuseTexName = mat.diffuse_texname;
 }
 
 } // namespace Object
