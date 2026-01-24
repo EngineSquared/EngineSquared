@@ -142,7 +142,7 @@ void TestSystem(Engine::Core &core)
         "TestGPUBuffer1"_hs, std::make_unique<TestGPUBuffer>("TestGPUBuffer1", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
     core.GetResource<Graphic::Resource::GPUBufferContainer>().Get("TestGPUBuffer1"_hs)->Create(core);
 
-    Graphic::Resource::BindGroup inputBindGroup(core, "DefaultTestShader"_hs, 0,
+    Graphic::Resource::BindGroup inputBindGroup(core, "inputBindGroup", "DefaultTestShader"_hs, 0,
                                                 {
                                                     {.binding = 0,
                                                      .type = Graphic::Resource::BindGroup::Asset::Type::Buffer,

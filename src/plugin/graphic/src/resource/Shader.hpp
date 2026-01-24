@@ -102,7 +102,7 @@ class Shader {
                 entries.push_back(entry->getEntry());
             }
             wgpu::BindGroupLayoutDescriptor bindGroupLayoutDescriptor(wgpu::Default);
-            const std::string layoutLabel = fmt::format("{} Bind Group Layout of pipeline {}", layout.getName(), name);
+            const std::string layoutLabel = fmt::format("{}::{}", name, layout.getName());
             bindGroupLayoutDescriptor.label = wgpu::StringView(layoutLabel);
             bindGroupLayoutDescriptor.entryCount = entries.size();
             bindGroupLayoutDescriptor.entries = entries.data();
