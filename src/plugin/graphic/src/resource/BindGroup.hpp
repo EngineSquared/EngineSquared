@@ -29,9 +29,9 @@ class BindGroup {
         uint64_t size; // For buffer type
     };
 
-    BindGroup(Engine::Core &core, entt::hashed_string shaderId, uint32_t layoutIndex,
+    BindGroup(Engine::Core &core, std::string_view name, entt::hashed_string shaderId, uint32_t layoutIndex,
               std::initializer_list<Asset> assets)
-        : _shaderId(shaderId), _layoutIndex(layoutIndex), _assets(assets)
+        : _shaderId(shaderId), _layoutIndex(layoutIndex), _name(name), _assets(assets)
     {
         _entries = _CreateBindGroupEntries(core);
         _bindGroup = _CreateBindGroup(core);
@@ -39,8 +39,8 @@ class BindGroup {
 
     BindGroup(const BindGroup &other) = delete;
     BindGroup(BindGroup &&other) noexcept
-        : _shaderId(other._shaderId), _layoutIndex(other._layoutIndex), _assets(std::move(other._assets)),
-          _entries(std::move(other._entries)), _bindGroup(other._bindGroup)
+        : _shaderId(other._shaderId), _layoutIndex(other._layoutIndex), _name(std::move(other._name)),
+          _assets(std::move(other._assets)), _entries(std::move(other._entries)), _bindGroup(other._bindGroup)
     {
         other._bindGroup = nullptr;
     }
@@ -96,6 +96,7 @@ class BindGroup {
 
         wgpu::BindGroupDescriptor descriptor(wgpu::Default);
         descriptor.layout = layout;
+        descriptor.label = wgpu::StringView(_name);
         descriptor.entryCount = static_cast<uint32_t>(_entries.size());
         descriptor.entries = _entries.empty() ? nullptr : _entries.data();
 
@@ -148,6 +149,7 @@ class BindGroup {
 
     entt::hashed_string _shaderId;
     uint32_t _layoutIndex = 0;
+    std::string _name;
     std::vector<Asset> _assets;
     std::vector<wgpu::BindGroupEntry> _entries;
     wgpu::BindGroup _bindGroup;

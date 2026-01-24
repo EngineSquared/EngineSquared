@@ -10,6 +10,7 @@
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
 #include "resource/buffer/MaterialGPUBuffer.hpp"
+#include "resource/pass/GBuffer.hpp"
 #include <filesystem>
 #include <string>
 
@@ -55,7 +56,7 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
     std::string bindGroupName = fmt::format("MATERIAL_BIND_GROUP_{}", entity);
     entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
-    Graphic::Resource::BindGroup bindGroup(core, "DEFAULT_RENDER_PASS_SHADER", 2,
+    Graphic::Resource::BindGroup bindGroup(core, bindGroupName, Resource::GBUFFER_SHADER_ID, 2,
                                            {
                                                {
                                                 0, Graphic::Resource::BindGroup::Asset::Type::Buffer,

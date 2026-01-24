@@ -168,7 +168,7 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
     }
 
     return Graphic::Resource::BindGroup(
-        core, shaderId, 0,
+        core, "BindGroupName", shaderId, 0,
         {
             {0, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0            },
             {1, Graphic::Resource::BindGroup::Asset::Type::Buffer,  bufferId,  sizeof(float)},

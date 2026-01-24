@@ -2,8 +2,8 @@
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
+#include "resource/pass/Deferred.hpp"
 #include "utils/AmbientLight.hpp"
-#include "utils/DefaultRenderPass.hpp"
 
 namespace DefaultPipeline::System {
 
@@ -20,7 +20,7 @@ void CreatePointLights(Engine::Core &core)
     auto ambientLightBufferSize = ambientLightBuffer->GetBuffer().getSize();
 
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
-    Graphic::Resource::BindGroup lightsBindGroup(core, Utils::DEFAULT_RENDER_PASS_SHADER_ID, 3,
+    Graphic::Resource::BindGroup lightsBindGroup(core, Utils::LIGHTS_BIND_GROUP_NAME, Resource::DEFERRED_SHADER_ID, 2,
                                                  {
                                                      {0, Graphic::Resource::BindGroup::Asset::Type::Buffer,
                                                       Utils::AMBIENT_LIGHT_BUFFER_ID, ambientLightBufferSize},
