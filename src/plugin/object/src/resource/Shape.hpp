@@ -38,6 +38,7 @@ namespace Object::Resource {
 struct Shape {
     Component::Mesh mesh{};
     Component::Material material{};
+    std::string name{};
 
     Shape() = default;
     ~Shape() = default;
@@ -79,6 +80,13 @@ struct Shape {
      * @return const Component::Material&  Const reference to the material object.
      */
     const Component::Material &GetMaterial() const { return material; }
+
+    /**
+     * @brief Get the name of the shape.
+     *
+     * @return const std::string&  Const reference to the name string.
+     */
+    const std::string &GetName() const { return name; }
 };
 
 } // namespace Object::Resource
