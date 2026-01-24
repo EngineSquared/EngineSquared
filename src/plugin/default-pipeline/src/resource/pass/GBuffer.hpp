@@ -9,6 +9,7 @@
 #include "entity/Entity.hpp"
 #include "resource/ASingleExecutionRenderPass.hpp"
 #include "resource/buffer/CameraGPUBuffer.hpp"
+#include "resource/buffer/MaterialGPUBuffer.hpp"
 #include "utils/DefaultMaterial.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
@@ -44,8 +45,13 @@ struct Object {
 }
 
 struct Material {
-    ambient: vec3f,
-    padding: f32,
+    ambient : vec4f,
+    diffuse : vec4f,
+    specular : vec4f,
+    transmittance  : vec4f,
+    emission : vec4f,
+    _padding : vec3f,
+    shininess : f32
 };
 
 struct VertexToFragment {
@@ -89,7 +95,7 @@ fn fs_main(
     var output : GBufferOutput;
     var uv = vec2f(1.0 - fragUV.x, 1.0 - fragUV.y);
     output.normal = vec4(normalize(fragNormal), 1.0);
-    output.albedo = vec4(textureSample(texture, textureSampler, uv).rgb * material.ambient, 1.0);
+    output.albedo = vec4(textureSample(texture, textureSampler, uv).rgb * material.diffuse.rgb, 1.0);
 
     return output;
 }
@@ -198,7 +204,8 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
         auto materialLayout = Graphic::Utils::BindGroupLayout("Material")
                                   .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("material")
                                                 .setType(wgpu::BufferBindingType::Uniform)
-                                                .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
+                                                .setMinBindingSize(
+                                                    Resource::MaterialGPUBuffer::MaterialTransfer::GPUSize())
                                                 .setVisibility(wgpu::ShaderStage::Fragment)
                                                 .setBinding(0))
                                   .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("materialTexture")
