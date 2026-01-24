@@ -28,15 +28,15 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     entt::hashed_string textureId{material.diffuseTexName.data(), material.diffuseTexName.size()};
     entt::hashed_string samplerId{material.diffuseTexName.data(), material.diffuseTexName.size()};
 
-    if (std::filesystem::exists(material.diffuseTexName))
+    if (textureContainer.Contains(textureId))
+    {
+        GPUMaterial.texture = textureId;
+    }
+    else if (std::filesystem::exists(material.diffuseTexName))
     {
         Graphic::Resource::Texture texture{context, material.diffuseTexName,
                                            Graphic::Resource::Image(material.diffuseTexName)};
         textureContainer.Add(textureId, std::move(texture));
-        GPUMaterial.texture = textureId;
-    }
-    else if (textureContainer.Contains(textureId))
-    {
         GPUMaterial.texture = textureId;
     }
     else if (!material.diffuseTexName.empty())
