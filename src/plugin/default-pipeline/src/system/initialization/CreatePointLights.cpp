@@ -2,8 +2,8 @@
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
-#include "utils/AmbientLight.hpp"
 #include "resource/pass/Deferred.hpp"
+#include "utils/AmbientLight.hpp"
 
 namespace DefaultPipeline::System {
 

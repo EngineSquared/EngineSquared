@@ -2,6 +2,7 @@
 
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
+#include "component/AmbientLight.hpp"
 #include "component/Camera.hpp"
 #include "component/Mesh.hpp"
 #include "component/Transform.hpp"
@@ -12,7 +13,6 @@
 #include "utils/ConfigureHeadlessGraphics.hpp"
 #include "utils/ShapeGenerator.hpp"
 #include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
-#include "component/AmbientLight.hpp"
 
 void TestSystem(Engine::Core &core)
 {

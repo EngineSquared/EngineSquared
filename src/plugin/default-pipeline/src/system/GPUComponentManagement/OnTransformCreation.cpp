@@ -5,8 +5,8 @@
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/TransformGPUBuffer.hpp"
-#include <string>
 #include "resource/pass/GBuffer.hpp"
+#include <string>
 
 void DefaultPipeline::System::OnTransformCreation(Engine::Core &core, Engine::EntityId entityId)
 {

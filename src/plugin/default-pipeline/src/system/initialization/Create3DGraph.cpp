@@ -12,7 +12,6 @@
 #include "utils/DefaultRenderPass.hpp"
 #include "utils/EndRenderTexture.hpp"
 
-
 /**
  * @brief Creates a texture descriptor for the G-buffer normal output.
  *
@@ -172,30 +171,37 @@ static void CreateDeferredTexturesBindingGroup(Engine::Core &core)
     const auto &context = core.GetResource<Graphic::Resource::Context>();
     auto &shaderContainer = core.GetResource<Graphic::Resource::ShaderContainer>();
 
-    Graphic::Resource::BindGroup texturesBindGroup(
-        core, DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_NAME, DefaultPipeline::Resource::DEFERRED_SHADER_ID, 1,
-        {
-            {0, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID, 0},
-            {1, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_ALBEDO_ID, 0},
-            {2, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID, 0}
-        });
-    core.GetResource<Graphic::Resource::BindGroupManager>().Add(DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_ID, std::move(texturesBindGroup));
+    Graphic::Resource::BindGroup texturesBindGroup(core, DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_NAME,
+                                                   DefaultPipeline::Resource::DEFERRED_SHADER_ID, 1,
+                                                   {
+                                                       {0, Graphic::Resource::BindGroup::Asset::Type::Texture,
+                                                        DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID, 0},
+                                                       {1, Graphic::Resource::BindGroup::Asset::Type::Texture,
+                                                        DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_ALBEDO_ID, 0},
+                                                       {2, Graphic::Resource::BindGroup::Asset::Type::Texture,
+                                                        DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID,  0}
+    });
+    core.GetResource<Graphic::Resource::BindGroupManager>().Add(
+        DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_ID, std::move(texturesBindGroup));
 
     auto &eventManager = core.GetResource<Event::Resource::EventManager>();
-    eventManager.RegisterCallback<Window::Event::OnResize>(
-        [&core](const Window::Event::OnResize &event) {
-            auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
-            bindGroupManager.Remove(DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_ID);
+    eventManager.RegisterCallback<Window::Event::OnResize>([&core](const Window::Event::OnResize &event) {
+        auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
+        bindGroupManager.Remove(DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_ID);
 
-            Graphic::Resource::BindGroup texturesBindGroup(
-                core, DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_NAME, DefaultPipeline::Resource::DEFERRED_SHADER_ID, 1,
-                {
-                    {0, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID, 0},
-                    {1, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_ALBEDO_ID, 0},
-                    {2, Graphic::Resource::BindGroup::Asset::Type::Texture, DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID, 0}
-                });
-            bindGroupManager.Add(DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_ID, std::move(texturesBindGroup));
+        Graphic::Resource::BindGroup texturesBindGroup(
+            core, DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_NAME,
+            DefaultPipeline::Resource::DEFERRED_SHADER_ID, 1,
+            {
+                {0, Graphic::Resource::BindGroup::Asset::Type::Texture,
+                 DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID, 0},
+                {1, Graphic::Resource::BindGroup::Asset::Type::Texture,
+                 DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_ALBEDO_ID, 0},
+                {2, Graphic::Resource::BindGroup::Asset::Type::Texture,
+                 DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID,  0}
         });
+        bindGroupManager.Add(DefaultPipeline::Resource::DEFERRED_BINDGROUP_TEXTURES_ID, std::move(texturesBindGroup));
+    });
 }
 
 /**

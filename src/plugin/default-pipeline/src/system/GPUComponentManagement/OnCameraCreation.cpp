@@ -8,10 +8,10 @@
 #include "resource/Context.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/CameraGPUBuffer.hpp"
+#include "resource/pass/GBuffer.hpp"
 #include "system/preparation/PrepareEndRenderTexture.hpp"
 #include "utils/DefaultRenderPass.hpp"
 #include "utils/EndRenderTexture.hpp"
-#include "resource/pass/GBuffer.hpp"
 #include <string>
 
 void DefaultPipeline::System::OnCameraCreation(Engine::Core &core, Engine::EntityId entityId)

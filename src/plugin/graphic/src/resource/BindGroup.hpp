@@ -39,8 +39,8 @@ class BindGroup {
 
     BindGroup(const BindGroup &other) = delete;
     BindGroup(BindGroup &&other) noexcept
-        : _name(std::move(other._name)), _shaderId(other._shaderId), _layoutIndex(other._layoutIndex), _assets(std::move(other._assets)),
-          _entries(std::move(other._entries)), _bindGroup(other._bindGroup)
+        : _name(std::move(other._name)), _shaderId(other._shaderId), _layoutIndex(other._layoutIndex),
+          _assets(std::move(other._assets)), _entries(std::move(other._entries)), _bindGroup(other._bindGroup)
     {
         other._bindGroup = nullptr;
     }

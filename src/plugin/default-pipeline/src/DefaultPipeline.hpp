@@ -17,8 +17,8 @@
 #include "resource/buffer/PointLightsBuffer.hpp"
 #include "resource/buffer/TransformGPUBuffer.hpp"
 
-#include "resource/pass/GBuffer.hpp"
 #include "resource/pass/Deferred.hpp"
+#include "resource/pass/GBuffer.hpp"
 
 #include "system/initialization/Create3DGraph.hpp"
 #include "system/initialization/CreateAmbientLight.hpp"
