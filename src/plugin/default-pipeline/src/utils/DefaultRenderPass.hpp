@@ -6,10 +6,10 @@
 #include "component/GPUTransform.hpp"
 #include "component/Transform.hpp"
 #include "entity/Entity.hpp"
+#include "resource/ASingleExecutionRenderPass.hpp"
 #include "resource/AmbientLight.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
-#include "resource/SingleExecutionRenderPass.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
 #include "utils/AmbientLight.hpp"
 #include "utils/DefaultMaterial.hpp"
@@ -36,7 +36,7 @@ struct Camera {
 
 struct Model {
     modelMatrix : mat4x4<f32>,
-    normalMatrix : mat3x3<f32>,
+    normalMatrix : mat4x4<f32>,
 };
 
 struct Material {
@@ -98,7 +98,7 @@ fn vs_main(
     output.Position = camera.viewProjectionMatrix * worldPos;
     output.fragUV = input.uv;
     output.worldPos = worldPos.xyz;
-    output.worldNormal = model.normalMatrix * input.normal;
+    output.worldNormal = (model.normalMatrix * vec4f(input.normal, 0.0)).xyz;
     return output;
 }
 
@@ -211,21 +211,33 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
         }
     }
 
+    /**
+     * @brief Builds and returns the default render-pass shader configured for the engine's pipeline.
+     *
+     * Constructs a ShaderDescriptor with bind group layouts for camera, model, material, and lights,
+     * configures the vertex buffer layout and color/depth outputs, validates the descriptor, and
+     * creates a Graphic::Resource::Shader from the descriptor.
+     *
+     * @param graphicContext Graphics resource context used to create the shader.
+     * @return Graphic::Resource::Shader Shader instance configured for the default render pass.
+     *
+     * @note Descriptor validation is performed; any validation warnings or errors are logged before shader creation.
+     */
     static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext)
     {
         Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
-        auto cameraLayout = Graphic::Utils::BindGroupLayout("CameraModelLayout")
+        auto cameraLayout = Graphic::Utils::BindGroupLayout("CameraLayout")
                                 .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("camera")
                                               .setType(wgpu::BufferBindingType::Uniform)
                                               .setMinBindingSize(sizeof(glm::mat4))
                                               .setVisibility(wgpu::ShaderStage::Vertex)
                                               .setBinding(0));
         // Model buffer contains: mat4 modelMatrix (64 bytes) + 3 * vec4 normalMatrix columns (48 bytes) = 112 bytes
-        auto modelLayout = Graphic::Utils::BindGroupLayout("CameraModelLayout")
+        auto modelLayout = Graphic::Utils::BindGroupLayout("ModelLayout")
                                .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("model")
                                              .setType(wgpu::BufferBindingType::Uniform)
-                                             .setMinBindingSize(sizeof(glm::mat4) + 3 * sizeof(glm::vec4))
+                                             .setMinBindingSize(sizeof(glm::mat4) + sizeof(glm::mat4))
                                              .setVisibility(wgpu::ShaderStage::Vertex)
                                              .setBinding(0));
         auto materialLayout = Graphic::Utils::BindGroupLayout("MaterialLayout")
@@ -266,7 +278,7 @@ class DefaultRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<D
             Graphic::Utils::ColorTargetState("END_RENDER_TEXTURE").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);
 
         auto depthOutput = Graphic::Utils::DepthStencilState("END_DEPTH_RENDER_TEXTURE")
-                               .setFormat(wgpu::TextureFormat::Depth24Plus)
+                               .setFormat(wgpu::TextureFormat::Depth32Float)
                                .setCompareFunction(wgpu::CompareFunction::Less)
                                .setDepthWriteEnabled(wgpu::OptionalBool::True);
 

@@ -5,7 +5,10 @@
 #include "resource/Image.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/webgpu.hpp"
+#include <array>
+#include <bit>
 #include <functional>
+#include <glm/gtc/packing.hpp>
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 
@@ -19,6 +22,26 @@ struct CallbackData {
     bool done = false;
 };
 
+/**
+ * @brief Callback invoked when a readback buffer mapping completes; converts mapped texture data into RGBA8 pixels
+ * stored in the provided CallbackData.
+ *
+ * @param status Result of the mapAsync operation.
+ * @param message Optional message produced by the mapping operation.
+ * @param userdata1 Pointer to a CallbackData instance that will receive the resulting Image pixels and control flags
+ * (must be a valid CallbackData*).
+ * @param userdata2 Unused.
+ *
+ * If @p status is not success the function logs the failure, sets CallbackData::done to true and returns. If mapping
+ * succeeded the function reads the mapped buffer, iterates over texels while skipping per-row padding, converts each
+ * texel to a 4-channel 8-bit RGBA pixel according to CallbackData::format, appends pixels to CallbackData::data.pixels,
+ * unmaps the buffer, and marks CallbackData::done true. Supported source formats: RGBA8UnormSrgb, RGBA8Unorm,
+ * BGRA8Unorm, RGBA16Float (per-channel half floats unpacked, clamped to [0,1], and scaled to 0–255), and Depth32Float
+ * (depth mapped to a grayscale RGBA with alpha=255).
+ *
+ * @throws Exception::UnsupportedTextureFormatError If the texture format in CallbackData is not supported for
+ * retrieval.
+ */
 static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView message, void *userdata1, void *userdata2)
 {
     auto data = static_cast<CallbackData *>(userdata1);
@@ -39,10 +62,41 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
         }
         glm::u8vec4 pixel;
         // Here we assume the texture format is RGBA8Unorm (4 bytes per pixel)
-        pixel.r = mapped[i * 4 + 0];
-        pixel.g = mapped[i * 4 + 1];
-        pixel.b = mapped[i * 4 + 2];
-        pixel.a = mapped[i * 4 + 3];
+        switch (data->format)
+        {
+        case wgpu::TextureFormat::RGBA8UnormSrgb:
+        case wgpu::TextureFormat::RGBA8Unorm:
+            pixel.r = mapped[i * 4 + 0];
+            pixel.g = mapped[i * 4 + 1];
+            pixel.b = mapped[i * 4 + 2];
+            pixel.a = mapped[i * 4 + 3];
+            break;
+        case wgpu::TextureFormat::BGRA8Unorm:
+            pixel.b = mapped[i * 4 + 0];
+            pixel.g = mapped[i * 4 + 1];
+            pixel.r = mapped[i * 4 + 2];
+            pixel.a = mapped[i * 4 + 3];
+            break;
+        case wgpu::TextureFormat::RGBA16Float: {
+            auto r = std::bit_cast<uint16_t>(std::array<uint8_t, 2>{mapped[i * 8 + 0], mapped[i * 8 + 1]});
+            auto g = std::bit_cast<uint16_t>(std::array<uint8_t, 2>{mapped[i * 8 + 2], mapped[i * 8 + 3]});
+            auto b = std::bit_cast<uint16_t>(std::array<uint8_t, 2>{mapped[i * 8 + 4], mapped[i * 8 + 5]});
+            auto a = std::bit_cast<uint16_t>(std::array<uint8_t, 2>{mapped[i * 8 + 6], mapped[i * 8 + 7]});
+            pixel.r = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(r), 0.0f, 1.0f) * 255.0f);
+            pixel.g = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(g), 0.0f, 1.0f) * 255.0f);
+            pixel.b = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(b), 0.0f, 1.0f) * 255.0f);
+            pixel.a = static_cast<uint8_t>(std::clamp(glm::unpackHalf1x16(a), 0.0f, 1.0f) * 255.0f);
+            break;
+        }
+        case wgpu::TextureFormat::Depth32Float: {
+            auto depth = std::bit_cast<float>(
+                std::array<uint8_t, 4>{mapped[i * 4 + 0], mapped[i * 4 + 1], mapped[i * 4 + 2], mapped[i * 4 + 3]});
+            auto depthByte = static_cast<uint8_t>(std::clamp(depth, 0.0f, 1.0f) * 255.0f);
+            pixel = glm::u8vec4(depthByte, depthByte, depthByte, 255);
+            break;
+        }
+        default: throw Exception::UnsupportedTextureFormatError("Texture format not supported for retrieval.");
+        }
         data->data.pixels.push_back(pixel);
     }
     buf.unmap();
@@ -147,6 +201,15 @@ class Texture {
                            textureSize);
     }
 
+    /**
+     * @brief Reads back the GPU texture and returns it as an Image.
+     *
+     * Copies the texture to a CPU-readable buffer, converts the source texel format into 4-channel
+     * RGBA byte pixels, and returns an Image populated with those pixels. Depth formats are
+     * mapped to grayscale RGBA (depth -> luminance, alpha = 255).
+     *
+     * @return Image The retrieved image with width and height matching the texture and 4 channels (RGBA).
+     */
     Image RetrieveImage(const Context &context) const
     {
         const wgpu::Queue &queue = context.queue.value();
@@ -166,7 +229,15 @@ class Texture {
         srcView.texture = _webgpuTexture;
         srcView.mipLevel = 0;
         srcView.origin = {0, 0, 0};
-        srcView.aspect = wgpu::TextureAspect::All;
+        if (_webgpuTexture.getFormat() == wgpu::TextureFormat::Depth24Plus ||
+            _webgpuTexture.getFormat() == wgpu::TextureFormat::Depth24PlusStencil8 ||
+            _webgpuTexture.getFormat() == wgpu::TextureFormat::Depth32Float ||
+            _webgpuTexture.getFormat() == wgpu::TextureFormat::Depth32FloatStencil8)
+        {
+            srcView.aspect = wgpu::TextureAspect::DepthOnly;
+        }
+        else
+            srcView.aspect = wgpu::TextureAspect::All;
 
         wgpu::TexelCopyBufferInfo dstView(wgpu::Default);
         dstView.buffer = readbackBuffer;

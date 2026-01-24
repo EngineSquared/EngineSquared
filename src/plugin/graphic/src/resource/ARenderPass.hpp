@@ -41,7 +41,7 @@ struct DepthOutput {
 };
 
 struct OutputContainer {
-    std::unordered_map<uint32_t, ColorOutput> colorBuffers;
+    std::map<uint32_t, ColorOutput> colorBuffers;
     std::optional<DepthOutput> depthBuffer;
 };
 

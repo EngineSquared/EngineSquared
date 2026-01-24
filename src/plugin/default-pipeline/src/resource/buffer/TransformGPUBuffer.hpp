@@ -19,15 +19,12 @@ namespace DefaultPipeline::Resource {
  *
  * Layout (WGSL std140 alignment):
  * - modelMatrix: mat4x4<f32> (64 bytes, offset 0)
- * - normalMatrix: mat3x3<f32> (48 bytes, offset 64) - each column is 16-byte aligned
- * Total: 112 bytes
+ * - normalMatrix: mat4x4<f32> (64 bytes, offset 64)
+ * Total: 128 bytes
  */
 struct TransformGPUData {
     glm::mat4 modelMatrix;
-    // mat3x3 in WGSL has each column aligned to 16 bytes, so we use vec4 for each column
-    glm::vec4 normalMatrixCol0;
-    glm::vec4 normalMatrixCol1;
-    glm::vec4 normalMatrixCol2;
+    glm::mat4 normalMatrix;
 };
 
 class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
@@ -81,18 +78,27 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
         return context.GetDevice()->createBuffer(bufferDesc);
     }
 
+    /**
+     * @brief Update the GPU buffer with the entity's current model and normal matrices.
+     *
+     * Computes the model matrix from the provided Transform component, derives the normal
+     * matrix as the transpose of the inverse of the model matrix, packs both into a
+     * TransformGPUData instance, and writes the data to the GPU buffer at offset 0 using
+     * the provided graphics context queue.
+     *
+     * @param transformComponent Component used to compute the model transformation matrix.
+     * @param context Graphics context containing the queue used to write to the GPU buffer.
+     */
     void _UpdateBuffer(const Object::Component::Transform &transformComponent,
                        const Graphic::Resource::Context &context)
     {
         const glm::mat4 &modelMatrix = transformComponent.ComputeTransformationMatrix();
 
-        const glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
+        const glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelMatrix));
 
         TransformGPUData gpuData;
         gpuData.modelMatrix = modelMatrix;
-        gpuData.normalMatrixCol0 = glm::vec4(normalMatrix[0], 0.0f);
-        gpuData.normalMatrixCol1 = glm::vec4(normalMatrix[1], 0.0f);
-        gpuData.normalMatrixCol2 = glm::vec4(normalMatrix[2], 0.0f);
+        gpuData.normalMatrix = normalMatrix;
 
         context.queue->writeBuffer(_buffer, 0, &gpuData, sizeof(TransformGPUData));
     }

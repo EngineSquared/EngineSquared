@@ -3,7 +3,6 @@
 #include "resource/RenderGraph.hpp"
 #include "resource/RenderGraphContainer.hpp"
 #include "resource/ShaderContainer.hpp"
-#include "resource/SingleExecutionRenderPass.hpp"
 #include "resource/Window.hpp"
 #include "system/preparation/PrepareEndRenderTexture.hpp"
 #include "utils/DefaultRenderPass.hpp"

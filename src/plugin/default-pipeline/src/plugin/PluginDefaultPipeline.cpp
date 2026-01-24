@@ -14,6 +14,19 @@ static void SetupGPUComponent(Engine::Core &core)
     registry.on_destroy<GPUComponent>().template connect<DestructionFunction>(core);
 }
 
+/**
+ * @brief Configure and register the default rendering pipeline for the plugin.
+ *
+ * Registers required plugin dependencies and runtime resources, wires CPU component
+ * lifecycle events to GPU creation/destruction handlers for camera, mesh, transform,
+ * and material components, and registers the rendering setup and preparation systems.
+ *
+ * The setup systems registered include: CreateDefaultRenderPipeline, Create3DGraph,
+ * CreateDefaultMaterial, CreateAmbientLight, and CreatePointLights.
+ *
+ * The preparation systems registered include: UpdateGPUTransforms, UpdateGPUCameras,
+ * UpdateGPUMaterials, UpdateGPUMeshes, UpdateAmbientLight, and UpdatePointLights.
+ */
 void DefaultPipeline::Plugin::Bind()
 {
     RequirePlugins<RenderingPipeline::Plugin, Graphic::Plugin>();
@@ -29,8 +42,9 @@ void DefaultPipeline::Plugin::Bind()
     SetupGPUComponent<Object::Component::Material, Component::GPUMaterial, &System::OnMaterialCreation,
                       &System::OnMaterialDestruction>(this->GetCore());
 
-    RegisterSystems<RenderingPipeline::Setup>(System::CreateDefaultRenderPipeline, System::CreateDefaultMaterial,
-                                              System::CreateAmbientLight, System::CreatePointLights);
+    RegisterSystems<RenderingPipeline::Setup>(System::CreateDefaultRenderPipeline, System::Create3DGraph,
+                                              System::CreateDefaultMaterial, System::CreateAmbientLight,
+                                              System::CreatePointLights);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::UpdateGPUTransforms, System::UpdateGPUCameras,
                                                     System::UpdateGPUMaterials, System::UpdateGPUMeshes,

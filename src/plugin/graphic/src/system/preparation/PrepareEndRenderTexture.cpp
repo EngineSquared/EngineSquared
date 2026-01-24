@@ -78,6 +78,18 @@ static void EnsureSurfaceEndRenderTexture(Graphic::Resource::Context &context,
     }
 }
 
+/**
+ * @brief Ensure a depth render texture of the specified pixel dimensions exists in the texture container.
+ *
+ * Ensures a 2D depth texture named by Graphic::System::END_DEPTH_RENDER_TEXTURE_ID is present in the core's
+ * Graphic::Resource::TextureContainer; if an existing texture has a different size it is replaced.
+ *
+ * @param core The engine core providing access to graphic resources.
+ * @param requiredSize Width and height, in pixels, for the depth texture.
+ *
+ * The created texture uses the Depth32Float format and is configured for texture binding, render attachment,
+ * copy source, and copy destination usage.
+ */
 static void EnsureDepthTexture(Engine::Core &core, const glm::uvec2 &requiredSize)
 {
     auto &context = core.GetResource<Graphic::Resource::Context>();
@@ -101,7 +113,7 @@ static void EnsureDepthTexture(Engine::Core &core, const glm::uvec2 &requiredSiz
     textureDesc.dimension = wgpu::TextureDimension::_2D;
     textureDesc.mipLevelCount = 1;
     textureDesc.sampleCount = 1;
-    textureDesc.format = wgpu::TextureFormat::Depth24Plus;
+    textureDesc.format = wgpu::TextureFormat::Depth32Float;
     textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
                         wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
     textureDesc.viewFormats = nullptr;

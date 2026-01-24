@@ -34,6 +34,7 @@ target(plugin_name)
     add_headerfiles("src/(plugin/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(resource/buffer/*.hpp)")
+    add_headerfiles("src/(resource/pass/*.hpp)")
     add_headerfiles("src/(system/initialization/*.hpp)")
     add_headerfiles("src/(system/GPUComponentManagement/*.hpp)")
     add_headerfiles("src/(system/preparation/*.hpp)")
@@ -62,6 +63,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
 
         add_deps(plugin_name)
         add_deps(target_dependencies)
+        add_deps("PluginGraphicTests")
         add_files(file)
         add_files("tests/main.cpp")
 
