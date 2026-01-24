@@ -20,8 +20,7 @@ add_requires(
     { debug = is_mode("debug") }
 )
 add_requires("fmt 12.1.0", { configs = { header_only = true }, debug = is_mode("debug") })
--- Temporarily disabled due to build issues on Windows 11
---add_requires("rmlui 6.0", { configs = { transform = true }, debug = is_mode("debug") })
+add_requires("rmlui 6.2", { configs = { transform = true, font_effects = true }, debug = is_mode("debug") })
 
 set_languages("c++20")
 
@@ -42,6 +41,7 @@ includes("src/utils/tools/xmake.lua")
 includes("src/plugin/event/xmake.lua")
 includes("src/plugin/camera-movement/xmake.lua")
 includes("src/plugin/default-pipeline/xmake.lua")
+includes("src/plugin/rmlui/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
@@ -66,8 +66,9 @@ target("EngineSquared")
     add_deps("UtilsLog")
     add_deps("PluginEvent")
     add_deps("PluginDefaultPipeline")
+    add_deps("PluginRmlui")
 
-    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native")
+    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native", "rmlui")
 
     if is_mode("debug") then
         add_defines("DEBUG")

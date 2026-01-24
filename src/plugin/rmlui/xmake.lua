@@ -41,19 +41,6 @@ target("PluginRmlui")
 
     add_includedirs("src", {public = true})
 
-target("PluginRmluiTests")
-    set_kind("static")
-    set_group(TEST_GROUP_NAME)
-    set_languages("cxx20")
-
-    add_packages(required_packages, "gtest")
-
-    add_deps(target_dependencies)
-
-    add_deps(plugin_name)
-
-    add_includedirs("tests", {public = true})
-
 for _, file in ipairs(os.files("tests/**.cpp")) do
     local name = path.basename(file)
     if name == "main" then

@@ -5,7 +5,7 @@
 
 #include "resource/Context.hpp"
 #include "resource/Shader.hpp"
-#include "resource/SingleExecutionRenderPass.hpp"
+#include "resource/ASingleExecutionRenderPass.hpp"
 
 #include "utils/RenderInterface.hpp"
 #include "utils/webgpu.hpp"
