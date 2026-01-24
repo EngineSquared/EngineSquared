@@ -7,6 +7,7 @@ local required_packages = {
     "entt",
     "spdlog",
     "glm",
+    "freetype",
     "lodepng",
     "stb",
     "wgpu-native"
@@ -19,6 +20,7 @@ local target_dependencies = {
     "PluginInput",
     "PluginGraphic"
 }
+
 target("PluginRmlui")
     set_kind("static")
     set_group(PLUGINS_GROUP_NAME)
@@ -46,9 +48,6 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
     if name == "main" then
         goto continue
     end
-    if path.filename(path.directory(file)) == "utils" then
-        goto continue
-    end
     target(name)
         set_group(TEST_GROUP_NAME)
         set_kind("binary")
@@ -58,14 +57,19 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         end
 
         set_languages("cxx20")
+        add_packages(required_packages, "gtest")
         add_links("gtest")
         add_tests("default")
-        add_packages(required_packages, "gtest")
 
-        add_deps(plugin_name)
-        add_deps("PluginGraphicTests")
+        add_deps("EngineSquaredCore")
+        add_deps("PluginRmlui")
+        add_deps("UtilsTools")
 
-        add_includedirs("tests", {public = true})
+        add_files(file)
+        add_files("tests/main.cpp")
+        if is_mode("debug") then
+            add_defines("DEBUG")
+        end
 
         after_build(function (target)
             import("core.project.config")
@@ -94,11 +98,5 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             local targetdir = path.join(builddir, "$(plat)", "$(arch)", "$(mode)")
             os.rm(path.join(targetdir, "asset"))
         end)
-
-        add_files(file)
-        add_files("tests/main.cpp")
-        if is_mode("debug") then
-            add_defines("DEBUG")
-        end
     ::continue::
 end
