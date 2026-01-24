@@ -73,12 +73,12 @@ fn vs_main(
   @location(1) normal: vec3f,
   @location(2) uv: vec2f,
 ) -> VertexToFragment {
-  var output : VertexToFragment;
-  let worldPosition = (object.model * vec4(position, 1.0)).xyz;
-  output.Position = camera.viewProjectionMatrix * vec4(worldPosition, 1.0);
-  output.fragNormal = normalize((object.normal * vec4(normal, 0.0)).xyz);
-  output.fragUV = uv;
-  return output;
+    var output : VertexToFragment;
+    let worldPosition = (object.model * vec4(position, 1.0)).xyz;
+    output.Position = camera.viewProjectionMatrix * vec4(worldPosition, 1.0);
+    output.fragNormal = normalize((object.normal * vec4(normal, 0.0)).xyz);
+    output.fragUV = uv;
+    return output;
 }
 
 @fragment
@@ -86,11 +86,12 @@ fn fs_main(
   @location(0) fragNormal: vec3f,
   @location(1) fragUV : vec2f
 ) -> GBufferOutput {
-  var output : GBufferOutput;
-  output.normal = vec4(normalize(fragNormal), 1.0);
-  output.albedo = vec4(textureSample(texture, textureSampler, fragUV).rgb, 1.0);
+    var output : GBufferOutput;
+    var uv = vec2f(1.0 - fragUV.x, 1.0 - fragUV.y);
+    output.normal = vec4(normalize(fragNormal), 1.0);
+    output.albedo = vec4(textureSample(texture, textureSampler, uv).rgb, 1.0);
 
-  return output;
+    return output;
 }
 
 )";
