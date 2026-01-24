@@ -4,6 +4,7 @@
 #include "component/GPUMaterial.hpp"
 #include "component/GPUMesh.hpp"
 #include "component/GPUTransform.hpp"
+#include "component/GPUDirectionalLight.hpp"
 
 #include "plugin/PluginDefaultPipeline.hpp"
 
@@ -16,9 +17,11 @@
 #include "resource/buffer/PointGPUBuffer.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
 #include "resource/buffer/TransformGPUBuffer.hpp"
+#include "resource/buffer/DirectionalLightBuffer.hpp"
 
 #include "resource/pass/Deferred.hpp"
 #include "resource/pass/GBuffer.hpp"
+#include "resource/pass/Shadow.hpp"
 
 #include "system/initialization/Create3DGraph.hpp"
 #include "system/initialization/CreateAmbientLight.hpp"
@@ -33,6 +36,8 @@
 #include "system/GPUComponentManagement/OnMeshDestruction.hpp"
 #include "system/GPUComponentManagement/OnTransformCreation.hpp"
 #include "system/GPUComponentManagement/OnTransformDestruction.hpp"
+#include "system/GPUComponentManagement/OnDirectionalLightCreation.hpp"
+#include "system/GPUComponentManagement/OnDirectionalLightDestruction.hpp"
 
 #include "system/preparation/UpdateAmbientLight.hpp"
 #include "system/preparation/UpdateGPUCameras.hpp"
