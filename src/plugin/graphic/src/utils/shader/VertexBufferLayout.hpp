@@ -98,6 +98,12 @@ class VertexBufferLayout : public IValidable {
     {
         switch (format)
         {
+        case wgpu::VertexFormat::Uint8: return sizeof(uint8_t);
+        case wgpu::VertexFormat::Uint8x2: return 2 * sizeof(uint8_t);
+        case wgpu::VertexFormat::Uint8x4: return 4 * sizeof(uint8_t);
+        case wgpu::VertexFormat::Unorm8: return sizeof(uint8_t);
+        case wgpu::VertexFormat::Unorm8x2: return 2 * sizeof(uint8_t);
+        case wgpu::VertexFormat::Unorm8x4: return 4 * sizeof(uint8_t);
         case wgpu::VertexFormat::Float32x2: return 2 * sizeof(float);
         case wgpu::VertexFormat::Float32x3: return 3 * sizeof(float);
         case wgpu::VertexFormat::Float32x4: return 4 * sizeof(float);
