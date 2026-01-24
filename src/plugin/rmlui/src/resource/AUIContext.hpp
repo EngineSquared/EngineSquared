@@ -1,14 +1,14 @@
 #pragma once
 
+#include <RmlUi/Core.h>
 #include <memory>
 #include <string>
 #include <type_traits>
-#include <RmlUi/Core.h>
 
-#include "exception/CreateRmlContextError.hpp"
 #include "RmlUi/Core/RenderInterface.h"
 #include "RmlUi/Core/SystemInterface.h"
 #include "core/Core.hpp"
+#include "exception/CreateRmlContextError.hpp"
 #include "utils/IRenderer.hpp"
 
 template <typename T>
