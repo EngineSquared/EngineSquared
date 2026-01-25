@@ -92,6 +92,12 @@ class SoundManager {
      * @param pInput  Unused input buffer (typically nullptr for playback-only).
      * @param frameCount Number of audio frames that must be written to the output buffer.
      *
+     * @note Mixes all active sounds with volume into a temporary f32 buffer, then converts to device format.
+     * @note Handles looping with configurable start/end points.
+     * @details Custom callbacks are invoked first, then all playing sounds are mixed. The mix buffer
+     *          is cleared initially and all sounds are mixed with their respective volumes. Format
+     *          conversion supports f32 and s16, clamping to [-1.0, 1.0] range to prevent clipping.
+     *
      * @return void
      */
     static void data_callback(ma_device *pDevice, void *pOutput, const void * /*pInput*/, ma_uint32 frameCount)
@@ -101,7 +107,6 @@ class SoundManager {
         const ma_uint32 channels = pDevice->playback.channels;
         const ma_uint32 totalSamples = frameCount * channels;
 
-        // Clear output buffer
         std::memset(pOutput, 0, ma_get_bytes_per_frame(pDevice->playback.format, channels) * frameCount);
 
         const auto &callbacks = self._customCallbacks.GetFunctions();
@@ -110,7 +115,6 @@ class SoundManager {
             (*callback)(pDevice, pOutput, frameCount);
         }
 
-        // Mix buffer in f32 format for proper mixing
         std::array<float, 4096 * 2> mixBuffer{};
         if (totalSamples > mixBuffer.size())
         {
@@ -123,23 +127,19 @@ class SoundManager {
             if (sound.usingEngine || !sound.isPlaying || sound.isPaused)
                 continue;
 
-            // Temp buffer for this sound's samples (f32)
             std::array<float, 4096 * 2> tempBuffer{};
             ma_uint64 framesRead = 0;
 
-            // Configure decoder to output f32 for consistent mixing
             ma_decoder_config decoderConfig = ma_decoder_config_init(ma_format_f32, channels, pDevice->sampleRate);
             ma_decoder tempDecoder;
             if (ma_decoder_init_file(sound.path.c_str(), &decoderConfig, &tempDecoder) == MA_SUCCESS)
             {
-                // Seek to current position
                 ma_uint64 cursor = 0;
                 ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &cursor);
                 ma_decoder_seek_to_pcm_frame(&tempDecoder, cursor);
 
                 ma_result result = ma_decoder_read_pcm_frames(&tempDecoder, tempBuffer.data(), frameCount, &framesRead);
 
-                // Sync original decoder position
                 ma_decoder_get_cursor_in_pcm_frames(&tempDecoder, &cursor);
                 ma_decoder_seek_to_pcm_frame(&sound.decoder, cursor);
                 ma_decoder_uninit(&tempDecoder);
@@ -149,13 +149,11 @@ class SoundManager {
                     Log::Error(fmt::format("[Audio] Decoder error for '{}': {}", name, ma_result_description(result)));
                 }
 
-                // Mix with volume into mixBuffer
                 for (ma_uint32 i = 0; i < framesRead * channels; ++i)
                 {
                     mixBuffer[i] += tempBuffer[i] * sound.volume;
                 }
 
-                // Handle looping
                 if (framesRead < frameCount)
                 {
                     if (sound.loop)
@@ -168,7 +166,6 @@ class SoundManager {
                     }
                 }
 
-                // Check loop end point
                 if (sound.loop && sound.loopEndFrame > 0)
                 {
                     ma_uint64 currentFrame = 0;
@@ -181,7 +178,6 @@ class SoundManager {
             }
         }
 
-        // Convert mixed f32 buffer to device format
         if (pDevice->playback.format == ma_format_f32)
         {
             auto *output = static_cast<float *>(pOutput);
