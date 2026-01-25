@@ -16,11 +16,11 @@
 
 #include "Object.hpp"
 
+#include <Jolt/Geometry/IndexedTriangle.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
 #include <Jolt/Physics/Collision/Shape/MeshShape.h>
-#include <Jolt/Geometry/IndexedTriangle.h>
 #include <Jolt/Physics/Collision/Shape/RotatedTranslatedShape.h>
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
 
@@ -62,7 +62,7 @@ static JPH::RefConst<JPH::Shape> CreateMeshShapeFromMesh(const Object::Component
     // Convert indices to triangles
     JPH::IndexedTriangleList joltTriangles;
     joltTriangles.reserve(indices.size() / 3);
-    
+
     for (size_t i = 0; i < indices.size(); i += 3)
     {
         // Ensure we have enough indices for a triangle
@@ -73,7 +73,7 @@ static JPH::RefConst<JPH::Shape> CreateMeshShapeFromMesh(const Object::Component
     }
 
     JPH::MeshShapeSettings settings(joltVertices, joltTriangles);
-    
+
     // Set active edge threshold if collider settings are provided
     if (meshCollider)
     {

@@ -25,7 +25,6 @@
 
 namespace Physics::Component {
 
-
 /**
  * @brief Triangle mesh collider (concave mesh support)
  *
