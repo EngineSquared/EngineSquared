@@ -209,7 +209,7 @@ template <> class VehicleBuilder<4> {
         chassisRigidBody.restitution = 0.1f;
         chassis.AddComponent<Component::RigidBody>(chassisRigidBody);
 
-        chassis.AddComponent<Component::BoxCollider>(Component::BoxCollider(_chassisHalfExtents));
+        chassis.AddComponent<Component::MeshCollider>();
 
         _vehicle.wheelEntities = wheelEntities;
         _vehicle.wheelPositions = _wheelPositions;
