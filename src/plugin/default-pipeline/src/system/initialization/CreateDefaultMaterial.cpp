@@ -18,7 +18,7 @@ void DefaultPipeline::System::CreateDefaultMaterial(Engine::Core &core)
     auto materialBuffer = std::make_unique<Resource::MaterialGPUBuffer>();
     materialBuffer->Create(core);
     Object::Component::Material defaultMaterial;
-    defaultMaterial.ambientTexName = Graphic::Utils::DEFAULT_TEXTURE_NAME;
+    defaultMaterial.diffuseTexName = Graphic::Utils::DEFAULT_TEXTURE_NAME;
     materialBuffer->SetMaterial(core, defaultMaterial);
 
     uint64_t materialBufferSize = materialBuffer->GetBuffer().getSize();

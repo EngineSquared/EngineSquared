@@ -6,6 +6,9 @@ Graphic::Resource::Sampler::Sampler(const wgpu::Device &device)
     wgpu::SamplerDescriptor samplerDesc(wgpu::Default);
 
     samplerDesc.maxAnisotropy = 1;
+    samplerDesc.addressModeW = wgpu::AddressMode::Repeat;
+    samplerDesc.addressModeU = wgpu::AddressMode::Repeat;
+    samplerDesc.addressModeV = wgpu::AddressMode::Repeat;
 
     _sampler = device.createSampler(samplerDesc);
 }

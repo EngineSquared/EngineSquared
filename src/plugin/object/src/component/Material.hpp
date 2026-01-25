@@ -52,7 +52,7 @@ struct Material {
     float ior;      // index of refraction
     float dissolve; // 1 == opaque; 0 == fully transparent
 
-    std::string ambientTexName;
+    std::string diffuseTexName;
 
     explicit Material() = default;
     ~Material() = default;
