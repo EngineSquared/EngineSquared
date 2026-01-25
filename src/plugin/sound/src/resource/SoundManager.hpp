@@ -236,7 +236,9 @@ class SoundManager {
             for (ma_uint32 i = 0; i < totalSamples; ++i)
             {
                 float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                output[i] += static_cast<int32_t>(sample * 2147483647.0f);
+                const int64_t mixed =
+                    static_cast<int64_t>(output[i]) + static_cast<int64_t>(sample * 2147483647.0f);
+                output[i] = static_cast<int32_t>(std::clamp<int64_t>(mixed, INT32_MIN, INT32_MAX));
             }
         }
         break;
@@ -245,7 +247,9 @@ class SoundManager {
             for (ma_uint32 i = 0; i < totalSamples; ++i)
             {
                 float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                output[i] += static_cast<int16_t>(sample * 32767.0f);
+                const int32_t mixed =
+                    static_cast<int32_t>(output[i]) + static_cast<int32_t>(sample * 32767.0f);
+                output[i] = static_cast<int16_t>(std::clamp<int32_t>(mixed, INT16_MIN, INT16_MAX));
             }
         }
         break;
@@ -254,7 +258,9 @@ class SoundManager {
             for (ma_uint32 i = 0; i < totalSamples; ++i)
             {
                 float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                output[i] += static_cast<uint8_t>((sample + 1.0f) * 127.5f);
+                const int mixed =
+                    static_cast<int>(output[i]) + static_cast<int>(sample * 127.5f);
+                output[i] = static_cast<uint8_t>(std::clamp(mixed, 0, 255));
             }
         }
         break;
@@ -366,7 +372,10 @@ class SoundManager {
         auto it = _soundsToPlay.find(soundName);
         if (it != _soundsToPlay.end())
         {
-            ma_decoder_uninit(&it->second.decoder);
+            if (it->second.hasEngineSound)
+                ma_sound_uninit(&it->second.engineSound);
+            if (it->second.decoderInitialized)
+                ma_decoder_uninit(&it->second.decoder);
             _soundsToPlay.erase(it);
         }
         else
@@ -515,7 +524,9 @@ class SoundManager {
             // Initialize engine and sound lazily
             if (!_engineInit)
             {
-                ma_result r = ma_engine_init(NULL, &_engine);
+                ma_engine_config cfg = ma_engine_config_init();
+                cfg.sampleRate = _device.sampleRate;
+                ma_result r = ma_engine_init(&cfg, &_engine);
                 if (r != MA_SUCCESS)
                 {
                     Log::Error(fmt::format("Failed to init ma_engine: {}", ma_result_description(r)));
