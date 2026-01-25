@@ -411,7 +411,7 @@ class SoundManager {
         }
     }
 
-        /**
+    /**
      * @brief Set the playback pitch (speed) for a sound.
      * @param soundName Name of the sound.
      * @param pitch Pitch factor (> 0), 1.0 = normal.
@@ -437,7 +437,6 @@ class SoundManager {
                 }
                 _engineInit = true;
             }
-
 
             if (!snd.hasEngineSound)
             {
@@ -471,7 +470,6 @@ class SoundManager {
             Log::Error(fmt::format("Could not set pitch: Sound \"{}\" does not exist", soundName));
         }
     }
-
 
     /**
      * @brief Set whether the sound should loop.
