@@ -18,14 +18,14 @@ enum class WheelIndex : uint8_t {
 
 /**
  * @brief Friction curve point for tire friction modeling
- * 
+ *
  * Defines friction behavior at different slip levels:
  * - Longitudinal: slip ratio (0 = perfect traction, 1 = wheel locked)
  * - Lateral: slip angle in degrees (angle between velocity and wheel direction)
  */
 struct FrictionCurvePoint {
-    float slip;      ///< Slip ratio (longitudinal) or slip angle in degrees (lateral)
-    float friction;  ///< Friction coefficient (0 = no friction, >1 = enhanced grip)
+    float slip;     ///< Slip ratio (longitudinal) or slip angle in degrees (lateral)
+    float friction; ///< Friction coefficient (0 = no friction, >1 = enhanced grip)
 };
 
 /**
@@ -72,9 +72,9 @@ struct WheelSettings {
     /// Y-axis: Friction coefficient (typically 0-1.2)
     /// Default: realistic tire slip curve with peak at 6% slip
     std::vector<FrictionCurvePoint> longitudinalFriction = {
-        {0.0f, 0.0f},    // No friction when no slip
-        {0.06f, 1.2f},   // Peak friction at 6% slip
-        {0.2f, 1.0f}     // Reduced friction when sliding
+        {0.0f,  0.0f}, // No friction when no slip
+        {0.06f, 1.2f}, // Peak friction at 6% slip
+        {0.2f,  1.0f}  // Reduced friction when sliding
     };
 
     /// Lateral friction curve (sideways/slip angle direction)
@@ -82,9 +82,9 @@ struct WheelSettings {
     /// Y-axis: Friction coefficient (typically 0-1.2)
     /// Default: realistic tire slip angle curve
     std::vector<FrictionCurvePoint> lateralFriction = {
-        {0.0f, 0.0f},    // No friction when aligned
-        {3.0f, 1.2f},    // Peak friction at 3 degrees
-        {20.0f, 1.0f}    // Reduced friction at high slip angles
+        {0.0f,  0.0f}, // No friction when aligned
+        {3.0f,  1.2f}, // Peak friction at 3 degrees
+        {20.0f, 1.0f}  // Reduced friction at high slip angles
     };
 
     /// Maximum brake torque (Nm) that can be applied to this wheel

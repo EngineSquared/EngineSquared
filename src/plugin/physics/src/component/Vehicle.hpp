@@ -49,14 +49,14 @@ enum class TransmissionMode : uint8_t {
 
 /**
  * @brief Torque curve point for normalized engine torque
- * 
+ *
  * Defines a point on the torque curve:
  * - X-axis (rpm): Fraction of engine RPM (0 = minRPM, 1 = maxRPM)
  * - Y-axis (torque): Ratio of max torque (0 = 0 Nm, 1 = maxTorque)
  */
 struct TorqueCurvePoint {
-    float rpm;      ///< Normalized RPM (0.0 to 1.0)
-    float torque;   ///< Normalized torque (0.0 to 1.0)
+    float rpm;    ///< Normalized RPM (0.0 to 1.0)
+    float torque; ///< Normalized torque (0.0 to 1.0)
 };
 
 /**
@@ -119,9 +119,9 @@ struct EngineSettings {
     /// X-axis: Fraction of RPM (0.0 = minRPM, 1.0 = maxRPM)
     /// Default: realistic curve with peak torque at mid-range RPM
     std::vector<TorqueCurvePoint> normalizedTorque = {
-        {0.0f, 0.8f},   // 80% torque at minRPM
-        {0.66f, 1.0f},  // 100% torque at 66% of RPM range (peak)
-        {1.0f, 0.8f}    // 80% torque at maxRPM
+        {0.0f,  0.8f}, // 80% torque at minRPM
+        {0.66f, 1.0f}, // 100% torque at 66% of RPM range (peak)
+        {1.0f,  0.8f}  // 80% torque at maxRPM
     };
 
     /// Moment of inertia (kg m^2) of the engine

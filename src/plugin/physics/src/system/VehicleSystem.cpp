@@ -111,17 +111,18 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
 
     // Convert normalized torque curve
     controllerSettings.mEngine.mNormalizedTorque.Clear();
-    controllerSettings.mEngine.mNormalizedTorque.Reserve(static_cast<JPH::uint>(vehicle.engine.normalizedTorque.size()));
+    controllerSettings.mEngine.mNormalizedTorque.Reserve(
+        static_cast<JPH::uint>(vehicle.engine.normalizedTorque.size()));
     for (const auto &point : vehicle.engine.normalizedTorque)
     {
         controllerSettings.mEngine.mNormalizedTorque.AddPoint(point.rpm, point.torque);
     }
 
     // Convert transmission mode
-    controllerSettings.mTransmission.mMode = (vehicle.gearbox.mode == Component::TransmissionMode::Auto) 
-        ? JPH::ETransmissionMode::Auto 
-        : JPH::ETransmissionMode::Manual;
-    
+    controllerSettings.mTransmission.mMode = (vehicle.gearbox.mode == Component::TransmissionMode::Auto) ?
+                                                 JPH::ETransmissionMode::Auto :
+                                                 JPH::ETransmissionMode::Manual;
+
     controllerSettings.mTransmission.mClutchStrength = vehicle.gearbox.clutchStrength;
     controllerSettings.mTransmission.mSwitchTime = vehicle.gearbox.switchTime;
     controllerSettings.mTransmission.mClutchReleaseTime = vehicle.gearbox.clutchReleaseTime;
