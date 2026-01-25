@@ -12,11 +12,17 @@
 
 #include "Object.hpp"
 
+// Test: Add both SoftBody includes
+#include "component/SoftBody.hpp"
+#include "component/SoftBodyAttachment.hpp"
+
 #include <array>
 #include <fmt/format.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <memory>
+#include <optional>
+#include <vector>
 
 namespace Physics::Builder {
 
@@ -159,6 +165,7 @@ template <> class VehicleBuilder<4> {
      * Creates:
      * - 1 chassis entity with Vehicle, VehicleController, and Mesh components
      * - 4 wheel entities with Mesh and Transform components
+     * - (Optional) 1 bodywork entity with SoftBody if EnableSoftBodyBodywork() was called
      *
      * The VehicleSystem will automatically create the Jolt constraint when
      * the Vehicle component is constructed.
@@ -186,11 +193,24 @@ template <> class VehicleBuilder<4> {
             throw Exception::VehicleBuilderError("Gearbox must have at least one forward gear and one reverse gear");
         }
 
+        // Validate bodywork configuration if enabled
+        if (_useSoftBodyBodywork && !_hasBodyworkMesh)
+        {
+            throw Exception::VehicleBuilderError(
+                "SoftBody bodywork enabled but no bodywork mesh set. Call SetBodyworkMesh().");
+        }
+
+        //=====================================================================
+        // Create chassis entity
+        //=====================================================================
         auto chassis = core.CreateEntity();
         chassis.AddComponent<Object::Component::Transform>(
             Object::Component::Transform(_chassisPosition, _chassisScale, _chassisRotation));
         chassis.AddComponent<Object::Component::Mesh>(_chassisMesh);
 
+        //=====================================================================
+        // Create wheel entities
+        //=====================================================================
         std::array<Engine::EntityId, 4> wheelEntities;
         for (size_t i = 0; i < 4; ++i)
         {
@@ -205,6 +225,9 @@ template <> class VehicleBuilder<4> {
             wheelEntities[i].AddComponent<Object::Component::Mesh>(core, _wheelMeshes[i]);
         }
 
+        //=====================================================================
+        // Add physics components to chassis
+        //=====================================================================
         auto chassisRigidBody = Component::RigidBody::CreateDynamic(_chassisMass);
         chassisRigidBody.friction = 0.5f;
         chassisRigidBody.restitution = 0.1f;
@@ -218,6 +241,45 @@ template <> class VehicleBuilder<4> {
         chassis.AddComponent<Component::Vehicle>(_vehicle);
 
         chassis.AddComponent<Component::VehicleController>();
+
+        //=====================================================================
+        // Create SoftBody bodywork if enabled
+        //=====================================================================
+        if (_useSoftBodyBodywork)
+        {
+            auto bodywork = core.CreateEntity();
+
+            // Position bodywork at chassis position + offset
+            glm::vec3 bodyworkPos = _chassisPosition + _chassisRotation * _bodyworkOffset;
+            bodywork.AddComponent<Object::Component::Transform>(
+                Object::Component::Transform(bodyworkPos, _chassisScale, _chassisRotation));
+
+            // Add the bodywork mesh
+            bodywork.AddComponent<Object::Component::Mesh>(*_bodyworkMesh);
+
+            // Create SoftBody with car bodywork settings
+            Component::SoftBody softBody;
+            softBody.type = Component::SoftBodyType::Custom;
+            softBody.settings = _bodyworkSettings;
+
+            // Set pinned vertices from anchors (invMass = 0 for pinned)
+            if (!_bodyworkAnchorVertices.empty())
+            {
+                softBody.pinnedVertices = _bodyworkAnchorVertices;
+            }
+
+            bodywork.AddComponent<Component::SoftBody>(softBody);
+
+            // Create attachment to chassis
+            Component::SoftBodyAttachment attachment(chassis);
+            attachment.anchorVertices = _bodyworkAnchorVertices;
+            attachment.localOffset = _bodyworkOffset;
+            attachment.syncPosition = true;
+            attachment.syncRotation = true;
+            attachment.anchorStrength = 1.0f; // Fully rigid anchors
+
+            bodywork.AddComponent<Component::SoftBodyAttachment>(attachment);
+        }
 
         return chassis;
     }
@@ -255,6 +317,88 @@ template <> class VehicleBuilder<4> {
         return *this;
     }
 
+    //=========================================================================
+    // SoftBody Bodywork Configuration
+    //=========================================================================
+
+    /**
+     * @brief Enable SoftBody bodywork mode
+     *
+     * When enabled, a deformable bodywork entity will be created that:
+     * - Maintains shape during normal driving
+     * - Deforms on collision (e.g., hitting a wall)
+     * - Is attached to the rigid chassis via anchor vertices
+     *
+     * @param enable True to enable SoftBody bodywork
+     * @return Reference to builder for chaining
+     */
+    VehicleBuilder &EnableSoftBodyBodywork(bool enable = true)
+    {
+        _useSoftBodyBodywork = enable;
+        return *this;
+    }
+
+    /**
+     * @brief Set the mesh for the deformable bodywork
+     *
+     * @param bodyworkMesh The mesh for bodywork rendering and deformation
+     * @return Reference to builder for chaining
+     */
+    VehicleBuilder &SetBodyworkMesh(const Object::Component::Mesh &bodyworkMesh)
+    {
+        _bodyworkMesh = bodyworkMesh;
+        _hasBodyworkMesh = true;
+        return *this;
+    }
+
+    /**
+     * @brief Set anchor vertices that attach bodywork to chassis
+     *
+     * @param anchorIndices Vertex indices that are anchored to chassis
+     * @return Reference to builder for chaining
+     */
+    VehicleBuilder &SetBodyworkAnchors(const std::vector<uint32_t> &anchorIndices)
+    {
+        _bodyworkAnchorVertices = anchorIndices;
+        return *this;
+    }
+
+    /**
+     * @brief Set bodywork position offset from chassis center
+     *
+     * @param offset Local offset from chassis transform
+     * @return Reference to builder for chaining
+     */
+    VehicleBuilder &SetBodyworkOffset(const glm::vec3 &offset)
+    {
+        _bodyworkOffset = offset;
+        return *this;
+    }
+
+    /**
+     * @brief Set SoftBody settings for bodywork
+     *
+     * @param settings Custom soft body settings
+     * @return Reference to builder for chaining
+     */
+    VehicleBuilder &SetBodyworkSettings(const Component::SoftBodySettings &settings)
+    {
+        _bodyworkSettings = settings;
+        return *this;
+    }
+
+    /**
+     * @brief Set bodywork stiffness (convenience method)
+     *
+     * @param stiffness Stiffness [0, 1] (1 = nearly rigid)
+     * @return Reference to builder for chaining
+     */
+    VehicleBuilder &SetBodyworkStiffness(float stiffness)
+    {
+        _bodyworkSettings = Component::SoftBodySettings::CarBodywork(stiffness);
+        return *this;
+    }
+
   private:
     Component::Vehicle _vehicle = Component::Vehicle::CreateDefaultCar();
 
@@ -269,6 +413,14 @@ template <> class VehicleBuilder<4> {
 
     bool _hasChassisSet = false;
     std::array<bool, 4> _hasWheelMesh = {false, false, false, false};
+
+    // SoftBody bodywork members
+    std::optional<Object::Component::Mesh> _bodyworkMesh;
+    std::vector<uint32_t> _bodyworkAnchorVertices;
+    glm::vec3 _bodyworkOffset = glm::vec3(0.0f);
+    Component::SoftBodySettings _bodyworkSettings = Component::SoftBodySettings::CarBodywork();
+    bool _useSoftBodyBodywork = false;
+    bool _hasBodyworkMesh = false;
 };
 
 } // namespace Physics::Builder

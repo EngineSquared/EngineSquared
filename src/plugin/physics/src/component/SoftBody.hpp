@@ -194,6 +194,83 @@ struct SoftBodySettings {
         s.pressure = 500.0f;
         return s;
     }
+
+    /// Don't update the body position during simulation (for attached bodies)
+    bool updatePosition = true;
+
+    /**
+     * @brief Settings optimized for vehicle bodywork (car panels)
+     *
+     * Creates a very stiff soft body that maintains its shape while driving
+     * but can deform slightly on collision (e.g., hitting a wall).
+     * Designed to be attached to a RigidBody chassis via SoftBodyAttachment.
+     *
+     * @param stiffness Bodywork stiffness [0, 1] (1 = nearly rigid like steel, 0 = very deformable)
+     * @return SoftBodySettings
+     *
+     * ## Characteristics
+     * - Very stiff edge constraints to maintain panel shape
+     * - High solver iterations for stability at high speeds
+     * - No gravity (attached to chassis, follows its movement)
+     * - Position not updated by simulation (controlled by attachment)
+     * - Low damping for quick response to impacts
+     * - Small vertex radius for collision detection
+     *
+     * ## Usage
+     * @code
+     * // Create bodywork mesh (e.g., car body panels)
+     * auto bodywork = core.CreateEntity();
+     * bodywork.AddComponent<Transform>(core, chassisPosition);
+     * bodywork.AddComponent<Mesh>(core, bodyworkMesh);
+     * bodywork.AddComponent<SoftBody>(core, SoftBody::Create(SoftBodySettings::CarBodywork()));
+     *
+     * // Attach to chassis (must have RigidBody)
+     * SoftBodyAttachment attachment(chassisEntity);
+     * attachment.AddAnchors(bottomVertexIndices);  // Vertices that connect to chassis
+     * bodywork.AddComponent<SoftBodyAttachment>(core, attachment);
+     * @endcode
+     *
+     * @see SoftBodyAttachment
+     */
+    static SoftBodySettings CarBodywork(float stiffness = 0.95f)
+    {
+        SoftBodySettings s;
+
+        // High solver iterations for stability at vehicle speeds
+        s.solverIterations = 10;
+
+        // Low damping for responsive deformation
+        s.linearDamping = 0.05f;
+
+        // High max velocity (vehicle can go fast)
+        s.maxLinearVelocity = 200.0f;
+
+        // No gravity - bodywork follows chassis via attachment
+        s.gravityFactor = 0.0f;
+
+        // Don't update body position - controlled by attachment system
+        s.updatePosition = false;
+
+        // Material properties
+        s.restitution = 0.3f; // Some bounce on collision
+        s.friction = 0.4f;    // Moderate friction
+
+        // Very stiff constraints to maintain shape
+        // compliance = (1 - stiffness)^2 * base_value for exponential stiffness curve
+        float softness = (1.0f - stiffness);
+        float softness2 = softness * softness;
+
+        s.edgeCompliance = softness2 * 1.0e-5f;   // Very stiff edges (panel shape)
+        s.shearCompliance = softness2 * 1.0e-5f; // Very stiff shear (prevent warping)
+        s.bendCompliance = softness2 * 1.0e-4f;  // Slightly less stiff bending
+
+        // Collision settings
+        s.vertexRadius = 0.02f;      // Small collision radius for accurate collision detection
+        s.allowSleeping = false;     // Never sleep (always attached to moving chassis)
+        s.doubleSidedFaces = false;  // Single-sided for performance
+
+        return s;
+    }
 };
 
 /**
