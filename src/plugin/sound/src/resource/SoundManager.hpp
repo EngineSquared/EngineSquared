@@ -1,5 +1,6 @@
 #pragma once
 
+#include <atomic>
 #include <functional>
 #include <map>
 #include <miniaudio.h>
@@ -22,6 +23,13 @@ class SoundManager {
     ma_engine _engine;
     bool _engineInit = false;
 
+    // Deferred error reporting for audio callback (avoid logging in real-time callback)
+    // Bit flags: 0x1 = frame count too large, 0x2 = decoder read error, 0x4 = unknown format
+    std::atomic<uint32_t> _callbackErrorFlags{0};
+    static constexpr uint32_t ERROR_FRAME_TOO_LARGE = 0x1;
+    static constexpr uint32_t ERROR_DECODER_READ = 0x2;
+    static constexpr uint32_t ERROR_UNKNOWN_FORMAT = 0x4;
+
     struct Sound {
         std::string name;
         std::string path;
@@ -35,7 +43,9 @@ class SoundManager {
         float volume = 1.0f;
         ma_uint64 loopStartFrame = 0;
         ma_uint64 loopEndFrame = 0;
+        bool decoderInitialized = false;
     };
+
 
     struct TransparentHash {
         using is_transparent = void;
@@ -75,14 +85,47 @@ class SoundManager {
     SoundManager &operator=(const SoundManager &) = delete;
 
     /**
-     * Default move constructor.
+     * Move constructor.
+     * @note std::atomic is not movable, so we manually transfer its value.
      */
-    SoundManager(SoundManager &&) noexcept = default;
+    SoundManager(SoundManager &&other) noexcept
+        : _result(other._result)
+        , _deviceConfig(other._deviceConfig)
+        , _device(other._device)
+        , _deviceInit(other._deviceInit)
+        , _engine(other._engine)
+        , _engineInit(other._engineInit)
+        , _callbackErrorFlags(other._callbackErrorFlags.load(std::memory_order_relaxed))
+        , _soundsToPlay(std::move(other._soundsToPlay))
+        , _customCallbacks(std::move(other._customCallbacks))
+    {
+        other._deviceInit = false;
+        other._engineInit = false;
+    }
 
     /**
-     * Default move assignment operator.
+     * Move assignment operator.
+     * @note std::atomic is not movable, so we manually transfer its value.
      */
-    SoundManager &operator=(SoundManager &&) noexcept = default;
+    SoundManager &operator=(SoundManager &&other) noexcept
+    {
+        if (this != &other)
+        {
+            _result = other._result;
+            _deviceConfig = other._deviceConfig;
+            _device = other._device;
+            _deviceInit = other._deviceInit;
+            _engine = other._engine;
+            _engineInit = other._engineInit;
+            _callbackErrorFlags.store(other._callbackErrorFlags.load(std::memory_order_relaxed),
+                                      std::memory_order_relaxed);
+            _soundsToPlay = std::move(other._soundsToPlay);
+            _customCallbacks = std::move(other._customCallbacks);
+            other._deviceInit = false;
+            other._engineInit = false;
+        }
+        return *this;
+    }
 
     /**
      * @brief Audio data callback used by the playback device to fill the output buffer.
@@ -118,82 +161,97 @@ class SoundManager {
         std::array<float, 4096 * 2> mixBuffer{};
         if (totalSamples > mixBuffer.size())
         {
-            Log::Error("[Audio] Frame count too large for mix buffer");
+            self._callbackErrorFlags.fetch_or(ERROR_FRAME_TOO_LARGE, std::memory_order_relaxed);
             return;
         }
 
         for (auto &[name, sound] : self._soundsToPlay)
         {
-            if (sound.usingEngine || !sound.isPlaying || sound.isPaused)
+            if (sound.usingEngine || !sound.isPlaying || sound.isPaused || !sound.decoderInitialized)
                 continue;
 
             std::array<float, 4096 * 2> tempBuffer{};
             ma_uint64 framesRead = 0;
 
-            ma_decoder_config decoderConfig = ma_decoder_config_init(ma_format_f32, channels, pDevice->sampleRate);
-            ma_decoder tempDecoder;
-            if (ma_decoder_init_file(sound.path.c_str(), &decoderConfig, &tempDecoder) == MA_SUCCESS)
+            ma_result result = ma_decoder_read_pcm_frames(&sound.decoder, tempBuffer.data(), frameCount, &framesRead);
+
+            if (result != MA_SUCCESS && result != MA_AT_END)
             {
-                ma_uint64 cursor = 0;
-                ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &cursor);
-                ma_decoder_seek_to_pcm_frame(&tempDecoder, cursor);
+                self._callbackErrorFlags.fetch_or(ERROR_DECODER_READ, std::memory_order_relaxed);
+            }
 
-                ma_result result = ma_decoder_read_pcm_frames(&tempDecoder, tempBuffer.data(), frameCount, &framesRead);
+            for (ma_uint32 i = 0; i < framesRead * channels; ++i)
+            {
+                mixBuffer[i] += tempBuffer[i] * sound.volume;
+            }
 
-                ma_decoder_get_cursor_in_pcm_frames(&tempDecoder, &cursor);
-                ma_decoder_seek_to_pcm_frame(&sound.decoder, cursor);
-                ma_decoder_uninit(&tempDecoder);
-
-                if (result != MA_SUCCESS && result != MA_AT_END)
+            if (framesRead < frameCount)
+            {
+                if (sound.loop)
                 {
-                    Log::Error(fmt::format("[Audio] Decoder error for '{}': {}", name, ma_result_description(result)));
+                    ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
                 }
-
-                for (ma_uint32 i = 0; i < framesRead * channels; ++i)
+                else if (result == MA_AT_END)
                 {
-                    mixBuffer[i] += tempBuffer[i] * sound.volume;
+                    sound.isPlaying = false;
                 }
+            }
 
-                if (framesRead < frameCount)
+            if (sound.loop && sound.loopEndFrame > 0)
+            {
+                ma_uint64 currentFrame = 0;
+                ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &currentFrame);
+                if (currentFrame >= sound.loopEndFrame)
                 {
-                    if (sound.loop)
-                    {
-                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
-                    }
-                    else if (result == MA_AT_END)
-                    {
-                        sound.isPlaying = false;
-                    }
-                }
-
-                if (sound.loop && sound.loopEndFrame > 0)
-                {
-                    ma_uint64 currentFrame = 0;
-                    ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &currentFrame);
-                    if (currentFrame >= sound.loopEndFrame)
-                    {
-                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
-                    }
+                    ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
                 }
             }
         }
 
-        if (pDevice->playback.format == ma_format_f32)
+        switch (pDevice->playback.format)
         {
-            auto *output = static_cast<float *>(pOutput);
-            for (ma_uint32 i = 0; i < totalSamples; ++i)
+            case ma_format_f32:
             {
-                output[i] += std::clamp(mixBuffer[i], -1.0f, 1.0f);
+                auto *output = static_cast<float *>(pOutput);
+                for (ma_uint32 i = 0; i < totalSamples; ++i)
+                {
+                    output[i] += std::clamp(mixBuffer[i], -1.0f, 1.0f);
+                }
             }
-        }
-        else if (pDevice->playback.format == ma_format_s16)
-        {
-            auto *output = static_cast<int16_t *>(pOutput);
-            for (ma_uint32 i = 0; i < totalSamples; ++i)
+            break;
+            case ma_format_s32:
             {
-                float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                output[i] += static_cast<int16_t>(sample * 32767.0f);
+                auto *output = static_cast<int32_t *>(pOutput);
+                for (ma_uint32 i = 0; i < totalSamples; ++i)
+                {
+                    float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
+                    output[i] += static_cast<int32_t>(sample * 2147483647.0f);
+                }
             }
+            break;
+            case ma_format_s16:
+            {
+                auto *output = static_cast<int16_t *>(pOutput);
+                for (ma_uint32 i = 0; i < totalSamples; ++i)
+                {
+                    float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
+                    output[i] += static_cast<int16_t>(sample * 32767.0f);
+                }
+            }
+            break;
+            case ma_format_u8:
+            {
+                auto *output = static_cast<uint8_t *>(pOutput);
+                for (ma_uint32 i = 0; i < totalSamples; ++i)
+                {
+                    float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
+                    output[i] += static_cast<uint8_t>((sample + 1.0f) * 127.5f);
+                }
+            }
+            break;
+            default:
+                self._callbackErrorFlags.fetch_or(ERROR_UNKNOWN_FORMAT, std::memory_order_relaxed);
+                break;
         }
     }
 
@@ -234,6 +292,29 @@ class SoundManager {
     }
 
     /**
+     * @brief Check and log any deferred errors from the audio callback.
+     *
+     * Call this method periodically from the main thread (e.g., in an Update system)
+     * to report errors that occurred in the real-time audio callback without blocking it.
+     */
+    inline void CheckCallbackErrors()
+    {
+        uint32_t errors = _callbackErrorFlags.exchange(0, std::memory_order_relaxed);
+        if (errors & ERROR_FRAME_TOO_LARGE)
+        {
+            Log::Error("[Audio] Frame count too large for mix buffer");
+        }
+        if (errors & ERROR_DECODER_READ)
+        {
+            Log::Error("[Audio] Decoder read error occurred during playback");
+        }
+        if (errors & ERROR_UNKNOWN_FORMAT)
+        {
+            Log::Error("[Audio] Unknown audio format encountered during playback");
+        }
+    }
+
+    /**
      * @brief Register the provided sound file.
      *
      * @param soundName Name to assign to the registered sound
@@ -255,12 +336,14 @@ class SoundManager {
         sound.path = filePath;
         sound.loop = loop;
 
-        _result = ma_decoder_init_file(filePath.c_str(), nullptr, &sound.decoder);
+        ma_decoder_config decoderConfig = ma_decoder_config_init(ma_format_unknown, 2, 44100);
+        _result = ma_decoder_init_file(filePath.c_str(), &decoderConfig, &sound.decoder);
         if (_result != MA_SUCCESS)
         {
-            Log::Error(fmt::format("Failed to initialize the audio device: {}", ma_result_description(_result)));
+            Log::Error(fmt::format("Failed to initialize the audio decoder: {}", ma_result_description(_result)));
             return;
         }
+        sound.decoderInitialized = true;
         _soundsToPlay.emplace(soundName, std::move(sound));
     }
 
@@ -331,6 +414,7 @@ class SoundManager {
             if (snd.usingEngine && snd.hasEngineSound)
             {
                 ma_sound_stop(&snd.engineSound);
+                ma_sound_seek_to_pcm_frame(&snd.engineSound, 0);
                 ma_decoder_seek_to_pcm_frame(&snd.decoder, 0);
             }
             else
@@ -411,7 +495,6 @@ class SoundManager {
      * @brief Set the playback pitch (speed) for a sound.
      * @param soundName Name of the sound.
      * @param pitch Pitch factor (> 0), 1.0 = normal.
-     * @note Currently disabled - resampler removed for audio quality testing
      */
     inline void SetPitch(const std::string &soundName, float pitch)
     {
