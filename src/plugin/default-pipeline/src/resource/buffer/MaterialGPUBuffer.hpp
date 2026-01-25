@@ -16,7 +16,7 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
         glm::vec4 specular;
         glm::vec4 transmittance;
         glm::vec4 emission;
-        float _padding[3];
+        std::array<float, 3> _padding;
         float shininess;
 
         explicit MaterialTransfer(const Object::Component::Material &material)
