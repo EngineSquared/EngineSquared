@@ -12,7 +12,7 @@
 // Components - Colliders
 #include "component/BoxCollider.hpp"
 #include "component/CapsuleCollider.hpp"
-#include "component/DefaultCollider.hpp"
+#include "component/MeshCollider.hpp"
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
 #include "component/SphereCollider.hpp"

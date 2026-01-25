@@ -40,9 +40,16 @@ void CreateFloor(Engine::Core &core)
     floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
 }
 
+// If no collider is added to a rigidbody, its mesh is used to create a MeshCollider with default settings.
 void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass)
 {
     auto cube = Object::Helper::CreateCube(core, {.size = 1.0f, .position = glm::vec3(x, y, z)});
+
+    // Uncomment to explicity create a mesh collider
+    // auto meshCollider = Physics::Component::MeshCollider(); // NOSONAR
+    // // A higher number means less precision. For a simple cube 0.3 is plenty. By default it's 0.05.
+    // meshCollider.maxConvexRadius = 0.3f; // NOSONAR
+    // cube.AddComponent<Physics::Component::MeshCollider>(meshCollider); // NOSONAR
 
     auto rigidBody = Physics::Component::RigidBody::CreateDynamic(mass);
     rigidBody.friction = 0.5f;

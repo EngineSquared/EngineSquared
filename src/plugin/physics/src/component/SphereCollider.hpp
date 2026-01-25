@@ -31,7 +31,7 @@ namespace Physics::Component {
  * @brief Sphere-shaped collider
  *
  * Explicit sphere collider that users can add to customize collision shape.
- * If present on an entity with RigidBody, prevents DefaultCollider auto-creation.
+ * If present on an entity with RigidBody, overrides the automatic mesh-based collision.
  *
  * Spheres are the most efficient collision shape and should be preferred
  * when the object's shape can be approximated as a sphere.
