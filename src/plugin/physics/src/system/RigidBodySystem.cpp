@@ -32,11 +32,11 @@ namespace Physics::System {
 /**
  * @brief Create a ConvexHullShape from mesh vertices
  * @param mesh The mesh component containing vertices
- * @param meshCollider Mesh collider settings (convex radius)
+ * @param meshCollider Pointer to MeshCollider settings (nullable). If null, default settings are used.
  * @return RefConst to the created shape, or nullptr on failure
  */
 static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Component::Mesh &mesh,
-                                                          const Component::MeshCollider &meshCollider)
+                                                          const Component::MeshCollider *meshCollider)
 {
     const auto &vertices = mesh.GetVertices();
 
@@ -54,7 +54,7 @@ static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Componen
         joltPoints.push_back(Utils::ToJoltVec3(vertex));
     }
 
-    float maxConvexRadius = meshCollider.maxConvexRadius;
+    float maxConvexRadius = meshCollider ? meshCollider->maxConvexRadius : Component::MeshCollider{}.maxConvexRadius;
     JPH::ConvexHullShapeSettings settings(joltPoints, maxConvexRadius);
 
     JPH::ShapeSettings::ShapeResult result = settings.Create();
@@ -128,29 +128,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
         return nullptr;
     }
 
-    if (!registry.try_get<Component::MeshCollider>(entity))
-    {
-        registry.emplace<Component::MeshCollider>(entity);
-    }
-
-    return CreateConvexHullFromMesh(*mesh, registry.get<Component::MeshCollider>(entity));
-}
-
-/**
- * @brief Get or create a collider shape for the entity
- *
- * If no explicit collider exists but the entity has an Object::Mesh component,
- * creates a ConvexHullShape from the mesh vertices automatically.
- */
-static JPH::RefConst<JPH::Shape> GetOrCreateColliderShape(Engine::Core::Registry &registry, Engine::EntityId entity)
-{
-    auto shape = CreateShapeFromColliders(registry, entity);
-
-    if (shape != nullptr)
-        return shape;
-
-    Log::Error("Failed to create collider shape: no collider component and no valid mesh found");
-    return nullptr;
+    return CreateConvexHullFromMesh(*mesh, registry.try_get<Component::MeshCollider>(entity));
 }
 
 //=============================================================================
@@ -187,7 +165,7 @@ static void OnRigidBodyConstruct(Engine::Core::Registry &registry, Engine::Entit
             transform = &registry.emplace<Object::Component::Transform>(entity);
         }
 
-        auto shape = GetOrCreateColliderShape(registry, entity);
+        auto shape = CreateShapeFromColliders(registry, entity);
         if (!shape)
         {
             Log::Error("Failed to create collider shape for RigidBody");
