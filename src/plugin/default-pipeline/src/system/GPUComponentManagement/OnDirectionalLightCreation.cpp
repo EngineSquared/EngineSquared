@@ -9,9 +9,9 @@
 #include "resource/SamplerContainer.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
-#include "resource/pass/Shadow.hpp"
 #include "resource/buffer/DirectionalLightBuffer.hpp"
 #include "resource/pass/GBuffer.hpp"
+#include "resource/pass/Shadow.hpp"
 #include <filesystem>
 #include <string>
 

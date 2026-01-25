@@ -5,6 +5,7 @@
 #include "component/AmbientLight.hpp"
 #include "component/Camera.hpp"
 #include "component/DirectionalLight.hpp"
+#include "component/GPUDirectionalLight.hpp"
 #include "component/Mesh.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
@@ -12,7 +13,6 @@
 #include "resource/pass/Deferred.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include "utils/ConfigureHeadlessGraphics.hpp"
-#include "component/GPUDirectionalLight.hpp"
 #include "utils/ShapeGenerator.hpp"
 #include "utils/ThrowErrorIfGraphicalErrorHappened.hpp"
 
@@ -63,9 +63,10 @@ void ExtractTextures(Engine::Core &core)
     auto &outputTexture = textures.Get(Graphic::System::END_DEPTH_RENDER_TEXTURE_ID);
     auto outputTextureImage = outputTexture.RetrieveImage(context);
 
-
     auto view = core.GetRegistry().view<DefaultPipeline::Component::GPUDirectionalLight>();
-    auto &shadowOneTexture = textures.Get(Engine::Entity{core, view.front()}.GetComponents<DefaultPipeline::Component::GPUDirectionalLight>().shadowTexture);
+    auto &shadowOneTexture = textures.Get(Engine::Entity{core, view.front()}
+                                              .GetComponents<DefaultPipeline::Component::GPUDirectionalLight>()
+                                              .shadowTexture);
     auto shadowOneTextureImage = shadowOneTexture.RetrieveImage(context);
 
     normalImage.ToPng("GBUFFER_NORMAL.png");

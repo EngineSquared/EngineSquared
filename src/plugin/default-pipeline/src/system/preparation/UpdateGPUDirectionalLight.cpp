@@ -12,10 +12,11 @@ void DefaultPipeline::System::UpdateGPUDirectionalLight(Engine::Core &core)
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
     const auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
 
-    core.GetRegistry().view<Object::Component::Transform, Object::Component::DirectionalLight, Component::GPUDirectionalLight>().each(
-        [&core, &gpuBufferContainer, &textureContainer](Object::Component::Transform &transform,
-                                                        Object::Component::DirectionalLight &directionalLight,
-                                                        Component::GPUDirectionalLight &gpuDirectionalLight) {
+    core.GetRegistry()
+        .view<Object::Component::Transform, Object::Component::DirectionalLight, Component::GPUDirectionalLight>()
+        .each([&core, &gpuBufferContainer, &textureContainer](Object::Component::Transform &transform,
+                                                              Object::Component::DirectionalLight &directionalLight,
+                                                              Component::GPUDirectionalLight &gpuDirectionalLight) {
             gpuDirectionalLight.Update(directionalLight, transform);
             auto &gpuBuffer = gpuBufferContainer.Get(gpuDirectionalLight.buffer);
             gpuBuffer->Update(core);
