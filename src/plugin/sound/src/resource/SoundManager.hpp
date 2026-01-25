@@ -105,6 +105,17 @@ class SoundManager {
     {
         if (this != &other)
         {
+            if (_deviceInit)
+            {
+                ma_device_stop(&_device);
+                ma_device_uninit(&_device);
+                _deviceInit = false;
+            }
+            if (_engineInit)
+            {
+                ma_engine_uninit(&_engine);
+                _engineInit = false;
+            }
             _result = other._result;
             _deviceConfig = other._deviceConfig;
             _device = other._device;
@@ -129,11 +140,10 @@ class SoundManager {
      * @param pInput  Unused input buffer (typically nullptr for playback-only).
      * @param frameCount Number of audio frames that must be written to the output buffer.
      *
-     * @note Mixes all active sounds with volume into a temporary f32 buffer, then converts to device format.
-     * @note Handles looping with configurable start/end points.
+     * @note Handles looping with configurable start/end points, checking loop bounds before reading.
      * @details Custom callbacks are invoked first, then all playing sounds are mixed. The mix buffer
      *          is cleared initially and all sounds are mixed with their respective volumes. Format
-     *          conversion supports f32 and s16, clamping to [-1.0, 1.0] range to prevent clipping.
+     *          conversion supports f32, s32, s16, and u8 with saturated addition to prevent overflow.
      *
      * @return void
      */
@@ -324,7 +334,7 @@ class SoundManager {
         sound.path = filePath;
         sound.loop = loop;
 
-        ma_decoder_config decoderConfig = ma_decoder_config_init(ma_format_unknown, 2, 44100);
+        ma_decoder_config decoderConfig = ma_decoder_config_init(ma_format_f32, 2, 44100);
         _result = ma_decoder_init_file(filePath.c_str(), &decoderConfig, &sound.decoder);
         if (_result != MA_SUCCESS)
         {
@@ -518,6 +528,10 @@ class SoundManager {
                 snd.usingEngine = true;
                 ma_sound_set_looping(&snd.engineSound, snd.loop ? MA_TRUE : MA_FALSE);
                 ma_sound_set_volume(&snd.engineSound, snd.volume);
+
+                ma_uint64 cursor = 0u;
+                ma_decoder_get_cursor_in_pcm_frames(&snd.decoder, &cursor);
+                ma_sound_seek_to_pcm_frame(&snd.engineSound, cursor);
 
                 // If currently marked as playing, start it
                 if (snd.isPlaying && !snd.isPaused)

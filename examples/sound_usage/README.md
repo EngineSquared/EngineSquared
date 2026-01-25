@@ -6,7 +6,7 @@
 
 2. Add the following option inside root xmake:
 ```lua
-option("with_sound_usage_example", {default = false, description = "Enable sound Usage Example"})
+option("with_sound_usage_example", {default = false, description = "Enable Sound Usage Example"})
 
 if has_config("with_sound_usage_example") then
     includes("examples/sound_usage/xmake.lua")
