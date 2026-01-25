@@ -1,15 +1,8 @@
 #pragma once
 
-#include <algorithm>
-#include <array>
-#include <atomic>
-#include <cstdint>
-#include <cstring>
 #include <functional>
 #include <map>
 #include <miniaudio.h>
-#include <mutex>
-#include <set>
 #include <string_view>
 #include <unordered_map>
 
@@ -25,7 +18,7 @@ class SoundManager {
     ma_result _result;
     ma_device_config _deviceConfig;
     ma_device _device;
-    bool _deviceInit = false; // Guard for device cleanup
+    bool _deviceInit = false;
     ma_engine _engine;
     bool _engineInit = false;
 
@@ -33,74 +26,15 @@ class SoundManager {
         std::string name;
         std::string path;
         ma_decoder decoder;
+        ma_sound engineSound;
         bool loop = false;
-        std::atomic<bool> isPlaying{false}; // Lock-free state
-        std::atomic<bool> isPaused{false};  // Lock-free state
-        std::atomic<float> volume{1.0f};
+        bool isPlaying = false;
+        bool isPaused = false;
+        bool hasEngineSound = false;
+        bool usingEngine = false;
+        float volume = 1.0f;
         ma_uint64 loopStartFrame = 0;
         ma_uint64 loopEndFrame = 0;
-        // High-level engine sound for pitch shifting (lazy init)
-        ma_sound engineSound{};
-        std::atomic<bool> hasEngineSound{false};
-        std::atomic<bool> usingEngine{false}; // when true, playback handled by ma_engine
-        std::mutex engineMutex;               // Protects engineSound + flags during moves/ops
-
-        // Sound is not copyable (atomics), but must be movable for unordered_map
-        Sound() = default;
-        ~Sound() = default;
-        Sound(const Sound &) = delete;
-        Sound &operator=(const Sound &) = delete;
-        Sound(Sound &&other) noexcept
-        {
-            std::scoped_lock lock(other.engineMutex);
-            name = std::move(other.name);
-            path = std::move(other.path);
-            decoder = other.decoder;
-            loop = other.loop;
-            isPlaying.store(other.isPlaying.load(std::memory_order_acquire), std::memory_order_release);
-            isPaused.store(other.isPaused.load(std::memory_order_acquire), std::memory_order_release);
-            volume.store(other.volume.load(std::memory_order_acquire), std::memory_order_release);
-            loopStartFrame = other.loopStartFrame;
-            loopEndFrame = other.loopEndFrame;
-            engineSound = other.engineSound;
-            hasEngineSound.store(other.hasEngineSound.exchange(false, std::memory_order_acq_rel),
-                                 std::memory_order_release);
-            usingEngine.store(other.usingEngine.exchange(false, std::memory_order_acq_rel), std::memory_order_release);
-
-            other.decoder = ma_decoder{};
-            other.engineSound = ma_sound{};
-            other.isPlaying.store(false, std::memory_order_release);
-            other.isPaused.store(false, std::memory_order_release);
-            other.volume.store(1.0f, std::memory_order_release);
-        }
-        Sound &operator=(Sound &&other) noexcept
-        {
-            if (this != &other)
-            {
-                std::scoped_lock lock(engineMutex, other.engineMutex);
-                name = std::move(other.name);
-                path = std::move(other.path);
-                decoder = other.decoder;
-                loop = other.loop;
-                isPlaying.store(other.isPlaying.load(std::memory_order_acquire), std::memory_order_release);
-                isPaused.store(other.isPaused.load(std::memory_order_acquire), std::memory_order_release);
-                volume.store(other.volume.load(std::memory_order_acquire), std::memory_order_release);
-                loopStartFrame = other.loopStartFrame;
-                loopEndFrame = other.loopEndFrame;
-                engineSound = other.engineSound;
-                hasEngineSound.store(other.hasEngineSound.exchange(false, std::memory_order_acq_rel),
-                                     std::memory_order_release);
-                usingEngine.store(other.usingEngine.exchange(false, std::memory_order_acq_rel),
-                                  std::memory_order_release);
-
-                other.decoder = ma_decoder{};
-                other.engineSound = ma_sound{};
-                other.isPlaying.store(false, std::memory_order_release);
-                other.isPaused.store(false, std::memory_order_release);
-                other.volume.store(1.0f, std::memory_order_release);
-            }
-            return *this;
-        }
     };
 
     struct TransparentHash {
@@ -116,7 +50,6 @@ class SoundManager {
     };
 
     std::unordered_map<std::string, Sound, TransparentHash, TransparentEqual> _soundsToPlay;
-    std::mutex soundsMutex; // Protects _soundsToPlay map from concurrent modification
 
     FunctionUtils::FunctionContainer<void, ma_device *, void *, ma_uint32> _customCallbacks;
 
@@ -131,8 +64,25 @@ class SoundManager {
      */
     ~SoundManager();
 
-    // Copy and move operations implicitly deleted due to non-copyable/non-movable members
-    // (std::mutex, ma_device, etc.)
+    /**
+     * Deleted copy constructor (contains non-copyable FunctionContainer).
+     */
+    SoundManager(const SoundManager &) = delete;
+
+    /**
+     * Deleted copy assignment operator (contains non-copyable FunctionContainer).
+     */
+    SoundManager &operator=(const SoundManager &) = delete;
+
+    /**
+     * Default move constructor.
+     */
+    SoundManager(SoundManager &&) noexcept = default;
+
+    /**
+     * Default move assignment operator.
+     */
+    SoundManager &operator=(SoundManager &&) noexcept = default;
 
     /**
      * @brief Audio data callback used by the playback device to fill the output buffer.
@@ -148,11 +98,11 @@ class SoundManager {
     {
         auto *core = static_cast<Engine::Core *>(pDevice->pUserData);
         auto &self = core->GetResource<SoundManager>();
+        const ma_uint32 channels = pDevice->playback.channels;
+        const ma_uint32 totalSamples = frameCount * channels;
 
-        // Clear output in device's native format
-        // This is crucial - we need to clear in the device format, not always f32
-        std::memset(pOutput, 0,
-                    ma_get_bytes_per_frame(pDevice->playback.format, pDevice->playback.channels) * frameCount);
+        // Clear output buffer
+        std::memset(pOutput, 0, ma_get_bytes_per_frame(pDevice->playback.format, channels) * frameCount);
 
         const auto &callbacks = self._customCallbacks.GetFunctions();
         for (const auto &callback : callbacks)
@@ -160,110 +110,110 @@ class SoundManager {
             (*callback)(pDevice, pOutput, frameCount);
         }
 
-        // For now, only support one sound at a time or implement proper format conversion
-        // This is simpler and more robust than trying to mix different formats
+        // Mix buffer in f32 format for proper mixing
+        std::array<float, 4096 * 2> mixBuffer{};
+        if (totalSamples > mixBuffer.size())
         {
-            std::scoped_lock lock(self.soundsMutex); // Protect map iteration from RegisterSound/UnregisterSound
-            for (auto &[name, sound] : self._soundsToPlay)
+            Log::Error("[Audio] Frame count too large for mix buffer");
+            return;
+        }
+
+        for (auto &[name, sound] : self._soundsToPlay)
+        {
+            if (sound.usingEngine || !sound.isPlaying || sound.isPaused)
+                continue;
+
+            // Temp buffer for this sound's samples (f32)
+            std::array<float, 4096 * 2> tempBuffer{};
+            ma_uint64 framesRead = 0;
+
+            // Configure decoder to output f32 for consistent mixing
+            ma_decoder_config decoderConfig = ma_decoder_config_init(ma_format_f32, channels, pDevice->sampleRate);
+            ma_decoder tempDecoder;
+            if (ma_decoder_init_file(sound.path.c_str(), &decoderConfig, &tempDecoder) == MA_SUCCESS)
             {
-                // Skip sounds that are using the high-level engine (played elsewhere)
-                if (sound.usingEngine.load(std::memory_order_acquire))
-                    continue;
+                // Seek to current position
+                ma_uint64 cursor = 0;
+                ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &cursor);
+                ma_decoder_seek_to_pcm_frame(&tempDecoder, cursor);
 
-                if (!sound.isPlaying.load(std::memory_order_acquire) || sound.isPaused.load(std::memory_order_acquire))
-                    continue;
+                ma_result result = ma_decoder_read_pcm_frames(&tempDecoder, tempBuffer.data(), frameCount, &framesRead);
 
-                // Read directly from decoder into the device output buffer
-                ma_uint64 framesRead = 0;
-                ma_result result = ma_decoder_read_pcm_frames(&sound.decoder, pOutput, frameCount, &framesRead);
+                // Sync original decoder position
+                ma_decoder_get_cursor_in_pcm_frames(&tempDecoder, &cursor);
+                ma_decoder_seek_to_pcm_frame(&sound.decoder, cursor);
+                ma_decoder_uninit(&tempDecoder);
 
                 if (result != MA_SUCCESS && result != MA_AT_END)
                 {
-                    Log::Error(fmt::format("[Audio] Decoder error: {}", ma_result_description(result)));
+                    Log::Error(fmt::format("[Audio] Decoder error for '{}': {}", name, ma_result_description(result)));
                 }
 
-                const float currentVolume = sound.volume.load(std::memory_order_acquire);
-                // Apply volume to decoded samples (s16 format for 911 RSR WAV)
-                if (currentVolume < 0.99f || currentVolume > 1.01f)
+                // Mix with volume into mixBuffer
+                for (ma_uint32 i = 0; i < framesRead * channels; ++i)
                 {
-                    int16_t *pInt16 = static_cast<int16_t *>(pOutput);
-                    ma_uint32 sampleCount = static_cast<ma_uint32>(framesRead * pDevice->playback.channels);
-                    for (ma_uint32 i = 0; i < sampleCount; ++i)
-                    {
-                        float sample = static_cast<float>(pInt16[i]) * currentVolume;
-                        if (sample > 32767.0f)
-                            sample = 32767.0f;
-                        if (sample < -32768.0f)
-                            sample = -32768.0f;
-                        pInt16[i] = static_cast<int16_t>(sample);
-                    }
+                    mixBuffer[i] += tempBuffer[i] * sound.volume;
                 }
 
-                // If we didn't read enough frames and looping is enabled
+                // Handle looping
                 if (framesRead < frameCount)
                 {
                     if (sound.loop)
                     {
-                        // Seek to loop start and read remaining frames
                         ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
-                        void *offsetOutput =
-                            (char *) pOutput +
-                            (ma_get_bytes_per_frame(pDevice->playback.format, pDevice->playback.channels) * framesRead);
-                        ma_uint64 remainingFrames = frameCount - framesRead;
-                        ma_uint64 additionalFramesRead = 0;
-
-                        result = ma_decoder_read_pcm_frames(&sound.decoder, offsetOutput, remainingFrames,
-                                                            &additionalFramesRead);
-                        framesRead += additionalFramesRead;
                     }
-                    else
+                    else if (result == MA_AT_END)
                     {
-                        // Not looping, stop playback at end
-                        if (framesRead < frameCount && result == MA_AT_END)
-                        {
-                            sound.isPlaying.store(false, std::memory_order_release);
-                        }
+                        sound.isPlaying = false;
                     }
                 }
 
                 // Check loop end point
                 if (sound.loop && sound.loopEndFrame > 0)
                 {
-                    ma_uint64 currentFrame;
-                    if (ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &currentFrame) == MA_SUCCESS)
+                    ma_uint64 currentFrame = 0;
+                    ma_decoder_get_cursor_in_pcm_frames(&sound.decoder, &currentFrame);
+                    if (currentFrame >= sound.loopEndFrame)
                     {
-                        if (currentFrame >= sound.loopEndFrame)
-                        {
-                            ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
-                        }
+                        ma_decoder_seek_to_pcm_frame(&sound.decoder, sound.loopStartFrame);
                     }
                 }
+            }
+        }
 
-                // Only play one sound at a time for now (simplicity)
-                break;
-            } // End lock scope
+        // Convert mixed f32 buffer to device format
+        if (pDevice->playback.format == ma_format_f32)
+        {
+            auto *output = static_cast<float *>(pOutput);
+            for (ma_uint32 i = 0; i < totalSamples; ++i)
+            {
+                output[i] += std::clamp(mixBuffer[i], -1.0f, 1.0f);
+            }
+        }
+        else if (pDevice->playback.format == ma_format_s16)
+        {
+            auto *output = static_cast<int16_t *>(pOutput);
+            for (ma_uint32 i = 0; i < totalSamples; ++i)
+            {
+                float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
+                output[i] += static_cast<int16_t>(sample * 32767.0f);
+            }
         }
     }
 
     /**
      * @brief Initialize the sound system.
      *
-     * Note: We use ma_format_unknown to let miniaudio negotiate the best format.
-     * Most decoders output ma_format_s16 (16-bit PCM), and miniaudio will handle
-     * conversion if needed. This avoids format mismatch issues.
-     *
      * @return void
      */
     inline void Init(Engine::Core &core)
     {
         _deviceConfig = ma_device_config_init(ma_device_type_playback);
-        _deviceConfig.playback.format = ma_format_unknown; // Let miniaudio choose best format
-        _deviceConfig.playback.channels = 2;               // Stereo
-        _deviceConfig.sampleRate = 44100;                  // Standard sample rate
+        _deviceConfig.playback.format = ma_format_unknown;
+        _deviceConfig.playback.channels = 2;
+        _deviceConfig.sampleRate = 44100;
         _deviceConfig.dataCallback = SoundManager::data_callback;
         _deviceConfig.pUserData = &core;
-
-        Log::Info(fmt::format("[Audio] Initializing device: format=auto-negotiate, channels=2, sampleRate=44100"));
 
         _result = ma_device_init(NULL, &_deviceConfig, &_device);
         if (_result != MA_SUCCESS)
@@ -280,7 +230,7 @@ class SoundManager {
         }
         else
         {
-            _deviceInit = true; // Mark device as successfully initialized
+            _deviceInit = true;
             Log::Info(fmt::format("[Audio] Device started successfully. Device format={}, sample rate={}, channels={}",
                                   static_cast<int>(_device.playback.format), _device.sampleRate,
                                   _device.playback.channels));
@@ -298,7 +248,6 @@ class SoundManager {
      */
     inline void RegisterSound(const std::string &soundName, const std::string &filePath, bool loop = false)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map access from data_callback
         if (_soundsToPlay.contains(soundName))
         {
             Log::Warn(fmt::format("Could not register: Sound \"{}\" already exists", soundName));
@@ -328,7 +277,6 @@ class SoundManager {
      */
     inline void UnregisterSound(const std::string &soundName)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map access from data_callback
         auto it = _soundsToPlay.find(soundName);
         if (it != _soundsToPlay.end())
         {
@@ -350,21 +298,16 @@ class SoundManager {
      */
     inline void Play(const std::string &soundName)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map lookup from RegisterSound/UnregisterSound
         auto it = _soundsToPlay.find(soundName);
         if (it != _soundsToPlay.end())
         {
             auto &snd = it->second;
-            snd.isPlaying.store(true, std::memory_order_release);
-            snd.isPaused.store(false, std::memory_order_release);
-            if (snd.usingEngine.load(std::memory_order_acquire) && snd.hasEngineSound.load(std::memory_order_acquire))
+            snd.isPlaying = true;
+            snd.isPaused = false;
+
+            if (snd.usingEngine && snd.hasEngineSound)
             {
-                std::scoped_lock lock(snd.engineMutex);
-                if (snd.usingEngine.load(std::memory_order_acquire) &&
-                    snd.hasEngineSound.load(std::memory_order_acquire))
-                {
-                    ma_sound_start(&snd.engineSound);
-                }
+                ma_sound_start(&snd.engineSound);
             }
         }
         else
@@ -382,22 +325,17 @@ class SoundManager {
      */
     inline void Stop(const std::string &soundName)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map lookup from RegisterSound/UnregisterSound
         auto it = _soundsToPlay.find(soundName);
         if (it != _soundsToPlay.end())
         {
             auto &snd = it->second;
-            snd.isPlaying.store(false, std::memory_order_release);
-            snd.isPaused.store(false, std::memory_order_release);
-            if (snd.usingEngine.load(std::memory_order_acquire) && snd.hasEngineSound.load(std::memory_order_acquire))
+            snd.isPlaying = false;
+            snd.isPaused = false;
+
+            if (snd.usingEngine && snd.hasEngineSound)
             {
-                std::scoped_lock lock(snd.engineMutex);
-                if (snd.usingEngine.load(std::memory_order_acquire) &&
-                    snd.hasEngineSound.load(std::memory_order_acquire))
-                {
-                    ma_sound_stop(&snd.engineSound);
-                    ma_sound_seek_to_pcm_frame(&snd.engineSound, 0);
-                }
+                ma_sound_stop(&snd.engineSound);
+                ma_decoder_seek_to_pcm_frame(&snd.decoder, 0);
             }
             else
             {
@@ -419,20 +357,15 @@ class SoundManager {
      */
     inline void Pause(const std::string &soundName)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map lookup from RegisterSound/UnregisterSound
         auto it = _soundsToPlay.find(soundName);
         if (it != _soundsToPlay.end())
         {
             auto &snd = it->second;
-            snd.isPaused.store(true, std::memory_order_release);
-            if (snd.usingEngine.load(std::memory_order_acquire) && snd.hasEngineSound.load(std::memory_order_acquire))
+            snd.isPaused = true;
+
+            if (snd.usingEngine && snd.hasEngineSound)
             {
-                std::scoped_lock lock(snd.engineMutex);
-                if (snd.usingEngine.load(std::memory_order_acquire) &&
-                    snd.hasEngineSound.load(std::memory_order_acquire))
-                {
-                    ma_sound_stop(&snd.engineSound);
-                }
+                ma_sound_stop(&snd.engineSound);
             }
         }
         else
@@ -450,12 +383,10 @@ class SoundManager {
      */
     inline bool IsPlaying(const std::string &soundName)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map lookup from RegisterSound/UnregisterSound
         auto it = _soundsToPlay.find(soundName);
         if (it != _soundsToPlay.end())
         {
-            return it->second.isPlaying.load(std::memory_order_acquire) &&
-                   !it->second.isPaused.load(std::memory_order_acquire);
+            return it->second.isPlaying && !it->second.isPaused;
         }
         Log::Error(fmt::format("Could not verify playing status: Sound \"{}\" does not exist", soundName));
         return false;
@@ -469,11 +400,10 @@ class SoundManager {
      */
     inline void SetVolume(const std::string &soundName, float volume)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map lookup from RegisterSound/UnregisterSound
         auto it = _soundsToPlay.find(soundName);
         if (it != _soundsToPlay.end())
         {
-            it->second.volume.store(std::clamp(volume, 0.0f, 1.0f), std::memory_order_release);
+            it->second.volume = std::clamp(volume, 0.0f, 1.0f);
         }
         else
         {
@@ -481,7 +411,7 @@ class SoundManager {
         }
     }
 
-    /**
+        /**
      * @brief Set the playback pitch (speed) for a sound.
      * @param soundName Name of the sound.
      * @param pitch Pitch factor (> 0), 1.0 = normal.
@@ -489,7 +419,6 @@ class SoundManager {
      */
     inline void SetPitch(const std::string &soundName, float pitch)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map lookup from RegisterSound/UnregisterSound
         auto it = _soundsToPlay.find(soundName);
         if (it != _soundsToPlay.end())
         {
@@ -509,9 +438,8 @@ class SoundManager {
                 _engineInit = true;
             }
 
-            std::scoped_lock lock(snd.engineMutex);
 
-            if (!snd.hasEngineSound.load(std::memory_order_acquire))
+            if (!snd.hasEngineSound)
             {
                 ma_result r = ma_sound_init_from_file(&_engine, snd.path.c_str(), MA_SOUND_FLAG_STREAM, NULL, NULL,
                                                       &snd.engineSound);
@@ -520,20 +448,20 @@ class SoundManager {
                     Log::Error(fmt::format("Failed to init ma_sound for '{}': {}", snd.name, ma_result_description(r)));
                     return;
                 }
-                snd.hasEngineSound.store(true, std::memory_order_release);
-                snd.usingEngine.store(true, std::memory_order_release);
+                snd.hasEngineSound = true;
+                snd.usingEngine = true;
                 ma_sound_set_looping(&snd.engineSound, snd.loop ? MA_TRUE : MA_FALSE);
-                ma_sound_set_volume(&snd.engineSound, snd.volume.load(std::memory_order_acquire));
+                ma_sound_set_volume(&snd.engineSound, snd.volume);
 
                 // If currently marked as playing, start it
-                if (snd.isPlaying.load(std::memory_order_acquire) && !snd.isPaused.load(std::memory_order_acquire))
+                if (snd.isPlaying && !snd.isPaused)
                 {
                     ma_sound_start(&snd.engineSound);
                 }
             }
 
             // Apply pitch
-            if (snd.hasEngineSound.load(std::memory_order_acquire))
+            if (snd.hasEngineSound)
             {
                 ma_sound_set_pitch(&snd.engineSound, pitch);
             }
@@ -544,6 +472,7 @@ class SoundManager {
         }
     }
 
+
     /**
      * @brief Set whether the sound should loop.
      *
@@ -552,7 +481,6 @@ class SoundManager {
      */
     inline void SetLoop(const std::string &soundName, bool shouldLoop)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map lookup from RegisterSound/UnregisterSound
         auto it = _soundsToPlay.find(soundName);
         if (it != _soundsToPlay.end())
         {
@@ -573,7 +501,6 @@ class SoundManager {
      */
     inline void SetLoopPoints(const std::string &soundName, float startSeconds, float endSeconds = 0)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map lookup from RegisterSound/UnregisterSound
         auto it = _soundsToPlay.find(soundName);
         if (it != _soundsToPlay.end())
         {
@@ -616,7 +543,6 @@ class SoundManager {
      */
     inline double GetPlayPosition(const std::string &soundName)
     {
-        std::scoped_lock lock(soundsMutex); // Protect map lookup from RegisterSound/UnregisterSound
         auto it = _soundsToPlay.find(soundName);
         if (it == _soundsToPlay.end())
         {
@@ -625,7 +551,7 @@ class SoundManager {
         }
 
         Sound &sound = it->second;
-        if (!sound.isPlaying.load(std::memory_order_acquire))
+        if (!sound.isPlaying)
         {
             Log::Warn(fmt::format("Sound \"{}\" is not currently playing", soundName));
             return 0.0f;

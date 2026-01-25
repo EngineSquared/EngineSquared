@@ -5,7 +5,6 @@
 
 void Sound::Plugin::Bind()
 {
-    // SoundManager is created in-place via system instead of RegisterResource
-    // because it contains non-movable members (std::mutex, ma_device)
+    RegisterResource<Resource::SoundManager>(Resource::SoundManager());
     RegisterSystems<Engine::Scheduler::Startup>(Sound::System::InitSounds);
 }
