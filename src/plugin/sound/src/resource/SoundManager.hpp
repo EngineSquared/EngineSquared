@@ -105,6 +105,15 @@ class SoundManager {
     {
         if (this != &other)
         {
+            for (auto &[name, snd] : _soundsToPlay)
+            {
+                if (snd.hasEngineSound)
+                    ma_sound_uninit(&snd.engineSound);
+                if (snd.decoderInitialized)
+                    ma_decoder_uninit(&snd.decoder);
+            }
+            _soundsToPlay.clear();
+
             if (_deviceInit)
             {
                 ma_device_stop(&_device);
