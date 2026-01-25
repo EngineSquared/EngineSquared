@@ -43,13 +43,11 @@ static void CreateJoltWheelSettings(JPH::WheelSettingsWV &joltWheel, const Compo
     joltWheel.mSuspensionSpring.mFrequency = wheelSettings.suspensionFrequency;
     joltWheel.mSuspensionSpring.mDamping = wheelSettings.suspensionDamping;
 
-    // Convert friction curves
     joltWheel.mInertia = wheelSettings.inertia;
     joltWheel.mAngularDamping = wheelSettings.angularDamping;
     joltWheel.mMaxBrakeTorque = wheelSettings.maxBrakeTorque;
     joltWheel.mMaxHandBrakeTorque = wheelSettings.maxHandBrakeTorque;
 
-    // Convert longitudinal friction curve
     joltWheel.mLongitudinalFriction.Clear();
     joltWheel.mLongitudinalFriction.Reserve(static_cast<JPH::uint>(wheelSettings.longitudinalFriction.size()));
     for (const auto &point : wheelSettings.longitudinalFriction)
@@ -57,7 +55,6 @@ static void CreateJoltWheelSettings(JPH::WheelSettingsWV &joltWheel, const Compo
         joltWheel.mLongitudinalFriction.AddPoint(point.slip, point.friction);
     }
 
-    // Convert lateral friction curve
     joltWheel.mLateralFriction.Clear();
     joltWheel.mLateralFriction.Reserve(static_cast<JPH::uint>(wheelSettings.lateralFriction.size()));
     for (const auto &point : wheelSettings.lateralFriction)
@@ -109,7 +106,6 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
     controllerSettings.mEngine.mInertia = vehicle.engine.inertia;
     controllerSettings.mEngine.mAngularDamping = vehicle.engine.angularDamping;
 
-    // Convert normalized torque curve
     controllerSettings.mEngine.mNormalizedTorque.Clear();
     controllerSettings.mEngine.mNormalizedTorque.Reserve(
         static_cast<JPH::uint>(vehicle.engine.normalizedTorque.size()));
@@ -118,7 +114,6 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
         controllerSettings.mEngine.mNormalizedTorque.AddPoint(point.rpm, point.torque);
     }
 
-    // Convert transmission mode
     controllerSettings.mTransmission.mMode = (vehicle.gearbox.mode == Component::TransmissionMode::Auto) ?
                                                  JPH::ETransmissionMode::Auto :
                                                  JPH::ETransmissionMode::Manual;
@@ -137,13 +132,11 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
         return;
     }
 
-    // Convert forward gear ratios (std::vector<float> -> JPH::Array<float>)
     for (float ratio : vehicle.gearbox.forwardGearRatios)
     {
         controllerSettings.mTransmission.mGearRatios.push_back(ratio);
     }
 
-    // Convert reverse gear ratios (std::vector<float> -> JPH::Array<float>)
     controllerSettings.mTransmission.mReverseGearRatios.clear();
     for (float ratio : vehicle.gearbox.reverseGearRatios)
     {
