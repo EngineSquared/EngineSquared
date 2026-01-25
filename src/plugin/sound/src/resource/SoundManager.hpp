@@ -46,7 +46,6 @@ class SoundManager {
         bool decoderInitialized = false;
     };
 
-
     struct TransparentHash {
         using is_transparent = void;
 
@@ -89,15 +88,10 @@ class SoundManager {
      * @note std::atomic is not movable, so we manually transfer its value.
      */
     SoundManager(SoundManager &&other) noexcept
-        : _result(other._result)
-        , _deviceConfig(other._deviceConfig)
-        , _device(other._device)
-        , _deviceInit(other._deviceInit)
-        , _engine(other._engine)
-        , _engineInit(other._engineInit)
-        , _callbackErrorFlags(other._callbackErrorFlags.load(std::memory_order_relaxed))
-        , _soundsToPlay(std::move(other._soundsToPlay))
-        , _customCallbacks(std::move(other._customCallbacks))
+        : _result(other._result), _deviceConfig(other._deviceConfig), _device(other._device),
+          _deviceInit(other._deviceInit), _engine(other._engine), _engineInit(other._engineInit),
+          _callbackErrorFlags(other._callbackErrorFlags.load(std::memory_order_relaxed)),
+          _soundsToPlay(std::move(other._soundsToPlay)), _customCallbacks(std::move(other._customCallbacks))
     {
         other._deviceInit = false;
         other._engineInit = false;
@@ -210,48 +204,42 @@ class SoundManager {
 
         switch (pDevice->playback.format)
         {
-            case ma_format_f32:
+        case ma_format_f32: {
+            auto *output = static_cast<float *>(pOutput);
+            for (ma_uint32 i = 0; i < totalSamples; ++i)
             {
-                auto *output = static_cast<float *>(pOutput);
-                for (ma_uint32 i = 0; i < totalSamples; ++i)
-                {
-                    output[i] += std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                }
+                output[i] += std::clamp(mixBuffer[i], -1.0f, 1.0f);
             }
-            break;
-            case ma_format_s32:
+        }
+        break;
+        case ma_format_s32: {
+            auto *output = static_cast<int32_t *>(pOutput);
+            for (ma_uint32 i = 0; i < totalSamples; ++i)
             {
-                auto *output = static_cast<int32_t *>(pOutput);
-                for (ma_uint32 i = 0; i < totalSamples; ++i)
-                {
-                    float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                    output[i] += static_cast<int32_t>(sample * 2147483647.0f);
-                }
+                float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
+                output[i] += static_cast<int32_t>(sample * 2147483647.0f);
             }
-            break;
-            case ma_format_s16:
+        }
+        break;
+        case ma_format_s16: {
+            auto *output = static_cast<int16_t *>(pOutput);
+            for (ma_uint32 i = 0; i < totalSamples; ++i)
             {
-                auto *output = static_cast<int16_t *>(pOutput);
-                for (ma_uint32 i = 0; i < totalSamples; ++i)
-                {
-                    float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                    output[i] += static_cast<int16_t>(sample * 32767.0f);
-                }
+                float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
+                output[i] += static_cast<int16_t>(sample * 32767.0f);
             }
-            break;
-            case ma_format_u8:
+        }
+        break;
+        case ma_format_u8: {
+            auto *output = static_cast<uint8_t *>(pOutput);
+            for (ma_uint32 i = 0; i < totalSamples; ++i)
             {
-                auto *output = static_cast<uint8_t *>(pOutput);
-                for (ma_uint32 i = 0; i < totalSamples; ++i)
-                {
-                    float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                    output[i] += static_cast<uint8_t>((sample + 1.0f) * 127.5f);
-                }
+                float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
+                output[i] += static_cast<uint8_t>((sample + 1.0f) * 127.5f);
             }
-            break;
-            default:
-                self._callbackErrorFlags.fetch_or(ERROR_UNKNOWN_FORMAT, std::memory_order_relaxed);
-                break;
+        }
+        break;
+        default: self._callbackErrorFlags.fetch_or(ERROR_UNKNOWN_FORMAT, std::memory_order_relaxed); break;
         }
     }
 
