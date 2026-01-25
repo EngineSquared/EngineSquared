@@ -10,7 +10,7 @@
  * it under the terms of the MIT License. See the project's LICENSE file for
  * the full license text and details.
  *
- * @file MeshCollider.hpp
+ * @file ConvexHullMeshCollider.hpp
  * @brief Convex hull mesh collider component
  *
  * This component creates a convex hull collision shape from the
@@ -26,36 +26,36 @@
 namespace Physics::Component {
 
 /**
- * @brief Triangle mesh collider (concave mesh support)
+ * @brief Convex hull mesh collider
  *
- * This component creates a triangle mesh collision shape from the entity's
- * Object::Mesh component vertices and indices. This supports concave meshes,
- * making it ideal for static terrain, floors, and complex geometry.
+ * This component creates a convex hull collision shape from the entity's
+ * Object::Mesh component vertices. The convex hull is computed automatically
+ * by Jolt Physics from the mesh vertices.
  *
  * If this component is present on an entity with RigidBody, it uses the
  * mesh geometry for collision instead of requiring an explicit collider.
  *
  * @note The entity MUST have an Object::Mesh component for this to work.
- * @note Triangle mesh colliders should ONLY be used for STATIC objects.
- *       For dynamic objects, use primitive colliders or convex hulls.
- * @note The mesh scale from the Transform component is automatically applied.
+ * @note Convex hulls are more expensive than primitives (Box, Sphere, Capsule)
+ *       but much cheaper than concave mesh colliders.
+ * @note Jolt automatically computes the convex hull from the provided points,
+ *       so interior points are handled correctly.
  */
-struct MeshCollider {
-    /// Cosine of the angle threshold for active edges (default: cos(5°) ≈ 0.996)
-    /// Active edges prevent objects from getting stuck on internal edges when sliding across triangles
-    /// Lower values = more edges marked as active = smoother sliding
-    float activeEdgeCosThresholdAngle = 0.996195f;
+struct ConvexHullMeshCollider {
+    /// Maximum convex radius (Jolt parameter for collision detection)
+    /// Smaller values = sharper corners, larger values = smoother but less accurate
+    float maxConvexRadius = 0.05f;
 
     /**
      * @brief Default constructor
      */
-    MeshCollider() = default;
+    ConvexHullMeshCollider() = default;
 
     /**
-     * @brief Construct with custom active edge threshold
-     * @param edgeThreshold Cosine of the angle threshold for active edges
+     * @brief Construct with convex radius
+     * @param convexRadius Maximum convex radius for collision detection
      */
-    explicit MeshCollider(float edgeThreshold) : activeEdgeCosThresholdAngle(edgeThreshold) {}
+    explicit ConvexHullMeshCollider(float convexRadius) : maxConvexRadius(convexRadius) {}
 };
 
 } // namespace Physics::Component
