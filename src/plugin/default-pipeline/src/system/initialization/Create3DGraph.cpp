@@ -8,6 +8,7 @@
 #include "resource/Window.hpp"
 #include "resource/pass/Deferred.hpp"
 #include "resource/pass/GBuffer.hpp"
+#include "resource/pass/Shadow.hpp"
 #include "system/WindowSystem.hpp"
 #include "utils/EndRenderTexture.hpp"
 
@@ -221,6 +222,27 @@ static Graphic::Resource::RenderGraph CreateGraph(Engine::Core &core)
         renderGraph.Add(DefaultPipeline::Resource::GBUFFER_PASS_NAME, std::move(GBufferPass));
     }
     {
+        // SHADOW
+        DefaultPipeline::Resource::Shadow shadowPass{};
+        {
+            auto ShadowShader =
+                DefaultPipeline::Resource::Shadow::CreateShader(core.GetResource<Graphic::Resource::Context>());
+            core.GetResource<Graphic::Resource::ShaderContainer>().Add(DefaultPipeline::Resource::SHADOW_SHADER_ID,
+                                                                       std::move(ShadowShader));
+            shadowPass.BindShader(DefaultPipeline::Resource::SHADOW_SHADER_NAME);
+        }
+        {
+            Graphic::Resource::DepthOutput output;
+
+            output.getClearDepthCallback = [](Engine::Core &, float &clearDepth) {
+                clearDepth = 1.0f;
+                return true;
+            };
+            shadowPass.AddOutput(std::move(output));
+        }
+        renderGraph.Add(DefaultPipeline::Resource::SHADOW_PASS_NAME, std::move(shadowPass));
+    }
+    {
         // DEFERRED
         DefaultPipeline::Resource::Deferred deferredPass{};
         {
@@ -240,6 +262,9 @@ static Graphic::Resource::RenderGraph CreateGraph(Engine::Core &core)
 
     renderGraph.SetDependency(DefaultPipeline::Resource::GBUFFER_PASS_NAME,
                               DefaultPipeline::Resource::DEFERRED_PASS_NAME);
+    renderGraph.SetDependency(DefaultPipeline::Resource::SHADOW_PASS_NAME,
+                              DefaultPipeline::Resource::DEFERRED_PASS_NAME);
+
     return renderGraph;
 }
 

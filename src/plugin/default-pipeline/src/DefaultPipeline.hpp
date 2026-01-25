@@ -45,6 +45,7 @@
 #include "system/preparation/UpdateGPUMeshes.hpp"
 #include "system/preparation/UpdateGPUTransforms.hpp"
 #include "system/preparation/UpdatePointLights.hpp"
+#include "system/preparation/UpdateGPUDirectionalLight.hpp"
 
 #include "utils/AmbientLight.hpp"
 #include "utils/PointLights.hpp"

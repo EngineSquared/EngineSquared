@@ -7,8 +7,9 @@
 #include "component/GPUTransform.hpp"
 #include "core/Core.hpp"
 #include "entity/Entity.hpp"
-#include "resource/ASingleExecutionRenderPass.hpp"
+#include "resource/AMultipleExecutionRenderPass.hpp"
 #include "resource/buffer/CameraGPUBuffer.hpp"
+#include "resource/buffer/DirectionalLightBuffer.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
 #include "utils/DefaultMaterial.hpp"
 #include "utils/PointLights.hpp"
@@ -19,38 +20,25 @@
 #include <string_view>
 
 namespace DefaultPipeline::Resource {
-static inline constexpr std::string_view DEFERRED_PASS_OUTPUT = "DEFERRED_PASS_OUTPUT";
-static inline const entt::hashed_string DEFERRED_PASS_OUTPUT_ID{DEFERRED_PASS_OUTPUT.data(),
-                                                                DEFERRED_PASS_OUTPUT.size()};
-static inline constexpr std::string_view DEFERRED_PASS_NAME = "DEFERRED_PASS";
-static inline const entt::hashed_string DEFERRED_PASS_ID{DEFERRED_PASS_NAME.data(), DEFERRED_PASS_NAME.size()};
-static inline constexpr std::string_view DEFERRED_SHADER_NAME = "DEFERRED_SHADER";
-static inline const entt::hashed_string DEFERRED_SHADER_ID =
-    entt::hashed_string{DEFERRED_SHADER_NAME.data(), DEFERRED_SHADER_NAME.size()};
+static inline constexpr std::string_view SHADOW_PASS_OUTPUT = "SHADOW_PASS_OUTPUT";
+static inline const entt::hashed_string SHADOW_PASS_OUTPUT_ID{SHADOW_PASS_OUTPUT.data(), SHADOW_PASS_OUTPUT.size()};
+static inline constexpr std::string_view SHADOW_PASS_NAME = "SHADOW_PASS";
+static inline const entt::hashed_string SHADOW_PASS_ID{SHADOW_PASS_NAME.data(), SHADOW_PASS_NAME.size()};
+static inline constexpr std::string_view SHADOW_SHADER_NAME = "SHADOW_SHADER";
+static inline const entt::hashed_string SHADOW_SHADER_ID =
+    entt::hashed_string{SHADOW_SHADER_NAME.data(), SHADOW_SHADER_NAME.size()};
 
-static inline constexpr std::string_view DEFERRED_BINDGROUP_TEXTURES_NAME = "DEFERRED_BINDGROUP_TEXTURES";
-static inline const entt::hashed_string DEFERRED_BINDGROUP_TEXTURES_ID =
-    entt::hashed_string{DEFERRED_BINDGROUP_TEXTURES_NAME.data(), DEFERRED_BINDGROUP_TEXTURES_NAME.size()};
+static inline constexpr std::string_view SHADOW_BINDGROUP_TEXTURES_NAME = "SHADOW_BINDGROUP_TEXTURES";
+static inline const entt::hashed_string SHADOW_BINDGROUP_TEXTURES_ID =
+    entt::hashed_string{SHADOW_BINDGROUP_TEXTURES_NAME.data(), SHADOW_BINDGROUP_TEXTURES_NAME.size()};
 
-static inline constexpr std::string_view DEFERRED_SHADE_CONTENT = R"(
+static inline constexpr std::string_view SHADOW_SHADER_CONTENT = R"(
 const MAX_POINT_LIGHTS: u32 = 64u;
 
 struct Input {
-    @builtin(vertex_index) VertexIndex : u32
-};
-
-struct VertexToFragment {
-    @builtin(position) coord : vec4f
-}
-
-struct Output {
-    @location(0) color : vec4f,
-}
-
-struct Light {
-  lightViewProjMatrix: mat4x4f,
-  color: vec4f,
-  direction: vec3f,
+    @location(0) position: vec3f,
+    @location(1) normal: vec3f,
+    @location(2) uv: vec2f,
 };
 
 struct Object {
@@ -58,170 +46,139 @@ struct Object {
   normal : mat4x4<f32>,
 }
 
+struct Light {
+  viewProjection: mat4x4f,
+  color: vec4f,
+  direction: vec3f,
+  _padding: f32,
+};
 
+@group(0) @binding(0) var<uniform> light: Light;
+@group(1) @binding(0) var<uniform> object: Object;
 
 @vertex
 fn vs_main(
-    input : DeferredInput
-) -> VertexToFragment {
-    var coord : vec4f;
-    const pos = array(
-        vec2(-1.0, -1.0), vec2(-1.0, 1.0), vec2(1.0, -1.0),
-        vec2(-1.0, 1.0), vec2(1.0, 1.0), vec2(1.0, -1.0)
-    );
-
-    coord = vec4f(pos[input.VertexIndex], 0.9, 1.0);
-    return VertexToFragment(coord);
-}
-
-fn world_from_screen_coord(coord : vec2f, depth_sample: f32) -> vec3f {
-  let posClip = vec4(coord.x * 2.0 - 1.0, (1.0 - coord.y) * 2.0 - 1.0, depth_sample, 1.0);
-  let posWorldW = camera.invViewProjectionMatrix * posClip;
-  let posWorld = posWorldW.xyz / posWorldW.www;
-  return posWorld;
-}
-
-// Physically plausible point-light attenuation with finite radius
-// Formula inside the radius: A * (1 - s^2)^2 / (1 + F * s), where s = d / R
-// For s >= 1 (distance >= R) the attenuation is explicitly clamped to 0.0.
-// This yields a compact-support profile that is C1-smooth at distance R (value and derivative are zero there).
-// See https://lisyarus.github.io/blog/posts/point-light-attenuation.html for more details on this model.
-fn attenuate(distance: f32, radius: f32, max_intensity: f32, falloff: f32) -> f32 {
-    let s = distance / radius;
-
-    if (s >= 1.0) {
-        return 0.0;
-    }
-
-    let s2 = s * s;
-    let one_minus_s2 = 1.0 - s2;
-
-    return max_intensity * one_minus_s2 * one_minus_s2 / (1.0 + falloff * s);
-}
-
-fn calculatePointLight(light: GPUPointLight, worldPos: vec3f, normal: vec3f) -> vec3f {
-    let lightDir = normalize(light.position - worldPos);
-    let distance = length(light.position - worldPos);
-    let attenuation = attenuate(distance, light.radius, light.intensity, light.falloff);
-    let diff = max(dot(normal, lightDir), 0.0);
-
-    return light.color * diff * attenuation;
+    input : Input
+) -> @builtin(position) vec4f {
+    return light.viewProjection * object.model * vec4f(input.position, 1.0);
 }
 
 @fragment
-fn fs_main(
-  vertexToFragment : VertexToFragment,
-) -> DeferredOutput {
-    var output : DeferredOutput;
-    output.color = vec4(0.0, 0.0, 0.0, 1.0);
-    var coords = vec2i(floor(vertexToFragment.coord.xy));
-
-    let depth = textureLoad(gBufferDepth, coords, 0).x;
-
-    if (depth >= 1.0) {
-        return output;
-    }
-
-    let bufferSize = textureDimensions(gBufferDepth);
-    let coordUV = floor(vertexToFragment.coord.xy) / vec2f(bufferSize);
-    let position = world_from_screen_coord(coordUV, depth);
-
-    let normal = textureLoad(gBufferNormal, coords, 0).xyz;
-    let albedo = textureLoad(gBufferAlbedo, coords, 0).rgb;
-
-    let N = normalize(normal);
-    let V = normalize(camera.position - position);
-
-    var lighting = ambientLight.color;
-
-    for (var i = 0u; i < pointLights.count; i++) {
-        lighting += calculatePointLight(pointLights.lights[i], position, N);
-    }
-
-    var color : vec4f = vec4f(albedo * lighting, 1.0);
-    output.color = color;
-    return output;
-}
+fn fs_main() {}
 )";
 
-class Deferred : public Graphic::Resource::ASingleExecutionRenderPass<Deferred> {
+class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
   public:
-    explicit Deferred(std::string_view name = DEFERRED_PASS_NAME) : ASingleExecutionRenderPass<Deferred>(name) {}
+    explicit Shadow(std::string_view name = SHADOW_PASS_NAME) : AMultipleExecutionRenderPass<Shadow>(name) {}
+
+    virtual uint16_t GetNumberOfPasses(Engine::Core &core) override
+    {
+        uint16_t count = 0;
+        core.GetRegistry().view<Component::GPUDirectionalLight>().each(
+            [&count](auto entity, const auto &light) { count++; });
+        return std::min(count, static_cast<uint16_t>(1));
+    }
+
+    // virtual void preMultiplePass(Engine::Core &core) {};
+    // virtual void postMultiplePass(Engine::Core &core) {};
+    virtual void perPass(uint16_t passIndex, Engine::Core &core) override
+    {
+        auto view = core.GetRegistry().view<Component::GPUDirectionalLight>();
+        if (view.empty())
+        {
+            return;
+        }
+        uint16_t i = 0;
+        for (auto &&[e, light] : view.each())
+        {
+            Engine::Entity entity{core, e};
+            if (i == passIndex)
+            {
+                const auto &lightGPUComponent = entity.GetComponents<Component::GPUDirectionalLight>();
+                auto &outputs = this->GetOutputs();
+                outputs.depthBuffer->textureId = lightGPUComponent.shadowTexture;
+                return;
+            }
+            i++;
+        }
+    };
+
+    virtual void postPass(uint16_t passIndex, Engine::Core &core) override {}
 
     void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
     {
         const auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
         const auto &bufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
 
-        auto cameraView = core.GetRegistry().view<Component::GPUCamera>();
-        if (cameraView.empty())
+        auto light = core.GetRegistry().view<Component::GPUDirectionalLight>();
+        if (light.empty())
         {
-            Log::Error("Deferred::UniqueRenderCallback: No camera with GPUCamera component found.");
+            Log::Error(
+                "Shadow::UniqueRenderCallback: No directional light with GPUDirectionalLight component found."); // TODO:
+                                                                                                                 // remove
+                                                                                                                 // log
             return;
         }
-        Engine::Entity camera{core, cameraView.front()};
-        const auto &cameraGPUComponent = camera.GetComponents<Component::GPUCamera>();
-        const auto &cameraBindGroup = bindGroupManager.Get(cameraGPUComponent.bindGroup);
-        renderPass.setBindGroup(cameraBindGroup.GetLayoutIndex(), cameraBindGroup.GetBindGroup(), 0, nullptr);
+        Engine::Entity lightEntity{core, light.front()};
+        const auto &lightGPUComponent = lightEntity.GetComponents<Component::GPUDirectionalLight>();
+        const auto &lightBindGroup = bindGroupManager.Get(lightGPUComponent.bindGroup);
+        renderPass.setBindGroup(0, lightBindGroup.GetBindGroup(), 0, nullptr);
 
-        const auto &lightsBindGroup = bindGroupManager.Get(Utils::LIGHTS_BIND_GROUP_ID);
-        renderPass.setBindGroup(lightsBindGroup.GetLayoutIndex(), lightsBindGroup.GetBindGroup(), 0, nullptr);
+        auto view = core.GetRegistry().view<Component::GPUTransform, Component::GPUMesh>();
 
-        const auto &texturesBindgroup = bindGroupManager.Get(DEFERRED_BINDGROUP_TEXTURES_ID);
-        renderPass.setBindGroup(texturesBindgroup.GetLayoutIndex(), texturesBindgroup.GetBindGroup(), 0, nullptr);
+        for (auto &&[e, transform, gpuMesh] : view.each())
+        {
+            Engine::Entity entity{core, e};
 
-        renderPass.draw(6, 1, 0, 0);
+            const auto &transformBindGroup = bindGroupManager.Get(transform.bindGroup);
+            renderPass.setBindGroup(1, transformBindGroup.GetBindGroup(), 0, nullptr);
+            const auto &pointBuffer = bufferContainer.Get(gpuMesh.pointBufferId);
+            const auto &pointBufferSize = pointBuffer->GetBuffer().getSize();
+            renderPass.setVertexBuffer(0, pointBuffer->GetBuffer(), 0, pointBufferSize);
+            const auto &indexBuffer = bufferContainer.Get(gpuMesh.indexBufferId);
+            const auto &indexBufferSize = indexBuffer->GetBuffer().getSize();
+            renderPass.setIndexBuffer(indexBuffer->GetBuffer(), wgpu::IndexFormat::Uint32, 0, indexBufferSize);
+            renderPass.drawIndexed(indexBufferSize / sizeof(uint32_t), 1, 0, 0, 0);
+        }
     }
 
     static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext)
     {
         Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
-        auto gBufferTexturesLayout = Graphic::Utils::BindGroupLayout("gBufferTextures")
-                                         .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("normal")
-                                                       .setSampleType(wgpu::TextureSampleType::UnfilterableFloat)
-                                                       .setViewDimension(wgpu::TextureViewDimension::_2D)
-                                                       .setVisibility(wgpu::ShaderStage::Fragment)
-                                                       .setBinding(0))
-                                         .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("albedo")
-                                                       .setSampleType(wgpu::TextureSampleType::UnfilterableFloat)
-                                                       .setViewDimension(wgpu::TextureViewDimension::_2D)
-                                                       .setVisibility(wgpu::ShaderStage::Fragment)
-                                                       .setBinding(1))
-                                         .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("depth")
-                                                       .setSampleType(wgpu::TextureSampleType::UnfilterableFloat)
-                                                       .setViewDimension(wgpu::TextureViewDimension::_2D)
-                                                       .setVisibility(wgpu::ShaderStage::Fragment)
-                                                       .setBinding(2));
-        auto cameraLayout = Graphic::Utils::BindGroupLayout("camera").addEntry(
-            Graphic::Utils::BufferBindGroupLayoutEntry("camera")
+        auto lightLayout = Graphic::Utils::BindGroupLayout("light").addEntry(
+            Graphic::Utils::BufferBindGroupLayoutEntry("light")
                 .setType(wgpu::BufferBindingType::Uniform)
-                .setMinBindingSize(Resource::CameraGPUBuffer::CameraTransfer::GPUSize())
-                .setVisibility(wgpu::ShaderStage::Fragment | wgpu::ShaderStage::Vertex)
+                .setMinBindingSize(Resource::DirectionalLightBuffer::DirectionalLightTransfer::GPUSize())
+                .setVisibility(wgpu::ShaderStage::Vertex)
                 .setBinding(0));
-        auto lightsLayout = Graphic::Utils::BindGroupLayout("LightsLayout")
-                                .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("ambientLight")
-                                              .setType(wgpu::BufferBindingType::Uniform)
-                                              .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
-                                              .setVisibility(wgpu::ShaderStage::Fragment)
-                                              .setBinding(0))
-                                .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("pointLights")
-                                              .setType(wgpu::BufferBindingType::Uniform)
-                                              .setMinBindingSize(Resource::PointLightsBuffer::GPUSize())
-                                              .setVisibility(wgpu::ShaderStage::Fragment)
-                                              .setBinding(1));
+        auto objectLayout = Graphic::Utils::BindGroupLayout("object").addEntry(
+            Graphic::Utils::BufferBindGroupLayoutEntry("model&normal")
+                .setType(wgpu::BufferBindingType::Uniform)
+                .setMinBindingSize(sizeof(glm::mat4) + sizeof(glm::mat4))
+                .setVisibility(wgpu::ShaderStage::Vertex)
+                .setBinding(0));
 
-        auto colorOutput =
-            Graphic::Utils::ColorTargetState("DEFERRED_OUTPUT").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);
+        auto vertexLayout = Graphic::Utils::VertexBufferLayout()
+                                .addVertexAttribute(wgpu::VertexFormat::Float32x3, 0, 0)
+                                .addVertexAttribute(wgpu::VertexFormat::Float32x3, 3 * sizeof(float), 1)
+                                .addVertexAttribute(wgpu::VertexFormat::Float32x2, 6 * sizeof(float), 2)
+                                .setArrayStride(8 * sizeof(float))
+                                .setStepMode(wgpu::VertexStepMode::Vertex);
 
-        shaderDescriptor.setShader(DEFERRED_SHADE_CONTENT)
-            .setName(DEFERRED_SHADER_NAME)
+        auto depthOutput = Graphic::Utils::DepthStencilState("SHADOW_OUTPUT")
+                               .setFormat(wgpu::TextureFormat::Depth32Float)
+                               .setCompareFunction(wgpu::CompareFunction::Less)
+                               .setDepthWriteEnabled(wgpu::OptionalBool::True);
+
+        shaderDescriptor.setShader(SHADOW_SHADER_CONTENT)
+            .setName(SHADOW_SHADER_NAME)
+            .addVertexBufferLayout(vertexLayout)
             .setVertexEntryPoint("vs_main")
             .setFragmentEntryPoint("fs_main")
-            .addBindGroupLayout(cameraLayout)
-            .addBindGroupLayout(gBufferTexturesLayout)
-            .addBindGroupLayout(lightsLayout)
-            .addOutputColorFormat(colorOutput);
+            .addBindGroupLayout(lightLayout)
+            .addBindGroupLayout(objectLayout)
+            .setOutputDepthFormat(depthOutput);
         const auto validations = shaderDescriptor.validate();
         if (!validations.empty())
         {

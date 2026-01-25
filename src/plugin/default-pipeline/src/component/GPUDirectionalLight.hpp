@@ -2,6 +2,7 @@
 
 #include "Logger.hpp"
 #include "component/DirectionalLight.hpp"
+#include "component/Transform.hpp"
 #include "glm/glm.hpp"
 #include <entt/core/hashed_string.hpp>
 
@@ -16,9 +17,10 @@ struct GPUDirectionalLight {
 
     void Update(const Object::Component::DirectionalLight &light, const Object::Component::Transform &transform)
     {
-        glm::vec3 lightDirection = glm::normalize(light.direction);
+        // Why do we negate the forward vector?
+        glm::vec3 lightDirection = -glm::normalize(transform.GetForwardVector() * transform.GetScale());
         glm::vec3 posOfLight = transform.GetPosition();
-        glm::mat4 lightProjection = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f, 60.0f);
+        glm::mat4 lightProjection = light.projection;
         glm::vec3 target = posOfLight + glm::normalize(lightDirection) * 10.0f;
         glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 

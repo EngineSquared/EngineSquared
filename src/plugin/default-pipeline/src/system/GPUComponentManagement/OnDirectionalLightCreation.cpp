@@ -9,7 +9,8 @@
 #include "resource/SamplerContainer.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
-#include "resource/buffer/DirectionalLightGPUBuffer.hpp"
+#include "resource/pass/Shadow.hpp"
+#include "resource/buffer/DirectionalLightBuffer.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include <filesystem>
 #include <string>
@@ -25,24 +26,36 @@ void DefaultPipeline::System::OnDirectionalLightCreation(Engine::Core &core, Eng
 
     auto &GPUDirectionalLight = entity.AddComponent<Component::GPUDirectionalLight>();
 
-    auto directionalLightBuffer = std::make_unique<Resource::DirectionalLightGPUBuffer>(entity);
+    auto directionalLightBuffer = std::make_unique<Resource::DirectionalLightBuffer>(entity);
     directionalLightBuffer->Create(core);
     const std::string_view directionalLightBufferName = directionalLightBuffer->GetDebugName();
     entt::hashed_string directionalLightBufferId{directionalLightBufferName.data(), directionalLightBufferName.size()};
     gpuBufferContainer.Add(directionalLightBufferId, std::move(directionalLightBuffer));
     GPUDirectionalLight.buffer = directionalLightBufferId;
 
-    // std::string bindGroupName = fmt::format("MATERIAL_BIND_GROUP_{}", entity);
-    // entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
-    // Graphic::Resource::BindGroup bindGroup(core, bindGroupName, Resource::GBUFFER_SHADER_ID, 2,
-    //                                        {
-    //                                            {
-    //                                             0, Graphic::Resource::BindGroup::Asset::Type::Buffer,
-    //                                             materialBufferId, materialBufferSize,
-    //                                             },
-    //                                            {1, Graphic::Resource::BindGroup::Asset::Type::Texture, textureId, 0},
-    //                                            {2, Graphic::Resource::BindGroup::Asset::Type::Sampler, samplerId, 0},
-    // });
-    // bindGroupManager.Add(bindGroupId, std::move(bindGroup));
-    // GPUMaterial.bindGroup = bindGroupId;
+    wgpu::TextureDescriptor textureDescriptor(wgpu::Default);
+    std::string label = fmt::format("DIRECTIONAL_LIGHT_SHADOW_TEXTURE_{}", entityId);
+    textureDescriptor.label = wgpu::StringView(label);
+    textureDescriptor.size = {2048, 2048, 1};
+    textureDescriptor.dimension = wgpu::TextureDimension::_2D;
+    textureDescriptor.format = wgpu::TextureFormat::Depth32Float;
+    textureDescriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
+                              wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
+    Graphic::Resource::Texture shadowTexture(context, textureDescriptor);
+    entt::hashed_string textureId{label.data(), label.size()};
+    textureContainer.Add(textureId, std::move(shadowTexture));
+    GPUDirectionalLight.shadowTexture = textureId;
+
+    std::string bindGroupName = fmt::format("DIRECTIONAL_LIGHT_BIND_GROUP_{}", entity);
+    const uint64_t directionalLightBufferSize = Resource::DirectionalLightBuffer::DirectionalLightTransfer::GPUSize();
+    entt::hashed_string bindGroupId{bindGroupName.data(), bindGroupName.size()};
+    Graphic::Resource::BindGroup bindGroup(core, bindGroupName, Resource::SHADOW_SHADER_ID, 0,
+                                           {
+                                               {
+                                                0, Graphic::Resource::BindGroup::Asset::Type::Buffer,
+                                                directionalLightBufferId, directionalLightBufferSize,
+                                                },
+    });
+    bindGroupManager.Add(bindGroupId, std::move(bindGroup));
+    GPUDirectionalLight.bindGroup = bindGroupId;
 }

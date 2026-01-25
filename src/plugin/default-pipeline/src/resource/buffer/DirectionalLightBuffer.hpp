@@ -10,25 +10,26 @@
 
 namespace DefaultPipeline::Resource {
 class DirectionalLightBuffer : public Graphic::Resource::AGPUBuffer {
-  private:
+  public:
     static inline std::string prefix = "DirectionalLightBuffer_";
     struct DirectionalLightTransfer {
         glm::mat4 viewProjectionMatrix;
         glm::vec4 color;
         glm::vec3 direction;
+        uint32_t _padding; // Padding to align to 16 bytes
 
         explicit DirectionalLightTransfer(const Component::GPUDirectionalLight &GPUDirectionalLight,
-                                          const Object::Component::DirectionalLight &directionalLight)
+                                          const Object::Component::DirectionalLight &directionalLight,
+                                          const Object::Component::Transform &transform)
             : viewProjectionMatrix(GPUDirectionalLight.viewProjectionMatrix), color(directionalLight.color),
-              direction(directionalLight.direction)
+              direction(glm::normalize(transform.GetForwardVector() * transform.GetScale()))
         {
         }
 
         static uint32_t CPUSize() { return sizeof(DirectionalLightTransfer); }
-        static uint32_t GPUSize() { return sizeof(DirectionalLightTransfer) + sizeof(float) /*padding*/; }
+        static uint32_t GPUSize() { return sizeof(DirectionalLightTransfer); }
     };
 
-  public:
     explicit DirectionalLightBuffer(Engine::Entity entity) : _entity(entity) { _UpdateDebugName(); }
 
     ~DirectionalLightBuffer() override { Destroy(); }
@@ -60,8 +61,9 @@ class DirectionalLightBuffer : public Graphic::Resource::AGPUBuffer {
         }
         const auto &gpuDirectionalLight = _entity.GetComponents<Component::GPUDirectionalLight>();
         const auto &directionalLight = _entity.GetComponents<Object::Component::DirectionalLight>();
+        const auto &transform = _entity.GetComponents<Object::Component::Transform>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
-        _UpdateBuffer(context, gpuDirectionalLight, directionalLight);
+        _UpdateBuffer(context, gpuDirectionalLight, directionalLight, transform);
     };
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
@@ -83,9 +85,10 @@ class DirectionalLightBuffer : public Graphic::Resource::AGPUBuffer {
 
     void _UpdateBuffer(const Graphic::Resource::Context &context,
                        const Component::GPUDirectionalLight &GPUDirectionalLight,
-                       const Object::Component::DirectionalLight &directionalLightComponent)
+                       const Object::Component::DirectionalLight &directionalLightComponent,
+                       const Object::Component::Transform &transform)
     {
-        DirectionalLightTransfer directionalLightTransfer(GPUDirectionalLight, directionalLightComponent);
+        DirectionalLightTransfer directionalLightTransfer(GPUDirectionalLight, directionalLightComponent, transform);
         context.queue->writeBuffer(_buffer, 0, std::addressof(directionalLightTransfer),
                                    DirectionalLightTransfer::CPUSize());
     }

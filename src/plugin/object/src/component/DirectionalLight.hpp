@@ -6,6 +6,6 @@ namespace Object::Component {
 
 struct DirectionalLight {
     glm::vec4 color{1.0f};
-    glm::vec3 direction{0.0f, -1.0f, 0.0f};
+    glm::mat4 projection = glm::orthoLH_ZO(-30.0f, 30.0f, -30.0f, 30.0f, 0.1f, 60.0f);
 };
 } // namespace Object::Component
