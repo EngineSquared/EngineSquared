@@ -40,17 +40,6 @@ namespace Physics::Component {
  *       but much cheaper than concave mesh colliders.
  * @note Jolt automatically computes the convex hull from the provided points,
  *       so interior points are handled correctly.
- *
- * @example "Basic usage with a mesh entity"
- * @code
- * // Entity already has Object::Mesh component with vertices
- * Physics::Component::MeshCollider collider;
- * entity.AddComponent<Physics::Component::MeshCollider>(core, collider);
- *
- * // Add RigidBody - it will use the mesh vertices for collision
- * Physics::Component::RigidBody rigidBody = Physics::Component::RigidBody::CreateDynamic(10.0f);
- * entity.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
- * @endcode
  */
 struct MeshCollider {
     /// Maximum convex radius (Jolt parameter for collision detection)
