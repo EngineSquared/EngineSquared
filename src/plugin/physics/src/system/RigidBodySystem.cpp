@@ -36,7 +36,7 @@ namespace Physics::System {
  * @return RefConst to the created shape, or nullptr on failure
  */
 static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Component::Mesh &mesh,
-                                                           const Component::MeshCollider &meshCollider)
+                                                          const Component::MeshCollider &meshCollider)
 {
     const auto &vertices = mesh.GetVertices();
 
