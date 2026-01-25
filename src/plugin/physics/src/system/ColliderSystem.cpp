@@ -26,10 +26,11 @@ namespace Physics::System {
  * @param colliderTypeName Name of the collider for logging purposes
  */
 static void EnsureStaticRigidBody(Engine::Core::Registry &registry, Engine::EntityId entity,
-                                   const char *colliderTypeName)
+                                  const char *colliderTypeName)
 {
     // If entity already has a RigidBody OR a SoftBody, do nothing
-    if (registry.try_get<Component::RigidBody>(entity) != nullptr || registry.try_get<Component::SoftBody>(entity) != nullptr)
+    if (registry.try_get<Component::RigidBody>(entity) != nullptr ||
+        registry.try_get<Component::SoftBody>(entity) != nullptr)
         return;
 
     // Add a static RigidBody by default

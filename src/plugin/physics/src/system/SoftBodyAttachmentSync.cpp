@@ -108,7 +108,8 @@ static void InitializeAnchorPositions(Component::SoftBodyAttachment &attachment,
     }
 
     attachment.initialized = true;
-    Log::Debug(fmt::format("SoftBodyAttachment: Initialized {} anchor positions", attachment.anchorLocalPositions.size()));
+    Log::Debug(
+        fmt::format("SoftBodyAttachment: Initialized {} anchor positions", attachment.anchorLocalPositions.size()));
 }
 
 //=============================================================================
@@ -197,12 +198,12 @@ void SyncSoftBodyAttachments(Engine::Core &core)
 
         // Calculate the soft body center position in world space
         glm::vec3 softBodyWorldPos = parentPos + parentRot * attachment.localOffset;
-        glm::quat softBodyWorldRot = attachment.syncRotation ? parentRot * attachment.localRotation : attachment.localRotation;
+        glm::quat softBodyWorldRot =
+            attachment.syncRotation ? parentRot * attachment.localRotation : attachment.localRotation;
 
         // First, update the soft body's world transform (center of mass position)
         // This is critical - it sets where the soft body exists in world space
-        body.SetPositionAndRotationInternal(Utils::ToJoltRVec3(softBodyWorldPos),
-                                            Utils::ToJoltQuat(softBodyWorldRot));
+        body.SetPositionAndRotationInternal(Utils::ToJoltRVec3(softBodyWorldPos), Utils::ToJoltQuat(softBodyWorldRot));
 
         // Now update anchor vertices
         // IMPORTANT: Jolt SoftBody vertices are relative to the body's center of mass!

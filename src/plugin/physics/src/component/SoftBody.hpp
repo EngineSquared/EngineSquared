@@ -260,14 +260,14 @@ struct SoftBodySettings {
         float softness = (1.0f - stiffness);
         float softness2 = softness * softness;
 
-        s.edgeCompliance = softness2 * 1.0e-5f;   // Very stiff edges (panel shape)
+        s.edgeCompliance = softness2 * 1.0e-5f;  // Very stiff edges (panel shape)
         s.shearCompliance = softness2 * 1.0e-5f; // Very stiff shear (prevent warping)
         s.bendCompliance = softness2 * 1.0e-4f;  // Slightly less stiff bending
 
         // Collision settings
-        s.vertexRadius = 0.02f;      // Small collision radius for accurate collision detection
-        s.allowSleeping = false;     // Never sleep (always attached to moving chassis)
-        s.doubleSidedFaces = false;  // Single-sided for performance
+        s.vertexRadius = 0.02f;     // Small collision radius for accurate collision detection
+        s.allowSleeping = false;    // Never sleep (always attached to moving chassis)
+        s.doubleSidedFaces = false; // Single-sided for performance
 
         return s;
     }
