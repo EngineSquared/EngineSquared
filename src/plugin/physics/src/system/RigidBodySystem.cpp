@@ -19,7 +19,8 @@
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
-#include <Jolt/Physics/Collision/Shape/ConvexHullShape.h>
+#include <Jolt/Physics/Collision/Shape/MeshShape.h>
+#include <Jolt/Geometry/IndexedTriangle.h>
 #include <Jolt/Physics/Collision/Shape/RotatedTranslatedShape.h>
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
 
@@ -30,37 +31,59 @@ namespace Physics::System {
 //=============================================================================
 
 /**
- * @brief Create a ConvexHullShape from mesh vertices
- * @param mesh The mesh component containing vertices
- * @param meshCollider Pointer to MeshCollider settings (nullable). If null, default settings are used.
+ * @brief Create a MeshShape from mesh vertices and indices
+ * @param mesh The mesh component containing vertices and indices
+ * @param meshCollider Pointer to MeshCollider settings (nullable)
+ * @param scale Scale to apply to the mesh vertices (from Transform component)
  * @return RefConst to the created shape, or nullptr on failure
  */
-static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Component::Mesh &mesh,
-                                                          const Component::MeshCollider *meshCollider)
+static JPH::RefConst<JPH::Shape> CreateMeshShapeFromMesh(const Object::Component::Mesh &mesh,
+                                                         const Component::MeshCollider *meshCollider,
+                                                         const glm::vec3 &scale)
 {
     const auto &vertices = mesh.GetVertices();
+    const auto &indices = mesh.GetIndices();
 
-    if (vertices.empty())
+    if (vertices.empty() || indices.empty())
     {
-        Log::Warn("MeshCollider: Mesh has no vertices, cannot create convex hull");
+        Log::Warn("MeshCollider: Mesh has no vertices or indices, cannot create mesh shape");
         return nullptr;
     }
 
-    JPH::Array<JPH::Vec3> joltPoints;
-    joltPoints.reserve(vertices.size());
-
+    // Convert vertices and apply scale
+    JPH::VertexList joltVertices;
+    joltVertices.reserve(vertices.size());
     for (const auto &vertex : vertices)
     {
-        joltPoints.push_back(Utils::ToJoltVec3(vertex));
+        glm::vec3 scaledVertex = vertex * scale;
+        joltVertices.push_back(JPH::Float3(scaledVertex.x, scaledVertex.y, scaledVertex.z));
     }
 
-    float maxConvexRadius = meshCollider ? meshCollider->maxConvexRadius : Component::MeshCollider{}.maxConvexRadius;
-    JPH::ConvexHullShapeSettings settings(joltPoints, maxConvexRadius);
+    // Convert indices to triangles
+    JPH::IndexedTriangleList joltTriangles;
+    joltTriangles.reserve(indices.size() / 3);
+    
+    for (size_t i = 0; i < indices.size(); i += 3)
+    {
+        // Ensure we have enough indices for a triangle
+        if (i + 2 >= indices.size())
+            break;
+
+        joltTriangles.push_back(JPH::IndexedTriangle(indices[i], indices[i + 1], indices[i + 2], 0));
+    }
+
+    JPH::MeshShapeSettings settings(joltVertices, joltTriangles);
+    
+    // Set active edge threshold if collider settings are provided
+    if (meshCollider)
+    {
+        settings.mActiveEdgeCosThresholdAngle = meshCollider->activeEdgeCosThresholdAngle;
+    }
 
     JPH::ShapeSettings::ShapeResult result = settings.Create();
     if (!result.IsValid())
     {
-        Log::Error(fmt::format("MeshCollider: Failed to create convex hull shape: {}", result.GetError().c_str()));
+        Log::Error(fmt::format("MeshCollider: Failed to create mesh shape: {}", result.GetError().c_str()));
         return nullptr;
     }
 
@@ -128,7 +151,14 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
         return nullptr;
     }
 
-    return CreateConvexHullFromMesh(*mesh, registry.try_get<Component::MeshCollider>(entity));
+    // Get scale from transform if available, otherwise use (1,1,1)
+    glm::vec3 scale(1.0f, 1.0f, 1.0f);
+    if (auto *transform = registry.try_get<Object::Component::Transform>(entity))
+    {
+        scale = transform->GetScale();
+    }
+
+    return CreateMeshShapeFromMesh(*mesh, registry.try_get<Component::MeshCollider>(entity), scale);
 }
 
 //=============================================================================
