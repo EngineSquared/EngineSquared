@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include <glm/vec3.hpp>
-
 namespace Physics::Component {
 
 /**
@@ -42,7 +40,6 @@ namespace Physics::Component {
  *       but much cheaper than concave mesh colliders.
  * @note Jolt automatically computes the convex hull from the provided points,
  *       so interior points are handled correctly.
- * @note The `offset` member is applied to the created physics shape.
  *
  * @example "Basic usage with a mesh entity"
  * @code
@@ -56,9 +53,6 @@ namespace Physics::Component {
  * @endcode
  */
 struct MeshCollider {
-    /// Local offset from entity transform (applied after convex hull creation)
-    glm::vec3 offset{0.0f, 0.0f, 0.0f};
-
     /// Maximum convex radius (Jolt parameter for collision detection)
     /// Smaller values = sharper corners, larger values = smoother but less accurate
     float maxConvexRadius = 0.05f;
@@ -69,25 +63,10 @@ struct MeshCollider {
     MeshCollider() = default;
 
     /**
-     * @brief Construct with offset
-     * @param localOffset Local position offset from entity center
-     */
-    explicit MeshCollider(const glm::vec3 &localOffset) : offset(localOffset) {}
-
-    /**
-     * @brief Construct with offset and convex radius
-     * @param localOffset Local position offset from entity center
+     * @brief Construct with convex radius
      * @param convexRadius Maximum convex radius for collision detection
      */
-    MeshCollider(const glm::vec3 &localOffset, float convexRadius)
-        : offset(localOffset), maxConvexRadius(convexRadius) {}
-
-    /**
-     * @brief Create a mesh collider at an offset
-     * @param localOffset Position offset from entity center
-     * @return MeshCollider
-     */
-    static MeshCollider AtOffset(const glm::vec3 &localOffset) { return MeshCollider(localOffset); }
+    explicit MeshCollider(float convexRadius) : maxConvexRadius(convexRadius) {}
 };
 
 } // namespace Physics::Component

@@ -32,7 +32,7 @@ namespace Physics::System {
 /**
  * @brief Create a ConvexHullShape from mesh vertices
  * @param mesh The mesh component containing vertices
- * @param meshCollider Optional mesh collider settings (offset, convex radius)
+ * @param meshCollider Mesh collider settings (convex radius)
  * @return RefConst to the created shape, or nullptr on failure
  */
 static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Component::Mesh &mesh,
@@ -62,12 +62,6 @@ static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Componen
     {
         Log::Error(fmt::format("MeshCollider: Failed to create convex hull shape: {}", result.GetError().c_str()));
         return nullptr;
-    }
-
-    if (meshCollider.offset != glm::vec3{0.0f, 0.0f, 0.0f})
-    {
-        return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(meshCollider.offset), JPH::Quat::sIdentity(),
-                                                result.Get());
     }
 
     return result.Get();
