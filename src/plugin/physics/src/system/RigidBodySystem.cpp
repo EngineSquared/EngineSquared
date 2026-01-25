@@ -36,10 +36,12 @@ namespace Physics::System {
  * @brief Create a ConvexHullShape from mesh vertices
  * @param mesh The mesh component containing vertices
  * @param meshCollider Pointer to ConvexHullMeshCollider settings (nullable). If null, default settings are used.
+ * @param scale Scale to apply to the mesh vertices (from Transform component)
  * @return RefConst to the created shape, or nullptr on failure
  */
 static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Component::Mesh &mesh,
-                                                          const Component::ConvexHullMeshCollider *meshCollider)
+                                                          const Component::ConvexHullMeshCollider *meshCollider,
+                                                          const glm::vec3 &scale)
 {
     const auto &vertices = mesh.GetVertices();
 
@@ -54,7 +56,8 @@ static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Componen
 
     for (const auto &vertex : vertices)
     {
-        joltPoints.push_back(Utils::ToJoltVec3(vertex));
+        glm::vec3 scaledVertex = vertex * scale;
+        joltPoints.push_back(JPH::Vec3(scaledVertex.x, scaledVertex.y, scaledVertex.z));
     }
 
     float maxConvexRadius = meshCollider ? meshCollider->maxConvexRadius : Component::ConvexHullMeshCollider{}.maxConvexRadius;
@@ -189,7 +192,13 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
             return nullptr;
         }
 
-        return CreateConvexHullFromMesh(*mesh, convexHullCollider);
+        glm::vec3 scale(1.0f, 1.0f, 1.0f);
+        if (auto *transform = registry.try_get<Object::Component::Transform>(entity))
+        {
+            scale = transform->GetScale();
+        }
+
+        return CreateConvexHullFromMesh(*mesh, convexHullCollider, scale);
     }
 
     auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
