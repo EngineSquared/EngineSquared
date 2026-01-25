@@ -22,7 +22,6 @@ void Physics::Plugin::Bind()
 {
     RequirePlugins<Event::Plugin>();
 
-    // Register telemetry resource for vehicle RPM
     RegisterResource<Resource::VehicleTelemetry>(Resource::VehicleTelemetry{});
 
     RegisterSystems<Engine::Scheduler::Startup>(System::InitJoltPhysics);

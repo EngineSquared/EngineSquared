@@ -518,7 +518,6 @@ class SoundManager {
             if (pitch <= 0.01f)
                 pitch = 0.01f;
 
-            // Initialize engine and sound lazily
             if (!_engineInit)
             {
                 ma_engine_config cfg = ma_engine_config_init();
@@ -550,14 +549,12 @@ class SoundManager {
                 ma_decoder_get_cursor_in_pcm_frames(&snd.decoder, &cursor);
                 ma_sound_seek_to_pcm_frame(&snd.engineSound, cursor);
 
-                // If currently marked as playing, start it
                 if (snd.isPlaying && !snd.isPaused)
                 {
                     ma_sound_start(&snd.engineSound);
                 }
             }
 
-            // Apply pitch
             if (snd.hasEngineSound)
             {
                 ma_sound_set_pitch(&snd.engineSound, pitch);
