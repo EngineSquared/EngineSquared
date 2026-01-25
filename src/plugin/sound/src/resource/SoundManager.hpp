@@ -236,8 +236,7 @@ class SoundManager {
             for (ma_uint32 i = 0; i < totalSamples; ++i)
             {
                 float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                const int64_t mixed =
-                    static_cast<int64_t>(output[i]) + static_cast<int64_t>(sample * 2147483647.0f);
+                const int64_t mixed = static_cast<int64_t>(output[i]) + static_cast<int64_t>(sample * 2147483647.0f);
                 output[i] = static_cast<int32_t>(std::clamp<int64_t>(mixed, INT32_MIN, INT32_MAX));
             }
         }
@@ -247,8 +246,7 @@ class SoundManager {
             for (ma_uint32 i = 0; i < totalSamples; ++i)
             {
                 float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                const int32_t mixed =
-                    static_cast<int32_t>(output[i]) + static_cast<int32_t>(sample * 32767.0f);
+                const int32_t mixed = static_cast<int32_t>(output[i]) + static_cast<int32_t>(sample * 32767.0f);
                 output[i] = static_cast<int16_t>(std::clamp<int32_t>(mixed, INT16_MIN, INT16_MAX));
             }
         }
@@ -258,8 +256,7 @@ class SoundManager {
             for (ma_uint32 i = 0; i < totalSamples; ++i)
             {
                 float sample = std::clamp(mixBuffer[i], -1.0f, 1.0f);
-                const int mixed =
-                    static_cast<int>(output[i]) + static_cast<int>(sample * 127.5f);
+                const int mixed = static_cast<int>(output[i]) + static_cast<int>(sample * 127.5f);
                 output[i] = static_cast<uint8_t>(std::clamp(mixed, 0, 255));
             }
         }
