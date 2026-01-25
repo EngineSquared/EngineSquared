@@ -5,6 +5,7 @@
 #include "Logger.hpp"
 #include "component/BoxCollider.hpp"
 #include "component/CapsuleCollider.hpp"
+#include "component/ConvexHullMeshCollider.hpp"
 #include "component/MeshCollider.hpp"
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
@@ -20,6 +21,7 @@
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
+#include <Jolt/Physics/Collision/Shape/ConvexHullShape.h>
 #include <Jolt/Physics/Collision/Shape/MeshShape.h>
 #include <Jolt/Physics/Collision/Shape/RotatedTranslatedShape.h>
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
@@ -29,6 +31,44 @@ namespace Physics::System {
 //=============================================================================
 // Collider shape creation
 //=============================================================================
+
+/**
+ * @brief Create a ConvexHullShape from mesh vertices
+ * @param mesh The mesh component containing vertices
+ * @param meshCollider Pointer to ConvexHullMeshCollider settings (nullable). If null, default settings are used.
+ * @return RefConst to the created shape, or nullptr on failure
+ */
+static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Component::Mesh &mesh,
+                                                          const Component::ConvexHullMeshCollider *meshCollider)
+{
+    const auto &vertices = mesh.GetVertices();
+
+    if (vertices.empty())
+    {
+        Log::Warn("ConvexHullMeshCollider: Mesh has no vertices, cannot create convex hull");
+        return nullptr;
+    }
+
+    JPH::Array<JPH::Vec3> joltPoints;
+    joltPoints.reserve(vertices.size());
+
+    for (const auto &vertex : vertices)
+    {
+        joltPoints.push_back(Utils::ToJoltVec3(vertex));
+    }
+
+    float maxConvexRadius = meshCollider ? meshCollider->maxConvexRadius : Component::ConvexHullMeshCollider{}.maxConvexRadius;
+    JPH::ConvexHullShapeSettings settings(joltPoints, maxConvexRadius);
+
+    JPH::ShapeSettings::ShapeResult result = settings.Create();
+    if (!result.IsValid())
+    {
+        Log::Error(fmt::format("ConvexHullMeshCollider: Failed to create convex hull shape: {}", result.GetError().c_str()));
+        return nullptr;
+    }
+
+    return result.Get();
+}
 
 /**
  * @brief Create a MeshShape from mesh vertices and indices
@@ -138,6 +178,18 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
             return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(boxCollider->offset), JPH::Quat::sIdentity(),
                                                    baseShape);
         return baseShape;
+    }
+
+    if (auto *convexHullCollider = registry.try_get<Component::ConvexHullMeshCollider>(entity))
+    {
+        auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
+        if (!mesh)
+        {
+            Log::Warn("ConvexHullMeshCollider: trying to create shape without Object::Mesh component");
+            return nullptr;
+        }
+
+        return CreateConvexHullFromMesh(*mesh, convexHullCollider);
     }
 
     auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
