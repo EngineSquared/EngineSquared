@@ -5,7 +5,7 @@
 #include "Logger.hpp"
 #include "component/BoxCollider.hpp"
 #include "component/CapsuleCollider.hpp"
-#include "component/DefaultCollider.hpp"
+#include "component/MeshCollider.hpp"
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
 #include "component/SphereCollider.hpp"
@@ -19,6 +19,7 @@
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
+#include <Jolt/Physics/Collision/Shape/ConvexHullShape.h>
 #include <Jolt/Physics/Collision/Shape/RotatedTranslatedShape.h>
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
 
@@ -29,6 +30,50 @@ namespace Physics::System {
 //=============================================================================
 
 /**
+ * @brief Create a ConvexHullShape from mesh vertices
+ * @param mesh The mesh component containing vertices
+ * @param meshCollider Optional mesh collider settings (offset, convex radius)
+ * @return RefConst to the created shape, or nullptr on failure
+ */
+static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Component::Mesh &mesh,
+                                                           const Component::MeshCollider &meshCollider)
+{
+    const auto &vertices = mesh.GetVertices();
+
+    if (vertices.empty())
+    {
+        Log::Warn("MeshCollider: Mesh has no vertices, cannot create convex hull");
+        return nullptr;
+    }
+
+    JPH::Array<JPH::Vec3> joltPoints;
+    joltPoints.reserve(vertices.size());
+
+    for (const auto &vertex : vertices)
+    {
+        joltPoints.push_back(Utils::ToJoltVec3(vertex));
+    }
+
+    float maxConvexRadius = meshCollider.maxConvexRadius;
+    JPH::ConvexHullShapeSettings settings(joltPoints, maxConvexRadius);
+
+    JPH::ShapeSettings::ShapeResult result = settings.Create();
+    if (!result.IsValid())
+    {
+        Log::Error(fmt::format("MeshCollider: Failed to create convex hull shape: {}", result.GetError().c_str()));
+        return nullptr;
+    }
+
+    if (meshCollider.offset != glm::vec3{0.0f, 0.0f, 0.0f})
+    {
+        return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(meshCollider.offset), JPH::Quat::sIdentity(),
+                                                result.Get());
+    }
+
+    return result.Get();
+}
+
+/**
  * @brief Create a Jolt shape from collider components
  * @return Shared pointer to shape, or nullptr if no collider found
  *
@@ -36,9 +81,10 @@ namespace Physics::System {
  * 1. SphereCollider
  * 2. CapsuleCollider
  * 3. BoxCollider
- * 4. DefaultCollider
+ * 4. MeshCollider (requires Object::Mesh component)
  *
- * @note If no collider is found, a DefaultCollider will be created automatically.
+ * @note If no collider is found, it will default to the MeshCollider with default settings, which can be pretty heavy.
+ * Make sure to always use the most appropriate colliders for RigidBodies.
  */
 static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
@@ -81,22 +127,26 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
         return baseShape;
     }
 
-    if (auto *defaultCollider = registry.try_get<Component::DefaultCollider>(entity))
+    auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
+    if (!mesh)
     {
-        auto *baseShape = new JPH::BoxShape(Utils::ToJoltVec3(defaultCollider->halfExtents));
-        if (defaultCollider->offset != glm::vec3{0.0f, 0.0f, 0.0f})
-            return new JPH::RotatedTranslatedShape(Utils::ToJoltVec3(defaultCollider->offset), JPH::Quat::sIdentity(),
-                                                   baseShape);
-        return baseShape;
+        Log::Warn("MeshCollider: trying to create shape without Object::Mesh component");
+        return nullptr;
     }
 
-    return nullptr;
+    if (!registry.try_get<Component::MeshCollider>(entity))
+    {
+        registry.emplace<Component::MeshCollider>(entity);
+    }
+
+    return CreateConvexHullFromMesh(*mesh, registry.get<Component::MeshCollider>(entity));
 }
 
 /**
  * @brief Get or create a collider shape for the entity
  *
- * If no collider exists, creates a DefaultCollider automatically.
+ * If no explicit collider exists but the entity has an Object::Mesh component,
+ * creates a ConvexHullShape from the mesh vertices automatically.
  */
 static JPH::RefConst<JPH::Shape> GetOrCreateColliderShape(Engine::Core::Registry &registry, Engine::EntityId entity)
 {
@@ -105,16 +155,8 @@ static JPH::RefConst<JPH::Shape> GetOrCreateColliderShape(Engine::Core::Registry
     if (shape != nullptr)
         return shape;
 
-    registry.emplace<Component::DefaultCollider>(entity);
-    shape = CreateShapeFromColliders(registry, entity);
-
-    if (shape == nullptr)
-    {
-        Log::Error("Failed to create default collider shape");
-        return nullptr;
-    }
-
-    return shape;
+    Log::Error("Failed to create collider shape: no collider component and no valid mesh found");
+    return nullptr;
 }
 
 //=============================================================================

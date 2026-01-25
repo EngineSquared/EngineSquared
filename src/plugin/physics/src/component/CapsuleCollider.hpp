@@ -31,7 +31,7 @@ namespace Physics::Component {
  * @brief Capsule-shaped collider (cylinder with hemispherical caps)
  *
  * Explicit capsule collider that users can add to customize collision shape.
- * If present on an entity with RigidBody, prevents DefaultCollider auto-creation.
+ * If present on an entity with RigidBody, overrides the automatic mesh-based collision.
  *
  * A capsule is defined as a line segment with a radius, creating a shape
  * that looks like a cylinder with rounded (hemispherical) ends.

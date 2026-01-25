@@ -40,7 +40,7 @@ void CreateFloor(Engine::Core &core)
  *
  * Use the helper function to create a cube entity with mesh and transform.
  * Add RigidBody component with dynamic motion type and specified mass.
- * The DefaultCollider is created automatically!
+ * A ConvexHullShape is created automatically from the mesh vertices!
  */
 void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass)
 {
