@@ -50,7 +50,6 @@ static JPH::RefConst<JPH::Shape> CreateMeshShapeFromMesh(const Object::Component
         return nullptr;
     }
 
-    // Convert vertices and apply scale
     JPH::VertexList joltVertices;
     joltVertices.reserve(vertices.size());
     for (const auto &vertex : vertices)
@@ -59,13 +58,11 @@ static JPH::RefConst<JPH::Shape> CreateMeshShapeFromMesh(const Object::Component
         joltVertices.push_back(JPH::Float3(scaledVertex.x, scaledVertex.y, scaledVertex.z));
     }
 
-    // Convert indices to triangles
     JPH::IndexedTriangleList joltTriangles;
     joltTriangles.reserve(indices.size() / 3);
 
     for (size_t i = 0; i < indices.size(); i += 3)
     {
-        // Ensure we have enough indices for a triangle
         if (i + 2 >= indices.size())
             break;
 
@@ -74,7 +71,6 @@ static JPH::RefConst<JPH::Shape> CreateMeshShapeFromMesh(const Object::Component
 
     JPH::MeshShapeSettings settings(joltVertices, joltTriangles);
 
-    // Set active edge threshold if collider settings are provided
     if (meshCollider)
     {
         settings.mActiveEdgeCosThresholdAngle = meshCollider->activeEdgeCosThresholdAngle;
@@ -151,7 +147,6 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
         return nullptr;
     }
 
-    // Get scale from transform if available, otherwise use (1,1,1)
     glm::vec3 scale(1.0f, 1.0f, 1.0f);
     if (auto *transform = registry.try_get<Object::Component::Transform>(entity))
     {
