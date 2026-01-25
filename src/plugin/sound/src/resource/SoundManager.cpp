@@ -7,11 +7,21 @@ SoundManager::~SoundManager()
 {
     for (auto &[name, sound] : _soundsToPlay)
     {
+        if (sound.hasEngineSound)
+            ma_sound_uninit(&sound.engineSound);
         ma_decoder_uninit(&sound.decoder);
     }
 
-    ma_device_stop(&_device);
-    ma_device_uninit(&_device);
+    if (_engineInit)
+    {
+        ma_engine_uninit(&_engine);
+    }
+
+    if (_deviceInit)
+    {
+        ma_device_stop(&_device);
+        ma_device_uninit(&_device);
+    }
 }
 
 } // namespace Sound::Resource

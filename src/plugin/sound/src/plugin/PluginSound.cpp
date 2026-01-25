@@ -7,4 +7,5 @@ void Sound::Plugin::Bind()
 {
     RegisterResource<Resource::SoundManager>(Resource::SoundManager());
     RegisterSystems<Engine::Scheduler::Startup>(Sound::System::InitSounds);
+    RegisterSystems<Engine::Scheduler::Update>(Sound::System::ReportAudioErrors);
 }
