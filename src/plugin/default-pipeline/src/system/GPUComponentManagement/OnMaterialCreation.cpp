@@ -25,27 +25,30 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
 
     auto &GPUMaterial = entity.AddComponent<Component::GPUMaterial>();
 
-    entt::hashed_string textureId{material.ambientTexName.data(), material.ambientTexName.size()};
-    entt::hashed_string samplerId{material.ambientTexName.data(), material.ambientTexName.size()};
+    entt::hashed_string textureId{material.diffuseTexName.data(), material.diffuseTexName.size()};
+    entt::hashed_string samplerId{material.diffuseTexName.data(), material.diffuseTexName.size()};
 
-    if (std::filesystem::exists(material.ambientTexName))
+    if (textureContainer.Contains(textureId))
     {
-        Graphic::Resource::Texture texture{context, material.ambientTexName,
-                                           Graphic::Resource::Image(material.ambientTexName)};
+        GPUMaterial.texture = textureId;
+    }
+    else if (std::filesystem::exists(material.diffuseTexName))
+    {
+        Graphic::Resource::Texture texture{context, material.diffuseTexName,
+                                           Graphic::Resource::Image(material.diffuseTexName)};
         textureContainer.Add(textureId, std::move(texture));
         GPUMaterial.texture = textureId;
     }
-    else if (textureContainer.Contains(textureId))
+    else if (!material.diffuseTexName.empty())
     {
-        GPUMaterial.texture = textureId;
-    }
-    else if (!material.ambientTexName.empty())
-    {
-        Log::Warn(fmt::format("Texture '{}' not found as file or in texture container", material.ambientTexName));
+        Log::Warn(fmt::format("Texture '{}' not found as file or in texture container", material.diffuseTexName));
     }
 
-    Graphic::Resource::Sampler sampler{context.deviceContext.GetDevice().value()};
-    samplerContainer.Add(samplerId, std::move(sampler));
+    if (!samplerContainer.Contains(samplerId))
+    {
+        Graphic::Resource::Sampler sampler{context.deviceContext.GetDevice().value()};
+        samplerContainer.Add(samplerId, std::move(sampler));
+    }
     GPUMaterial.sampler = samplerId;
 
     auto materialBuffer = std::make_unique<Resource::MaterialGPUBuffer>(entity);
