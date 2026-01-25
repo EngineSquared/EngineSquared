@@ -60,13 +60,15 @@ static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Componen
         joltPoints.push_back(JPH::Vec3(scaledVertex.x, scaledVertex.y, scaledVertex.z));
     }
 
-    float maxConvexRadius = meshCollider ? meshCollider->maxConvexRadius : Component::ConvexHullMeshCollider{}.maxConvexRadius;
+    float maxConvexRadius =
+        meshCollider ? meshCollider->maxConvexRadius : Component::ConvexHullMeshCollider{}.maxConvexRadius;
     JPH::ConvexHullShapeSettings settings(joltPoints, maxConvexRadius);
 
     JPH::ShapeSettings::ShapeResult result = settings.Create();
     if (!result.IsValid())
     {
-        Log::Error(fmt::format("ConvexHullMeshCollider: Failed to create convex hull shape: {}", result.GetError().c_str()));
+        Log::Error(
+            fmt::format("ConvexHullMeshCollider: Failed to create convex hull shape: {}", result.GetError().c_str()));
         return nullptr;
     }
 
