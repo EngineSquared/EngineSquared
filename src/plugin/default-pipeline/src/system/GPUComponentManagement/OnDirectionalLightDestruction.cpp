@@ -17,8 +17,8 @@ void DefaultPipeline::System::OnDirectionalLightDestruction(Engine::Core &core, 
 
     if (gpuBufferContainer.Contains(directionalLightComponent.buffer))
         gpuBufferContainer.Remove(directionalLightComponent.buffer);
-    if (bindGroupManager.Contains(directionalLightComponent.bindGroup))
-        bindGroupManager.Remove(directionalLightComponent.bindGroup);
+    if (bindGroupManager.Contains(directionalLightComponent.bindGroupData))
+        bindGroupManager.Remove(directionalLightComponent.bindGroupData);
 
     entity.RemoveComponent<Component::GPUDirectionalLight>();
 }

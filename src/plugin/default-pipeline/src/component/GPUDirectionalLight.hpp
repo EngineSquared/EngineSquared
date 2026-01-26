@@ -4,6 +4,7 @@
 #include "component/DirectionalLight.hpp"
 #include "component/Transform.hpp"
 #include "glm/glm.hpp"
+#include "utils/webgpu.hpp"
 #include <entt/core/hashed_string.hpp>
 
 namespace DefaultPipeline::Component {
@@ -12,8 +13,9 @@ struct GPUDirectionalLight {
 
     glm::mat4 viewProjectionMatrix;
     Id buffer{};
-    Id shadowTexture{};
-    Id bindGroup{};
+    Id bindGroupData{};
+    wgpu::TextureView shadowTextureView;
+    size_t shadowTextureIndex;
 
     void Update(const Object::Component::DirectionalLight &light, const Object::Component::Transform &transform)
     {

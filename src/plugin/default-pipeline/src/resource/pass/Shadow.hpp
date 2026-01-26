@@ -91,9 +91,10 @@ class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
             Engine::Entity entity{core, e};
             if (i == passIndex)
             {
-                const auto &lightGPUComponent = entity.GetComponents<Component::GPUDirectionalLight>();
+                auto &lightGPUComponent = entity.GetComponents<Component::GPUDirectionalLight>();
                 auto &outputs = this->GetOutputs();
-                outputs.depthBuffer->textureId = lightGPUComponent.shadowTexture;
+                outputs.depthBuffer->depthTextureView = lightGPUComponent.shadowTextureView;
+                lightGPUComponent.shadowTextureIndex = passIndex;
                 return;
             }
             i++;
@@ -118,7 +119,7 @@ class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
         }
         Engine::Entity lightEntity{core, light.front()};
         const auto &lightGPUComponent = lightEntity.GetComponents<Component::GPUDirectionalLight>();
-        const auto &lightBindGroup = bindGroupManager.Get(lightGPUComponent.bindGroup);
+        const auto &lightBindGroup = bindGroupManager.Get(lightGPUComponent.bindGroupData);
         renderPass.setBindGroup(0, lightBindGroup.GetBindGroup(), 0, nullptr);
 
         auto view = core.GetRegistry().view<Component::GPUTransform, Component::GPUMesh>();

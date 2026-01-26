@@ -12,11 +12,13 @@
 #include "resource/buffer/DirectionalLightBuffer.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include "resource/pass/Shadow.hpp"
+#include "utils/DirectionalLights.hpp"
 #include <filesystem>
 #include <string>
 
 void DefaultPipeline::System::OnDirectionalLightCreation(Engine::Core &core, Engine::EntityId entityId)
 {
+    static uint32_t lightIndex = 0;
     Engine::Entity entity{core, entityId};
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
@@ -33,18 +35,19 @@ void DefaultPipeline::System::OnDirectionalLightCreation(Engine::Core &core, Eng
     gpuBufferContainer.Add(directionalLightBufferId, std::move(directionalLightBuffer));
     GPUDirectionalLight.buffer = directionalLightBufferId;
 
-    wgpu::TextureDescriptor textureDescriptor(wgpu::Default);
-    std::string label = fmt::format("DIRECTIONAL_LIGHT_SHADOW_TEXTURE_{}", entityId);
-    textureDescriptor.label = wgpu::StringView(label);
-    textureDescriptor.size = {2048, 2048, 1};
-    textureDescriptor.dimension = wgpu::TextureDimension::_2D;
-    textureDescriptor.format = wgpu::TextureFormat::Depth32Float;
-    textureDescriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
-                              wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
-    Graphic::Resource::Texture shadowTexture(context, textureDescriptor);
-    entt::hashed_string textureId{label.data(), label.size()};
-    textureContainer.Add(textureId, std::move(shadowTexture));
-    GPUDirectionalLight.shadowTexture = textureId;
+    const auto &directionalShadowsTexture = textureContainer.Get(Utils::DIRECTIONAL_LIGHTS_SHADOW_TEXTURE_ID);
+    wgpu::TextureViewDescriptor shadowTextureViewDesc(wgpu::Default);
+    std::string textureViewName = fmt::format("DIRECTIONAL_LIGHTS_SHADOW_TEXTURE_VIEW_{}", entity);
+    shadowTextureViewDesc.label = wgpu::StringView(textureViewName.c_str());
+    shadowTextureViewDesc.format = wgpu::TextureFormat::Depth32Float;
+    shadowTextureViewDesc.dimension = wgpu::TextureViewDimension::_2D;
+    shadowTextureViewDesc.aspect = wgpu::TextureAspect::DepthOnly;
+    shadowTextureViewDesc.baseMipLevel = 0;
+    shadowTextureViewDesc.mipLevelCount = 1;
+    shadowTextureViewDesc.baseArrayLayer = lightIndex;
+    shadowTextureViewDesc.arrayLayerCount = 1;
+    shadowTextureViewDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment;
+    GPUDirectionalLight.shadowTextureView = directionalShadowsTexture.CreateView(shadowTextureViewDesc);
 
     std::string bindGroupName = fmt::format("DIRECTIONAL_LIGHT_BIND_GROUP_{}", entity);
     const uint64_t directionalLightBufferSize = Resource::DirectionalLightBuffer::DirectionalLightTransfer::GPUSize();
@@ -57,5 +60,6 @@ void DefaultPipeline::System::OnDirectionalLightCreation(Engine::Core &core, Eng
                                                 },
     });
     bindGroupManager.Add(bindGroupId, std::move(bindGroup));
-    GPUDirectionalLight.bindGroup = bindGroupId;
+    GPUDirectionalLight.bindGroupData = bindGroupId;
+    lightIndex++;
 }

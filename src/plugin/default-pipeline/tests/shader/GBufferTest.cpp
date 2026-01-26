@@ -63,16 +63,14 @@ void ExtractTextures(Engine::Core &core)
     auto outputTextureImage = outputTexture.RetrieveImage(context);
 
     auto view = core.GetRegistry().view<DefaultPipeline::Component::GPUDirectionalLight>();
-    auto &shadowOneTexture = textures.Get(Engine::Entity{core, view.front()}
-                                              .GetComponents<DefaultPipeline::Component::GPUDirectionalLight>()
-                                              .shadowTexture);
+    auto &shadowOneTexture = textures.Get(DefaultPipeline::Utils::DIRECTIONAL_LIGHTS_SHADOW_TEXTURE_ID);
     auto shadowOneTextureImage = shadowOneTexture.RetrieveImage(context);
 
     normalImage.ToPng("GBUFFER_NORMAL.png");
     albedoImage.ToPng("GBUFFER_ALBEDO.png");
     depthImage.ToPng("GBUFFER_DEPTH.png");
     outputTextureImage.ToPng("DEFERRED_OUTPUT.png");
-    shadowOneTextureImage.ToPng("SHADOW_ONE_OUTPUT.png");
+    // shadowOneTextureImage.ToPng("SHADOW_ONE_OUTPUT.png");
 }
 
 TEST(DefaultPipeline, SmokeTest)

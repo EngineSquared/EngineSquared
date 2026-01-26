@@ -102,6 +102,8 @@ struct DirectionalLightsData {
 @group(2) @binding(0) var<uniform> ambientLight : AmbientLight;
 @group(2) @binding(1) var<uniform> pointLights : PointLightsData;
 @group(2) @binding(2) var<uniform> directionalLights : DirectionalLightsData;
+@group(2) @binding(3) var lightsDirectionalTextures: texture_depth_2d_array;
+@group(2) @binding(4) var lightsDirectionalTextureSampler: sampler_comparison;
 
 @vertex
 fn vs_main(
@@ -208,16 +210,17 @@ class Deferred : public Graphic::Resource::ASingleExecutionRenderPass<Deferred> 
             Log::Error("Deferred::UniqueRenderCallback: No camera with GPUCamera component found.");
             return;
         }
+
         Engine::Entity camera{core, cameraView.front()};
         const auto &cameraGPUComponent = camera.GetComponents<Component::GPUCamera>();
         const auto &cameraBindGroup = bindGroupManager.Get(cameraGPUComponent.bindGroup);
-        renderPass.setBindGroup(cameraBindGroup.GetLayoutIndex(), cameraBindGroup.GetBindGroup(), 0, nullptr);
-
-        const auto &lightsBindGroup = bindGroupManager.Get(Utils::LIGHTS_BIND_GROUP_ID);
-        renderPass.setBindGroup(lightsBindGroup.GetLayoutIndex(), lightsBindGroup.GetBindGroup(), 0, nullptr);
+        renderPass.setBindGroup(0, cameraBindGroup.GetBindGroup(), 0, nullptr);
 
         const auto &texturesBindgroup = bindGroupManager.Get(DEFERRED_BINDGROUP_TEXTURES_ID);
-        renderPass.setBindGroup(texturesBindgroup.GetLayoutIndex(), texturesBindgroup.GetBindGroup(), 0, nullptr);
+        renderPass.setBindGroup(1, texturesBindgroup.GetBindGroup(), 0, nullptr);
+
+        const auto &lightsBindGroup = bindGroupManager.Get(Utils::LIGHTS_BIND_GROUP_ID);
+        renderPass.setBindGroup(2, lightsBindGroup.GetBindGroup(), 0, nullptr);
 
         renderPass.draw(6, 1, 0, 0);
     }
@@ -263,7 +266,16 @@ class Deferred : public Graphic::Resource::ASingleExecutionRenderPass<Deferred> 
                                               .setType(wgpu::BufferBindingType::Uniform)
                                               .setMinBindingSize(Resource::DirectionalLightsBuffer::GPUSize())
                                               .setVisibility(wgpu::ShaderStage::Fragment)
-                                              .setBinding(2));
+                                              .setBinding(2))
+                                .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("directionalShadowMaps")
+                                              .setSampleType(wgpu::TextureSampleType::Depth)
+                                              .setViewDimension(wgpu::TextureViewDimension::_2DArray)
+                                              .setVisibility(wgpu::ShaderStage::Fragment)
+                                              .setBinding(3))
+                                .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("directionalShadowMapSampler")
+                                              .setType(wgpu::SamplerBindingType::Comparison)
+                                              .setVisibility(wgpu::ShaderStage::Fragment)
+                                              .setBinding(4));
 
         auto colorOutput =
             Graphic::Utils::ColorTargetState("DEFERRED_OUTPUT").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);

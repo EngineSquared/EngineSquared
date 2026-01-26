@@ -129,10 +129,18 @@ template <typename TDerived> class AMultipleExecutionRenderPass : public ARender
         {
             const auto &depthTexture = this->GetOutputs().depthBuffer.value();
 
-            entt::hashed_string textureId = depthTexture.textureId;
-            auto textureView = core.GetResource<Resource::TextureContainer>().Get(textureId).GetDefaultView();
+            wgpu::TextureView depthView;
+            if (depthTexture.depthTextureView.has_value())
+            {
+                depthView = depthTexture.depthTextureView.value();
+            }
+            else
+            {
+                entt::hashed_string textureId = depthTexture.textureId;
+                depthView = core.GetResource<Resource::TextureContainer>().Get(textureId).GetDefaultView();
+            }
 
-            depthAttachment.view = textureView;
+            depthAttachment.view = depthView;
             depthAttachment.depthStoreOp = depthTexture.storeOp;
             float clearDepth = 1.0f;
             if (depthTexture.getClearDepthCallback(core, clearDepth))

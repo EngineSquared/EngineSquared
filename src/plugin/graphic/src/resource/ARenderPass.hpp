@@ -28,7 +28,9 @@ struct ColorOutput {
 };
 
 struct DepthOutput {
+    // TODO: use textureView container
     entt::hashed_string textureId{};
+    std::optional<wgpu::TextureView> depthTextureView;
     explicit DepthOutput(std::string_view textureId_ = {})
     {
         if (!textureId_.empty())
