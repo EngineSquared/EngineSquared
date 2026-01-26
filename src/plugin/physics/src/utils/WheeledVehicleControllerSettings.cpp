@@ -3,7 +3,6 @@
 #include "utils/WheeledVehicleController.hpp"
 #include "utils/WheeledVehicleControllerSettings.hpp"
 
-
 namespace Physics::Utils {
 
 JPH::VehicleController *
