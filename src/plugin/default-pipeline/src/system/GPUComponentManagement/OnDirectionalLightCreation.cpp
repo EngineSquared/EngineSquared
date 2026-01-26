@@ -38,7 +38,7 @@ void DefaultPipeline::System::OnDirectionalLightCreation(Engine::Core &core, Eng
     const auto &directionalShadowsTexture = textureContainer.Get(Utils::DIRECTIONAL_LIGHTS_SHADOW_TEXTURE_ID);
     wgpu::TextureViewDescriptor shadowTextureViewDesc(wgpu::Default);
     std::string textureViewName = fmt::format("DIRECTIONAL_LIGHTS_SHADOW_TEXTURE_VIEW_{}", entity);
-    shadowTextureViewDesc.label = wgpu::StringView(textureViewName.c_str());
+    shadowTextureViewDesc.label = wgpu::StringView(textureViewName);
     shadowTextureViewDesc.format = wgpu::TextureFormat::Depth32Float;
     shadowTextureViewDesc.dimension = wgpu::TextureViewDimension::_2D;
     shadowTextureViewDesc.aspect = wgpu::TextureAspect::DepthOnly;

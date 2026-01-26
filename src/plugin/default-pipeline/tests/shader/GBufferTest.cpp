@@ -70,7 +70,7 @@ void ExtractTextures(Engine::Core &core)
     albedoImage.ToPng("GBUFFER_ALBEDO.png");
     depthImage.ToPng("GBUFFER_DEPTH.png");
     outputTextureImage.ToPng("DEFERRED_OUTPUT.png");
-    // shadowOneTextureImage.ToPng("SHADOW_ONE_OUTPUT.png");
+    shadowOneTextureImage.ToPng("SHADOW_ONE_OUTPUT.png");
 }
 
 TEST(DefaultPipeline, SmokeTest)

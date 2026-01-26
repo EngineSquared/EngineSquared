@@ -24,7 +24,7 @@ struct GPUDirectionalLight {
         glm::vec3 posOfLight = transform.GetPosition();
         glm::mat4 lightProjection = light.projection;
         glm::vec3 target = posOfLight + glm::normalize(lightDirection) * 10.0f;
-        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+        auto up = glm::vec3(0.0f, 1.0f, 0.0f);
 
         glm::mat4 lightView = glm::lookAt(posOfLight, target, up);
         glm::mat4 lightSpaceMatrix = lightProjection * lightView;

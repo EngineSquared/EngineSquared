@@ -68,17 +68,15 @@ class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
   public:
     explicit Shadow(std::string_view name = SHADOW_PASS_NAME) : AMultipleExecutionRenderPass<Shadow>(name) {}
 
-    virtual uint16_t GetNumberOfPasses(Engine::Core &core) override
+    uint16_t GetNumberOfPasses(Engine::Core &core) override
     {
         uint16_t count = 0;
         core.GetRegistry().view<Component::GPUDirectionalLight>().each(
-            [&count](auto entity, const auto &light) { count++; });
+            [&count](auto, const auto &) { count++; });
         return std::min(count, static_cast<uint16_t>(1));
     }
 
-    // virtual void preMultiplePass(Engine::Core &core) {};
-    // virtual void postMultiplePass(Engine::Core &core) {};
-    virtual void perPass(uint16_t passIndex, Engine::Core &core) override
+    void perPass(uint16_t passIndex, Engine::Core &core) override
     {
         auto view = core.GetRegistry().view<Component::GPUDirectionalLight>();
         if (view.empty())
@@ -101,8 +99,6 @@ class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
         }
     };
 
-    virtual void postPass(uint16_t passIndex, Engine::Core &core) override {}
-
     void UniqueRenderCallback(wgpu::RenderPassEncoder &renderPass, Engine::Core &core) override
     {
         const auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
@@ -111,10 +107,6 @@ class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
         auto light = core.GetRegistry().view<Component::GPUDirectionalLight>();
         if (light.empty())
         {
-            Log::Error(
-                "Shadow::UniqueRenderCallback: No directional light with GPUDirectionalLight component found."); // TODO:
-                                                                                                                 // remove
-                                                                                                                 // log
             return;
         }
         Engine::Entity lightEntity{core, light.front()};

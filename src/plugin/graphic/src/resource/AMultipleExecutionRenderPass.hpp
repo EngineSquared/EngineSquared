@@ -12,10 +12,18 @@ template <typename TDerived> class AMultipleExecutionRenderPass : public ARender
 
     virtual uint16_t GetNumberOfPasses(Engine::Core &core) = 0;
 
-    virtual void preMultiplePass(Engine::Core &core) {};
-    virtual void postMultiplePass(Engine::Core &core) {};
-    virtual void perPass(uint16_t passIndex, Engine::Core &core) {};
-    virtual void postPass(uint16_t passIndex, Engine::Core &core) {};
+    virtual void preMultiplePass(Engine::Core &core) {
+        // Default implementation does nothing
+    };
+    virtual void postMultiplePass(Engine::Core &core) {
+        // Default implementation does nothing
+    };
+    virtual void perPass(uint16_t passIndex, Engine::Core &core) {
+        // Default implementation does nothing
+    };
+    virtual void postPass(uint16_t passIndex, Engine::Core &core) {
+        // Default implementation does nothing
+    };
 
     void Execute(Engine::Core &core) override
     {
