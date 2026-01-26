@@ -43,8 +43,8 @@ struct Material {
 
     std::string name;
 
-    glm::vec3 ambient = glm::vec3(1.f, 1.f, 1.f);
-    glm::vec3 diffuse;
+    glm::vec3 ambient = glm::vec3(1.f);
+    glm::vec3 diffuse = glm::vec3(1.f);
     glm::vec3 specular;
     glm::vec3 transmittance;
     glm::vec3 emission;

@@ -161,15 +161,17 @@ fn calculateDirectionalLight(light: DirectionalLight, N: vec3f, V: vec3f, MatKd:
 
   var visibility = 0.0;
   let oneOverShadowDepthTextureSize = 1.0 / 1024.0;
-  for (var y = -1; y <= 1; y++) {
-    for (var x = -1; x <= 1; x++) {
-      let offset = vec2f(vec2(x, y)) * oneOverShadowDepthTextureSize;
-
-      visibility += textureSampleCompare(
-        lightsDirectionalTextures, lightsDirectionalTextureSampler,
-        projCoord.xy + offset, i32(light.shadowIndex), projCoord.z - 0.007
-      );
-    }
+  let offsets = array<vec2f, 9>(
+    vec2f(-1, -1), vec2f(0, -1), vec2f(1, -1),
+    vec2f(-1,  0), vec2f(0,  0), vec2f(1,  0),
+    vec2f(-1,  1), vec2f(0,  1), vec2f(1,  1)
+  );
+  for (var i = 0u; i < 9u; i++) {
+    let offset = offsets[i] * oneOverShadowDepthTextureSize;
+    visibility += textureSampleCompare(
+      lightsDirectionalTextures, lightsDirectionalTextureSampler,
+      projCoord.xy + offset, i32(light.shadowIndex), projCoord.z - 0.007
+    );
   }
   visibility /= 9.0;
   if (visibility < 0.01) {
