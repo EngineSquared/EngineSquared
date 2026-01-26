@@ -71,6 +71,7 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
             pixel.b = mapped[i * 4 + 2];
             pixel.a = mapped[i * 4 + 3];
             break;
+        case wgpu::TextureFormat::BGRA8UnormSrgb:
         case wgpu::TextureFormat::BGRA8Unorm:
             pixel.b = mapped[i * 4 + 0];
             pixel.g = mapped[i * 4 + 1];

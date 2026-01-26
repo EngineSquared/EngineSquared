@@ -10,8 +10,9 @@
 #include "resource/ASingleExecutionRenderPass.hpp"
 #include "resource/buffer/CameraGPUBuffer.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
+#include "resource/buffer/DirectionalLightsBuffer.hpp"
 #include "utils/DefaultMaterial.hpp"
-#include "utils/PointLights.hpp"
+#include "utils/Lights.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
@@ -77,6 +78,21 @@ struct PointLightsData {
     _padding3: f32,
 };
 
+struct DirectionalLight {
+    viewProjection: mat4x4f,
+    color: vec4f,
+    direction: vec3f,
+    _padding: f32,
+};
+
+struct DirectionalLightsData {
+    lights: array<DirectionalLight, 64>,
+    count: u32,
+    _padding1: f32,
+    _padding2: f32,
+    _padding3: f32,
+};
+
 @group(0) @binding(0) var<uniform> camera: Camera;
 
 @group(1) @binding(0) var gBufferNormal: texture_2d<f32>;
@@ -85,7 +101,7 @@ struct PointLightsData {
 
 @group(2) @binding(0) var<uniform> ambientLight : AmbientLight;
 @group(2) @binding(1) var<uniform> pointLights : PointLightsData;
-
+@group(2) @binding(2) var<uniform> directionalLights : DirectionalLightsData;
 
 @vertex
 fn vs_main(
@@ -164,6 +180,12 @@ fn fs_main(
     for (var i = 0u; i < pointLights.count; i++) {
         lighting += calculatePointLight(pointLights.lights[i], position, N);
     }
+    for (var i = 0u; i < directionalLights.count; i++) {
+        let dirLight = directionalLights.lights[i];
+        let L = normalize(-dirLight.direction);
+        let diff = max(dot(N, L), 0.0);
+        lighting += dirLight.color.xyz * diff;
+    }
 
     var color : vec4f = vec4f(albedo * lighting, 1.0);
     output.color = color;
@@ -229,14 +251,19 @@ class Deferred : public Graphic::Resource::ASingleExecutionRenderPass<Deferred> 
         auto lightsLayout = Graphic::Utils::BindGroupLayout("LightsLayout")
                                 .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("ambientLight")
                                               .setType(wgpu::BufferBindingType::Uniform)
-                                              .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
+                                              .setMinBindingSize(sizeof(glm::vec3) + sizeof(float))
                                               .setVisibility(wgpu::ShaderStage::Fragment)
                                               .setBinding(0))
                                 .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("pointLights")
                                               .setType(wgpu::BufferBindingType::Uniform)
                                               .setMinBindingSize(Resource::PointLightsBuffer::GPUSize())
                                               .setVisibility(wgpu::ShaderStage::Fragment)
-                                              .setBinding(1));
+                                              .setBinding(1))
+                                .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("directionalLights")
+                                              .setType(wgpu::BufferBindingType::Uniform)
+                                              .setMinBindingSize(Resource::DirectionalLightsBuffer::GPUSize())
+                                              .setVisibility(wgpu::ShaderStage::Fragment)
+                                              .setBinding(2));
 
         auto colorOutput =
             Graphic::Utils::ColorTargetState("DEFERRED_OUTPUT").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);

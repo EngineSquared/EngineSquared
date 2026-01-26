@@ -59,7 +59,7 @@ void ExtractTextures(Engine::Core &core)
     auto &depthTexture = textures.Get(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID);
     auto depthImage = depthTexture.RetrieveImage(context);
 
-    auto &outputTexture = textures.Get(Graphic::System::END_DEPTH_RENDER_TEXTURE_ID);
+    auto &outputTexture = textures.Get(Graphic::Utils::END_RENDER_TEXTURE_ID);
     auto outputTextureImage = outputTexture.RetrieveImage(context);
 
     auto view = core.GetRegistry().view<DefaultPipeline::Component::GPUDirectionalLight>();
@@ -89,7 +89,7 @@ TEST(DefaultPipeline, SmokeTest)
     core.RegisterSystem(TestSystem);
 
     // Uncomment to save the images
-    core.RegisterSystem<RenderingPipeline::Presentation>(ExtractTextures);
+    core.RegisterSystem<RenderingPipeline::CommandCreation>(ExtractTextures);
 
     core.RunSystems();
 

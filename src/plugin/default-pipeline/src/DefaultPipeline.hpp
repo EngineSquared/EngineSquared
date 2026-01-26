@@ -17,6 +17,7 @@
 #include "resource/buffer/MaterialGPUBuffer.hpp"
 #include "resource/buffer/PointGPUBuffer.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
+#include "resource/buffer/DirectionalLightsBuffer.hpp"
 #include "resource/buffer/TransformGPUBuffer.hpp"
 
 #include "resource/pass/Deferred.hpp"
@@ -27,6 +28,8 @@
 #include "system/initialization/CreateAmbientLight.hpp"
 #include "system/initialization/CreateDefaultMaterial.hpp"
 #include "system/initialization/CreatePointLights.hpp"
+#include "system/initialization/CreateDirectionalLights.hpp"
+#include "system/initialization/CreateLights.hpp"
 
 #include "system/GPUComponentManagement/OnCameraCreation.hpp"
 #include "system/GPUComponentManagement/OnCameraDestruction.hpp"

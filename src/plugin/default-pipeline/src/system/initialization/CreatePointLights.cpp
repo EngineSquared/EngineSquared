@@ -2,8 +2,6 @@
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
-#include "resource/pass/Deferred.hpp"
-#include "utils/AmbientLight.hpp"
 
 namespace DefaultPipeline::System {
 
@@ -15,18 +13,5 @@ void CreatePointLights(Engine::Core &core)
     pointLightsBuffer->Create(core);
     auto pointLightsBufferSize = pointLightsBuffer->GetBuffer().getSize();
     bufferManager.Add(Utils::POINT_LIGHTS_BUFFER_ID, std::move(pointLightsBuffer));
-
-    auto &ambientLightBuffer = bufferManager.Get(Utils::AMBIENT_LIGHT_BUFFER_ID);
-    auto ambientLightBufferSize = ambientLightBuffer->GetBuffer().getSize();
-
-    auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
-    Graphic::Resource::BindGroup lightsBindGroup(core, Utils::LIGHTS_BIND_GROUP_NAME, Resource::DEFERRED_SHADER_ID, 2,
-                                                 {
-                                                     {0, Graphic::Resource::BindGroup::Asset::Type::Buffer,
-                                                      Utils::AMBIENT_LIGHT_BUFFER_ID, ambientLightBufferSize},
-                                                     {1, Graphic::Resource::BindGroup::Asset::Type::Buffer,
-                                                      Utils::POINT_LIGHTS_BUFFER_ID,  pointLightsBufferSize }
-    });
-    bindGroupManager.Add(Utils::LIGHTS_BIND_GROUP_ID, std::move(lightsBindGroup));
 }
 } // namespace DefaultPipeline::System
