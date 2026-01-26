@@ -35,6 +35,7 @@ static inline const entt::hashed_string DEFERRED_BINDGROUP_TEXTURES_ID =
 
 static inline constexpr std::string_view DEFERRED_SHADE_CONTENT = R"(
 const MAX_POINT_LIGHTS: u32 = 64u;
+const MAX_DIRECTIONAL_LIGHTS: u32 = 64u;
 
 struct DeferredInput {
     @builtin(vertex_index) VertexIndex : u32
@@ -153,7 +154,7 @@ fn calculatePointLight(light: GPUPointLight, worldPos: vec3f, normal: vec3f) -> 
     return light.color * diff * attenuation;
 }
 
-fn calculateDirectionalLight(light: DirectionalLight, N: vec3f, V: vec3f, MatKd: vec3f, MatKs: vec3f, Shiness: f32, position: vec3f) -> vec3f
+fn calculateDirectionalLight(light: DirectionalLight, N: vec3f, V: vec3f, MatKd: vec3f, MatKs: vec3f, Shiness: f32, position: vec3f, shadowBias: f32) -> vec3f
 {
   let FragPosLightSpace = light.viewProjection * vec4f(position, 1.0);
   let shadowCoord = FragPosLightSpace.xyz / FragPosLightSpace.w;
@@ -166,11 +167,14 @@ fn calculateDirectionalLight(light: DirectionalLight, N: vec3f, V: vec3f, MatKd:
     vec2f(-1,  0), vec2f(0,  0), vec2f(1,  0),
     vec2f(-1,  1), vec2f(0,  1), vec2f(1,  1)
   );
-  for (var i = 0u; i < 9u; i++) {
+
+  const PCF_SAMPLES: u32 = 9u;
+
+  for (var i = 0u; i < PCF_SAMPLES; i++) {
     let offset = offsets[i] * oneOverShadowDepthTextureSize;
     visibility += textureSampleCompare(
       lightsDirectionalTextures, lightsDirectionalTextureSampler,
-      projCoord.xy + offset, i32(light.shadowIndex), projCoord.z - 0.007
+      projCoord.xy + offset, i32(light.shadowIndex), projCoord.z - shadowBias
     );
   }
   visibility /= 9.0;
@@ -218,11 +222,17 @@ fn fs_main(
 
     var lighting = ambientLight.color;
 
-    for (var i = 0u; i < pointLights.count; i++) {
+    for (var i = 0u; i < MAX_POINT_LIGHTS; i++) {
+        if (i >= pointLights.count) {
+            break;
+        }
         lighting += calculatePointLight(pointLights.lights[i], position, N);
     }
-    for (var i = 0u; i < directionalLights.count; i++) {
-        lighting += calculateDirectionalLight(directionalLights.lights[i], N, V, albedo, vec3f(1.0), Shiness, position);
+    for (var i = 0u; i < MAX_DIRECTIONAL_LIGHTS; i++) {
+        if (i >= directionalLights.count) {
+            break;
+        }
+        lighting += calculateDirectionalLight(directionalLights.lights[i], N, V, albedo, vec3f(1.0), Shiness, position, 0.007);
     }
 
     var color : vec4f = vec4f(albedo * lighting, 1.0);
