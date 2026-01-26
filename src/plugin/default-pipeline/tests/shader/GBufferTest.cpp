@@ -42,8 +42,7 @@ void TestSystem(Engine::Core &core)
 
     auto directionalLight = core.CreateEntity();
     directionalLight.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -2.0f));
-    directionalLight.AddComponent<Object::Component::DirectionalLight>(
-        {.color = glm::vec4(1.0f), .direction = glm::vec3(0.0f, 0.0f, 1.0f)});
+    directionalLight.AddComponent<Object::Component::DirectionalLight>({.color = glm::vec4(1.0f)});
 }
 
 void ExtractTextures(Engine::Core &core)

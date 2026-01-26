@@ -48,9 +48,6 @@ struct Object {
 
 struct Light {
   viewProjection: mat4x4f,
-  color: vec4f,
-  direction: vec3f,
-  _padding: f32,
 };
 
 @group(0) @binding(0) var<uniform> light: Light;
