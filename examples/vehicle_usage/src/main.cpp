@@ -39,8 +39,8 @@ void Setup(Engine::Core &core)
 
     auto camera = core.CreateEntity();
 
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 1.0f, -10.0f));
-    camera.AddComponent<Object::Component::Camera>(core);
+    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 1.0f, -10.0f));
+    camera.AddComponent<Object::Component::Camera>();
 
     auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
     cameraManager.SetActiveCamera(camera);

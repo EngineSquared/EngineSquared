@@ -12,7 +12,7 @@
 // Components - Colliders
 #include "component/BoxCollider.hpp"
 #include "component/CapsuleCollider.hpp"
-#include "component/DefaultCollider.hpp"
+#include "component/MeshCollider.hpp"
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
 #include "component/SphereCollider.hpp"
@@ -37,6 +37,7 @@
 
 // Resources
 #include "resource/PhysicsManager.hpp"
+#include "resource/VehicleTelemetry.hpp"
 
 // Systems
 #include "system/ConstraintSystem.hpp"
@@ -47,6 +48,7 @@
 #include "system/SoftBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
 #include "system/VehicleControlSystem.hpp"
+#include "system/VehicleRPMUpdate.hpp"
 #include "system/VehicleSystem.hpp"
 #include "system/WheelTransformSyncSystem.hpp"
 

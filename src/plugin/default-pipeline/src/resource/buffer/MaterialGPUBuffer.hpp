@@ -8,21 +8,28 @@
 
 namespace DefaultPipeline::Resource {
 class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
-  private:
+  public:
     static inline std::string prefix = "MaterialGPUBuffer_";
     struct MaterialTransfer {
-        glm::vec3 ambient;
+        glm::vec4 ambient;
+        glm::vec4 diffuse;
+        glm::vec4 specular;
+        glm::vec4 transmittance;
+        glm::vec4 emission;
+        std::array<float, 3> _padding;
+        float shininess;
 
-        explicit MaterialTransfer(const Object::Component::Material &material) : ambient(material.ambient) {}
+        explicit MaterialTransfer(const Object::Component::Material &material)
+            : ambient(material.ambient, 1.0f), diffuse(material.diffuse, 1.0f), specular(material.specular, 1.0f),
+              transmittance(material.transmittance, 1.0f), emission(material.emission, 1.0f),
+              shininess(material.shininess)
+        {
+        }
 
         static uint32_t CPUSize() { return sizeof(MaterialTransfer); }
-        static uint32_t GPUSize() { return sizeof(MaterialTransfer) + sizeof(float) /*padding*/; }
+        static uint32_t GPUSize() { return sizeof(MaterialTransfer); }
     };
 
-    static_assert(sizeof(MaterialTransfer) == (sizeof(float) * 3),
-                  "MaterialTransfer struct size does not match GPU requirements.");
-
-  public:
     explicit MaterialGPUBuffer(Engine::Entity entity) : _entity(entity) { _UpdateDebugName(); }
 
     explicit MaterialGPUBuffer(void) { _UpdateDebugName(); }

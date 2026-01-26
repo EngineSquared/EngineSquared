@@ -11,4 +11,14 @@ namespace Sound::System {
  * @return void
  */
 void InitSounds(Engine::Core &core);
+
+/**
+ * @brief Report any audio errors that occurred during callbacks
+ *
+ * @param core A reference to the core engine.
+ *
+ * @return void
+ */
+void ReportAudioErrors(Engine::Core &core);
+
 } // namespace Sound::System

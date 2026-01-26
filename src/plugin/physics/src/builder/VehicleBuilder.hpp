@@ -1,6 +1,7 @@
 #pragma once
 
 #include "component/BoxCollider.hpp"
+#include "component/MeshCollider.hpp"
 #include "component/RigidBody.hpp"
 #include "component/Vehicle.hpp"
 #include "component/VehicleController.hpp"
@@ -209,7 +210,7 @@ template <> class VehicleBuilder<4> {
         chassisRigidBody.restitution = 0.1f;
         chassis.AddComponent<Component::RigidBody>(chassisRigidBody);
 
-        chassis.AddComponent<Component::BoxCollider>(Component::BoxCollider(_chassisHalfExtents));
+        chassis.AddComponent<Component::MeshCollider>();
 
         _vehicle.wheelEntities = wheelEntities;
         _vehicle.wheelPositions = _wheelPositions;
@@ -227,15 +228,6 @@ template <> class VehicleBuilder<4> {
     VehicleBuilder &SetChassisMass(float mass)
     {
         _chassisMass = mass;
-        return *this;
-    }
-
-    /**
-     * @brief Set chassis collider half-extents
-     */
-    VehicleBuilder &SetChassisHalfExtents(const glm::vec3 &halfExtents)
-    {
-        _chassisHalfExtents = halfExtents;
         return *this;
     }
 
@@ -271,7 +263,6 @@ template <> class VehicleBuilder<4> {
     glm::quat _chassisRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     glm::vec3 _chassisScale = glm::vec3(1.0f);
     float _chassisMass = 1500.0f;
-    glm::vec3 _chassisHalfExtents = glm::vec3(1.0f, 0.5f, 2.0f);
 
     std::array<Object::Component::Mesh, 4> _wheelMeshes;
     std::array<glm::vec3, 4> _wheelPositions = Component::Vehicle::GetDefaultWheelPositions();
