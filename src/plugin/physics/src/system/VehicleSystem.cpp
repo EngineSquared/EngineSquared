@@ -10,6 +10,7 @@
 #include "component/VehicleInternal.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
+#include "utils/WheeledVehicleControllerSettings.hpp"
 
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Collision/Shape/CylinderShape.h>
@@ -98,7 +99,7 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
     std::array<Engine::EntityId, 4> wheelEntities = vehicle.wheelEntities;
     std::array<JPH::BodyID, 4> wheelBodyIDs{};
 
-    JPH::WheeledVehicleControllerSettings controllerSettings;
+    Utils::WheeledVehicleControllerSettings controllerSettings;
 
     controllerSettings.mEngine.mMaxTorque = vehicle.engine.maxTorque;
     controllerSettings.mEngine.mMinRPM = vehicle.engine.minRPM;
@@ -201,7 +202,7 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
         constraintSettings.mWheels[i] = wheelSettings;
     }
 
-    constraintSettings.mController = new JPH::WheeledVehicleControllerSettings(controllerSettings);
+    constraintSettings.mController = new Utils::WheeledVehicleControllerSettings(controllerSettings);
     constraintSettings.mMaxPitchRollAngle = JPH::DegreesToRadians(60.0f);
 
     constraintSettings.mAntiRollBars.clear();
