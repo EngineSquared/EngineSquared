@@ -1,6 +1,7 @@
 #pragma once
 
 #include "component/BoxCollider.hpp"
+#include "component/ConvexHullMeshCollider.hpp"
 #include "component/MeshCollider.hpp"
 #include "component/RigidBody.hpp"
 #include "component/Vehicle.hpp"
@@ -208,9 +209,8 @@ template <> class VehicleBuilder<4> {
         auto chassisRigidBody = Component::RigidBody::CreateDynamic(_chassisMass);
         chassisRigidBody.friction = 0.5f;
         chassisRigidBody.restitution = 0.1f;
+        chassis.AddComponent<Component::ConvexHullMeshCollider>();
         chassis.AddComponent<Component::RigidBody>(chassisRigidBody);
-
-        chassis.AddComponent<Component::MeshCollider>();
 
         _vehicle.wheelEntities = wheelEntities;
         _vehicle.wheelPositions = _wheelPositions;
