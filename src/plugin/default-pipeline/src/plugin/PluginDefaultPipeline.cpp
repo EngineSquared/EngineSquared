@@ -32,7 +32,8 @@ void DefaultPipeline::Plugin::Bind()
                       &System::OnDirectionalLightCreation, &System::OnDirectionalLightDestruction>(this->GetCore());
 
     RegisterSystems<RenderingPipeline::Setup>(System::Create3DGraph, System::CreateDefaultMaterial,
-                                              System::CreateAmbientLight, System::CreatePointLights, System::CreateDirectionalLights, System::CreateLights);
+                                              System::CreateAmbientLight, System::CreatePointLights,
+                                              System::CreateDirectionalLights, System::CreateLights);
 
     RegisterSystems<RenderingPipeline::Preparation>(
         System::UpdateGPUTransforms, System::UpdateGPUCameras, System::UpdateGPUMaterials, System::UpdateGPUMeshes,

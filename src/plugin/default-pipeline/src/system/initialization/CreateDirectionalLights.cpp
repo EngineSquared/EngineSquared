@@ -1,7 +1,7 @@
-#include "system/initialization/CreatePointLights.hpp"
 #include "resource/BindGroupManager.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/DirectionalLightsBuffer.hpp"
+#include "system/initialization/CreatePointLights.hpp"
 
 namespace DefaultPipeline::System {
 
