@@ -87,7 +87,7 @@ TEST(DefaultPipeline, SmokeTest)
     core.RegisterSystem(TestSystem);
 
     // Uncomment to save the images
-    core.RegisterSystem<RenderingPipeline::CommandCreation>(ExtractTextures);
+    // core.RegisterSystem<RenderingPipeline::CommandCreation>(ExtractTextures);
 
     core.RunSystems();
 
