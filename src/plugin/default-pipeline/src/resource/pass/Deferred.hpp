@@ -82,7 +82,7 @@ struct DirectionalLight {
     viewProjection: mat4x4f,
     color: vec4f,
     direction: vec3f,
-    _padding: f32,
+    shadowIndex: u32,
 };
 
 struct DirectionalLightsData {
@@ -153,6 +153,42 @@ fn calculatePointLight(light: GPUPointLight, worldPos: vec3f, normal: vec3f) -> 
     return light.color * diff * attenuation;
 }
 
+fn calculateDirectionalLight(light: DirectionalLight, N: vec3f, V: vec3f, MatKd: vec3f, MatKs: vec3f, Shiness: f32, position: vec3f) -> vec3f
+{
+  let FragPosLightSpace = light.viewProjection * vec4f(position, 1.0);
+  let shadowCoord = FragPosLightSpace.xyz / FragPosLightSpace.w;
+  let projCoord = shadowCoord * vec3f(0.5, -0.5, 1.0) + vec3f(0.5, 0.5, 0.0);
+
+  var visibility = 0.0;
+  let oneOverShadowDepthTextureSize = 1.0 / 1024.0;
+  for (var y = -1; y <= 1; y++) {
+    for (var x = -1; x <= 1; x++) {
+      let offset = vec2f(vec2(x, y)) * oneOverShadowDepthTextureSize;
+
+      visibility += textureSampleCompare(
+        lightsDirectionalTextures, lightsDirectionalTextureSampler,
+        projCoord.xy + offset, i32(light.shadowIndex), projCoord.z - 0.007
+      );
+    }
+  }
+  visibility /= 9.0;
+  if (visibility < 0.01) {
+    return vec3f(0.0);
+  }
+
+  let L = normalize(light.direction);
+  let R = reflect(-L, N); // equivalent to 2.0 * dot(N, L) * N - L
+
+  let diffuse = max(0.0, dot(L, N)) * light.color.rgb;
+  // let diffuse = light.color.rgb;
+
+  // We clamp the dot product to 0 when it is negative
+  let RoV = max(0.0, dot(R, V));
+  let specular = pow(RoV, Shiness) * light.color.rgb;
+
+  return (MatKd * diffuse + MatKs * specular) * visibility;
+}
+
 @fragment
 fn fs_main(
   vertexToFragment : VertexToFragment,
@@ -160,6 +196,7 @@ fn fs_main(
     var output : DeferredOutput;
     output.color = vec4(0.0, 0.0, 0.0, 1.0);
     var coords = vec2i(floor(vertexToFragment.coord.xy));
+    const Shiness = 32.0;
 
     let depth = textureLoad(gBufferDepth, coords, 0).x;
 
@@ -183,10 +220,7 @@ fn fs_main(
         lighting += calculatePointLight(pointLights.lights[i], position, N);
     }
     for (var i = 0u; i < directionalLights.count; i++) {
-        let dirLight = directionalLights.lights[i];
-        let L = normalize(-dirLight.direction);
-        let diff = max(dot(N, L), 0.0);
-        lighting += dirLight.color.xyz * diff;
+        lighting += calculateDirectionalLight(directionalLights.lights[i], N, V, albedo, vec3f(1.0), Shiness, position);
     }
 
     var color : vec4f = vec4f(albedo * lighting, 1.0);

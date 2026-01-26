@@ -15,7 +15,7 @@ struct GPUDirectionalLight {
     Id buffer{};
     Id bindGroupData{};
     wgpu::TextureView shadowTextureView;
-    size_t shadowTextureIndex;
+    uint32_t shadowTextureIndex;
 
     void Update(const Object::Component::DirectionalLight &light, const Object::Component::Transform &transform)
     {

@@ -20,7 +20,7 @@ class DirectionalLightsBuffer : public Graphic::Resource::AGPUBuffer {
         glm::mat4 viewProjectionMatrix;
         glm::vec4 color;
         glm::vec3 direction;
-        uint32_t _padding;
+        uint32_t shadowIndex;
     };
 
     struct GPUDirectionalLights {
@@ -88,6 +88,7 @@ class DirectionalLightsBuffer : public Graphic::Resource::AGPUBuffer {
             data.lights[index].viewProjectionMatrix = viewProjectionMatrix;
             data.lights[index].color = color;
             data.lights[index].direction = direction;
+            data.lights[index].shadowIndex = gpuLight.shadowTextureIndex;
             index++;
         });
         data.count = index;
