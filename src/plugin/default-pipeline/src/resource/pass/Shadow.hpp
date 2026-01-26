@@ -71,8 +71,7 @@ class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
     uint16_t GetNumberOfPasses(Engine::Core &core) override
     {
         uint16_t count = 0;
-        core.GetRegistry().view<Component::GPUDirectionalLight>().each(
-            [&count](auto, const auto &) { count++; });
+        core.GetRegistry().view<Component::GPUDirectionalLight>().each([&count](auto, const auto &) { count++; });
         return std::min(count, static_cast<uint16_t>(1));
     }
 
