@@ -35,7 +35,8 @@ void DefaultPipeline::Plugin::Bind()
                                               System::CreateAmbientLight, System::CreatePointLights,
                                               System::CreateDirectionalLights, System::CreateLights);
 
-    RegisterSystems<RenderingPipeline::Preparation>(
-        System::UpdateGPUTransforms, System::UpdateGPUCameras, System::UpdateGPUMaterials, System::UpdateGPUMeshes,
-        System::UpdateGPUDirectionalLight, System::UpdateAmbientLight, System::UpdatePointLights, System::UpdateDirectionalLights);
+    RegisterSystems<RenderingPipeline::Preparation>(System::UpdateGPUTransforms, System::UpdateGPUCameras,
+                                                    System::UpdateGPUMaterials, System::UpdateGPUMeshes,
+                                                    System::UpdateGPUDirectionalLight, System::UpdateAmbientLight,
+                                                    System::UpdatePointLights, System::UpdateDirectionalLights);
 }
