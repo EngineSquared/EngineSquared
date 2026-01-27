@@ -61,7 +61,7 @@ class WheeledVehicleControllerSettings : public JPH::WheeledVehicleControllerSet
      * @brief Copy constructor from JPH::WheeledVehicleControllerSettings
      * @param other The Jolt settings to copy from
      */
-    WheeledVehicleControllerSettings(const JPH::WheeledVehicleControllerSettings &other)
+    explicit WheeledVehicleControllerSettings(const JPH::WheeledVehicleControllerSettings &other)
         : JPH::WheeledVehicleControllerSettings(other)
     {
     }
