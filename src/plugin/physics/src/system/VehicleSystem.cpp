@@ -110,12 +110,27 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
     controllerSettings.mEngine.mInertia = vehicle.engine.inertia;
     controllerSettings.mEngine.mAngularDamping = vehicle.engine.angularDamping;
 
-    controllerSettings.mEngine.mNormalizedTorque.Clear();
-    controllerSettings.mEngine.mNormalizedTorque.Reserve(
-        static_cast<JPH::uint>(vehicle.engine.normalizedTorque.size()));
-    for (const auto &point : vehicle.engine.normalizedTorque)
+    if (vehicle.engine.normalizedTorque.empty())
     {
-        controllerSettings.mEngine.mNormalizedTorque.AddPoint(point.rpm, point.torque);
+        Log::Warn("Vehicle engine normalized torque curve is empty. Falling back to default values.");
+        Component::EngineSettings defaultSettings;
+        controllerSettings.mEngine.mNormalizedTorque.Clear();
+        controllerSettings.mEngine.mNormalizedTorque.Reserve(
+            static_cast<JPH::uint>(defaultSettings.normalizedTorque.size()));
+        for (const auto &point : defaultSettings.normalizedTorque)
+        {
+            controllerSettings.mEngine.mNormalizedTorque.AddPoint(point.rpm, point.torque);
+        }
+    }
+    else
+    {
+        controllerSettings.mEngine.mNormalizedTorque.Clear();
+        controllerSettings.mEngine.mNormalizedTorque.Reserve(
+            static_cast<JPH::uint>(vehicle.engine.normalizedTorque.size()));
+        for (const auto &point : vehicle.engine.normalizedTorque)
+        {
+            controllerSettings.mEngine.mNormalizedTorque.AddPoint(point.rpm, point.torque);
+        }
     }
 
     controllerSettings.mTransmission.mMode = (vehicle.gearbox.mode == Component::TransmissionMode::Auto) ?
@@ -146,7 +161,7 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
     {
         Log::Warn("Gearbox has no reverse gears defined. Using default reverse gear ratio based on first "
                   "forward gear.");
-        float defaultReverseRatio = -2.90f;
+        float defaultReverseRatio = -vehicle.gearbox.forwardGearRatios[0];
         controllerSettings.mTransmission.mReverseGearRatios.push_back(defaultReverseRatio);
     }
     else
