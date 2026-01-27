@@ -94,6 +94,32 @@ template <> class VehicleBuilder<4> {
     }
 
     /**
+     * @brief Set maximum brake torque for a specific wheel
+     *
+     * @param index Wheel position
+     * @param torque Maximum brake torque in Nm (default: 1500.0f)
+     */
+    VehicleBuilder &SetMaxBrakeTorque(Component::WheelIndex index, float torque)
+    {
+        _vehicle.wheels[static_cast<size_t>(index)].maxBrakeTorque = torque;
+        return *this;
+    }
+
+    /**
+     * @brief Set maximum handbrake torque for a specific wheel
+     *
+     * Usually only applied to rear wheels.
+     *
+     * @param index Wheel position
+     * @param torque Maximum handbrake torque in Nm (default: 4000.0f)
+     */
+    VehicleBuilder &SetMaxHandBrakeTorque(Component::WheelIndex index, float torque)
+    {
+        _vehicle.wheels[static_cast<size_t>(index)].maxHandBrakeTorque = torque;
+        return *this;
+    }
+
+    /**
      * @brief Set drivetrain type (AWD, FWD, RWD)
      */
     VehicleBuilder &SetDrivetrain(Component::DrivetrainType drivetrain)

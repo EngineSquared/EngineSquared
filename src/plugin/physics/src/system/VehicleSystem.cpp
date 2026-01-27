@@ -145,7 +145,7 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
     controllerSettings.mTransmission.mReverseGearRatios.clear();
     if (vehicle.gearbox.reverseGearRatios.empty())
     {
-        Log::Warning("Gearbox has no reverse gears defined. Using default reverse gear ratio based on first "
+        Log::Warn("Gearbox has no reverse gears defined. Using default reverse gear ratio based on first "
                      "forward gear.");
         float defaultReverseRatio = -2.90f;
         controllerSettings.mTransmission.mReverseGearRatios.push_back(defaultReverseRatio);
