@@ -6,7 +6,7 @@
 #include "resource/PhysicsManager.hpp"
 #include "resource/VehicleTelemetry.hpp"
 
-#include "utils/WheeledVehicleController.hpp"
+#include <Jolt/Physics/Vehicle/WheeledVehicleController.h>
 
 namespace Physics::System {
 
@@ -26,7 +26,7 @@ void VehicleRPMUpdate(Engine::Core &core)
         if (!internal.IsValid() || !internal.vehicleConstraint)
             continue;
 
-        auto *controller = static_cast<Utils::WheeledVehicleController *>(internal.vehicleConstraint->GetController());
+        auto *controller = static_cast<JPH::WheeledVehicleController *>(internal.vehicleConstraint->GetController());
         if (!controller)
             continue;
 

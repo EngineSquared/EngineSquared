@@ -7,7 +7,7 @@
 #include "component/VehicleInternal.hpp"
 #include "resource/PhysicsManager.hpp"
 
-#include "utils/WheeledVehicleController.hpp"
+#include <Jolt/Physics/Vehicle/WheeledVehicleController.h>
 
 namespace Physics::System {
 
@@ -27,7 +27,7 @@ void VehicleControlSystem(Engine::Core &core)
                 return;
 
             auto *wheeledController =
-                static_cast<Utils::WheeledVehicleController *>(internal.vehicleConstraint->GetController());
+                static_cast<JPH::WheeledVehicleController *>(internal.vehicleConstraint->GetController());
 
             wheeledController->SetDriverInput(controller.forwardInput, controller.steeringInput, controller.brakeInput,
                                               controller.handBrakeInput);
