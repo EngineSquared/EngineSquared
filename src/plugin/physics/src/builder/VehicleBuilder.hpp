@@ -182,7 +182,7 @@ template <> class VehicleBuilder<4> {
             }
         }
 
-        if (_vehicle.gearbox.forwardGearRatios.size() < 2)
+        if (_vehicle.gearbox.forwardGearRatios.empty())
         {
             throw Exception::VehicleBuilderError("Gearbox must have at least one forward gear");
         }

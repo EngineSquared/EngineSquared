@@ -47,7 +47,11 @@ static void CreateJoltWheelSettings(JPH::WheelSettingsWV &joltWheel, const Compo
     joltWheel.mInertia = wheelSettings.inertia;
     joltWheel.mAngularDamping = wheelSettings.angularDamping;
     joltWheel.mMaxBrakeTorque = wheelSettings.maxBrakeTorque;
-    joltWheel.mMaxHandBrakeTorque = wheelSettings.maxHandBrakeTorque;
+
+    if (isRear)
+    {
+        joltWheel.mMaxHandBrakeTorque = wheelSettings.maxHandBrakeTorque;
+    }
 
     joltWheel.mLongitudinalFriction.Clear();
     joltWheel.mLongitudinalFriction.Reserve(static_cast<JPH::uint>(wheelSettings.longitudinalFriction.size()));
@@ -139,9 +143,19 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
     }
 
     controllerSettings.mTransmission.mReverseGearRatios.clear();
-    for (float ratio : vehicle.gearbox.reverseGearRatios)
+    if (vehicle.gearbox.reverseGearRatios.empty())
     {
-        controllerSettings.mTransmission.mReverseGearRatios.push_back(ratio);
+        Log::Warning("Gearbox has no reverse gears defined. Using default reverse gear ratio based on first "
+                     "forward gear.");
+        float defaultReverseRatio = -2.90f;
+        controllerSettings.mTransmission.mReverseGearRatios.push_back(defaultReverseRatio);
+    }
+    else
+    {
+        for (float ratio : vehicle.gearbox.reverseGearRatios)
+        {
+            controllerSettings.mTransmission.mReverseGearRatios.push_back(ratio);
+        }
     }
 
     switch (vehicle.drivetrain)
