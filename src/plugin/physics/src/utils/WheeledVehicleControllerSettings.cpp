@@ -8,7 +8,8 @@ namespace Physics::Utils {
 JPH::VehicleController *
 WheeledVehicleControllerSettings::ConstructController(JPH::VehicleConstraint &inConstraint) const
 {
-    return new WheeledVehicleController(*this, inConstraint);
+    // Safety: JoltPhysics will cast it to a reference-counted pointer through its internal system
+    return new WheeledVehicleController(*this, inConstraint); // NOSONAR
 }
 
 } // namespace Physics::Utils

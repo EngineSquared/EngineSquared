@@ -55,7 +55,7 @@ class WheeledVehicleControllerSettings : public JPH::WheeledVehicleControllerSet
      * @brief Copy constructor
      * @param other The settings to copy from
      */
-    WheeledVehicleControllerSettings(const WheeledVehicleControllerSettings &other) = default;
+    explicit WheeledVehicleControllerSettings(const WheeledVehicleControllerSettings &other) = default;
 
     /**
      * @brief Copy constructor from JPH::WheeledVehicleControllerSettings

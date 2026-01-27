@@ -202,7 +202,9 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
         constraintSettings.mWheels[i] = wheelSettings;
     }
 
-    constraintSettings.mController = new Utils::WheeledVehicleControllerSettings(controllerSettings);
+    // Safety: JoltPhysics will cast it to a reference-counted pointer through its internal system
+    // (mController is a Ref<VehicleControllerSettings>)
+    constraintSettings.mController = new Utils::WheeledVehicleControllerSettings(controllerSettings); // NOSONAR
     constraintSettings.mMaxPitchRollAngle = JPH::DegreesToRadians(60.0f);
 
     constraintSettings.mAntiRollBars.clear();
