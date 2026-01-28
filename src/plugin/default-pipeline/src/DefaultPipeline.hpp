@@ -1,6 +1,7 @@
 #pragma once
 
 #include "component/GPUCamera.hpp"
+#include "component/GPUDirectionalLight.hpp"
 #include "component/GPUMaterial.hpp"
 #include "component/GPUMesh.hpp"
 #include "component/GPUTransform.hpp"
@@ -11,6 +12,8 @@
 
 #include "resource/buffer/AmbientLightBuffer.hpp"
 #include "resource/buffer/CameraGPUBuffer.hpp"
+#include "resource/buffer/DirectionalLightBuffer.hpp"
+#include "resource/buffer/DirectionalLightsBuffer.hpp"
 #include "resource/buffer/IndexGPUBuffer.hpp"
 #include "resource/buffer/MaterialGPUBuffer.hpp"
 #include "resource/buffer/PointGPUBuffer.hpp"
@@ -19,14 +22,19 @@
 
 #include "resource/pass/Deferred.hpp"
 #include "resource/pass/GBuffer.hpp"
+#include "resource/pass/Shadow.hpp"
 
 #include "system/initialization/Create3DGraph.hpp"
 #include "system/initialization/CreateAmbientLight.hpp"
 #include "system/initialization/CreateDefaultMaterial.hpp"
+#include "system/initialization/CreateDirectionalLights.hpp"
+#include "system/initialization/CreateLights.hpp"
 #include "system/initialization/CreatePointLights.hpp"
 
 #include "system/GPUComponentManagement/OnCameraCreation.hpp"
 #include "system/GPUComponentManagement/OnCameraDestruction.hpp"
+#include "system/GPUComponentManagement/OnDirectionalLightCreation.hpp"
+#include "system/GPUComponentManagement/OnDirectionalLightDestruction.hpp"
 #include "system/GPUComponentManagement/OnMaterialCreation.hpp"
 #include "system/GPUComponentManagement/OnMaterialDestruction.hpp"
 #include "system/GPUComponentManagement/OnMeshCreation.hpp"
@@ -35,7 +43,9 @@
 #include "system/GPUComponentManagement/OnTransformDestruction.hpp"
 
 #include "system/preparation/UpdateAmbientLight.hpp"
+#include "system/preparation/UpdateDirectionalLights.hpp"
 #include "system/preparation/UpdateGPUCameras.hpp"
+#include "system/preparation/UpdateGPUDirectionalLight.hpp"
 #include "system/preparation/UpdateGPUMaterials.hpp"
 #include "system/preparation/UpdateGPUMeshes.hpp"
 #include "system/preparation/UpdateGPUTransforms.hpp"

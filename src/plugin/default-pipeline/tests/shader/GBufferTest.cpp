@@ -4,6 +4,8 @@
 #include "RenderingPipeline.hpp"
 #include "component/AmbientLight.hpp"
 #include "component/Camera.hpp"
+#include "component/DirectionalLight.hpp"
+#include "component/GPUDirectionalLight.hpp"
 #include "component/Mesh.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
@@ -37,6 +39,10 @@ void TestSystem(Engine::Core &core)
                                       .intensity = 50.0f,
                                       .radius = 10.0f,
                                       .falloff = 1.0f});
+
+    auto directionalLight = core.CreateEntity();
+    directionalLight.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -2.0f));
+    directionalLight.AddComponent<Object::Component::DirectionalLight>({.color = glm::vec4(1.0f)});
 }
 
 void ExtractTextures(Engine::Core &core)
@@ -53,13 +59,18 @@ void ExtractTextures(Engine::Core &core)
     auto &depthTexture = textures.Get(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID);
     auto depthImage = depthTexture.RetrieveImage(context);
 
-    auto &outputTexture = textures.Get(DefaultPipeline::Resource::DEFERRED_PASS_OUTPUT_ID);
-    auto deferredOutputImage = outputTexture.RetrieveImage(context);
+    auto &outputTexture = textures.Get(Graphic::Utils::END_RENDER_TEXTURE_ID);
+    auto outputTextureImage = outputTexture.RetrieveImage(context);
+
+    auto view = core.GetRegistry().view<DefaultPipeline::Component::GPUDirectionalLight>();
+    auto &shadowOneTexture = textures.Get(DefaultPipeline::Utils::DIRECTIONAL_LIGHTS_SHADOW_TEXTURE_ID);
+    auto shadowOneTextureImage = shadowOneTexture.RetrieveImage(context);
 
     normalImage.ToPng("GBUFFER_NORMAL.png");
     albedoImage.ToPng("GBUFFER_ALBEDO.png");
     depthImage.ToPng("GBUFFER_DEPTH.png");
-    deferredOutputImage.ToPng("DEFERRED_OUTPUT.png");
+    outputTextureImage.ToPng("DEFERRED_OUTPUT.png");
+    shadowOneTextureImage.ToPng("SHADOW_ONE_OUTPUT.png");
 }
 
 TEST(DefaultPipeline, SmokeTest)
@@ -76,7 +87,7 @@ TEST(DefaultPipeline, SmokeTest)
     core.RegisterSystem(TestSystem);
 
     // Uncomment to save the images
-    // core.RegisterSystem<RenderingPipeline::Presentation>(ExtractTextures);
+    // core.RegisterSystem<RenderingPipeline::CommandCreation>(ExtractTextures);
 
     core.RunSystems();
 

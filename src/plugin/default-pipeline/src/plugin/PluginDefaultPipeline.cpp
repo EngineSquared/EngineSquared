@@ -14,16 +14,6 @@ static void SetupGPUComponent(Engine::Core &core)
     registry.on_destroy<GPUComponent>().template connect<DestructionFunction>(core);
 }
 
-/**
- * @brief Configure and register the default rendering pipeline for the plugin.
- *
- * Registers required plugin dependencies and runtime resources, wires CPU component
- * lifecycle events to GPU creation/destruction handlers for camera, mesh, transform,
- * and material components, and registers the rendering setup and preparation systems.
- *
- * The preparation systems registered include: UpdateGPUTransforms, UpdateGPUCameras,
- * UpdateGPUMaterials, UpdateGPUMeshes, UpdateAmbientLight, and UpdatePointLights.
- */
 void DefaultPipeline::Plugin::Bind()
 {
     RequirePlugins<RenderingPipeline::Plugin, Graphic::Plugin>();
@@ -38,11 +28,15 @@ void DefaultPipeline::Plugin::Bind()
                       &System::OnTransformDestruction>(this->GetCore());
     SetupGPUComponent<Object::Component::Material, Component::GPUMaterial, &System::OnMaterialCreation,
                       &System::OnMaterialDestruction>(this->GetCore());
+    SetupGPUComponent<Object::Component::DirectionalLight, Component::GPUDirectionalLight,
+                      &System::OnDirectionalLightCreation, &System::OnDirectionalLightDestruction>(this->GetCore());
 
     RegisterSystems<RenderingPipeline::Setup>(System::Create3DGraph, System::CreateDefaultMaterial,
-                                              System::CreateAmbientLight, System::CreatePointLights);
+                                              System::CreateAmbientLight, System::CreatePointLights,
+                                              System::CreateDirectionalLights, System::CreateLights);
 
     RegisterSystems<RenderingPipeline::Preparation>(System::UpdateGPUTransforms, System::UpdateGPUCameras,
                                                     System::UpdateGPUMaterials, System::UpdateGPUMeshes,
-                                                    System::UpdateAmbientLight, System::UpdatePointLights);
+                                                    System::UpdateGPUDirectionalLight, System::UpdateAmbientLight,
+                                                    System::UpdatePointLights, System::UpdateDirectionalLights);
 }

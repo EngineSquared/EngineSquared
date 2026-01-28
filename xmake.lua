@@ -14,13 +14,14 @@ add_requires(
     "freetype",
     "zlib",
     "stb 2025.03.14",
-    "joltphysics v5.4.0",
     "miniaudio 0.11.23",
     "lodepng 2025.05.06",
     "wgpu-native ^24.0.0",
     "glfw3webgpu v1.3.0-alpha",
     { debug = is_mode("debug") }
 )
+
+add_requires("joltphysics v5.4.0", { configs = { symbols = is_mode("debug") }, debug = is_mode("debug") })
 add_requires("fmt 12.1.0", { configs = { header_only = true }, debug = is_mode("debug") })
 add_requires("rmlui 6.2", { configs = { transform = true, font_effects = true }, debug = is_mode("debug") })
 
