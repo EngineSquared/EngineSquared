@@ -38,23 +38,67 @@ enum class CollisionTesterType : uint8_t {
 };
 
 /**
+ * @brief Transmission mode - how gears are shifted
+ */
+enum class TransmissionMode : uint8_t {
+    /// Automatically shift gear up and down
+    Auto,
+    /// Manual gear shift (controlled by user input)
+    Manual
+};
+
+/**
+ * @brief Torque curve point for normalized engine torque
+ *
+ * Defines a point on the torque curve:
+ * - X-axis (rpm): Fraction of engine RPM (0 = minRPM, 1 = maxRPM)
+ * - Y-axis (torque): Ratio of max torque (0 = 0 Nm, 1 = maxTorque)
+ */
+struct TorqueCurvePoint {
+    float rpm;    ///< Normalized RPM (0.0 to 1.0)
+    float torque; ///< Normalized torque (0.0 to 1.0)
+};
+
+/**
  * @brief Gearbox configuration for vehicle transmission
  */
 struct GearboxSettings {
-    /// Gear ratios (index 0 is reverse, 1+ are forward gears)
-    std::vector<float> gearRatios = {-2.5f, 2.8f, 1.8f, 1.3f, 1.0f, 0.8f};
+    /// Transmission mode (auto or manual shifting)
+    TransmissionMode mode = TransmissionMode::Auto;
 
-    /// Current gear index (0 = reverse, 1 = first, etc.)
+    /// Forward gear ratios (rotation rate between engine and gearbox)
+    /// Index 0 = 1st gear, 1 = 2nd gear, etc.
+    std::vector<float> forwardGearRatios = {2.66f, 1.78f, 1.3f, 1.0f, 0.74f};
+
+    /// Reverse gear ratios (rotation rate between engine and gearbox when in reverse)
+    /// Typically negative values. Index 0 = 1st reverse gear, etc.
+    std::vector<float> reverseGearRatios = {-2.90f};
+
+    /// Current gear (-1 = reverse, 0 = neutral, 1 = first forward, etc.)
     int currentGear = 1;
 
-    /// Time to switch gears in seconds
-    float clutchReleaseTime = 0.3f;
-
-    /// Gear shift delay
+    /// How long it takes to switch gears (s) - only used in auto mode
     float switchTime = 0.5f;
 
-    /// Ratio between engine and clutch when clutch is pressed
+    /// How long it takes to release the clutch (go to full friction) - only used in auto mode
+    float clutchReleaseTime = 0.3f;
+
+    /// How long to wait after releasing clutch before another switch is attempted (s) - only used in auto mode
+    float switchLatency = 0.5f;
+
+    /// If RPM of engine is bigger than this, shift a gear up - only used in auto mode
+    float shiftUpRPM = 4000.0f;
+
+    /// If RPM of engine is smaller than this, shift a gear down - only used in auto mode
+    float shiftDownRPM = 2000.0f;
+
+    /// Strength of the clutch when fully engaged
+    /// Total torque = ClutchStrength * (Velocity Engine - Avg Velocity Wheels At Clutch)
+    /// Units: kg * m^2 * s^-1
     float clutchStrength = 10.0f;
+
+    /// Current clutch friction (0 = no friction, 1 = full friction) - for manual mode
+    float clutchFriction = 1.0f;
 };
 
 /**
@@ -70,10 +114,21 @@ struct EngineSettings {
     /// Maximum RPM
     float maxRPM = 6000.0f;
 
-    /// Inertia of engine and wheels
+    /// Normalized torque curve - describes torque output across RPM range
+    /// Y-axis: Ratio of max torque (0.0 = 0 Nm, 1.0 = maxTorque)
+    /// X-axis: Fraction of RPM (0.0 = minRPM, 1.0 = maxRPM)
+    /// Default: realistic curve with peak torque at mid-range RPM
+    std::vector<TorqueCurvePoint> normalizedTorque = {
+        {0.0f,  0.8f}, // 80% torque at minRPM
+        {0.66f, 1.0f}, // 100% torque at 66% of RPM range (peak)
+        {1.0f,  0.8f}  // 80% torque at maxRPM
+    };
+
+    /// Moment of inertia (kg m^2) of the engine
     float inertia = 0.5f;
 
-    /// Engine friction (Nm/rad/s)
+    /// Angular damping factor: dw/dt = -c * w
+    /// Value should be zero or positive, usually close to 0
     float angularDamping = 0.2f;
 };
 

@@ -43,8 +43,28 @@ static void CreateJoltWheelSettings(JPH::WheelSettingsWV &joltWheel, const Compo
     joltWheel.mSuspensionSpring.mFrequency = wheelSettings.suspensionFrequency;
     joltWheel.mSuspensionSpring.mDamping = wheelSettings.suspensionDamping;
 
-    joltWheel.mLongitudinalFriction.mPoints[0] = {0.0f, wheelSettings.longitudinalFriction};
-    joltWheel.mLateralFriction.mPoints[0] = {0.0f, wheelSettings.lateralFriction};
+    joltWheel.mInertia = wheelSettings.inertia;
+    joltWheel.mAngularDamping = wheelSettings.angularDamping;
+    joltWheel.mMaxBrakeTorque = wheelSettings.maxBrakeTorque;
+
+    if (isRear)
+    {
+        joltWheel.mMaxHandBrakeTorque = wheelSettings.maxHandBrakeTorque;
+    }
+
+    joltWheel.mLongitudinalFriction.Clear();
+    joltWheel.mLongitudinalFriction.Reserve(static_cast<JPH::uint>(wheelSettings.longitudinalFriction.size()));
+    for (const auto &point : wheelSettings.longitudinalFriction)
+    {
+        joltWheel.mLongitudinalFriction.AddPoint(point.slip, point.friction);
+    }
+
+    joltWheel.mLateralFriction.Clear();
+    joltWheel.mLateralFriction.Reserve(static_cast<JPH::uint>(wheelSettings.lateralFriction.size()));
+    for (const auto &point : wheelSettings.lateralFriction)
+    {
+        joltWheel.mLateralFriction.AddPoint(point.slip, point.friction);
+    }
 }
 
 /**
@@ -90,24 +110,67 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
     controllerSettings.mEngine.mInertia = vehicle.engine.inertia;
     controllerSettings.mEngine.mAngularDamping = vehicle.engine.angularDamping;
 
+    if (vehicle.engine.normalizedTorque.empty())
+    {
+        Log::Warn("Vehicle engine normalized torque curve is empty. Falling back to default values.");
+        Component::EngineSettings defaultSettings;
+        controllerSettings.mEngine.mNormalizedTorque.Clear();
+        controllerSettings.mEngine.mNormalizedTorque.Reserve(
+            static_cast<JPH::uint>(defaultSettings.normalizedTorque.size()));
+        for (const auto &point : defaultSettings.normalizedTorque)
+        {
+            controllerSettings.mEngine.mNormalizedTorque.AddPoint(point.rpm, point.torque);
+        }
+    }
+    else
+    {
+        controllerSettings.mEngine.mNormalizedTorque.Clear();
+        controllerSettings.mEngine.mNormalizedTorque.Reserve(
+            static_cast<JPH::uint>(vehicle.engine.normalizedTorque.size()));
+        for (const auto &point : vehicle.engine.normalizedTorque)
+        {
+            controllerSettings.mEngine.mNormalizedTorque.AddPoint(point.rpm, point.torque);
+        }
+    }
+
+    controllerSettings.mTransmission.mMode = (vehicle.gearbox.mode == Component::TransmissionMode::Auto) ?
+                                                 JPH::ETransmissionMode::Auto :
+                                                 JPH::ETransmissionMode::Manual;
+
     controllerSettings.mTransmission.mClutchStrength = vehicle.gearbox.clutchStrength;
     controllerSettings.mTransmission.mSwitchTime = vehicle.gearbox.switchTime;
     controllerSettings.mTransmission.mClutchReleaseTime = vehicle.gearbox.clutchReleaseTime;
+    controllerSettings.mTransmission.mSwitchLatency = vehicle.gearbox.switchLatency;
+    controllerSettings.mTransmission.mShiftUpRPM = vehicle.gearbox.shiftUpRPM;
+    controllerSettings.mTransmission.mShiftDownRPM = vehicle.gearbox.shiftDownRPM;
     controllerSettings.mTransmission.mGearRatios.clear();
 
-    if (vehicle.gearbox.gearRatios.size() < 2)
+    if (vehicle.gearbox.forwardGearRatios.empty())
     {
-        // Should never happen
-        Log::Error("Cannot create Vehicle: Gearbox must have at least one forward gear and one reverse gear");
+        Log::Error("Cannot create Vehicle: Gearbox must have at least one forward gear");
         return;
     }
 
-    for (size_t i = 1; i < vehicle.gearbox.gearRatios.size(); ++i)
+    for (float ratio : vehicle.gearbox.forwardGearRatios)
     {
-        controllerSettings.mTransmission.mGearRatios.push_back(vehicle.gearbox.gearRatios[i]);
+        controllerSettings.mTransmission.mGearRatios.push_back(ratio);
     }
 
-    controllerSettings.mTransmission.mReverseGearRatios = {vehicle.gearbox.gearRatios[0]};
+    controllerSettings.mTransmission.mReverseGearRatios.clear();
+    if (vehicle.gearbox.reverseGearRatios.empty())
+    {
+        Log::Warn("Gearbox has no reverse gears defined. Using default reverse gear ratio based on first "
+                  "forward gear.");
+        float defaultReverseRatio = -vehicle.gearbox.forwardGearRatios[0];
+        controllerSettings.mTransmission.mReverseGearRatios.push_back(defaultReverseRatio);
+    }
+    else
+    {
+        for (float ratio : vehicle.gearbox.reverseGearRatios)
+        {
+            controllerSettings.mTransmission.mReverseGearRatios.push_back(ratio);
+        }
+    }
 
     switch (vehicle.drivetrain)
     {
@@ -167,7 +230,9 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
         constraintSettings.mWheels[i] = wheelSettings;
     }
 
-    constraintSettings.mController = new JPH::WheeledVehicleControllerSettings(controllerSettings);
+    // Safety: JoltPhysics will cast it to a reference-counted pointer through its internal system
+    // (mController is a Ref<VehicleControllerSettings>)
+    constraintSettings.mController = new JPH::WheeledVehicleControllerSettings(controllerSettings); // NOSONAR
     constraintSettings.mMaxPitchRollAngle = JPH::DegreesToRadians(60.0f);
 
     constraintSettings.mAntiRollBars.clear();
