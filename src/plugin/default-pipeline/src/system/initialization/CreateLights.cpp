@@ -17,7 +17,7 @@ static void CreateDirectionalLightsShadowTextures(Engine::Core &core)
 
     wgpu::TextureDescriptor textureDescriptor(wgpu::Default);
     textureDescriptor.label = wgpu::StringView("DIRECTIONAL_LIGHTS_SHADOW_TEXTURE");
-    textureDescriptor.size = {8192, 8192, Utils::MAX_DIRECTIONAL_LIGHTS};
+    textureDescriptor.size = {4096, 4096, Utils::MAX_DIRECTIONAL_LIGHTS};
     textureDescriptor.dimension = wgpu::TextureDimension::_2D;
     textureDescriptor.format = wgpu::TextureFormat::Depth32Float;
     textureDescriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |

@@ -161,7 +161,7 @@ fn calculateDirectionalLight(light: DirectionalLight, N: vec3f, V: vec3f, MatKd:
   let projCoord = shadowCoord * vec3f(0.5, -0.5, 1.0) + vec3f(0.5, 0.5, 0.0);
 
   var visibility = 0.0;
-  let oneOverShadowDepthTextureSize = 1.0 / 8192.0;
+  let oneOverShadowDepthTextureSize = 1.0 / 4096.0;
   let offsets = array<vec2f, 9>(
     vec2f(-1, -1), vec2f(0, -1), vec2f(1, -1),
     vec2f(-1,  0), vec2f(0,  0), vec2f(1,  0),
