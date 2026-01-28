@@ -316,6 +316,7 @@ CreateJoltCreationSettings(const Component::SoftBody &softBody,
     creationSettings.mVertexRadius = softBody.settings.vertexRadius;
     creationSettings.mAllowSleeping = softBody.settings.allowSleeping;
     creationSettings.mFacesDoubleSided = softBody.settings.doubleSidedFaces;
+    creationSettings.mUpdatePosition = softBody.settings.updatePosition;
 
     return creationSettings;
 }

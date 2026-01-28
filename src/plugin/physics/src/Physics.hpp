@@ -33,6 +33,7 @@
 
 // Components - Soft Body
 #include "component/SoftBody.hpp"
+#include "component/SoftBodyAttachment.hpp"
 #include "component/SoftBodyInternal.hpp"
 
 // Resources
@@ -40,11 +41,13 @@
 #include "resource/VehicleTelemetry.hpp"
 
 // Systems
+// #include "system/ColliderSystem.hpp"
 #include "system/ConstraintSystem.hpp"
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
 #include "system/RigidBodySystem.hpp"
+#include "system/SoftBodyAttachmentSync.hpp"
 #include "system/SoftBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
 #include "system/VehicleControlSystem.hpp"
