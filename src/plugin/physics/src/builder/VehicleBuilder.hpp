@@ -1,6 +1,7 @@
 #pragma once
 
 #include "component/BoxCollider.hpp"
+#include "component/ConvexHullMeshCollider.hpp"
 #include "component/MeshCollider.hpp"
 #include "component/RigidBody.hpp"
 #include "component/Vehicle.hpp"
@@ -93,6 +94,32 @@ template <> class VehicleBuilder<4> {
     }
 
     /**
+     * @brief Set maximum brake torque for a specific wheel
+     *
+     * @param index Wheel position
+     * @param torque Maximum brake torque in Nm (default: 1500.0f)
+     */
+    VehicleBuilder &SetMaxBrakeTorque(Component::WheelIndex index, float torque)
+    {
+        _vehicle.wheels[static_cast<size_t>(index)].maxBrakeTorque = torque;
+        return *this;
+    }
+
+    /**
+     * @brief Set maximum handbrake torque for a specific wheel
+     *
+     * Usually only applied to rear wheels.
+     *
+     * @param index Wheel position
+     * @param torque Maximum handbrake torque in Nm (default: 4000.0f)
+     */
+    VehicleBuilder &SetMaxHandBrakeTorque(Component::WheelIndex index, float torque)
+    {
+        _vehicle.wheels[static_cast<size_t>(index)].maxHandBrakeTorque = torque;
+        return *this;
+    }
+
+    /**
      * @brief Set drivetrain type (AWD, FWD, RWD)
      */
     VehicleBuilder &SetDrivetrain(Component::DrivetrainType drivetrain)
@@ -181,9 +208,9 @@ template <> class VehicleBuilder<4> {
             }
         }
 
-        if (_vehicle.gearbox.gearRatios.size() < 2)
+        if (_vehicle.gearbox.forwardGearRatios.empty())
         {
-            throw Exception::VehicleBuilderError("Gearbox must have at least one forward gear and one reverse gear");
+            throw Exception::VehicleBuilderError("Gearbox must have at least one forward gear");
         }
 
         auto chassis = core.CreateEntity();
@@ -208,9 +235,8 @@ template <> class VehicleBuilder<4> {
         auto chassisRigidBody = Component::RigidBody::CreateDynamic(_chassisMass);
         chassisRigidBody.friction = 0.5f;
         chassisRigidBody.restitution = 0.1f;
+        chassis.AddComponent<Component::ConvexHullMeshCollider>();
         chassis.AddComponent<Component::RigidBody>(chassisRigidBody);
-
-        chassis.AddComponent<Component::MeshCollider>();
 
         _vehicle.wheelEntities = wheelEntities;
         _vehicle.wheelPositions = _wheelPositions;
