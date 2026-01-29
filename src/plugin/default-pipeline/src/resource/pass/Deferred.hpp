@@ -161,14 +161,16 @@ fn calculateDirectionalLight(light: DirectionalLight, N: vec3f, V: vec3f, MatKd:
   let projCoord = shadowCoord * vec3f(0.5, -0.5, 1.0) + vec3f(0.5, 0.5, 0.0);
 
   var visibility = 0.0;
-  let oneOverShadowDepthTextureSize = 1.0 / 4096.0;
-  let offsets = array<vec2f, 9>(
-    vec2f(-1, -1), vec2f(0, -1), vec2f(1, -1),
-    vec2f(-1,  0), vec2f(0,  0), vec2f(1,  0),
-    vec2f(-1,  1), vec2f(0,  1), vec2f(1,  1)
+  let oneOverShadowDepthTextureSize = 1.0 / 2048.0;
+  let offsets = array<vec2f, 25>(
+    vec2f(-2, -2), vec2f(-1, -2), vec2f(0, -2), vec2f(1, -2), vec2f(2, -2),
+    vec2f(-2, -1), vec2f(-1, -1), vec2f(0, -1), vec2f(1, -1), vec2f(2, -1),
+    vec2f(-2, 0), vec2f(-1, 0), vec2f(0, 0), vec2f(1, 0), vec2f(2, 0),
+    vec2f(-2, 1), vec2f(-1, 1), vec2f(0, 1), vec2f(1, 1), vec2f(2, 1),
+    vec2f(-2, 2), vec2f(-1, 2), vec2f(0, 2), vec2f(1, 2), vec2f(2, 2)
   );
 
-  const PCF_SAMPLES: u32 = 9u;
+  const PCF_SAMPLES: u32 = 25u;
 
   for (var i = 0u; i < PCF_SAMPLES; i++) {
     let offset = offsets[i] * oneOverShadowDepthTextureSize;
@@ -177,7 +179,7 @@ fn calculateDirectionalLight(light: DirectionalLight, N: vec3f, V: vec3f, MatKd:
       projCoord.xy + offset, i32(light.shadowIndex), projCoord.z - shadowBias
     );
   }
-  visibility /= 9.0;
+  visibility /= 25.0;
   if (visibility < 0.01) {
     return vec3f(0.0);
   }

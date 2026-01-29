@@ -17,7 +17,7 @@ static void CreateDirectionalLightsShadowTextures(Engine::Core &core)
 
     wgpu::TextureDescriptor textureDescriptor(wgpu::Default);
     textureDescriptor.label = wgpu::StringView("DIRECTIONAL_LIGHTS_SHADOW_TEXTURE");
-    textureDescriptor.size = {4096, 4096, Utils::MAX_DIRECTIONAL_LIGHTS};
+    textureDescriptor.size = {2048, 2048, Utils::MAX_DIRECTIONAL_LIGHTS};
     textureDescriptor.dimension = wgpu::TextureDimension::_2D;
     textureDescriptor.format = wgpu::TextureFormat::Depth32Float;
     textureDescriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
@@ -29,6 +29,11 @@ static void CreateDirectionalLightsShadowTextures(Engine::Core &core)
     samplerDescriptor.label = wgpu::StringView("DIRECTIONAL_LIGHTS_SHADOW_SAMPLER");
     samplerDescriptor.maxAnisotropy = 1;
     samplerDescriptor.compare = wgpu::CompareFunction::Less;
+    samplerDescriptor.addressModeW = wgpu::AddressMode::ClampToEdge;
+    samplerDescriptor.addressModeU = wgpu::AddressMode::ClampToEdge;
+    samplerDescriptor.addressModeV = wgpu::AddressMode::ClampToEdge;
+    samplerDescriptor.minFilter = wgpu::FilterMode::Linear;
+    samplerDescriptor.magFilter = wgpu::FilterMode::Linear;
     Graphic::Resource::Sampler shadowSampler(context.deviceContext.GetDevice().value(), samplerDescriptor);
     samplerContainer.Add(Utils::DIRECTIONAL_LIGHTS_SHADOW_SAMPLER_ID, std::move(shadowSampler));
 }
