@@ -30,5 +30,11 @@ template <typename TReturn, typename... TArgs> class BaseFunction {
      * @return Unique ID of the function.
      */
     virtual FunctionID GetID() const = 0;
+
+    /**
+     * @brief Pure virtual function to get the name of the function.
+     * @return Name of the function.
+     */
+    virtual std::string GetName() const = 0;
 };
 } // namespace FunctionUtils
