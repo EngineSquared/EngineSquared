@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BaseFunction.hpp"
+#include <string>
 
 namespace Engine {
 // Forward declaration of Core class.
