@@ -2,9 +2,6 @@
 
 #include "BaseFunction.hpp"
 #include "Demangle.hpp"
-#include <cxxabi.h>
-#include <string>
-#include <typeinfo>
 
 namespace Engine {
 // Forward declaration of Core class.
@@ -69,7 +66,7 @@ class WrappedSystem : public FunctionUtils::BaseFunction<void, Core &> {
      * @tparam TCallable The type of the system.
      * @return The ID of the system.
      */
-    static FunctionUtils::FunctionID GetCallableID(TSystem &callable)
+    static FunctionUtils::FunctionID GetCallableID(const TSystem &callable)
     {
         if constexpr (std::is_class_v<TSystem>)
         {
@@ -87,7 +84,7 @@ class WrappedSystem : public FunctionUtils::BaseFunction<void, Core &> {
      * @tparam TCallable The type of the system.
      * @return The name of the system.
      */
-    static std::string GetCallableName(TSystem &callable)
+    static std::string GetCallableName(const TSystem &callable)
     {
         if constexpr (std::is_class_v<TSystem>)
         {
