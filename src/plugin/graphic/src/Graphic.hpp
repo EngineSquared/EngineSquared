@@ -2,6 +2,7 @@
 
 // Resources
 #include "resource/AGPUBuffer.hpp"
+#include "resource/AMultipleExecutionRenderPass.hpp"
 #include "resource/ARenderPass.hpp"
 #include "resource/ASingleExecutionRenderPass.hpp"
 #include "resource/BindGroup.hpp"
