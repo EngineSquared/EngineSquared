@@ -24,12 +24,6 @@ template <typename ResourceType> class ResourceManager {
     struct ResourceLoader final {
         using result_type = std::shared_ptr<ResourceType>;
 
-        result_type operator()(const ResourceType &resource) const { return std::make_shared<ResourceType>(resource); }
-        result_type operator()(ResourceType &&resource) const
-        {
-            return std::make_shared<ResourceType>(std::move(resource));
-        }
-
         template <typename... Args> result_type operator()(Args &&...args) const
         {
             return std::make_shared<ResourceType>(std::forward<Args>(args)...);
@@ -38,7 +32,6 @@ template <typename ResourceType> class ResourceManager {
 
   public:
     ResourceManager() = default;
-
     ~ResourceManager() = default;
 
     ResourceManager(const ResourceManager &) = delete;
@@ -64,50 +57,6 @@ template <typename ResourceType> class ResourceManager {
         {
             Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, std::forward<Args>(args)...);
-        }
-
-        return ret.first->second;
-    }
-
-    /**
-     * @brief Adds a resource to the manager.
-     *
-     * @note If the resource already exists, it will be overwritten.
-     *
-     * @param id  id of the resource
-     * @param resource  resource to add
-     * @return the added resource
-     */
-    entt::resource<ResourceType> Add(const entt::hashed_string &id, const ResourceType &resource)
-    {
-        auto ret = cache.load(id, resource);
-
-        if (!ret.second)
-        {
-            Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
-            ret = cache.force_load(id, resource);
-        }
-
-        return ret.first->second;
-    }
-
-    /**
-     * @brief Adds a resource to the manager.
-     *
-     * @note If the resource already exists, it will be overwritten.
-     *
-     * @param id  id of the resource
-     * @param resource  resource to add
-     * @return the added resource
-     */
-    entt::resource<ResourceType> Add(const entt::hashed_string &id, ResourceType &&resource)
-    {
-        auto ret = cache.load(id, std::move(resource));
-
-        if (!ret.second)
-        {
-            Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
-            ret = cache.force_load(id, std::move(resource));
         }
 
         return ret.first->second;
