@@ -42,16 +42,11 @@ TEST(VehiclePlugin, VehicleForwardMovement)
     Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);
     Object::Component::Mesh wheelMesh = Object::Utils::GenerateWheelMesh(0.3f, 0.2f);
 
-    // Configure wheel settings with good traction
     Physics::Component::WheelSettings frontWheel = Physics::Component::WheelSettings::CreateFrontWheel();
     frontWheel.radius = 0.3f;
-    frontWheel.longitudinalFriction = 2.0f;
-    frontWheel.lateralFriction = 2.0f;
 
     Physics::Component::WheelSettings rearWheel = Physics::Component::WheelSettings::CreateRearWheel();
     rearWheel.radius = 0.3f;
-    rearWheel.longitudinalFriction = 2.0f;
-    rearWheel.lateralFriction = 2.0f;
 
     Physics::Builder::VehicleBuilder<4> builder;
     auto vehicle = builder.SetChassisMesh(chassisMesh, glm::vec3(0.0f, 1.0f, 0.0f))
