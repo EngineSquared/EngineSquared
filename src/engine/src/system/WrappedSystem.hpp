@@ -21,6 +21,7 @@ class WrappedSystem : public FunctionUtils::BaseFunction<void, Core &> {
         : _system(system), _errorCallback(errorCallback)
     {
         _id = GetCallableID(_system);
+        _name = GetCallableName(_system);
     }
 
     /**
@@ -53,6 +54,12 @@ class WrappedSystem : public FunctionUtils::BaseFunction<void, Core &> {
     FunctionUtils::FunctionID GetID() const override { return _id; }
 
     /**
+     * @brief Returns the name of the system.
+     * @return Name of the system.
+     */
+    std::string GetName() const override { return _name; }
+
+    /**
      * @brief Get the ID of the system.
      * @param callable The system.
      * @tparam TCallable The type of the system.
@@ -70,9 +77,28 @@ class WrappedSystem : public FunctionUtils::BaseFunction<void, Core &> {
         }
     }
 
+    /**
+     * @brief Get the name of the system.
+     * @param callable The system.
+     * @tparam TCallable The type of the system.
+     * @return The name of the system.
+     */
+    static std::string GetCallableName(TSystem callable)
+    {
+        if constexpr (std::is_class_v<TSystem>)
+        {
+            return typeid(callable).name();
+        }
+        else
+        {
+            return std::to_string(GetCallableID(callable));
+        }
+    }
+
   private:
     [[no_unique_address]] TSystem _system;
     [[no_unique_address]] TErrorCallback _errorCallback;
     FunctionUtils::FunctionID _id = 0; ///< Unique ID for the function.
+    std::string _name;                 ///< Name of the function.
 };
 } // namespace Engine
