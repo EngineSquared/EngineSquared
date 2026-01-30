@@ -1,9 +1,11 @@
 #pragma once
 
 #include <cstdlib>
-#include <cxxabi.h>
-#include <string>
-#include <typeinfo>
+#if defined(__GNUG__) || defined(__clang__)
+#    include <cxxabi.h>
+#    include <string>
+#    include <typeinfo>
+#endif
 
 namespace FunctionUtils {
 
@@ -14,6 +16,7 @@ namespace FunctionUtils {
  */
 inline std::string DemangleTypeName(const std::type_info &typeInfo)
 {
+#if defined(__GNUG__) || defined(__clang__)
     int status = 0;
     char *demangledName = abi::__cxa_demangle(typeInfo.name(), nullptr, nullptr, &status);
     if (status == 0 && demangledName != nullptr)
@@ -24,8 +27,13 @@ inline std::string DemangleTypeName(const std::type_info &typeInfo)
     }
     else
     {
-        return typeInfo.name();
+        if (demangledName != nullptr)
+        {
+            std::free(demangledName);
+        }
     }
+#endif
+    return typeInfo.name();
 }
 
 } // namespace FunctionUtils
