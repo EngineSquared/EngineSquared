@@ -1,7 +1,9 @@
 #pragma once
 
 #include "BaseFunction.hpp"
+#include "Demangle.hpp"
 #include <string>
+#include <typeinfo>
 
 namespace FunctionUtils {
 /**
@@ -66,7 +68,7 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
     {
         if constexpr (std::is_class_v<TCallable>)
         {
-            return typeid(callable).name();
+            return FunctionUtils::DemangleTypeName(typeid(callable));
         }
         else
         {

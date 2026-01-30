@@ -1,6 +1,7 @@
 #pragma once
 
 #include "FunctionID.hpp"
+#include <string>
 
 namespace FunctionUtils {
 /**
