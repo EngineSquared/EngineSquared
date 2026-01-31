@@ -93,7 +93,6 @@ static std::vector<std::pair<uint32_t, uint32_t>> GenerateEdgesFromFaces(const s
     return edges;
 }
 
-
 /**
  * @brief Result of creating Jolt shared settings, includes vertex mapping
  */
@@ -174,7 +173,8 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
 
             if (idx0 >= deduped_vertices.size() || idx1 >= deduped_vertices.size() || idx2 >= deduped_vertices.size())
             {
-                Log::Warn(fmt::format("SoftBody: Skipping face with out-of-bounds indices ({}, {}, {})", idx0, idx1, idx2));
+                Log::Warn(
+                    fmt::format("SoftBody: Skipping face with out-of-bounds indices ({}, {}, {})", idx0, idx1, idx2));
                 continue;
             }
 

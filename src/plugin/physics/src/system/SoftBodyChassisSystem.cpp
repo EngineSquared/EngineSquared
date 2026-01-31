@@ -48,7 +48,6 @@ struct DeduplicatedMesh {
  * @brief Convert mesh to deduplicated indexed mesh
  */
 
-
 /**
  * @brief Create Jolt SoftBodySharedSettings with skinned constraints for chassis
  *

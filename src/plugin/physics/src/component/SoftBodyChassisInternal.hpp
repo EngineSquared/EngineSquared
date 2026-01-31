@@ -123,8 +123,7 @@ struct SoftBodyChassisInternal {
      * @param skeleton RigidBody skeleton ID
      * @param softBody SoftBody ID
      */
-    SoftBodyChassisInternal(JPH::BodyID skeleton, JPH::BodyID softBody)
-        : skeletonBodyID(skeleton), softBodyID(softBody)
+    SoftBodyChassisInternal(JPH::BodyID skeleton, JPH::BodyID softBody) : skeletonBodyID(skeleton), softBodyID(softBody)
     {
         jointMatrices.push_back(JPH::Mat44::sIdentity());
     }

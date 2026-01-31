@@ -142,7 +142,6 @@ bool IsTriangleDegenerate(uint32_t i0, uint32_t i1, uint32_t i2, const std::vect
 
 } // namespace
 
-
 /**
  * @brief Helper: compute mesh bounds
  */
@@ -306,8 +305,6 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
     std::vector<glm::vec2> newTexCoords;
 
     CollapseClusters(vertices, normals, texCoords, uf, newVertices, newNormals, newTexCoords, result.vertexMap);
-
-
 
     std::vector<uint32_t> newIndices;
     newIndices.reserve(indices.size());

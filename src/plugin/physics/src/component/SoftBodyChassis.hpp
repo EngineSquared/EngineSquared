@@ -194,10 +194,7 @@ struct SoftBodyChassis {
      * @brief Constructor with custom settings
      * @param chassisSettings Settings for the soft body chassis
      */
-    explicit SoftBodyChassis(const SoftBodyChassisSettings &chassisSettings)
-        : settings(chassisSettings)
-    {
-    }
+    explicit SoftBodyChassis(const SoftBodyChassisSettings &chassisSettings) : settings(chassisSettings) {}
 
     /**
      * @brief Constructor with factory preset
