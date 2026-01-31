@@ -144,3 +144,30 @@ TEST(Relationship, get_parent_of_child_without_relationship_component)
 
     ASSERT_EQ(Relationship::Utils::GetParent(child), std::nullopt);
 }
+
+TEST(Relationship, for_each_child)
+{
+    Engine::Core core;
+
+    auto child1 = core.CreateEntity();
+    auto child2 = core.CreateEntity();
+    auto child3 = core.CreateEntity();
+    auto parent = core.CreateEntity();
+
+    child1.AddComponent<Relationship::Component::Relationship>();
+    child2.AddComponent<Relationship::Component::Relationship>();
+    child3.AddComponent<Relationship::Component::Relationship>();
+    parent.AddComponent<Relationship::Component::Relationship>();
+
+    Relationship::Utils::SetChildOf(child1, parent);
+    Relationship::Utils::SetChildOf(child2, parent);
+    Relationship::Utils::SetChildOf(child3, parent);
+
+    std::vector<Engine::Entity> children;
+    Relationship::Utils::ForEachChild(parent, [&children](Engine::Entity child) { children.push_back(child); });
+
+    ASSERT_EQ(children.size(), 3);
+    ASSERT_EQ(children[0], child3);
+    ASSERT_EQ(children[1], child2);
+    ASSERT_EQ(children[2], child1);
+}
