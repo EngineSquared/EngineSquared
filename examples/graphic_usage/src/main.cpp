@@ -25,12 +25,49 @@ void EscapeKeySystem(Engine::Core &core)
     }
 }
 
+Object::Component::Mesh CreateCustomMesh(void)
+{
+    Object::Component::Mesh mesh;
+
+    mesh.SetVertices({
+        {-0.5f, 0.0f, -0.5f},
+        {0.5f,  0.0f, -0.5f},
+        {0.5f,  0.0f,  0.5f},
+        {-0.5f, 0.0f,  0.5f}
+    });
+
+    mesh.SetNormals({
+        {0.0f, 1.0f, 0.0f},
+        {0.0f, 1.0f, 0.0f},
+        {0.0f, 1.0f, 0.0f},
+        {0.0f, 1.0f, 0.0f}
+    });
+
+    mesh.SetTexCoords({
+        {0.0f, 0.0f},
+        {1.0f, 0.0f},
+        {1.0f, 1.0f},
+        {0.0f, 1.0f}
+    });
+
+    mesh.SetIndices({
+        0, 1, 2,
+        2, 3, 0
+    });
+
+    return mesh;
+}
+
 void Setup(Engine::Core &core)
 {
     auto cube = core.CreateEntity();
 
     cube.AddComponent<Object::Component::Transform>();
     cube.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
+
+    auto customMesh = core.CreateEntity();
+    customMesh.AddComponent<Object::Component::Transform>(glm::vec3(1.5f, 0.0f, 0.0f));
+    customMesh.AddComponent<Object::Component::Mesh>(CreateCustomMesh());
 
     auto camera = core.CreateEntity();
 
