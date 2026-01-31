@@ -188,7 +188,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
     if (auto *convexHullCollider = registry.try_get<Component::ConvexHullMeshCollider>(entity))
     {
         const Object::Component::Mesh *mesh = nullptr;
-        
+
         if (convexHullCollider->mesh.has_value())
         {
             mesh = &convexHullCollider->mesh.value();
@@ -197,10 +197,11 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
         {
             mesh = registry.try_get<Object::Component::Mesh>(entity);
         }
-        
+
         if (!mesh)
         {
-            Log::Warn("ConvexHullMeshCollider: trying to create shape without mesh data (no embedded mesh or Object::Mesh component)");
+            Log::Warn("ConvexHullMeshCollider: trying to create shape without mesh data (no embedded mesh or "
+                      "Object::Mesh component)");
             return nullptr;
         }
 
@@ -215,7 +216,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
 
     auto *meshCollider = registry.try_get<Component::MeshCollider>(entity);
     const Object::Component::Mesh *mesh = nullptr;
-    
+
     if (meshCollider && meshCollider->mesh.has_value())
     {
         mesh = &meshCollider->mesh.value();
@@ -224,10 +225,11 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
     {
         mesh = registry.try_get<Object::Component::Mesh>(entity);
     }
-    
+
     if (!mesh)
     {
-        Log::Warn("MeshCollider: trying to create shape without mesh data (no embedded mesh or Object::Mesh component)");
+        Log::Warn(
+            "MeshCollider: trying to create shape without mesh data (no embedded mesh or Object::Mesh component)");
         return nullptr;
     }
 

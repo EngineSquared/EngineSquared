@@ -23,8 +23,8 @@
 
 #pragma once
 
-#include <optional>
 #include "component/Mesh.hpp"
+#include <optional>
 
 namespace Physics::Component {
 
