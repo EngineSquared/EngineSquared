@@ -4,6 +4,7 @@
 #include "component/ConvexHullMeshCollider.hpp"
 #include "component/MeshCollider.hpp"
 #include "component/RigidBody.hpp"
+#include "component/SoftBodyChassis.hpp"
 #include "component/Vehicle.hpp"
 #include "component/VehicleController.hpp"
 #include "component/WheelSettings.hpp"
@@ -18,6 +19,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <memory>
+#include <optional>
 
 namespace Physics::Builder {
 
@@ -27,6 +29,10 @@ namespace Physics::Builder {
  * Currently only supports N=4 (4-wheel vehicles).
  * Attempting to use other values will result in a compile-time error.
  *
+ * Supports two chassis modes:
+ * - RigidBody chassis (default): Standard rigid collision body
+ * - SoftBody chassis: Deformable body that can be dented on collision
+ *
  * Usage:
  * @code
  * VehicleBuilder<4> builder;
@@ -34,6 +40,7 @@ namespace Physics::Builder {
  *        .SetWheelMesh(WheelIndex::FrontLeft, wheelMesh)
  *        .SetWheelSettings(WheelIndex::FrontLeft, frontWheelSettings)
  *        .SetDrivetrain(DrivetrainType::RWD)
+ *        .SetSoftBodyChassis(SoftBodyChassisSettings::Realistic())  // Optional
  *        .Build(core);
  * @endcode
  */
@@ -156,6 +163,60 @@ template <> class VehicleBuilder<4> {
     }
 
     /**
+     * @brief Enable soft body chassis for deformable car body
+     *
+     * When enabled, the vehicle will have a deformable chassis that can
+     * be dented on collision. Uses a hybrid architecture with an invisible
+     * RigidBody skeleton for physics and a visible SoftBody for deformation.
+     *
+     * @param settings SoftBody chassis configuration
+     * @return Reference to builder for chaining
+     *
+     * @note If the mesh is too complex and cannot be simplified enough,
+     *       the system will fall back to RigidBody chassis if fallbackToRigidBody
+     *       is true in settings.
+     */
+    VehicleBuilder &SetSoftBodyChassis(const Component::SoftBodyChassisSettings &settings)
+    {
+        _softBodyChassisSettings = settings;
+        _useSoftBodyChassis = true;
+        return *this;
+    }
+
+    /**
+     * @brief Enable soft body chassis with default realistic settings
+     *
+     * Convenience method that enables SoftBody chassis with settings
+     * optimized for realistic deformation.
+     *
+     * @return Reference to builder for chaining
+     */
+    VehicleBuilder &EnableSoftBodyChassis()
+    {
+        _softBodyChassisSettings = Component::SoftBodyChassisSettings::Realistic();
+        _useSoftBodyChassis = true;
+        return *this;
+    }
+
+    /**
+     * @brief Disable soft body chassis (use regular RigidBody)
+     *
+     * @return Reference to builder for chaining
+     */
+    VehicleBuilder &DisableSoftBodyChassis()
+    {
+        _useSoftBodyChassis = false;
+        return *this;
+    }
+
+    /**
+     * @brief Check if soft body chassis is enabled
+     *
+     * @return true if SoftBody chassis will be created
+     */
+    [[nodiscard]] bool IsSoftBodyChassisEnabled() const { return _useSoftBodyChassis; }
+
+    /**
      * @brief Set wheel offset positions relative to chassis center
      *
      * Default positions assume a standard car layout:
@@ -186,6 +247,7 @@ template <> class VehicleBuilder<4> {
      * Creates:
      * - 1 chassis entity with Vehicle, VehicleController, and Mesh components
      * - 4 wheel entities with Mesh and Transform components
+     * - If SoftBody chassis enabled: adds SoftBodyChassis component
      *
      * The VehicleSystem will automatically create the Jolt constraint when
      * the Vehicle component is constructed.
@@ -237,6 +299,11 @@ template <> class VehicleBuilder<4> {
         chassisRigidBody.restitution = 0.1f;
         chassis.AddComponent<Component::ConvexHullMeshCollider>();
         chassis.AddComponent<Component::RigidBody>(chassisRigidBody);
+
+        if (_useSoftBodyChassis)
+        {
+            chassis.AddComponent<Component::SoftBodyChassis>(_softBodyChassisSettings);
+        }
 
         _vehicle.wheelEntities = wheelEntities;
         _vehicle.wheelPositions = _wheelPositions;
@@ -295,6 +362,10 @@ template <> class VehicleBuilder<4> {
 
     bool _hasChassisSet = false;
     std::array<bool, 4> _hasWheelMesh = {false, false, false, false};
+
+    // SoftBody chassis settings
+    Component::SoftBodyChassisSettings _softBodyChassisSettings;
+    bool _useSoftBodyChassis = false;
 };
 
 } // namespace Physics::Builder
