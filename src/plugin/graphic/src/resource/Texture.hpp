@@ -71,6 +71,7 @@ static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView me
             pixel.b = mapped[i * 4 + 2];
             pixel.a = mapped[i * 4 + 3];
             break;
+        case wgpu::TextureFormat::BGRA8UnormSrgb:
         case wgpu::TextureFormat::BGRA8Unorm:
             pixel.b = mapped[i * 4 + 0];
             pixel.g = mapped[i * 4 + 1];
@@ -271,6 +272,11 @@ class Texture {
     }
 
     wgpu::TextureView GetDefaultView() const { return _defaultView; }
+
+    inline wgpu::TextureView CreateView(const wgpu::TextureViewDescriptor &descriptor) const
+    {
+        return _webgpuTexture.createView(descriptor);
+    }
 
     void ReleaseOwnership() { _ownsResources = false; }
 
