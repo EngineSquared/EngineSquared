@@ -76,26 +76,26 @@ CreateChassisSharedSettings(const Object::Component::Mesh &mesh, const Component
         JPH::SoftBodySharedSettings::Vertex vertex;
         glm::vec3 scaledPos = v * scale;
         vertex.mPosition = JPH::Float3(scaledPos.x, scaledPos.y, scaledPos.z);
-        vertex.mVelocity = JPH::Float3(0, 0, 0);
+        vertex.mVelocity = JPH::Float3(0.0f, 0.0f, 0.0f);
         vertex.mInvMass = 1.0f;
         joltSettings->mVertices.emplace_back(vertex);
     }
 
     if (!deduped_indices.empty())
     {
-        joltSettings->mFaces.reserve(deduped_indices.size() / 3);
-        for (size_t i = 0; i + 2 < deduped_indices.size(); i += 3)
+        joltSettings->mFaces.reserve(deduped_indices.size() / 3u);
+        for (size_t i = 0u; i + 2u < deduped_indices.size(); i += 3u)
         {
             uint32_t idx0 = deduped_indices[i];
-            uint32_t idx1 = deduped_indices[i + 1];
-            uint32_t idx2 = deduped_indices[i + 2];
+            uint32_t idx1 = deduped_indices[i + 1u];
+            uint32_t idx2 = deduped_indices[i + 2u];
 
             if (idx0 == idx1 || idx1 == idx2 || idx0 == idx2)
                 continue;
             if (idx0 >= deduped_vertices.size() || idx1 >= deduped_vertices.size() || idx2 >= deduped_vertices.size())
                 continue;
 
-            joltSettings->mFaces.emplace_back(JPH::SoftBodySharedSettings::Face(idx0, idx1, idx2, 0));
+            joltSettings->mFaces.emplace_back(JPH::SoftBodySharedSettings::Face(idx0, idx1, idx2, 0u));
         }
 
         float edgeCompliance = (1.0f - settings.stiffness) * 0.001f;
@@ -108,7 +108,7 @@ CreateChassisSharedSettings(const Object::Component::Mesh &mesh, const Component
 
     joltSettings->mInvBindMatrices.emplace_back(JPH::SoftBodySharedSettings::InvBind(0, JPH::Mat44::sIdentity()));
 
-    for (uint32_t i = 0; i < joltSettings->mVertices.size(); ++i)
+    for (uint32_t i = 0u; i < joltSettings->mVertices.size(); ++i)
     {
         JPH::SoftBodySharedSettings::Skinned skinned;
         skinned.mVertex = i;
@@ -117,7 +117,7 @@ CreateChassisSharedSettings(const Object::Component::Mesh &mesh, const Component
         skinned.mBackStopRadius = settings.backStopRadius;
 
         skinned.mWeights[0] = JPH::SoftBodySharedSettings::SkinWeight(0, 1.0f);
-        if (JPH::SoftBodySharedSettings::Skinned::cMaxSkinWeights > 1)
+        if (JPH::SoftBodySharedSettings::Skinned::cMaxSkinWeights > 1u)
         {
             skinned.mWeights[1] = JPH::SoftBodySharedSettings::SkinWeight(0, 0.0f);
         }
@@ -270,7 +270,7 @@ static void OnSoftBodyChassisConstruct(Engine::Core::Registry &registry, Engine:
         }
         glm::vec3 halfExtents = (maxBound - minBound) * 0.5f;
 
-        auto [sharedSettings, vertexMap] = CreateChassisSharedSettings(workingMesh, settings, scale);
+        auto [sharedSettings, dedupMap] = CreateChassisSharedSettings(workingMesh, settings, scale);
 
         JPH::SoftBodyCreationSettings softBodySettings(sharedSettings, Utils::ToJoltRVec3(position),
                                                        Utils::ToJoltQuat(rotation), Utils::Layers::MOVING);
@@ -295,13 +295,27 @@ static void OnSoftBodyChassisConstruct(Engine::Core::Registry &registry, Engine:
 
         Component::SoftBodyChassisInternal internal;
         internal.softBodyID = softBodyID;
-        internal.vertexMap = wasSimplified ? simplificationMap : std::move(vertexMap);
         internal.initialScale = scale;
         internal.isInitialized = true;
         internal.wasSimplified = wasSimplified;
         internal.originalVertexCount = originalVertexCount;
         internal.simplifiedVertexCount = static_cast<uint32_t>(workingMesh.GetVertices().size());
         internal.hardSkinNextFrame = true;
+
+        if (wasSimplified)
+        {
+            std::vector<uint32_t> composedMap(simplificationMap.size());
+            for (size_t i = 0u; i < simplificationMap.size(); ++i)
+            {
+                uint32_t simpIdx = simplificationMap[i];
+                composedMap[i] = (simpIdx < dedupMap.size()) ? dedupMap[simpIdx] : 0u;
+            }
+            internal.vertexMap = std::move(composedMap);
+        }
+        else
+        {
+            internal.vertexMap = std::move(dedupMap);
+        }
 
         registry.emplace<Component::SoftBodyChassisInternal>(entity, std::move(internal));
 
@@ -449,8 +463,12 @@ void SyncSoftBodyChassisMesh(Engine::Core &core)
 
         const auto *motionProps = static_cast<const JPH::SoftBodyMotionProperties *>(body.GetMotionProperties());
         const auto &joltVertices = motionProps->GetVertices();
-
-        glm::vec3 invScale = 1.0f / internal.initialScale;
+        constexpr float epsilon = 1e-6f;
+        glm::vec3 safeScale = glm::max(glm::abs(internal.initialScale), glm::vec3(epsilon));
+        auto signOrOne = [](float v) { return v < 0.0f ? -1.0f : 1.0f; };
+        safeScale *= glm::vec3(signOrOne(internal.initialScale.x), signOrOne(internal.initialScale.y),
+                               signOrOne(internal.initialScale.z));
+        glm::vec3 invScale = 1.0f / safeScale;
 
         auto &meshVertices = mesh.GetVertices();
         const auto &vertexMap = internal.vertexMap;
@@ -459,7 +477,7 @@ void SyncSoftBodyChassisMesh(Engine::Core &core)
         glm::quat bodyRot = Utils::FromJoltQuat(body.GetRotation());
         glm::quat invBodyRot = glm::inverse(bodyRot);
 
-        for (size_t i = 0; i < meshVertices.size() && i < vertexMap.size(); ++i)
+        for (size_t i = 0u; i < meshVertices.size() && i < vertexMap.size(); ++i)
         {
             uint32_t joltIdx = vertexMap[i];
             if (joltIdx < joltVertices.size())
