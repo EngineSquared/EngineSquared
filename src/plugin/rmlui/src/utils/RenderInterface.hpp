@@ -39,7 +39,8 @@ class RenderInterface : public Rmlui::Utils::IRenderer {
     void ReleaseGeometry(Rml::CompiledGeometryHandle handle) override;
     Rml::TextureHandle LoadTexture(Rml::Vector2i &texture_dimensions, const Rml::String &source) override;
     Rml::TextureHandle GenerateTexture(Rml::Span<const Rml::byte> source, Rml::Vector2i dimensions) override;
-    Rml::TextureHandle CreateTexture(Rml::Span<const Rml::byte> source_data, Rml::Vector2i source_dimensions);
+    Rml::TextureHandle CreateTexture(Rml::Span<const Rml::byte> source_data, Rml::Vector2i source_dimensions,
+                                     wgpu::TextureFormat format);
     void ReleaseTexture(Rml::TextureHandle handle) override;
     void EnableScissorRegion(bool enable) override;
     void SetScissorRegion(Rml::Rectanglei region) override;
@@ -81,6 +82,7 @@ class RenderInterface : public Rmlui::Utils::IRenderer {
     std::unordered_map<Rml::CompiledGeometryHandle, std::unique_ptr<GeometryData>> _geometries;
     std::unordered_map<Rml::TextureHandle, std::unique_ptr<TextureData>> _textures;
     size_t _textureCounter = 0;
+    Rml::TextureHandle _nextTextureHandle = 1;
     std::vector<DrawCommand> _drawCommands;
     std::unique_ptr<TextureData> _defaultTexture;
     wgpu::Buffer _screenBuffer;

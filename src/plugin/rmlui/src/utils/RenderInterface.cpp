@@ -256,7 +256,19 @@ wgpu::BindGroup RenderInterface::ResolveTextureBindGroup(Rml::TextureHandle text
     {
         return nullptr;
     }
-    if (!texture.gpuTexture || (texture.sampler == nullptr))
+    if (!texture.gpuTexture)
+    {
+        return nullptr;
+    }
+    if (texture.sampler == nullptr)
+    {
+        if (const auto &samplers = _core.GetResource<Graphic::Resource::SamplerContainer>();
+            samplers.Contains(Graphic::Utils::DEFAULT_SAMPLER_ID))
+        {
+            texture.sampler = samplers.Get(Graphic::Utils::DEFAULT_SAMPLER_ID).GetSampler();
+        }
+    }
+    if (texture.sampler == nullptr)
     {
         return nullptr;
     }
@@ -285,7 +297,8 @@ Rml::TextureHandle RenderInterface::LoadTexture(Rml::Vector2i &texture_dimension
 
         const auto *bytes = reinterpret_cast<const Rml::byte *>(image.pixels.data());
         const size_t size_in_bytes = image.pixels.size() * sizeof(image.pixels[0]);
-        return CreateTexture(Rml::Span<const Rml::byte>(bytes, size_in_bytes), texture_dimensions);
+        return CreateTexture(Rml::Span<const Rml::byte>(bytes, size_in_bytes), texture_dimensions,
+                             wgpu::TextureFormat::RGBA8UnormSrgb);
     }
     catch (const Graphic::Exception::UnknownFileError &error)
     {
@@ -303,11 +316,11 @@ Rml::TextureHandle RenderInterface::LoadTexture(Rml::Vector2i &texture_dimension
 
 Rml::TextureHandle RenderInterface::GenerateTexture(Rml::Span<const Rml::byte> source, Rml::Vector2i dimensions)
 {
-    return CreateTexture(source, dimensions);
+    return CreateTexture(source, dimensions, wgpu::TextureFormat::RGBA8Unorm);
 }
 
 Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> source_data,
-                                                  Rml::Vector2i source_dimensions)
+                                                  Rml::Vector2i source_dimensions, wgpu::TextureFormat format)
 {
     if (source_dimensions.x <= 0 || source_dimensions.y <= 0)
     {
@@ -348,7 +361,21 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
     const std::string textureName = fmt::format("rmlui_texture_{}", _textureCounter);
 
     _textureCounter += 1UL;
-    texture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, textureName, image);
+    {
+        wgpu::TextureDescriptor textureDesc(wgpu::Default);
+        textureDesc.label = wgpu::StringView(textureName);
+        textureDesc.size = {image.width, image.height, 1};
+        textureDesc.dimension = wgpu::TextureDimension::_2D;
+        textureDesc.mipLevelCount = 1;
+        textureDesc.sampleCount = 1;
+        textureDesc.format = format;
+        textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
+                            wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
+        textureDesc.viewFormats = nullptr;
+        textureDesc.viewFormatCount = 0;
+        texture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, textureDesc);
+        texture->gpuTexture->Write(context, image);
+    }
 
     if (const auto &samplers = _core.GetResource<Graphic::Resource::SamplerContainer>();
         samplers.Contains(Graphic::Utils::DEFAULT_SAMPLER_ID))
@@ -367,7 +394,7 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
         }
     }
 
-    const auto textureHandle = reinterpret_cast<Rml::TextureHandle>(texture.get());
+    const auto textureHandle = _nextTextureHandle++;
     _textures.emplace(textureHandle, std::move(texture));
     return textureHandle;
 }
@@ -453,7 +480,21 @@ void RenderInterface::BeginFrame()
             image.height = 1;
             image.channels = 4;
             image.pixels = {glm::u8vec4(255, 255, 255, 255)};
-            _defaultTexture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, "rmlui_white", image);
+            {
+                wgpu::TextureDescriptor textureDesc(wgpu::Default);
+                textureDesc.label = wgpu::StringView("rmlui_white");
+                textureDesc.size = {image.width, image.height, 1};
+                textureDesc.dimension = wgpu::TextureDimension::_2D;
+                textureDesc.mipLevelCount = 1;
+                textureDesc.sampleCount = 1;
+                textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+                textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
+                                    wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
+                textureDesc.viewFormats = nullptr;
+                textureDesc.viewFormatCount = 0;
+                _defaultTexture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, textureDesc);
+                _defaultTexture->gpuTexture->Write(context, image);
+            }
 
             const auto &samplers = _core.GetResource<Graphic::Resource::SamplerContainer>();
             if (samplers.Contains(Graphic::Utils::DEFAULT_SAMPLER_ID))
