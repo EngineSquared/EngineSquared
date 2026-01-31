@@ -145,7 +145,7 @@ static JPH::RefConst<JPH::Shape> CreateMeshShapeFromMesh(const Object::Component
  * Make sure to always use the most appropriate colliders for RigidBodies.
  */
 static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry &registry, // NOSONAR
-                                                          Engine::EntityId entity) // NOSONAR
+                                                          Engine::EntityId entity)          // NOSONAR
 {
     if (auto *sphereCollider = registry.try_get<Component::SphereCollider>(entity))
     {
