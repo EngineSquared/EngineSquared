@@ -55,6 +55,7 @@ class UIContext : public AUIContext {
     bool RegisterEventListener(Rml::Element &element, const Rml::String &eventType,
                                std::function<void(Rml::Event &)> callback, bool useCapture = false);
     bool UnregisterEventListener(Rml::Element &element, const Rml::String &eventType);
+    void RequestLateUpdate();
     void SetInputCallbackIds(const InputCallbackIds &ids);
     bool AreInputCallbacksRegistered() const;
     void SetInputCallbacksRegistered(bool registered);
@@ -84,6 +85,7 @@ class UIContext : public AUIContext {
     std::vector<EventListenerEntry> _eventListeners;
     InputCallbackIds _inputCallbackIds;
     bool _inputCallbacksRegistered = false;
+    bool _lateUpdateRequested = false;
 
     bool _isReady() const;
 };
