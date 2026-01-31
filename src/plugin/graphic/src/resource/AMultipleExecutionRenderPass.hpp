@@ -6,18 +6,47 @@
 
 namespace Graphic::Resource {
 
-template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPass {
+template <typename TDerived> class AMultipleExecutionRenderPass : public ARenderPass {
   public:
-    explicit ASingleExecutionRenderPass(std::string_view name) : ARenderPass(name) {}
+    explicit AMultipleExecutionRenderPass(std::string_view name) : ARenderPass(name) {}
+
+    virtual uint16_t GetNumberOfPasses(Engine::Core &core) = 0;
+
+    virtual void preMultiplePass(Engine::Core &core) {
+        // Default implementation does nothing
+    };
+    virtual void postMultiplePass(Engine::Core &core) {
+        // Default implementation does nothing
+    };
+    virtual void perPass(uint16_t passIndex, Engine::Core &core) {
+        // Default implementation does nothing
+    };
+    virtual void postPass(uint16_t passIndex, Engine::Core &core) {
+        // Default implementation does nothing
+    };
 
     void Execute(Engine::Core &core) override
+    {
+        preMultiplePass(core);
+        const uint16_t numberOfPasses = GetNumberOfPasses(core);
+        for (uint16_t passIndex = 0; passIndex < numberOfPasses; passIndex++)
+        {
+            perPass(passIndex, core);
+            ExecuteSinglePass(core);
+            postPass(passIndex, core);
+        }
+        postMultiplePass(core);
+    }
+
+    void ExecuteSinglePass(Engine::Core &core)
     {
         Resource::Context &context = core.GetResource<Resource::Context>();
 
         if (this->GetOutputs().colorBuffers.empty() && !this->GetOutputs().depthBuffer.has_value())
         {
-            throw Exception::MissingOutputRenderPassError(
+            Log::Error(
                 fmt::format("RenderPass {}: No outputs defined for render pass, cannot execute.", this->GetName()));
+            return;
         }
 
         wgpu::RenderPassEncoder renderPass = this->_CreateRenderPass(context.deviceContext, core);

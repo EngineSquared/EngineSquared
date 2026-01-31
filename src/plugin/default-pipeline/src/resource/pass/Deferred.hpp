@@ -9,9 +9,10 @@
 #include "entity/Entity.hpp"
 #include "resource/ASingleExecutionRenderPass.hpp"
 #include "resource/buffer/CameraGPUBuffer.hpp"
+#include "resource/buffer/DirectionalLightsBuffer.hpp"
 #include "resource/buffer/PointLightsBuffer.hpp"
 #include "utils/DefaultMaterial.hpp"
-#include "utils/PointLights.hpp"
+#include "utils/Lights.hpp"
 #include "utils/shader/BufferBindGroupLayoutEntry.hpp"
 #include "utils/shader/SamplerBindGroupLayoutEntry.hpp"
 #include "utils/shader/TextureBindGroupLayoutEntry.hpp"
@@ -34,6 +35,7 @@ static inline const entt::hashed_string DEFERRED_BINDGROUP_TEXTURES_ID =
 
 static inline constexpr std::string_view DEFERRED_SHADE_CONTENT = R"(
 const MAX_POINT_LIGHTS: u32 = 64u;
+const MAX_DIRECTIONAL_LIGHTS: u32 = 64u;
 
 struct DeferredInput {
     @builtin(vertex_index) VertexIndex : u32
@@ -77,6 +79,21 @@ struct PointLightsData {
     _padding3: f32,
 };
 
+struct DirectionalLight {
+    viewProjection: mat4x4f,
+    color: vec4f,
+    direction: vec3f,
+    shadowIndex: u32,
+};
+
+struct DirectionalLightsData {
+    lights: array<DirectionalLight, 64>,
+    count: u32,
+    _padding1: f32,
+    _padding2: f32,
+    _padding3: f32,
+};
+
 @group(0) @binding(0) var<uniform> camera: Camera;
 
 @group(1) @binding(0) var gBufferNormal: texture_2d<f32>;
@@ -85,7 +102,9 @@ struct PointLightsData {
 
 @group(2) @binding(0) var<uniform> ambientLight : AmbientLight;
 @group(2) @binding(1) var<uniform> pointLights : PointLightsData;
-
+@group(2) @binding(2) var<uniform> directionalLights : DirectionalLightsData;
+@group(2) @binding(3) var lightsDirectionalTextures: texture_depth_2d_array;
+@group(2) @binding(4) var lightsDirectionalTextureSampler: sampler_comparison;
 
 @vertex
 fn vs_main(
@@ -135,6 +154,49 @@ fn calculatePointLight(light: GPUPointLight, worldPos: vec3f, normal: vec3f) -> 
     return light.color * diff * attenuation;
 }
 
+fn calculateDirectionalLight(light: DirectionalLight, N: vec3f, V: vec3f, MatKd: vec3f, MatKs: vec3f, Shiness: f32, position: vec3f, shadowBias: f32) -> vec3f
+{
+  let FragPosLightSpace = light.viewProjection * vec4f(position, 1.0);
+  let shadowCoord = FragPosLightSpace.xyz / FragPosLightSpace.w;
+  let projCoord = shadowCoord * vec3f(0.5, -0.5, 1.0) + vec3f(0.5, 0.5, 0.0);
+
+  var visibility = 0.0;
+  let oneOverShadowDepthTextureSize = 1.0 / 2048.0;
+  let offsets = array<vec2f, 25>(
+    vec2f(-2, -2), vec2f(-1, -2), vec2f(0, -2), vec2f(1, -2), vec2f(2, -2),
+    vec2f(-2, -1), vec2f(-1, -1), vec2f(0, -1), vec2f(1, -1), vec2f(2, -1),
+    vec2f(-2, 0), vec2f(-1, 0), vec2f(0, 0), vec2f(1, 0), vec2f(2, 0),
+    vec2f(-2, 1), vec2f(-1, 1), vec2f(0, 1), vec2f(1, 1), vec2f(2, 1),
+    vec2f(-2, 2), vec2f(-1, 2), vec2f(0, 2), vec2f(1, 2), vec2f(2, 2)
+  );
+
+  const PCF_SAMPLES: u32 = 25u;
+
+  for (var i = 0u; i < PCF_SAMPLES; i++) {
+    let offset = offsets[i] * oneOverShadowDepthTextureSize;
+    visibility += textureSampleCompare(
+      lightsDirectionalTextures, lightsDirectionalTextureSampler,
+      projCoord.xy + offset, i32(light.shadowIndex), projCoord.z - shadowBias
+    );
+  }
+  visibility /= 25.0;
+  if (visibility < 0.01) {
+    return vec3f(0.0);
+  }
+
+  let L = normalize(light.direction);
+  let R = reflect(-L, N); // equivalent to 2.0 * dot(N, L) * N - L
+
+  let diffuse = max(0.0, dot(L, N)) * light.color.rgb;
+  // let diffuse = light.color.rgb;
+
+  // We clamp the dot product to 0 when it is negative
+  let RoV = max(0.0, dot(R, V));
+  let specular = pow(RoV, Shiness) * light.color.rgb;
+
+  return (MatKd * diffuse + MatKs * specular) * visibility;
+}
+
 @fragment
 fn fs_main(
   vertexToFragment : VertexToFragment,
@@ -142,6 +204,7 @@ fn fs_main(
     var output : DeferredOutput;
     output.color = vec4(0.0, 0.0, 0.0, 1.0);
     var coords = vec2i(floor(vertexToFragment.coord.xy));
+    const Shiness = 32.0;
 
     let depth = textureLoad(gBufferDepth, coords, 0).x;
 
@@ -161,8 +224,17 @@ fn fs_main(
 
     var lighting = ambientLight.color;
 
-    for (var i = 0u; i < pointLights.count; i++) {
+    for (var i = 0u; i < MAX_POINT_LIGHTS; i++) {
+        if (i >= pointLights.count) {
+            break;
+        }
         lighting += calculatePointLight(pointLights.lights[i], position, N);
+    }
+    for (var i = 0u; i < MAX_DIRECTIONAL_LIGHTS; i++) {
+        if (i >= directionalLights.count) {
+            break;
+        }
+        lighting += calculateDirectionalLight(directionalLights.lights[i], N, V, albedo, vec3f(1.0), Shiness, position, 0.007);
     }
 
     var color : vec4f = vec4f(albedo * lighting, 1.0);
@@ -186,16 +258,17 @@ class Deferred : public Graphic::Resource::ASingleExecutionRenderPass<Deferred> 
             Log::Error("Deferred::UniqueRenderCallback: No camera with GPUCamera component found.");
             return;
         }
+
         Engine::Entity camera{core, cameraView.front()};
         const auto &cameraGPUComponent = camera.GetComponents<Component::GPUCamera>();
         const auto &cameraBindGroup = bindGroupManager.Get(cameraGPUComponent.bindGroup);
-        renderPass.setBindGroup(cameraBindGroup.GetLayoutIndex(), cameraBindGroup.GetBindGroup(), 0, nullptr);
-
-        const auto &lightsBindGroup = bindGroupManager.Get(Utils::LIGHTS_BIND_GROUP_ID);
-        renderPass.setBindGroup(lightsBindGroup.GetLayoutIndex(), lightsBindGroup.GetBindGroup(), 0, nullptr);
+        renderPass.setBindGroup(0, cameraBindGroup.GetBindGroup(), 0, nullptr);
 
         const auto &texturesBindgroup = bindGroupManager.Get(DEFERRED_BINDGROUP_TEXTURES_ID);
-        renderPass.setBindGroup(texturesBindgroup.GetLayoutIndex(), texturesBindgroup.GetBindGroup(), 0, nullptr);
+        renderPass.setBindGroup(1, texturesBindgroup.GetBindGroup(), 0, nullptr);
+
+        const auto &lightsBindGroup = bindGroupManager.Get(Utils::LIGHTS_BIND_GROUP_ID);
+        renderPass.setBindGroup(2, lightsBindGroup.GetBindGroup(), 0, nullptr);
 
         renderPass.draw(6, 1, 0, 0);
     }
@@ -229,14 +302,28 @@ class Deferred : public Graphic::Resource::ASingleExecutionRenderPass<Deferred> 
         auto lightsLayout = Graphic::Utils::BindGroupLayout("LightsLayout")
                                 .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("ambientLight")
                                               .setType(wgpu::BufferBindingType::Uniform)
-                                              .setMinBindingSize(sizeof(glm::vec3) + sizeof(float) /*padding*/)
+                                              .setMinBindingSize(sizeof(glm::vec3) + sizeof(float))
                                               .setVisibility(wgpu::ShaderStage::Fragment)
                                               .setBinding(0))
                                 .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("pointLights")
                                               .setType(wgpu::BufferBindingType::Uniform)
                                               .setMinBindingSize(Resource::PointLightsBuffer::GPUSize())
                                               .setVisibility(wgpu::ShaderStage::Fragment)
-                                              .setBinding(1));
+                                              .setBinding(1))
+                                .addEntry(Graphic::Utils::BufferBindGroupLayoutEntry("directionalLights")
+                                              .setType(wgpu::BufferBindingType::Uniform)
+                                              .setMinBindingSize(Resource::DirectionalLightsBuffer::GPUSize())
+                                              .setVisibility(wgpu::ShaderStage::Fragment)
+                                              .setBinding(2))
+                                .addEntry(Graphic::Utils::TextureBindGroupLayoutEntry("directionalShadowMaps")
+                                              .setSampleType(wgpu::TextureSampleType::Depth)
+                                              .setViewDimension(wgpu::TextureViewDimension::_2DArray)
+                                              .setVisibility(wgpu::ShaderStage::Fragment)
+                                              .setBinding(3))
+                                .addEntry(Graphic::Utils::SamplerBindGroupLayoutEntry("directionalShadowMapSampler")
+                                              .setType(wgpu::SamplerBindingType::Comparison)
+                                              .setVisibility(wgpu::ShaderStage::Fragment)
+                                              .setBinding(4));
 
         auto colorOutput =
             Graphic::Utils::ColorTargetState("DEFERRED_OUTPUT").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);

@@ -390,6 +390,16 @@ Rml::ElementDocument *UIContext::GetDocument() { return _document; }
 
 const Rml::ElementDocument *UIContext::GetDocument() const { return _document; }
 
+Rml::ElementDocument *UIContext::GetOverlayDocument(const std::string &docPath)
+{
+    return _overlayDocuments.find(docPath) != _overlayDocuments.end() ? _overlayDocuments.at(docPath) : nullptr;
+}
+
+const Rml::ElementDocument *UIContext::GetOverlayDocument(const std::string &docPath) const
+{
+    return _overlayDocuments.find(docPath) != _overlayDocuments.end() ? _overlayDocuments.at(docPath) : nullptr;
+}
+
 void UIContext::EnableDebugger(bool enable)
 {
     if (_context == nullptr)

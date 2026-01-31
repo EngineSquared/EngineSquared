@@ -28,7 +28,9 @@ struct ColorOutput {
 };
 
 struct DepthOutput {
+    // TODO: use textureView container
     entt::hashed_string textureId{};
+    std::optional<wgpu::TextureView> depthTextureView;
     explicit DepthOutput(std::string_view textureId_ = {})
     {
         if (!textureId_.empty())
@@ -144,6 +146,7 @@ class ARenderPass {
     const auto &GetInputs(void) const { return _inputs; }
     const auto &GetName(void) const { return _name; }
     const auto &GetOutputs(void) const { return _outputs; }
+    auto &GetOutputs(void) { return _outputs; }
 
   private:
     std::optional<entt::hashed_string> _boundShader = std::nullopt;

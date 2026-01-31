@@ -39,6 +39,12 @@ void Setup(Engine::Core &core)
     camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -5.0f));
     camera.AddComponent<Object::Component::Camera>();
 
+    auto directionalLight = core.CreateEntity();
+    directionalLight.AddComponent<Object::Component::Transform>(glm::vec3(-5, 3, 1.5))
+        .SetRotation(0.19305186, 0.7857022, -0.30020833, 0.5052504);
+    directionalLight.AddComponent<Object::Component::DirectionalLight>(
+        {.color = glm::vec4(0.3f), .projection = glm::orthoLH_ZO(-5.0f, 5.0f, -5.0f, 5.0f, 0.1f, 50.0f)});
+
     auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
     cameraManager.SetActiveCamera(camera);
     cameraManager.SetMovementSpeed(3.0f);
