@@ -96,6 +96,25 @@ TEST(Systems, EnableDisable)
     ASSERT_EQ(core.GetResource<C>().value, 2);
 }
 
+TEST(Systems, RemoveSystem)
+{
+    Core core;
+
+    core.RegisterResource<A>({});
+
+    auto [a] = core.RegisterSystem(TestSystemClass());
+
+    core.RunSystems();
+
+    ASSERT_EQ(core.GetResource<A>().value, 1);
+
+    core.GetScheduler<Scheduler::Update>().Remove(a);
+
+    core.RunSystems();
+
+    ASSERT_EQ(core.GetResource<A>().value, 1);
+}
+
 TEST(Systems, ErrorHandling)
 {
     Core core;

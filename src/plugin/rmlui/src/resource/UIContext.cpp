@@ -248,12 +248,18 @@ void UIContext::Update(Engine::Core &core)
     _context->Update();
 }
 
-void UIContext::Render(Engine::Core & /*core*/)
+void UIContext::Render(Engine::Core &core)
 {
     if (!_isReady())
     {
         Log::Warn("Rmlui is not ready to render");
         return;
+    }
+
+    if (_lateUpdateRequested)
+    {
+        _lateUpdateRequested = false;
+        Update(core);
     }
 
     GetRenderInterface()->BeginFrame();
@@ -363,6 +369,8 @@ bool UIContext::LoadOverlayDocument(const std::string &docPath)
     }
 
     document->Show();
+    document->SetProperty("width", "100%");
+    document->SetProperty("height", "100%");
     _overlayDocuments.emplace(docPath, document);
     return true;
 }
@@ -474,6 +482,8 @@ bool UIContext::UnregisterEventListener(Rml::Element &element, const Rml::String
     }
     return false;
 }
+
+void UIContext::RequestLateUpdate() { _lateUpdateRequested = true; }
 
 void UIContext::SetInputCallbackIds(const InputCallbackIds &ids) { _inputCallbackIds = ids; }
 
