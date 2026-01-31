@@ -1,23 +1,3 @@
-/**************************************************************************
- * EngineSquared v0.2.0
- *
- * EngineSquared is a software package, part of the Engine² organization.
- *
- * This file is part of the EngineSquared project that is under MIT License.
- * Copyright © 2024-present by @EngineSquared, All rights reserved.
- *
- * EngineSquared is a free software: you can redistribute it and/or modify
- * it under the terms of the MIT License. See the project's LICENSE file for
- * the full license text and details.
- *
- * @file MeshSimplifier.cpp
- * @brief Implementation of mesh simplification algorithms.
- *
- * @author @EngineSquared
- * @version 0.2.0
- * @date 2026-01-29
- **************************************************************************/
-
 #include "MeshSimplifier.hpp"
 #include "MeshUtils.hpp"
 
@@ -47,7 +27,6 @@ class SpatialHash {
         int32_t y = static_cast<int32_t>(std::floor(pos.y * _invCellSize));
         int32_t z = static_cast<int32_t>(std::floor(pos.z * _invCellSize));
 
-        // Combine into single hash
         return (static_cast<int64_t>(x) * 73856093) ^ (static_cast<int64_t>(y) * 19349663) ^
                (static_cast<int64_t>(z) * 83492791);
     }
@@ -64,7 +43,6 @@ class SpatialHash {
     {
         std::vector<uint32_t> result;
 
-        // Check all 27 neighboring cells (3x3x3)
         for (int dx = -1; dx <= 1; ++dx)
         {
             for (int dy = -1; dy <= 1; ++dy)
@@ -109,7 +87,7 @@ class UnionFind {
     {
         if (_parent[x] != x)
         {
-            _parent[x] = Find(_parent[x]); // Path compression
+            _parent[x] = Find(_parent[x]);
         }
         return _parent[x];
     }
@@ -122,7 +100,6 @@ class UnionFind {
         if (rootX == rootY)
             return;
 
-        // Union by rank
         if (_rank[rootX] < _rank[rootY])
         {
             _parent[rootX] = rootY;
@@ -170,7 +147,6 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
     SimplificationResult result;
     result.originalVertexCount = static_cast<uint32_t>(mesh.GetVertices().size());
 
-    // Check if simplification is needed
     if (mesh.GetVertices().size() <= settings.targetVertexCount)
     {
         result.mesh = mesh;
@@ -189,7 +165,6 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
     const auto &texCoords = mesh.GetTexCoords();
     const auto &indices = mesh.GetIndices();
 
-    // Calculate adaptive merge distance based on mesh bounds
     glm::vec3 minBound(FLT_MAX);
     glm::vec3 maxBound(-FLT_MAX);
     for (const auto &v : vertices)
@@ -200,17 +175,14 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
     glm::vec3 extent = maxBound - minBound;
     float meshDiagonal = glm::length(extent);
 
-    // Adaptive merge distance: larger for bigger meshes
     float mergeDistance = settings.mergeDistance + (settings.aggressiveness * meshDiagonal * 0.01f);
 
-    // Build spatial hash
     SpatialHash spatialHash(mergeDistance * 2.0f);
     for (uint32_t i = 0; i < vertices.size(); ++i)
     {
         spatialHash.Insert(vertices[i], i);
     }
 
-    // Find vertex clusters using union-find
     UnionFind uf(static_cast<uint32_t>(vertices.size()));
 
     for (uint32_t i = 0; i < vertices.size(); ++i)
@@ -229,7 +201,6 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
         }
     }
 
-    // Map old vertices to new cluster representatives
     std::unordered_map<uint32_t, uint32_t> clusterToNewIndex;
     std::vector<glm::vec3> newVertices;
     std::vector<glm::vec3> newNormals;
@@ -241,7 +212,6 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
 
     result.vertexMap.resize(vertices.size());
 
-    // First pass: identify unique clusters and accumulate
     for (uint32_t i = 0; i < vertices.size(); ++i)
     {
         uint32_t cluster = uf.Find(i);
@@ -280,7 +250,6 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
         }
     }
 
-    // Second pass: compute centroids
     for (uint32_t i = 0; i < newVertices.size(); ++i)
     {
         float invCount = 1.0f / static_cast<float>(clusterCounts[i]);
@@ -295,7 +264,6 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
         }
     }
 
-    // Rebuild indices, skipping degenerate triangles
     std::vector<uint32_t> newIndices;
     newIndices.reserve(indices.size());
 
@@ -313,7 +281,6 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
         }
     }
 
-    // Build result mesh
     result.mesh.SetVertices(newVertices);
     result.mesh.SetIndices(newIndices);
 
@@ -322,10 +289,8 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
         result.mesh.SetTexCoords(newTexCoords);
     }
 
-    // Recalculate normals if requested
     if (settings.recalculateNormals && !newVertices.empty() && !newIndices.empty())
     {
-        // Resize normals array to match vertices
         std::vector<glm::vec3> recalcNormals(newVertices.size(), glm::vec3(0.0f));
         result.mesh.SetNormals(recalcNormals);
         RecalculateNormals(result.mesh);
@@ -359,7 +324,6 @@ SimplificationResult DeduplicateVertices(const Component::Mesh &mesh, float epsi
         return result;
     }
 
-    // Build spatial hash for deduplication
     SpatialHash spatialHash(epsilon * 2.0f);
     std::vector<glm::vec3> newVertices;
     std::vector<glm::vec3> newNormals;
@@ -400,7 +364,6 @@ SimplificationResult DeduplicateVertices(const Component::Mesh &mesh, float epsi
         }
     }
 
-    // Rebuild indices
     std::vector<uint32_t> newIndices;
     newIndices.reserve(indices.size());
 
@@ -445,7 +408,6 @@ uint32_t EstimateSimplifiedVertexCount(const Component::Mesh &mesh, const Simpli
         return static_cast<uint32_t>(vertices.size());
     }
 
-    // Quick estimation based on merge distance and mesh bounds
     glm::vec3 minBound(FLT_MAX);
     glm::vec3 maxBound(-FLT_MAX);
     for (const auto &v : vertices)
@@ -455,20 +417,17 @@ uint32_t EstimateSimplifiedVertexCount(const Component::Mesh &mesh, const Simpli
     }
     glm::vec3 extent = maxBound - minBound;
 
-    // Estimate cells in the spatial grid
     float cellSize = settings.mergeDistance * 2.0f;
     uint32_t cellsX = static_cast<uint32_t>(std::ceil(extent.x / cellSize)) + 1;
     uint32_t cellsY = static_cast<uint32_t>(std::ceil(extent.y / cellSize)) + 1;
     uint32_t cellsZ = static_cast<uint32_t>(std::ceil(extent.z / cellSize)) + 1;
 
-    // Maximum possible unique vertices is min(original count, total cells)
     uint32_t maxCells = cellsX * cellsY * cellsZ;
     uint32_t estimated = std::min(static_cast<uint32_t>(vertices.size()), maxCells);
 
-    // Apply aggressiveness factor
     estimated = static_cast<uint32_t>(estimated * (1.0f - settings.aggressiveness * 0.5f));
 
-    return std::max(estimated, 100u); // At least 100 vertices
+    return std::max(estimated, 100u);
 }
 
 } // namespace Object::Utils

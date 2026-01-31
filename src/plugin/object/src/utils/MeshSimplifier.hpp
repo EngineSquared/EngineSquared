@@ -122,6 +122,12 @@ struct SimplificationSettings {
  * 5. Remove degenerate triangles
  * 6. Optionally recalculate normals
  *
+ * Implementation notes: The implementation uses a spatial hash for efficient
+ * proximity queries and a union-find (disjoint set) structure to cluster
+ * nearby vertices. Clusters are collapsed to centroids; triangles are rebuilt
+ * and degenerate faces removed. Normals may be recomputed if requested. This
+ * approach is fast and robust for large meshes but is lossy.
+ *
  * @param mesh The input mesh to simplify
  * @param settings Simplification parameters
  * @return SimplificationResult containing the simplified mesh and metadata
