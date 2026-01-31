@@ -57,8 +57,8 @@ auto RemoveParent(Engine::Entity child) -> void;
  */
 auto GetParent(Engine::Entity child) -> std::optional<Engine::Entity>;
 
-template <typename TFunc>
-auto ForEachChild(Engine::Entity parent, TFunc func) -> void {
+template <typename TFunc> auto ForEachChild(Engine::Entity parent, TFunc func) -> void
+{
     const Relationship::Component::Relationship *parentRS =
         parent.TryGetComponent<Relationship::Component::Relationship>();
     if (!parentRS)

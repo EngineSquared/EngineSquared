@@ -164,9 +164,7 @@ TEST(Relationship, for_each_child)
     Relationship::Utils::SetChildOf(child3, parent);
 
     std::vector<Engine::Entity> children;
-    Relationship::Utils::ForEachChild(parent, [&children](Engine::Entity child) {
-        children.push_back(child);
-    });
+    Relationship::Utils::ForEachChild(parent, [&children](Engine::Entity child) { children.push_back(child); });
 
     ASSERT_EQ(children.size(), 3);
     ASSERT_EQ(children[0], child3);
