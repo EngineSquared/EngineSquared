@@ -32,8 +32,8 @@ Object::Component::Mesh CreateCustomMesh(void)
     mesh.SetVertices({
         {-0.5f, 0.0f, -0.5f},
         {0.5f,  0.0f, -0.5f},
-        {0.5f,  0.0f,  0.5f},
-        {-0.5f, 0.0f,  0.5f}
+        {0.5f,  0.0f, 0.5f },
+        {-0.5f, 0.0f, 0.5f }
     });
 
     mesh.SetNormals({
@@ -50,10 +50,7 @@ Object::Component::Mesh CreateCustomMesh(void)
         {0.0f, 1.0f}
     });
 
-    mesh.SetIndices({
-        0, 1, 2,
-        2, 3, 0
-    });
+    mesh.SetIndices({0, 1, 2, 2, 3, 0});
 
     return mesh;
 }
