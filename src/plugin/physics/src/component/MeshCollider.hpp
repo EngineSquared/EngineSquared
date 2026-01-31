@@ -23,19 +23,23 @@
 
 #pragma once
 
+#include "component/Mesh.hpp"
+#include <optional>
+
 namespace Physics::Component {
 
 /**
  * @brief Triangle mesh collider (concave mesh support)
  *
- * This component creates a triangle mesh collision shape from the entity's
- * Object::Mesh component vertices and indices. This supports concave meshes,
+ * This component creates a triangle mesh collision shape from mesh data.
+ * The mesh can either be embedded in this component or retrieved from the
+ * entity's Object::Mesh component. This supports concave meshes,
  * making it ideal for static terrain, floors, and complex geometry.
  *
  * If this component is present on an entity with RigidBody, it uses the
  * mesh geometry for collision instead of requiring an explicit collider.
  *
- * @note The entity MUST have an Object::Mesh component for this to work.
+ * @note If mesh is not embedded, the entity MUST have an Object::Mesh component.
  * @note Triangle mesh colliders should ONLY be used for STATIC objects.
  *       For dynamic objects, use primitive colliders or convex hulls.
  * @note The mesh scale from the Transform component is automatically applied.
@@ -45,6 +49,9 @@ struct MeshCollider {
     /// Active edges prevent objects from getting stuck on internal edges when sliding across triangles
     /// Lower values = more edges marked as active = smoother sliding
     float activeEdgeCosThresholdAngle = 0.996195f;
+
+    /// Optional embedded mesh data for collision (avoids needing entity Mesh component)
+    std::optional<Object::Component::Mesh> mesh;
 
     /**
      * @brief Default constructor
