@@ -73,6 +73,13 @@ class AScheduler : public IScheduler {
      */
     inline void SetErrorPolicy(SchedulerErrorPolicy errorPolicy) override { _errorPolicy = errorPolicy; }
 
+    /**
+     * @brief Remove a system from the scheduler
+     *
+     * @param id The system to remove
+     */
+    void Remove(FunctionUtils::FunctionID id);
+
   protected:
     Core &_core;
 

@@ -7,10 +7,14 @@
 #include "utils/webgpu.hpp"
 #include <array>
 #include <bit>
+#include <cstddef>
+#include <cstdint>
+#include <cstring>
 #include <functional>
 #include <glm/gtc/packing.hpp>
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
+#include <vector>
 
 namespace Graphic::Resource {
 
@@ -197,9 +201,25 @@ class Texture {
         source.offset = 0;
         source.bytesPerRow = image.channels * textureSize.width;
         source.rowsPerImage = textureSize.height;
+
         const wgpu::Queue &queue = context.queue.value();
-        queue.writeTexture(destination, image.pixels.data(), source.bytesPerRow * source.rowsPerImage, source,
-                           textureSize);
+        const uint32_t rowBytes = source.bytesPerRow;
+        const uint32_t alignedRowBytes = (rowBytes + 255u) & ~255u;
+        if (alignedRowBytes == rowBytes)
+        {
+            queue.writeTexture(destination, image.pixels.data(), rowBytes * source.rowsPerImage, source, textureSize);
+            return;
+        }
+
+        std::vector<uint8_t> padded(alignedRowBytes * textureSize.height, 0u);
+        const auto *const src = reinterpret_cast<const std::byte *>(image.pixels.data());
+        for (uint32_t row = 0; row < textureSize.height; ++row)
+        {
+            std::memcpy(padded.data() + row * alignedRowBytes, src + row * rowBytes, rowBytes);
+        }
+
+        source.bytesPerRow = alignedRowBytes;
+        queue.writeTexture(destination, padded.data(), alignedRowBytes * source.rowsPerImage, source, textureSize);
     }
 
     /**
