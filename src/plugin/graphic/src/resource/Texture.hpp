@@ -7,11 +7,14 @@
 #include "utils/webgpu.hpp"
 #include <array>
 #include <bit>
+#include <cstddef>
+#include <cstdint>
 #include <cstring>
 #include <functional>
 #include <glm/gtc/packing.hpp>
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
+#include <vector>
 
 namespace Graphic::Resource {
 
@@ -209,7 +212,7 @@ class Texture {
         }
 
         std::vector<uint8_t> padded(alignedRowBytes * textureSize.height, 0u);
-        const uint8_t *src = reinterpret_cast<const uint8_t *>(image.pixels.data());
+        const auto *const src = reinterpret_cast<const std::byte *>(image.pixels.data());
         for (uint32_t row = 0; row < textureSize.height; ++row)
         {
             std::memcpy(padded.data() + row * alignedRowBytes, src + row * rowBytes, rowBytes);

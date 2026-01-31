@@ -394,7 +394,8 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
         }
     }
 
-    const auto textureHandle = _nextTextureHandle++;
+    _nextTextureHandle += 1UL;
+    const auto textureHandle = _nextTextureHandle;
     _textures.emplace(textureHandle, std::move(texture));
     return textureHandle;
 }
