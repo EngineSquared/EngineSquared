@@ -144,7 +144,8 @@ static JPH::RefConst<JPH::Shape> CreateMeshShapeFromMesh(const Object::Component
  * @note If no collider is found, it will default to the MeshCollider with default settings, which can be pretty heavy.
  * Make sure to always use the most appropriate colliders for RigidBodies.
  */
-static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry &registry, Engine::EntityId entity) //NOSONAR
+static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry &registry,
+                                                          Engine::EntityId entity) // NOSONAR
 {
     if (auto *sphereCollider = registry.try_get<Component::SphereCollider>(entity))
     {
