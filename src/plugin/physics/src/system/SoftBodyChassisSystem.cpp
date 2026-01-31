@@ -12,6 +12,7 @@
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
 #include "utils/Layers.hpp"
+#include "exception/SoftBodyChassisError.hpp"
 #include <fmt/format.h>
 #include <set>
 #include <unordered_map>
@@ -309,7 +310,7 @@ static void OnSoftBodyChassisConstruct(Engine::Core::Registry &registry, Engine:
         Log::Info(fmt::format("SoftBodyChassis: Created for entity {} ({} vertices, simplified: {})", entity,
                               workingMesh.GetVertices().size(), wasSimplified));
     }
-    catch (const std::runtime_error &e)
+    catch (const Exception::SoftBodyChassisError &e)
     {
         Log::Error(fmt::format("SoftBodyChassis: Runtime error during creation: {}", e.what()));
     }

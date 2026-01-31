@@ -16,7 +16,7 @@ namespace {
  */
 class SpatialHash {
   public:
-    SpatialHash(float cellSize) : _cellSize(cellSize), _invCellSize(1.0f / cellSize) {}
+    explicit SpatialHash(float cellSize) : _cellSize(cellSize), _invCellSize(1.0f / cellSize) {}
 
     /**
      * @brief Get hash key for a position
@@ -43,22 +43,27 @@ class SpatialHash {
     {
         std::vector<uint32_t> result;
 
-        for (int dx = -1; dx <= 1; ++dx)
-        {
-            for (int dy = -1; dy <= 1; ++dy)
-            {
-                for (int dz = -1; dz <= 1; ++dz)
-                {
-                    glm::vec3 offset(dx * _cellSize, dy * _cellSize, dz * _cellSize);
-                    int64_t key = GetKey(pos + offset);
+        static const std::array<glm::ivec3, 27> neighborOffsets = {
+            glm::ivec3(-1, -1, -1), glm::ivec3(-1, -1, 0), glm::ivec3(-1, -1, 1),
+            glm::ivec3(-1, 0, -1),  glm::ivec3(-1, 0, 0),  glm::ivec3(-1, 0, 1),
+            glm::ivec3(-1, 1, -1),  glm::ivec3(-1, 1, 0),  glm::ivec3(-1, 1, 1),
 
-                    auto it = _cells.find(key);
-                    if (it != _cells.end())
-                    {
-                        result.insert(result.end(), it->second.begin(), it->second.end());
-                    }
-                }
-            }
+            glm::ivec3(0, -1, -1),  glm::ivec3(0, -1, 0),  glm::ivec3(0, -1, 1),
+            glm::ivec3(0, 0, -1),   glm::ivec3(0, 0, 0),   glm::ivec3(0, 0, 1),
+            glm::ivec3(0, 1, -1),   glm::ivec3(0, 1, 0),   glm::ivec3(0, 1, 1),
+
+            glm::ivec3(1, -1, -1),  glm::ivec3(1, -1, 0),  glm::ivec3(1, -1, 1),
+            glm::ivec3(1, 0, -1),   glm::ivec3(1, 0, 0),   glm::ivec3(1, 0, 1),
+            glm::ivec3(1, 1, -1),   glm::ivec3(1, 1, 0),   glm::ivec3(1, 1, 1),
+        };
+
+        for (const auto &off : neighborOffsets)
+        {
+            glm::vec3 offset(off.x * _cellSize, off.y * _cellSize, off.z * _cellSize);
+            int64_t key = GetKey(pos + offset);
+            auto it = _cells.find(key);
+            if (it != _cells.end())
+                result.insert(result.end(), it->second.begin(), it->second.end());
         }
 
         return result;
@@ -147,8 +152,6 @@ bool IsTriangleDegenerate(uint32_t i0, uint32_t i1, uint32_t i2, const std::vect
  */
 static void ComputeBounds(const std::vector<glm::vec3> &vertices, glm::vec3 &minBound, glm::vec3 &maxBound)
 {
-    minBound = glm::vec3(FLT_MAX);
-    maxBound = glm::vec3(-FLT_MAX);
     for (const auto &v : vertices)
     {
         minBound = glm::min(minBound, v);
@@ -158,7 +161,9 @@ static void ComputeBounds(const std::vector<glm::vec3> &vertices, glm::vec3 &min
 
 static float ComputeMergeDistance(const std::vector<glm::vec3> &vertices, const SimplificationSettings &settings)
 {
-    glm::vec3 minBound, maxBound;
+    glm::vec3 minBound = glm::vec3(FLT_MAX);
+    glm::vec3 maxBound = glm::vec3(-FLT_MAX);
+
     ComputeBounds(vertices, minBound, maxBound);
     glm::vec3 extent = maxBound - minBound;
     float meshDiagonal = glm::length(extent);
@@ -168,7 +173,7 @@ static float ComputeMergeDistance(const std::vector<glm::vec3> &vertices, const 
 /**
  * @brief Cluster vertices using spatial hash and return UnionFind
  */
-static UnionFind ClusterVertices(const std::vector<glm::vec3> &vertices, float mergeDistance, SpatialHash &spatialHash)
+static UnionFind ClusterVertices(const std::vector<glm::vec3> &vertices, float mergeDistance, const SpatialHash &spatialHash)
 {
     UnionFind uf(static_cast<uint32_t>(vertices.size()));
 
@@ -192,20 +197,31 @@ static UnionFind ClusterVertices(const std::vector<glm::vec3> &vertices, float m
 }
 
 /**
- * @brief Collapse clusters into centroids and compute new vertex arrays
+ * @brief Collapse clusters resulting from union-find
  */
-static void CollapseClusters(const std::vector<glm::vec3> &vertices, const std::vector<glm::vec3> &normals,
-                             const std::vector<glm::vec2> &texCoords, UnionFind &uf,
-                             std::vector<glm::vec3> &outVertices, std::vector<glm::vec3> &outNormals,
-                             std::vector<glm::vec2> &outTexCoords, std::vector<uint32_t> &outVertexMap)
+struct CollapseResult {
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec3> normals;
+    std::vector<glm::vec2> texCoords;
+    std::vector<uint32_t> vertexMap;
+};
+
+/**
+ * @brief Collapse clusters into centroids and compute new vertex arrays
+ * @return CollapseResult containing new vertices, normals, texCoords and vertexMap
+ */
+static CollapseResult CollapseClusters(const std::vector<glm::vec3> &vertices, const std::vector<glm::vec3> &normals,
+                                       const std::vector<glm::vec2> &texCoords, UnionFind &uf)
 {
+    CollapseResult res;
+
     std::unordered_map<uint32_t, uint32_t> clusterToNewIndex;
     std::vector<glm::vec3> clusterSums;
     std::vector<glm::vec3> normalSums;
     std::vector<glm::vec2> texCoordSums;
     std::vector<uint32_t> clusterCounts;
 
-    outVertexMap.resize(vertices.size());
+    res.vertexMap.resize(vertices.size());
 
     for (uint32_t i = 0; i < vertices.size(); ++i)
     {
@@ -213,23 +229,23 @@ static void CollapseClusters(const std::vector<glm::vec3> &vertices, const std::
         auto it = clusterToNewIndex.find(cluster);
         if (it == clusterToNewIndex.end())
         {
-            uint32_t newIdx = static_cast<uint32_t>(outVertices.size());
+            uint32_t newIdx = static_cast<uint32_t>(res.vertices.size());
             clusterToNewIndex[cluster] = newIdx;
-            outVertices.push_back(vertices[i]);
+            res.vertices.push_back(vertices[i]);
             clusterSums.push_back(vertices[i]);
 
             if (!normals.empty())
             {
-                outNormals.push_back(normals[i]);
+                res.normals.push_back(normals[i]);
                 normalSums.push_back(normals[i]);
             }
             if (!texCoords.empty())
             {
-                outTexCoords.push_back(texCoords[i]);
+                res.texCoords.push_back(texCoords[i]);
                 texCoordSums.push_back(texCoords[i]);
             }
             clusterCounts.push_back(1);
-            outVertexMap[i] = newIdx;
+            res.vertexMap[i] = newIdx;
         }
         else
         {
@@ -240,23 +256,25 @@ static void CollapseClusters(const std::vector<glm::vec3> &vertices, const std::
             if (!texCoords.empty())
                 texCoordSums[newIdx] += texCoords[i];
             clusterCounts[newIdx]++;
-            outVertexMap[i] = newIdx;
+            res.vertexMap[i] = newIdx;
         }
     }
 
-    for (uint32_t i = 0; i < outVertices.size(); ++i)
+    for (uint32_t i = 0; i < res.vertices.size(); ++i)
     {
         float invCount = 1.0f / static_cast<float>(clusterCounts[i]);
-        outVertices[i] = clusterSums[i] * invCount;
+        res.vertices[i] = clusterSums[i] * invCount;
         if (!normals.empty())
         {
-            outNormals[i] = glm::normalize(normalSums[i]);
+            res.normals[i] = glm::normalize(normalSums[i]);
         }
         if (!texCoords.empty())
         {
-            outTexCoords[i] = texCoordSums[i] * invCount;
+            res.texCoords[i] = texCoordSums[i] * invCount;
         }
     }
+
+    return res;
 }
 
 SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const SimplificationSettings &settings)
@@ -289,8 +307,6 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
         minBound = glm::min(minBound, v);
         maxBound = glm::max(maxBound, v);
     }
-    glm::vec3 extent = maxBound - minBound;
-    float meshDiagonal = glm::length(extent);
 
     float mergeDistance = ComputeMergeDistance(vertices, settings);
 
@@ -304,7 +320,11 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
     std::vector<glm::vec3> newNormals;
     std::vector<glm::vec2> newTexCoords;
 
-    CollapseClusters(vertices, normals, texCoords, uf, newVertices, newNormals, newTexCoords, result.vertexMap);
+    auto collapseRes = CollapseClusters(vertices, normals, texCoords, uf);
+    newVertices = std::move(collapseRes.vertices);
+    newNormals = std::move(collapseRes.normals);
+    newTexCoords = std::move(collapseRes.texCoords);
+    result.vertexMap = std::move(collapseRes.vertexMap);
 
     std::vector<uint32_t> newIndices;
     newIndices.reserve(indices.size());
@@ -464,7 +484,8 @@ uint32_t EstimateSimplifiedVertexCount(const Component::Mesh &mesh, const Simpli
     uint32_t cellsY = static_cast<uint32_t>(std::ceil(extent.y / cellSize)) + 1;
     uint32_t cellsZ = static_cast<uint32_t>(std::ceil(extent.z / cellSize)) + 1;
 
-    uint32_t maxCells = cellsX * cellsY * cellsZ;
+    uint64_t maxCells64 = cellsX * cellsY * cellsZ;
+    auto maxCells = static_cast<uint32_t>(std::min(maxCells64, static_cast<uint64_t>(UINT32_MAX)));
     uint32_t estimated = std::min(static_cast<uint32_t>(vertices.size()), maxCells);
 
     estimated = static_cast<uint32_t>(estimated * (1.0f - settings.aggressiveness * 0.5f));
