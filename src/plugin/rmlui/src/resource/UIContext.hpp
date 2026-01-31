@@ -47,7 +47,9 @@ class UIContext : public AUIContext {
     bool UnloadOverlayDocument(const std::string &docPath);
     const std::string &GetTitle() const override;
     Rml::ElementDocument *GetDocument();
+    Rml::ElementDocument *GetOverlayDocument(const std::string &docPath);
     const Rml::ElementDocument *GetDocument() const;
+    const Rml::ElementDocument *GetOverlayDocument(const std::string &docPath) const;
     void EnableDebugger(bool enable);
     Rml::Element *GetElementById(const std::string &elementId);
     bool RegisterEventListener(Rml::Element &element, const Rml::String &eventType,
