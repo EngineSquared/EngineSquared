@@ -23,19 +23,23 @@
 
 #pragma once
 
+#include <optional>
+#include "component/Mesh.hpp"
+
 namespace Physics::Component {
 
 /**
  * @brief Convex hull mesh collider
  *
- * This component creates a convex hull collision shape from the entity's
- * Object::Mesh component vertices. The convex hull is computed automatically
+ * This component creates a convex hull collision shape from mesh data.
+ * The mesh can either be embedded in this component or retrieved from the
+ * entity's Object::Mesh component. The convex hull is computed automatically
  * by Jolt Physics from the mesh vertices.
  *
  * If this component is present on an entity with RigidBody, it uses the
  * mesh geometry for collision instead of requiring an explicit collider.
  *
- * @note The entity MUST have an Object::Mesh component for this to work.
+ * @note If mesh is not embedded, the entity MUST have an Object::Mesh component.
  * @note Convex hulls are more expensive than primitives (Box, Sphere, Capsule)
  *       but much cheaper than concave mesh colliders.
  * @note Jolt automatically computes the convex hull from the provided points,
@@ -45,6 +49,9 @@ struct ConvexHullMeshCollider {
     /// Maximum convex radius (Jolt parameter for collision detection)
     /// Smaller values = sharper corners, larger values = smoother but less accurate
     float maxConvexRadius = 0.05f;
+
+    /// Optional embedded mesh data for collision (avoids needing entity Mesh component)
+    std::optional<Object::Component::Mesh> mesh;
 
     /**
      * @brief Default constructor

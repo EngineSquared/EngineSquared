@@ -187,10 +187,20 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
 
     if (auto *convexHullCollider = registry.try_get<Component::ConvexHullMeshCollider>(entity))
     {
-        auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
+        const Object::Component::Mesh *mesh = nullptr;
+        
+        if (convexHullCollider->mesh.has_value())
+        {
+            mesh = &convexHullCollider->mesh.value();
+        }
+        else
+        {
+            mesh = registry.try_get<Object::Component::Mesh>(entity);
+        }
+        
         if (!mesh)
         {
-            Log::Warn("ConvexHullMeshCollider: trying to create shape without Object::Mesh component");
+            Log::Warn("ConvexHullMeshCollider: trying to create shape without mesh data (no embedded mesh or Object::Mesh component)");
             return nullptr;
         }
 
@@ -203,10 +213,21 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
         return CreateConvexHullFromMesh(*mesh, convexHullCollider, scale);
     }
 
-    auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
+    auto *meshCollider = registry.try_get<Component::MeshCollider>(entity);
+    const Object::Component::Mesh *mesh = nullptr;
+    
+    if (meshCollider && meshCollider->mesh.has_value())
+    {
+        mesh = &meshCollider->mesh.value();
+    }
+    else
+    {
+        mesh = registry.try_get<Object::Component::Mesh>(entity);
+    }
+    
     if (!mesh)
     {
-        Log::Warn("MeshCollider: trying to create shape without Object::Mesh component");
+        Log::Warn("MeshCollider: trying to create shape without mesh data (no embedded mesh or Object::Mesh component)");
         return nullptr;
     }
 
@@ -216,7 +237,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
         scale = transform->GetScale();
     }
 
-    return CreateMeshShapeFromMesh(*mesh, registry.try_get<Component::MeshCollider>(entity), scale);
+    return CreateMeshShapeFromMesh(*mesh, meshCollider, scale);
 }
 
 //=============================================================================
