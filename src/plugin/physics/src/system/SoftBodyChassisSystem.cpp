@@ -9,10 +9,10 @@
 #include "component/SoftBodyChassisInternal.hpp"
 #include "component/Vehicle.hpp"
 #include "component/VehicleInternal.hpp"
+#include "exception/SoftBodyChassisError.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
 #include "utils/Layers.hpp"
-#include "exception/SoftBodyChassisError.hpp"
 #include <fmt/format.h>
 #include <set>
 #include <unordered_map>

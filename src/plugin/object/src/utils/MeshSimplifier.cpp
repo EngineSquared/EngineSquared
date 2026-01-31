@@ -173,7 +173,8 @@ static float ComputeMergeDistance(const std::vector<glm::vec3> &vertices, const 
 /**
  * @brief Cluster vertices using spatial hash and return UnionFind
  */
-static UnionFind ClusterVertices(const std::vector<glm::vec3> &vertices, float mergeDistance, const SpatialHash &spatialHash)
+static UnionFind ClusterVertices(const std::vector<glm::vec3> &vertices, float mergeDistance,
+                                 const SpatialHash &spatialHash)
 {
     UnionFind uf(static_cast<uint32_t>(vertices.size()));
 
