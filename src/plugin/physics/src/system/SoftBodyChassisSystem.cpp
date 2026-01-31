@@ -143,8 +143,7 @@ CreateChassisSharedSettings(const Object::Component::Mesh &mesh, const Component
 
             if (idx0 == idx1 || idx1 == idx2 || idx0 == idx2)
                 continue;
-            if (idx0 >= deduped.vertices.size() || idx1 >= deduped.vertices.size() ||
-                idx2 >= deduped.vertices.size())
+            if (idx0 >= deduped.vertices.size() || idx1 >= deduped.vertices.size() || idx2 >= deduped.vertices.size())
                 continue;
 
             joltSettings->mFaces.emplace_back(JPH::SoftBodySharedSettings::Face(idx0, idx1, idx2, 0));
@@ -199,9 +198,8 @@ static JPH::BodyID CreateSkeletonBody(Resource::PhysicsManager &physicsManager, 
         return JPH::BodyID();
     }
 
-    JPH::BodyCreationSettings bodySettings(shapeResult.Get(), Utils::ToJoltRVec3(position),
-                                           Utils::ToJoltQuat(rotation), JPH::EMotionType::Dynamic,
-                                           Utils::Layers::MOVING);
+    JPH::BodyCreationSettings bodySettings(shapeResult.Get(), Utils::ToJoltRVec3(position), Utils::ToJoltQuat(rotation),
+                                           JPH::EMotionType::Dynamic, Utils::Layers::MOVING);
 
     bodySettings.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia;
     bodySettings.mMassPropertiesOverride.mMass = mass;
@@ -478,8 +476,8 @@ void SyncSoftBodyChassisMesh(Engine::Core &core)
     if (!physicsManager.IsPhysicsActivated())
         return;
 
-    auto view = registry.view<Component::SoftBodyChassis, Component::SoftBodyChassisInternal,
-                              Object::Component::Mesh, Object::Component::Transform>();
+    auto view = registry.view<Component::SoftBodyChassis, Component::SoftBodyChassisInternal, Object::Component::Mesh,
+                              Object::Component::Transform>();
 
     auto &bodyLockInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
 
