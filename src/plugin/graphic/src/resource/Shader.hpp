@@ -81,7 +81,7 @@ class Shader {
             wgpu::ColorTargetState colorTarget(wgpu::Default);
             colorTarget.format = format.getFormat();
             colorTarget.writeMask = wgpu::ColorWriteMask::All;
-            colorTarget.blend = &blendState;
+            colorTarget.blend = &format.getBlendState();
             colorTargets.emplace_back(colorTarget);
         }
         fragmentState.module = shaderModule;
