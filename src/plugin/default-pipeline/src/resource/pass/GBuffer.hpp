@@ -95,8 +95,11 @@ fn fs_main(
     var output : GBufferOutput;
     var uv = vec2f(1.0 - fragUV.x, 1.0 - fragUV.y);
     output.normal = vec4(normalize(fragNormal), 1.0);
-    output.albedo = vec4(textureSample(texture, textureSampler, uv).rgb * material.diffuse.rgb, 1.0);
-
+    var textureColor = textureSample(texture, textureSampler, uv);
+    if (textureColor.a < 0.05) {
+        discard;
+    }
+    output.albedo = vec4(textureColor.rgb * material.diffuse.rgb, 1.0);
     return output;
 }
 
@@ -228,9 +231,17 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
         auto normalOutput =
             Graphic::Utils::ColorTargetState("GBUFFER_NORMAL").setFormat(wgpu::TextureFormat::RGBA16Float);
 
-        auto albedoOutput =
-            Graphic::Utils::ColorTargetState("GBUFFER_ALBEDO").setFormat(wgpu::TextureFormat::BGRA8Unorm);
+        wgpu::BlendState blendState{wgpu::Default};
+        blendState.alpha.srcFactor = wgpu::BlendFactor::One;
+        blendState.alpha.dstFactor = wgpu::BlendFactor::OneMinusSrcAlpha;
+        blendState.alpha.operation = wgpu::BlendOperation::Add;
+        blendState.color.srcFactor = wgpu::BlendFactor::One;
+        blendState.color.dstFactor = wgpu::BlendFactor::OneMinusSrcAlpha;
+        blendState.color.operation = wgpu::BlendOperation::Add;
 
+        auto albedoOutput = Graphic::Utils::ColorTargetState("GBUFFER_ALBEDO")
+                                .setFormat(wgpu::TextureFormat::BGRA8Unorm)
+                                .setBlendState(blendState);
         auto depthOutput = Graphic::Utils::DepthStencilState("GBUFFER_DEPTH")
                                .setFormat(wgpu::TextureFormat::Depth32Float)
                                .setCompareFunction(wgpu::CompareFunction::Less)

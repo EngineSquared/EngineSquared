@@ -18,6 +18,14 @@ class ColorTargetState : public IValidable {
 
     inline wgpu::TextureFormat getFormat(void) const { return this->_format; }
 
+    inline const wgpu::BlendState &getBlendState(void) const { return this->_blendState; }
+
+    inline ColorTargetState &setBlendState(const wgpu::BlendState &blendState)
+    {
+        this->_blendState = blendState;
+        return *this;
+    }
+
     std::vector<ValidationError> validate(void) const override
     {
         std::vector<ValidationError> errors;
@@ -31,6 +39,7 @@ class ColorTargetState : public IValidable {
 
   private:
     wgpu::TextureFormat _format = wgpu::TextureFormat::Undefined;
+    wgpu::BlendState _blendState{wgpu::Default};
     std::string _name;
 };
 } // namespace Graphic::Utils
