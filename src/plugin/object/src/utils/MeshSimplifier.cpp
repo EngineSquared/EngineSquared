@@ -23,9 +23,9 @@ class SpatialHash {
      */
     int64_t GetKey(const glm::vec3 &pos) const
     {
-        int32_t x = static_cast<int32_t>(std::floor(pos.x * _invCellSize));
-        int32_t y = static_cast<int32_t>(std::floor(pos.y * _invCellSize));
-        int32_t z = static_cast<int32_t>(std::floor(pos.z * _invCellSize));
+        auto x = static_cast<int32_t>(std::floor(pos.x * _invCellSize));
+        auto y = static_cast<int32_t>(std::floor(pos.y * _invCellSize));
+        auto z = static_cast<int32_t>(std::floor(pos.z * _invCellSize));
 
         return (static_cast<int64_t>(x) * 73856093) ^ (static_cast<int64_t>(y) * 19349663) ^
                (static_cast<int64_t>(z) * 83492791);
@@ -75,7 +75,7 @@ class SpatialHash {
  */
 class UnionFind {
   public:
-    UnionFind(uint32_t size) : _parent(size), _rank(size, 0)
+    explicit UnionFind(uint32_t size) : _parent(size), _rank(size, 0)
     {
         for (uint32_t i = 0; i < size; ++i)
         {
@@ -142,6 +142,124 @@ bool IsTriangleDegenerate(uint32_t i0, uint32_t i1, uint32_t i2, const std::vect
 
 } // namespace
 
+
+/**
+ * @brief Helper: compute mesh bounds
+ */
+static void ComputeBounds(const std::vector<glm::vec3> &vertices, glm::vec3 &minBound, glm::vec3 &maxBound)
+{
+    minBound = glm::vec3(FLT_MAX);
+    maxBound = glm::vec3(-FLT_MAX);
+    for (const auto &v : vertices)
+    {
+        minBound = glm::min(minBound, v);
+        maxBound = glm::max(maxBound, v);
+    }
+}
+
+static float ComputeMergeDistance(const std::vector<glm::vec3> &vertices, const SimplificationSettings &settings)
+{
+    glm::vec3 minBound, maxBound;
+    ComputeBounds(vertices, minBound, maxBound);
+    glm::vec3 extent = maxBound - minBound;
+    float meshDiagonal = glm::length(extent);
+    return settings.mergeDistance + (settings.aggressiveness * meshDiagonal * 0.01f);
+}
+
+/**
+ * @brief Cluster vertices using spatial hash and return UnionFind
+ */
+static UnionFind ClusterVertices(const std::vector<glm::vec3> &vertices, float mergeDistance, SpatialHash &spatialHash)
+{
+    UnionFind uf(static_cast<uint32_t>(vertices.size()));
+
+    for (uint32_t i = 0; i < vertices.size(); ++i)
+    {
+        auto nearby = spatialHash.GetNearby(vertices[i]);
+        for (uint32_t j : nearby)
+        {
+            if (j <= i)
+                continue;
+
+            float dist = glm::distance(vertices[i], vertices[j]);
+            if (dist < mergeDistance)
+            {
+                uf.Unite(i, j);
+            }
+        }
+    }
+
+    return uf;
+}
+
+/**
+ * @brief Collapse clusters into centroids and compute new vertex arrays
+ */
+static void CollapseClusters(const std::vector<glm::vec3> &vertices, const std::vector<glm::vec3> &normals,
+                             const std::vector<glm::vec2> &texCoords, UnionFind &uf,
+                             std::vector<glm::vec3> &outVertices, std::vector<glm::vec3> &outNormals,
+                             std::vector<glm::vec2> &outTexCoords, std::vector<uint32_t> &outVertexMap)
+{
+    std::unordered_map<uint32_t, uint32_t> clusterToNewIndex;
+    std::vector<glm::vec3> clusterSums;
+    std::vector<glm::vec3> normalSums;
+    std::vector<glm::vec2> texCoordSums;
+    std::vector<uint32_t> clusterCounts;
+
+    outVertexMap.resize(vertices.size());
+
+    for (uint32_t i = 0; i < vertices.size(); ++i)
+    {
+        uint32_t cluster = uf.Find(i);
+        auto it = clusterToNewIndex.find(cluster);
+        if (it == clusterToNewIndex.end())
+        {
+            uint32_t newIdx = static_cast<uint32_t>(outVertices.size());
+            clusterToNewIndex[cluster] = newIdx;
+            outVertices.push_back(vertices[i]);
+            clusterSums.push_back(vertices[i]);
+
+            if (!normals.empty())
+            {
+                outNormals.push_back(normals[i]);
+                normalSums.push_back(normals[i]);
+            }
+            if (!texCoords.empty())
+            {
+                outTexCoords.push_back(texCoords[i]);
+                texCoordSums.push_back(texCoords[i]);
+            }
+            clusterCounts.push_back(1);
+            outVertexMap[i] = newIdx;
+        }
+        else
+        {
+            uint32_t newIdx = it->second;
+            clusterSums[newIdx] += vertices[i];
+            if (!normals.empty())
+                normalSums[newIdx] += normals[i];
+            if (!texCoords.empty())
+                texCoordSums[newIdx] += texCoords[i];
+            clusterCounts[newIdx]++;
+            outVertexMap[i] = newIdx;
+        }
+    }
+
+    for (uint32_t i = 0; i < outVertices.size(); ++i)
+    {
+        float invCount = 1.0f / static_cast<float>(clusterCounts[i]);
+        outVertices[i] = clusterSums[i] * invCount;
+        if (!normals.empty())
+        {
+            outNormals[i] = glm::normalize(normalSums[i]);
+        }
+        if (!texCoords.empty())
+        {
+            outTexCoords[i] = texCoordSums[i] * invCount;
+        }
+    }
+}
+
 SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const SimplificationSettings &settings)
 {
     SimplificationResult result;
@@ -175,94 +293,21 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
     glm::vec3 extent = maxBound - minBound;
     float meshDiagonal = glm::length(extent);
 
-    float mergeDistance = settings.mergeDistance + (settings.aggressiveness * meshDiagonal * 0.01f);
+    float mergeDistance = ComputeMergeDistance(vertices, settings);
 
     SpatialHash spatialHash(mergeDistance * 2.0f);
     for (uint32_t i = 0; i < vertices.size(); ++i)
-    {
         spatialHash.Insert(vertices[i], i);
-    }
 
-    UnionFind uf(static_cast<uint32_t>(vertices.size()));
+    UnionFind uf = ClusterVertices(vertices, mergeDistance, spatialHash);
 
-    for (uint32_t i = 0; i < vertices.size(); ++i)
-    {
-        auto nearby = spatialHash.GetNearby(vertices[i]);
-        for (uint32_t j : nearby)
-        {
-            if (j <= i)
-                continue;
-
-            float dist = glm::distance(vertices[i], vertices[j]);
-            if (dist < mergeDistance)
-            {
-                uf.Unite(i, j);
-            }
-        }
-    }
-
-    std::unordered_map<uint32_t, uint32_t> clusterToNewIndex;
     std::vector<glm::vec3> newVertices;
     std::vector<glm::vec3> newNormals;
     std::vector<glm::vec2> newTexCoords;
-    std::vector<glm::vec3> clusterSums;
-    std::vector<glm::vec3> normalSums;
-    std::vector<glm::vec2> texCoordSums;
-    std::vector<uint32_t> clusterCounts;
 
-    result.vertexMap.resize(vertices.size());
+    CollapseClusters(vertices, normals, texCoords, uf, newVertices, newNormals, newTexCoords, result.vertexMap);
 
-    for (uint32_t i = 0; i < vertices.size(); ++i)
-    {
-        uint32_t cluster = uf.Find(i);
 
-        auto it = clusterToNewIndex.find(cluster);
-        if (it == clusterToNewIndex.end())
-        {
-            uint32_t newIdx = static_cast<uint32_t>(newVertices.size());
-            clusterToNewIndex[cluster] = newIdx;
-            newVertices.push_back(vertices[i]);
-            clusterSums.push_back(vertices[i]);
-
-            if (!normals.empty())
-            {
-                newNormals.push_back(normals[i]);
-                normalSums.push_back(normals[i]);
-            }
-            if (!texCoords.empty())
-            {
-                newTexCoords.push_back(texCoords[i]);
-                texCoordSums.push_back(texCoords[i]);
-            }
-            clusterCounts.push_back(1);
-            result.vertexMap[i] = newIdx;
-        }
-        else
-        {
-            uint32_t newIdx = it->second;
-            clusterSums[newIdx] += vertices[i];
-            if (!normals.empty())
-                normalSums[newIdx] += normals[i];
-            if (!texCoords.empty())
-                texCoordSums[newIdx] += texCoords[i];
-            clusterCounts[newIdx]++;
-            result.vertexMap[i] = newIdx;
-        }
-    }
-
-    for (uint32_t i = 0; i < newVertices.size(); ++i)
-    {
-        float invCount = 1.0f / static_cast<float>(clusterCounts[i]);
-        newVertices[i] = clusterSums[i] * invCount;
-        if (!normals.empty())
-        {
-            newNormals[i] = glm::normalize(normalSums[i]);
-        }
-        if (!texCoords.empty())
-        {
-            newTexCoords[i] = texCoordSums[i] * invCount;
-        }
-    }
 
     std::vector<uint32_t> newIndices;
     newIndices.reserve(indices.size());
@@ -348,7 +393,7 @@ SimplificationResult DeduplicateVertices(const Component::Mesh &mesh, float epsi
 
         if (!found)
         {
-            uint32_t newIdx = static_cast<uint32_t>(newVertices.size());
+            auto newIdx = static_cast<uint32_t>(newVertices.size());
             result.vertexMap[i] = newIdx;
             newVertices.push_back(v);
             spatialHash.Insert(v, newIdx);

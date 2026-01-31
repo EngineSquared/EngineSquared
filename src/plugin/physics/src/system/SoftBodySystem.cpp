@@ -37,6 +37,7 @@
 #include <unordered_map>
 
 #include "Object.hpp"
+#include "utils/MeshSimplifier.hpp"
 #include "utils/MeshUtils.hpp"
 
 // Jolt soft body includes
@@ -92,87 +93,6 @@ static std::vector<std::pair<uint32_t, uint32_t>> GenerateEdgesFromFaces(const s
     return edges;
 }
 
-/**
- * @brief Hash function for glm::vec3 to use in unordered_map
- */
-struct Vec3Hash {
-    size_t operator()(const glm::vec3 &v) const
-    {
-        // Use a simple hash combining x, y, z components
-        size_t h1 = std::hash<float>{}(v.x);
-        size_t h2 = std::hash<float>{}(v.y);
-        size_t h3 = std::hash<float>{}(v.z);
-        return h1 ^ (h2 << 1) ^ (h3 << 2);
-    }
-};
-
-/**
- * @brief Equality function for glm::vec3 (exact comparison)
- */
-struct Vec3Equal {
-    bool operator()(const glm::vec3 &a, const glm::vec3 &b) const { return a.x == b.x && a.y == b.y && a.z == b.z; }
-};
-
-/**
- * @brief Structure holding deduplicated mesh data for Jolt soft body
- */
-struct DeduplicatedMesh {
-    std::vector<glm::vec3> vertices; ///< Unique vertices
-    std::vector<uint32_t> indices;   ///< Face indices referencing unique vertices
-    std::vector<uint32_t> vertexMap; ///< Maps original vertex index to deduplicated index
-};
-
-/**
- * @brief Convert a potentially "flat" mesh (with duplicated vertices) to an indexed mesh with unique vertices
- *
- * OBJLoader creates meshes where each face has its own copy of vertices, resulting in
- * indices like [0, 1, 2, 3, 4, 5, ...] where vertices are duplicated.
- * Jolt SoftBody needs a proper indexed mesh with shared vertices for constraint creation.
- *
- * @param mesh The input mesh (potentially with duplicated vertices)
- * @return DeduplicatedMesh with unique vertices and proper indices
- */
-static DeduplicatedMesh DeduplicateMesh(const Object::Component::Mesh &mesh)
-{
-    DeduplicatedMesh result;
-    const auto &vertices = mesh.GetVertices();
-    result.vertexMap.resize(vertices.size());
-
-    std::unordered_map<glm::vec3, uint32_t, Vec3Hash, Vec3Equal> vertexToIndex;
-
-    for (size_t i = 0; i < vertices.size(); ++i)
-    {
-        const auto &vertex = vertices[i];
-
-        auto it = vertexToIndex.find(vertex);
-        if (it != vertexToIndex.end())
-        {
-            // Vertex already exists, reuse its index
-            result.vertexMap[i] = it->second;
-        }
-        else
-        {
-            // New unique vertex
-            auto newIndex = static_cast<uint32_t>(result.vertices.size());
-            result.vertices.push_back(vertex);
-            vertexToIndex[vertex] = newIndex;
-            result.vertexMap[i] = newIndex;
-        }
-    }
-
-    // Remap indices to point to deduplicated vertices
-    const auto &originalIndices = mesh.GetIndices();
-    result.indices.reserve(originalIndices.size());
-    for (uint32_t idx : originalIndices)
-    {
-        if (idx < result.vertexMap.size())
-        {
-            result.indices.push_back(result.vertexMap[idx]);
-        }
-    }
-
-    return result;
-}
 
 /**
  * @brief Result of creating Jolt shared settings, includes vertex mapping
@@ -201,29 +121,28 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
     result.settings = new JPH::SoftBodySharedSettings();
     auto *settings = result.settings.GetPtr();
 
-    // Deduplicate the mesh to get unique vertices and proper indices
-    // This is necessary because OBJLoader creates "flat" meshes with duplicated vertices
-    DeduplicatedMesh deduped = DeduplicateMesh(mesh);
+    // Deduplicate the mesh using shared utility
+    auto dedupRes = Object::Utils::DeduplicateVertices(mesh);
+    const auto &deduped_vertices = dedupRes.mesh.GetVertices();
+    const auto &deduped_indices = dedupRes.mesh.GetIndices();
 
     // Store the vertex map for later sync
-    result.vertexMap = std::move(deduped.vertexMap);
+    result.vertexMap = std::move(dedupRes.vertexMap);
 
     Log::Info(fmt::format("SoftBody mesh: original {} vertices -> {} unique vertices, {} indices (scale: {:.2f}, "
                           "{:.2f}, {:.2f})",
-                          mesh.GetVertices().size(), deduped.vertices.size(), deduped.indices.size(), scale.x, scale.y,
+                          mesh.GetVertices().size(), deduped_vertices.size(), deduped_indices.size(), scale.x, scale.y,
                           scale.z));
 
     // Add unique vertices with scale applied
-    settings->mVertices.reserve(deduped.vertices.size());
-    for (size_t i = 0; i < deduped.vertices.size(); ++i)
+    settings->mVertices.reserve(deduped_vertices.size());
+    for (size_t i = 0; i < deduped_vertices.size(); ++i)
     {
         JPH::SoftBodySharedSettings::Vertex v;
-        // Apply scale to vertex positions
-        glm::vec3 scaledPos = deduped.vertices[i] * scale;
+        glm::vec3 scaledPos = deduped_vertices[i] * scale;
         v.mPosition = JPH::Float3(scaledPos.x, scaledPos.y, scaledPos.z);
         v.mVelocity = JPH::Float3(0, 0, 0);
 
-        // Map inverse mass from original vertices - find any original vertex that maps to this one
         float invMass = 1.0f;
         for (size_t origIdx = 0; origIdx < result.vertexMap.size(); ++origIdx)
         {
@@ -239,26 +158,23 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
     }
 
     // Add faces using deduplicated indices
-    if (!deduped.indices.empty())
+    if (!deduped_indices.empty())
     {
-        settings->mFaces.reserve(deduped.indices.size() / 3);
-        for (size_t i = 0; i + 2 < deduped.indices.size(); i += 3)
+        settings->mFaces.reserve(deduped_indices.size() / 3);
+        for (size_t i = 0; i + 2 < deduped_indices.size(); i += 3)
         {
-            uint32_t idx0 = deduped.indices[i];
-            uint32_t idx1 = deduped.indices[i + 1];
-            uint32_t idx2 = deduped.indices[i + 2];
+            uint32_t idx0 = deduped_indices[i];
+            uint32_t idx1 = deduped_indices[i + 1];
+            uint32_t idx2 = deduped_indices[i + 2];
 
-            // Skip degenerate faces (faces where two or more vertices are the same)
             if (idx0 == idx1 || idx1 == idx2 || idx0 == idx2)
             {
                 continue;
             }
 
-            // Validate indices are within bounds
-            if (idx0 >= deduped.vertices.size() || idx1 >= deduped.vertices.size() || idx2 >= deduped.vertices.size())
+            if (idx0 >= deduped_vertices.size() || idx1 >= deduped_vertices.size() || idx2 >= deduped_vertices.size())
             {
-                Log::Warn(
-                    fmt::format("SoftBody: Skipping face with out-of-bounds indices ({}, {}, {})", idx0, idx1, idx2));
+                Log::Warn(fmt::format("SoftBody: Skipping face with out-of-bounds indices ({}, {}, {})", idx0, idx1, idx2));
                 continue;
             }
 
@@ -267,10 +183,8 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
 
         Log::Info(fmt::format("SoftBody: Created {} faces", settings->mFaces.size()));
 
-        // Only create constraints if we have valid faces
         if (!settings->mFaces.empty())
         {
-            // Create constraints automatically based on faces
             JPH::SoftBodySharedSettings::VertexAttributes attributes(
                 softBody.settings.edgeCompliance, softBody.settings.shearCompliance, softBody.settings.bendCompliance);
 

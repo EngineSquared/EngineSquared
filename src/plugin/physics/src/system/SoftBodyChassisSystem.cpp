@@ -36,23 +36,6 @@ namespace Physics::System {
 //=============================================================================
 
 /**
- * @brief Hash function for glm::vec3
- */
-struct Vec3Hash {
-    size_t operator()(const glm::vec3 &v) const
-    {
-        size_t h1 = std::hash<float>{}(v.x);
-        size_t h2 = std::hash<float>{}(v.y);
-        size_t h3 = std::hash<float>{}(v.z);
-        return h1 ^ (h2 << 1) ^ (h3 << 2);
-    }
-};
-
-struct Vec3Equal {
-    bool operator()(const glm::vec3 &a, const glm::vec3 &b) const { return a.x == b.x && a.y == b.y && a.z == b.z; }
-};
-
-/**
  * @brief Structure holding deduplicated mesh data
  */
 struct DeduplicatedMesh {
@@ -64,43 +47,7 @@ struct DeduplicatedMesh {
 /**
  * @brief Convert mesh to deduplicated indexed mesh
  */
-static DeduplicatedMesh DeduplicateMesh(const Object::Component::Mesh &mesh)
-{
-    DeduplicatedMesh result;
-    const auto &vertices = mesh.GetVertices();
-    result.vertexMap.resize(vertices.size());
 
-    std::unordered_map<glm::vec3, uint32_t, Vec3Hash, Vec3Equal> vertexToIndex;
-
-    for (size_t i = 0; i < vertices.size(); ++i)
-    {
-        const auto &vertex = vertices[i];
-        auto it = vertexToIndex.find(vertex);
-        if (it != vertexToIndex.end())
-        {
-            result.vertexMap[i] = it->second;
-        }
-        else
-        {
-            auto newIndex = static_cast<uint32_t>(result.vertices.size());
-            result.vertices.push_back(vertex);
-            vertexToIndex[vertex] = newIndex;
-            result.vertexMap[i] = newIndex;
-        }
-    }
-
-    const auto &originalIndices = mesh.GetIndices();
-    result.indices.reserve(originalIndices.size());
-    for (uint32_t idx : originalIndices)
-    {
-        if (idx < result.vertexMap.size())
-        {
-            result.indices.push_back(result.vertexMap[idx]);
-        }
-    }
-
-    return result;
-}
 
 /**
  * @brief Create Jolt SoftBodySharedSettings with skinned constraints for chassis
@@ -116,13 +63,15 @@ CreateChassisSharedSettings(const Object::Component::Mesh &mesh, const Component
 {
     auto joltSettings = new JPH::SoftBodySharedSettings();
 
-    DeduplicatedMesh deduped = DeduplicateMesh(mesh);
+    auto dedupRes = Object::Utils::DeduplicateVertices(mesh);
+    const auto &deduped_vertices = dedupRes.mesh.GetVertices();
+    const auto &deduped_indices = dedupRes.mesh.GetIndices();
 
     Log::Info(fmt::format("SoftBodyChassis: {} original -> {} unique vertices", mesh.GetVertices().size(),
-                          deduped.vertices.size()));
+                          deduped_vertices.size()));
 
-    joltSettings->mVertices.reserve(deduped.vertices.size());
-    for (const auto &v : deduped.vertices)
+    joltSettings->mVertices.reserve(deduped_vertices.size());
+    for (const auto &v : deduped_vertices)
     {
         JPH::SoftBodySharedSettings::Vertex vertex;
         glm::vec3 scaledPos = v * scale;
@@ -132,18 +81,18 @@ CreateChassisSharedSettings(const Object::Component::Mesh &mesh, const Component
         joltSettings->mVertices.emplace_back(vertex);
     }
 
-    if (!deduped.indices.empty())
+    if (!deduped_indices.empty())
     {
-        joltSettings->mFaces.reserve(deduped.indices.size() / 3);
-        for (size_t i = 0; i + 2 < deduped.indices.size(); i += 3)
+        joltSettings->mFaces.reserve(deduped_indices.size() / 3);
+        for (size_t i = 0; i + 2 < deduped_indices.size(); i += 3)
         {
-            uint32_t idx0 = deduped.indices[i];
-            uint32_t idx1 = deduped.indices[i + 1];
-            uint32_t idx2 = deduped.indices[i + 2];
+            uint32_t idx0 = deduped_indices[i];
+            uint32_t idx1 = deduped_indices[i + 1];
+            uint32_t idx2 = deduped_indices[i + 2];
 
             if (idx0 == idx1 || idx1 == idx2 || idx0 == idx2)
                 continue;
-            if (idx0 >= deduped.vertices.size() || idx1 >= deduped.vertices.size() || idx2 >= deduped.vertices.size())
+            if (idx0 >= deduped_vertices.size() || idx1 >= deduped_vertices.size() || idx2 >= deduped_vertices.size())
                 continue;
 
             joltSettings->mFaces.emplace_back(JPH::SoftBodySharedSettings::Face(idx0, idx1, idx2, 0));
@@ -180,7 +129,7 @@ CreateChassisSharedSettings(const Object::Component::Mesh &mesh, const Component
 
     joltSettings->Optimize();
 
-    return {joltSettings, std::move(deduped.vertexMap)};
+    return {joltSettings, std::move(dedupRes.vertexMap)};
 }
 
 /**
@@ -270,7 +219,7 @@ static void OnSoftBodyChassisConstruct(Engine::Core::Registry &registry, Engine:
         Object::Component::Mesh workingMesh = *mesh;
         std::vector<uint32_t> simplificationMap;
         bool wasSimplified = false;
-        uint32_t originalVertexCount = static_cast<uint32_t>(meshVertices.size());
+        auto originalVertexCount = static_cast<uint32_t>(meshVertices.size());
 
         if (meshVertices.size() > settings.maxVertices)
         {
@@ -361,9 +310,13 @@ static void OnSoftBodyChassisConstruct(Engine::Core::Registry &registry, Engine:
         Log::Info(fmt::format("SoftBodyChassis: Created for entity {} ({} vertices, simplified: {})", entity,
                               workingMesh.GetVertices().size(), wasSimplified));
     }
-    catch (const std::exception &e)
+    catch (const std::runtime_error &e)
     {
-        Log::Error(fmt::format("SoftBodyChassis: Exception during creation: {}", e.what()));
+        Log::Error(fmt::format("SoftBodyChassis: Runtime error during creation: {}", e.what()));
+    }
+    catch (const std::bad_alloc &e)
+    {
+        Log::Error(fmt::format("SoftBodyChassis: Allocation failed during creation: {}", e.what()));
     }
 }
 

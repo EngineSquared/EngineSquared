@@ -112,7 +112,7 @@ struct SoftBodyChassisInternal {
     /**
      * @brief Default constructor (invalid bodies)
      */
-    SoftBodyChassisInternal() : skeletonBodyID(JPH::BodyID()), softBodyID(JPH::BodyID()), numJoints(1)
+    SoftBodyChassisInternal() : skeletonBodyID(JPH::BodyID()), softBodyID(JPH::BodyID())
     {
         // Initialize with identity joint matrix
         jointMatrices.push_back(JPH::Mat44::sIdentity());
@@ -124,7 +124,7 @@ struct SoftBodyChassisInternal {
      * @param softBody SoftBody ID
      */
     SoftBodyChassisInternal(JPH::BodyID skeleton, JPH::BodyID softBody)
-        : skeletonBodyID(skeleton), softBodyID(softBody), numJoints(1)
+        : skeletonBodyID(skeleton), softBodyID(softBody)
     {
         jointMatrices.push_back(JPH::Mat44::sIdentity());
     }
@@ -136,7 +136,7 @@ struct SoftBodyChassisInternal {
      * @param map Vertex mapping from original to deduplicated indices
      */
     SoftBodyChassisInternal(JPH::BodyID skeleton, JPH::BodyID softBody, std::vector<uint32_t> map)
-        : skeletonBodyID(skeleton), softBodyID(softBody), vertexMap(std::move(map)), numJoints(1)
+        : skeletonBodyID(skeleton), softBodyID(softBody), vertexMap(std::move(map))
     {
         jointMatrices.push_back(JPH::Mat44::sIdentity());
     }

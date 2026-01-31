@@ -188,14 +188,14 @@ struct SoftBodyChassis {
     /**
      * @brief Default constructor with default settings
      */
-    SoftBodyChassis() : settings(SoftBodyChassisSettings::Default()), isActive(false) {}
+    SoftBodyChassis() : settings(SoftBodyChassisSettings::Default()) {}
 
     /**
      * @brief Constructor with custom settings
      * @param chassisSettings Settings for the soft body chassis
      */
     explicit SoftBodyChassis(const SoftBodyChassisSettings &chassisSettings)
-        : settings(chassisSettings), isActive(false)
+        : settings(chassisSettings)
     {
     }
 
@@ -203,7 +203,7 @@ struct SoftBodyChassis {
      * @brief Constructor with factory preset
      * @param preset One of the factory presets (Realistic, Arcade, Performance)
      */
-    explicit SoftBodyChassis(SoftBodyChassisSettings &&preset) : settings(std::move(preset)), isActive(false) {}
+    explicit SoftBodyChassis(SoftBodyChassisSettings &&preset) : settings(std::move(preset)) {}
 };
 
 } // namespace Physics::Component
