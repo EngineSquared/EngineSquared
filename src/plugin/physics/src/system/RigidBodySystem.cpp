@@ -144,7 +144,8 @@ static JPH::RefConst<JPH::Shape> CreateMeshShapeFromMesh(const Object::Component
  * @note If no collider is found, it will default to the MeshCollider with default settings, which can be pretty heavy.
  * Make sure to always use the most appropriate colliders for RigidBodies.
  */
-static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry &registry, Engine::EntityId entity)
+static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry &registry, // NOSONAR
+                                                          Engine::EntityId entity)          // NOSONAR
 {
     if (auto *sphereCollider = registry.try_get<Component::SphereCollider>(entity))
     {
@@ -187,10 +188,21 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
 
     if (auto *convexHullCollider = registry.try_get<Component::ConvexHullMeshCollider>(entity))
     {
-        auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
+        const Object::Component::Mesh *mesh = nullptr;
+
+        if (convexHullCollider->mesh.has_value())
+        {
+            mesh = &convexHullCollider->mesh.value();
+        }
+        else
+        {
+            mesh = registry.try_get<Object::Component::Mesh>(entity);
+        }
+
         if (!mesh)
         {
-            Log::Warn("ConvexHullMeshCollider: trying to create shape without Object::Mesh component");
+            Log::Warn("ConvexHullMeshCollider: trying to create shape without mesh data (no embedded mesh or "
+                      "Object::Mesh component)");
             return nullptr;
         }
 
@@ -203,10 +215,22 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
         return CreateConvexHullFromMesh(*mesh, convexHullCollider, scale);
     }
 
-    auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
+    auto *meshCollider = registry.try_get<Component::MeshCollider>(entity);
+    const Object::Component::Mesh *mesh = nullptr;
+
+    if (meshCollider && meshCollider->mesh.has_value())
+    {
+        mesh = &meshCollider->mesh.value();
+    }
+    else
+    {
+        mesh = registry.try_get<Object::Component::Mesh>(entity);
+    }
+
     if (!mesh)
     {
-        Log::Warn("MeshCollider: trying to create shape without Object::Mesh component");
+        Log::Warn(
+            "MeshCollider: trying to create shape without mesh data (no embedded mesh or Object::Mesh component)");
         return nullptr;
     }
 
@@ -216,7 +240,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
         scale = transform->GetScale();
     }
 
-    return CreateMeshShapeFromMesh(*mesh, registry.try_get<Component::MeshCollider>(entity), scale);
+    return CreateMeshShapeFromMesh(*mesh, meshCollider, scale);
 }
 
 //=============================================================================
