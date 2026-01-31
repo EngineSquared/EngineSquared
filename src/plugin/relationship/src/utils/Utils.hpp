@@ -56,4 +56,29 @@ auto RemoveParent(Engine::Entity child) -> void;
  * @return  the parent entity, or nullopt if the entity has no parent
  */
 auto GetParent(Engine::Entity child) -> std::optional<Engine::Entity>;
+
+template <typename TFunc>
+auto ForEachChild(Engine::Entity parent, TFunc func) -> void {
+    const Relationship::Component::Relationship *parentRS =
+        parent.TryGetComponent<Relationship::Component::Relationship>();
+    if (!parentRS)
+    {
+        Log::Warn(fmt::format("Entity({}) has no Relationship component in ForEachChild", parent));
+        return;
+    }
+
+    auto currentChildOpt = parentRS->first;
+    while (currentChildOpt.has_value())
+    {
+        Engine::Entity currentChild = currentChildOpt.value();
+        func(currentChild);
+        const Relationship::Component::Relationship *currentChildRS =
+            currentChild.TryGetComponent<Relationship::Component::Relationship>();
+        if (!currentChildRS)
+        {
+            break;
+        }
+        currentChildOpt = currentChildRS->next;
+    }
+}
 } // namespace Relationship::Utils
