@@ -78,4 +78,20 @@ void AScheduler::RunSystem(const SystemBase *system, Core &core)
         }
     }
 }
+
+void AScheduler::Remove(FunctionUtils::FunctionID id)
+{
+    if (_enabledSystemsList.Contains(id))
+    {
+        _enabledSystemsList.DeleteFunction(id);
+    }
+    else if (_disabledSystemsList.Contains(id))
+    {
+        _disabledSystemsList.DeleteFunction(id);
+    }
+    else
+    {
+        Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
+    }
+}
 } // namespace Engine::Scheduler
