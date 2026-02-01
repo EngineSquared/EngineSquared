@@ -231,17 +231,9 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
         auto normalOutput =
             Graphic::Utils::ColorTargetState("GBUFFER_NORMAL").setFormat(wgpu::TextureFormat::RGBA16Float);
 
-        wgpu::BlendState blendState{wgpu::Default};
-        blendState.alpha.srcFactor = wgpu::BlendFactor::One;
-        blendState.alpha.dstFactor = wgpu::BlendFactor::OneMinusSrcAlpha;
-        blendState.alpha.operation = wgpu::BlendOperation::Add;
-        blendState.color.srcFactor = wgpu::BlendFactor::One;
-        blendState.color.dstFactor = wgpu::BlendFactor::OneMinusSrcAlpha;
-        blendState.color.operation = wgpu::BlendOperation::Add;
+        auto albedoOutput =
+            Graphic::Utils::ColorTargetState("GBUFFER_ALBEDO").setFormat(wgpu::TextureFormat::BGRA8Unorm);
 
-        auto albedoOutput = Graphic::Utils::ColorTargetState("GBUFFER_ALBEDO")
-                                .setFormat(wgpu::TextureFormat::BGRA8Unorm)
-                                .setBlendState(blendState);
         auto depthOutput = Graphic::Utils::DepthStencilState("GBUFFER_DEPTH")
                                .setFormat(wgpu::TextureFormat::Depth32Float)
                                .setCompareFunction(wgpu::CompareFunction::Less)
