@@ -360,8 +360,7 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
 
     result.simplifiedVertexCount = static_cast<uint32_t>(newVertices.size());
     result.wasSimplified =
-        (result.simplifiedVertexCount < result.originalVertexCount) ||
-        (newIndices.size() != indices.size());
+        (result.simplifiedVertexCount < result.originalVertexCount) || (newIndices.size() != indices.size());
 
     return result;
 }
