@@ -16,7 +16,7 @@ namespace {
  */
 class SpatialHash {
   public:
-    explicit SpatialHash(float cellSize) : _cellSize(cellSize), _invCellSize(1.0f / cellSize) {}
+    explicit SpatialHash(float cellSize) : _cellSize(std::max(cellSize, 1e-6f)), _invCellSize(1.0f / _cellSize) {}
 
     /**
      * @brief Get hash key for a position
@@ -161,9 +161,8 @@ static void ComputeBounds(const std::vector<glm::vec3> &vertices, glm::vec3 &min
 
 static float ComputeMergeDistance(const std::vector<glm::vec3> &vertices, const SimplificationSettings &settings)
 {
-    glm::vec3 minBound = glm::vec3(FLT_MAX);
-    glm::vec3 maxBound = glm::vec3(-FLT_MAX);
-
+    glm::vec3 minBound(FLT_MAX);
+    glm::vec3 maxBound(-FLT_MAX);
     ComputeBounds(vertices, minBound, maxBound);
     glm::vec3 extent = maxBound - minBound;
     float meshDiagonal = glm::length(extent);
@@ -230,7 +229,7 @@ static CollapseResult CollapseClusters(const std::vector<glm::vec3> &vertices, c
         auto it = clusterToNewIndex.find(cluster);
         if (it == clusterToNewIndex.end())
         {
-            uint32_t newIdx = static_cast<uint32_t>(res.vertices.size());
+            auto newIdx = static_cast<uint32_t>(res.vertices.size());
             clusterToNewIndex[cluster] = newIdx;
             res.vertices.push_back(vertices[i]);
             clusterSums.push_back(vertices[i]);
@@ -303,11 +302,7 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
 
     glm::vec3 minBound(FLT_MAX);
     glm::vec3 maxBound(-FLT_MAX);
-    for (const auto &v : vertices)
-    {
-        minBound = glm::min(minBound, v);
-        maxBound = glm::max(maxBound, v);
-    }
+    ComputeBounds(vertices, minBound, maxBound);
 
     float mergeDistance = ComputeMergeDistance(vertices, settings);
 
@@ -364,7 +359,9 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const Simplificat
     }
 
     result.simplifiedVertexCount = static_cast<uint32_t>(newVertices.size());
-    result.wasSimplified = true;
+    result.wasSimplified =
+        (result.simplifiedVertexCount < result.originalVertexCount) ||
+        (newIndices.size() != indices.size());
 
     return result;
 }
@@ -473,11 +470,7 @@ uint32_t EstimateSimplifiedVertexCount(const Component::Mesh &mesh, const Simpli
 
     glm::vec3 minBound(FLT_MAX);
     glm::vec3 maxBound(-FLT_MAX);
-    for (const auto &v : vertices)
-    {
-        minBound = glm::min(minBound, v);
-        maxBound = glm::max(maxBound, v);
-    }
+    ComputeBounds(vertices, minBound, maxBound);
     glm::vec3 extent = maxBound - minBound;
 
     float cellSize = settings.mergeDistance * 2.0f;
