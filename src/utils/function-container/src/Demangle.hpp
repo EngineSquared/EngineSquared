@@ -18,20 +18,10 @@ inline std::string DemangleTypeName(const std::type_info &typeInfo)
 {
 #if defined(__GNUG__) || defined(__clang__)
     int status = 0;
-    char *demangledName = abi::__cxa_demangle(typeInfo.name(), nullptr, nullptr, &status);
-    if (status == 0 && demangledName != nullptr)
-    {
-        std::string name = demangledName;
-        std::free(demangledName);
-        return name;
-    }
-    else
-    {
-        if (demangledName != nullptr)
-        {
-            std::free(demangledName);
-        }
-    }
+    std::unique_ptr<char, decltype(&std::free)> ptr(abi::__cxa_demangle(typeInfo.name(), nullptr, nullptr, &status),
+                                                    std::free);
+    if (status == 0 && ptr)
+        return std::string(ptr.get());
 #endif
     return typeInfo.name();
 }
