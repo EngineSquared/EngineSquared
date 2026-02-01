@@ -393,7 +393,8 @@ class SoundManager {
                 _result = ma_decoder_init_file(snd.path.c_str(), &decoderConfig, &snd.decoder);
                 if (_result != MA_SUCCESS)
                 {
-                    Log::Error(fmt::format("Failed to initialize the audio decoder for '{}': {}", snd.name, ma_result_description(_result)));
+                    Log::Error(fmt::format("Failed to initialize the audio decoder for '{}': {}", snd.name,
+                                           ma_result_description(_result)));
                     return;
                 }
                 snd.decoderInitialized = true;
