@@ -76,22 +76,26 @@ struct SoftBodyChassisInternal {
     glm::vec3 initialScale = glm::vec3(1.0f);
 
     //=========================================================================
-    // Skinning data (updated each frame)
+    // Anchor data (for attachment-based deformation)
     //=========================================================================
 
-    /// Joint matrices for skinning (relative to center of mass)
-    /// For vehicle chassis, this is typically just 1 joint: the chassis transform
-    std::vector<JPH::Mat44> jointMatrices;
+    /// Indices of vertices that are anchored (in Jolt's deduplicated space)
+    /// These vertices are forced to their original local positions each frame
+    std::vector<uint32_t> anchorVertexIndices;
 
-    /// Number of joints (typically 1 for vehicle chassis)
-    uint32_t numJoints = 1;
+    /// Original local positions of anchor vertices (in scaled space)
+    /// Used to reset anchors to their correct positions relative to chassis
+    std::vector<glm::vec3> anchorLocalPositions;
 
-    /// Whether to hard skin all vertices this frame (for teleportation/reset)
-    bool hardSkinNextFrame = true;
+    /// Whether anchors have been initialized
+    bool anchorsInitialized = false;
 
     //=========================================================================
     // State tracking
     //=========================================================================
+
+    /// Whether to teleport all vertices this frame (for initialization/reset)
+    bool hardSkinNextFrame = true;
 
     /// Whether the soft body was successfully initialized
     bool isInitialized = false;
@@ -114,8 +118,6 @@ struct SoftBodyChassisInternal {
      */
     SoftBodyChassisInternal() : skeletonBodyID(JPH::BodyID()), softBodyID(JPH::BodyID())
     {
-        // Initialize with identity joint matrix
-        jointMatrices.push_back(JPH::Mat44::sIdentity());
     }
 
     /**
@@ -125,7 +127,6 @@ struct SoftBodyChassisInternal {
      */
     SoftBodyChassisInternal(JPH::BodyID skeleton, JPH::BodyID softBody) : skeletonBodyID(skeleton), softBodyID(softBody)
     {
-        jointMatrices.push_back(JPH::Mat44::sIdentity());
     }
 
     /**
@@ -137,7 +138,6 @@ struct SoftBodyChassisInternal {
     SoftBodyChassisInternal(JPH::BodyID skeleton, JPH::BodyID softBody, std::vector<uint32_t> map)
         : skeletonBodyID(skeleton), softBodyID(softBody), vertexMap(std::move(map))
     {
-        jointMatrices.push_back(JPH::Mat44::sIdentity());
     }
 
     //=========================================================================
@@ -163,32 +163,16 @@ struct SoftBodyChassisInternal {
     [[nodiscard]] bool IsValid() const { return HasValidSkeleton() && HasValidSoftBody() && isInitialized; }
 
     //=========================================================================
-    // Skinning helpers
+    // Anchor helpers
     //=========================================================================
 
     /**
-     * @brief Request hard skinning for next frame
+     * @brief Request hard sync for next frame
      *
      * Call this when the vehicle is teleported or reset to immediately
-     * snap all vertices to their skinned positions.
+     * snap all vertices to their original positions.
      */
     void RequestHardSkin() { hardSkinNextFrame = true; }
-
-    /**
-     * @brief Update joint matrix from skeleton transform
-     *
-     * This should be called each frame before SkinVertices() to update
-     * the joint matrix with the current skeleton position/rotation.
-     *
-     * @param localTransform Transform relative to center of mass
-     */
-    void UpdateJointMatrix(const JPH::Mat44 &localTransform)
-    {
-        if (!jointMatrices.empty())
-        {
-            jointMatrices[0] = localTransform;
-        }
-    }
 };
 
 } // namespace Physics::Component

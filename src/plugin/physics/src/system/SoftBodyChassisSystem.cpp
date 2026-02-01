@@ -50,17 +50,37 @@ struct DeduplicatedMesh {
  */
 
 /**
- * @brief Create Jolt SoftBodySharedSettings with skinned constraints for chassis
+ * @brief Result from CreateChassisSharedSettings containing all necessary data
+ */
+struct ChassisSharedSettingsResult
+{
+    JPH::Ref<JPH::SoftBodySharedSettings> settings;
+    std::vector<uint32_t> vertexMap;        ///< Original mesh index -> Jolt vertex index
+    std::vector<uint32_t> anchorIndices;    ///< Jolt indices of anchor vertices
+    std::vector<glm::vec3> anchorPositions; ///< Local positions of anchors (scaled)
+};
+
+/**
+ * @brief Create Jolt SoftBodySharedSettings for chassis with anchor vertex identification
+ *
+ * Creates a soft body that:
+ * - Has all vertices connected by edge/shear/bend constraints
+ * - Identifies "anchor" vertices near the bottom (attachment points to chassis)
+ * - Returns anchor data for manual position control during sync
+ *
+ * The anchor vertices will be manually positioned each frame to follow the chassis,
+ * while non-anchor vertices are free to deform under physics simulation.
  *
  * @param mesh The chassis mesh
  * @param settings The chassis settings
  * @param scale Scale to apply to vertices
- * @return Pair of shared settings and vertex map
+ * @return ChassisSharedSettingsResult with settings, vertex map, and anchor data
  */
-static std::pair<JPH::Ref<JPH::SoftBodySharedSettings>, std::vector<uint32_t>>
-CreateChassisSharedSettings(const Object::Component::Mesh &mesh, const Component::SoftBodyChassisSettings &settings,
-                            const glm::vec3 &scale)
+static ChassisSharedSettingsResult CreateChassisSharedSettings(const Object::Component::Mesh &mesh,
+                                                               const Component::SoftBodyChassisSettings &settings,
+                                                               const glm::vec3 &scale)
 {
+    ChassisSharedSettingsResult result;
     auto joltSettings = new JPH::SoftBodySharedSettings();
 
     auto dedupRes = Object::Utils::DeduplicateVertices(mesh);
@@ -70,16 +90,39 @@ CreateChassisSharedSettings(const Object::Component::Mesh &mesh, const Component
     Log::Info(fmt::format("SoftBodyChassis: {} original -> {} unique vertices", mesh.GetVertices().size(),
                           deduped_vertices.size()));
 
-    joltSettings->mVertices.reserve(deduped_vertices.size());
+    // Compute bounding box to identify anchor vertices (near bottom)
+    glm::vec3 minBound(FLT_MAX), maxBound(-FLT_MAX);
     for (const auto &v : deduped_vertices)
     {
+        glm::vec3 scaledV = v * scale;
+        minBound = glm::min(minBound, scaledV);
+        maxBound = glm::max(maxBound, scaledV);
+    }
+
+    float height = maxBound.y - minBound.y;
+    float anchorThreshold = minBound.y + height * 0.15f; // Bottom 15% of vertices are anchors
+
+    joltSettings->mVertices.reserve(deduped_vertices.size());
+    for (size_t i = 0; i < deduped_vertices.size(); ++i)
+    {
+        const auto &v = deduped_vertices[i];
         JPH::SoftBodySharedSettings::Vertex vertex;
         glm::vec3 scaledPos = v * scale;
         vertex.mPosition = JPH::Float3(scaledPos.x, scaledPos.y, scaledPos.z);
         vertex.mVelocity = JPH::Float3(0.0f, 0.0f, 0.0f);
-        vertex.mInvMass = 1.0f;
+        vertex.mInvMass = 1.0f; // All vertices dynamic, we control anchors manually
+
         joltSettings->mVertices.emplace_back(vertex);
+
+        // Identify anchor vertices (near the bottom of the mesh)
+        if (scaledPos.y <= anchorThreshold)
+        {
+            result.anchorIndices.push_back(static_cast<uint32_t>(i));
+            result.anchorPositions.push_back(scaledPos);
+        }
     }
+
+    Log::Info(fmt::format("SoftBodyChassis: Identified {} anchor vertices (bottom 15%)", result.anchorIndices.size()));
 
     if (!deduped_indices.empty())
     {
@@ -98,74 +141,21 @@ CreateChassisSharedSettings(const Object::Component::Mesh &mesh, const Component
             joltSettings->mFaces.emplace_back(JPH::SoftBodySharedSettings::Face(idx0, idx1, idx2, 0u));
         }
 
-        float edgeCompliance = (1.0f - settings.stiffness) * 0.001f;
-        float shearCompliance = (1.0f - settings.stiffness) * 0.002f;
-        float bendCompliance = (1.0f - settings.stiffness) * 0.1f;
+        // Use soft compliance to allow significant deformation
+        float edgeCompliance = (1.0f - settings.stiffness) * 0.01f;
+        float shearCompliance = (1.0f - settings.stiffness) * 0.02f;
+        float bendCompliance = (1.0f - settings.stiffness) * 1.0f;
 
         JPH::SoftBodySharedSettings::VertexAttributes attributes(edgeCompliance, shearCompliance, bendCompliance);
         joltSettings->CreateConstraints(&attributes, 1, JPH::SoftBodySharedSettings::EBendType::Distance);
     }
 
-    joltSettings->mInvBindMatrices.emplace_back(JPH::SoftBodySharedSettings::InvBind(0, JPH::Mat44::sIdentity()));
-
-    for (uint32_t i = 0u; i < joltSettings->mVertices.size(); ++i)
-    {
-        JPH::SoftBodySharedSettings::Skinned skinned;
-        skinned.mVertex = i;
-        skinned.mMaxDistance = settings.maxDeformation;
-        skinned.mBackStopDistance = settings.backStopDistance;
-        skinned.mBackStopRadius = settings.backStopRadius;
-
-        skinned.mWeights[0] = JPH::SoftBodySharedSettings::SkinWeight(0, 1.0f);
-        if (JPH::SoftBodySharedSettings::Skinned::cMaxSkinWeights > 1u)
-        {
-            skinned.mWeights[1] = JPH::SoftBodySharedSettings::SkinWeight(0, 0.0f);
-        }
-
-        joltSettings->mSkinnedConstraints.emplace_back(skinned);
-    }
-
-    joltSettings->CalculateSkinnedConstraintNormals();
-
     joltSettings->Optimize();
 
-    return {joltSettings, std::move(dedupRes.vertexMap)};
-}
+    result.settings = joltSettings;
+    result.vertexMap = std::move(dedupRes.vertexMap);
 
-/**
- * @brief Create invisible skeleton RigidBody for VehicleConstraint
- */
-static JPH::BodyID CreateSkeletonBody(Resource::PhysicsManager &physicsManager, const glm::vec3 &position,
-                                      const glm::quat &rotation, const glm::vec3 &halfExtents, float mass)
-{
-    JPH::BoxShapeSettings shapeSettings(JPH::Vec3(halfExtents.x, halfExtents.y, halfExtents.z));
-    auto shapeResult = shapeSettings.Create();
-
-    if (shapeResult.HasError())
-    {
-        Log::Error(fmt::format("SoftBodyChassis: Failed to create skeleton shape: {}", shapeResult.GetError().c_str()));
-        return JPH::BodyID();
-    }
-
-    JPH::BodyCreationSettings bodySettings(shapeResult.Get(), Utils::ToJoltRVec3(position), Utils::ToJoltQuat(rotation),
-                                           JPH::EMotionType::Dynamic, Utils::Layers::MOVING);
-
-    bodySettings.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia;
-    bodySettings.mMassPropertiesOverride.mMass = mass;
-    bodySettings.mLinearDamping = 0.1f;
-    bodySettings.mAngularDamping = 0.1f;
-    bodySettings.mAllowSleeping = false;
-
-    auto &bodyInterface = physicsManager.GetBodyInterface();
-    JPH::Body *body = bodyInterface.CreateBody(bodySettings);
-
-    if (!body)
-    {
-        Log::Error("SoftBodyChassis: Failed to create skeleton body");
-        return JPH::BodyID();
-    }
-
-    return body->GetID();
+    return result;
 }
 
 //=============================================================================
@@ -260,19 +250,9 @@ static void OnSoftBodyChassisConstruct(Engine::Core::Registry &registry, Engine:
         glm::quat rotation = transform->GetRotation();
         glm::vec3 scale = transform->GetScale();
 
-        glm::vec3 minBound(FLT_MAX);
-        glm::vec3 maxBound(-FLT_MAX);
-        for (const auto &v : workingMesh.GetVertices())
-        {
-            glm::vec3 scaledV = v * scale;
-            minBound = glm::min(minBound, scaledV);
-            maxBound = glm::max(maxBound, scaledV);
-        }
-        glm::vec3 halfExtents = (maxBound - minBound) * 0.5f;
+        auto chassisResult = CreateChassisSharedSettings(workingMesh, settings, scale);
 
-        auto [sharedSettings, dedupMap] = CreateChassisSharedSettings(workingMesh, settings, scale);
-
-        JPH::SoftBodyCreationSettings softBodySettings(sharedSettings, Utils::ToJoltRVec3(position),
+        JPH::SoftBodyCreationSettings softBodySettings(chassisResult.settings, Utils::ToJoltRVec3(position),
                                                        Utils::ToJoltQuat(rotation), Utils::Layers::MOVING);
 
         softBodySettings.mNumIterations = settings.solverIterations;
@@ -302,19 +282,24 @@ static void OnSoftBodyChassisConstruct(Engine::Core::Registry &registry, Engine:
         internal.simplifiedVertexCount = static_cast<uint32_t>(workingMesh.GetVertices().size());
         internal.hardSkinNextFrame = true;
 
+        // Store anchor data for manual position control
+        internal.anchorVertexIndices = std::move(chassisResult.anchorIndices);
+        internal.anchorLocalPositions = std::move(chassisResult.anchorPositions);
+        internal.anchorsInitialized = true;
+
         if (wasSimplified)
         {
             std::vector<uint32_t> composedMap(simplificationMap.size());
             for (size_t i = 0u; i < simplificationMap.size(); ++i)
             {
                 uint32_t simpIdx = simplificationMap[i];
-                composedMap[i] = (simpIdx < dedupMap.size()) ? dedupMap[simpIdx] : 0u;
+                composedMap[i] = (simpIdx < chassisResult.vertexMap.size()) ? chassisResult.vertexMap[simpIdx] : 0u;
             }
             internal.vertexMap = std::move(composedMap);
         }
         else
         {
-            internal.vertexMap = std::move(dedupMap);
+            internal.vertexMap = std::move(chassisResult.vertexMap);
         }
 
         registry.emplace<Component::SoftBodyChassisInternal>(entity, std::move(internal));
@@ -401,22 +386,21 @@ void SyncSoftBodyChassisWithSkeleton(Engine::Core &core)
         registry.view<Component::SoftBodyChassis, Component::SoftBodyChassisInternal, Object::Component::Transform>();
 
     auto &bodyInterface = physicsManager.GetBodyInterface();
-    auto &bodyLockInterface = physicsManager.GetPhysicsSystem().GetBodyLockInterface();
 
-    for (auto [entity, chassis, internal, transform] : view.each())
+    for (auto entity : view)
     {
-        if (!chassis.isActive || !internal.IsValid())
+        auto &chassis = view.get<Component::SoftBodyChassis>(entity);
+        auto &internal = view.get<Component::SoftBodyChassisInternal>(entity);
+        auto &transform = view.get<Object::Component::Transform>(entity);
+
+        if (!chassis.isActive || !internal.IsValid() || !internal.anchorsInitialized)
             continue;
 
         glm::vec3 position = transform.GetPosition();
         glm::quat rotation = transform.GetRotation();
 
-        JPH::Mat44 jointMatrix =
-            JPH::Mat44::sRotationTranslation(Utils::ToJoltQuat(rotation), Utils::ToJoltVec3(position));
-
-        internal.UpdateJointMatrix(jointMatrix);
-
-        JPH::BodyLockWrite lock(bodyLockInterface, internal.softBodyID);
+        // Lock the soft body for writing
+        JPH::BodyLockWrite lock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(), internal.softBodyID);
         if (!lock.Succeeded())
             continue;
 
@@ -425,13 +409,37 @@ void SyncSoftBodyChassisWithSkeleton(Engine::Core &core)
             continue;
 
         auto *motionProps = static_cast<JPH::SoftBodyMotionProperties *>(body.GetMotionProperties());
+        auto &joltVertices = motionProps->GetVertices();
 
-        JPH::RMat44 comTransform = body.GetCenterOfMassTransform();
+        // On first frame or reset, teleport the entire soft body to match chassis
+        if (internal.hardSkinNextFrame)
+        {
+            // Set the body position and rotation to match chassis
+            body.SetPositionAndRotationInternal(Utils::ToJoltRVec3(position), Utils::ToJoltQuat(rotation));
+            internal.hardSkinNextFrame = false;
+        }
+        else
+        {
+            // Normal frame: Update position/rotation
+            body.SetPositionAndRotationInternal(Utils::ToJoltRVec3(position), Utils::ToJoltQuat(rotation));
+        }
 
-        motionProps->SkinVertices(comTransform, internal.jointMatrices.data(), internal.numJoints,
-                                  internal.hardSkinNextFrame, *physicsManager.GetTempAllocator());
+        // Now pin the anchor vertices to their original local positions
+        // This keeps the bottom of the mesh attached to the chassis
+        // while allowing the rest to deform from collisions
+        for (size_t i = 0; i < internal.anchorVertexIndices.size(); ++i)
+        {
+            uint32_t joltVertexIdx = internal.anchorVertexIndices[i];
+            if (joltVertexIdx >= joltVertices.size())
+                continue;
 
-        internal.hardSkinNextFrame = false;
+            const glm::vec3 &localPos = internal.anchorLocalPositions[i];
+
+            // Set anchor vertex to its original local position (relative to body COM)
+            joltVertices[joltVertexIdx].mPosition = JPH::Vec3(localPos.x, localPos.y, localPos.z);
+            // Zero velocity to prevent oscillation
+            joltVertices[joltVertexIdx].mVelocity = JPH::Vec3::sZero();
+        }
     }
 }
 
@@ -463,27 +471,31 @@ void SyncSoftBodyChassisMesh(Engine::Core &core)
 
         const auto *motionProps = static_cast<const JPH::SoftBodyMotionProperties *>(body.GetMotionProperties());
         const auto &joltVertices = motionProps->GetVertices();
+
+        // Use safe inverse scale
+        glm::vec3 safeScale = internal.initialScale;
         constexpr float epsilon = 1e-6f;
-        glm::vec3 safeScale = glm::max(glm::abs(internal.initialScale), glm::vec3(epsilon));
-        auto signOrOne = [](float v) { return v < 0.0f ? -1.0f : 1.0f; };
-        safeScale *= glm::vec3(signOrOne(internal.initialScale.x), signOrOne(internal.initialScale.y),
-                               signOrOne(internal.initialScale.z));
+        if (std::abs(safeScale.x) < epsilon)
+            safeScale.x = 1.0f;
+        if (std::abs(safeScale.y) < epsilon)
+            safeScale.y = 1.0f;
+        if (std::abs(safeScale.z) < epsilon)
+            safeScale.z = 1.0f;
         glm::vec3 invScale = 1.0f / safeScale;
 
         auto &meshVertices = mesh.GetVertices();
         const auto &vertexMap = internal.vertexMap;
 
-        glm::vec3 bodyPos = Utils::FromJoltRVec3(body.GetPosition());
-        glm::quat bodyRot = Utils::FromJoltQuat(body.GetRotation());
-        glm::quat invBodyRot = glm::inverse(bodyRot);
-
+        // Jolt SoftBody vertices are in LOCAL space relative to the body's center of mass
+        // We just need to apply inverse scale to convert back to original mesh space
         for (size_t i = 0u; i < meshVertices.size() && i < vertexMap.size(); ++i)
         {
             uint32_t joltIdx = vertexMap[i];
             if (joltIdx < joltVertices.size())
             {
-                glm::vec3 worldPos = Utils::FromJoltVec3(joltVertices[joltIdx].mPosition);
-                glm::vec3 localPos = invBodyRot * (worldPos - bodyPos);
+                // mPosition is already in local space relative to center of mass
+                glm::vec3 localPos = Utils::FromJoltVec3(joltVertices[joltIdx].mPosition);
+                // Apply inverse scale to convert from Jolt space back to mesh space
                 localPos *= invScale;
                 mesh.SetVertexAt(i, localPos);
             }
