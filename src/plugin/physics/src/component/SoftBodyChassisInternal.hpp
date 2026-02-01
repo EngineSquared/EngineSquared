@@ -116,9 +116,7 @@ struct SoftBodyChassisInternal {
     /**
      * @brief Default constructor (invalid bodies)
      */
-    SoftBodyChassisInternal() : skeletonBodyID(JPH::BodyID()), softBodyID(JPH::BodyID())
-    {
-    }
+    SoftBodyChassisInternal() : skeletonBodyID(JPH::BodyID()), softBodyID(JPH::BodyID()) {}
 
     /**
      * @brief Construct with body IDs

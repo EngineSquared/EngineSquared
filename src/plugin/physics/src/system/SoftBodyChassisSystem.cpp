@@ -52,8 +52,7 @@ struct DeduplicatedMesh {
 /**
  * @brief Result from CreateChassisSharedSettings containing all necessary data
  */
-struct ChassisSharedSettingsResult
-{
+struct ChassisSharedSettingsResult {
     JPH::Ref<JPH::SoftBodySharedSettings> settings;
     std::vector<uint32_t> vertexMap;        ///< Original mesh index -> Jolt vertex index
     std::vector<uint32_t> anchorIndices;    ///< Jolt indices of anchor vertices
