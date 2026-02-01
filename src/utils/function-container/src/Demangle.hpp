@@ -1,10 +1,11 @@
 #pragma once
 
 #include <cstdlib>
+#include <memory>
+#include <string>
+#include <typeinfo>
 #if defined(__GNUG__) || defined(__clang__)
 #    include <cxxabi.h>
-#    include <string>
-#    include <typeinfo>
 #endif
 
 namespace FunctionUtils {
