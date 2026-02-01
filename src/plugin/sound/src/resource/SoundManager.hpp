@@ -345,15 +345,7 @@ class SoundManager {
         sound.name = soundName;
         sound.path = filePath;
         sound.loop = loop;
-
-        ma_decoder_config decoderConfig = ma_decoder_config_init(ma_format_f32, 2, 44100);
-        _result = ma_decoder_init_file(filePath.c_str(), &decoderConfig, &sound.decoder);
-        if (_result != MA_SUCCESS)
-        {
-            Log::Error(fmt::format("Failed to initialize the audio decoder: {}", ma_result_description(_result)));
-            return;
-        }
-        sound.decoderInitialized = true;
+        sound.decoderInitialized = false;
         _soundsToPlay.emplace(soundName, std::move(sound));
     }
 
@@ -394,6 +386,19 @@ class SoundManager {
         if (it != _soundsToPlay.end())
         {
             auto &snd = it->second;
+
+            if (!snd.usingEngine && !snd.decoderInitialized)
+            {
+                ma_decoder_config decoderConfig = ma_decoder_config_init(ma_format_f32, 2, 44100);
+                _result = ma_decoder_init_file(snd.path.c_str(), &decoderConfig, &snd.decoder);
+                if (_result != MA_SUCCESS)
+                {
+                    Log::Error(fmt::format("Failed to initialize the audio decoder for '{}': {}", snd.name, ma_result_description(_result)));
+                    return;
+                }
+                snd.decoderInitialized = true;
+            }
+
             snd.isPlaying = true;
             snd.isPaused = false;
 
@@ -428,11 +433,13 @@ class SoundManager {
             {
                 ma_sound_stop(&snd.engineSound);
                 ma_sound_seek_to_pcm_frame(&snd.engineSound, 0);
-                ma_decoder_seek_to_pcm_frame(&snd.decoder, 0);
+                if (snd.decoderInitialized)
+                    ma_decoder_seek_to_pcm_frame(&snd.decoder, 0);
             }
             else
             {
-                ma_decoder_seek_to_pcm_frame(&snd.decoder, 0);
+                if (snd.decoderInitialized)
+                    ma_decoder_seek_to_pcm_frame(&snd.decoder, 0);
             }
         }
         else
@@ -546,7 +553,10 @@ class SoundManager {
                 ma_sound_set_volume(&snd.engineSound, snd.volume);
 
                 ma_uint64 cursor = 0u;
-                ma_decoder_get_cursor_in_pcm_frames(&snd.decoder, &cursor);
+                if (snd.decoderInitialized)
+                {
+                    ma_decoder_get_cursor_in_pcm_frames(&snd.decoder, &cursor);
+                }
                 ma_sound_seek_to_pcm_frame(&snd.engineSound, cursor);
 
                 if (snd.isPlaying && !snd.isPaused)
