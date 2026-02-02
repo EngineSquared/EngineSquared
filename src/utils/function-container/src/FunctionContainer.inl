@@ -7,19 +7,22 @@ template <typename TCallable>
 FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
 {
     FunctionUtils::FunctionID id;
+    std::string name;
 
     if constexpr (is_derived_from_function_type<TCallable>::value)
     {
         id = callable.GetID();
+        name = callable.GetName();
     }
     else
     {
         id = CallableFunction<TCallable, TReturn, TArgs...>::GetCallableID(callable);
+        name = CallableFunction<TCallable, TReturn, TArgs...>::GetCallableName(callable);
     }
 
     if (_idToIterator.contains(id))
     {
-        Log::Warn("Function already exists"); // TODO: be able to change container thing name
+        Log::Warn(fmt::format("Function already exists: {}", name)); // TODO: be able to change container thing name
         return id;
     }
 
@@ -40,7 +43,7 @@ FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::A
 
     if (_idToIterator.contains(id))
     {
-        Log::Warn("Function already exists"); // TODO: be able to change container thing name
+        Log::Warn("Function already exists: " + function->GetName()); // TODO: be able to change container thing name
         return id;
     }
 

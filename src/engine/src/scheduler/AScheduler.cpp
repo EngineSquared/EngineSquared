@@ -57,11 +57,11 @@ void AScheduler::RunSystem(const SystemBase *system, Core &core)
     {
         if (_errorPolicy != SchedulerErrorPolicy::Silent)
         {
-            Log::Error(fmt::format("System {} failed: {}", system->GetID(), e.what()));
+            Log::Error(fmt::format("System {} failed: {}", system->GetName(), e.what()));
         }
         else
         {
-            Log::Debug(fmt::format("System {} failed: {}", system->GetID(), e.what()));
+            Log::Debug(fmt::format("System {} failed: {}", system->GetName(), e.what()));
         }
 
         switch (_errorPolicy)

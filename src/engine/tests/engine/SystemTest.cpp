@@ -28,6 +28,8 @@ TEST(Systems, Casual)
 {
     Core core;
 
+    core.SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy::Nothing);
+
     core.RegisterResource<A>({});
     core.RegisterResource<B>({});
     core.RegisterResource<C>({});
@@ -55,6 +57,8 @@ TEST(Systems, Casual)
 TEST(Systems, EnableDisable)
 {
     Core core;
+
+    core.SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy::Nothing);
 
     core.SetDefaultScheduler<Scheduler::Update>();
 
@@ -115,6 +119,8 @@ TEST(Systems, ErrorHandling)
 {
     Core core;
 
+    core.SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy::Nothing);
+
     core.RegisterResource<A>({});
     core.RegisterResource<B>({});
 
@@ -124,7 +130,7 @@ TEST(Systems, ErrorHandling)
     core.RegisterSystemWithErrorHandler([](const Core &) { throw std::runtime_error("Test error"); }, // NOSONAR
                                         [](Core &c) { c.GetResource<B>().value++; });
 
-    core.RunSystems();
+    EXPECT_THROW(core.RunSystems(), std::runtime_error);
 
     ASSERT_EQ(core.GetResource<A>().value, 1);
     ASSERT_EQ(core.GetResource<B>().value, 1);
@@ -133,6 +139,8 @@ TEST(Systems, ErrorHandling)
 TEST(Systems, ErrorHandlingDoesNotAllowDuplicates)
 {
     Core core;
+
+    core.SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy::Nothing);
 
     core.RegisterResource<A>({});
     core.RegisterResource<B>({});
@@ -144,7 +152,7 @@ TEST(Systems, ErrorHandlingDoesNotAllowDuplicates)
     core.RegisterSystemWithErrorHandler([](const Core &) { throw std::runtime_error("Test error"); }, // NOSONAR
                                         [](Core &c) { c.GetResource<B>().value++; });
 
-    core.RunSystems();
+    EXPECT_THROW(core.RunSystems(), std::runtime_error);
 
     ASSERT_EQ(core.GetResource<A>().value, 1);
     ASSERT_EQ(core.GetResource<B>().value, 1);
@@ -153,6 +161,8 @@ TEST(Systems, ErrorHandlingDoesNotAllowDuplicates)
 TEST(Systems, SystemCannotBeAddedTwiceAsWrapped)
 {
     Core core;
+
+    core.SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy::Nothing);
 
     core.RegisterResource<A>({});
 
@@ -167,6 +177,8 @@ TEST(Systems, SystemCannotBeAddedTwiceAsWrapped)
 TEST(Systems, SystemCannotBeAddedTwiceAsWrapped2)
 {
     Core core;
+
+    core.SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy::Nothing);
 
     core.RegisterResource<A>({});
 
