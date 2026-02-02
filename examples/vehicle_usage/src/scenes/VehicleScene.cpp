@@ -78,14 +78,26 @@ Engine::Entity CreateVehicle(Engine::Core &core)
     Physics::Component::WheelSettings frontWheel = Physics::Component::WheelSettings::CreateFrontWheel();
     frontWheel.radius = 0.4f;
     frontWheel.width = 0.3f;
-    frontWheel.longitudinalFriction = {{0.0f, 2.5f}, {1.0f, 2.5f}};
-    frontWheel.lateralFriction = {{0.0f, 2.0f}, {90.0f, 2.0f}};
+    frontWheel.longitudinalFriction = {
+        {0.0f, 2.5f},
+        {1.0f, 2.5f}
+    };
+    frontWheel.lateralFriction = {
+        {0.0f,  2.0f},
+        {90.0f, 2.0f}
+    };
 
     Physics::Component::WheelSettings rearWheel = Physics::Component::WheelSettings::CreateRearWheel();
     rearWheel.radius = 0.4f;
     rearWheel.width = 0.3f;
-    rearWheel.longitudinalFriction = {{0.0f, 2.5f}, {1.0f, 2.5f}};
-    rearWheel.lateralFriction = {{0.0f, 2.0f}, {90.0f, 2.0f}};
+    rearWheel.longitudinalFriction = {
+        {0.0f, 2.5f},
+        {1.0f, 2.5f}
+    };
+    rearWheel.lateralFriction = {
+        {0.0f,  2.0f},
+        {90.0f, 2.0f}
+    };
 
     Physics::Builder::VehicleBuilder<4> builder;
     auto vehicleEntity = builder.SetChassisMesh(chassisMesh, glm::vec3(0.0f, 2.0f, 0.0f))
