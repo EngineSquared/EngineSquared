@@ -10,11 +10,6 @@
 
 namespace FunctionUtils {
 
-/**
- * @brief Démangle un nom de type C++ (typeid) en une chaîne lisible.
- * @param typeInfo L'objet type_info à démangler.
- * @return Le nom démanglé si possible, sinon le nom brut.
- */
 inline std::string DemangleTypeName(const std::type_info &typeInfo)
 {
 #if defined(__GNUG__) || defined(__clang__)
