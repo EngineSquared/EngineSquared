@@ -104,6 +104,9 @@ struct SoftBodySettings {
     /// Treat faces as double-sided for collision
     bool doubleSidedFaces = false;
 
+    /// Update body position during simulation (set false for externally controlled bodies)
+    bool updatePosition = true;
+
     //=========================================================================
     // Factory methods
     //=========================================================================

@@ -40,6 +40,8 @@
 #include "CubeGenerator.hpp"
 #include "CylinderGenerator.hpp"
 #include "JellyCubeGenerator.hpp"
+#include "MeshSimplifier.hpp"
+#include "MeshUtils.hpp"
 #include "PlaneGenerator.hpp"
 #include "RopeGenerator.hpp"
 #include "SphereGenerator.hpp"

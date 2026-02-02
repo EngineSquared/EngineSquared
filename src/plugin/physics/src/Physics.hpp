@@ -33,6 +33,8 @@
 
 // Components - Soft Body
 #include "component/SoftBody.hpp"
+#include "component/SoftBodyChassis.hpp"
+#include "component/SoftBodyChassisInternal.hpp"
 #include "component/SoftBodyInternal.hpp"
 
 // Resources
@@ -45,6 +47,7 @@
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
 #include "system/RigidBodySystem.hpp"
+#include "system/SoftBodyChassisSystem.hpp"
 #include "system/SoftBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
 #include "system/VehicleControlSystem.hpp"

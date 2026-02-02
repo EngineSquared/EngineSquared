@@ -11,6 +11,7 @@
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
 #include "system/RigidBodySystem.hpp"
+#include "system/SoftBodyChassisSystem.hpp"
 #include "system/SoftBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
 #include "system/VehicleControlSystem.hpp"
@@ -30,13 +31,17 @@ void Physics::Plugin::Bind()
     RegisterSystems<Engine::Scheduler::Startup>(System::InitVehicleSystem);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitConstraintSystem);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitSoftBodySystem);
+    RegisterSystems<Engine::Scheduler::Startup>(System::InitSoftBodyChassisSystem);
 
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::PhysicsUpdate);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::VehicleControlSystem);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::VehicleRPMUpdate);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::SyncTransformWithPhysics);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::SyncSoftBodyVertices);
+    RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::SyncSoftBodyChassisWithSkeleton);
+    RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::SyncSoftBodyChassisMesh);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::WheelTransformSyncSystem);
 
     RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownSoftBodySystem);
+    RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownSoftBodyChassisSystem);
 }
