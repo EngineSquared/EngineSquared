@@ -4,7 +4,7 @@
 class TestScript : public NativeScripting::Utils::ScriptableEntity {
   public:
     explicit TestScript(Engine::Entity entity) : ScriptableEntity(entity) {}
-    ~TestScript() { std::cout << "TestScript Destroyed" << std::endl; }
+    ~TestScript() final { std::cout << "TestScript Destroyed" << std::endl; }
 
     void OnCreate(Engine::Core &core) { std::cout << "Entity Created" << std::endl; }
 
