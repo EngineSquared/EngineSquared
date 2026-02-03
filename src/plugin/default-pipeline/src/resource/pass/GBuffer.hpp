@@ -95,8 +95,11 @@ fn fs_main(
     var output : GBufferOutput;
     var uv = vec2f(1.0 - fragUV.x, 1.0 - fragUV.y);
     output.normal = vec4(normalize(fragNormal), 1.0);
-    output.albedo = vec4(textureSample(texture, textureSampler, uv).rgb * material.diffuse.rgb, 1.0);
-
+    var textureColor = textureSample(texture, textureSampler, uv);
+    if (textureColor.a < 0.05) {
+        discard;
+    }
+    output.albedo = vec4(textureColor.rgb * material.diffuse.rgb, 1.0);
     return output;
 }
 
