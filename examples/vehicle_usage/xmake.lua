@@ -6,7 +6,6 @@ if is_plat("windows") then
     add_cxflags("/W4")
 end
 
-includes("../../xmake.lua")
 
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
 target("VehicleUsage")
@@ -23,7 +22,7 @@ target("VehicleUsage")
 
     add_files("src/**.cpp")
 
-    add_includedirs("$(projectdir)/src/")
+    add_includedirs("src/")
 
     add_packages("entt", "glm", "glfw", "spdlog", "fmt", "joltphysics", "stb", "tinyobjloader", "wgpu-native", "glfw3webgpu", "lodepng")
 
