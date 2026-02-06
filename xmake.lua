@@ -100,10 +100,6 @@ local EXECUTABLE_EXAMPLES_FLAG_NAME = "executable_examples"
 option(ALL_EXAMPLES_FLAG_NAME, {default = false, description = "Enable all examples"})
 option(EXECUTABLE_EXAMPLES_FLAG_NAME, {default = false, description = "Enable executable examples"})
 
-local examples = {}
-for _, dir in ipairs(os.dirs("examples/*")) do
-    table.append(examples, dir)
-end
 for _, dir in ipairs(os.dirs("examples/*")) do
     local name = path.basename(dir)
 
@@ -116,7 +112,7 @@ for _, dir in ipairs(os.dirs("examples/*")) do
             if has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) and os.isfile(path.join("examples", name, ".ci_run_target")) then
                 examples[#examples + 1] = name
                 includes(path.join("examples", name, "xmake.lua"))
-            elseif not has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) then
+            elseif has_config(ALL_EXAMPLES_FLAG_NAME) or not has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) then
                 examples[#examples + 1] = name
                 includes(path.join("examples", name, "xmake.lua"))
             end
