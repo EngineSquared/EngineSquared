@@ -229,8 +229,8 @@ jobs:
 
       - name: Build and test examples
         run: |
-          xmake f --all_examples=y
+          xmake f --all_examples=y -y
           xmake build -y
-          xmake f --executable_examples=y
+          xmake f --executable_examples=y -y
           xmake run -y -v
         timeout-minutes: 120
