@@ -74,7 +74,8 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     auto teapot = core.CreateEntity();
     // Position, scale, and rotation are now handled by Transform
     // SoftBodySystem will automatically apply the scale to vertices
-    teapot.AddComponent<Object::Component::Transform>(Object::Component::Transform(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(scaleFactor)));
+    teapot.AddComponent<Object::Component::Transform>(
+        Object::Component::Transform(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(scaleFactor)));
 
     // Add Mesh (no manual scaling needed - Transform.scale will be applied by SoftBodySystem)
     teapot.AddComponent<Object::Component::Mesh>(std::move(mesh));
