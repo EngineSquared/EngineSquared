@@ -110,10 +110,8 @@ for _, dir in ipairs(os.dirs("examples/*")) do
             print("Warning: No xmake.lua found in " .. dir .. ", skipping...")
         else
             if has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) and os.isfile(path.join("examples", name, ".ci_run_target")) then
-                examples[#examples + 1] = name
                 includes(path.join("examples", name, "xmake.lua"))
             elseif has_config(ALL_EXAMPLES_FLAG_NAME) or not has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) then
-                examples[#examples + 1] = name
                 includes(path.join("examples", name, "xmake.lua"))
             end
         end
