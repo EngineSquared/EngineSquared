@@ -164,44 +164,13 @@ jobs:
           package-cache-key: '${{ runner.os }}-xmake-entt-vulkan-glm'
           project-path: '.'
 
-      - name: Build and test examples (Linux/macOS)
+      - name: Build and test examples
         if: "!contains(runner.os, 'windows')"
         run: |
-          for example_dir in ./examples/*/; do
-            if [ -d "$example_dir" ]; then
-              echo "Building example in $example_dir"
-              cd "$example_dir"
-              xmake build -y -P .
-              if [ -f ".ci_run_target" ]; then
-                echo "Running example in $example_dir"
-                target=$(cat .ci_run_target)
-                xmake run -P . $target
-              fi
-              cd - > /dev/null
-            fi
-          done
-        timeout-minutes: 120
-
-      - name: Build and test examples (Windows)
-        if: contains(runner.os, 'windows')
-        shell: pwsh
-        run: |
-          Get-ChildItem -Path "./examples" -Directory | ForEach-Object {
-            $exampleDir = $_.FullName
-            Write-Host "Building example in $exampleDir"
-            Push-Location $exampleDir
-            try {
-              xmake build -y -P .
-              if (Test-Path ".ci_run_target") {
-                Write-Host "Running example in $exampleDir"
-                $target = Get-Content ".ci_run_target" -Raw
-                $target = $target.Trim()
-                xmake run -P . $target
-              }
-            } finally {
-              Pop-Location
-            }
-          }
+          xmake f --all_examples=y
+          xmake build -y
+          xmake f --executable_examples=y
+          xmake run -y -v
         timeout-minutes: 120
 
   run_tests:
