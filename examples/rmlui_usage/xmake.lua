@@ -24,11 +24,10 @@ local function setup_demo_target(target_name, source_file)
 
         add_files(source_file)
 
-        add_includedirs("$(projectdir)/src/")
-        add_includedirs("$(projectdir)/asset/")
+        add_includedirs("src/")
+        add_includedirs("asset/")
 
         add_packages("entt", "glm", "glfw", "spdlog", "fmt", "stb", "tinyobjloader", "wgpu-native", "glfw3webgpu", "lodepng", "rmlui")
-        add_linkdirs("$(package:rmlui):installdir()/lib")
         add_links("rmlui_debugger", "rmlui")
         if is_plat("linux") then
             add_ldflags("-Wl,--start-group", "-lrmlui_debugger", "-lrmlui", "-Wl,--end-group", {force = true})

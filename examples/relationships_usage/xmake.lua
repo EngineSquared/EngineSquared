@@ -1,7 +1,5 @@
 -- Build with xmake -P .
 
-add_requires("entt", "gtest", "glm >=1.0.1", "glfw >=3.4", "glew", "spdlog", "fmt", "joltphysics", "stb")
-
 set_project("RelationshipsUsage")
 set_languages("c++20")
 
