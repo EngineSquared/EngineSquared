@@ -124,7 +124,9 @@ jobs:
           build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-compilation'
 
       - name: Build project
-        run: xmake build -y
+        run: |
+          xmake f -y
+          xmake build -y
         timeout-minutes: 120
 
   run_tests:
@@ -179,6 +181,7 @@ jobs:
 
       - name: Run tests
         run: |
+          xmake f -y -m debug
           xmake test -y -v
         timeout-minutes: 120
 
@@ -229,8 +232,8 @@ jobs:
 
       - name: Build and test examples
         run: |
-          xmake f --all_examples=y -y
+          xmake f --all_examples=y -y -m debug
           xmake build -y
-          xmake f --executable_examples=y -y
+          xmake f --executable_examples=y -y -m debug
           xmake run -y -v
         timeout-minutes: 120
