@@ -1,16 +1,10 @@
 -- Build with xmake -P .
 
-add_requires("entt", "gtest", "glm >=1.0.1", "glfw >=3.4", "glew", "spdlog", "fmt", "joltphysics", "stb")
-
 set_project("InputUsage")
 set_languages("c++20")
 
 add_rules("mode.debug", "mode.release")
 
--- build against the repo's EngineSquared
-includes("../../xmake.lua")
-
--- add /W4 for windows
 if is_plat("windows") then
     add_cxflags("/W4")
 end
