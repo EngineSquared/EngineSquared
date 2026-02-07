@@ -29,6 +29,11 @@ local function setup_demo_target(target_name, source_file)
 
         add_packages("entt", "glm", "glfw", "spdlog", "fmt", "stb", "tinyobjloader", "wgpu-native", "glfw3webgpu", "lodepng", "rmlui")
         add_links("rmlui_debugger", "rmlui")
+        if is_plat("windows") then
+            add_links("freetype", "zlib")
+        else
+            add_links("freetype", "z")
+        end
         if is_plat("linux") then
             add_ldflags("-Wl,--start-group", "-lrmlui_debugger", "-lrmlui", "-Wl,--end-group", {force = true})
         end
