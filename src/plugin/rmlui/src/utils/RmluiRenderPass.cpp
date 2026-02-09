@@ -49,8 +49,17 @@ Graphic::Resource::Shader Rmlui::Utils::RmluiRenderPass::CreateShader(Graphic::R
                                           .setVisibility(wgpu::ShaderStage::Vertex)
                                           .setBinding(0));
 
-    auto colorOutput =
-        Graphic::Utils::ColorTargetState("END_RENDER_TEXTURE").setFormat(wgpu::TextureFormat::BGRA8UnormSrgb);
+    wgpu::BlendState blendState(wgpu::Default);
+    blendState.color.srcFactor = wgpu::BlendFactor::One;
+    blendState.color.dstFactor = wgpu::BlendFactor::OneMinusSrcAlpha;
+    blendState.color.operation = wgpu::BlendOperation::Add;
+    blendState.alpha.srcFactor = wgpu::BlendFactor::One;
+    blendState.alpha.dstFactor = wgpu::BlendFactor::OneMinusSrcAlpha;
+    blendState.alpha.operation = wgpu::BlendOperation::Add;
+
+    auto colorOutput = Graphic::Utils::ColorTargetState("END_RENDER_TEXTURE")
+                           .setFormat(wgpu::TextureFormat::BGRA8UnormSrgb)
+                           .setBlendState(blendState);
 
     shaderDescriptor.setShader(RMLUI_RENDER_PASS_SHADER_CONTENT)
         .setName(RMLUI_RENDER_PASS_SHADER_NAME)
