@@ -25,7 +25,7 @@ xmake run -y BasicCoreUsage
 - `graphic_light_usage`: An example illustrating how to use lighting features.
 - `graphic_material_usage`: An example demonstrating how to use materials.
 - `graphic_usage`: An example showcasing the basic graphics features.
-- `graphic_usage_with_physics_usage`: An example demonstrating how to use graphics features in conjunction with physics features.
+- `graphic_usage_with_physics_usage`: An example demonstrating how to use graphics features with physics features.
 - `input_usage`: An example illustrating how to handle user input.
 - `nativescripting_usage`: An example showcasing how to use native scripting.
 - `physics_usage`: An example showcasing the basic physics features.
