@@ -18,7 +18,7 @@ xmake f --basic_core_usage=y
 xmake run -y BasicCoreUsage
 ```
 
-## Non-exaustive list of examples
+## Non-exhaustive list of examples
 
 - `basic_core_usage`: A simple example demonstrating the basic usage of EngineSquared's core features.
 - `event_usage`: An example showcasing how to use the event system.
