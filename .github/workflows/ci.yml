@@ -127,7 +127,7 @@ jobs:
         run: |
           xmake f -y
           xmake build -y
-        timeout-minutes: 120
+        timeout-minutes: 30
 
   run_tests:
     name: Run tests
@@ -179,13 +179,12 @@ jobs:
 
       - name: Run tests
         run: |
-          xmake f -y -m debug
           xmake test -y -v
-        timeout-minutes: 120
+        timeout-minutes: 30
 
       - name: Check test coverage (Linux)
         if: contains(runner.os, 'linux')
-        uses: threeal/gcovr-action@64cb417ed6f143cafe1c69611922672002f460bb
+        uses: threeal/gcovr-action@1b53388d5f84b4f3afb1b9082782961dff911ba0
 
   check_examples:
     name: Build and test examples
@@ -234,4 +233,4 @@ jobs:
           xmake build -y
           xmake f --executable_examples=y -y -m debug
           xmake run -y -v
-        timeout-minutes: 120
+        timeout-minutes: 30
