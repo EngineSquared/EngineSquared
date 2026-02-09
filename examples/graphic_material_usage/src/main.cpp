@@ -38,7 +38,7 @@ void Setup(Engine::Core &core)
 
     // Custom Material from file
     Object::Component::Material materialWithTexture;
-    materialWithTexture.ambientTexName = "./asset/texture.png";
+    materialWithTexture.diffuseTexName = "./asset/texture.png";
     auto cube1 = core.CreateEntity();
     cube1.AddComponent<Object::Component::Transform>();
     cube1.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
@@ -46,7 +46,7 @@ void Setup(Engine::Core &core)
 
     // Custom Material from local texture
     Object::Component::Material materialFromLocalTexture;
-    materialFromLocalTexture.ambientTexName = "LocalTextureName";
+    materialFromLocalTexture.diffuseTexName = "LocalTextureName";
     auto &textureManager = core.GetResource<Graphic::Resource::TextureContainer>();
     auto texture =
         Graphic::Resource::Texture(core.GetResource<Graphic::Resource::Context>(), "LocalTexture", glm::uvec2(255, 255),

@@ -3,6 +3,9 @@
 
 class TestScript : public NativeScripting::Utils::ScriptableEntity {
   public:
+    explicit TestScript(Engine::Entity entity) : ScriptableEntity(entity) {}
+    ~TestScript() final { std::cout << "TestScript Destroyed" << std::endl; }
+
     void OnCreate(Engine::Core &core) { std::cout << "Entity Created" << std::endl; }
 
     void OnUpdate(Engine::Core &core) { std::cout << "Entity Updated" << std::endl; }
