@@ -5,11 +5,17 @@
 namespace Sound::Resource {
 SoundManager::~SoundManager()
 {
+    if (_deviceInit)
+    {
+        ma_device_stop(&_device);
+    }
+
     for (auto &[name, sound] : _soundsToPlay)
     {
         if (sound.hasEngineSound)
             ma_sound_uninit(&sound.engineSound);
-        ma_decoder_uninit(&sound.decoder);
+        if (sound.decoderInitialized)
+            ma_decoder_uninit(&sound.decoder);
     }
 
     if (_engineInit)
@@ -19,7 +25,6 @@ SoundManager::~SoundManager()
 
     if (_deviceInit)
     {
-        ma_device_stop(&_device);
         ma_device_uninit(&_device);
     }
 }
