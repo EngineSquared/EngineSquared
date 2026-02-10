@@ -167,15 +167,6 @@ jobs:
           package-cache: true
           package-cache-key: 'xmake-package-cache-key-${{ runner.os }}-tests'
           project-path: '.'
-          build-cache: true
-          build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-tests'
-
-      - name: Remove *.gcno / *.gcda / *.gcov files (Linux)
-        if: contains(runner.os, 'linux')
-        run: |
-          find . -name "*.gcno" -delete
-          find . -name "*.gcda" -delete
-          find . -name "*.gcov" -delete
 
       - name: Run tests
         run: |
