@@ -14,6 +14,8 @@ local required_packages = {
     "wgpu-native"
 }
 
+local plugin_name = "PluginRmlui"
+
 local target_dependencies = {
     "EngineSquaredCore",
     "UtilsLog",
@@ -22,7 +24,7 @@ local target_dependencies = {
     "PluginGraphic"
 }
 
-target("PluginRmlui")
+target(plugin_name)
     set_kind("static")
     set_group(PLUGINS_GROUP_NAME)
     set_languages("cxx20")
@@ -57,22 +59,19 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
     target(name)
         set_group(TEST_GROUP_NAME)
         set_kind("binary")
+        add_files("tests/main.cpp")
+        set_default(false)
         if is_plat("linux") then
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
         end
-
-        set_languages("cxx20")
         add_packages(required_packages, "gtest")
         add_links("gtest")
         add_tests("default")
 
-        add_deps("EngineSquaredCore")
-        add_deps("PluginRmlui")
-        add_deps("UtilsTools")
+        add_deps(plugin_name)
 
         add_files(file)
-        add_files("tests/main.cpp")
         if is_mode("debug") then
             add_defines("DEBUG")
         end

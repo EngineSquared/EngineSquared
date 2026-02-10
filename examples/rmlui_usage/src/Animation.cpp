@@ -33,7 +33,7 @@ void Setup(Engine::Core &core)
 
     auto &rmluiContext = core.GetResource<Rmlui::Resource::UIContext>();
     RmluiUsage::Demo::LoadDefaultFonts(rmluiContext);
-    rmluiContext.LoadDocument("asset/animation.rml");
+    rmluiContext.LoadDocument("examples/rmlui_usage/asset/animation.rml");
     RmluiUsage::Demo::AttachHoverOverlay(rmluiContext, "Animation");
     rmluiContext.EnableDebugger(true);
     core.RegisterSystem(RmluiUsage::Demo::EscapeKeySystem);

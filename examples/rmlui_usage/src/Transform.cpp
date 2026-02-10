@@ -33,7 +33,7 @@ void Setup(Engine::Core &core)
 
     auto &rmluiContext = core.GetResource<Rmlui::Resource::UIContext>();
     RmluiUsage::Demo::LoadDefaultFonts(rmluiContext);
-    rmluiContext.LoadDocument("asset/transform.rml");
+    rmluiContext.LoadDocument("examples/rmlui_usage/asset/transform.rml");
     RmluiUsage::Demo::AttachHoverOverlay(rmluiContext, "Transform");
     rmluiContext.EnableDebugger(true);
     core.RegisterSystem(RmluiUsage::Demo::EscapeKeySystem);

@@ -43,9 +43,9 @@ void CreateFloor(Engine::Core &core)
 
     // Half-extent 100x1x100 like Jolt samples (surface at Y = -1 + 1 = 0)
     auto boxCollider = Physics::Component::BoxCollider(glm::vec3(100.0f, 1.0f, 100.0f));
-    floor.AddComponent<Physics::Component::BoxCollider>(core, boxCollider);
+    floor.AddComponent<Physics::Component::BoxCollider>(boxCollider);
 
-    floor.AddComponent<Physics::Component::RigidBody>(core, Physics::Component::RigidBody::CreateStatic());
+    floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
 }
 
 void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass)
@@ -55,11 +55,11 @@ void CreateFallingCube(Engine::Core &core, float x, float y, float z, float mass
     auto rigidBody = Physics::Component::RigidBody::CreateDynamic(mass);
     rigidBody.friction = 0.5f;
     rigidBody.restitution = 0.3f;
-    cube.AddComponent<Physics::Component::RigidBody>(core, rigidBody);
+    cube.AddComponent<Physics::Component::RigidBody>(rigidBody);
 
     Object::Component::Material texture;
-    texture.ambientTexName = std::string(FILES_PATH) + "texture.png";
-    cube.AddComponent<Object::Component::Material>(core, std::move(texture));
+    texture.diffuseTexName = std::string(FILES_PATH) + "texture.png";
+    cube.AddComponent<Object::Component::Material>(std::move(texture));
 }
 
 void CreateSoftbodyFromOBJ(Engine::Core &core)
@@ -75,10 +75,10 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     // Position, scale, and rotation are now handled by Transform
     // SoftBodySystem will automatically apply the scale to vertices
     teapot.AddComponent<Object::Component::Transform>(
-        core, Object::Component::Transform(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(scaleFactor)));
+        Object::Component::Transform(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(scaleFactor)));
 
     // Add Mesh (no manual scaling needed - Transform.scale will be applied by SoftBodySystem)
-    teapot.AddComponent<Object::Component::Mesh>(core, std::move(mesh));
+    teapot.AddComponent<Object::Component::Mesh>(std::move(mesh));
 
     // Configure soft body settings - SoftBody auto-initializes invMasses and edges from Mesh
     auto settings = Physics::Component::SoftBodySettings::Balloon(5000.0f);
@@ -92,10 +92,7 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
     settings.restitution = 0.3f;
 
     // New simplified API: just pass settings, auto-detect Mesh
-    teapot.AddComponent<Physics::Component::SoftBody>(core, Physics::Component::SoftBody(settings));
-
-    Object::Component::Material mat;
-    teapot.AddComponent<Object::Component::Material>(core, mat);
+    teapot.AddComponent<Physics::Component::SoftBody>(Physics::Component::SoftBody(settings));
 }
 
 void CreateJellyCube(Engine::Core &core, const glm::vec3 &position, float size, uint32_t gridSize)
@@ -115,11 +112,11 @@ void CreateJellyCube(Engine::Core &core, const glm::vec3 &position, float size, 
     settings.restitution = 0.3f;
 
     // Add SoftBody - auto-initializes from Mesh
-    jellyCube.AddComponent<Physics::Component::SoftBody>(core, Physics::Component::SoftBody(settings));
+    jellyCube.AddComponent<Physics::Component::SoftBody>(Physics::Component::SoftBody(settings));
 
     Object::Component::Material mat;
-    mat.ambientTexName = std::string(FILES_PATH) + "texture.png";
-    jellyCube.AddComponent<Object::Component::Material>(core, mat);
+    mat.diffuseTexName = std::string(FILES_PATH) + "texture.png";
+    jellyCube.AddComponent<Object::Component::Material>(mat);
 }
 
 void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
@@ -138,7 +135,7 @@ void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
     settings.solverIterations = 8;
     settings.vertexRadius = 0.02f;
 
-    auto &soft = cloth.AddComponent<Physics::Component::SoftBody>(core, Physics::Component::SoftBody(settings));
+    auto &soft = cloth.AddComponent<Physics::Component::SoftBody>(Physics::Component::SoftBody(settings));
 
     for (uint32_t x = 0u; x < width; ++x)
     {
@@ -146,8 +143,8 @@ void CreateClothDemo(Engine::Core &core, const glm::vec3 &position)
     }
 
     Object::Component::Material mat;
-    mat.ambientTexName = std::string(FILES_PATH) + "texture.png";
-    cloth.AddComponent<Object::Component::Material>(core, mat);
+    mat.diffuseTexName = std::string(FILES_PATH) + "texture.png";
+    cloth.AddComponent<Object::Component::Material>(mat);
 }
 
 void Setup(Engine::Core &core)
@@ -160,8 +157,15 @@ void Setup(Engine::Core &core)
 
     auto camera = core.CreateEntity();
 
-    camera.AddComponent<Object::Component::Transform>(core, glm::vec3(0.0f, 5.0f, -15.0f));
-    camera.AddComponent<Object::Component::Camera>(core);
+    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 5.0f, -15.0f));
+    camera.AddComponent<Object::Component::Camera>();
+
+    auto pointLight = core.CreateEntity();
+    pointLight.AddComponent<Object::Component::Transform>(glm::vec3(5.0f, 10.0f, -5.0f));
+    pointLight.AddComponent<Object::Component::PointLight>(glm::vec3(0.7f, 0.7f, 0.7f), 1.f, 50.f, 0.1f);
+
+    auto ambientLight = core.CreateEntity();
+    ambientLight.AddComponent<Object::Component::AmbientLight>(glm::vec3(0.2f));
 
     auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
     cameraManager.SetActiveCamera(camera);
