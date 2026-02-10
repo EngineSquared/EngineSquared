@@ -2,37 +2,43 @@
 set_project("RmluiUsage")
 set_languages("c++20")
 
-if is_plat("windows") then
-    add_cxflags("/W4")
-end
-
-
-includes("../../xmake.lua")
-
-add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
+local required_packages = {
+    "rmlui",
+    "fmt",
+    "glfw",
+    "entt",
+    "spdlog",
+    "glm",
+    "freetype",
+    "zlib",
+    "lodepng",
+    "stb",
+    "wgpu-native",
+    "tinyobjloader",
+    "glfw3webgpu",
+}
 
 local function setup_demo_target(target_name, source_file)
     target(target_name)
         set_kind("binary")
         set_languages("c++20")
 
-        add_deps("EngineSquaredCore")
-        add_deps("PluginGraphic")
-        add_deps("PluginWindow")
-        add_deps("PluginInput")
-        add_deps("PluginCameraMovement")
         add_deps("EngineSquared")
 
         add_files(source_file)
 
-        add_includedirs("$(projectdir)/src/")
-        add_includedirs("$(projectdir)/asset/")
+        add_includedirs("src/")
+        add_includedirs("asset/")
 
-        add_packages("entt", "glm", "glfw", "spdlog", "fmt", "stb", "tinyobjloader", "wgpu-native", "glfw3webgpu", "lodepng", "rmlui")
-        add_linkdirs("$(package:rmlui):installdir()/lib")
+        add_packages(required_packages)
         add_links("rmlui_debugger", "rmlui")
+        if is_plat("windows") then
+            add_links("freetype", "zlib")
+        else
+            add_links("freetype", "z")
+        end
         if is_plat("linux") then
-            add_ldflags("-Wl,--start-group", "-lrmlui_debugger", "-lrmlui", "-Wl,--end-group", {force = true})
+            add_ldflags("-Wl,--start-group", "-lrmlui_debugger", "-lrmlui", "-lfreetype", "-lz", "-Wl,--end-group", {force = true})
         end
 
         set_rundir("$(projectdir)")

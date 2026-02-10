@@ -1,5 +1,4 @@
 includes("../../engine/xmake.lua")
--- includes("../../utils/log/xmake.lua")
 
 local required_packages = {
     "entt",
@@ -11,7 +10,6 @@ local plugin_name = "PluginEvent"
 
 local target_dependencies = {
     "EngineSquaredCore",
-    -- "UtilsLog"
 }
 
 target(plugin_name)
@@ -40,6 +38,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
     target(name)
         set_group(TEST_GROUP_NAME)
         set_kind("binary")
+        set_default(false)
         if is_plat("linux") then
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")

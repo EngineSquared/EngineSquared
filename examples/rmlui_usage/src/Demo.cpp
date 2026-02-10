@@ -90,7 +90,8 @@ class DemoWindow : public Rml::EventListener {
                 rmlui_dynamic_cast<Rml::ElementFormControl *>(document->GetElementById("sandbox_rml_source")))
         {
             auto rmlValue = source->GetValue();
-            rmlValue += "<p>Write your RML here</p>\n\n<!-- <img src=\"asset/high_scores_alien_1.tga\"/> -->";
+            rmlValue += "<p>Write your RML here</p>\n\n<!-- <img "
+                        "src=\"examples/rmlui_usage/asset/high_scores_alien_1.tga\"/> -->";
             source->SetValue(rmlValue);
         }
 
@@ -105,7 +106,7 @@ class DemoWindow : public Rml::EventListener {
 
             Rml::String styleSheetContent;
             auto *fileInterface = Rml::GetFileInterface();
-            Rml::FileHandle handle = fileInterface->Open("asset/rml.rcss");
+            Rml::FileHandle handle = fileInterface->Open("examples/rmlui_usage/asset/rml.rcss");
             if (handle != 0U)
             {
                 size_t length = fileInterface->Length(handle);
@@ -585,7 +586,7 @@ void Setup(Engine::Core &core)
     auto &state = core.RegisterResource<DemoState>(DemoState{});
     Rml::Factory::RegisterEventListenerInstancer(&state.instancer);
 
-    rmluiContext.LoadDocument("asset/demo.rml");
+    rmluiContext.LoadDocument("examples/rmlui_usage/asset/demo.rml");
     auto *document = rmluiContext.GetDocument();
     if (document == nullptr)
     {
