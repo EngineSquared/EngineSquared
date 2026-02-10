@@ -1,7 +1,8 @@
+---@diagnostic disable: undefined-global
+
 TEST_GROUP_NAME = "UnitTests"
 PLUGINS_GROUP_NAME = "Plugins"
 UTILS_GROUP_NAME = "Utils"
--- Set the default group for all targets
 
 add_rules("mode.debug", "mode.release")
 add_requires(
@@ -11,8 +12,8 @@ add_requires(
     "tinyobjloader v2.0.0rc13",
     "glm 1.0.1",
     "glfw 3.4",
-    "freetype",
-    "zlib",
+    "freetype 2.14.1",
+    "zlib 1.3.1",
     "stb 2025.03.14",
     "miniaudio 0.11.23",
     "lodepng 2025.05.06",
@@ -91,35 +92,28 @@ target("EngineSquared")
         add_defines("NDEBUG")
         add_cxflags("-O2")
     end
+target_end()
 
-for _, file in ipairs(os.files("tests/**.cpp")) do
-    local name = path.basename(file)
-    if name == "main" then
-        goto continue
-    end
-    target(name)
-        set_kind("binary")
-        if is_plat("linux") then
-            add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
-            add_ldflags("--coverage")
-        end
-        set_languages("cxx20")
-        add_files(file)
-        add_files("tests/main.cpp")
-        add_packages("entt", "glfw", "glm", "gtest", "spdlog", "tinyobjloader", "fmt", "rmlui", "freetype", "zlib")
-        if is_plat("windows") then
-            add_links("freetype", "zlib")
+local ALL_EXAMPLES_FLAG_NAME = "all_examples"
+local EXECUTABLE_EXAMPLES_FLAG_NAME = "executable_examples"
+
+option(ALL_EXAMPLES_FLAG_NAME, {default = false, description = "Enable all examples"})
+option(EXECUTABLE_EXAMPLES_FLAG_NAME, {default = false, description = "Enable executable examples"})
+
+for _, dir in ipairs(os.dirs("examples/*")) do
+    local name = path.basename(dir)
+
+    option(name, {default = false, description = "Enable \"" .. name .. "\" Example"})
+
+    if has_config(ALL_EXAMPLES_FLAG_NAME) or has_config(name) or has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) then
+        if (not os.isfile(path.join(dir, "xmake.lua"))) then
+            print("Warning: No xmake.lua found in " .. dir .. ", skipping...")
         else
-            add_links("freetype", "z")
+            if has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) and os.isfile(path.join("examples", name, ".ci_run_target")) then
+                includes(path.join("examples", name, "xmake.lua"))
+            elseif has_config(ALL_EXAMPLES_FLAG_NAME) or not has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) then
+                includes(path.join("examples", name, "xmake.lua"))
+            end
         end
-        add_links("gtest")
-        add_deps("EngineSquared")
-        add_includedirs("src")
-        add_includedirs("tests")
-        add_tests("default")
-        if is_mode("debug") then
-            add_defines("DEBUG")
-            add_defines("ES_DEBUG")
-        end
-    ::continue::
+    end
 end
