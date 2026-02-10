@@ -20,6 +20,16 @@ local required_packages = {
 
 local plugin_name = "PluginCameraMovement"
 
+local target_dependencies = {
+    "EngineSquaredCore",
+    "PluginObject",
+    "PluginRenderingPipeline",
+    "PluginWindow",
+    "PluginEvent",
+    "UtilsLog",
+    "PluginInput"
+}
+
 target(plugin_name)
     set_kind("static")
     set_group(PLUGINS_GROUP_NAME)
@@ -27,13 +37,8 @@ target(plugin_name)
 
     add_packages(required_packages)
 
-    add_deps("EngineSquaredCore")
-    add_deps("PluginObject")
-    add_deps("PluginRenderingPipeline")
-    add_deps("PluginWindow")
-    add_deps("PluginEvent")
-    add_deps("UtilsLog")
-    add_deps("PluginInput")
+    add_deps(target_dependencies)
+
     add_files("src/**.cpp")
 
     add_headerfiles("src/(component/*.hpp)")

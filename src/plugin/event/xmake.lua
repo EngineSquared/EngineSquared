@@ -1,5 +1,4 @@
 includes("../../engine/xmake.lua")
--- includes("../../utils/log/xmake.lua")
 
 local required_packages = {
     "entt",
@@ -11,7 +10,6 @@ local plugin_name = "PluginEvent"
 
 local target_dependencies = {
     "EngineSquaredCore",
-    -- "UtilsLog"
 }
 
 target(plugin_name)
