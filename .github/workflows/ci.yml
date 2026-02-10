@@ -22,6 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
 
       - name: Find unwanted files
         run: |
@@ -56,6 +57,7 @@ jobs:
         if: steps.check_bot.outputs.skip != 'true'
         with:
           token: ${{ secrets.PAT_CI_TEST }}
+          ref: ${{ github.ref_name }}
 
       - name: Install clang-format
         if: steps.check_bot.outputs.skip != 'true'
@@ -97,9 +99,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Pull latest changes
-        run: git pull origin ${{ github.ref_name }}
+          ref: ${{ github.ref_name }}
 
       - name: Setup Linux dependencies
         if: contains(runner.os, 'linux')
@@ -115,94 +115,19 @@ jobs:
         uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
         with:
           xmake-version: latest
-          actions-cache-folder: '.xmake-cache'
-          actions-cache-key: '${{ runner.os }}-xmake-install'
+          actions-cache-folder: '.xmake-cache-${{ runner.os }}'
+          actions-cache-key: 'xmake-actions-cache-key-${{ runner.os }}-compilation'
           package-cache: true
-          package-cache-key: '${{ runner.os }}-xmake-packages'
+          package-cache-key: 'xmake-package-cache-key-${{ runner.os }}-compilation'
           project-path: '.'
           build-cache: true
-          build-cache-key: '${{ runner.os }}-xmake-build'
+          build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-compilation'
 
       - name: Build project
-        run: xmake build -y
-        timeout-minutes: 120
-
-  check_examples:
-    name: Build and test examples
-    if: startsWith(github.event.head_commit.message, 'example')
-    needs: [check_repository_cleanliness, lint_code]
-    strategy:
-      matrix:
-        include:
-          - os: windows-latest
-          - os: ubuntu-latest
-          - os: macos-latest
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Linux dependencies
-        if: contains(runner.os, 'linux')
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
-
-      - name: Setup Windows dependencies
-        if: contains(runner.os, 'windows')
-        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
-
-      - name: Install xmake
-        uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
-        with:
-          xmake-version: latest
-          actions-cache-folder: '.xmake-cache'
-          actions-cache-key: '${{ runner.os }}-xmake-examples'
-          package-cache: true
-          package-cache-key: '${{ runner.os }}-xmake-entt-vulkan-glm'
-          project-path: '.'
-
-      - name: Build and test examples (Linux/macOS)
-        if: "!contains(runner.os, 'windows')"
-        run: |
-          for example_dir in ./examples/*/; do
-            if [ -d "$example_dir" ]; then
-              echo "Building example in $example_dir"
-              cd "$example_dir"
-              xmake build -y -P .
-              if [ -f ".ci_run_target" ]; then
-                echo "Running example in $example_dir"
-                target=$(cat .ci_run_target)
-                xmake run -P . $target
-              fi
-              cd - > /dev/null
-            fi
-          done
-        timeout-minutes: 120
-
-      - name: Build and test examples (Windows)
-        if: contains(runner.os, 'windows')
-        shell: pwsh
-        run: |
-          Get-ChildItem -Path "./examples" -Directory | ForEach-Object {
-            $exampleDir = $_.FullName
-            Write-Host "Building example in $exampleDir"
-            Push-Location $exampleDir
-            try {
-              xmake build -y -P .
-              if (Test-Path ".ci_run_target") {
-                Write-Host "Running example in $exampleDir"
-                $target = Get-Content ".ci_run_target" -Raw
-                $target = $target.Trim()
-                xmake run -P . $target
-              }
-            } finally {
-              Pop-Location
-            }
-          }
-        timeout-minutes: 120
+          xmake f -y
+          xmake build -y
+        timeout-minutes: 30
 
   run_tests:
     name: Run tests
@@ -219,9 +144,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Pull latest changes
-        run: git pull origin ${{ github.ref_name }}
+          ref: ${{ github.ref_name }}
 
       - name: Setup Linux test dependencies
         if: contains(runner.os, 'linux')
@@ -239,39 +162,67 @@ jobs:
         uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
         with:
           xmake-version: latest
-          actions-cache-folder: '.xmake-cache'
-          actions-cache-key: '${{ runner.os }}-xmake-install'
+          actions-cache-folder: '.xmake-cache-${{ runner.os }}'
+          actions-cache-key: 'xmake-actions-cache-key-${{ runner.os }}-tests'
           package-cache: true
-          package-cache-key: '${{ runner.os }}-xmake-entt-vulkan-glm'
+          package-cache-key: 'xmake-package-cache-key-${{ runner.os }}-tests'
           project-path: '.'
 
-      - name: Remove *.gcno / *.gcda / *.gcov files (Linux)
-        if: contains(runner.os, 'linux')
-        run: |
-          find . -name "*.gcno" -delete
-          find . -name "*.gcda" -delete
-          find . -name "*.gcov" -delete
-
-      - name: Run tests (Linux)
-        if: contains(runner.os, 'linux')
+      - name: Run tests
         run: |
           xmake test -y -v
-        timeout-minutes: 120
-
-      - name: Run tests (Windows)
-        if: contains(runner.os, 'windows')
-        shell: pwsh
-        run: |
-          xmake test -y -v
-        timeout-minutes: 120
-
-      - name: Run tests (macOS)
-        if: contains(runner.os, 'macos')
-        run: |
-          xmake test -y -v
-        timeout-minutes: 120
-
+        timeout-minutes: 30
 
       - name: Check test coverage (Linux)
         if: contains(runner.os, 'linux')
-        uses: threeal/gcovr-action@64cb417ed6f143cafe1c69611922672002f460bb
+        uses: threeal/gcovr-action@1b53388d5f84b4f3afb1b9082782961dff911ba0
+
+  check_examples:
+    name: Build and test examples
+    needs: [check_repository_cleanliness, lint_code]
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+          - os: ubuntu-latest
+          - os: macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+
+      - name: Pull latest changes
+        run: git pull origin ${{ github.ref_name }} || true
+
+      - name: Setup Linux dependencies
+        if: contains(runner.os, 'linux')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
+
+      - name: Setup Windows dependencies
+        if: contains(runner.os, 'windows')
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
+
+      - name: Install xmake
+        uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
+        with:
+          xmake-version: latest
+          actions-cache-folder: '.xmake-cache-${{ runner.os }}'
+          actions-cache-key: 'xmake-actions-cache-key-${{ runner.os }}-examples'
+          package-cache: true
+          package-cache-key: 'xmake-package-cache-key-${{ runner.os }}-examples'
+          project-path: '.'
+          build-cache: true
+          build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-examples'
+
+      - name: Build and test examples
+        run: |
+          xmake f --all_examples=y -y -m debug
+          xmake build -y
+          xmake f --executable_examples=y -y -m debug
+          xmake run -y -v
+        timeout-minutes: 30

@@ -27,6 +27,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
     target(name)
         set_group(TEST_GROUP_NAME)
         set_kind("binary")
+        set_default(false)
         if is_plat("linux") then
             add_cxxflags("--coverage", "-fprofile-arcs", "-ftest-coverage", {force = true})
             add_ldflags("--coverage")
