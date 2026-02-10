@@ -122,6 +122,7 @@ jobs:
           project-path: '.'
           build-cache: true
           build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-compilation'
+          build-cache-path: 'build/.build_cache'
 
       - name: Build project
         run: |
@@ -218,6 +219,7 @@ jobs:
           project-path: '.'
           build-cache: true
           build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-examples'
+          build-cache-path: 'build/.build_cache'
 
       - name: Build and test examples
         run: |
