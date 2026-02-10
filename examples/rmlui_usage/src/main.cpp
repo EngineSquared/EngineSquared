@@ -206,26 +206,26 @@ void ApplyOverlayState(Engine::Core &core)
     {
         state.demoDirty = false;
         if (state.demo)
-            ui.LoadOverlayDocument("asset/demo.rml");
+            ui.LoadOverlayDocument("examples/rmlui_usage/asset/demo.rml");
         else
-            ui.UnloadOverlayDocument("asset/demo.rml");
+            ui.UnloadOverlayDocument("examples/rmlui_usage/asset/demo.rml");
     }
     if (state.animationDirty)
     {
         state.animationDirty = false;
         if (state.animation)
-            ui.LoadOverlayDocument("asset/animation.rml");
+            ui.LoadOverlayDocument("examples/rmlui_usage/asset/animation.rml");
         else
-            ui.UnloadOverlayDocument("asset/animation.rml");
+            ui.UnloadOverlayDocument("examples/rmlui_usage/asset/animation.rml");
         state.animationInitialized = false;
     }
     if (state.transformDirty)
     {
         state.transformDirty = false;
         if (state.transform)
-            ui.LoadOverlayDocument("asset/transform.rml");
+            ui.LoadOverlayDocument("examples/rmlui_usage/asset/transform.rml");
         else
-            ui.UnloadOverlayDocument("asset/transform.rml");
+            ui.UnloadOverlayDocument("examples/rmlui_usage/asset/transform.rml");
     }
 
     if (state.animation && !state.animationInitialized)
@@ -249,16 +249,16 @@ void Setup(Engine::Core &core)
 
     auto &rmluiContext = core.GetResource<Rmlui::Resource::UIContext>();
 
-    rmluiContext.SetFont("asset/LatoLatin-Regular.ttf");
-    rmluiContext.SetFont("asset/LatoLatin-Bold.ttf");
-    rmluiContext.SetFont("asset/LatoLatin-Italic.ttf");
-    rmluiContext.SetFont("asset/LatoLatin-BoldItalic.ttf");
-    rmluiContext.SetFont("asset/NotoEmoji-Regular.ttf");
+    rmluiContext.SetFont("examples/rmlui_usage/asset/LatoLatin-Regular.ttf");
+    rmluiContext.SetFont("examples/rmlui_usage/asset/LatoLatin-Bold.ttf");
+    rmluiContext.SetFont("examples/rmlui_usage/asset/LatoLatin-Italic.ttf");
+    rmluiContext.SetFont("examples/rmlui_usage/asset/LatoLatin-BoldItalic.ttf");
+    rmluiContext.SetFont("examples/rmlui_usage/asset/NotoEmoji-Regular.ttf");
     rmluiContext.EnableDebugger(true);
-    rmluiContext.LoadDocument("asset/hover_overlay.rml");
+    rmluiContext.LoadDocument("examples/rmlui_usage/asset/hover_overlay.rml");
 
     auto &overlayState = core.RegisterResource<OverlayState>(OverlayState{});
-    rmluiContext.LoadOverlayDocument("asset/demo.rml");
+    rmluiContext.LoadOverlayDocument("examples/rmlui_usage/asset/demo.rml");
 
     if (auto *hoverLogo = rmluiContext.GetElementById("hover-logo-demo"))
     {

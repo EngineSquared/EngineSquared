@@ -50,11 +50,11 @@ inline void ConfigureDefaultWindowAndCamera(Engine::Core &core)
 
 inline void LoadDefaultFonts(Rmlui::Resource::UIContext &rmluiContext)
 {
-    rmluiContext.SetFont("asset/LatoLatin-Regular.ttf");
-    rmluiContext.SetFont("asset/LatoLatin-Bold.ttf");
-    rmluiContext.SetFont("asset/LatoLatin-Italic.ttf");
-    rmluiContext.SetFont("asset/LatoLatin-BoldItalic.ttf");
-    rmluiContext.SetFont("asset/NotoEmoji-Regular.ttf");
+    rmluiContext.SetFont("examples/rmlui_usage/asset/LatoLatin-Regular.ttf");
+    rmluiContext.SetFont("examples/rmlui_usage/asset/LatoLatin-Bold.ttf");
+    rmluiContext.SetFont("examples/rmlui_usage/asset/LatoLatin-Italic.ttf");
+    rmluiContext.SetFont("examples/rmlui_usage/asset/LatoLatin-BoldItalic.ttf");
+    rmluiContext.SetFont("examples/rmlui_usage/asset/NotoEmoji-Regular.ttf");
 }
 
 inline void RegisterHoverClick(Rmlui::Resource::UIContext &rmluiContext, const char *demoName)
@@ -68,7 +68,7 @@ inline void RegisterHoverClick(Rmlui::Resource::UIContext &rmluiContext, const c
 
 inline void AttachHoverOverlay(Rmlui::Resource::UIContext &rmluiContext, const char *demoName)
 {
-    rmluiContext.LoadOverlayDocument("asset/hover_esq.rml");
+    rmluiContext.LoadOverlayDocument("examples/rmlui_usage/asset/hover_esq.rml");
     RegisterHoverClick(rmluiContext, demoName);
 }
 } // namespace RmluiUsage::Demo

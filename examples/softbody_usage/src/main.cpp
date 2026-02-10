@@ -93,9 +93,6 @@ void CreateSoftbodyFromOBJ(Engine::Core &core)
 
     // New simplified API: just pass settings, auto-detect Mesh
     teapot.AddComponent<Physics::Component::SoftBody>(Physics::Component::SoftBody(settings));
-
-    Object::Component::Material mat;
-    teapot.AddComponent<Object::Component::Material>(mat);
 }
 
 void CreateJellyCube(Engine::Core &core, const glm::vec3 &position, float size, uint32_t gridSize)
@@ -162,6 +159,13 @@ void Setup(Engine::Core &core)
 
     camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 5.0f, -15.0f));
     camera.AddComponent<Object::Component::Camera>();
+
+    auto pointLight = core.CreateEntity();
+    pointLight.AddComponent<Object::Component::Transform>(glm::vec3(5.0f, 10.0f, -5.0f));
+    pointLight.AddComponent<Object::Component::PointLight>(glm::vec3(0.7f,0.7f,0.7f), 1.f, 50.f, 0.1f);
+
+    auto ambientLight = core.CreateEntity();
+    ambientLight.AddComponent<Object::Component::AmbientLight>(glm::vec3(0.2f));
 
     auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
     cameraManager.SetActiveCamera(camera);
