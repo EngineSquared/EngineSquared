@@ -100,7 +100,7 @@ void Setup(Engine::Core &core)
 
     auto pointLight = core.CreateEntity();
     pointLight.AddComponent<Object::Component::Transform>(glm::vec3(5.0f, 10.0f, -5.0f));
-    pointLight.AddComponent<Object::Component::PointLight>(glm::vec3(0.7f,0.7f,0.7f), 1.f, 50.f, 0.1f);
+    pointLight.AddComponent<Object::Component::PointLight>(glm::vec3(0.7f, 0.7f, 0.7f), 1.f, 50.f, 0.1f);
 
     auto ambientLight = core.CreateEntity();
     ambientLight.AddComponent<Object::Component::AmbientLight>(glm::vec3(0.2f));
@@ -108,7 +108,6 @@ void Setup(Engine::Core &core)
     auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
     cameraManager.SetActiveCamera(camera);
     cameraManager.SetMovementSpeed(3.0f);
-
 
     core.RegisterSystem(EscapeKeySystem);
 }

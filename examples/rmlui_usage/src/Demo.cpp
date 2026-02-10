@@ -90,7 +90,8 @@ class DemoWindow : public Rml::EventListener {
                 rmlui_dynamic_cast<Rml::ElementFormControl *>(document->GetElementById("sandbox_rml_source")))
         {
             auto rmlValue = source->GetValue();
-            rmlValue += "<p>Write your RML here</p>\n\n<!-- <img src=\"examples/rmlui_usage/asset/high_scores_alien_1.tga\"/> -->";
+            rmlValue += "<p>Write your RML here</p>\n\n<!-- <img "
+                        "src=\"examples/rmlui_usage/asset/high_scores_alien_1.tga\"/> -->";
             source->SetValue(rmlValue);
         }
 

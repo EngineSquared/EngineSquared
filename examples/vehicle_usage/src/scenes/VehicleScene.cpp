@@ -55,7 +55,9 @@ void CreateCheckeredFloor(Engine::Core &core)
             tileMaterial.ambient = color * 0.3f;
             tileMaterial.specular = glm::vec3(0.1f);
             tileMaterial.shininess = 16.0f;
-            tileMaterial.diffuseTexName = Graphic::Utils::DEFAULT_TEXTURE_NAME; // Use engine default texture to avoid missing texture warnings while keeping a plain material
+            tileMaterial.diffuseTexName =
+                Graphic::Utils::DEFAULT_TEXTURE_NAME; // Use engine default texture to avoid missing texture warnings
+                                                      // while keeping a plain material
             // Use engine default texture (1x1) so material color is used without external textures
             // tileMaterial.ambientTexName = Graphic::Utils::DEFAULT_TEXTURE_NAME;
             tile.AddComponent<Object::Component::Material>(tileMaterial);
@@ -120,7 +122,9 @@ Engine::Entity CreateVehicle(Engine::Core &core)
     chassisMaterial.ambient = chassisMaterial.diffuse * 0.3f;
     chassisMaterial.specular = glm::vec3(0.3f);
     chassisMaterial.shininess = 32.0f;
-    chassisMaterial.diffuseTexName = Graphic::Utils::DEFAULT_TEXTURE_NAME; // Use engine default texture to avoid missing texture warnings while keeping a plain material
+    chassisMaterial.diffuseTexName =
+        Graphic::Utils::DEFAULT_TEXTURE_NAME; // Use engine default texture to avoid missing texture warnings while
+                                              // keeping a plain material
     // Use engine default texture to avoid missing texture warnings while keeping a plain material
     // chassisMaterial.ambientTexName = Graphic::Utils::DEFAULT_TEXTURE_NAME;
     vehicleEntity.AddComponent<Object::Component::Material>(chassisMaterial);
