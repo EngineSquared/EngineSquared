@@ -65,7 +65,6 @@ class Shader {
         wgpu::FragmentState fragmentState(wgpu::Default);
         std::vector<wgpu::ColorTargetState> colorTargets;
         colorTargets.reserve(descriptor.getOutputColorFormats().size());
-        wgpu::BlendState blendState(wgpu::Default);
         for (const auto &format : descriptor.getOutputColorFormats())
         {
             wgpu::ColorTargetState colorTarget(wgpu::Default);
