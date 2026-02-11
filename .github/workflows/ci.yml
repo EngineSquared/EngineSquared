@@ -209,17 +209,12 @@ jobs:
         uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
 
       - name: Install xmake
-        uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
+        uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
         with:
           xmake-version: latest
-          actions-cache-folder: '.xmake-cache-${{ runner.os }}'
-          actions-cache-key: 'xmake-actions-cache-key-${{ runner.os }}-examples'
           package-cache: true
-          package-cache-key: 'xmake-package-cache-key-${{ runner.os }}-examples'
           project-path: '.'
           build-cache: true
-          build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-examples'
-          build-cache-path: 'build/.build_cache'
 
       - name: Build and test examples
         run: |
