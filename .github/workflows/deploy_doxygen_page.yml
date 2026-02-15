@@ -2,6 +2,10 @@ name: Doxygen GitHub Pages Deploy Action
 
 on:
   workflow_dispatch:
+  push:
+      paths:
+        - 'workflow/**'
+        - 'Doxyfile.cfg'
 
 jobs:
   generate_doxygen:
