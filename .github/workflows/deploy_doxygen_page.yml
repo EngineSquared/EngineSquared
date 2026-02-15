@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
       paths:
-        - 'workflow/**'
+        - '.github/workflows/deploy_doxygen_page.yml'
         - 'Doxyfile.cfg'
 
 jobs:
