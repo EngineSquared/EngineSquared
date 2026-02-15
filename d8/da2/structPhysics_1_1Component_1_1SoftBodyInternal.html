@@ -145,6 +145,15 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a5201798c06b157f0fdf85279a42042b5" id="r_a5201798c06b157f0fdf85279a42042b5"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#a5201798c06b157f0fdf85279a42042b5">initialScale</a> = glm::vec3(1.0f)</td></tr>
 <tr class="memdesc:a5201798c06b157f0fdf85279a42042b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial scale applied to vertices during creation Used to convert Jolt vertices (world-scale) back to local mesh space during sync.  <br /></td></tr>
 <tr class="separator:a5201798c06b157f0fdf85279a42042b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71e33fa1b2c2b68e401d2802871883df" id="r_a71e33fa1b2c2b68e401d2802871883df"><td class="memItemLeft" align="right" valign="top">JPH::BodyID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#a71e33fa1b2c2b68e401d2802871883df">attachedToBodyID</a></td></tr>
+<tr class="memdesc:a71e33fa1b2c2b68e401d2802871883df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Body ID of the rigid body this soft body is attached to (optional) When set, kinematic vertices will follow this body's transform.  <br /></td></tr>
+<tr class="separator:a71e33fa1b2c2b68e401d2802871883df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a234ac9dc27473e5e1d2bd4e64901bbfd" id="r_a234ac9dc27473e5e1d2bd4e64901bbfd"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#a234ac9dc27473e5e1d2bd4e64901bbfd">kinematicVertexIndices</a></td></tr>
+<tr class="memdesc:a234ac9dc27473e5e1d2bd4e64901bbfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indices of kinematic vertices in the Jolt soft body (deduplicated indices) These vertices will be moved to follow the attached body's transform.  <br /></td></tr>
+<tr class="separator:a234ac9dc27473e5e1d2bd4e64901bbfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc776d51a6aebef4ad49d1f6c6fa76b8" id="r_adc776d51a6aebef4ad49d1f6c6fa76b8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; glm::vec3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#adc776d51a6aebef4ad49d1f6c6fa76b8">kinematicVertexLocalPositions</a></td></tr>
+<tr class="memdesc:adc776d51a6aebef4ad49d1f6c6fa76b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial positions of kinematic vertices in local space (relative to attached body) Used to calculate world positions when the attached body moves.  <br /></td></tr>
+<tr class="separator:adc776d51a6aebef4ad49d1f6c6fa76b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Internal component storing Jolt soft body reference. </p>
@@ -175,7 +184,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Default constructor (invalid body) </p>
-<div class="fragment"><div class="line"><span class="lineno">   57</span>: <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">bodyID</a>(JPH::BodyID()) {}</div>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>: <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">bodyID</a>(JPH::BodyID()) {}</div>
 <div class="ttc" id="astructPhysics_1_1Component_1_1SoftBodyInternal_html_aecf0e6daf1aa2379d9c557789f791c5a"><div class="ttname"><a href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">Physics::Component::SoftBodyInternal::bodyID</a></div><div class="ttdeci">JPH::BodyID bodyID</div><div class="ttdoc">Jolt body ID for the soft body.</div><div class="ttdef"><b>Definition</b> SoftBodyInternal.hpp:44</div></div>
 </div><!-- fragment -->
 </div>
@@ -211,7 +220,7 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">   63</span>: <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">bodyID</a>(<span class="keywordtype">id</span>) {}</div>
+<div class="fragment"><div class="line"><span class="lineno">   75</span>: <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">bodyID</a>(<span class="keywordtype">id</span>) {}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -257,7 +266,7 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">   70</span>: <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">bodyID</a>(<span class="keywordtype">id</span>), <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#ac0d4e7420f4e7dce05508a209fd38d30">vertexMap</a>(std::move(map)) {}</div>
+<div class="fragment"><div class="line"><span class="lineno">   82</span>: <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">bodyID</a>(<span class="keywordtype">id</span>), <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#ac0d4e7420f4e7dce05508a209fd38d30">vertexMap</a>(std::move(map)) {}</div>
 <div class="ttc" id="astructPhysics_1_1Component_1_1SoftBodyInternal_html_ac0d4e7420f4e7dce05508a209fd38d30"><div class="ttname"><a href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#ac0d4e7420f4e7dce05508a209fd38d30">Physics::Component::SoftBodyInternal::vertexMap</a></div><div class="ttdeci">std::vector&lt; uint32_t &gt; vertexMap</div><div class="ttdoc">Maps original mesh vertex index to deduplicated Jolt vertex index Used to sync Jolt simulation result...</div><div class="ttdef"><b>Definition</b> SoftBodyInternal.hpp:48</div></div>
 </div><!-- fragment -->
 </div>
@@ -311,9 +320,9 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">   79</span>        : <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">bodyID</a>(<span class="keywordtype">id</span>), <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#ac0d4e7420f4e7dce05508a209fd38d30">vertexMap</a>(std::move(map)), <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#a5201798c06b157f0fdf85279a42042b5">initialScale</a>(scale)</div>
-<div class="line"><span class="lineno">   80</span>    {</div>
-<div class="line"><span class="lineno">   81</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">   91</span>        : <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">bodyID</a>(<span class="keywordtype">id</span>), <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#ac0d4e7420f4e7dce05508a209fd38d30">vertexMap</a>(std::move(map)), <a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#a5201798c06b157f0fdf85279a42042b5">initialScale</a>(scale)</div>
+<div class="line"><span class="lineno">   92</span>    {</div>
+<div class="line"><span class="lineno">   93</span>    }</div>
 <div class="ttc" id="astructPhysics_1_1Component_1_1SoftBodyInternal_html_a5201798c06b157f0fdf85279a42042b5"><div class="ttname"><a href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#a5201798c06b157f0fdf85279a42042b5">Physics::Component::SoftBodyInternal::initialScale</a></div><div class="ttdeci">glm::vec3 initialScale</div><div class="ttdoc">Initial scale applied to vertices during creation Used to convert Jolt vertices (world-scale) back to...</div><div class="ttdef"><b>Definition</b> SoftBodyInternal.hpp:52</div></div>
 </div><!-- fragment -->
 </div>
@@ -344,11 +353,27 @@ Public Attributes</h2></td></tr>
 
 <p>Check if body ID is valid. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if body ID is valid </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">   87</span>{ <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">bodyID</a>.IsInvalid(); }</div>
+<div class="fragment"><div class="line"><span class="lineno">   99</span>{ <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html#aecf0e6daf1aa2379d9c557789f791c5a">bodyID</a>.IsInvalid(); }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a71e33fa1b2c2b68e401d2802871883df" name="a71e33fa1b2c2b68e401d2802871883df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71e33fa1b2c2b68e401d2802871883df">&#9670;&#160;</a></span>attachedToBodyID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">JPH::BodyID Physics::Component::SoftBodyInternal::attachedToBodyID</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Body ID of the rigid body this soft body is attached to (optional) When set, kinematic vertices will follow this body's transform. </p>
+
+</div>
+</div>
 <a id="aecf0e6daf1aa2379d9c557789f791c5a" name="aecf0e6daf1aa2379d9c557789f791c5a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aecf0e6daf1aa2379d9c557789f791c5a">&#9670;&#160;</a></span>bodyID</h2>
 
@@ -381,6 +406,38 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a234ac9dc27473e5e1d2bd4e64901bbfd" name="a234ac9dc27473e5e1d2bd4e64901bbfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a234ac9dc27473e5e1d2bd4e64901bbfd">&#9670;&#160;</a></span>kinematicVertexIndices</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;uint32_t&gt; Physics::Component::SoftBodyInternal::kinematicVertexIndices</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indices of kinematic vertices in the Jolt soft body (deduplicated indices) These vertices will be moved to follow the attached body's transform. </p>
+
+</div>
+</div>
+<a id="adc776d51a6aebef4ad49d1f6c6fa76b8" name="adc776d51a6aebef4ad49d1f6c6fa76b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc776d51a6aebef4ad49d1f6c6fa76b8">&#9670;&#160;</a></span>kinematicVertexLocalPositions</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;glm::vec3&gt; Physics::Component::SoftBodyInternal::kinematicVertexLocalPositions</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initial positions of kinematic vertices in local space (relative to attached body) Used to calculate world positions when the attached body moves. </p>
+
+</div>
+</div>
 <a id="ac0d4e7420f4e7dce05508a209fd38d30" name="ac0d4e7420f4e7dce05508a209fd38d30"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac0d4e7420f4e7dce05508a209fd38d30">&#9670;&#160;</a></span>vertexMap</h2>
 
@@ -398,7 +455,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/plugin/physics/src/component/<a class="el" href="../../db/dfc/SoftBodyInternal_8hpp_source.html">SoftBodyInternal.hpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
+<li>src/plugin/physics/src/component/<a class="el" href="../../db/dfc/SoftBodyInternal_8hpp_source.html">SoftBodyInternal.hpp (1de556d48b65f8aa90d3f384a7458d5c7999e756)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

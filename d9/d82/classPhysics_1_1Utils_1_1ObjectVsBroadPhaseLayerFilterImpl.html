@@ -162,16 +162,17 @@ Public Member Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   10</span>    {</div>
 <div class="line"><span class="lineno">   11</span>        <span class="keywordflow">switch</span> (inLayer1)</div>
 <div class="line"><span class="lineno">   12</span>        {</div>
-<div class="line"><span class="lineno">   13</span>        <span class="keywordflow">case</span> Layers::NON_MOVING: <span class="keywordflow">return</span> inLayer2 == BroadPhaseLayers::MOVING;</div>
-<div class="line"><span class="lineno">   14</span>        <span class="keywordflow">case</span> Layers::MOVING: <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   15</span>        <span class="keywordflow">default</span>: JPH_ASSERT(<span class="keyword">false</span>); <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   16</span>        }</div>
-<div class="line"><span class="lineno">   17</span>    }</div>
+<div class="line"><span class="lineno">   13</span>        <span class="keywordflow">case</span> Layers::NON_MOVING: <span class="keywordflow">return</span> inLayer2 == BroadPhaseLayers::MOVING || inLayer2 == BroadPhaseLayers::DEBRIS;</div>
+<div class="line"><span class="lineno">   14</span>        <span class="keywordflow">case</span> Layers::MOVING: <span class="keywordflow">return</span> inLayer2 != BroadPhaseLayers::DEBRIS;     <span class="comment">// MOVING doesn&#39;t collide with DEBRIS</span></div>
+<div class="line"><span class="lineno">   15</span>        <span class="keywordflow">case</span> Layers::DEBRIS: <span class="keywordflow">return</span> inLayer2 == BroadPhaseLayers::NON_MOVING; <span class="comment">// DEBRIS only collides with NON_MOVING</span></div>
+<div class="line"><span class="lineno">   16</span>        <span class="keywordflow">default</span>: JPH_ASSERT(<span class="keyword">false</span>); <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   17</span>        }</div>
+<div class="line"><span class="lineno">   18</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/plugin/physics/src/utils/<a class="el" href="../../d6/d07/ObjectVsBroadPhaseLayerFilterImpl_8hpp_source.html">ObjectVsBroadPhaseLayerFilterImpl.hpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
+<li>src/plugin/physics/src/utils/<a class="el" href="../../d6/d07/ObjectVsBroadPhaseLayerFilterImpl_8hpp_source.html">ObjectVsBroadPhaseLayerFilterImpl.hpp (1de556d48b65f8aa90d3f384a7458d5c7999e756)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

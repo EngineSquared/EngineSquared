@@ -158,7 +158,8 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   22</span>        <span class="comment">// Create a mapping table from object to broad phase layer</span></div>
 <div class="line"><span class="lineno">   23</span>        _objectToBroadPhase[Layers::NON_MOVING] = BroadPhaseLayers::NON_MOVING;</div>
 <div class="line"><span class="lineno">   24</span>        _objectToBroadPhase[Layers::MOVING] = BroadPhaseLayers::MOVING;</div>
-<div class="line"><span class="lineno">   25</span>    }</div>
+<div class="line"><span class="lineno">   25</span>        _objectToBroadPhase[Layers::DEBRIS] = BroadPhaseLayers::DEBRIS;</div>
+<div class="line"><span class="lineno">   26</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -186,10 +187,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   30</span>    {</div>
-<div class="line"><span class="lineno">   31</span>        JPH_ASSERT(inLayer &lt; Layers::NUM_LAYERS);</div>
-<div class="line"><span class="lineno">   32</span>        <span class="keywordflow">return</span> _objectToBroadPhase[inLayer];</div>
-<div class="line"><span class="lineno">   33</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">   31</span>    {</div>
+<div class="line"><span class="lineno">   32</span>        JPH_ASSERT(inLayer &lt; Layers::NUM_LAYERS);</div>
+<div class="line"><span class="lineno">   33</span>        <span class="keywordflow">return</span> _objectToBroadPhase[inLayer];</div>
+<div class="line"><span class="lineno">   34</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -216,14 +217,15 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   36</span>    {</div>
-<div class="line"><span class="lineno">   37</span>        <span class="keywordflow">switch</span> ((JPH::BroadPhaseLayer::Type) inLayer)</div>
-<div class="line"><span class="lineno">   38</span>        {</div>
-<div class="line"><span class="lineno">   39</span>        <span class="keywordflow">case</span> (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::NON_MOVING: <span class="keywordflow">return</span> <span class="stringliteral">&quot;NON_MOVING&quot;</span>;</div>
-<div class="line"><span class="lineno">   40</span>        <span class="keywordflow">case</span> (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::MOVING: <span class="keywordflow">return</span> <span class="stringliteral">&quot;MOVING&quot;</span>;</div>
-<div class="line"><span class="lineno">   41</span>        <span class="keywordflow">default</span>: JPH_ASSERT(<span class="keyword">false</span>); <span class="keywordflow">return</span> <span class="stringliteral">&quot;INVALID&quot;</span>;</div>
-<div class="line"><span class="lineno">   42</span>        }</div>
-<div class="line"><span class="lineno">   43</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>    {</div>
+<div class="line"><span class="lineno">   38</span>        <span class="keywordflow">switch</span> ((JPH::BroadPhaseLayer::Type) inLayer)</div>
+<div class="line"><span class="lineno">   39</span>        {</div>
+<div class="line"><span class="lineno">   40</span>        <span class="keywordflow">case</span> (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::NON_MOVING: <span class="keywordflow">return</span> <span class="stringliteral">&quot;NON_MOVING&quot;</span>;</div>
+<div class="line"><span class="lineno">   41</span>        <span class="keywordflow">case</span> (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::MOVING: <span class="keywordflow">return</span> <span class="stringliteral">&quot;MOVING&quot;</span>;</div>
+<div class="line"><span class="lineno">   42</span>        <span class="keywordflow">case</span> (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::DEBRIS: <span class="keywordflow">return</span> <span class="stringliteral">&quot;DEBRIS&quot;</span>;</div>
+<div class="line"><span class="lineno">   43</span>        <span class="keywordflow">default</span>: JPH_ASSERT(<span class="keyword">false</span>); <span class="keywordflow">return</span> <span class="stringliteral">&quot;INVALID&quot;</span>;</div>
+<div class="line"><span class="lineno">   44</span>        }</div>
+<div class="line"><span class="lineno">   45</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -249,12 +251,12 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   27</span>{ <span class="keywordflow">return</span> BroadPhaseLayers::NUM_LAYERS; }</div>
+<div class="fragment"><div class="line"><span class="lineno">   28</span>{ <span class="keywordflow">return</span> BroadPhaseLayers::NUM_LAYERS; }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/plugin/physics/src/utils/<a class="el" href="../../d1/d35/BroadPhaseLayerImpl_8hpp_source.html">BroadPhaseLayerImpl.hpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
+<li>src/plugin/physics/src/utils/<a class="el" href="../../d1/d35/BroadPhaseLayerImpl_8hpp_source.html">BroadPhaseLayerImpl.hpp (1de556d48b65f8aa90d3f384a7458d5c7999e756)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>EngineSquared: src/plugin/physics/src/utils/Layers.hpp (c6ad143c61677014b712e4ced39af16b95cddd36) Source File</title>
+<title>EngineSquared: src/plugin/physics/src/utils/Layers.hpp (1de556d48b65f8aa90d3f384a7458d5c7999e756) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -124,10 +124,11 @@ $(document).ready(function(){initNavTree('d9/da3/Layers_8hpp_source.html','../..
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="../../d0/dab/namespacePhysics_1_1Utils_1_1Layers.html">   10</a></span><span class="keyword">namespace </span>Layers {</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">static</span> <span class="keyword">constexpr</span> JPH::ObjectLayer NON_MOVING = 0;</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">static</span> <span class="keyword">constexpr</span> JPH::ObjectLayer MOVING = 1;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">static</span> <span class="keyword">constexpr</span> JPH::ObjectLayer NUM_LAYERS = 2;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>} <span class="comment">// namespace Layers</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">static</span> <span class="keyword">constexpr</span> JPH::ObjectLayer DEBRIS = 2; <span class="comment">// For attached softbodies, debris - only collides with NON_MOVING</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">static</span> <span class="keyword">constexpr</span> JPH::ObjectLayer NUM_LAYERS = 3;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>} <span class="comment">// namespace Layers</span></div>
 </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>} <span class="comment">// namespace Physics::Utils</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>} <span class="comment">// namespace Physics::Utils</span></div>
 <div class="ttc" id="anamespacePhysics_1_1Utils_html"><div class="ttname"><a href="../../d5/d85/namespacePhysics_1_1Utils.html">Physics::Utils</a></div><div class="ttdef"><b>Definition</b> BroadPhaseLayerImpl.hpp:15</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

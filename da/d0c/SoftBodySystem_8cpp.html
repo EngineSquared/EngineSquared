@@ -110,15 +110,19 @@ $(document).ready(function(){initNavTree('da/d0c/SoftBodySystem_8cpp.html','../.
   <div class="headertitle"><div class="title">SoftBodySystem.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<h3 class="version">(c6ad143c61677014b712e4ced39af16b95cddd36)</h3><div class="textblock"><code>#include &quot;<a class="el" href="../../d3/d87/Physics_8pch_8hpp_source.html">Physics.pch.hpp</a>&quot;</code><br />
+<h3 class="version">(1de556d48b65f8aa90d3f384a7458d5c7999e756)</h3><div class="textblock"><code>#include &quot;<a class="el" href="../../d3/d87/Physics_8pch_8hpp_source.html">Physics.pch.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d8/d66/SoftBodyError_8hpp_source.html">exception/SoftBodyError.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../df/dbf/SoftBodySystem_8hpp_source.html">system/SoftBodySystem.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d9/d11/Logger_8hpp_source.html">Logger.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d2/df3/BoxCollider_8hpp_source.html">component/BoxCollider.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../df/d8e/CapsuleCollider_8hpp_source.html">component/CapsuleCollider.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d9/da0/ConvexHullMeshCollider_8hpp_source.html">component/ConvexHullMeshCollider.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../da/df3/MeshCollider_8hpp_source.html">component/MeshCollider.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d6/d01/RigidBodyInternal_8hpp_source.html">component/RigidBodyInternal.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d4/db4/SoftBody_8hpp_source.html">component/SoftBody.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../db/dfc/SoftBodyInternal_8hpp_source.html">component/SoftBodyInternal.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d5/dd5/SphereCollider_8hpp_source.html">component/SphereCollider.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d7/d22/VehicleInternal_8hpp_source.html">component/VehicleInternal.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d4/d95/PhysicsManager_8hpp_source.html">resource/PhysicsManager.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d0/d9e/JoltConversions_8hpp_source.html">utils/JoltConversions.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d9/da3/Layers_8hpp_source.html">utils/Layers.hpp</a>&quot;</code><br />
@@ -165,6 +169,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aa9b722d87a5f2866a96f8c1f03dedb24" id="r_aa9b722d87a5f2866a96f8c1f03dedb24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dcc/namespacePhysics_1_1System.html#aa9b722d87a5f2866a96f8c1f03dedb24">Physics::System::SyncSoftBodyVertices</a> (<a class="el" href="../../d4/d18/classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
 <tr class="memdesc:aa9b722d87a5f2866a96f8c1f03dedb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronize soft body vertex positions to mesh data.  <br /></td></tr>
 <tr class="separator:aa9b722d87a5f2866a96f8c1f03dedb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a562c8c960c526a8239ba1c2dcbe58157" id="r_a562c8c960c526a8239ba1c2dcbe58157"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dcc/namespacePhysics_1_1System.html#a562c8c960c526a8239ba1c2dcbe58157">Physics::System::UpdateKinematicVertices</a> (<a class="el" href="../../d4/d18/classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+<tr class="memdesc:a562c8c960c526a8239ba1c2dcbe58157"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update kinematic vertices for attached soft bodies.  <br /></td></tr>
+<tr class="separator:a562c8c960c526a8239ba1c2dcbe58157"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

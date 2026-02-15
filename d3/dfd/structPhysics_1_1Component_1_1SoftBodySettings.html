@@ -215,21 +215,21 @@ Public Attributes</h2></td></tr>
 <li>Edge/Shear: 1.0e-4f (very stiff)</li>
 <li>Bend: 1.0e-3f (stiff but allows some bending) </li>
 </ul>
-<div class="fragment"><div class="line"><span class="lineno">  165</span>    {</div>
-<div class="line"><span class="lineno">  166</span>        SoftBodySettings s;</div>
-<div class="line"><span class="lineno">  167</span>        s.solverIterations = 10;</div>
-<div class="line"><span class="lineno">  168</span>        s.linearDamping = 0.1f;</div>
-<div class="line"><span class="lineno">  169</span>        s.pressure = <a class="code hl_variable" href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#aaed22d7aeccaf274bb223dd67396eb4f">pressure</a>;</div>
-<div class="line"><span class="lineno">  170</span>        s.restitution = 0.5f;</div>
-<div class="line"><span class="lineno">  171</span>        s.friction = 0.3f;</div>
-<div class="line"><span class="lineno">  172</span>        <span class="comment">// Jolt defaults: { 1.0e-4f, 1.0e-4f, 1.0e-3f } for edge/shear/bend</span></div>
-<div class="line"><span class="lineno">  173</span>        s.edgeCompliance = 1.0e-4f;</div>
-<div class="line"><span class="lineno">  174</span>        s.shearCompliance = 1.0e-4f;</div>
-<div class="line"><span class="lineno">  175</span>        s.bendCompliance = 1.0e-3f;</div>
-<div class="line"><span class="lineno">  176</span>        s.vertexRadius = 0.02f; <span class="comment">// Small, only for z-fighting prevention</span></div>
-<div class="line"><span class="lineno">  177</span>        <span class="keywordflow">return</span> s;</div>
-<div class="line"><span class="lineno">  178</span>    }</div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBodySettings_html_aaed22d7aeccaf274bb223dd67396eb4f"><div class="ttname"><a href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#aaed22d7aeccaf274bb223dd67396eb4f">Physics::Component::SoftBodySettings::pressure</a></div><div class="ttdeci">float pressure</div><div class="ttdoc">Pressure for volume preservation (0 = no pressure) For balloons/inflatables: n * R * T (substance amo...</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:79</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  167</span>    {</div>
+<div class="line"><span class="lineno">  168</span>        SoftBodySettings s;</div>
+<div class="line"><span class="lineno">  169</span>        s.solverIterations = 10;</div>
+<div class="line"><span class="lineno">  170</span>        s.linearDamping = 0.1f;</div>
+<div class="line"><span class="lineno">  171</span>        s.pressure = <a class="code hl_variable" href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#aaed22d7aeccaf274bb223dd67396eb4f">pressure</a>;</div>
+<div class="line"><span class="lineno">  172</span>        s.restitution = 0.5f;</div>
+<div class="line"><span class="lineno">  173</span>        s.friction = 0.3f;</div>
+<div class="line"><span class="lineno">  174</span>        <span class="comment">// Jolt defaults: { 1.0e-4f, 1.0e-4f, 1.0e-3f } for edge/shear/bend</span></div>
+<div class="line"><span class="lineno">  175</span>        s.edgeCompliance = 1.0e-4f;</div>
+<div class="line"><span class="lineno">  176</span>        s.shearCompliance = 1.0e-4f;</div>
+<div class="line"><span class="lineno">  177</span>        s.bendCompliance = 1.0e-3f;</div>
+<div class="line"><span class="lineno">  178</span>        s.vertexRadius = 0.02f; <span class="comment">// Small, only for z-fighting prevention</span></div>
+<div class="line"><span class="lineno">  179</span>        <span class="keywordflow">return</span> s;</div>
+<div class="line"><span class="lineno">  180</span>    }</div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBodySettings_html_aaed22d7aeccaf274bb223dd67396eb4f"><div class="ttname"><a href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#aaed22d7aeccaf274bb223dd67396eb4f">Physics::Component::SoftBodySettings::pressure</a></div><div class="ttdeci">float pressure</div><div class="ttdoc">Pressure for volume preservation (0 = no pressure) For balloons/inflatables: n * R * T (substance amo...</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:81</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -265,19 +265,19 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html" title="Soft body simulation settings.">SoftBodySettings</a> </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  122</span>    {</div>
-<div class="line"><span class="lineno">  123</span>        SoftBodySettings s;</div>
-<div class="line"><span class="lineno">  124</span>        s.solverIterations = 8;</div>
-<div class="line"><span class="lineno">  125</span>        s.linearDamping = 0.2f;</div>
-<div class="line"><span class="lineno">  126</span>        s.gravityFactor = 1.0f;</div>
-<div class="line"><span class="lineno">  127</span>        s.friction = 0.3f;</div>
-<div class="line"><span class="lineno">  128</span>        s.edgeCompliance = (1.0f - stiffness) * 0.001f;</div>
-<div class="line"><span class="lineno">  129</span>        s.shearCompliance = (1.0f - stiffness) * 0.002f;</div>
-<div class="line"><span class="lineno">  130</span>        s.bendCompliance = (1.0f - stiffness) * 0.5f;</div>
-<div class="line"><span class="lineno">  131</span>        s.vertexRadius = 0.01f;</div>
-<div class="line"><span class="lineno">  132</span>        s.doubleSidedFaces = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  133</span>        <span class="keywordflow">return</span> s;</div>
-<div class="line"><span class="lineno">  134</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">  124</span>    {</div>
+<div class="line"><span class="lineno">  125</span>        SoftBodySettings s;</div>
+<div class="line"><span class="lineno">  126</span>        s.solverIterations = 8;</div>
+<div class="line"><span class="lineno">  127</span>        s.linearDamping = 0.2f;</div>
+<div class="line"><span class="lineno">  128</span>        s.gravityFactor = 1.0f;</div>
+<div class="line"><span class="lineno">  129</span>        s.friction = 0.3f;</div>
+<div class="line"><span class="lineno">  130</span>        s.edgeCompliance = (1.0f - stiffness) * 0.001f;</div>
+<div class="line"><span class="lineno">  131</span>        s.shearCompliance = (1.0f - stiffness) * 0.002f;</div>
+<div class="line"><span class="lineno">  132</span>        s.bendCompliance = (1.0f - stiffness) * 0.5f;</div>
+<div class="line"><span class="lineno">  133</span>        s.vertexRadius = 0.01f;</div>
+<div class="line"><span class="lineno">  134</span>        s.doubleSidedFaces = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">return</span> s;</div>
+<div class="line"><span class="lineno">  136</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -305,7 +305,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Default soft body settings. </p>
-<div class="fragment"><div class="line"><span class="lineno">  114</span>{ <span class="keywordflow">return</span> {}; }</div>
+<div class="fragment"><div class="line"><span class="lineno">  116</span>{ <span class="keywordflow">return</span> {}; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -334,18 +334,18 @@ Public Attributes</h2></td></tr>
 
 <p>Settings for jelly-like objects. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html" title="Soft body simulation settings.">SoftBodySettings</a> </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  185</span>    {</div>
-<div class="line"><span class="lineno">  186</span>        SoftBodySettings s;</div>
-<div class="line"><span class="lineno">  187</span>        s.solverIterations = 5;</div>
-<div class="line"><span class="lineno">  188</span>        s.linearDamping = 0.2f;</div>
-<div class="line"><span class="lineno">  189</span>        s.restitution = 0.8f;</div>
-<div class="line"><span class="lineno">  190</span>        s.friction = 0.1f;</div>
-<div class="line"><span class="lineno">  191</span>        s.edgeCompliance = 0.01f;</div>
-<div class="line"><span class="lineno">  192</span>        s.shearCompliance = 0.02f;</div>
-<div class="line"><span class="lineno">  193</span>        s.bendCompliance = 0.5f;</div>
-<div class="line"><span class="lineno">  194</span>        s.pressure = 500.0f;</div>
-<div class="line"><span class="lineno">  195</span>        <span class="keywordflow">return</span> s;</div>
-<div class="line"><span class="lineno">  196</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">  187</span>    {</div>
+<div class="line"><span class="lineno">  188</span>        SoftBodySettings s;</div>
+<div class="line"><span class="lineno">  189</span>        s.solverIterations = 5;</div>
+<div class="line"><span class="lineno">  190</span>        s.linearDamping = 0.2f;</div>
+<div class="line"><span class="lineno">  191</span>        s.restitution = 0.8f;</div>
+<div class="line"><span class="lineno">  192</span>        s.friction = 0.1f;</div>
+<div class="line"><span class="lineno">  193</span>        s.edgeCompliance = 0.01f;</div>
+<div class="line"><span class="lineno">  194</span>        s.shearCompliance = 0.02f;</div>
+<div class="line"><span class="lineno">  195</span>        s.bendCompliance = 0.5f;</div>
+<div class="line"><span class="lineno">  196</span>        s.pressure = 500.0f;</div>
+<div class="line"><span class="lineno">  197</span>        <span class="keywordflow">return</span> s;</div>
+<div class="line"><span class="lineno">  198</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -381,18 +381,18 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html" title="Soft body simulation settings.">SoftBodySettings</a> </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  142</span>    {</div>
-<div class="line"><span class="lineno">  143</span>        SoftBodySettings s;</div>
-<div class="line"><span class="lineno">  144</span>        s.solverIterations = 10;</div>
-<div class="line"><span class="lineno">  145</span>        s.linearDamping = 0.3f;</div>
-<div class="line"><span class="lineno">  146</span>        s.gravityFactor = 1.0f;</div>
-<div class="line"><span class="lineno">  147</span>        s.friction = 0.5f;</div>
-<div class="line"><span class="lineno">  148</span>        s.edgeCompliance = (1.0f - stiffness) * 0.0001f;</div>
-<div class="line"><span class="lineno">  149</span>        s.shearCompliance = 1e10f; <span class="comment">// Disable shear for 1D</span></div>
-<div class="line"><span class="lineno">  150</span>        s.bendCompliance = (1.0f - stiffness) * 0.01f;</div>
-<div class="line"><span class="lineno">  151</span>        s.vertexRadius = 0.02f;</div>
-<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">return</span> s;</div>
-<div class="line"><span class="lineno">  153</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">  144</span>    {</div>
+<div class="line"><span class="lineno">  145</span>        SoftBodySettings s;</div>
+<div class="line"><span class="lineno">  146</span>        s.solverIterations = 10;</div>
+<div class="line"><span class="lineno">  147</span>        s.linearDamping = 0.3f;</div>
+<div class="line"><span class="lineno">  148</span>        s.gravityFactor = 1.0f;</div>
+<div class="line"><span class="lineno">  149</span>        s.friction = 0.5f;</div>
+<div class="line"><span class="lineno">  150</span>        s.edgeCompliance = (1.0f - stiffness) * 0.0001f;</div>
+<div class="line"><span class="lineno">  151</span>        s.shearCompliance = 1e10f; <span class="comment">// Disable shear for 1D</span></div>
+<div class="line"><span class="lineno">  152</span>        s.bendCompliance = (1.0f - stiffness) * 0.01f;</div>
+<div class="line"><span class="lineno">  153</span>        s.vertexRadius = 0.02f;</div>
+<div class="line"><span class="lineno">  154</span>        <span class="keywordflow">return</span> s;</div>
+<div class="line"><span class="lineno">  155</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -606,7 +606,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/plugin/physics/src/component/<a class="el" href="../../d4/db4/SoftBody_8hpp_source.html">SoftBody.hpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
+<li>src/plugin/physics/src/component/<a class="el" href="../../d4/db4/SoftBody_8hpp_source.html">SoftBody.hpp (1de556d48b65f8aa90d3f384a7458d5c7999e756)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

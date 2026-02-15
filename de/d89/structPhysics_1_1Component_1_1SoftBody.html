@@ -163,6 +163,15 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ab3b417ee650125a1d0c7dd7d874c6ed6" id="r_ab3b417ee650125a1d0c7dd7d874c6ed6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; uint32_t, uint32_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ab3b417ee650125a1d0c7dd7d874c6ed6">edges</a></td></tr>
 <tr class="memdesc:ab3b417ee650125a1d0c7dd7d874c6ed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Edge constraints (pairs of vertex indices) for rope/chain without faces Auto-generated from Mesh.indices if empty.  <br /></td></tr>
 <tr class="separator:ab3b417ee650125a1d0c7dd7d874c6ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bbef14ace6e13556ae9dc34d3ab5f43" id="r_a0bbef14ace6e13556ae9dc34d3ab5f43"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="../../de/ded/structEngine_1_1EntityId.html">Engine::EntityId</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#a0bbef14ace6e13556ae9dc34d3ab5f43">attachedEntityId</a> = std::nullopt</td></tr>
+<tr class="memdesc:a0bbef14ace6e13556ae9dc34d3ab5f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entity ID of the rigid body to attach to (optional) When set, kinematic vertices will follow this body's transform Use AttachToEntity() to set this properly.  <br /></td></tr>
+<tr class="separator:a0bbef14ace6e13556ae9dc34d3ab5f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61a1cc4f936ee5cf95b025246ac60a86" id="r_a61a1cc4f936ee5cf95b025246ac60a86"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#a61a1cc4f936ee5cf95b025246ac60a86">kinematicVertexPercent</a> = 0.0f</td></tr>
+<tr class="memdesc:a61a1cc4f936ee5cf95b025246ac60a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Percentage of vertices to make kinematic (attachment points) [0.0 - 1.0] These are automatically selected from the "bottom" of the mesh (lowest Y) Set to 0 to disable automatic kinematic vertex selection.  <br /></td></tr>
+<tr class="separator:a61a1cc4f936ee5cf95b025246ac60a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa1dab6d14e0918d543cc4c0a7f6d48c" id="r_aaa1dab6d14e0918d543cc4c0a7f6d48c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#aaa1dab6d14e0918d543cc4c0a7f6d48c">kinematicVertexIndices</a></td></tr>
+<tr class="memdesc:aaa1dab6d14e0918d543cc4c0a7f6d48c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manual list of vertex indices to make kinematic (in original mesh space) If non-empty, these are used instead of automatic selection.  <br /></td></tr>
+<tr class="separator:aaa1dab6d14e0918d543cc4c0a7f6d48c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Soft body physics component. </p>
@@ -185,15 +194,15 @@ Usage</h2>
 <div class="line">teapot.AddComponent&lt;Transform&gt;(core, position);</div>
 <div class="line">teapot.AddComponent&lt;Mesh&gt;(core, mesh);</div>
 <div class="line">teapot.AddComponent&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">SoftBody</a>&gt;(core, <a class="code hl_function" href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#addc2ad53987c6fdba9648e564eaf0057">SoftBodySettings::Balloon</a>(5000.0f));</div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBodySettings_html_addc2ad53987c6fdba9648e564eaf0057"><div class="ttname"><a href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#addc2ad53987c6fdba9648e564eaf0057">Physics::Component::SoftBodySettings::Balloon</a></div><div class="ttdeci">static SoftBodySettings Balloon(float pressure=1000.0f)</div><div class="ttdoc">Settings for pressure-based soft bodies (balloons)</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:164</div></div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Physics::Component::SoftBody</a></div><div class="ttdoc">Soft body physics component.</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:241</div></div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBodySettings_html_addc2ad53987c6fdba9648e564eaf0057"><div class="ttname"><a href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#addc2ad53987c6fdba9648e564eaf0057">Physics::Component::SoftBodySettings::Balloon</a></div><div class="ttdeci">static SoftBodySettings Balloon(float pressure=1000.0f)</div><div class="ttdoc">Settings for pressure-based soft bodies (balloons)</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:166</div></div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Physics::Component::SoftBody</a></div><div class="ttdoc">Soft body physics component.</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:243</div></div>
 </div><!-- fragment --><p><b>Procedural cloth</b> (using <a class="el" href="../../da/d00/namespaceObject_1_1Helper.html">Object::Helper</a>): </p><div class="fragment"><div class="line"><span class="keyword">auto</span> cloth = <a class="code hl_function" href="../../da/d00/namespaceObject_1_1Helper.html#a1e08004ff4c7ed7c04f4a1ee25570843">Object::Helper::CreateCloth</a>(core, 10, 10, 0.1f, position);</div>
 <div class="line"><span class="keyword">auto</span>&amp; soft = cloth.AddComponent&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">SoftBody</a>&gt;(core, <a class="code hl_function" href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#a27df03bcfe700e857e37b3076331c2d4">SoftBodySettings::Cloth</a>(0.5f));</div>
 <div class="line">soft.<a class="code hl_function" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#aff297529f54a8d00ecb16bf185513ad5">PinVertex</a>(0);   <span class="comment">// Pin top-left corner</span></div>
 <div class="line">soft.PinVertex(9);   <span class="comment">// Pin top-right corner</span></div>
 <div class="ttc" id="anamespaceObject_1_1Helper_html_a1e08004ff4c7ed7c04f4a1ee25570843"><div class="ttname"><a href="../../da/d00/namespaceObject_1_1Helper.html#a1e08004ff4c7ed7c04f4a1ee25570843">Object::Helper::CreateCloth</a></div><div class="ttdeci">Engine::Entity CreateCloth(Engine::Core &amp;core, CreateClothInfo info)</div><div class="ttdef"><b>Definition</b> CreateShape.cpp:75</div></div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBodySettings_html_a27df03bcfe700e857e37b3076331c2d4"><div class="ttname"><a href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#a27df03bcfe700e857e37b3076331c2d4">Physics::Component::SoftBodySettings::Cloth</a></div><div class="ttdeci">static SoftBodySettings Cloth(float stiffness=0.5f)</div><div class="ttdoc">Settings optimized for cloth simulation.</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:121</div></div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_aff297529f54a8d00ecb16bf185513ad5"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#aff297529f54a8d00ecb16bf185513ad5">Physics::Component::SoftBody::PinVertex</a></div><div class="ttdeci">void PinVertex(uint32_t vertexIndex)</div><div class="ttdoc">Pin a vertex (fix it in space)</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:284</div></div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBodySettings_html_a27df03bcfe700e857e37b3076331c2d4"><div class="ttname"><a href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#a27df03bcfe700e857e37b3076331c2d4">Physics::Component::SoftBodySettings::Cloth</a></div><div class="ttdeci">static SoftBodySettings Cloth(float stiffness=0.5f)</div><div class="ttdoc">Settings optimized for cloth simulation.</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:123</div></div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_aff297529f54a8d00ecb16bf185513ad5"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#aff297529f54a8d00ecb16bf185513ad5">Physics::Component::SoftBody::PinVertex</a></div><div class="ttdeci">void PinVertex(uint32_t vertexIndex)</div><div class="ttdoc">Pin a vertex (fix it in space)</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:304</div></div>
 </div><!-- fragment --><p><b>Note</b>: Collider components (<a class="el" href="../../d4/d47/structPhysics_1_1Component_1_1BoxCollider.html">BoxCollider</a>, <a class="el" href="../../df/df2/structPhysics_1_1Component_1_1SphereCollider.html">SphereCollider</a>, etc.) are ignored for <a class="el" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html" title="Soft body physics component.">SoftBody</a>. Use <code><a class="el" href="../../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#a5ce4b45baac5027df1210e5f14e171df" title="Vertex collision radius (for collision detection)">SoftBodySettings::vertexRadius</a></code> for collision detection.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d6/db7/structObject_1_1Component_1_1Mesh.html" title="Mesh structure.">Object::Component::Mesh</a> </dd>
 <dd>
@@ -265,8 +274,8 @@ Usage</h2>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  355</span>: <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b">settings</a>(<a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b">settings</a>) {}</div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_accffbf98b0b23cc24cc8d51caee9973b"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b">Physics::Component::SoftBody::settings</a></div><div class="ttdeci">SoftBodySettings settings</div><div class="ttdoc">Simulation settings.</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:250</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  375</span>: <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b">settings</a>(<a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b">settings</a>) {}</div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_accffbf98b0b23cc24cc8d51caee9973b"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b">Physics::Component::SoftBody::settings</a></div><div class="ttdeci">SoftBodySettings settings</div><div class="ttdoc">Simulation settings.</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:252</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -312,8 +321,8 @@ Usage</h2>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  362</span>: <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#a792b9a969a617df5bdc1fd5a0d0ebd74">type</a>(bodyType), <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b">settings</a>(<a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b">settings</a>) {}</div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_a792b9a969a617df5bdc1fd5a0d0ebd74"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#a792b9a969a617df5bdc1fd5a0d0ebd74">Physics::Component::SoftBody::type</a></div><div class="ttdeci">SoftBodyType type</div><div class="ttdoc">Type of soft body (affects default settings)</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:247</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  382</span>: <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#a792b9a969a617df5bdc1fd5a0d0ebd74">type</a>(bodyType), <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b">settings</a>(<a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b">settings</a>) {}</div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_a792b9a969a617df5bdc1fd5a0d0ebd74"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#a792b9a969a617df5bdc1fd5a0d0ebd74">Physics::Component::SoftBody::type</a></div><div class="ttdeci">SoftBodyType type</div><div class="ttdoc">Type of soft body (affects default settings)</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:249</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -342,8 +351,8 @@ Usage</h2>
 </div><div class="memdoc">
 
 <p>Get number of edge constraints. </p>
-<div class="fragment"><div class="line"><span class="lineno">  278</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ab3b417ee650125a1d0c7dd7d874c6ed6">edges</a>.size(); }</div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_ab3b417ee650125a1d0c7dd7d874c6ed6"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ab3b417ee650125a1d0c7dd7d874c6ed6">Physics::Component::SoftBody::edges</a></div><div class="ttdeci">std::vector&lt; std::pair&lt; uint32_t, uint32_t &gt; &gt; edges</div><div class="ttdoc">Edge constraints (pairs of vertex indices) for rope/chain without faces Auto-generated from Mesh....</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:264</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  298</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ab3b417ee650125a1d0c7dd7d874c6ed6">edges</a>.size(); }</div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_ab3b417ee650125a1d0c7dd7d874c6ed6"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ab3b417ee650125a1d0c7dd7d874c6ed6">Physics::Component::SoftBody::edges</a></div><div class="ttdeci">std::vector&lt; std::pair&lt; uint32_t, uint32_t &gt; &gt; edges</div><div class="ttdoc">Edge constraints (pairs of vertex indices) for rope/chain without faces Auto-generated from Mesh....</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:266</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -371,8 +380,8 @@ Usage</h2>
 </div><div class="memdoc">
 
 <p>Get number of vertices (from invMasses size) </p>
-<div class="fragment"><div class="line"><span class="lineno">  273</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>.size(); }</div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_ac7347762cc0daa6c3866eb3970cbedec"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">Physics::Component::SoftBody::invMasses</a></div><div class="ttdeci">std::vector&lt; float &gt; invMasses</div><div class="ttdoc">Vertex inverse masses (0 = pinned/fixed). Size must match Mesh.vertices.size()</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:257</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  293</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>.size(); }</div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_ac7347762cc0daa6c3866eb3970cbedec"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">Physics::Component::SoftBody::invMasses</a></div><div class="ttdeci">std::vector&lt; float &gt; invMasses</div><div class="ttdoc">Vertex inverse masses (0 = pinned/fixed). Size must match Mesh.vertices.size()</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:259</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -401,7 +410,7 @@ Usage</h2>
 
 <p>Check if the soft body configuration is valid. </p>
 <dl class="section note"><dt>Note</dt><dd>Only checks if vertex data has been initialized </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  335</span>{ <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>.empty(); }</div>
+<div class="fragment"><div class="line"><span class="lineno">  355</span>{ <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>.empty(); }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -430,9 +439,9 @@ Usage</h2>
 </div><div class="memdoc">
 
 <p>Check if a vertex is pinned. </p>
-<div class="fragment"><div class="line"><span class="lineno">  327</span>    {</div>
-<div class="line"><span class="lineno">  328</span>        <span class="keywordflow">return</span> vertexIndex &lt; <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>.size() &amp;&amp; <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>[vertexIndex] == 0.0f;</div>
-<div class="line"><span class="lineno">  329</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">  347</span>    {</div>
+<div class="line"><span class="lineno">  348</span>        <span class="keywordflow">return</span> vertexIndex &lt; <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>.size() &amp;&amp; <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>[vertexIndex] == 0.0f;</div>
+<div class="line"><span class="lineno">  349</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -469,17 +478,17 @@ Usage</h2>
 </dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d5/d94/Creating_01a_01cloth_01for_01soft_01body_01simulation_1-example.html#a3">Creating a cloth for soft body simulation:</a>, and <a class="el" href="../../d4/d1e/Creating_01a_01rope_01for_01soft_01body_01simulation_1-example.html#a3">Creating a rope for soft body simulation:</a>.</dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  285</span>    {</div>
-<div class="line"><span class="lineno">  286</span>        <span class="keywordflow">if</span> (vertexIndex &lt; <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>.size())</div>
-<div class="line"><span class="lineno">  287</span>        {</div>
-<div class="line"><span class="lineno">  288</span>            <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>[vertexIndex] = 0.0f;</div>
-<div class="line"><span class="lineno">  289</span>            <span class="keywordflow">if</span> (std::ranges::find(<a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>, vertexIndex) == <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>.end())</div>
-<div class="line"><span class="lineno">  290</span>            {</div>
-<div class="line"><span class="lineno">  291</span>                <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>.push_back(vertexIndex);</div>
-<div class="line"><span class="lineno">  292</span>            }</div>
-<div class="line"><span class="lineno">  293</span>        }</div>
-<div class="line"><span class="lineno">  294</span>    }</div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_adcc6de6d865d2af26b2893085f9e0c43"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">Physics::Component::SoftBody::pinnedVertices</a></div><div class="ttdeci">std::vector&lt; uint32_t &gt; pinnedVertices</div><div class="ttdoc">Indices of pinned (fixed) vertices.</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:260</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  305</span>    {</div>
+<div class="line"><span class="lineno">  306</span>        <span class="keywordflow">if</span> (vertexIndex &lt; <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>.size())</div>
+<div class="line"><span class="lineno">  307</span>        {</div>
+<div class="line"><span class="lineno">  308</span>            <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>[vertexIndex] = 0.0f;</div>
+<div class="line"><span class="lineno">  309</span>            <span class="keywordflow">if</span> (std::ranges::find(<a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>, vertexIndex) == <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>.end())</div>
+<div class="line"><span class="lineno">  310</span>            {</div>
+<div class="line"><span class="lineno">  311</span>                <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>.push_back(vertexIndex);</div>
+<div class="line"><span class="lineno">  312</span>            }</div>
+<div class="line"><span class="lineno">  313</span>        }</div>
+<div class="line"><span class="lineno">  314</span>    }</div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html_adcc6de6d865d2af26b2893085f9e0c43"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">Physics::Component::SoftBody::pinnedVertices</a></div><div class="ttdeci">std::vector&lt; uint32_t &gt; pinnedVertices</div><div class="ttdoc">Indices of pinned (fixed) vertices.</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:262</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -526,27 +535,43 @@ Usage</h2>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  305</span>    {</div>
-<div class="line"><span class="lineno">  306</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">float</span> kMinMass = 1.0e-6f;</div>
-<div class="line"><span class="lineno">  307</span> </div>
-<div class="line"><span class="lineno">  308</span>        <span class="keywordflow">if</span> (vertexIndex &gt;= <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>.size())</div>
-<div class="line"><span class="lineno">  309</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  310</span> </div>
-<div class="line"><span class="lineno">  311</span>        <span class="keywordflow">if</span> (mass &lt;= 0.0f)</div>
-<div class="line"><span class="lineno">  312</span>        {</div>
-<div class="line"><span class="lineno">  313</span>            <span class="comment">// mass &lt;= 0 means pin the vertex, delegate to PinVertex</span></div>
-<div class="line"><span class="lineno">  314</span>            <a class="code hl_function" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#aff297529f54a8d00ecb16bf185513ad5">PinVertex</a>(vertexIndex);</div>
-<div class="line"><span class="lineno">  315</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  316</span>        }</div>
-<div class="line"><span class="lineno">  317</span> </div>
-<div class="line"><span class="lineno">  318</span>        <span class="keywordtype">float</span> safeMass = mass &lt; kMinMass ? kMinMass : mass;</div>
-<div class="line"><span class="lineno">  319</span>        <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>[vertexIndex] = 1.0f / safeMass;</div>
-<div class="line"><span class="lineno">  320</span>        <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>.erase(std::ranges::remove(<a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>, vertexIndex).begin(), <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>.end());</div>
-<div class="line"><span class="lineno">  321</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">  325</span>    {</div>
+<div class="line"><span class="lineno">  326</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">float</span> kMinMass = 1.0e-6f;</div>
+<div class="line"><span class="lineno">  327</span> </div>
+<div class="line"><span class="lineno">  328</span>        <span class="keywordflow">if</span> (vertexIndex &gt;= <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>.size())</div>
+<div class="line"><span class="lineno">  329</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  330</span> </div>
+<div class="line"><span class="lineno">  331</span>        <span class="keywordflow">if</span> (mass &lt;= 0.0f)</div>
+<div class="line"><span class="lineno">  332</span>        {</div>
+<div class="line"><span class="lineno">  333</span>            <span class="comment">// mass &lt;= 0 means pin the vertex, delegate to PinVertex</span></div>
+<div class="line"><span class="lineno">  334</span>            <a class="code hl_function" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#aff297529f54a8d00ecb16bf185513ad5">PinVertex</a>(vertexIndex);</div>
+<div class="line"><span class="lineno">  335</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  336</span>        }</div>
+<div class="line"><span class="lineno">  337</span> </div>
+<div class="line"><span class="lineno">  338</span>        <span class="keywordtype">float</span> safeMass = mass &lt; kMinMass ? kMinMass : mass;</div>
+<div class="line"><span class="lineno">  339</span>        <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#ac7347762cc0daa6c3866eb3970cbedec">invMasses</a>[vertexIndex] = 1.0f / safeMass;</div>
+<div class="line"><span class="lineno">  340</span>        <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>.erase(std::ranges::remove(<a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>, vertexIndex).begin(), <a class="code hl_variable" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html#adcc6de6d865d2af26b2893085f9e0c43">pinnedVertices</a>.end());</div>
+<div class="line"><span class="lineno">  341</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a0bbef14ace6e13556ae9dc34d3ab5f43" name="a0bbef14ace6e13556ae9dc34d3ab5f43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bbef14ace6e13556ae9dc34d3ab5f43">&#9670;&#160;</a></span>attachedEntityId</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;<a class="el" href="../../de/ded/structEngine_1_1EntityId.html">Engine::EntityId</a>&gt; Physics::Component::SoftBody::attachedEntityId = std::nullopt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Entity ID of the rigid body to attach to (optional) When set, kinematic vertices will follow this body's transform Use AttachToEntity() to set this properly. </p>
+
+</div>
+</div>
 <a id="ab3b417ee650125a1d0c7dd7d874c6ed6" name="ab3b417ee650125a1d0c7dd7d874c6ed6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab3b417ee650125a1d0c7dd7d874c6ed6">&#9670;&#160;</a></span>edges</h2>
 
@@ -576,6 +601,38 @@ Usage</h2>
 </div><div class="memdoc">
 
 <p>Vertex inverse masses (0 = pinned/fixed). Size must match Mesh.vertices.size() </p>
+
+</div>
+</div>
+<a id="aaa1dab6d14e0918d543cc4c0a7f6d48c" name="aaa1dab6d14e0918d543cc4c0a7f6d48c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa1dab6d14e0918d543cc4c0a7f6d48c">&#9670;&#160;</a></span>kinematicVertexIndices</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;uint32_t&gt; Physics::Component::SoftBody::kinematicVertexIndices</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Manual list of vertex indices to make kinematic (in original mesh space) If non-empty, these are used instead of automatic selection. </p>
+
+</div>
+</div>
+<a id="a61a1cc4f936ee5cf95b025246ac60a86" name="a61a1cc4f936ee5cf95b025246ac60a86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61a1cc4f936ee5cf95b025246ac60a86">&#9670;&#160;</a></span>kinematicVertexPercent</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Physics::Component::SoftBody::kinematicVertexPercent = 0.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Percentage of vertices to make kinematic (attachment points) [0.0 - 1.0] These are automatically selected from the "bottom" of the mesh (lowest Y) Set to 0 to disable automatic kinematic vertex selection. </p>
 
 </div>
 </div>
@@ -628,7 +685,7 @@ Usage</h2>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/plugin/physics/src/component/<a class="el" href="../../d4/db4/SoftBody_8hpp_source.html">SoftBody.hpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
+<li>src/plugin/physics/src/component/<a class="el" href="../../d4/db4/SoftBody_8hpp_source.html">SoftBody.hpp (1de556d48b65f8aa90d3f384a7458d5c7999e756)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
