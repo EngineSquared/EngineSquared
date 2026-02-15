@@ -1,16 +1,17 @@
 name: Doxygen GitHub Pages Deploy Action
+
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
 
 jobs:
-  generate:
+  generate_doxygen:
+    name: Generate and Deploy Doxygen Documentation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          submodules: "true"
+          submodules: true
 
       - name: Install Doxygen
         run: |
@@ -25,7 +26,7 @@ jobs:
           cd ..
 
       - name: Generate Doxygen Documentation
-        run: doxygen Doxyfile
+        run: doxygen Doxyfile.cfg
 
       - name: Create .nojekyll file
         run: touch docs/html/.nojekyll
