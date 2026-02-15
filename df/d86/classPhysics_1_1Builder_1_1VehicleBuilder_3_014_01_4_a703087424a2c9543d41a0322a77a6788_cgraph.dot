@@ -1,0 +1,17 @@
+digraph "Physics::Builder::VehicleBuilder&lt; 4 &gt;::Build"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="Physics::Builder::Vehicle\lBuilder\< 4 \>::Build",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Build the vehicle and create all entities."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Engine::Entity::AddComponent",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$da/d6e/classEngine_1_1Entity.html#a816b3a2c6e9a074c61cfee1b0bcfdfa0",tooltip=" "];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="Physics::Component\l::RigidBody::CreateDynamic",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d5/dc5/structPhysics_1_1Component_1_1RigidBody.html#a96dbd120d58f51c6ff227c2a853b2bf9",tooltip="Create a dynamic rigid body."];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="Engine::Core::CreateEntity",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#ae8d49483d71929b61f383056da94c7fb",tooltip=" "];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="Log::Debug",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d0/d45/namespaceLog.html#a7b4e13507856ddf944bb7786034abeea",tooltip=" "];
+}

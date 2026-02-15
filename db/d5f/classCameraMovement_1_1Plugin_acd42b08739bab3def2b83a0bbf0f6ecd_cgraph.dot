@@ -1,0 +1,23 @@
+digraph "CameraMovement::Plugin::Bind"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="CameraMovement::Plugin\l::Bind",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Engine::APlugin::GetCore",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$db/d55/classEngine_1_1APlugin.html#a0c091ce4fe16a505c1b6dfeee9e77f6c",tooltip=" "];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="Engine::Core::GetResource",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451",tooltip=" "];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="Engine::APlugin::Register\lResource",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$db/d55/classEngine_1_1APlugin.html#af15a80fb8e52db6ffa6b9222dc8cd4fe",tooltip=" "];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="Engine::Core::RegisterResource",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#ae9dc85a421d332cdc8020fdf18531149",tooltip=" "];
+  Node1 -> Node6 [id="edge5_Node000001_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="CameraMovement::System\l::ResetCameraBehavior",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d8/d14/namespaceCameraMovement_1_1System.html#a4dbea8d7fedf7c348623881c054498ee",tooltip="System that resets the camera behavior to default when requested."];
+  Node6 -> Node3 [id="edge6_Node000006_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node6 -> Node7 [id="edge7_Node000006_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="CameraMovement::Resource\l::CameraManager::SetBehavior",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dc/d29/classCameraMovement_1_1Resource_1_1CameraManager.html#a98851bcbe5e0b253526a9065e0a8c84f",tooltip="Set the camera behavior instance."];
+  Node1 -> Node7 [id="edge8_Node000001_Node000007",color="steelblue1",style="solid",tooltip=" "];
+}

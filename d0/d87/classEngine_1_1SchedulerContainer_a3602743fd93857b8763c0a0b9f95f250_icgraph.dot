@@ -1,0 +1,15 @@
+digraph "Engine::SchedulerContainer::Before"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="Engine::SchedulerContainer\l::Before",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Add a dependency between two schedulers. It will set the first scheduler to be before the second one."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Engine::Core::SetScheduler\lBefore",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#a372ca61f2b67f8617e732a711ddcff78",tooltip="Sets the execution order of two schedulers, ensuring that TSchedulerA is executed before TSchedulerB."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="RenderingPipeline::\lPlugin::Bind",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dc/d80/classRenderingPipeline_1_1Plugin.html#a252bbb72b821e7f0302a93e693a919c9",tooltip=" "];
+  Node2 -> Node4 [id="edge3_Node000002_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="TEST",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$df/df7/Scheduler_8cpp.html#ae654ce7809e400b0edebbbe9236c41f7",tooltip=" "];
+}

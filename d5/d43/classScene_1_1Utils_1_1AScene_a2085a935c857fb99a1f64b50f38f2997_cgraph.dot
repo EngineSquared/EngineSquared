@@ -1,0 +1,11 @@
+digraph "Scene::Utils::AScene::Load"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="Scene::Utils::AScene\l::Load",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Method used to instantiate new entities with their components."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Scene::Utils::AScene\l::_onCreate",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d5/d43/classScene_1_1Utils_1_1AScene.html#a25c21823b7a1fa39ae3d3da0355cad29",tooltip=" "];
+}

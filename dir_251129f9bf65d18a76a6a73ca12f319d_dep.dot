@@ -1,0 +1,22 @@
+digraph "src/plugin/rendering-pipeline/src"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  compound=true
+  subgraph clusterdir_46437c5f5760c547af2aa4a762b9f0ee {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", label="rendering-pipeline", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_46437c5f5760c547af2aa4a762b9f0ee.html",tooltip=""]
+  subgraph clusterdir_251129f9bf65d18a76a6a73ca12f319d {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", label="", fontname=Helvetica,fontsize=10 style="filled,bold", URL="dir_251129f9bf65d18a76a6a73ca12f319d.html",tooltip=""]
+    dir_251129f9bf65d18a76a6a73ca12f319d [shape=plaintext, label="src"];
+  dir_09a01d3b5aafecabfaf63d086ec91355 [label="plugin", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_09a01d3b5aafecabfaf63d086ec91355.html",tooltip=""];
+  dir_387f9472e02a3e21242f850eefc38998 [label="scheduler", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_387f9472e02a3e21242f850eefc38998.html",tooltip=""];
+  }
+  }
+  dir_2052808828190f934b76e979ee65af8a [label="engine", fillcolor="#edf0f7", color="red", style="filled,dashed", URL="dir_2052808828190f934b76e979ee65af8a.html",tooltip=""];
+  dir_251129f9bf65d18a76a6a73ca12f319d->dir_09a01d3b5aafecabfaf63d086ec91355 [headlabel="1", labeldistance=1.5 headhref="dir_000117_000057.html" href="dir_000117_000057.html" color="steelblue1" fontcolor="steelblue1"];
+  dir_251129f9bf65d18a76a6a73ca12f319d->dir_387f9472e02a3e21242f850eefc38998 [headlabel="10", labeldistance=1.5 headhref="dir_000117_000085.html" href="dir_000117_000085.html" color="steelblue1" fontcolor="steelblue1"];
+  dir_09a01d3b5aafecabfaf63d086ec91355->dir_2052808828190f934b76e979ee65af8a [headlabel="4", labeldistance=1.5 headhref="dir_000057_000013.html" href="dir_000057_000013.html" color="steelblue1" fontcolor="steelblue1"];
+  dir_387f9472e02a3e21242f850eefc38998->dir_2052808828190f934b76e979ee65af8a [headlabel="12", labeldistance=1.5 headhref="dir_000085_000013.html" href="dir_000085_000013.html" color="steelblue1" fontcolor="steelblue1"];
+}

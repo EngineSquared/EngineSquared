@@ -1,0 +1,13 @@
+digraph "Object::OBJLoader::GetMaterials"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="Object::OBJLoader::\lGetMaterials",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Retrieves the loaded materials data."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="TEST",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d9/d0b/OBJLoaderTest_8cpp.html#af9229cbec8076f4b2c5a304d8f7c098a",tooltip=" "];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="TEST",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d9/d0b/OBJLoaderTest_8cpp.html#abbb046f686e87f90a867dcf21b35de28",tooltip=" "];
+}

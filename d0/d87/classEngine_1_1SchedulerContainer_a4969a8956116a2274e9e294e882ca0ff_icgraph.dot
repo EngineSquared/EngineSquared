@@ -1,0 +1,13 @@
+digraph "Engine::SchedulerContainer::Contains"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="Engine::SchedulerContainer\l::Contains",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Checks if a scheduler of the specified type exists in the container."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Engine::Core::GetScheduler",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#add25c94a2bf9413bc94b382c2b6d532a",tooltip=" "];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="Engine::Core::SetDefault\lScheduler",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#a00150f3dd7171274b9527cd864092919",tooltip="Sets the default scheduler for the core engine."];
+}

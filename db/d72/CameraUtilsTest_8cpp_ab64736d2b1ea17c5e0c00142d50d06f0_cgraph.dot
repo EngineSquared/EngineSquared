@@ -1,0 +1,13 @@
+digraph "TEST"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="TEST",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="CameraMovement::Utils\l::ComputeLookAtQuaternion",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$df/d52/namespaceCameraMovement_1_1Utils.html#a5a818e3a8b95994945fcd7d269420102",tooltip="Compute a quaternion that represents a \"look at\" rotation."];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="CameraMovement::Utils\l::GetUpVector",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$df/d52/namespaceCameraMovement_1_1Utils.html#a09c03020d96cb4a7ad5f45b8379943a9",tooltip="Get the up vector from a quaternion rotation."];
+}

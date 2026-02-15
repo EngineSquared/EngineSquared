@@ -1,0 +1,9 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node0 [id="Node000000",label="Physics::System::Vec3Hash",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$da/dd4/structPhysics_1_1System_1_1Vec3Hash.html",tooltip="Hash function for glm::vec3 to use in unordered_map."];
+}

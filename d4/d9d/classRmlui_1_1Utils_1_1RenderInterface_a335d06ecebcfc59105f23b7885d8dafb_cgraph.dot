@@ -1,0 +1,24 @@
+digraph "Rmlui::Utils::RenderInterface::GenerateTexture"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="Rmlui::Utils::RenderInterface\l::GenerateTexture",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Rmlui::Utils::RenderInterface\l::CreateTexture",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d9d/classRmlui_1_1Utils_1_1RenderInterface.html#a57c64cebf8d5e5445d47d097ed709902",tooltip=" "];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="Object::Resource::Resource\lManager::Contains",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d1/d28/classObject_1_1Resource_1_1ResourceManager.html#ae6a658a61b3c25c6f7bf5260fa48685a",tooltip="Check whenever the resource with given id exists in the manager."];
+  Node2 -> Node4 [id="edge3_Node000002_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="Engine::Core::GetResource",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451",tooltip=" "];
+  Node2 -> Node5 [id="edge4_Node000002_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="wgpu::StringView",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d6/dce/namespacewgpu.html#a88b0b32f23e85dc47170c47aaccc89d4",tooltip=" "];
+  Node2 -> Node6 [id="edge5_Node000002_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="Log::Warn",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d0/d45/namespaceLog.html#a6a482c08dcd9b6b6863152b051323d01",tooltip=" "];
+  Node2 -> Node7 [id="edge6_Node000002_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="Graphic::Resource::\lTexture::Write",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$db/d09/classGraphic_1_1Resource_1_1Texture.html#a680b1d8934c39649ed05e9bd21213b32",tooltip=" "];
+  Node7 -> Node8 [id="edge7_Node000007_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="wgpu::Extent3D",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d6/dce/namespacewgpu.html#a8a5288529496cf4831ff0c5bb20ae2f7",tooltip=" "];
+  Node7 -> Node6 [id="edge8_Node000007_Node000006",color="steelblue1",style="solid",tooltip=" "];
+}

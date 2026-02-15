@@ -1,0 +1,25 @@
+var namespaceGraphic_1_1Exception =
+[
+    [ "AdapterCreationError", "d2/d30/classGraphic_1_1Exception_1_1AdapterCreationError.html", null ],
+    [ "BindGroupCreationError", "d6/d7d/classGraphic_1_1Exception_1_1BindGroupCreationError.html", null ],
+    [ "CapabilitiesRequestError", "d8/dc8/classGraphic_1_1Exception_1_1CapabilitiesRequestError.html", null ],
+    [ "DeviceCreationError", "d4/d73/classGraphic_1_1Exception_1_1DeviceCreationError.html", null ],
+    [ "DuplicatedVertexAttributeLocationError", "d5/d38/classGraphic_1_1Exception_1_1DuplicatedVertexAttributeLocationError.html", null ],
+    [ "EndRenderTextureCreationError", "d7/d15/classGraphic_1_1Exception_1_1EndRenderTextureCreationError.html", null ],
+    [ "FailToCreateCommandEncoderError", "d8/d1c/classGraphic_1_1Exception_1_1FailToCreateCommandEncoderError.html", null ],
+    [ "FileReadingError", "db/d46/classGraphic_1_1Exception_1_1FileReadingError.html", null ],
+    [ "FileWritingError", "d0/dc4/classGraphic_1_1Exception_1_1FileWritingError.html", null ],
+    [ "InstanceCreationError", "d1/d78/classGraphic_1_1Exception_1_1InstanceCreationError.html", null ],
+    [ "MissingOutputRenderPassError", "df/d17/classGraphic_1_1Exception_1_1MissingOutputRenderPassError.html", null ],
+    [ "NonexistentComponentError", "d8/d0b/classGraphic_1_1Exception_1_1NonexistentComponentError.html", null ],
+    [ "QueueCreationError", "d1/de9/classGraphic_1_1Exception_1_1QueueCreationError.html", null ],
+    [ "RenderPassSortError", "d4/da2/classGraphic_1_1Exception_1_1RenderPassSortError.html", null ],
+    [ "SurfaceCreationError", "d7/dc7/classGraphic_1_1Exception_1_1SurfaceCreationError.html", null ],
+    [ "UncapturedDeviceError", "db/db7/classGraphic_1_1Exception_1_1UncapturedDeviceError.html", null ],
+    [ "UnknownFileError", "db/d0e/classGraphic_1_1Exception_1_1UnknownFileError.html", null ],
+    [ "UnknownFormatType", "de/d2c/classGraphic_1_1Exception_1_1UnknownFormatType.html", null ],
+    [ "UnsetAttributeTextureDescriptor", "d9/da6/classGraphic_1_1Exception_1_1UnsetAttributeTextureDescriptor.html", null ],
+    [ "UnsupportedTextureFormatError", "df/d3e/classGraphic_1_1Exception_1_1UnsupportedTextureFormatError.html", null ],
+    [ "UpdateBufferError", "d5/d31/classGraphic_1_1Exception_1_1UpdateBufferError.html", null ],
+    [ "VertexAttributeOverlappingError", "d0/d51/classGraphic_1_1Exception_1_1VertexAttributeOverlappingError.html", null ]
+];

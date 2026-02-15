@@ -1,0 +1,39 @@
+digraph "Physics::Component::Vehicle"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="Physics::Component\l::Vehicle",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Main vehicle component containing all configuration."];
+  Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" wheels",fontcolor="grey" ];
+  Node2 [id="Node000002",label="std::array\< Physics\l::Component::WheelSettings,\l static_cast\< size_t \>(WheelIndex\l::Count)\>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node2 [id="edge2_Node000002_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" elements",fontcolor="grey" ];
+  Node3 [id="Node000003",label="Physics::Component\l::WheelSettings",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$d5/dd4/structPhysics_1_1Component_1_1WheelSettings.html",tooltip="Settings for an individual wheel in a vehicle."];
+  Node4 -> Node3 [id="edge3_Node000003_Node000004",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" lateralFriction\nlongitudinalFriction",fontcolor="grey" ];
+  Node4 [id="Node000004",label="std::vector\< Physics\l::Component::FrictionCurvePoint \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node5 -> Node4 [id="edge4_Node000004_Node000005",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" elements",fontcolor="grey" ];
+  Node5 [id="Node000005",label="Physics::Component\l::FrictionCurvePoint",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$d9/d23/structPhysics_1_1Component_1_1FrictionCurvePoint.html",tooltip="Friction curve point for tire friction modeling."];
+  Node6 -> Node1 [id="edge5_Node000001_Node000006",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" engine",fontcolor="grey" ];
+  Node6 [id="Node000006",label="Physics::Component\l::EngineSettings",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$d2/d29/structPhysics_1_1Component_1_1EngineSettings.html",tooltip="Engine configuration."];
+  Node7 -> Node6 [id="edge6_Node000006_Node000007",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" normalizedTorque",fontcolor="grey" ];
+  Node7 [id="Node000007",label="std::vector\< Physics\l::Component::TorqueCurvePoint \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node8 -> Node7 [id="edge7_Node000007_Node000008",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" elements",fontcolor="grey" ];
+  Node8 [id="Node000008",label="Physics::Component\l::TorqueCurvePoint",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$d8/d3f/structPhysics_1_1Component_1_1TorqueCurvePoint.html",tooltip="Torque curve point for normalized engine torque."];
+  Node9 -> Node1 [id="edge8_Node000001_Node000009",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" gearbox",fontcolor="grey" ];
+  Node9 [id="Node000009",label="Physics::Component\l::GearboxSettings",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$d0/dc2/structPhysics_1_1Component_1_1GearboxSettings.html",tooltip="Gearbox configuration for vehicle transmission."];
+  Node10 -> Node9 [id="edge9_Node000009_Node000010",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" forwardGearRatios\nreverseGearRatios",fontcolor="grey" ];
+  Node10 [id="Node000010",label="std::vector\< float \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node11 -> Node1 [id="edge10_Node000001_Node000011",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" rollbar",fontcolor="grey" ];
+  Node11 [id="Node000011",label="Physics::Component\l::RollbarSettings",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$d9/d3e/structPhysics_1_1Component_1_1RollbarSettings.html",tooltip="Rollbar (anti-roll bar) configuration."];
+  Node12 -> Node1 [id="edge11_Node000001_Node000012",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" wheelEntities",fontcolor="grey" ];
+  Node12 [id="Node000012",label="std::array\< Engine\l::EntityId, 4 \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node13 -> Node12 [id="edge12_Node000012_Node000013",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" elements",fontcolor="grey" ];
+  Node13 [id="Node000013",label="Engine::EntityId",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$de/ded/structEngine_1_1EntityId.html",tooltip="Represents a unique identifier for an entity in the Engine's entity-component system."];
+  Node14 -> Node13 [id="edge13_Node000013_Node000014",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node14 [id="Node000014",label="Engine::Id",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$d4/d1e/structEngine_1_1Id.html",tooltip="A strongly-typed identifier wrapper based on entt::id_type."];
+  Node15 -> Node14 [id="edge14_Node000014_Node000015",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node15 [id="Node000015",label="Engine::BasicId\< Id,\l entt::id_type \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$df/d73/structEngine_1_1BasicId.html",tooltip=" "];
+  Node16 -> Node1 [id="edge15_Node000001_Node000016",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" wheelPositions",fontcolor="grey" ];
+  Node16 [id="Node000016",label="std::array\< glm::vec3, 4 \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+}

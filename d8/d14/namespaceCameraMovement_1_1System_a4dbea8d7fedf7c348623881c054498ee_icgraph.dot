@@ -1,0 +1,11 @@
+digraph "CameraMovement::System::ResetCameraBehavior"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="CameraMovement::System\l::ResetCameraBehavior",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="System that resets the camera behavior to default when requested."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="CameraMovement::Plugin\l::Bind",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$db/d5f/classCameraMovement_1_1Plugin.html#acd42b08739bab3def2b83a0bbf0f6ecd",tooltip=" "];
+}

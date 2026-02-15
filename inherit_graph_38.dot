@@ -1,0 +1,11 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node0 [id="Node000000",label="FunctionUtils::BaseFunction\l\< void, Core & \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/dbb/classFunctionUtils_1_1BaseFunction.html",tooltip=" "];
+  Node0 -> Node1 [id="edge49_Node000000_Node000001",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node1 [id="Node000001",label="Engine::WrappedSystem\l\< TSystem, TErrorCallback \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$df/d0b/classEngine_1_1WrappedSystem.html",tooltip="Wrapper around a system that allows to add an error callback to it."];
+}

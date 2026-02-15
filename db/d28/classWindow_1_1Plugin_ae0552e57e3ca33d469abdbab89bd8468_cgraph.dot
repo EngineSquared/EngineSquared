@@ -1,0 +1,54 @@
+digraph "Window::Plugin::Bind"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="Window::Plugin::Bind",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Window::System::CreateWindow\lSystem",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#a347fe4d189a0183f389c50d3585b9cea",tooltip="Create a GLFW window."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="Engine::Core::RegisterResource",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#ae9dc85a421d332cdc8020fdf18531149",tooltip=" "];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="Window::System::DestroyWindow",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#a404a022af4512a4ddcc6d7d3d596e1d7",tooltip="Destroy the GLFW window."];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="Engine::Core::GetResource",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451",tooltip=" "];
+  Node1 -> Node6 [id="edge5_Node000001_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="Window::System::EnableVSync",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#a7f655f857ca984cb4e7989e58b97e251",tooltip="Enable VSync."];
+  Node1 -> Node7 [id="edge6_Node000001_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="Window::System::InitGLFW",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#afa017ba0bece69e39b09c470c448eb9d",tooltip="Initialize the GLFW."];
+  Node7 -> Node8 [id="edge7_Node000007_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="Log::Error",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d0/d45/namespaceLog.html#a57f205dd59a28db869b6be0bd2441660",tooltip=" "];
+  Node1 -> Node9 [id="edge8_Node000001_Node000009",color="steelblue1",style="solid",tooltip=" "];
+  Node9 [id="Node000009",label="Window::System::LinkGLFWContextToGL",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#a669a718e43aa05248d9a6621e4496f89",tooltip="Link the GLFW context to GL."];
+  Node9 -> Node10 [id="edge9_Node000009_Node000010",color="steelblue1",style="solid",tooltip=" "];
+  Node10 [id="Node000010",label="Window::Resource::Window\l::GetGLFWWindow",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d6/dd5/classWindow_1_1Resource_1_1Window.html#a3078db131e262e02675d2a38aaf9f5f8",tooltip="Get a pointer to the GLFW window."];
+  Node9 -> Node5 [id="edge10_Node000009_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node1 -> Node11 [id="edge11_Node000001_Node000011",color="steelblue1",style="solid",tooltip=" "];
+  Node11 [id="Node000011",label="Window::System::PollEvents",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#ac925e42ad257394d47f6e8bdc4416297",tooltip="Poll GLFW events."];
+  Node1 -> Node12 [id="edge12_Node000001_Node000012",color="steelblue1",style="solid",tooltip=" "];
+  Node12 [id="Node000012",label="Window::System::SetupGLFWHints",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#a5331991095bc2bef7dd3b58403a743b0",tooltip="Setup GLFW Hints."];
+  Node1 -> Node13 [id="edge13_Node000001_Node000013",color="steelblue1",style="solid",tooltip=" "];
+  Node13 [id="Node000013",label="Window::System::SetupWindow\lCallbacks",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#a42d2b4aefe938abbe2747cc6667cd9bb",tooltip="Setup window callbacks."];
+  Node13 -> Node5 [id="edge14_Node000013_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node13 -> Node14 [id="edge15_Node000013_Node000014",color="steelblue1",style="solid",tooltip=" "];
+  Node14 [id="Node000014",label="Event::Resource::EventManager\l::PushEvent",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$de/d6c/classEvent_1_1Resource_1_1EventManager.html#a5acb608e03541c92ba195e79b3b508fc",tooltip="Queue an event for processing."];
+  Node1 -> Node15 [id="edge16_Node000001_Node000015",color="steelblue1",style="solid",tooltip=" "];
+  Node15 [id="Node000015",label="Window::System::StopSystems",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#aee533df1a9590f4c37bc2307b19c9844",tooltip="Stop the window systems."];
+  Node15 -> Node5 [id="edge17_Node000015_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node15 -> Node16 [id="edge18_Node000015_Node000016",color="steelblue1",style="solid",tooltip=" "];
+  Node16 [id="Node000016",label="Window::Resource::Window\l::ShouldClose",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d6/dd5/classWindow_1_1Resource_1_1Window.html#a549961bcd7667878e2ca2d955ebbb0c4",tooltip="Check if the window should close."];
+  Node15 -> Node17 [id="edge19_Node000015_Node000017",color="steelblue1",style="solid",tooltip=" "];
+  Node17 [id="Node000017",label="Engine::Core::Stop",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#a28072ec0219ef5805612645a609237ae",tooltip=" "];
+  Node17 -> Node18 [id="edge20_Node000017_Node000018",color="steelblue1",style="solid",tooltip=" "];
+  Node18 [id="Node000018",label="Log::Warn",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d0/d45/namespaceLog.html#a6a482c08dcd9b6b6863152b051323d01",tooltip=" "];
+  Node1 -> Node19 [id="edge21_Node000001_Node000019",color="steelblue1",style="solid",tooltip=" "];
+  Node19 [id="Node000019",label="Window::System::StoreCore\lInWindow",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#ab391050319e702021785c1017b2412c0",tooltip="Store a pointer to the currently used Core in the GLFW window."];
+  Node19 -> Node10 [id="edge22_Node000019_Node000010",color="steelblue1",style="solid",tooltip=" "];
+  Node19 -> Node5 [id="edge23_Node000019_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node1 -> Node20 [id="edge24_Node000001_Node000020",color="steelblue1",style="solid",tooltip=" "];
+  Node20 [id="Node000020",label="Window::System::SwapBuffers",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#a529f417d85afadb15057000c39e1eff4",tooltip="Swap the buffers."];
+  Node20 -> Node10 [id="edge25_Node000020_Node000010",color="steelblue1",style="solid",tooltip=" "];
+  Node20 -> Node5 [id="edge26_Node000020_Node000005",color="steelblue1",style="solid",tooltip=" "];
+}

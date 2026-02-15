@@ -1,0 +1,25 @@
+digraph "RenderingPipeline::Init::RunSystems"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="RenderingPipeline::\lInit::RunSystems",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Run the systems according to the scheduler policy."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Engine::Core::DeleteScheduler",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d4/d18/classEngine_1_1Core.html#adde97ae5fcfce2a17e6ac58c42cc3e81",tooltip=" "];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="Engine::Scheduler::\lAScheduler::GetSystems",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d9/dd7/classEngine_1_1Scheduler_1_1AScheduler.html#a62bc8712f544cf5f7b85fd83c68e76a5",tooltip=" "];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="Engine::SystemContainer\l::GetSystems",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$db/dc2/classEngine_1_1SystemContainer.html#aacca2e32edfd78b884d1453d3d1f1af3",tooltip=" "];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="FunctionUtils::FunctionContainer\l\< void, Core & \>::GetFunctions",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d1/dce/classFunctionUtils_1_1FunctionContainer.html#a595e14ee35a7a197e35bf9a3744eb303",tooltip="Gets the list of functions in the container."];
+  Node1 -> Node6 [id="edge5_Node000001_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="Engine::Scheduler::\lAScheduler::RunSystem",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d9/dd7/classEngine_1_1Scheduler_1_1AScheduler.html#acbc942e1b2b4e31ab083ed24981c71ee",tooltip="Execute a system according to the scheduler policy."];
+  Node6 -> Node7 [id="edge6_Node000006_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="Log::Debug",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d0/d45/namespaceLog.html#a7b4e13507856ddf944bb7786034abeea",tooltip=" "];
+  Node6 -> Node8 [id="edge7_Node000006_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="Log::Error",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d0/d45/namespaceLog.html#a57f205dd59a28db869b6be0bd2441660",tooltip=" "];
+  Node6 -> Node9 [id="edge8_Node000006_Node000009",color="steelblue1",style="solid",tooltip=" "];
+  Node9 [id="Node000009",label="FunctionUtils::BaseFunction\l::GetName",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/dbb/classFunctionUtils_1_1BaseFunction.html#afdc9ace0ff175a45513e900e111581c8",tooltip="Pure virtual function to get the name of the function."];
+}

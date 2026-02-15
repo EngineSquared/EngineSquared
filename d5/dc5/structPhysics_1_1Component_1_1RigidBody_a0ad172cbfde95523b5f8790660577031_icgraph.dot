@@ -1,0 +1,15 @@
+digraph "Physics::Component::RigidBody::CreateKinematic"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="Physics::Component\l::RigidBody::CreateKinematic",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Create a kinematic rigid body."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="CreateMovingPlatform",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$da/d0f/examples_2physics__usage_2src_2main_8cpp.html#a83098f97805b92a506176adad2d01f9d",tooltip="Create a kinematic platform that can be moved programmatically."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="CreatePhysicsWorldSystem",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$da/d0f/examples_2physics__usage_2src_2main_8cpp.html#a64d083403344b69fc3a3748270c3365e",tooltip="Create the physics world with several entities."];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="main",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$da/d0f/examples_2physics__usage_2src_2main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe",tooltip=" "];
+}

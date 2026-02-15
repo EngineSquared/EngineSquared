@@ -1,0 +1,15 @@
+digraph "Event::Resource::EventManager::PushEvent"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="Event::Resource::EventManager\l::PushEvent",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Queue an event for processing."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Physics::Utils::ContactListener\lImpl::ProcessBufferedEvents",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$d7/d8b/classPhysics_1_1Utils_1_1ContactListenerImpl.html#a77f04b6b4da2958e077f407a039d387f",tooltip="Flush buffered events to the main thread EventManager (should be called from main thread)"];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="Window::System::SetupWindow\lCallbacks",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$dd/d54/namespaceWindow_1_1System.html#a42d2b4aefe938abbe2747cc6667cd9bb",tooltip="Setup window callbacks."];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="Window::Plugin::Bind",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$db/d28/classWindow_1_1Plugin.html#ae0552e57e3ca33d469abdbab89bd8468",tooltip=" "];
+}
