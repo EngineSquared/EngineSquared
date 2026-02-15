@@ -24,9 +24,10 @@ jobs:
 
       - name: Install theme
         run: |
+          mkdir -p docs
           git clone https://github.com/jothepro/doxygen-awesome-css.git
           cd doxygen-awesome-css
-          git checkout v2.3.4
+          git checkout v2.4.1
           cd ..
 
       - name: Generate Doxygen Documentation
