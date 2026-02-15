@@ -1,21 +1,16 @@
 name: Doxygen GitHub Pages Deploy Action
-
 on:
-  workflow_dispatch:
-  push:
-      paths:
-        - '.github/workflows/deploy_doxygen_page.yml'
-        - 'Doxyfile.cfg'
+  release:
+    types: [published]
 
 jobs:
-  generate_doxygen:
-    name: Generate and Deploy Doxygen Documentation
+  generate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: "true"
 
       - name: Install Doxygen
         run: |
@@ -24,14 +19,13 @@ jobs:
 
       - name: Install theme
         run: |
-          mkdir -p docs
           git clone https://github.com/jothepro/doxygen-awesome-css.git
           cd doxygen-awesome-css
-          git checkout v2.4.1
+          git checkout v2.3.4
           cd ..
 
       - name: Generate Doxygen Documentation
-        run: doxygen Doxyfile.cfg
+        run: doxygen Doxyfile
 
       - name: Create .nojekyll file
         run: touch docs/html/.nojekyll
