@@ -36,6 +36,7 @@ window.MathJax = {
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo.png"/></td>
   <td id="projectalign">
    <div id="projectname">EngineSquared<span id="projectnumber">&#160;0.2.0</span>
    </div>
@@ -115,15 +116,26 @@ $(document).ready(function(){initNavTree('db/d55/classEngine_1_1APlugin.html','.
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/dd3/classEngine_1_1APlugin__inherit__graph.png" border="0" usemap="#aEngine_1_1APlugin_inherit__map" alt="Inheritance graph"/></div>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
-<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Collaboration diagram for Engine::APlugin:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d1/d03/classEngine_1_1APlugin__coll__graph.png" border="0" usemap="#aEngine_1_1APlugin_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
+ <div class="center">
+  <img src="../../db/d55/classEngine_1_1APlugin.png" usemap="#Engine::APlugin_map" alt=""/>
+  <map id="Engine::APlugin_map" name="Engine::APlugin_map">
+<area href="../../d4/d51/classEngine_1_1IPlugin.html" alt="Engine::IPlugin" shape="rect" coords="0,0,156,24"/>
+<area href="../../db/d5f/classCameraMovement_1_1Plugin.html" title="Plugin for camera movement control." alt="CameraMovement::Plugin" shape="rect" coords="166,112,322,136"/>
+<area href="../../d5/db0/classDefaultPipeline_1_1Plugin.html" alt="DefaultPipeline::Plugin" shape="rect" coords="166,168,322,192"/>
+<area href="../../d8/de8/classEvent_1_1Plugin.html" alt="Event::Plugin" shape="rect" coords="166,224,322,248"/>
+<area href="../../d3/de6/classGraphic_1_1Plugin.html" alt="Graphic::Plugin" shape="rect" coords="166,280,322,304"/>
+<area href="../../d3/d98/classInput_1_1Plugin.html" alt="Input::Plugin" shape="rect" coords="166,336,322,360"/>
+<area href="../../d3/ddc/classNativeScripting_1_1Plugin.html" alt="NativeScripting::Plugin" shape="rect" coords="166,392,322,416"/>
+<area href="../../dc/ded/classPhysics_1_1Plugin.html" alt="Physics::Plugin" shape="rect" coords="166,448,322,472"/>
+<area href="../../d1/d25/classPluginTestA.html" alt="PluginTestA" shape="rect" coords="166,504,322,528"/>
+<area href="../../db/d7e/classPluginTestB.html" alt="PluginTestB" shape="rect" coords="166,560,322,584"/>
+<area href="../../dc/d80/classRenderingPipeline_1_1Plugin.html" title="This plugin create multiple schedulers that allows to create a rendering pipeline...." alt="RenderingPipeline::Plugin" shape="rect" coords="166,616,322,640"/>
+<area href="../../dd/dc8/classRmlui_1_1Plugin.html" alt="Rmlui::Plugin" shape="rect" coords="166,672,322,696"/>
+<area href="../../d0/d58/classScene_1_1Plugin.html" alt="Scene::Plugin" shape="rect" coords="166,728,322,752"/>
+<area href="../../d3/d2c/classSound_1_1Plugin.html" alt="Sound::Plugin" shape="rect" coords="166,784,322,808"/>
+<area href="../../db/d28/classWindow_1_1Plugin.html" alt="Window::Plugin" shape="rect" coords="166,840,322,864"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -231,14 +243,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <div class="fragment"><div class="line"><span class="lineno">   29</span>{ <span class="keywordflow">return</span> _core; }</div>
-</div><!-- fragment --><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d55/classEngine_1_1APlugin_a0c091ce4fe16a505c1b6dfeee9e77f6c_icgraph.png" border="0" usemap="#adb/d55/classEngine_1_1APlugin_a0c091ce4fe16a505c1b6dfeee9e77f6c_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="af15a80fb8e52db6ffa6b9222dc8cd4fe" name="af15a80fb8e52db6ffa6b9222dc8cd4fe"></a>
@@ -270,21 +275,7 @@ template&lt;typename TResource &gt; </div>
 <div class="line"><span class="lineno">   19</span>        <span class="keywordflow">return</span> _core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#ae9dc85a421d332cdc8020fdf18531149">RegisterResource</a>(std::forward&lt;TResource&gt;(resource));</div>
 <div class="line"><span class="lineno">   20</span>    }</div>
 <div class="ttc" id="aclassEngine_1_1Core_html_ae9dc85a421d332cdc8020fdf18531149"><div class="ttname"><a href="../../d4/d18/classEngine_1_1Core.html#ae9dc85a421d332cdc8020fdf18531149">Engine::Core::RegisterResource</a></div><div class="ttdeci">TResource &amp; RegisterResource(TResource &amp;&amp;resource)</div><div class="ttdef"><b>Definition</b> Core.inl:9</div></div>
-</div><!-- fragment --><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d55/classEngine_1_1APlugin_af15a80fb8e52db6ffa6b9222dc8cd4fe_cgraph.png" border="0" usemap="#adb/d55/classEngine_1_1APlugin_af15a80fb8e52db6ffa6b9222dc8cd4fe_cgraph" alt=""/></div>
-</div>
-<div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d55/classEngine_1_1APlugin_af15a80fb8e52db6ffa6b9222dc8cd4fe_icgraph.png" border="0" usemap="#adb/d55/classEngine_1_1APlugin_af15a80fb8e52db6ffa6b9222dc8cd4fe_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab01ea1016f9697889dd25e2cdffb122a" name="ab01ea1016f9697889dd25e2cdffb122a"></a>
@@ -316,14 +307,7 @@ template&lt;CScheduler TScheduler, typename... Args&gt; </div>
 <div class="line"><span class="lineno">   26</span>        <span class="keywordflow">return</span> _core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#a3597bd29a6a5def5c618bac18da527ef">RegisterScheduler</a>&lt;TScheduler&gt;(std::forward&lt;Args&gt;(args)...);</div>
 <div class="line"><span class="lineno">   27</span>    }</div>
 <div class="ttc" id="aclassEngine_1_1Core_html_a3597bd29a6a5def5c618bac18da527ef"><div class="ttname"><a href="../../d4/d18/classEngine_1_1Core.html#a3597bd29a6a5def5c618bac18da527ef">Engine::Core::RegisterScheduler</a></div><div class="ttdeci">TScheduler &amp; RegisterScheduler(Args &amp;&amp;...args)</div><div class="ttdef"><b>Definition</b> Core.inl:36</div></div>
-</div><!-- fragment --><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d55/classEngine_1_1APlugin_ab01ea1016f9697889dd25e2cdffb122a_cgraph.png" border="0" usemap="#adb/d55/classEngine_1_1APlugin_ab01ea1016f9697889dd25e2cdffb122a_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a16f6d50f614a4b02613208746c274f15" name="a16f6d50f614a4b02613208746c274f15"></a>
@@ -355,14 +339,7 @@ template&lt;typename TScheduler , typename... Systems&gt; </div>
 <div class="line"><span class="lineno">   14</span>        <span class="keywordflow">return</span> _core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#a6e4c8d1631a31aba8de29eb633f98b6e">RegisterSystem</a>&lt;TScheduler&gt;(systems...);</div>
 <div class="line"><span class="lineno">   15</span>    }</div>
 <div class="ttc" id="aclassEngine_1_1Core_html_a6e4c8d1631a31aba8de29eb633f98b6e"><div class="ttname"><a href="../../d4/d18/classEngine_1_1Core.html#a6e4c8d1631a31aba8de29eb633f98b6e">Engine::Core::RegisterSystem</a></div><div class="ttdeci">decltype(auto) RegisterSystem(Systems... systems)</div><div class="ttdef"><b>Definition</b> Core.inl:61</div></div>
-</div><!-- fragment --><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d55/classEngine_1_1APlugin_a16f6d50f614a4b02613208746c274f15_cgraph.png" border="0" usemap="#adb/d55/classEngine_1_1APlugin_a16f6d50f614a4b02613208746c274f15_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae33c41c11a916a520a7a6e32f8a82c34" name="ae33c41c11a916a520a7a6e32f8a82c34"></a>
@@ -394,7 +371,7 @@ template&lt;typename... TPlugins&gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/engine/src/plugin/<a class="el" href="../../d8/d63/APlugin_8hpp_source.html">APlugin.hpp (43364736f335168026239844a5c69003a1c29944)</a></li>
+<li>src/engine/src/plugin/<a class="el" href="../../d8/d63/APlugin_8hpp_source.html">APlugin.hpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

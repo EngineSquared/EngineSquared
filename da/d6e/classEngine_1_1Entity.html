@@ -36,6 +36,7 @@ window.MathJax = {
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo.png"/></td>
   <td id="projectalign">
    <div id="projectname">EngineSquared<span id="projectnumber">&#160;0.2.0</span>
    </div>
@@ -115,13 +116,6 @@ $(document).ready(function(){initNavTree('da/d6e/classEngine_1_1Entity.html','..
  <a href="../../da/d6e/classEngine_1_1Entity.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../de/da6/Entity_8hpp_source.html">Entity.hpp</a>&gt;</code></p>
-<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Collaboration diagram for Engine::Entity:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d7/def/classEngine_1_1Entity__coll__graph.png" border="0" usemap="#aEngine_1_1Entity_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -338,14 +332,7 @@ template&lt;typename TComponent &gt; </div>
 <div class="fragment"><div class="line"><span class="lineno">   64</span>    {</div>
 <div class="line"><span class="lineno">   65</span>        <span class="keywordflow">return</span> _entityId.AddComponent(GetCore(), std::forward&lt;TComponent&gt;(component));</div>
 <div class="line"><span class="lineno">   66</span>    }</div>
-</div><!-- fragment --><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d6e/classEngine_1_1Entity_a816b3a2c6e9a074c61cfee1b0bcfdfa0_icgraph.png" border="0" usemap="#ada/d6e/classEngine_1_1Entity_a816b3a2c6e9a074c61cfee1b0bcfdfa0_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a02a2048bea00ab3f727df6531e2b63c5" name="a02a2048bea00ab3f727df6531e2b63c5"></a>
@@ -438,14 +425,7 @@ template&lt;typename TTempComponent , typename... TArgs&gt; </div>
 <div class="fragment"><div class="line"><span class="lineno">  105</span>    {</div>
 <div class="line"><span class="lineno">  106</span>        <span class="keywordflow">return</span> _entityId.AddTemporaryComponent&lt;TTempComponent&gt;(GetCore(), std::forward&lt;TArgs&gt;(args)...);</div>
 <div class="line"><span class="lineno">  107</span>    }</div>
-</div><!-- fragment --><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d6e/classEngine_1_1Entity_a591627f4862cd3ace3a9996b8c70bc7f_icgraph.png" border="0" usemap="#ada/d6e/classEngine_1_1Entity_a591627f4862cd3ace3a9996b8c70bc7f_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a5aa83d14cb60da47f062efa6ba78843e" name="a5aa83d14cb60da47f062efa6ba78843e"></a>
@@ -536,14 +516,7 @@ template&lt;typename... TComponent&gt; </div>
 <div class="fragment"><div class="line"><span class="lineno">  142</span>    {</div>
 <div class="line"><span class="lineno">  143</span>        <span class="keywordflow">return</span> _entityId.GetComponents&lt;TComponent...&gt;(GetCore());</div>
 <div class="line"><span class="lineno">  144</span>    }</div>
-</div><!-- fragment --><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d6e/classEngine_1_1Entity_acd36f75b5b6b5245dbb1fcd0adcd0893_icgraph.png" border="0" usemap="#ada/d6e/classEngine_1_1Entity_acd36f75b5b6b5245dbb1fcd0adcd0893_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a13d8044ddcb5ada775d8786caedc03e4" name="a13d8044ddcb5ada775d8786caedc03e4"></a>
@@ -619,14 +592,7 @@ template&lt;typename... TComponent&gt; </div>
 <div class="fragment"><div class="line"><span class="lineno">  131</span>    {</div>
 <div class="line"><span class="lineno">  132</span>        <span class="keywordflow">return</span> _entityId.HasComponents&lt;TComponent...&gt;(GetCore());</div>
 <div class="line"><span class="lineno">  133</span>    }</div>
-</div><!-- fragment --><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d6e/classEngine_1_1Entity_aa11ba9b59eea8f31bd917bfaf89f6a28_icgraph.png" border="0" usemap="#ada/d6e/classEngine_1_1Entity_aa11ba9b59eea8f31bd917bfaf89f6a28_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a316e305136e6fd461260d9f6ce539fb3" name="a316e305136e6fd461260d9f6ce539fb3"></a>
@@ -652,14 +618,7 @@ template&lt;typename... TComponent&gt; </div>
 </table>
 </div><div class="memdoc">
 <div class="fragment"><div class="line"><span class="lineno">   52</span>{ <span class="keywordflow">return</span> _entityId; }</div>
-</div><!-- fragment --><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d6e/classEngine_1_1Entity_a316e305136e6fd461260d9f6ce539fb3_icgraph.png" border="0" usemap="#ada/d6e/classEngine_1_1Entity_a316e305136e6fd461260d9f6ce539fb3_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a9d498e8835bedd70bea734d5eb595478" name="a9d498e8835bedd70bea734d5eb595478"></a>
@@ -679,21 +638,7 @@ template&lt;typename... TComponent&gt; </div>
 <p>Check whenever if entity id is a valid id. </p><dl class="section return"><dt>Returns</dt><dd>entity's validity </dd></dl>
 <div class="fragment"><div class="line"><span class="lineno">    3</span>{ <span class="keywordflow">return</span> GetCore().<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#a3fc572f677c4d32a71d103f4cfb7a830">IsEntityValid</a>(_entityId); }</div>
 <div class="ttc" id="aclassEngine_1_1Core_html_a3fc572f677c4d32a71d103f4cfb7a830"><div class="ttname"><a href="../../d4/d18/classEngine_1_1Core.html#a3fc572f677c4d32a71d103f4cfb7a830">Engine::Core::IsEntityValid</a></div><div class="ttdeci">bool IsEntityValid(Id entity) const</div><div class="ttdef"><b>Definition</b> Core.cpp:95</div></div>
-</div><!-- fragment --><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d6e/classEngine_1_1Entity_a9d498e8835bedd70bea734d5eb595478_cgraph.png" border="0" usemap="#ada/d6e/classEngine_1_1Entity_a9d498e8835bedd70bea734d5eb595478_cgraph" alt=""/></div>
-</div>
-<div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d6e/classEngine_1_1Entity_a9d498e8835bedd70bea734d5eb595478_icgraph.png" border="0" usemap="#ada/d6e/classEngine_1_1Entity_a9d498e8835bedd70bea734d5eb595478_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aa2785e2cc9ca649ecb3084fdedfe0e0b" name="aa2785e2cc9ca649ecb3084fdedfe0e0b"></a>
@@ -783,14 +728,7 @@ template&lt;typename TComponent &gt; </div>
   </dd>
 </dl>
 <div class="fragment"><div class="line"><span class="lineno">  122</span>{ _entityId.RemoveComponent&lt;TComponent&gt;(GetCore()); }</div>
-</div><!-- fragment --><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d6e/classEngine_1_1Entity_ae29ffec08bec57123c16a045e47a6368_icgraph.png" border="0" usemap="#ada/d6e/classEngine_1_1Entity_ae29ffec08bec57123c16a045e47a6368_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a465b7e27d496784b45e929bdc7ce02e8" name="a465b7e27d496784b45e929bdc7ce02e8"></a>
@@ -820,14 +758,7 @@ template&lt;typename TComponent &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="../../da/d6e/classEngine_1_1Entity.html#a591627f4862cd3ace3a9996b8c70bc7f">AddTemporaryComponent</a> </dd></dl>
 <div class="fragment"><div class="line"><span class="lineno">  115</span>{ EntityId::RemoveTemporaryComponents(core); }</div>
-</div><!-- fragment --><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d6e/classEngine_1_1Entity_a465b7e27d496784b45e929bdc7ce02e8_icgraph.png" border="0" usemap="#ada/d6e/classEngine_1_1Entity_a465b7e27d496784b45e929bdc7ce02e8_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a9c234a44f74acc04f5c46ba8d61d471c" name="a9c234a44f74acc04f5c46ba8d61d471c"></a>
@@ -865,14 +796,7 @@ template&lt;typename TComponent &gt; </div>
 <div class="fragment"><div class="line"><span class="lineno">  164</span>    {</div>
 <div class="line"><span class="lineno">  165</span>        <span class="keywordflow">return</span> _entityId.TryGetComponent&lt;TComponent&gt;(GetCore());</div>
 <div class="line"><span class="lineno">  166</span>    }</div>
-</div><!-- fragment --><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d6e/classEngine_1_1Entity_a9c234a44f74acc04f5c46ba8d61d471c_icgraph.png" border="0" usemap="#ada/d6e/classEngine_1_1Entity_a9c234a44f74acc04f5c46ba8d61d471c_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -891,8 +815,8 @@ template&lt;typename TComponent &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/engine/src/entity/<a class="el" href="../../de/da6/Entity_8hpp_source.html">Entity.hpp (43364736f335168026239844a5c69003a1c29944)</a></li>
-<li>src/engine/src/entity/<a class="el" href="../../df/de9/Entity_8cpp.html">Entity.cpp (43364736f335168026239844a5c69003a1c29944)</a></li>
+<li>src/engine/src/entity/<a class="el" href="../../de/da6/Entity_8hpp_source.html">Entity.hpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
+<li>src/engine/src/entity/<a class="el" href="../../df/de9/Entity_8cpp.html">Entity.cpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

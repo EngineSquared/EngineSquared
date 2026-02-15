@@ -36,6 +36,7 @@ window.MathJax = {
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo.png"/></td>
   <td id="projectalign">
    <div id="projectname">EngineSquared<span id="projectnumber">&#160;0.2.0</span>
    </div>
@@ -119,15 +120,23 @@ $(document).ready(function(){initNavTree('d9/dd7/classEngine_1_1Scheduler_1_1ASc
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d4/db1/classEngine_1_1Scheduler_1_1AScheduler__inherit__graph.png" border="0" usemap="#aEngine_1_1Scheduler_1_1AScheduler_inherit__map" alt="Inheritance graph"/></div>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
-<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Collaboration diagram for Engine::Scheduler::AScheduler:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d1f/classEngine_1_1Scheduler_1_1AScheduler__coll__graph.png" border="0" usemap="#aEngine_1_1Scheduler_1_1AScheduler_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
+ <div class="center">
+  <img src="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler.png" usemap="#Engine::Scheduler::AScheduler_map" alt=""/>
+  <map id="Engine::Scheduler::AScheduler_map" name="Engine::Scheduler::AScheduler_map">
+<area href="../../d7/d5d/classEngine_1_1Scheduler_1_1IScheduler.html" title="Interface to be implemented for every schedulers." alt="Engine::Scheduler::IScheduler" shape="rect" coords="0,0,231,24"/>
+<area href="../../d6/d05/classEngine_1_1Scheduler_1_1FixedTimeUpdate.html" title="FixedTimeUpdate is a scheduler that runs systems at a fixed rate It is made to only be run a certain ..." alt="Engine::Scheduler::FixedTimeUpdate" shape="rect" coords="241,112,472,136"/>
+<area href="../../d7/d47/classEngine_1_1Scheduler_1_1RelativeTimeUpdate.html" title="RelativeTimeUpdate is a scheduler that runs systems at a rate that is not fixed It is made to run sys..." alt="Engine::Scheduler::RelativeTimeUpdate" shape="rect" coords="241,168,472,192"/>
+<area href="../../d7/dbb/classEngine_1_1Scheduler_1_1Shutdown.html" title="Shutdown scheduler that runs systems only once when engine shuts down." alt="Engine::Scheduler::Shutdown" shape="rect" coords="241,224,472,248"/>
+<area href="../../d8/de8/classEngine_1_1Scheduler_1_1Startup.html" title="Startup scheduler that runs systems only once." alt="Engine::Scheduler::Startup" shape="rect" coords="241,280,472,304"/>
+<area href="../../d6/de2/classEngine_1_1Scheduler_1_1Update.html" title="Update scheduler that runs systems every time it is called." alt="Engine::Scheduler::Update" shape="rect" coords="241,336,472,360"/>
+<area href="../../d7/df6/classRenderingPipeline_1_1Init.html" title="This class is used to initialize libraries like GLFW, etc." alt="RenderingPipeline::Init" shape="rect" coords="241,392,472,416"/>
+<area href="../../d8/d9c/classRenderingPipeline_1_1Setup.html" title="This class is used to setup libraries like GLFW, etc." alt="RenderingPipeline::Setup" shape="rect" coords="241,448,472,472"/>
+<area href="../../d1/deb/classSchedulerTest1.html" alt="SchedulerTest1" shape="rect" coords="241,504,472,528"/>
+<area href="../../d5/d13/classSchedulerTest2.html" alt="SchedulerTest2" shape="rect" coords="241,560,472,584"/>
+<area href="../../d0/d8d/classTestSchedulerA.html" alt="TestSchedulerA" shape="rect" coords="241,616,472,640"/>
+<area href="../../d3/df5/classTestSchedulerB.html" alt="TestSchedulerB" shape="rect" coords="241,672,472,696"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -248,14 +257,7 @@ template&lt;typename... TSystems&gt; </div>
 <div class="line"><span class="lineno">   30</span>        <span class="keywordflow">return</span> _enabledSystemsList.<a class="code hl_function" href="../../db/dc2/classEngine_1_1SystemContainer.html#a1d4cb4ac853b726000aa36691c69cc48">AddSystems</a>(systems...);</div>
 <div class="line"><span class="lineno">   31</span>    }</div>
 <div class="ttc" id="aclassEngine_1_1SystemContainer_html_a1d4cb4ac853b726000aa36691c69cc48"><div class="ttname"><a href="../../db/dc2/classEngine_1_1SystemContainer.html#a1d4cb4ac853b726000aa36691c69cc48">Engine::SystemContainer::AddSystems</a></div><div class="ttdeci">decltype(auto) AddSystems(TSystem... systems)</div><div class="ttdef"><b>Definition</b> System.hpp:27</div></div>
-</div><!-- fragment --><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler_ab25ad2fba5d3aede30df4244dc06b8fd_cgraph.png" border="0" usemap="#ad9/dd7/classEngine_1_1Scheduler_1_1AScheduler_ab25ad2fba5d3aede30df4244dc06b8fd_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a483329c72a418fef3baef42a29b09340" name="a483329c72a418fef3baef42a29b09340"></a>
@@ -293,14 +295,7 @@ template&lt;typename... TSystems&gt; </div>
 <div class="ttc" id="aclassFunctionUtils_1_1FunctionContainer_html_ad576785cd9f69968ea6af38cb55fb3fb"><div class="ttname"><a href="../../d1/dce/classFunctionUtils_1_1FunctionContainer.html#ad576785cd9f69968ea6af38cb55fb3fb">FunctionUtils::FunctionContainer::Contains</a></div><div class="ttdeci">bool Contains(FunctionID id) const</div><div class="ttdef"><b>Definition</b> FunctionContainer.hpp:108</div></div>
 <div class="ttc" id="aclassFunctionUtils_1_1FunctionContainer_html_aec76d963da335a93184ec8412f0376b7"><div class="ttname"><a href="../../d1/dce/classFunctionUtils_1_1FunctionContainer.html#aec76d963da335a93184ec8412f0376b7">FunctionUtils::FunctionContainer::DeleteFunction</a></div><div class="ttdeci">std::unique_ptr&lt; FunctionType &gt; DeleteFunction(FunctionID id)</div><div class="ttdoc">Deletes a function from the container.</div><div class="ttdef"><b>Definition</b> FunctionContainer.inl:60</div></div>
 <div class="ttc" id="anamespaceLog_html_a6a482c08dcd9b6b6863152b051323d01"><div class="ttname"><a href="../../d0/d45/namespaceLog.html#a6a482c08dcd9b6b6863152b051323d01">Log::Warn</a></div><div class="ttdeci">void Warn(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:19</div></div>
-</div><!-- fragment --><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler_a483329c72a418fef3baef42a29b09340_cgraph.png" border="0" usemap="#ad9/dd7/classEngine_1_1Scheduler_1_1AScheduler_a483329c72a418fef3baef42a29b09340_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a1f4aba345553c49e8c19e2bd635fed90" name="a1f4aba345553c49e8c19e2bd635fed90"></a>
@@ -340,14 +335,7 @@ template&lt;typename... TSystems&gt; </div>
 <div class="line"><span class="lineno">   36</span>        <a class="code hl_function" href="../../d0/d45/namespaceLog.html#a6a482c08dcd9b6b6863152b051323d01">Log::Warn</a>(fmt::format(<span class="stringliteral">&quot;System with id {} don&#39;t exist in the scheduler&quot;</span>, <span class="keywordtype">id</span>));</div>
 <div class="line"><span class="lineno">   37</span>    }</div>
 <div class="line"><span class="lineno">   38</span>}</div>
-</div><!-- fragment --><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler_a1f4aba345553c49e8c19e2bd635fed90_cgraph.png" border="0" usemap="#ad9/dd7/classEngine_1_1Scheduler_1_1AScheduler_a1f4aba345553c49e8c19e2bd635fed90_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4404067cc588ff20eac3cf06dc499130" name="a4404067cc588ff20eac3cf06dc499130"></a>
@@ -405,21 +393,7 @@ template&lt;typename... TSystems&gt; </div>
 </div><div class="memdoc">
 <div class="fragment"><div class="line"><span class="lineno">   18</span>{ <span class="keywordflow">return</span> _enabledSystemsList.<a class="code hl_function" href="../../db/dc2/classEngine_1_1SystemContainer.html#aacca2e32edfd78b884d1453d3d1f1af3">GetSystems</a>(); }</div>
 <div class="ttc" id="aclassEngine_1_1SystemContainer_html_aacca2e32edfd78b884d1453d3d1f1af3"><div class="ttname"><a href="../../db/dc2/classEngine_1_1SystemContainer.html#aacca2e32edfd78b884d1453d3d1f1af3">Engine::SystemContainer::GetSystems</a></div><div class="ttdeci">decltype(auto) GetSystems()</div><div class="ttdef"><b>Definition</b> System.hpp:32</div></div>
-</div><!-- fragment --><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler_a62bc8712f544cf5f7b85fd83c68e76a5_cgraph.png" border="0" usemap="#ad9/dd7/classEngine_1_1Scheduler_1_1AScheduler_a62bc8712f544cf5f7b85fd83c68e76a5_cgraph" alt=""/></div>
-</div>
-<div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler_a62bc8712f544cf5f7b85fd83c68e76a5_icgraph.png" border="0" usemap="#ad9/dd7/classEngine_1_1Scheduler_1_1AScheduler_a62bc8712f544cf5f7b85fd83c68e76a5_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a52713b7b72ee49b90648a938a29781b1" name="a52713b7b72ee49b90648a938a29781b1"></a>
@@ -459,14 +433,7 @@ template&lt;typename... TSystems&gt; </div>
 <div class="line"><span class="lineno">   94</span>        <a class="code hl_function" href="../../d0/d45/namespaceLog.html#a6a482c08dcd9b6b6863152b051323d01">Log::Warn</a>(fmt::format(<span class="stringliteral">&quot;System with id {} don&#39;t exist in the scheduler&quot;</span>, <span class="keywordtype">id</span>));</div>
 <div class="line"><span class="lineno">   95</span>    }</div>
 <div class="line"><span class="lineno">   96</span>}</div>
-</div><!-- fragment --><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler_a52713b7b72ee49b90648a938a29781b1_cgraph.png" border="0" usemap="#ad9/dd7/classEngine_1_1Scheduler_1_1AScheduler_a52713b7b72ee49b90648a938a29781b1_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="acbc942e1b2b4e31ab083ed24981c71ee" name="acbc942e1b2b4e31ab083ed24981c71ee"></a>
@@ -549,21 +516,7 @@ template&lt;typename... TSystems&gt; </div>
 <div class="ttc" id="anamespaceEngine_1_1Scheduler_html_adc9f665f0ab46064c8714e86f3089217af80a4ad87fee7c9fdc19b7769495fdb5"><div class="ttname"><a href="../../d7/d02/namespaceEngine_1_1Scheduler.html#adc9f665f0ab46064c8714e86f3089217af80a4ad87fee7c9fdc19b7769495fdb5">Engine::Scheduler::SchedulerErrorPolicy::Nothing</a></div><div class="ttdeci">@ Nothing</div><div class="ttdoc">Let the exception propagate.</div></div>
 <div class="ttc" id="anamespaceLog_html_a57f205dd59a28db869b6be0bd2441660"><div class="ttname"><a href="../../d0/d45/namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a></div><div class="ttdeci">void Error(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:21</div></div>
 <div class="ttc" id="anamespaceLog_html_a7b4e13507856ddf944bb7786034abeea"><div class="ttname"><a href="../../d0/d45/namespaceLog.html#a7b4e13507856ddf944bb7786034abeea">Log::Debug</a></div><div class="ttdeci">void Debug(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:15</div></div>
-</div><!-- fragment --><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler_acbc942e1b2b4e31ab083ed24981c71ee_cgraph.png" border="0" usemap="#ad9/dd7/classEngine_1_1Scheduler_1_1AScheduler_acbc942e1b2b4e31ab083ed24981c71ee_cgraph" alt=""/></div>
-</div>
-<div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler_acbc942e1b2b4e31ab083ed24981c71ee_icgraph.png" border="0" usemap="#ad9/dd7/classEngine_1_1Scheduler_1_1AScheduler_acbc942e1b2b4e31ab083ed24981c71ee_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a9627cc3b9c8bcfd39ee46dc62a48bb12" name="a9627cc3b9c8bcfd39ee46dc62a48bb12"></a>
@@ -656,8 +609,8 @@ template&lt;typename... TSystems&gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/engine/src/scheduler/<a class="el" href="../../db/def/AScheduler_8hpp_source.html">AScheduler.hpp (43364736f335168026239844a5c69003a1c29944)</a></li>
-<li>src/engine/src/scheduler/<a class="el" href="../../df/db1/AScheduler_8cpp.html">AScheduler.cpp (43364736f335168026239844a5c69003a1c29944)</a></li>
+<li>src/engine/src/scheduler/<a class="el" href="../../db/def/AScheduler_8hpp_source.html">AScheduler.hpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
+<li>src/engine/src/scheduler/<a class="el" href="../../df/db1/AScheduler_8cpp.html">AScheduler.cpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

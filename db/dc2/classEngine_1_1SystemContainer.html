@@ -36,6 +36,7 @@ window.MathJax = {
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo.png"/></td>
   <td id="projectalign">
    <div id="projectname">EngineSquared<span id="projectnumber">&#160;0.2.0</span>
    </div>
@@ -118,15 +119,12 @@ $(document).ready(function(){initNavTree('db/dc2/classEngine_1_1SystemContainer.
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../dd/d9f/classEngine_1_1SystemContainer__inherit__graph.png" border="0" usemap="#aEngine_1_1SystemContainer_inherit__map" alt="Inheritance graph"/></div>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
-<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Collaboration diagram for Engine::SystemContainer:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d3/d95/classEngine_1_1SystemContainer__coll__graph.png" border="0" usemap="#aEngine_1_1SystemContainer_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
+ <div class="center">
+  <img src="../../db/dc2/classEngine_1_1SystemContainer.png" usemap="#Engine::SystemContainer_map" alt=""/>
+  <map id="Engine::SystemContainer_map" name="Engine::SystemContainer_map">
+<area href="../../d1/dce/classFunctionUtils_1_1FunctionContainer.html" alt="FunctionUtils::FunctionContainer&lt; void, Core &amp; &gt;" shape="rect" coords="0,0,293,24"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -220,21 +218,7 @@ template&lt;typename... TSystem&gt; </div>
 <div class="line"><span class="lineno">   29</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/dce/classFunctionUtils_1_1FunctionContainer.html#ab53e5ab18720abc7afe660a6f0dc0173">AddFunctions</a>(systems...);</div>
 <div class="line"><span class="lineno">   30</span>    }</div>
 <div class="ttc" id="aclassFunctionUtils_1_1FunctionContainer_html_ab53e5ab18720abc7afe660a6f0dc0173"><div class="ttname"><a href="../../d1/dce/classFunctionUtils_1_1FunctionContainer.html#ab53e5ab18720abc7afe660a6f0dc0173">FunctionUtils::FunctionContainer&lt; void, Core &amp; &gt;::AddFunctions</a></div><div class="ttdeci">decltype(auto) AddFunctions(TFunctions... functions)</div><div class="ttdoc">Adds multiple functions to the container.</div><div class="ttdef"><b>Definition</b> FunctionContainer.hpp:77</div></div>
-</div><!-- fragment --><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/dc2/classEngine_1_1SystemContainer_a1d4cb4ac853b726000aa36691c69cc48_cgraph.png" border="0" usemap="#adb/dc2/classEngine_1_1SystemContainer_a1d4cb4ac853b726000aa36691c69cc48_cgraph" alt=""/></div>
-</div>
-<div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/dc2/classEngine_1_1SystemContainer_a1d4cb4ac853b726000aa36691c69cc48_icgraph.png" border="0" usemap="#adb/dc2/classEngine_1_1SystemContainer_a1d4cb4ac853b726000aa36691c69cc48_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae17460e02be0494cb720c073eab64e1b" name="ae17460e02be0494cb720c073eab64e1b"></a>
@@ -262,14 +246,7 @@ template&lt;typename... TSystem&gt; </div>
 </div><div class="memdoc">
 <div class="fragment"><div class="line"><span class="lineno">   34</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/dce/classFunctionUtils_1_1FunctionContainer.html#aec76d963da335a93184ec8412f0376b7">DeleteFunction</a>(<span class="keywordtype">id</span>); }</div>
 <div class="ttc" id="aclassFunctionUtils_1_1FunctionContainer_html_aec76d963da335a93184ec8412f0376b7"><div class="ttname"><a href="../../d1/dce/classFunctionUtils_1_1FunctionContainer.html#aec76d963da335a93184ec8412f0376b7">FunctionUtils::FunctionContainer&lt; void, Core &amp; &gt;::DeleteFunction</a></div><div class="ttdeci">std::unique_ptr&lt; FunctionType &gt; DeleteFunction(FunctionID id)</div><div class="ttdoc">Deletes a function from the container.</div><div class="ttdef"><b>Definition</b> FunctionContainer.inl:60</div></div>
-</div><!-- fragment --><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/dc2/classEngine_1_1SystemContainer_ae17460e02be0494cb720c073eab64e1b_cgraph.png" border="0" usemap="#adb/dc2/classEngine_1_1SystemContainer_ae17460e02be0494cb720c073eab64e1b_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aacca2e32edfd78b884d1453d3d1f1af3" name="aacca2e32edfd78b884d1453d3d1f1af3"></a>
@@ -296,25 +273,11 @@ template&lt;typename... TSystem&gt; </div>
 </div><div class="memdoc">
 <div class="fragment"><div class="line"><span class="lineno">   32</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/dce/classFunctionUtils_1_1FunctionContainer.html#a595e14ee35a7a197e35bf9a3744eb303">GetFunctions</a>(); }</div>
 <div class="ttc" id="aclassFunctionUtils_1_1FunctionContainer_html_a595e14ee35a7a197e35bf9a3744eb303"><div class="ttname"><a href="../../d1/dce/classFunctionUtils_1_1FunctionContainer.html#a595e14ee35a7a197e35bf9a3744eb303">FunctionUtils::FunctionContainer&lt; void, Core &amp; &gt;::GetFunctions</a></div><div class="ttdeci">const std::list&lt; std::unique_ptr&lt; FunctionType &gt; &gt; &amp; GetFunctions()</div><div class="ttdoc">Gets the list of functions in the container.</div><div class="ttdef"><b>Definition</b> FunctionContainer.hpp:87</div></div>
-</div><!-- fragment --><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/dc2/classEngine_1_1SystemContainer_aacca2e32edfd78b884d1453d3d1f1af3_cgraph.png" border="0" usemap="#adb/dc2/classEngine_1_1SystemContainer_aacca2e32edfd78b884d1453d3d1f1af3_cgraph" alt=""/></div>
-</div>
-<div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/dc2/classEngine_1_1SystemContainer_aacca2e32edfd78b884d1453d3d1f1af3_icgraph.png" border="0" usemap="#adb/dc2/classEngine_1_1SystemContainer_aacca2e32edfd78b884d1453d3d1f1af3_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/engine/src/system/<a class="el" href="../../d4/d25/System_8hpp_source.html">System.hpp (43364736f335168026239844a5c69003a1c29944)</a></li>
+<li>src/engine/src/system/<a class="el" href="../../d4/d25/System_8hpp_source.html">System.hpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

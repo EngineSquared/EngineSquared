@@ -36,6 +36,7 @@ window.MathJax = {
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo.png"/></td>
   <td id="projectalign">
    <div id="projectname">EngineSquared<span id="projectnumber">&#160;0.2.0</span>
    </div>
@@ -107,17 +108,10 @@ $(document).ready(function(){initNavTree('db/d72/CameraUtilsTest_8cpp.html','../
   <div class="headertitle"><div class="title">CameraUtilsTest.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<h3 class="version">(43364736f335168026239844a5c69003a1c29944)</h3><div class="textblock"><code>#include &lt;glm/glm.hpp&gt;</code><br />
+<h3 class="version">(c6ad143c61677014b712e4ced39af16b95cddd36)</h3><div class="textblock"><code>#include &lt;glm/glm.hpp&gt;</code><br />
 <code>#include &lt;glm/gtc/epsilon.hpp&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="../../db/dfe/CameraUtils_8hpp_source.html">utils/CameraUtils.hpp</a>&quot;</code><br />
-</div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Include dependency graph for CameraUtilsTest.cpp:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../de/da3/CameraUtilsTest_8cpp__incl.png" border="0" usemap="#asrc_2plugin_2camera-movement_2tests_2CameraUtilsTest_8cpp" alt=""/></div>
-</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -190,14 +184,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   82</span>}</div>
 <div class="ttc" id="anamespaceCameraMovement_1_1Utils_html_a5a818e3a8b95994945fcd7d269420102"><div class="ttname"><a href="../../df/d52/namespaceCameraMovement_1_1Utils.html#a5a818e3a8b95994945fcd7d269420102">CameraMovement::Utils::ComputeLookAtQuaternion</a></div><div class="ttdeci">glm::quat ComputeLookAtQuaternion(const glm::vec3 &amp;eye, const glm::vec3 &amp;target, const glm::vec3 &amp;up)</div><div class="ttdoc">Compute a quaternion that represents a &quot;look at&quot; rotation.</div><div class="ttdef"><b>Definition</b> CameraUtils.hpp:19</div></div>
 <div class="ttc" id="anamespaceCameraMovement_1_1Utils_html_ae3422f0d9a46e03f5b2fc18192d194e9"><div class="ttname"><a href="../../df/d52/namespaceCameraMovement_1_1Utils.html#ae3422f0d9a46e03f5b2fc18192d194e9">CameraMovement::Utils::GetForwardVector</a></div><div class="ttdeci">glm::vec3 GetForwardVector(const glm::quat &amp;rotation)</div><div class="ttdoc">Get the forward vector from a quaternion rotation.</div><div class="ttdef"><b>Definition</b> CameraUtils.hpp:77</div></div>
-</div><!-- fragment --><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_a2bbab2955bfa2939b2c95ee4de4a1eb8_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_a2bbab2955bfa2939b2c95ee4de4a1eb8_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a7161556bf3e90be66e285221b1fef325" name="a7161556bf3e90be66e285221b1fef325"></a>
@@ -235,14 +222,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   92</span> </div>
 <div class="line"><span class="lineno">   93</span>    EXPECT_TRUE(Vec3Equal(forward, glm::vec3(1.0f, 0.0f, 0.0f)));</div>
 <div class="line"><span class="lineno">   94</span>}</div>
-</div><!-- fragment --><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_a7161556bf3e90be66e285221b1fef325_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_a7161556bf3e90be66e285221b1fef325_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad12cec3589ce7eb809b29161e2c64aa6" name="ad12cec3589ce7eb809b29161e2c64aa6"></a>
@@ -280,14 +260,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  104</span> </div>
 <div class="line"><span class="lineno">  105</span>    EXPECT_TRUE(Vec3Equal(forward, glm::vec3(0.0f, 1.0f, 0.0f)));</div>
 <div class="line"><span class="lineno">  106</span>}</div>
-</div><!-- fragment --><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_ad12cec3589ce7eb809b29161e2c64aa6_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_ad12cec3589ce7eb809b29161e2c64aa6_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a344f277352eef3ef25d3508ce79ef659" name="a344f277352eef3ef25d3508ce79ef659"></a>
@@ -321,14 +294,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   52</span> </div>
 <div class="line"><span class="lineno">   53</span>    EXPECT_TRUE(Vec3Equal(forward, glm::vec3(1.0f, 0.0f, 0.0f)));</div>
 <div class="line"><span class="lineno">   54</span>}</div>
-</div><!-- fragment --><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_a344f277352eef3ef25d3508ce79ef659_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_a344f277352eef3ef25d3508ce79ef659_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a151801b18e79b569a06fcbf0ff26b967" name="a151801b18e79b569a06fcbf0ff26b967"></a>
@@ -362,14 +328,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   28</span> </div>
 <div class="line"><span class="lineno">   29</span>    EXPECT_TRUE(Vec3Equal(forward, glm::vec3(0.0f, 0.0f, 1.0f)));</div>
 <div class="line"><span class="lineno">   30</span>}</div>
-</div><!-- fragment --><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_a151801b18e79b569a06fcbf0ff26b967_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_a151801b18e79b569a06fcbf0ff26b967_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a3f9d589162bb38efdf0278d8c025f745" name="a3f9d589162bb38efdf0278d8c025f745"></a>
@@ -404,14 +363,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   61</span>    EXPECT_TRUE(Vec3Equal(right, glm::vec3(0.0f, 0.0f, -1.0f)));</div>
 <div class="line"><span class="lineno">   62</span>}</div>
 <div class="ttc" id="anamespaceCameraMovement_1_1Utils_html_ac83748bbf6ac05c83c9e6c32b3b90e78"><div class="ttname"><a href="../../df/d52/namespaceCameraMovement_1_1Utils.html#ac83748bbf6ac05c83c9e6c32b3b90e78">CameraMovement::Utils::GetRightVector</a></div><div class="ttdeci">glm::vec3 GetRightVector(const glm::quat &amp;rotation)</div><div class="ttdoc">Get the right vector from a quaternion rotation.</div><div class="ttdef"><b>Definition</b> CameraUtils.hpp:55</div></div>
-</div><!-- fragment --><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_a3f9d589162bb38efdf0278d8c025f745_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_a3f9d589162bb38efdf0278d8c025f745_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab9ab3ae6c3d1761da1c07d4e37564eaf" name="ab9ab3ae6c3d1761da1c07d4e37564eaf"></a>
@@ -445,14 +397,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   36</span> </div>
 <div class="line"><span class="lineno">   37</span>    EXPECT_TRUE(Vec3Equal(right, glm::vec3(1.0f, 0.0f, 0.0f)));</div>
 <div class="line"><span class="lineno">   38</span>}</div>
-</div><!-- fragment --><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_ab9ab3ae6c3d1761da1c07d4e37564eaf_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_ab9ab3ae6c3d1761da1c07d4e37564eaf_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac10c16bdd6c545030419262d7c7803c4" name="ac10c16bdd6c545030419262d7c7803c4"></a>
@@ -487,14 +432,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   69</span>    EXPECT_TRUE(Vec3Equal(up, glm::vec3(0.0f, 0.0f, 1.0f)));</div>
 <div class="line"><span class="lineno">   70</span>}</div>
 <div class="ttc" id="anamespaceCameraMovement_1_1Utils_html_a09c03020d96cb4a7ad5f45b8379943a9"><div class="ttname"><a href="../../df/d52/namespaceCameraMovement_1_1Utils.html#a09c03020d96cb4a7ad5f45b8379943a9">CameraMovement::Utils::GetUpVector</a></div><div class="ttdeci">glm::vec3 GetUpVector(const glm::quat &amp;rotation)</div><div class="ttdoc">Get the up vector from a quaternion rotation.</div><div class="ttdef"><b>Definition</b> CameraUtils.hpp:66</div></div>
-</div><!-- fragment --><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_ac10c16bdd6c545030419262d7c7803c4_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_ac10c16bdd6c545030419262d7c7803c4_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad2e369cd9904223a38ff87c09333ce6c" name="ad2e369cd9904223a38ff87c09333ce6c"></a>
@@ -528,14 +466,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   44</span> </div>
 <div class="line"><span class="lineno">   45</span>    EXPECT_TRUE(Vec3Equal(up, glm::vec3(0.0f, 1.0f, 0.0f)));</div>
 <div class="line"><span class="lineno">   46</span>}</div>
-</div><!-- fragment --><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_ad2e369cd9904223a38ff87c09333ce6c_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_ad2e369cd9904223a38ff87c09333ce6c_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab64736d2b1ea17c5e0c00142d50d06f0" name="ab64736d2b1ea17c5e0c00142d50d06f0"></a>
@@ -573,14 +504,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  168</span> </div>
 <div class="line"><span class="lineno">  169</span>    EXPECT_GT(glm::dot(up, worldUp), 0.0f);</div>
 <div class="line"><span class="lineno">  170</span>}</div>
-</div><!-- fragment --><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_ab64736d2b1ea17c5e0c00142d50d06f0_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_ab64736d2b1ea17c5e0c00142d50d06f0_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac3f077a566a249266484fd2b6065d519" name="ac3f077a566a249266484fd2b6065d519"></a>
@@ -616,14 +540,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  131</span>    EXPECT_TRUE(Vec3Equal(forward, glm::vec3(0.0f, -1.0f, 0.0f)));</div>
 <div class="line"><span class="lineno">  132</span>}</div>
 <div class="ttc" id="anamespaceCameraMovement_1_1Utils_html_a13038400d4a236e767186777e25b41f7"><div class="ttname"><a href="../../df/d52/namespaceCameraMovement_1_1Utils.html#a13038400d4a236e767186777e25b41f7">CameraMovement::Utils::RotateQuaternion</a></div><div class="ttdeci">glm::quat RotateQuaternion(const glm::quat &amp;current, float pitch, float yaw)</div><div class="ttdoc">Apply pitch and yaw rotation to a quaternion.</div><div class="ttdef"><b>Definition</b> CameraUtils.hpp:41</div></div>
-</div><!-- fragment --><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_ac3f077a566a249266484fd2b6065d519_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_ac3f077a566a249266484fd2b6065d519_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad4506383db40148c58000a9f11f0e3c1" name="ad4506383db40148c58000a9f11f0e3c1"></a>
@@ -658,14 +575,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  121</span> </div>
 <div class="line"><span class="lineno">  122</span>    EXPECT_TRUE(Vec3Equal(forward, glm::vec3(1.0f, 0.0f, 0.0f)));</div>
 <div class="line"><span class="lineno">  123</span>}</div>
-</div><!-- fragment --><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_ad4506383db40148c58000a9f11f0e3c1_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_ad4506383db40148c58000a9f11f0e3c1_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a79909b18c36ba9e214dcc5c4bd479462" name="a79909b18c36ba9e214dcc5c4bd479462"></a>
@@ -699,14 +609,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  112</span> </div>
 <div class="line"><span class="lineno">  113</span>    EXPECT_TRUE(QuatEqual(rotated, identity));</div>
 <div class="line"><span class="lineno">  114</span>}</div>
-</div><!-- fragment --><div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_a79909b18c36ba9e214dcc5c4bd479462_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_a79909b18c36ba9e214dcc5c4bd479462_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="af339602324d9be002b906a778637d1ae" name="af339602324d9be002b906a778637d1ae"></a>
@@ -745,14 +648,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  156</span>    EXPECT_NEAR(glm::length(right), 1.0f, EPSILON);</div>
 <div class="line"><span class="lineno">  157</span>    EXPECT_NEAR(glm::length(up), 1.0f, EPSILON);</div>
 <div class="line"><span class="lineno">  158</span>}</div>
-</div><!-- fragment --><div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_af339602324d9be002b906a778637d1ae_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_af339602324d9be002b906a778637d1ae_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a6c8ce3b5fa061bbbb8641f949989f876" name="a6c8ce3b5fa061bbbb8641f949989f876"></a>
@@ -791,14 +687,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  143</span>    EXPECT_NEAR(glm::dot(forward, up), 0.0f, EPSILON);</div>
 <div class="line"><span class="lineno">  144</span>    EXPECT_NEAR(glm::dot(right, up), 0.0f, EPSILON);</div>
 <div class="line"><span class="lineno">  145</span>}</div>
-</div><!-- fragment --><div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-15-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-15-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../db/d72/CameraUtilsTest_8cpp_a6c8ce3b5fa061bbbb8641f949989f876_cgraph.png" border="0" usemap="#adb/d72/CameraUtilsTest_8cpp_a6c8ce3b5fa061bbbb8641f949989f876_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

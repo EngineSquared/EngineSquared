@@ -36,6 +36,7 @@ window.MathJax = {
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo.png"/></td>
   <td id="projectalign">
    <div id="projectname">EngineSquared<span id="projectnumber">&#160;0.2.0</span>
    </div>
@@ -118,15 +119,13 @@ $(document).ready(function(){initNavTree('d6/d05/classEngine_1_1Scheduler_1_1Fix
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../dd/df4/classEngine_1_1Scheduler_1_1FixedTimeUpdate__inherit__graph.png" border="0" usemap="#aEngine_1_1Scheduler_1_1FixedTimeUpdate_inherit__map" alt="Inheritance graph"/></div>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
-<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Collaboration diagram for Engine::Scheduler::FixedTimeUpdate:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/d21/classEngine_1_1Scheduler_1_1FixedTimeUpdate__coll__graph.png" border="0" usemap="#aEngine_1_1Scheduler_1_1FixedTimeUpdate_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
+ <div class="center">
+  <img src="../../d6/d05/classEngine_1_1Scheduler_1_1FixedTimeUpdate.png" usemap="#Engine::Scheduler::FixedTimeUpdate_map" alt=""/>
+  <map id="Engine::Scheduler::FixedTimeUpdate_map" name="Engine::Scheduler::FixedTimeUpdate_map">
+<area href="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler.html" title="Interface to be implemented for every schedulers." alt="Engine::Scheduler::AScheduler" shape="rect" coords="0,56,217,80"/>
+<area href="../../d7/d5d/classEngine_1_1Scheduler_1_1IScheduler.html" title="Interface to be implemented for every schedulers." alt="Engine::Scheduler::IScheduler" shape="rect" coords="0,0,217,24"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -302,14 +301,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="ttc" id="aclassEngine_1_1Scheduler_1_1AScheduler_html_ab896a69149c85b5003950964fea9c002"><div class="ttname"><a href="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler.html#ab896a69149c85b5003950964fea9c002">Engine::Scheduler::AScheduler::_core</a></div><div class="ttdeci">Core &amp; _core</div><div class="ttdef"><b>Definition</b> AScheduler.hpp:84</div></div>
 <div class="ttc" id="aclassEngine_1_1Scheduler_1_1AScheduler_html_acbc942e1b2b4e31ab083ed24981c71ee"><div class="ttname"><a href="../../d9/dd7/classEngine_1_1Scheduler_1_1AScheduler.html#acbc942e1b2b4e31ab083ed24981c71ee">Engine::Scheduler::AScheduler::RunSystem</a></div><div class="ttdeci">void RunSystem(const SystemBase *system, Core &amp;core)</div><div class="ttdoc">Execute a system according to the scheduler policy.</div><div class="ttdef"><b>Definition</b> AScheduler.cpp:40</div></div>
 <div class="ttc" id="astructEngine_1_1Resource_1_1Time_html"><div class="ttname"><a href="../../db/d7d/structEngine_1_1Resource_1_1Time.html">Engine::Resource::Time</a></div><div class="ttdef"><b>Definition</b> Time.hpp:7</div></div>
-</div><!-- fragment --><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d6/d05/classEngine_1_1Scheduler_1_1FixedTimeUpdate_a9a2beb2494d3801012fdc9b33aba6b33_cgraph.png" border="0" usemap="#ad6/d05/classEngine_1_1Scheduler_1_1FixedTimeUpdate_a9a2beb2494d3801012fdc9b33aba6b33_cgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac429417e0f467479574a29f63fe7d519" name="ac429417e0f467479574a29f63fe7d519"></a>
@@ -345,19 +337,12 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This can cause issues if the value is changed during an update. It is recommended to change this value before the update loop starts. </dd></dl>
 <div class="fragment"><div class="line"><span class="lineno">   39</span>{ _tickRate = tickRate; }</div>
-</div><!-- fragment --><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d6/d05/classEngine_1_1Scheduler_1_1FixedTimeUpdate_ac429417e0f467479574a29f63fe7d519_icgraph.png" border="0" usemap="#ad6/d05/classEngine_1_1Scheduler_1_1FixedTimeUpdate_ac429417e0f467479574a29f63fe7d519_icgraph" alt=""/></div>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/engine/src/scheduler/<a class="el" href="../../d9/d14/FixedTimeUpdate_8hpp_source.html">FixedTimeUpdate.hpp (43364736f335168026239844a5c69003a1c29944)</a></li>
-<li>src/engine/src/scheduler/<a class="el" href="../../d9/d6d/FixedTimeUpdate_8cpp.html">FixedTimeUpdate.cpp (43364736f335168026239844a5c69003a1c29944)</a></li>
+<li>src/engine/src/scheduler/<a class="el" href="../../d9/d14/FixedTimeUpdate_8hpp_source.html">FixedTimeUpdate.hpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
+<li>src/engine/src/scheduler/<a class="el" href="../../d9/d6d/FixedTimeUpdate_8cpp.html">FixedTimeUpdate.cpp (c6ad143c61677014b712e4ced39af16b95cddd36)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
