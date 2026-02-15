@@ -21,4 +21,5 @@
 #include "helper/CreateShape.hpp"
 
 // Utils
+#include "utils/MeshSimplifier.hpp"
 #include "utils/ShapeGenerator.hpp"
