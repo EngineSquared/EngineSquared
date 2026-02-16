@@ -18,7 +18,6 @@ var namespacePhysics_1_1System =
     [ "ShutdownSoftBodySystem", "d2/dcc/namespacePhysics_1_1System.html#aaaf5a7e97d0af46d08ab2be2f2816b6c", null ],
     [ "SyncSoftBodyVertices", "d2/dcc/namespacePhysics_1_1System.html#aa9b722d87a5f2866a96f8c1f03dedb24", null ],
     [ "SyncTransformWithPhysics", "d2/dcc/namespacePhysics_1_1System.html#a9639d532843e8bd34028f2fdff7bc2ee", null ],
-    [ "UpdateKinematicVertices", "d2/dcc/namespacePhysics_1_1System.html#a562c8c960c526a8239ba1c2dcbe58157", null ],
     [ "VehicleControlSystem", "d2/dcc/namespacePhysics_1_1System.html#a8d69a9b7dd784930accec40e49d25b60", null ],
     [ "VehicleRPMUpdate", "d2/dcc/namespacePhysics_1_1System.html#a590c81e848be50801279af428b810552", null ],
     [ "WheelTransformSyncSystem", "d2/dcc/namespacePhysics_1_1System.html#a604bcdc7aa04408b24b31fde178ac0d3", null ]

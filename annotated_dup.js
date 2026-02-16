@@ -210,11 +210,6 @@ var annotated_dup =
         [ "ResourceManager", "d1/d28/classObject_1_1Resource_1_1ResourceManager.html", "d1/d28/classObject_1_1Resource_1_1ResourceManager" ],
         [ "Shape", "d8/df9/structObject_1_1Resource_1_1Shape.html", "d8/df9/structObject_1_1Resource_1_1Shape" ]
       ] ],
-      [ "Utils", "d0/d5d/namespaceObject_1_1Utils.html", [
-        [ "CollapseResult", "d2/d38/structObject_1_1Utils_1_1CollapseResult.html", "d2/d38/structObject_1_1Utils_1_1CollapseResult" ],
-        [ "SimplificationResult", "d2/dd6/structObject_1_1Utils_1_1SimplificationResult.html", "d2/dd6/structObject_1_1Utils_1_1SimplificationResult" ],
-        [ "SimplificationSettings", "de/d5a/structObject_1_1Utils_1_1SimplificationSettings.html", "de/d5a/structObject_1_1Utils_1_1SimplificationSettings" ]
-      ] ],
       [ "OBJLoader", "d3/d3a/classObject_1_1OBJLoader.html", "d3/d3a/classObject_1_1OBJLoader" ],
       [ "OBJLoaderError", "d9/d75/classObject_1_1OBJLoaderError.html", "d9/d75/classObject_1_1OBJLoaderError" ],
       [ "ResourceManagerError", "d6/dc3/classObject_1_1ResourceManagerError.html", "d6/dc3/classObject_1_1ResourceManagerError" ]

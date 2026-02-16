@@ -158,9 +158,6 @@ Functions</h2></td></tr>
 <tr class="memitem:aa9b722d87a5f2866a96f8c1f03dedb24" id="r_aa9b722d87a5f2866a96f8c1f03dedb24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dcc/namespacePhysics_1_1System.html#aa9b722d87a5f2866a96f8c1f03dedb24">SyncSoftBodyVertices</a> (<a class="el" href="../../d4/d18/classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
 <tr class="memdesc:aa9b722d87a5f2866a96f8c1f03dedb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronize soft body vertex positions to mesh data.  <br /></td></tr>
 <tr class="separator:aa9b722d87a5f2866a96f8c1f03dedb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a562c8c960c526a8239ba1c2dcbe58157" id="r_a562c8c960c526a8239ba1c2dcbe58157"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dcc/namespacePhysics_1_1System.html#a562c8c960c526a8239ba1c2dcbe58157">UpdateKinematicVertices</a> (<a class="el" href="../../d4/d18/classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
-<tr class="memdesc:a562c8c960c526a8239ba1c2dcbe58157"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update kinematic vertices for attached soft bodies.  <br /></td></tr>
-<tr class="separator:a562c8c960c526a8239ba1c2dcbe58157"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9639d532843e8bd34028f2fdff7bc2ee" id="r_a9639d532843e8bd34028f2fdff7bc2ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dcc/namespacePhysics_1_1System.html#a9639d532843e8bd34028f2fdff7bc2ee">SyncTransformWithPhysics</a> (<a class="el" href="../../d4/d18/classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
 <tr class="memdesc:a9639d532843e8bd34028f2fdff7bc2ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronize Transform components with Jolt <a class="el" href="../../d8/d54/namespacePhysics.html">Physics</a> body positions.  <br /></td></tr>
 <tr class="separator:a9639d532843e8bd34028f2fdff7bc2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -591,18 +588,18 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  645</span>{</div>
-<div class="line"><span class="lineno">  646</span>    <span class="keyword">auto</span> &amp;registry = core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#aefea4646026e43c1a8f3317b77ada312">GetRegistry</a>();</div>
-<div class="line"><span class="lineno">  647</span> </div>
-<div class="line"><span class="lineno">  648</span>    <span class="keywordflow">if</span> (!registry.ctx().contains&lt;<a class="code hl_class" href="../../d4/d18/classEngine_1_1Core.html">Engine::Core</a> *&gt;())</div>
-<div class="line"><span class="lineno">  649</span>        registry.ctx().emplace&lt;<a class="code hl_class" href="../../d4/d18/classEngine_1_1Core.html">Engine::Core</a> *&gt;(&amp;core);</div>
-<div class="line"><span class="lineno">  650</span> </div>
-<div class="line"><span class="lineno">  651</span>    registry.on_construct&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>&gt;().connect&lt;&amp;OnSoftBodyConstruct&gt;();</div>
-<div class="line"><span class="lineno">  652</span>    registry.on_destroy&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>&gt;().connect&lt;&amp;OnSoftBodyDestroy&gt;();</div>
-<div class="line"><span class="lineno">  653</span> </div>
-<div class="line"><span class="lineno">  654</span>    <a class="code hl_function" href="../../d0/d45/namespaceLog.html#a7b4e13507856ddf944bb7786034abeea">Log::Debug</a>(<span class="stringliteral">&quot;SoftBodySystem initialized&quot;</span>);</div>
-<div class="line"><span class="lineno">  655</span>}</div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Physics::Component::SoftBody</a></div><div class="ttdoc">Soft body physics component.</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:243</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  495</span>{</div>
+<div class="line"><span class="lineno">  496</span>    <span class="keyword">auto</span> &amp;registry = core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#aefea4646026e43c1a8f3317b77ada312">GetRegistry</a>();</div>
+<div class="line"><span class="lineno">  497</span> </div>
+<div class="line"><span class="lineno">  498</span>    <span class="keywordflow">if</span> (!registry.ctx().contains&lt;<a class="code hl_class" href="../../d4/d18/classEngine_1_1Core.html">Engine::Core</a> *&gt;())</div>
+<div class="line"><span class="lineno">  499</span>        registry.ctx().emplace&lt;<a class="code hl_class" href="../../d4/d18/classEngine_1_1Core.html">Engine::Core</a> *&gt;(&amp;core);</div>
+<div class="line"><span class="lineno">  500</span> </div>
+<div class="line"><span class="lineno">  501</span>    registry.on_construct&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>&gt;().connect&lt;&amp;OnSoftBodyConstruct&gt;();</div>
+<div class="line"><span class="lineno">  502</span>    registry.on_destroy&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>&gt;().connect&lt;&amp;OnSoftBodyDestroy&gt;();</div>
+<div class="line"><span class="lineno">  503</span> </div>
+<div class="line"><span class="lineno">  504</span>    <a class="code hl_function" href="../../d0/d45/namespaceLog.html#a7b4e13507856ddf944bb7786034abeea">Log::Debug</a>(<span class="stringliteral">&quot;SoftBodySystem initialized&quot;</span>);</div>
+<div class="line"><span class="lineno">  505</span>}</div>
+<div class="ttc" id="astructPhysics_1_1Component_1_1SoftBody_html"><div class="ttname"><a href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Physics::Component::SoftBody</a></div><div class="ttdoc">Soft body physics component.</div><div class="ttdef"><b>Definition</b> SoftBody.hpp:241</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -701,15 +698,15 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  658</span>{</div>
-<div class="line"><span class="lineno">  659</span>    <span class="keyword">auto</span> &amp;registry = core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#aefea4646026e43c1a8f3317b77ada312">GetRegistry</a>();</div>
-<div class="line"><span class="lineno">  660</span> </div>
-<div class="line"><span class="lineno">  661</span>    <span class="comment">// Disconnect hooks</span></div>
-<div class="line"><span class="lineno">  662</span>    registry.on_construct&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>&gt;().disconnect&lt;&amp;OnSoftBodyConstruct&gt;();</div>
-<div class="line"><span class="lineno">  663</span>    registry.on_destroy&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>&gt;().disconnect&lt;&amp;OnSoftBodyDestroy&gt;();</div>
-<div class="line"><span class="lineno">  664</span> </div>
-<div class="line"><span class="lineno">  665</span>    <a class="code hl_function" href="../../d0/d45/namespaceLog.html#a7b4e13507856ddf944bb7786034abeea">Log::Debug</a>(<span class="stringliteral">&quot;SoftBodySystem shutdown&quot;</span>);</div>
-<div class="line"><span class="lineno">  666</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  508</span>{</div>
+<div class="line"><span class="lineno">  509</span>    <span class="keyword">auto</span> &amp;registry = core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#aefea4646026e43c1a8f3317b77ada312">GetRegistry</a>();</div>
+<div class="line"><span class="lineno">  510</span> </div>
+<div class="line"><span class="lineno">  511</span>    <span class="comment">// Disconnect hooks</span></div>
+<div class="line"><span class="lineno">  512</span>    registry.on_construct&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>&gt;().disconnect&lt;&amp;OnSoftBodyConstruct&gt;();</div>
+<div class="line"><span class="lineno">  513</span>    registry.on_destroy&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>&gt;().disconnect&lt;&amp;OnSoftBodyDestroy&gt;();</div>
+<div class="line"><span class="lineno">  514</span> </div>
+<div class="line"><span class="lineno">  515</span>    <a class="code hl_function" href="../../d0/d45/namespaceLog.html#a7b4e13507856ddf944bb7786034abeea">Log::Debug</a>(<span class="stringliteral">&quot;SoftBodySystem shutdown&quot;</span>);</div>
+<div class="line"><span class="lineno">  516</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -737,177 +734,107 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  669</span>{</div>
-<div class="line"><span class="lineno">  670</span>    <span class="keyword">auto</span> &amp;registry = core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#aefea4646026e43c1a8f3317b77ada312">GetRegistry</a>();</div>
-<div class="line"><span class="lineno">  671</span> </div>
-<div class="line"><span class="lineno">  672</span>    <span class="keyword">auto</span> &amp;physicsManager = core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451">GetResource</a>&lt;<a class="code hl_class" href="../../da/d55/classPhysics_1_1Resource_1_1PhysicsManager.html">Resource::PhysicsManager</a>&gt;();</div>
-<div class="line"><span class="lineno">  673</span>    <span class="keywordflow">if</span> (!physicsManager.IsPhysicsActivated())</div>
-<div class="line"><span class="lineno">  674</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  675</span> </div>
-<div class="line"><span class="lineno">  676</span>    <span class="keyword">auto</span> &amp;bodyInterface = physicsManager.<a class="code hl_function" href="../../da/d55/classPhysics_1_1Resource_1_1PhysicsManager.html#a69e2a4295378da5f21123526d2ba3155">GetBodyInterface</a>();</div>
-<div class="line"><span class="lineno">  677</span> </div>
-<div class="line"><span class="lineno">  678</span>    <span class="comment">// Update vertex positions from Jolt simulation</span></div>
-<div class="line"><span class="lineno">  679</span>    <span class="keyword">auto</span> view = registry.view&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>, <a class="code hl_struct" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html">Component::SoftBodyInternal</a>&gt;();</div>
-<div class="line"><span class="lineno">  680</span> </div>
-<div class="line"><span class="lineno">  681</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> entity : view)</div>
-<div class="line"><span class="lineno">  682</span>    {</div>
-<div class="line"><span class="lineno">  683</span>        <span class="keyword">auto</span> &amp;internal = view.get&lt;<a class="code hl_struct" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html">Component::SoftBodyInternal</a>&gt;(entity);</div>
-<div class="line"><span class="lineno">  684</span> </div>
-<div class="line"><span class="lineno">  685</span>        <span class="keywordflow">if</span> (!internal.IsValid())</div>
-<div class="line"><span class="lineno">  686</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  687</span> </div>
-<div class="line"><span class="lineno">  688</span>        <span class="comment">// Get soft body motion properties</span></div>
-<div class="line"><span class="lineno">  689</span>        JPH::BodyLockRead lock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(), internal.bodyID);</div>
-<div class="line"><span class="lineno">  690</span>        <span class="keywordflow">if</span> (!lock.Succeeded())</div>
-<div class="line"><span class="lineno">  691</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  692</span> </div>
-<div class="line"><span class="lineno">  693</span>        <span class="keyword">const</span> JPH::Body &amp;body = lock.GetBody();</div>
-<div class="line"><span class="lineno">  694</span>        <span class="keywordflow">if</span> (!body.IsSoftBody())</div>
-<div class="line"><span class="lineno">  695</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  696</span> </div>
-<div class="line"><span class="lineno">  697</span>        <span class="keyword">const</span> JPH::SoftBodyMotionProperties *motionProps =</div>
-<div class="line"><span class="lineno">  698</span>            <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>JPH::SoftBodyMotionProperties *<span class="keyword">&gt;</span>(body.GetMotionProperties());</div>
-<div class="line"><span class="lineno">  699</span> </div>
-<div class="line"><span class="lineno">  700</span>        <span class="comment">// Get body center of mass in world space</span></div>
-<div class="line"><span class="lineno">  701</span>        JPH::RVec3 bodyPosition = body.GetCenterOfMassPosition();</div>
-<div class="line"><span class="lineno">  702</span> </div>
-<div class="line"><span class="lineno">  703</span>        <span class="comment">// Update vertex positions (vertices are in local space relative to body center of mass)</span></div>
-<div class="line"><span class="lineno">  704</span>        <span class="keyword">const</span> <span class="keyword">auto</span> &amp;joltVertices = motionProps-&gt;GetVertices();</div>
-<div class="line"><span class="lineno">  705</span> </div>
-<div class="line"><span class="lineno">  706</span>        <span class="comment">// Write to Mesh.vertices (used by graphics plugin for rendering)</span></div>
-<div class="line"><span class="lineno">  707</span>        <span class="keyword">auto</span> *mesh = registry.try_get&lt;<a class="code hl_struct" href="../../d6/db7/structObject_1_1Component_1_1Mesh.html">Object::Component::Mesh</a>&gt;(entity);</div>
-<div class="line"><span class="lineno">  708</span>        <span class="keywordflow">if</span> (!mesh || mesh-&gt;GetVertices().empty())</div>
-<div class="line"><span class="lineno">  709</span>        {</div>
-<div class="line"><span class="lineno">  710</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> *convexHullMesh = registry.try_get&lt;<a class="code hl_struct" href="../../d6/d19/structPhysics_1_1Component_1_1ConvexHullMeshCollider.html">Component::ConvexHullMeshCollider</a>&gt;(entity);</div>
-<div class="line"><span class="lineno">  711</span>                convexHullMesh &amp;&amp; convexHullMesh-&gt;<a class="code hl_variable" href="../../d6/d19/structPhysics_1_1Component_1_1ConvexHullMeshCollider.html#ac2d84d4220da2274e1662a1f309bc977">mesh</a> &amp;&amp; !convexHullMesh-&gt;mesh-&gt;GetVertices().empty())</div>
-<div class="line"><span class="lineno">  712</span>            {</div>
-<div class="line"><span class="lineno">  713</span>                mesh = &amp;(convexHullMesh-&gt;mesh.value());</div>
-<div class="line"><span class="lineno">  714</span>                <a class="code hl_function" href="../../d0/d45/namespaceLog.html#a6a482c08dcd9b6b6863152b051323d01">Log::Warn</a>(<span class="stringliteral">&quot;SoftBody: Using ConvexHullMeshCollider mesh as geometry for SoftBody&quot;</span>);</div>
-<div class="line"><span class="lineno">  715</span>            }</div>
-<div class="line"><span class="lineno">  716</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keyword">auto</span> *meshCollider = registry.try_get&lt;<a class="code hl_struct" href="../../d0/d3b/structPhysics_1_1Component_1_1MeshCollider.html">Component::MeshCollider</a>&gt;(entity);</div>
-<div class="line"><span class="lineno">  717</span>                     meshCollider &amp;&amp; meshCollider-&gt;mesh &amp;&amp; !meshCollider-&gt;mesh-&gt;GetVertices().empty())</div>
-<div class="line"><span class="lineno">  718</span>            {</div>
-<div class="line"><span class="lineno">  719</span>                mesh = &amp;(meshCollider-&gt;mesh.value());</div>
-<div class="line"><span class="lineno">  720</span>                <a class="code hl_function" href="../../d0/d45/namespaceLog.html#a6a482c08dcd9b6b6863152b051323d01">Log::Warn</a>(<span class="stringliteral">&quot;SoftBody: Using MeshCollider mesh as geometry for SoftBody&quot;</span>);</div>
-<div class="line"><span class="lineno">  721</span>            }</div>
-<div class="line"><span class="lineno">  722</span>            <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  723</span>            {</div>
-<div class="line"><span class="lineno">  724</span>                <a class="code hl_function" href="../../d0/d45/namespaceLog.html#a6a482c08dcd9b6b6863152b051323d01">Log::Warn</a>(<span class="stringliteral">&quot;SoftBody: No Mesh component found during sync. Skipping vertex update.&quot;</span>);</div>
-<div class="line"><span class="lineno">  725</span>                <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  726</span>            }</div>
-<div class="line"><span class="lineno">  727</span>        }</div>
-<div class="line"><span class="lineno">  728</span> </div>
-<div class="line"><span class="lineno">  729</span>        <span class="comment">// Update Transform with center of mass position (like RigidBody sync)</span></div>
-<div class="line"><span class="lineno">  730</span>        <span class="comment">// This way the GPU applies the Transform, and vertices stay in local space</span></div>
-<div class="line"><span class="lineno">  731</span>        <span class="comment">// EXCEPTION: If attached to another body, don&#39;t override Transform - it follows the parent</span></div>
-<div class="line"><span class="lineno">  732</span>        <span class="keyword">auto</span> *transform = registry.try_get&lt;<a class="code hl_struct" href="../../d6/d4d/structObject_1_1Component_1_1Transform.html">Object::Component::Transform</a>&gt;(entity);</div>
-<div class="line"><span class="lineno">  733</span> </div>
-<div class="line"><span class="lineno">  734</span>        <span class="comment">// For attached softbodies, we need the parent transform to convert world vertices to local</span></div>
-<div class="line"><span class="lineno">  735</span>        JPH::RVec3 parentPos = JPH::RVec3::sZero();</div>
-<div class="line"><span class="lineno">  736</span>        JPH::Quat parentRot = JPH::Quat::sIdentity();</div>
-<div class="line"><span class="lineno">  737</span>        <span class="keywordtype">bool</span> isAttached = !internal.attachedToBodyID.IsInvalid();</div>
-<div class="line"><span class="lineno">  738</span> </div>
-<div class="line"><span class="lineno">  739</span>        <span class="keywordflow">if</span> (transform &amp;&amp; isAttached)</div>
-<div class="line"><span class="lineno">  740</span>        {</div>
-<div class="line"><span class="lineno">  741</span>            <span class="comment">// Softbody is attached - get the parent body&#39;s transform</span></div>
-<div class="line"><span class="lineno">  742</span>            JPH::BodyLockRead parentLock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(),</div>
-<div class="line"><span class="lineno">  743</span>                                         internal.attachedToBodyID);</div>
-<div class="line"><span class="lineno">  744</span>            <span class="keywordflow">if</span> (parentLock.Succeeded())</div>
-<div class="line"><span class="lineno">  745</span>            {</div>
-<div class="line"><span class="lineno">  746</span>                <span class="keyword">const</span> JPH::Body &amp;parentBody = parentLock.GetBody();</div>
-<div class="line"><span class="lineno">  747</span>                parentPos = parentBody.GetCenterOfMassPosition();</div>
-<div class="line"><span class="lineno">  748</span>                parentRot = parentBody.GetRotation();</div>
-<div class="line"><span class="lineno">  749</span>                transform-&gt;SetPosition(Utils::FromJoltRVec3(parentPos));</div>
-<div class="line"><span class="lineno">  750</span>                transform-&gt;SetRotation(Utils::FromJoltQuat(parentRot));</div>
-<div class="line"><span class="lineno">  751</span>            }</div>
-<div class="line"><span class="lineno">  752</span>        }</div>
-<div class="line"><span class="lineno">  753</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (transform)</div>
-<div class="line"><span class="lineno">  754</span>        {</div>
-<div class="line"><span class="lineno">  755</span>            <span class="comment">// Standard softbody - use its own center of mass</span></div>
-<div class="line"><span class="lineno">  756</span>            transform-&gt;SetPosition(Utils::FromJoltRVec3(bodyPosition));</div>
-<div class="line"><span class="lineno">  757</span>            <span class="comment">// Note: Soft bodies don&#39;t have a single rotation, so we leave it as-is</span></div>
-<div class="line"><span class="lineno">  758</span>        }</div>
-<div class="line"><span class="lineno">  759</span> </div>
-<div class="line"><span class="lineno">  760</span>        <span class="comment">// Use the vertex map to sync deduplicated Jolt vertices back to the original mesh</span></div>
-<div class="line"><span class="lineno">  761</span>        <span class="comment">// Jolt vertices are in WORLD scale (scaled by initialScale during creation)</span></div>
-<div class="line"><span class="lineno">  762</span>        <span class="comment">// We need to convert back to LOCAL mesh space by dividing by initialScale</span></div>
-<div class="line"><span class="lineno">  763</span>        <span class="comment">// Then the GPU will apply Transform.scale (which should match initialScale)</span></div>
-<div class="line"><span class="lineno">  764</span>        <span class="comment">// Prevent division by zero - use small epsilon for safety</span></div>
-<div class="line"><span class="lineno">  765</span>        <span class="keyword">constexpr</span> <span class="keywordtype">float</span> epsilon = 1e-6f;</div>
-<div class="line"><span class="lineno">  766</span>        glm::vec3 safeScale = glm::max(glm::abs(internal.initialScale), glm::vec3(epsilon));</div>
-<div class="line"><span class="lineno">  767</span>        <span class="comment">// Preserve sign from original scale (treat zero as positive)</span></div>
-<div class="line"><span class="lineno">  768</span>        <span class="keyword">auto</span> signOrOne = [](<span class="keywordtype">float</span> v) { <span class="keywordflow">return</span> v &lt; 0.0f ? -1.0f : 1.0f; };</div>
-<div class="line"><span class="lineno">  769</span>        safeScale *= glm::vec3(signOrOne(internal.initialScale.x), signOrOne(internal.initialScale.y),</div>
-<div class="line"><span class="lineno">  770</span>                               signOrOne(internal.initialScale.z));</div>
-<div class="line"><span class="lineno">  771</span>        <span class="keyword">const</span> glm::vec3 invScale = glm::vec3(1.0f) / safeScale;</div>
-<div class="line"><span class="lineno">  772</span> </div>
-<div class="line"><span class="lineno">  773</span>        <span class="comment">// For attached softbodies: convert world positions to parent-local space</span></div>
-<div class="line"><span class="lineno">  774</span>        <span class="comment">// The GPU will then apply the parent&#39;s transform, giving us world positions</span></div>
-<div class="line"><span class="lineno">  775</span>        JPH::Quat invParentRot = isAttached ? parentRot.Conjugated() : JPH::Quat::sIdentity();</div>
-<div class="line"><span class="lineno">  776</span> </div>
-<div class="line"><span class="lineno">  777</span>        <span class="keywordflow">if</span> (!internal.vertexMap.empty())</div>
-<div class="line"><span class="lineno">  778</span>        {</div>
-<div class="line"><span class="lineno">  779</span>            <span class="comment">// Use vertex map: original mesh vertices are mapped to deduplicated Jolt vertices</span></div>
-<div class="line"><span class="lineno">  780</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> origIdx = 0u; origIdx &lt; mesh-&gt;GetVertices().size() &amp;&amp; origIdx &lt; internal.vertexMap.size();</div>
-<div class="line"><span class="lineno">  781</span>                 ++origIdx)</div>
-<div class="line"><span class="lineno">  782</span>            {</div>
-<div class="line"><span class="lineno">  783</span>                uint32_t joltIdx = internal.vertexMap[origIdx];</div>
-<div class="line"><span class="lineno">  784</span>                <span class="keywordflow">if</span> (joltIdx &lt; joltVertices.size())</div>
-<div class="line"><span class="lineno">  785</span>                {</div>
-<div class="line"><span class="lineno">  786</span>                    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;v = joltVertices[joltIdx];</div>
-<div class="line"><span class="lineno">  787</span>                    <span class="comment">// Get world position from Jolt</span></div>
-<div class="line"><span class="lineno">  788</span>                    JPH::Vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());</div>
-<div class="line"><span class="lineno">  789</span> </div>
-<div class="line"><span class="lineno">  790</span>                    <span class="keywordflow">if</span> (isAttached)</div>
-<div class="line"><span class="lineno">  791</span>                    {</div>
-<div class="line"><span class="lineno">  792</span>                        <span class="comment">// Convert from world space to parent-local space</span></div>
-<div class="line"><span class="lineno">  793</span>                        <span class="comment">// 1. Subtract parent position to get offset from parent</span></div>
-<div class="line"><span class="lineno">  794</span>                        <span class="comment">// 2. Rotate by inverse parent rotation to get local offset</span></div>
-<div class="line"><span class="lineno">  795</span>                        JPH::Vec3 localOffset = invParentRot * (worldPos - JPH::Vec3(parentPos));</div>
-<div class="line"><span class="lineno">  796</span>                        mesh-&gt;SetVertexAt(</div>
-<div class="line"><span class="lineno">  797</span>                            origIdx, glm::vec3(localOffset.GetX(), localOffset.GetY(), localOffset.GetZ()) * invScale);</div>
-<div class="line"><span class="lineno">  798</span>                    }</div>
-<div class="line"><span class="lineno">  799</span>                    <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  800</span>                    {</div>
-<div class="line"><span class="lineno">  801</span>                        <span class="comment">// Standard: just apply inverse scale</span></div>
-<div class="line"><span class="lineno">  802</span>                        mesh-&gt;SetVertexAt(origIdx,</div>
-<div class="line"><span class="lineno">  803</span>                                          glm::vec3(worldPos.GetX(), worldPos.GetY(), worldPos.GetZ()) * invScale);</div>
-<div class="line"><span class="lineno">  804</span>                    }</div>
-<div class="line"><span class="lineno">  805</span>                }</div>
-<div class="line"><span class="lineno">  806</span>            }</div>
-<div class="line"><span class="lineno">  807</span>        }</div>
-<div class="line"><span class="lineno">  808</span>        <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  809</span>        {</div>
-<div class="line"><span class="lineno">  810</span>            <span class="comment">// Fallback: direct 1:1 mapping (for procedurally generated meshes)</span></div>
-<div class="line"><span class="lineno">  811</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0u; i &lt; joltVertices.size() &amp;&amp; i &lt; mesh-&gt;GetVertices().size(); ++i)</div>
-<div class="line"><span class="lineno">  812</span>            {</div>
-<div class="line"><span class="lineno">  813</span>                <span class="keyword">const</span> <span class="keyword">auto</span> &amp;v = joltVertices[i];</div>
-<div class="line"><span class="lineno">  814</span>                JPH::Vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());</div>
-<div class="line"><span class="lineno">  815</span> </div>
-<div class="line"><span class="lineno">  816</span>                <span class="keywordflow">if</span> (isAttached)</div>
-<div class="line"><span class="lineno">  817</span>                {</div>
-<div class="line"><span class="lineno">  818</span>                    JPH::Vec3 localOffset = invParentRot * (worldPos - JPH::Vec3(parentPos));</div>
-<div class="line"><span class="lineno">  819</span>                    mesh-&gt;SetVertexAt(i,</div>
-<div class="line"><span class="lineno">  820</span>                                      glm::vec3(localOffset.GetX(), localOffset.GetY(), localOffset.GetZ()) * invScale);</div>
-<div class="line"><span class="lineno">  821</span>                }</div>
-<div class="line"><span class="lineno">  822</span>                <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  823</span>                {</div>
-<div class="line"><span class="lineno">  824</span>                    mesh-&gt;SetVertexAt(i, glm::vec3(worldPos.GetX(), worldPos.GetY(), worldPos.GetZ()) * invScale);</div>
-<div class="line"><span class="lineno">  825</span>                }</div>
-<div class="line"><span class="lineno">  826</span>            }</div>
-<div class="line"><span class="lineno">  827</span>        }</div>
-<div class="line"><span class="lineno">  828</span> </div>
-<div class="line"><span class="lineno">  829</span>        <span class="comment">// Recalculate normals for correct lighting on deformed soft bodies</span></div>
-<div class="line"><span class="lineno">  830</span>        <a class="code hl_function" href="../../d0/d5d/namespaceObject_1_1Utils.html#a7477219f06796f6c77928590f05c00ad">Object::Utils::RecalculateNormals</a>(*mesh);</div>
-<div class="line"><span class="lineno">  831</span>    }</div>
-<div class="line"><span class="lineno">  832</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  519</span>{</div>
+<div class="line"><span class="lineno">  520</span>    <span class="keyword">auto</span> &amp;registry = core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#aefea4646026e43c1a8f3317b77ada312">GetRegistry</a>();</div>
+<div class="line"><span class="lineno">  521</span> </div>
+<div class="line"><span class="lineno">  522</span>    <span class="keyword">auto</span> &amp;physicsManager = core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451">GetResource</a>&lt;<a class="code hl_class" href="../../da/d55/classPhysics_1_1Resource_1_1PhysicsManager.html">Resource::PhysicsManager</a>&gt;();</div>
+<div class="line"><span class="lineno">  523</span>    <span class="keywordflow">if</span> (!physicsManager.IsPhysicsActivated())</div>
+<div class="line"><span class="lineno">  524</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  525</span> </div>
+<div class="line"><span class="lineno">  526</span>    <span class="keyword">auto</span> &amp;bodyInterface = physicsManager.<a class="code hl_function" href="../../da/d55/classPhysics_1_1Resource_1_1PhysicsManager.html#a69e2a4295378da5f21123526d2ba3155">GetBodyInterface</a>();</div>
+<div class="line"><span class="lineno">  527</span> </div>
+<div class="line"><span class="lineno">  528</span>    <span class="comment">// Update vertex positions from Jolt simulation</span></div>
+<div class="line"><span class="lineno">  529</span>    <span class="keyword">auto</span> view = registry.view&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>, <a class="code hl_struct" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html">Component::SoftBodyInternal</a>&gt;();</div>
+<div class="line"><span class="lineno">  530</span> </div>
+<div class="line"><span class="lineno">  531</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> entity : view)</div>
+<div class="line"><span class="lineno">  532</span>    {</div>
+<div class="line"><span class="lineno">  533</span>        <span class="keyword">auto</span> &amp;internal = view.get&lt;<a class="code hl_struct" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html">Component::SoftBodyInternal</a>&gt;(entity);</div>
+<div class="line"><span class="lineno">  534</span> </div>
+<div class="line"><span class="lineno">  535</span>        <span class="keywordflow">if</span> (!internal.IsValid())</div>
+<div class="line"><span class="lineno">  536</span>            <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  537</span> </div>
+<div class="line"><span class="lineno">  538</span>        <span class="comment">// Get soft body motion properties</span></div>
+<div class="line"><span class="lineno">  539</span>        JPH::BodyLockRead lock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(), internal.bodyID);</div>
+<div class="line"><span class="lineno">  540</span>        <span class="keywordflow">if</span> (!lock.Succeeded())</div>
+<div class="line"><span class="lineno">  541</span>            <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  542</span> </div>
+<div class="line"><span class="lineno">  543</span>        <span class="keyword">const</span> JPH::Body &amp;body = lock.GetBody();</div>
+<div class="line"><span class="lineno">  544</span>        <span class="keywordflow">if</span> (!body.IsSoftBody())</div>
+<div class="line"><span class="lineno">  545</span>            <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  546</span> </div>
+<div class="line"><span class="lineno">  547</span>        <span class="keyword">const</span> JPH::SoftBodyMotionProperties *motionProps =</div>
+<div class="line"><span class="lineno">  548</span>            <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>JPH::SoftBodyMotionProperties *<span class="keyword">&gt;</span>(body.GetMotionProperties());</div>
+<div class="line"><span class="lineno">  549</span> </div>
+<div class="line"><span class="lineno">  550</span>        <span class="comment">// Get body center of mass in world space</span></div>
+<div class="line"><span class="lineno">  551</span>        JPH::RVec3 bodyPosition = body.GetCenterOfMassPosition();</div>
+<div class="line"><span class="lineno">  552</span> </div>
+<div class="line"><span class="lineno">  553</span>        <span class="comment">// Update vertex positions (vertices are in local space relative to body center of mass)</span></div>
+<div class="line"><span class="lineno">  554</span>        <span class="keyword">const</span> <span class="keyword">auto</span> &amp;joltVertices = motionProps-&gt;GetVertices();</div>
+<div class="line"><span class="lineno">  555</span> </div>
+<div class="line"><span class="lineno">  556</span>        <span class="comment">// Write to Mesh.vertices (used by graphics plugin for rendering)</span></div>
+<div class="line"><span class="lineno">  557</span>        <span class="keyword">auto</span> *mesh = registry.try_get&lt;<a class="code hl_struct" href="../../d6/db7/structObject_1_1Component_1_1Mesh.html">Object::Component::Mesh</a>&gt;(entity);</div>
+<div class="line"><span class="lineno">  558</span>        <span class="keywordflow">if</span> (!mesh || mesh-&gt;GetVertices().empty())</div>
+<div class="line"><span class="lineno">  559</span>            <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  560</span> </div>
+<div class="line"><span class="lineno">  561</span>        <span class="comment">// Update Transform with center of mass position (like RigidBody sync)</span></div>
+<div class="line"><span class="lineno">  562</span>        <span class="comment">// This way the GPU applies the Transform, and vertices stay in local space</span></div>
+<div class="line"><span class="lineno">  563</span>        <span class="keyword">auto</span> *transform = registry.try_get&lt;<a class="code hl_struct" href="../../d6/d4d/structObject_1_1Component_1_1Transform.html">Object::Component::Transform</a>&gt;(entity);</div>
+<div class="line"><span class="lineno">  564</span>        <span class="keywordflow">if</span> (transform)</div>
+<div class="line"><span class="lineno">  565</span>        {</div>
+<div class="line"><span class="lineno">  566</span>            transform-&gt;<a class="code hl_function" href="../../d6/d4d/structObject_1_1Component_1_1Transform.html#a1a515f8b9d828d300ef5faa8bc320a81">SetPosition</a>(Utils::FromJoltRVec3(bodyPosition));</div>
+<div class="line"><span class="lineno">  567</span>            <span class="comment">// Note: Soft bodies don&#39;t have a single rotation, so we leave it as-is</span></div>
+<div class="line"><span class="lineno">  568</span>        }</div>
+<div class="line"><span class="lineno">  569</span> </div>
+<div class="line"><span class="lineno">  570</span>        <span class="comment">// Use the vertex map to sync deduplicated Jolt vertices back to the original mesh</span></div>
+<div class="line"><span class="lineno">  571</span>        <span class="comment">// Jolt vertices are in WORLD scale (scaled by initialScale during creation)</span></div>
+<div class="line"><span class="lineno">  572</span>        <span class="comment">// We need to convert back to LOCAL mesh space by dividing by initialScale</span></div>
+<div class="line"><span class="lineno">  573</span>        <span class="comment">// Then the GPU will apply Transform.scale (which should match initialScale)</span></div>
+<div class="line"><span class="lineno">  574</span>        <span class="comment">// Prevent division by zero - use small epsilon for safety</span></div>
+<div class="line"><span class="lineno">  575</span>        <span class="keyword">constexpr</span> <span class="keywordtype">float</span> epsilon = 1e-6f;</div>
+<div class="line"><span class="lineno">  576</span>        glm::vec3 safeScale = glm::max(glm::abs(internal.initialScale), glm::vec3(epsilon));</div>
+<div class="line"><span class="lineno">  577</span>        <span class="comment">// Preserve sign from original scale (treat zero as positive)</span></div>
+<div class="line"><span class="lineno">  578</span>        <span class="keyword">auto</span> signOrOne = [](<span class="keywordtype">float</span> v) { <span class="keywordflow">return</span> v &lt; 0.0f ? -1.0f : 1.0f; };</div>
+<div class="line"><span class="lineno">  579</span>        safeScale *= glm::vec3(signOrOne(internal.initialScale.x), signOrOne(internal.initialScale.y),</div>
+<div class="line"><span class="lineno">  580</span>                               signOrOne(internal.initialScale.z));</div>
+<div class="line"><span class="lineno">  581</span>        <span class="keyword">const</span> glm::vec3 invScale = glm::vec3(1.0f) / safeScale;</div>
+<div class="line"><span class="lineno">  582</span> </div>
+<div class="line"><span class="lineno">  583</span>        <span class="keywordflow">if</span> (!internal.vertexMap.empty())</div>
+<div class="line"><span class="lineno">  584</span>        {</div>
+<div class="line"><span class="lineno">  585</span>            <span class="comment">// Use vertex map: original mesh vertices are mapped to deduplicated Jolt vertices</span></div>
+<div class="line"><span class="lineno">  586</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> origIdx = 0u; origIdx &lt; mesh-&gt;GetVertices().size() &amp;&amp; origIdx &lt; internal.vertexMap.size();</div>
+<div class="line"><span class="lineno">  587</span>                 ++origIdx)</div>
+<div class="line"><span class="lineno">  588</span>            {</div>
+<div class="line"><span class="lineno">  589</span>                uint32_t joltIdx = internal.vertexMap[origIdx];</div>
+<div class="line"><span class="lineno">  590</span>                <span class="keywordflow">if</span> (joltIdx &lt; joltVertices.size())</div>
+<div class="line"><span class="lineno">  591</span>                {</div>
+<div class="line"><span class="lineno">  592</span>                    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;v = joltVertices[joltIdx];</div>
+<div class="line"><span class="lineno">  593</span>                    <span class="comment">// Convert from Jolt world-scale space back to mesh local space</span></div>
+<div class="line"><span class="lineno">  594</span>                    glm::vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());</div>
+<div class="line"><span class="lineno">  595</span>                    mesh-&gt;SetVertexAt(origIdx, worldPos * invScale);</div>
+<div class="line"><span class="lineno">  596</span>                }</div>
+<div class="line"><span class="lineno">  597</span>            }</div>
+<div class="line"><span class="lineno">  598</span>        }</div>
+<div class="line"><span class="lineno">  599</span>        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  600</span>        {</div>
+<div class="line"><span class="lineno">  601</span>            <span class="comment">// Fallback: direct 1:1 mapping (for procedurally generated meshes)</span></div>
+<div class="line"><span class="lineno">  602</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0u; i &lt; joltVertices.size() &amp;&amp; i &lt; mesh-&gt;GetVertices().size(); ++i)</div>
+<div class="line"><span class="lineno">  603</span>            {</div>
+<div class="line"><span class="lineno">  604</span>                <span class="keyword">const</span> <span class="keyword">auto</span> &amp;v = joltVertices[i];</div>
+<div class="line"><span class="lineno">  605</span>                <span class="comment">// Convert from Jolt world-scale space back to mesh local space</span></div>
+<div class="line"><span class="lineno">  606</span>                glm::vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());</div>
+<div class="line"><span class="lineno">  607</span>                mesh-&gt;SetVertexAt(i, worldPos * invScale);</div>
+<div class="line"><span class="lineno">  608</span>            }</div>
+<div class="line"><span class="lineno">  609</span>        }</div>
+<div class="line"><span class="lineno">  610</span> </div>
+<div class="line"><span class="lineno">  611</span>        <span class="comment">// Recalculate normals for correct lighting on deformed soft bodies</span></div>
+<div class="line"><span class="lineno">  612</span>        <a class="code hl_function" href="../../d0/d5d/namespaceObject_1_1Utils.html#a7477219f06796f6c77928590f05c00ad">Object::Utils::RecalculateNormals</a>(*mesh);</div>
+<div class="line"><span class="lineno">  613</span>    }</div>
+<div class="line"><span class="lineno">  614</span>}</div>
 <div class="ttc" id="aclassPhysics_1_1Resource_1_1PhysicsManager_html_a69e2a4295378da5f21123526d2ba3155"><div class="ttname"><a href="../../da/d55/classPhysics_1_1Resource_1_1PhysicsManager.html#a69e2a4295378da5f21123526d2ba3155">Physics::Resource::PhysicsManager::GetBodyInterface</a></div><div class="ttdeci">JPH::BodyInterface &amp; GetBodyInterface()</div><div class="ttdoc">Get a reference to the body interface for manipulating bodies.</div><div class="ttdef"><b>Definition</b> PhysicsManager.hpp:59</div></div>
 <div class="ttc" id="anamespaceObject_1_1Utils_html_a7477219f06796f6c77928590f05c00ad"><div class="ttname"><a href="../../d0/d5d/namespaceObject_1_1Utils.html#a7477219f06796f6c77928590f05c00ad">Object::Utils::RecalculateNormals</a></div><div class="ttdeci">void RecalculateNormals(Component::Mesh &amp;mesh)</div><div class="ttdoc">Recalculate normals for a mesh based on face geometry.</div><div class="ttdef"><b>Definition</b> MeshUtils.cpp:41</div></div>
 <div class="ttc" id="astructObject_1_1Component_1_1Mesh_html"><div class="ttname"><a href="../../d6/db7/structObject_1_1Component_1_1Mesh.html">Object::Component::Mesh</a></div><div class="ttdoc">Mesh structure.</div><div class="ttdef"><b>Definition</b> Mesh.hpp:40</div></div>
 <div class="ttc" id="astructObject_1_1Component_1_1Transform_html"><div class="ttname"><a href="../../d6/d4d/structObject_1_1Component_1_1Transform.html">Object::Component::Transform</a></div><div class="ttdef"><b>Definition</b> Transform.hpp:18</div></div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1ConvexHullMeshCollider_html"><div class="ttname"><a href="../../d6/d19/structPhysics_1_1Component_1_1ConvexHullMeshCollider.html">Physics::Component::ConvexHullMeshCollider</a></div><div class="ttdoc">Convex hull mesh collider.</div><div class="ttdef"><b>Definition</b> ConvexHullMeshCollider.hpp:48</div></div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1ConvexHullMeshCollider_html_ac2d84d4220da2274e1662a1f309bc977"><div class="ttname"><a href="../../d6/d19/structPhysics_1_1Component_1_1ConvexHullMeshCollider.html#ac2d84d4220da2274e1662a1f309bc977">Physics::Component::ConvexHullMeshCollider::mesh</a></div><div class="ttdeci">std::optional&lt; Object::Component::Mesh &gt; mesh</div><div class="ttdoc">Optional embedded mesh data for collision (avoids needing entity Mesh component)</div><div class="ttdef"><b>Definition</b> ConvexHullMeshCollider.hpp:54</div></div>
-<div class="ttc" id="astructPhysics_1_1Component_1_1MeshCollider_html"><div class="ttname"><a href="../../d0/d3b/structPhysics_1_1Component_1_1MeshCollider.html">Physics::Component::MeshCollider</a></div><div class="ttdoc">Triangle mesh collider (concave mesh support)</div><div class="ttdef"><b>Definition</b> MeshCollider.hpp:47</div></div>
+<div class="ttc" id="astructObject_1_1Component_1_1Transform_html_a1a515f8b9d828d300ef5faa8bc320a81"><div class="ttname"><a href="../../d6/d4d/structObject_1_1Component_1_1Transform.html#a1a515f8b9d828d300ef5faa8bc320a81">Object::Component::Transform::SetPosition</a></div><div class="ttdeci">void SetPosition(const glm::vec3 &amp;newPosition)</div><div class="ttdef"><b>Definition</b> Transform.hpp:42</div></div>
 <div class="ttc" id="astructPhysics_1_1Component_1_1SoftBodyInternal_html"><div class="ttname"><a href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html">Physics::Component::SoftBodyInternal</a></div><div class="ttdoc">Internal component storing Jolt soft body reference.</div><div class="ttdef"><b>Definition</b> SoftBodyInternal.hpp:42</div></div>
 </div><!-- fragment -->
 </div>
@@ -969,105 +896,6 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   46</span>    }</div>
 <div class="line"><span class="lineno">   47</span>}</div>
 <div class="ttc" id="astructObject_1_1Component_1_1Transform_html_ab6b00b5720a1c6e183b29924727db165"><div class="ttname"><a href="../../d6/d4d/structObject_1_1Component_1_1Transform.html#ab6b00b5720a1c6e183b29924727db165">Object::Component::Transform::GetRotation</a></div><div class="ttdeci">const glm::quat &amp; GetRotation() const</div><div class="ttdef"><b>Definition</b> Transform.hpp:39</div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a562c8c960c526a8239ba1c2dcbe58157" name="a562c8c960c526a8239ba1c2dcbe58157"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a562c8c960c526a8239ba1c2dcbe58157">&#9670;&#160;</a></span>UpdateKinematicVertices()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Physics::System::UpdateKinematicVertices </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d4/d18/classEngine_1_1Core.html">Engine::Core</a> &amp;&#160;</td>
-          <td class="paramname"><em>core</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Update kinematic vertices for attached soft bodies. </p>
-<p>Moves kinematic vertices to follow their parent rigid body's transform. Should be called BEFORE physics update (before PhysicsSystem::Update).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">core</td><td>Reference to the engine core </td></tr>
-  </table>
-  </dd>
-</dl>
-<div class="fragment"><div class="line"><span class="lineno">  835</span>{</div>
-<div class="line"><span class="lineno">  836</span>    <span class="keyword">auto</span> &amp;registry = core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#aefea4646026e43c1a8f3317b77ada312">GetRegistry</a>();</div>
-<div class="line"><span class="lineno">  837</span> </div>
-<div class="line"><span class="lineno">  838</span>    <span class="keyword">auto</span> &amp;physicsManager = core.<a class="code hl_function" href="../../d4/d18/classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451">GetResource</a>&lt;<a class="code hl_class" href="../../da/d55/classPhysics_1_1Resource_1_1PhysicsManager.html">Resource::PhysicsManager</a>&gt;();</div>
-<div class="line"><span class="lineno">  839</span>    <span class="keywordflow">if</span> (!physicsManager.IsPhysicsActivated())</div>
-<div class="line"><span class="lineno">  840</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  841</span> </div>
-<div class="line"><span class="lineno">  842</span>    <span class="keyword">auto</span> &amp;bodyInterface = physicsManager.<a class="code hl_function" href="../../da/d55/classPhysics_1_1Resource_1_1PhysicsManager.html#a69e2a4295378da5f21123526d2ba3155">GetBodyInterface</a>();</div>
-<div class="line"><span class="lineno">  843</span> </div>
-<div class="line"><span class="lineno">  844</span>    <span class="comment">// Update kinematic vertex positions for attached soft bodies</span></div>
-<div class="line"><span class="lineno">  845</span>    <span class="keyword">auto</span> view = registry.view&lt;<a class="code hl_struct" href="../../de/d89/structPhysics_1_1Component_1_1SoftBody.html">Component::SoftBody</a>, <a class="code hl_struct" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html">Component::SoftBodyInternal</a>&gt;();</div>
-<div class="line"><span class="lineno">  846</span> </div>
-<div class="line"><span class="lineno">  847</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> entity : view)</div>
-<div class="line"><span class="lineno">  848</span>    {</div>
-<div class="line"><span class="lineno">  849</span>        <span class="keyword">auto</span> &amp;internal = view.get&lt;<a class="code hl_struct" href="../../d8/da2/structPhysics_1_1Component_1_1SoftBodyInternal.html">Component::SoftBodyInternal</a>&gt;(entity);</div>
-<div class="line"><span class="lineno">  850</span> </div>
-<div class="line"><span class="lineno">  851</span>        <span class="keywordflow">if</span> (!internal.IsValid())</div>
-<div class="line"><span class="lineno">  852</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  853</span> </div>
-<div class="line"><span class="lineno">  854</span>        <span class="comment">// Skip if not attached to any body</span></div>
-<div class="line"><span class="lineno">  855</span>        <span class="keywordflow">if</span> (internal.attachedToBodyID.IsInvalid() || internal.kinematicVertexIndices.empty())</div>
-<div class="line"><span class="lineno">  856</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  857</span> </div>
-<div class="line"><span class="lineno">  858</span>        <span class="comment">// Get the parent body&#39;s current transform</span></div>
-<div class="line"><span class="lineno">  859</span>        JPH::BodyLockRead parentLock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(),</div>
-<div class="line"><span class="lineno">  860</span>                                     internal.attachedToBodyID);</div>
-<div class="line"><span class="lineno">  861</span>        <span class="keywordflow">if</span> (!parentLock.Succeeded())</div>
-<div class="line"><span class="lineno">  862</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  863</span> </div>
-<div class="line"><span class="lineno">  864</span>        <span class="keyword">const</span> JPH::Body &amp;parentBody = parentLock.GetBody();</div>
-<div class="line"><span class="lineno">  865</span>        JPH::RVec3 parentPos = parentBody.GetCenterOfMassPosition();</div>
-<div class="line"><span class="lineno">  866</span>        JPH::Quat parentRot = parentBody.GetRotation();</div>
-<div class="line"><span class="lineno">  867</span> </div>
-<div class="line"><span class="lineno">  868</span>        <span class="comment">// Get writable access to soft body</span></div>
-<div class="line"><span class="lineno">  869</span>        JPH::BodyLockWrite softLock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(), internal.bodyID);</div>
-<div class="line"><span class="lineno">  870</span>        <span class="keywordflow">if</span> (!softLock.Succeeded())</div>
-<div class="line"><span class="lineno">  871</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  872</span> </div>
-<div class="line"><span class="lineno">  873</span>        JPH::Body &amp;softBody = softLock.GetBody();</div>
-<div class="line"><span class="lineno">  874</span>        <span class="keywordflow">if</span> (!softBody.IsSoftBody())</div>
-<div class="line"><span class="lineno">  875</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  876</span> </div>
-<div class="line"><span class="lineno">  877</span>        JPH::SoftBodyMotionProperties *motionProps =</div>
-<div class="line"><span class="lineno">  878</span>            <span class="keyword">static_cast&lt;</span>JPH::SoftBodyMotionProperties *<span class="keyword">&gt;</span>(softBody.GetMotionPropertiesUnchecked());</div>
-<div class="line"><span class="lineno">  879</span> </div>
-<div class="line"><span class="lineno">  880</span>        <span class="comment">// Get mutable vertices</span></div>
-<div class="line"><span class="lineno">  881</span>        JPH::Array&lt;JPH::SoftBodyMotionProperties::Vertex&gt; &amp;vertices = motionProps-&gt;GetVertices();</div>
-<div class="line"><span class="lineno">  882</span> </div>
-<div class="line"><span class="lineno">  883</span>        <span class="comment">// Update each kinematic vertex position based on parent transform</span></div>
-<div class="line"><span class="lineno">  884</span>        <span class="comment">// The local positions are stored in the softbody&#39;s local coordinate system (mesh space)</span></div>
-<div class="line"><span class="lineno">  885</span>        <span class="comment">// We rotate them by parent rotation and translate by parent position</span></div>
-<div class="line"><span class="lineno">  886</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0;</div>
-<div class="line"><span class="lineno">  887</span>             i &lt; internal.kinematicVertexIndices.size() &amp;&amp; i &lt; internal.kinematicVertexLocalPositions.size(); ++i)</div>
-<div class="line"><span class="lineno">  888</span>        {</div>
-<div class="line"><span class="lineno">  889</span>            uint32_t joltIdx = internal.kinematicVertexIndices[i];</div>
-<div class="line"><span class="lineno">  890</span>            <span class="keywordflow">if</span> (joltIdx &gt;= vertices.size())</div>
-<div class="line"><span class="lineno">  891</span>                <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  892</span> </div>
-<div class="line"><span class="lineno">  893</span>            <span class="comment">// Get the local offset from softbody origin</span></div>
-<div class="line"><span class="lineno">  894</span>            <span class="keyword">const</span> glm::vec3 &amp;localOffset = internal.kinematicVertexLocalPositions[i];</div>
-<div class="line"><span class="lineno">  895</span>            JPH::Vec3 joltLocalOffset(localOffset.x, localOffset.y, localOffset.z);</div>
-<div class="line"><span class="lineno">  896</span> </div>
-<div class="line"><span class="lineno">  897</span>            <span class="comment">// Rotate the local offset by parent rotation, then add parent position</span></div>
-<div class="line"><span class="lineno">  898</span>            JPH::Vec3 rotatedOffset = parentRot * joltLocalOffset;</div>
-<div class="line"><span class="lineno">  899</span>            JPH::RVec3 worldPos = parentPos + rotatedOffset;</div>
-<div class="line"><span class="lineno">  900</span> </div>
-<div class="line"><span class="lineno">  901</span>            <span class="comment">// Update vertex position (kinematic vertices have invMass = 0, so they won&#39;t be affected by physics)</span></div>
-<div class="line"><span class="lineno">  902</span>            vertices[joltIdx].mPosition = JPH::Vec3(worldPos);</div>
-<div class="line"><span class="lineno">  903</span>            vertices[joltIdx].mVelocity = JPH::Vec3::sZero(); <span class="comment">// Reset velocity for kinematic vertices</span></div>
-<div class="line"><span class="lineno">  904</span>        }</div>
-<div class="line"><span class="lineno">  905</span>    }</div>
-<div class="line"><span class="lineno">  906</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>

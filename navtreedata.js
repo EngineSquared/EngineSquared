@@ -25,13 +25,37 @@
 var NAVTREE =
 [
   [ "EngineSquared", "index.html", [
+    [ "Graphic Plugin", "d6/dfc/md_src_2plugin_2graphic_2README.html", [
+      [ "Description", "d6/dfc/md_src_2plugin_2graphic_2README.html#description", null ],
+      [ "Dependencies", "d6/dfc/md_src_2plugin_2graphic_2README.html#dependencies", [
+        [ "External (xmake packages)", "d6/dfc/md_src_2plugin_2graphic_2README.html#external-xmake-packages", null ],
+        [ "Engine", "d6/dfc/md_src_2plugin_2graphic_2README.html#engine", null ]
+      ] ],
+      [ "Install", "d6/dfc/md_src_2plugin_2graphic_2README.html#install", null ],
+      [ "Configuration", "d6/dfc/md_src_2plugin_2graphic_2README.html#configuration", [
+        [ "Window system", "d6/dfc/md_src_2plugin_2graphic_2README.html#window-system", null ],
+        [ "Power preference", "d6/dfc/md_src_2plugin_2graphic_2README.html#power-preference", null ],
+        [ "Device limits and features", "d6/dfc/md_src_2plugin_2graphic_2README.html#device-limits-and-features", null ],
+        [ "Uncaptured device errors", "d6/dfc/md_src_2plugin_2graphic_2README.html#uncaptured-device-errors", null ]
+      ] ],
+      [ "Usage", "d6/dfc/md_src_2plugin_2graphic_2README.html#usage", [
+        [ "Adding the plugin", "d6/dfc/md_src_2plugin_2graphic_2README.html#adding-the-plugin", null ],
+        [ "Configuring settings at startup", "d6/dfc/md_src_2plugin_2graphic_2README.html#configuring-settings-at-startup", null ],
+        [ "Headless (no window)", "d6/dfc/md_src_2plugin_2graphic_2README.html#headless-no-window", null ],
+        [ "Accessing graphics resources", "d6/dfc/md_src_2plugin_2graphic_2README.html#accessing-graphics-resources", null ],
+        [ "Shader from WGSL source", "d6/dfc/md_src_2plugin_2graphic_2README.html#shader-from-wgsl-source", null ],
+        [ "Render graph with a render pass", "d6/dfc/md_src_2plugin_2graphic_2README.html#render-graph-with-a-render-pass", null ],
+        [ "Full example (minimal app with error callback)", "d6/dfc/md_src_2plugin_2graphic_2README.html#full-example-minimal-app-with-error-callback", null ]
+      ] ],
+      [ "License", "d6/dfc/md_src_2plugin_2graphic_2README.html#license", null ]
+    ] ],
     [ "Examples", "d2/d19/md_examples_2README.html", [
       [ "Building and Running Examples", "d2/d19/md_examples_2README.html#building-and-running-examples", null ],
       [ "Non-exhaustive list of examples", "d2/d19/md_examples_2README.html#non-exhaustive-list-of-examples", null ],
       [ "Some flags that you can use when building examples", "d2/d19/md_examples_2README.html#some-flags-that-you-can-use-when-building-examples", null ]
     ] ],
     [ "Engine² (or Engine Squared)", "d0/d30/md_README.html", [
-      [ "Description", "d0/d30/md_README.html#description", null ],
+      [ "Description", "d0/d30/md_README.html#description-1", null ],
       [ "Getting started", "d0/d30/md_README.html#getting-started", [
         [ "Requirements", "d0/d30/md_README.html#requirements", null ],
         [ "Compile the library", "d0/d30/md_README.html#compile-the-library", null ],
@@ -99,31 +123,30 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d0/db0/Limits_8hpp_source.html",
-"d1/d6e/classGraphic_1_1Resource_1_1Shader.html#aa4d394b3e83701f8e8c0f5730d968578",
-"d2/d38/structObject_1_1Utils_1_1CollapseResult.html#ae41483c2365a1861e6e5043d2bb8f3de",
-"d3/d3c/namespaceRmlui_1_1Utils.html",
-"d4/d18/classEngine_1_1Core.html#a376804322841ade4b31367f423ae8063",
-"d4/dc7/Relationship_8cpp.html#a352f78dc8508082ecf242c7a1d277bef",
-"d5/d40/webgpu_8hpp.html#a43d929a44cdfe7584e3e2509589f0241",
-"d5/d40/webgpu_8hpp.html#ac2a95c89f93237d0ca2c6e6fc965b226",
-"d5/dc5/structPhysics_1_1Component_1_1RigidBody.html#a30e519b25e96e9b4ead5f18b90e7243f",
-"d6/d7d/classGraphic_1_1Exception_1_1BindGroupCreationError.html",
-"d6/dce/namespacewgpu.html#a3be55a1700190d681b85f6a9c82ea31c",
-"d6/dce/namespacewgpu.html#aba9950aa4e9a7916ebdf8cfaefe4dbe1",
-"d7/d47/classEngine_1_1Scheduler_1_1RelativeTimeUpdate.html#acf54bac6f45630ddf93e8d371399751a",
-"d7/dec/structObject_1_1Component_1_1Material.html#ac885e46be3937517b82b63ee69fdea10",
-"d8/de0/classdemo__setup_1_1DemoWindow.html#a76b9c42444c8b2de51f62d4dd442b86d",
-"d9/da3/CreateInstance_8hpp.html",
-"da/d68/MissingResourceError_8hpp.html",
-"db/d17/Extraction_8hpp_source.html",
-"db/df5/namespaceGraphic_1_1Resource.html#aef8384aaa884aef3fab6f39b39895371",
-"dc/da8/ShaderContainer_8hpp.html",
-"dd/d97/structObject_1_1Helper_1_1CreatePlaneInfo.html#aec781cc9e3d7b8788c4bfd4e1972ae37",
-"de/d81/structPhysics_1_1Component_1_1VehicleController.html#a53e2bdd80a435fa051df43ba8ab5c312",
-"df/d45/structDefaultPipeline_1_1Resource_1_1CameraGPUBuffer_1_1CameraTransfer.html#a90dbb048f89cb0e3a0bb5045da7b9b28",
-"dir_423c5852632b5cea9ad35ab225713bd2.html",
-"namespacemembers_c.html"
+"d0/dba/object_2src_2component_2AmbientLight_8hpp.html",
+"d1/d6e/classGraphic_1_1Resource_1_1Shader.html#ae24e1df392749561fc53141537fbbce4",
+"d2/d47/classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer.html#ade58053dfdacb6401b835ce62fb93a18",
+"d3/d7d/structGraphic_1_1Resource_1_1Surface.html#ab29f9626ac5b816c077411d5e4637d32",
+"d4/d18/classEngine_1_1Core.html#aa9793256fcc5501a02b19149d2954e1f",
+"d4/df1/InputUtils_8hpp_source.html",
+"d5/d40/webgpu_8hpp.html#a4f6353534ef9eac2cc9fe240d3dd07cc",
+"d5/d40/webgpu_8hpp.html#ad060a6346d79e0e8de748317a8f9f8ec",
+"d5/dd4/structPhysics_1_1Component_1_1WheelSettings.html#a280a8d3df07fea237e07a574fefaee88",
+"d6/d9e/SoundManager_8hpp.html#a8bd2b95c2978169cfbd1c19279684f27",
+"d6/dce/namespacewgpu.html#a4889a2ddeddc5b6b8d2277fa81f7c8c4",
+"d6/dce/namespacewgpu.html#acb8fa9456d5439a65b7a6967f64ae723",
+"d7/d53/BaseFunction_8hpp_source.html",
+"d7/df6/classRenderingPipeline_1_1Init.html#a6e468eea2f511ac83b33eec6b9089bb2",
+"d8/de8/classEngine_1_1Scheduler_1_1Startup.html",
+"d9/db5/structObject_1_1Component_1_1Camera.html#a6e86f12e7cae512ccf06cdc60d0e39ac",
+"da/d6e/classEngine_1_1Entity.html#a316e305136e6fd461260d9f6ce539fb3",
+"db/d28/classWindow_1_1Plugin.html#ae0552e57e3ca33d469abdbab89bd8468",
+"dc/d01/ClothGenerator_8hpp.html#add154ec512eaff35c1c7c09c87495cfd",
+"dc/dba/structPhysics_1_1Component_1_1VehicleInternal.html",
+"dd/db8/classCameraMovement_1_1CameraMovementError.html",
+"de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b",
+"df/d86/classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a2151746323aa8b08b7757307feabc93d",
+"dir_89760e66f664ad53dbcbb8775e2d7068.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

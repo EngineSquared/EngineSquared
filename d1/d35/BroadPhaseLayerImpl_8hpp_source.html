@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>EngineSquared: src/plugin/physics/src/utils/BroadPhaseLayerImpl.hpp (1de556d48b65f8aa90d3f384a7458d5c7999e756) Source File</title>
+<title>EngineSquared: src/plugin/physics/src/utils/BroadPhaseLayerImpl.hpp (ce0d3b9b9d3272f96d9a1f073d8b170acd048f80) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -138,47 +138,45 @@ $(document).ready(function(){initNavTree('d1/d35/BroadPhaseLayerImpl_8hpp_source
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="comment">// Create a mapping table from object to broad phase layer</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        _objectToBroadPhase[Layers::NON_MOVING] = BroadPhaseLayers::NON_MOVING;</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        _objectToBroadPhase[Layers::MOVING] = BroadPhaseLayers::MOVING;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        _objectToBroadPhase[Layers::DEBRIS] = BroadPhaseLayers::DEBRIS;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    }</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    }</div>
 </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#af0c7573885ae78571d9cc8074de4ec57">   28</a></span>    <span class="keyword">virtual</span> JPH::uint <a class="code hl_function" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#af0c7573885ae78571d9cc8074de4ec57">GetNumBroadPhaseLayers</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> BroadPhaseLayers::NUM_LAYERS; }</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="foldopen" id="foldopen00030" data-start="{" data-end="}">
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#ae04c00a778cfe6cf98599e89a95aeec5">   30</a></span>    <span class="keyword">virtual</span> JPH::BroadPhaseLayer <a class="code hl_function" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#ae04c00a778cfe6cf98599e89a95aeec5">GetBroadPhaseLayer</a>(JPH::ObjectLayer inLayer)<span class="keyword"> const override</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        JPH_ASSERT(inLayer &lt; Layers::NUM_LAYERS);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordflow">return</span> _objectToBroadPhase[inLayer];</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    }</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#af0c7573885ae78571d9cc8074de4ec57">   27</a></span>    <span class="keyword">virtual</span> JPH::uint <a class="code hl_function" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#af0c7573885ae78571d9cc8074de4ec57">GetNumBroadPhaseLayers</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> BroadPhaseLayers::NUM_LAYERS; }</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="foldopen" id="foldopen00029" data-start="{" data-end="}">
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#ae04c00a778cfe6cf98599e89a95aeec5">   29</a></span>    <span class="keyword">virtual</span> JPH::BroadPhaseLayer <a class="code hl_function" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#ae04c00a778cfe6cf98599e89a95aeec5">GetBroadPhaseLayer</a>(JPH::ObjectLayer inLayer)<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        JPH_ASSERT(inLayer &lt; Layers::NUM_LAYERS);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordflow">return</span> _objectToBroadPhase[inLayer];</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    }</div>
 </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="foldopen" id="foldopen00036" data-start="{" data-end="}">
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#afb68a2cbb7f88c90a0694b5e285f6585">   36</a></span>    <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#afb68a2cbb7f88c90a0694b5e285f6585">GetBroadPhaseLayerName</a>(JPH::BroadPhaseLayer inLayer)<span class="keyword"> const override</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordflow">switch</span> ((JPH::BroadPhaseLayer::Type) inLayer)</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        {</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordflow">case</span> (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::NON_MOVING: <span class="keywordflow">return</span> <span class="stringliteral">&quot;NON_MOVING&quot;</span>;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordflow">case</span> (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::MOVING: <span class="keywordflow">return</span> <span class="stringliteral">&quot;MOVING&quot;</span>;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keywordflow">case</span> (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::DEBRIS: <span class="keywordflow">return</span> <span class="stringliteral">&quot;DEBRIS&quot;</span>;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">default</span>: JPH_ASSERT(<span class="keyword">false</span>); <span class="keywordflow">return</span> <span class="stringliteral">&quot;INVALID&quot;</span>;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        }</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#afb68a2cbb7f88c90a0694b5e285f6585">   35</a></span>    <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#afb68a2cbb7f88c90a0694b5e285f6585">GetBroadPhaseLayerName</a>(JPH::BroadPhaseLayer inLayer)<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordflow">switch</span> ((JPH::BroadPhaseLayer::Type) inLayer)</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordflow">case</span> (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::NON_MOVING: <span class="keywordflow">return</span> <span class="stringliteral">&quot;NON_MOVING&quot;</span>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordflow">case</span> (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::MOVING: <span class="keywordflow">return</span> <span class="stringliteral">&quot;MOVING&quot;</span>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordflow">default</span>: JPH_ASSERT(<span class="keyword">false</span>); <span class="keywordflow">return</span> <span class="stringliteral">&quot;INVALID&quot;</span>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        }</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    }</div>
 </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    std::array&lt;JPH::BroadPhaseLayer, Layers::NUM_LAYERS&gt; _objectToBroadPhase;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>};</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    std::array&lt;JPH::BroadPhaseLayer, Layers::NUM_LAYERS&gt; _objectToBroadPhase;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>};</div>
 </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>} <span class="comment">// namespace Physics::Utils</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>} <span class="comment">// namespace Physics::Utils</span></div>
 </div>
 <div class="ttc" id="aBroadPhaseLayers_8hpp_html"><div class="ttname"><a href="../../d9/dd2/BroadPhaseLayers_8hpp.html">BroadPhaseLayers.hpp</a></div></div>
 <div class="ttc" id="aLayers_8hpp_html"><div class="ttname"><a href="../../d9/da3/Layers_8hpp.html">Layers.hpp</a></div></div>
 <div class="ttc" id="aclassPhysics_1_1Utils_1_1BPLayerInterfaceImpl_html"><div class="ttname"><a href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html">Physics::Utils::BPLayerInterfaceImpl</a></div><div class="ttdef"><b>Definition</b> BroadPhaseLayerImpl.hpp:18</div></div>
 <div class="ttc" id="aclassPhysics_1_1Utils_1_1BPLayerInterfaceImpl_html_a9203407f499ac9e4ac3af71b6a36ebb9"><div class="ttname"><a href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#a9203407f499ac9e4ac3af71b6a36ebb9">Physics::Utils::BPLayerInterfaceImpl::BPLayerInterfaceImpl</a></div><div class="ttdeci">BPLayerInterfaceImpl()</div><div class="ttdef"><b>Definition</b> BroadPhaseLayerImpl.hpp:20</div></div>
-<div class="ttc" id="aclassPhysics_1_1Utils_1_1BPLayerInterfaceImpl_html_ae04c00a778cfe6cf98599e89a95aeec5"><div class="ttname"><a href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#ae04c00a778cfe6cf98599e89a95aeec5">Physics::Utils::BPLayerInterfaceImpl::GetBroadPhaseLayer</a></div><div class="ttdeci">virtual JPH::BroadPhaseLayer GetBroadPhaseLayer(JPH::ObjectLayer inLayer) const override</div><div class="ttdef"><b>Definition</b> BroadPhaseLayerImpl.hpp:30</div></div>
-<div class="ttc" id="aclassPhysics_1_1Utils_1_1BPLayerInterfaceImpl_html_af0c7573885ae78571d9cc8074de4ec57"><div class="ttname"><a href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#af0c7573885ae78571d9cc8074de4ec57">Physics::Utils::BPLayerInterfaceImpl::GetNumBroadPhaseLayers</a></div><div class="ttdeci">virtual JPH::uint GetNumBroadPhaseLayers() const override</div><div class="ttdef"><b>Definition</b> BroadPhaseLayerImpl.hpp:28</div></div>
-<div class="ttc" id="aclassPhysics_1_1Utils_1_1BPLayerInterfaceImpl_html_afb68a2cbb7f88c90a0694b5e285f6585"><div class="ttname"><a href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#afb68a2cbb7f88c90a0694b5e285f6585">Physics::Utils::BPLayerInterfaceImpl::GetBroadPhaseLayerName</a></div><div class="ttdeci">const char * GetBroadPhaseLayerName(JPH::BroadPhaseLayer inLayer) const override</div><div class="ttdef"><b>Definition</b> BroadPhaseLayerImpl.hpp:36</div></div>
+<div class="ttc" id="aclassPhysics_1_1Utils_1_1BPLayerInterfaceImpl_html_ae04c00a778cfe6cf98599e89a95aeec5"><div class="ttname"><a href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#ae04c00a778cfe6cf98599e89a95aeec5">Physics::Utils::BPLayerInterfaceImpl::GetBroadPhaseLayer</a></div><div class="ttdeci">virtual JPH::BroadPhaseLayer GetBroadPhaseLayer(JPH::ObjectLayer inLayer) const override</div><div class="ttdef"><b>Definition</b> BroadPhaseLayerImpl.hpp:29</div></div>
+<div class="ttc" id="aclassPhysics_1_1Utils_1_1BPLayerInterfaceImpl_html_af0c7573885ae78571d9cc8074de4ec57"><div class="ttname"><a href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#af0c7573885ae78571d9cc8074de4ec57">Physics::Utils::BPLayerInterfaceImpl::GetNumBroadPhaseLayers</a></div><div class="ttdeci">virtual JPH::uint GetNumBroadPhaseLayers() const override</div><div class="ttdef"><b>Definition</b> BroadPhaseLayerImpl.hpp:27</div></div>
+<div class="ttc" id="aclassPhysics_1_1Utils_1_1BPLayerInterfaceImpl_html_afb68a2cbb7f88c90a0694b5e285f6585"><div class="ttname"><a href="../../dc/d0a/classPhysics_1_1Utils_1_1BPLayerInterfaceImpl.html#afb68a2cbb7f88c90a0694b5e285f6585">Physics::Utils::BPLayerInterfaceImpl::GetBroadPhaseLayerName</a></div><div class="ttdeci">const char * GetBroadPhaseLayerName(JPH::BroadPhaseLayer inLayer) const override</div><div class="ttdef"><b>Definition</b> BroadPhaseLayerImpl.hpp:35</div></div>
 <div class="ttc" id="anamespacePhysics_1_1Utils_html"><div class="ttname"><a href="../../d5/d85/namespacePhysics_1_1Utils.html">Physics::Utils</a></div><div class="ttdef"><b>Definition</b> BroadPhaseLayerImpl.hpp:15</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

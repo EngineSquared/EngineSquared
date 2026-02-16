@@ -9,9 +9,9 @@ var searchData=
   ['nativescripting_3a_3autils_6',['Utils',['../d8/d7e/namespaceNativeScripting_1_1Utils.html',1,'NativeScripting']]],
   ['nativescriptingcomponent_2ehpp_7',['NativeScriptingComponent.hpp',['../d7/d03/NativeScriptingComponent_8hpp.html',1,'']]],
   ['nearplane_8',['nearPlane',['../d9/db5/structObject_1_1Component_1_1Camera.html#abbcb166b99aaff9631ed5d8af70ef61e',1,'Object::Component::Camera']]],
-  ['needssimplification_9',['NeedsSimplification',['../d0/d5d/namespaceObject_1_1Utils.html#a6f2ca342d7f17e4409a625e7b3621556',1,'Object::Utils']]],
-  ['newsize_10',['newSize',['../db/d64/structWindow_1_1Event_1_1OnResize.html#a97f60738338e85b02bc674b436dee091',1,'Window::Event::OnResize']]],
-  ['next_11',['next',['../d3/dd1/structRelationship_1_1Component_1_1Relationship.html#a86c7bae2b9e914608ad43a9260496ee0',1,'Relationship::Component::Relationship']]],
+  ['newsize_9',['newSize',['../db/d64/structWindow_1_1Event_1_1OnResize.html#a97f60738338e85b02bc674b436dee091',1,'Window::Event::OnResize']]],
+  ['next_10',['next',['../d3/dd1/structRelationship_1_1Component_1_1Relationship.html#a86c7bae2b9e914608ad43a9260496ee0',1,'Relationship::Component::Relationship']]],
+  ['no_20window_11',['Headless (no window)',['../d6/dfc/md_src_2plugin_2graphic_2README.html#headless-no-window',1,'']]],
   ['no_5fdiscard_12',['NO_DISCARD',['../d5/d40/webgpu_8hpp.html#ac794180b779a02917f29f913c79abeff',1,'webgpu.hpp']]],
   ['non_20exhaustive_20list_20of_20examples_13',['Non-exhaustive list of examples',['../d2/d19/md_examples_2README.html#non-exhaustive-list-of-examples',1,'']]],
   ['none_14',['None',['../db/df5/namespaceGraphic_1_1Resource.html#ac2c45a0ed51d066a783af740db2d718aa6adf97f83acf6453d4a6a4b1070f3754',1,'Graphic::Resource']]],
@@ -19,7 +19,6 @@ var searchData=
   ['nonexistentcomponenterror_2ehpp_16',['NonexistentComponentError.hpp',['../df/d2f/NonexistentComponentError_8hpp.html',1,'']]],
   ['normalizedtorque_17',['normalizedTorque',['../d2/d29/structPhysics_1_1Component_1_1EngineSettings.html#a91afc5dcd60777d090e589d90631214d',1,'Physics::Component::EngineSettings']]],
   ['normalmatrix_18',['normalMatrix',['../dd/d73/structDefaultPipeline_1_1Resource_1_1TransformGPUData.html#aeff72a501837463a437d297106587fbe',1,'DefaultPipeline::Resource::TransformGPUData']]],
-  ['normals_19',['normals',['../d2/d38/structObject_1_1Utils_1_1CollapseResult.html#ad66656921840b0f5212d2cfc5f1ec43c',1,'Object::Utils::CollapseResult']]],
-  ['nothing_20',['Nothing',['../d7/d02/namespaceEngine_1_1Scheduler.html#adc9f665f0ab46064c8714e86f3089217af80a4ad87fee7c9fdc19b7769495fdb5',1,'Engine::Scheduler']]],
-  ['num_5fsteps_21',['NUM_STEPS',['../d5/d3c/structCounterComponent.html#aea6fc9fb3034575e624335b7fd60551d',1,'CounterComponent']]]
+  ['nothing_19',['Nothing',['../d7/d02/namespaceEngine_1_1Scheduler.html#adc9f665f0ab46064c8714e86f3089217af80a4ad87fee7c9fdc19b7769495fdb5',1,'Engine::Scheduler']]],
+  ['num_5fsteps_20',['NUM_STEPS',['../d5/d3c/structCounterComponent.html#aea6fc9fb3034575e624335b7fd60551d',1,'CounterComponent']]]
 ];
