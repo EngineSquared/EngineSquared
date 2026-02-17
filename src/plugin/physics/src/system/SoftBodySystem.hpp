@@ -56,4 +56,14 @@ void ShutdownSoftBodySystem(Engine::Core &core);
  */
 void SyncSoftBodyVertices(Engine::Core &core);
 
+/**
+ * @brief Update kinematic vertices for attached soft bodies
+ *
+ * Moves kinematic vertices to follow their parent rigid body's transform.
+ * Should be called BEFORE physics update (before PhysicsSystem::Update).
+ *
+ * @param core Reference to the engine core
+ */
+void UpdateKinematicVertices(Engine::Core &core);
+
 } // namespace Physics::System

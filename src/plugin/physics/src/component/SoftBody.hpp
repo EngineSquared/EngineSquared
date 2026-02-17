@@ -26,10 +26,12 @@
 #include <algorithm>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <optional>
 #include <utility>
 #include <vector>
 
 #include "component/Mesh.hpp"
+#include "entity/Entity.hpp"
 
 namespace Physics::Component {
 
@@ -262,6 +264,24 @@ struct SoftBody {
     /// Edge constraints (pairs of vertex indices) for rope/chain without faces
     /// Auto-generated from Mesh.indices if empty
     std::vector<std::pair<uint32_t, uint32_t>> edges;
+
+    //=========================================================================
+    // Attachment to rigid body (for vehicle deformation, etc.)
+    //=========================================================================
+
+    /// Entity ID of the rigid body to attach to (optional)
+    /// When set, kinematic vertices will follow this body's transform
+    /// Use AttachToEntity() to set this properly
+    std::optional<Engine::EntityId> attachedEntityId = std::nullopt;
+
+    /// Percentage of vertices to make kinematic (attachment points) [0.0 - 1.0]
+    /// These are automatically selected from the "bottom" of the mesh (lowest Y)
+    /// Set to 0 to disable automatic kinematic vertex selection
+    float kinematicVertexPercent = 0.0f;
+
+    /// Manual list of vertex indices to make kinematic (in original mesh space)
+    /// If non-empty, these are used instead of automatic selection
+    std::vector<uint32_t> kinematicVertexIndices;
 
     //=========================================================================
     // Methods

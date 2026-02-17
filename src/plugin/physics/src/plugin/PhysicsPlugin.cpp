@@ -31,6 +31,7 @@ void Physics::Plugin::Bind()
     RegisterSystems<Engine::Scheduler::Startup>(System::InitConstraintSystem);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitSoftBodySystem);
 
+    RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::UpdateKinematicVertices);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::PhysicsUpdate);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::VehicleControlSystem);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::VehicleRPMUpdate);
