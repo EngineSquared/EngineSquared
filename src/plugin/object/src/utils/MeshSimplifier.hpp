@@ -152,8 +152,7 @@ struct SimplificationSettings {
  * @param maxIterations Maximum number of simplification passes
  * @return SimplificationResult containing the simplified mesh
  */
-[[nodiscard]] SimplificationResult SimplifyMeshToTarget(const Component::Mesh &mesh,
-                                                        uint32_t targetVertexCount,
+[[nodiscard]] SimplificationResult SimplifyMeshToTarget(const Component::Mesh &mesh, uint32_t targetVertexCount,
                                                         uint32_t maxIterations = 10);
 
 /**
@@ -168,8 +167,7 @@ struct SimplificationSettings {
  * @param targetVertexCount Approximate target vertex count
  * @return SimplificationResult containing the simplified mesh
  */
-[[nodiscard]] SimplificationResult SimplifyMeshByVoxelization(const Component::Mesh &mesh,
-                                                               uint32_t targetVertexCount);
+[[nodiscard]] SimplificationResult SimplifyMeshByVoxelization(const Component::Mesh &mesh, uint32_t targetVertexCount);
 
 /**
  * @brief Check if a mesh needs simplification

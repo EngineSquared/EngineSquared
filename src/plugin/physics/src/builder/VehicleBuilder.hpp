@@ -48,8 +48,8 @@ template <size_t N> class VehicleBuilder {
  * @brief Vehicle body type enumeration
  */
 enum class VehicleBodyType {
-    Rigid,    ///< Standard rigid body
-    Soft,     ///< Soft body for deformable objects
+    Rigid, ///< Standard rigid body
+    Soft,  ///< Soft body for deformable objects
 };
 
 /**
@@ -236,7 +236,6 @@ template <> class VehicleBuilder<4> {
         chassis.AddComponent<Object::Component::Transform>(
             Object::Component::Transform(_chassisPosition, _chassisScale, _chassisRotation));
 
-            
         std::array<Engine::EntityId, 4> wheelEntities;
         for (size_t i = 0; i < 4; ++i)
         {

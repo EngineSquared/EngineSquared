@@ -11,7 +11,7 @@ class ObjectVsBroadPhaseLayerFilterImpl : public JPH::ObjectVsBroadPhaseLayerFil
         switch (inLayer1)
         {
         case Layers::NON_MOVING: return inLayer2 == BroadPhaseLayers::MOVING || inLayer2 == BroadPhaseLayers::DEBRIS;
-        case Layers::MOVING: return inLayer2 != BroadPhaseLayers::DEBRIS; // MOVING doesn't collide with DEBRIS
+        case Layers::MOVING: return inLayer2 != BroadPhaseLayers::DEBRIS;     // MOVING doesn't collide with DEBRIS
         case Layers::DEBRIS: return inLayer2 == BroadPhaseLayers::NON_MOVING; // DEBRIS only collides with NON_MOVING
         default: JPH_ASSERT(false); return false;
         }

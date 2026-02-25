@@ -16,8 +16,7 @@ namespace {
  */
 class SpatialHash {
   public:
-    explicit SpatialHash(float cellSize) : _cellSize(std::max(cellSize, 1e-6f)),
-                                           _invCellSize(1.0f / _cellSize) {}
+    explicit SpatialHash(float cellSize) : _cellSize(std::max(cellSize, 1e-6f)), _invCellSize(1.0f / _cellSize) {}
 
     /**
      * @brief Get hash key for a position
@@ -28,18 +27,14 @@ class SpatialHash {
         auto y = static_cast<int32_t>(std::floor(pos.y * _invCellSize));
         auto z = static_cast<int32_t>(std::floor(pos.z * _invCellSize));
 
-        return (static_cast<int64_t>(x) * 73856093) ^
-               (static_cast<int64_t>(y) * 19349663) ^
+        return (static_cast<int64_t>(x) * 73856093) ^ (static_cast<int64_t>(y) * 19349663) ^
                (static_cast<int64_t>(z) * 83492791);
     }
 
     /**
      * @brief Insert a vertex index at a position
      */
-    void Insert(const glm::vec3 &pos, uint32_t index)
-    {
-        _cells[GetKey(pos)].push_back(index);
-    }
+    void Insert(const glm::vec3 &pos, uint32_t index) { _cells[GetKey(pos)].push_back(index); }
 
     /**
      * @brief Get all vertices in the same cell and neighboring cells
@@ -134,8 +129,7 @@ class UnionFind {
 /**
  * @brief Check if a triangle is degenerate (has zero area or duplicate vertices)
  */
-bool IsTriangleDegenerate(uint32_t i0, uint32_t i1, uint32_t i2,
-                          const std::vector<glm::vec3> &vertices,
+bool IsTriangleDegenerate(uint32_t i0, uint32_t i1, uint32_t i2, const std::vector<glm::vec3> &vertices,
                           float epsilon = 1e-8f)
 {
     if (i0 == i1 || i1 == i2 || i0 == i2)
@@ -160,8 +154,7 @@ bool IsTriangleDegenerate(uint32_t i0, uint32_t i1, uint32_t i2,
 /**
  * @brief Helper: compute mesh bounds
  */
-static void ComputeBounds(const std::vector<glm::vec3> &vertices,
-                          glm::vec3 &minBound, glm::vec3 &maxBound)
+static void ComputeBounds(const std::vector<glm::vec3> &vertices, glm::vec3 &minBound, glm::vec3 &maxBound)
 {
     minBound = glm::vec3(FLT_MAX);
     maxBound = glm::vec3(-FLT_MAX);
@@ -176,8 +169,7 @@ static void ComputeBounds(const std::vector<glm::vec3> &vertices,
 /**
  * @brief Compute adaptive merge distance based on mesh size and settings
  */
-static float ComputeMergeDistance(const std::vector<glm::vec3> &vertices,
-                                  const SimplificationSettings &settings)
+static float ComputeMergeDistance(const std::vector<glm::vec3> &vertices, const SimplificationSettings &settings)
 {
     glm::vec3 minBound, maxBound;
     ComputeBounds(vertices, minBound, maxBound);
@@ -191,8 +183,7 @@ static float ComputeMergeDistance(const std::vector<glm::vec3> &vertices,
 /**
  * @brief Cluster vertices using spatial hash and return UnionFind
  */
-static UnionFind ClusterVertices(const std::vector<glm::vec3> &vertices,
-                                 float mergeDistance,
+static UnionFind ClusterVertices(const std::vector<glm::vec3> &vertices, float mergeDistance,
                                  const SpatialHash &spatialHash)
 {
     UnionFind uf(static_cast<uint32_t>(vertices.size()));
@@ -226,10 +217,8 @@ struct CollapseResult {
     std::vector<uint32_t> vertexMap;
 };
 
-static CollapseResult CollapseClusters(const std::vector<glm::vec3> &vertices,
-                                       const std::vector<glm::vec3> &normals,
-                                       const std::vector<glm::vec2> &texCoords,
-                                       UnionFind &uf)
+static CollapseResult CollapseClusters(const std::vector<glm::vec3> &vertices, const std::vector<glm::vec3> &normals,
+                                       const std::vector<glm::vec2> &texCoords, UnionFind &uf)
 {
     CollapseResult res;
 
@@ -298,8 +287,7 @@ static CollapseResult CollapseClusters(const std::vector<glm::vec3> &vertices,
     return res;
 }
 
-SimplificationResult SimplifyMesh(const Component::Mesh &mesh,
-                                  const SimplificationSettings &settings)
+SimplificationResult SimplifyMesh(const Component::Mesh &mesh, const SimplificationSettings &settings)
 {
     SimplificationResult result;
     result.originalVertexCount = static_cast<uint32_t>(mesh.GetVertices().size());
@@ -377,14 +365,13 @@ SimplificationResult SimplifyMesh(const Component::Mesh &mesh,
     }
 
     result.simplifiedVertexCount = static_cast<uint32_t>(collapseRes.vertices.size());
-    result.wasSimplified = (result.simplifiedVertexCount < result.originalVertexCount) ||
-                           (newIndices.size() != indices.size());
+    result.wasSimplified =
+        (result.simplifiedVertexCount < result.originalVertexCount) || (newIndices.size() != indices.size());
 
     return result;
 }
 
-SimplificationResult SimplifyMeshToTarget(const Component::Mesh &mesh,
-                                          uint32_t targetVertexCount,
+SimplificationResult SimplifyMeshToTarget(const Component::Mesh &mesh, uint32_t targetVertexCount,
                                           uint32_t maxIterations)
 {
     // If already under target, return unchanged
@@ -440,8 +427,7 @@ SimplificationResult SimplifyMeshToTarget(const Component::Mesh &mesh,
     return bestResult;
 }
 
-SimplificationResult SimplifyMeshByVoxelization(const Component::Mesh &mesh,
-                                                 uint32_t targetVertexCount)
+SimplificationResult SimplifyMeshByVoxelization(const Component::Mesh &mesh, uint32_t targetVertexCount)
 {
     SimplificationResult result;
     result.originalVertexCount = static_cast<uint32_t>(mesh.GetVertices().size());
@@ -491,8 +477,7 @@ SimplificationResult SimplifyMeshByVoxelization(const Component::Mesh &mesh,
 
     // Hash function for cell coordinates
     auto cellHash = [cellsY, cellsZ](uint32_t x, uint32_t y, uint32_t z) -> uint64_t {
-        return static_cast<uint64_t>(x) * cellsY * cellsZ + 
-               static_cast<uint64_t>(y) * cellsZ + z;
+        return static_cast<uint64_t>(x) * cellsY * cellsZ + static_cast<uint64_t>(y) * cellsZ + z;
     };
 
     // Map from cell hash to: (sum of positions, sum of normals, sum of texcoords, count, new index)
@@ -512,12 +497,12 @@ SimplificationResult SimplifyMeshByVoxelization(const Component::Mesh &mesh,
     for (uint32_t i = 0; i < vertices.size(); ++i)
     {
         const glm::vec3 &v = vertices[i];
-        
+
         // Calculate cell coordinates
         uint32_t cx = static_cast<uint32_t>(std::floor((v.x - minBound.x) * invCellSize));
         uint32_t cy = static_cast<uint32_t>(std::floor((v.y - minBound.y) * invCellSize));
         uint32_t cz = static_cast<uint32_t>(std::floor((v.z - minBound.z) * invCellSize));
-        
+
         // Clamp to grid bounds
         cx = std::min(cx, cellsX - 1);
         cy = std::min(cy, cellsY - 1);
@@ -544,7 +529,7 @@ SimplificationResult SimplifyMeshByVoxelization(const Component::Mesh &mesh,
         cell.newIndex = static_cast<uint32_t>(newVertices.size());
         float invCount = 1.0f / static_cast<float>(cell.count);
         newVertices.push_back(cell.posSum * invCount);
-        
+
         if (!normals.empty())
         {
             glm::vec3 avgNormal = cell.normalSum * invCount;
@@ -561,7 +546,7 @@ SimplificationResult SimplifyMeshByVoxelization(const Component::Mesh &mesh,
     for (uint32_t i = 0; i < vertices.size(); ++i)
     {
         const glm::vec3 &v = vertices[i];
-        
+
         uint32_t cx = static_cast<uint32_t>(std::floor((v.x - minBound.x) * invCellSize));
         uint32_t cy = static_cast<uint32_t>(std::floor((v.y - minBound.y) * invCellSize));
         uint32_t cz = static_cast<uint32_t>(std::floor((v.z - minBound.z) * invCellSize));
@@ -706,8 +691,7 @@ SimplificationResult DeduplicateVertices(const Component::Mesh &mesh, float epsi
     return result;
 }
 
-uint32_t EstimateSimplifiedVertexCount(const Component::Mesh &mesh,
-                                       const SimplificationSettings &settings)
+uint32_t EstimateSimplifiedVertexCount(const Component::Mesh &mesh, const SimplificationSettings &settings)
 {
     const auto &vertices = mesh.GetVertices();
 
