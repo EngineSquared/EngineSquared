@@ -4,6 +4,7 @@
 #include "component/ConvexHullMeshCollider.hpp"
 #include "component/MeshCollider.hpp"
 #include "component/RigidBody.hpp"
+#include "component/SoftBody.hpp"
 #include "component/Vehicle.hpp"
 #include "component/VehicleController.hpp"
 #include "component/WheelSettings.hpp"
@@ -34,12 +35,21 @@ namespace Physics::Builder {
  *        .SetWheelMesh(WheelIndex::FrontLeft, wheelMesh)
  *        .SetWheelSettings(WheelIndex::FrontLeft, frontWheelSettings)
  *        .SetDrivetrain(DrivetrainType::RWD)
+ *        .SetBodyType(VehicleBodyType::Rigid)
  *        .Build(core);
  * @endcode
  */
 template <size_t N> class VehicleBuilder {
     static_assert(N == 4, "VehicleBuilder currently only supports 4-wheel vehicles (N=4). "
                           "Support for other wheel counts may be added in future versions.");
+};
+
+/**
+ * @brief Vehicle body type enumeration
+ */
+enum class VehicleBodyType {
+    Rigid,    ///< Standard rigid body
+    Soft,     ///< Soft body for deformable objects
 };
 
 /**
@@ -181,6 +191,15 @@ template <> class VehicleBuilder<4> {
     }
 
     /**
+     * @brief Set vehicle body type (Rigid or Soft)
+     */
+    VehicleBuilder &SetBodyType(VehicleBodyType bodyType)
+    {
+        _bodyType = bodyType;
+        return *this;
+    }
+
+    /**
      * @brief Build the vehicle and create all entities
      *
      * Creates:
@@ -216,8 +235,8 @@ template <> class VehicleBuilder<4> {
         auto chassis = core.CreateEntity();
         chassis.AddComponent<Object::Component::Transform>(
             Object::Component::Transform(_chassisPosition, _chassisScale, _chassisRotation));
-        chassis.AddComponent<Object::Component::Mesh>(_chassisMesh);
 
+            
         std::array<Engine::EntityId, 4> wheelEntities;
         for (size_t i = 0; i < 4; ++i)
         {
@@ -232,11 +251,24 @@ template <> class VehicleBuilder<4> {
             wheelEntities[i].AddComponent<Object::Component::Mesh>(core, _wheelMeshes[i]);
         }
 
-        auto chassisRigidBody = Component::RigidBody::CreateDynamic(_chassisMass);
-        chassisRigidBody.friction = 0.5f;
-        chassisRigidBody.restitution = 0.1f;
-        chassis.AddComponent<Component::ConvexHullMeshCollider>();
-        chassis.AddComponent<Component::RigidBody>(chassisRigidBody);
+        Physics::Component::ConvexHullMeshCollider meshCollider;
+        meshCollider.mesh = _chassisMesh;
+        chassis.AddComponent<Component::ConvexHullMeshCollider>(meshCollider);
+
+        if (_bodyType == VehicleBodyType::Rigid)
+        {
+            auto chassisRigidBody = Component::RigidBody::CreateDynamic(_chassisMass);
+            chassisRigidBody.friction = 0.5f;
+            chassisRigidBody.restitution = 0.1f;
+            chassis.AddComponent<Component::RigidBody>(chassisRigidBody);
+        }
+        else if (_bodyType == VehicleBodyType::Soft)
+        {
+            auto chassisSoftBody = Component::SoftBodySettings::Balloon(_chassisMass);
+            chassisSoftBody.friction = 0.5f;
+            chassisSoftBody.restitution = 0.1f;
+            chassis.AddComponent<Component::SoftBody>(chassisSoftBody);
+        }
 
         _vehicle.wheelEntities = wheelEntities;
         _vehicle.wheelPositions = _wheelPositions;
@@ -294,6 +326,7 @@ template <> class VehicleBuilder<4> {
     std::array<glm::vec3, 4> _wheelPositions = Component::Vehicle::GetDefaultWheelPositions();
 
     bool _hasChassisSet = false;
+    VehicleBodyType _bodyType = VehicleBodyType::Rigid;
     std::array<bool, 4> _hasWheelMesh = {false, false, false, false};
 };
 

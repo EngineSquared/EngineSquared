@@ -23,13 +23,15 @@
 
 #pragma once
 
-#include <algorithm>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <utility>
 #include <vector>
 
-#include "component/Mesh.hpp"
+// Forward declaration to avoid circular dependency
+namespace Object::Component {
+struct Mesh;
+}
 
 namespace Physics::Component {
 
@@ -156,24 +158,18 @@ struct SoftBodySettings {
      * @brief Settings for pressure-based soft bodies (balloons)
      * @param pressure Internal pressure
      * @return SoftBodySettings
-     *
-     * Uses stiff constraint values inspired by Jolt's SoftBodyCreator defaults:
-     * - Edge/Shear: 1.0e-4f (very stiff)
-     * - Bend: 1.0e-3f (stiff but allows some bending)
      */
     static SoftBodySettings Balloon(float pressure = 1000.0f)
     {
         SoftBodySettings s;
-        s.solverIterations = 10;
+        s.solverIterations = 8;
         s.linearDamping = 0.1f;
         s.pressure = pressure;
         s.restitution = 0.5f;
-        s.friction = 0.3f;
-        // Jolt defaults: { 1.0e-4f, 1.0e-4f, 1.0e-3f } for edge/shear/bend
-        s.edgeCompliance = 1.0e-4f;
-        s.shearCompliance = 1.0e-4f;
-        s.bendCompliance = 1.0e-3f;
-        s.vertexRadius = 0.02f; // Small, only for z-fighting prevention
+        s.friction = 0.2f;
+        s.edgeCompliance = 0.001f;
+        s.bendCompliance = 0.1f;
+        s.vertexRadius = 0.02f;
         return s;
     }
 
@@ -209,7 +205,7 @@ struct SoftBodySettings {
  * - **Jolt**: Maintains internal vertex copy for simulation (unavoidable)
  *
  * The SoftBodySystem:
- * 1. On construct: **Auto-detects** Mesh component and initializes physics data
+ * 1. On construct: Reads geometry from Mesh.vertices to create Jolt soft body
  * 2. On update: Writes Jolt simulation results back to Mesh.vertices
  *
  * ## Usage
@@ -217,26 +213,22 @@ struct SoftBodySettings {
  * **From existing Mesh** (e.g., imported .obj):
  * @code
  * auto mesh = OBJLoader("model.obj").GetMesh();
- * auto teapot = core.CreateEntity();
- * teapot.AddComponent<Transform>(core, position);
- * teapot.AddComponent<Mesh>(core, mesh);
- * teapot.AddComponent<SoftBody>(core, SoftBodySettings::Balloon(5000.0f));
+ * auto softBody = SoftBody::CreateFromMesh(mesh, SoftBodySettings::Cloth());
+ * softBody.PinVertex(0);  // Pin first vertex
+ * entity.AddComponent<Object::Component::Mesh>(core, mesh);
+ * entity.AddComponent<SoftBody>(core, softBody);
  * @endcode
  *
- * **Procedural cloth** (using Object::Helper):
+ * **Procedural shapes**:
  * @code
- * auto cloth = Object::Helper::CreateCloth(core, 10, 10, 0.1f, position);
- * auto& soft = cloth.AddComponent<SoftBody>(core, SoftBodySettings::Cloth(0.5f));
- * soft.PinVertex(0);   // Pin top-left corner
- * soft.PinVertex(9);   // Pin top-right corner
+ * auto [mesh, softBody] = SoftBody::CreateCloth(10, 10, 0.1f);
+ * softBody.PinVertex(0);
+ * softBody.PinVertex(9);
+ * entity.AddComponent<Object::Component::Mesh>(core, mesh);
+ * entity.AddComponent<SoftBody>(core, softBody);
  * @endcode
- *
- * **Note**: Collider components (BoxCollider, SphereCollider, etc.) are ignored for SoftBody.
- * Use `SoftBodySettings::vertexRadius` for collision detection.
  *
  * @see Object::Component::Mesh
- * @see Object::Helper::CreateCloth
- * @see Object::Helper::CreateRope
  */
 struct SoftBody {
     //=========================================================================
@@ -286,38 +278,23 @@ struct SoftBody {
         if (vertexIndex < invMasses.size())
         {
             invMasses[vertexIndex] = 0.0f;
-            if (std::ranges::find(pinnedVertices, vertexIndex) == pinnedVertices.end())
-            {
-                pinnedVertices.push_back(vertexIndex);
-            }
+            pinnedVertices.push_back(vertexIndex);
         }
     }
 
     /**
      * @brief Unpin a vertex
-     *
-     * @details kMinMass is used to avoid instability from huge inverse masses.
-     *
      * @param vertexIndex Index of vertex to unpin
      * @param mass Mass to assign (default 1.0)
      */
     void UnpinVertex(uint32_t vertexIndex, float mass = 1.0f)
     {
-        static constexpr float kMinMass = 1.0e-6f;
-
-        if (vertexIndex >= invMasses.size())
-            return;
-
-        if (mass <= 0.0f)
+        if (vertexIndex < invMasses.size())
         {
-            // mass <= 0 means pin the vertex, delegate to PinVertex
-            PinVertex(vertexIndex);
-            return;
+            invMasses[vertexIndex] = mass > 0.0f ? 1.0f / mass : 0.0f;
+            pinnedVertices.erase(std::remove(pinnedVertices.begin(), pinnedVertices.end(), vertexIndex),
+                                 pinnedVertices.end());
         }
-
-        float safeMass = mass < kMinMass ? kMinMass : mass;
-        invMasses[vertexIndex] = 1.0f / safeMass;
-        pinnedVertices.erase(std::ranges::remove(pinnedVertices, vertexIndex).begin(), pinnedVertices.end());
     }
 
     /**
@@ -330,36 +307,54 @@ struct SoftBody {
 
     /**
      * @brief Check if the soft body configuration is valid
-     * @note Only checks if vertex data has been initialized
+     * @note Requires a Mesh component with matching vertex count
      */
     [[nodiscard]] bool IsValid() const { return !invMasses.empty(); }
 
     //=========================================================================
-    // Constructors
+    // Factory methods
     //=========================================================================
 
     /**
-     * @brief Default constructor - creates an empty SoftBody
+     * @brief Create a SoftBody from an existing Mesh
      *
-     * The SoftBody will be configured automatically when added to an entity
-     * that already has a Mesh component. The InitSoftBodySystem hook will:
-     * - Auto-detect the Mesh and initialize invMasses
-     * - Generate edge constraints from mesh faces
-     */
-    SoftBody() = default;
-
-    /**
-     * @brief Construct with specific settings
-     * @param settings Simulation settings (use factory methods like SoftBodySettings::Cloth())
-     */
-    explicit SoftBody(const SoftBodySettings &settings) : settings(settings) {}
-
-    /**
-     * @brief Construct with type and settings
-     * @param bodyType Type of soft body (affects internal processing)
+     * Use this when you have a mesh (e.g., loaded from .obj) and want to make it deformable.
+     *
+     * @param mesh The mesh containing vertices and indices
      * @param settings Simulation settings
+     * @return SoftBody configured for the mesh
      */
-    SoftBody(SoftBodyType bodyType, const SoftBodySettings &settings) : type(bodyType), settings(settings) {}
+    static SoftBody CreateFromMesh(const Object::Component::Mesh &mesh,
+                                   const SoftBodySettings &settings = SoftBodySettings::Default());
+
+    /**
+     * @brief Create a cloth (2D grid)
+     * @param width Number of vertices along X axis
+     * @param height Number of vertices along Y axis
+     * @param spacing Distance between vertices
+     * @param stiffness Cloth stiffness [0, 1]
+     * @return Pair of (Mesh for rendering, SoftBody for physics)
+     */
+    static std::pair<Object::Component::Mesh, SoftBody> CreateCloth(uint32_t width, uint32_t height,
+                                                                    float spacing = 0.1f, float stiffness = 0.5f);
+
+    /**
+     * @brief Create a rope (1D chain)
+     * @param segmentCount Number of segments
+     * @param segmentLength Length of each segment
+     * @param stiffness Rope stiffness [0, 1]
+     * @return Pair of (Mesh for rendering, SoftBody for physics)
+     */
+    static std::pair<Object::Component::Mesh, SoftBody> CreateRope(uint32_t segmentCount, float segmentLength = 0.1f,
+                                                                   float stiffness = 0.9f);
+
+    /**
+     * @brief Create a volumetric cube
+     * @param gridSize Number of vertices per axis
+     * @param spacing Distance between vertices
+     * @return Pair of (Mesh for rendering, SoftBody for physics)
+     */
+    static std::pair<Object::Component::Mesh, SoftBody> CreateCube(uint32_t gridSize, float spacing = 0.1f);
 };
 
 } // namespace Physics::Component

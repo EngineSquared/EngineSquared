@@ -51,6 +51,18 @@ struct SoftBodyInternal {
     /// Used to convert Jolt vertices (world-scale) back to local mesh space during sync
     glm::vec3 initialScale = glm::vec3(1.0f);
 
+    /// Body ID of the rigid body this soft body is attached to (optional)
+    /// When set, kinematic vertices will follow this body's transform
+    JPH::BodyID attachedToBodyID;
+
+    /// Indices of kinematic vertices in the Jolt soft body (deduplicated indices)
+    /// These vertices will be moved to follow the attached body's transform
+    std::vector<uint32_t> kinematicVertexIndices;
+
+    /// Initial positions of kinematic vertices in local space (relative to attached body)
+    /// Used to calculate world positions when the attached body moves
+    std::vector<glm::vec3> kinematicVertexLocalPositions;
+
     /**
      * @brief Default constructor (invalid body)
      */

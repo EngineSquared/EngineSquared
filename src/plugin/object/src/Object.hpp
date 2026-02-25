@@ -22,3 +22,4 @@
 
 // Utils
 #include "utils/ShapeGenerator.hpp"
+#include "utils/MeshSimplifier.hpp"

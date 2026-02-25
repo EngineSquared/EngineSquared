@@ -26,9 +26,13 @@
 #include "Logger.hpp"
 #include "component/BoxCollider.hpp"
 #include "component/CapsuleCollider.hpp"
+#include "component/ConvexHullMeshCollider.hpp"
+#include "component/MeshCollider.hpp"
+#include "component/RigidBodyInternal.hpp"
 #include "component/SoftBody.hpp"
 #include "component/SoftBodyInternal.hpp"
 #include "component/SphereCollider.hpp"
+#include "component/VehicleInternal.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
 #include "utils/Layers.hpp"
@@ -50,6 +54,51 @@ namespace Physics::System {
 //=============================================================================
 // Helper Functions
 //=============================================================================
+
+/**
+ * @brief Select kinematic vertex indices based on percentage (lowest Y values)
+ *
+ * This function selects a percentage of vertices to be kinematic (fixed to parent).
+ * It prioritizes vertices with the lowest Y coordinate (bottom of mesh).
+ *
+ * @param vertices The deduplicated vertices
+ * @param percent Percentage of vertices to select [0.0 - 1.0]
+ * @return Vector of vertex indices to make kinematic
+ */
+static std::vector<uint32_t> SelectKinematicVerticesByY(const std::vector<glm::vec3> &vertices, float percent)
+{
+    if (vertices.empty() || percent <= 0.0f)
+        return {};
+
+    // Special case: 100% kinematic - return all vertices
+    if (percent >= 1.0f)
+    {
+        std::vector<uint32_t> allIndices;
+        allIndices.reserve(vertices.size());
+        for (uint32_t i = 0; i < vertices.size(); ++i)
+        {
+            allIndices.push_back(i);
+        }
+        return allIndices;
+    }
+
+    // For partial kinematic, use uniform spatial distribution instead of just Y
+    // This ensures anchor points are spread across the entire mesh
+    size_t count = static_cast<size_t>(std::ceil(vertices.size() * std::clamp(percent, 0.0f, 1.0f)));
+    count = std::max(count, size_t(1));
+
+    // Use stride-based selection for uniform distribution
+    std::vector<uint32_t> kinematicIndices;
+    kinematicIndices.reserve(count);
+
+    size_t stride = std::max(size_t(1), vertices.size() / count);
+    for (size_t i = 0; kinematicIndices.size() < count && i < vertices.size(); i += stride)
+    {
+        kinematicIndices.push_back(static_cast<uint32_t>(i));
+    }
+
+    return kinematicIndices;
+}
 
 /**
  * @brief Generate edge constraints from triangle face indices
@@ -301,9 +350,9 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
 static JPH::SoftBodyCreationSettings
 CreateJoltCreationSettings(const Component::SoftBody &softBody,
                            const JPH::Ref<JPH::SoftBodySharedSettings> &sharedSettings, const JPH::RVec3 &position,
-                           const JPH::Quat &rotation)
+                           const JPH::Quat &rotation, JPH::ObjectLayer layer = Utils::Layers::MOVING)
 {
-    JPH::SoftBodyCreationSettings creationSettings(sharedSettings, position, rotation, Utils::Layers::MOVING);
+    JPH::SoftBodyCreationSettings creationSettings(sharedSettings, position, rotation, layer);
 
     // Apply settings
     creationSettings.mNumIterations = softBody.settings.solverIterations;
@@ -350,8 +399,21 @@ static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::Entity
         auto *mesh = entity.TryGetComponent<Object::Component::Mesh>();
         if (!mesh)
         {
-            Log::Error("SoftBody: No Mesh component found. Add Mesh component before SoftBody.");
-            return;
+            if (auto *convexHullMesh = entity.TryGetComponent<Component::ConvexHullMeshCollider>(); convexHullMesh && convexHullMesh->mesh)
+            {
+                mesh = &(convexHullMesh->mesh.value());
+                Log::Warn("SoftBody: Using ConvexHullMeshCollider mesh as geometry for SoftBody");
+            }
+            else if (auto *meshCollider = entity.TryGetComponent<Component::MeshCollider>(); meshCollider && meshCollider->mesh)
+            {
+                mesh = &(meshCollider->mesh.value());
+                Log::Warn("SoftBody: Using MeshCollider mesh as geometry for SoftBody");
+            }
+            else
+            {
+                Log::Error("SoftBody: No Mesh component found. Add Mesh component before SoftBody.");
+                return;
+            }
         }
 
         const auto &meshVertices = mesh->GetVertices();
@@ -421,8 +483,83 @@ static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::Entity
         // Create shared settings from Mesh (includes deduplication, vertex mapping, and scale application)
         auto settingsResult = CreateJoltSharedSettings(softBody, *mesh, scale);
 
+        //=====================================================================
+        // Handle kinematic vertices for attachment to rigid body
+        //=====================================================================
+        std::vector<uint32_t> kinematicJoltIndices;
+        std::vector<glm::vec3> kinematicLocalPositions;
+        JPH::BodyID attachedBodyID;
+
+        if (softBody.attachedEntityId.has_value())
+        {
+            // Get the attached body's BodyID
+            auto attachedEntity = softBody.attachedEntityId.value();
+            if (auto *rigidInternal = registry.try_get<Component::RigidBodyInternal>(attachedEntity))
+            {
+                attachedBodyID = rigidInternal->bodyID;
+                Log::Info(fmt::format("SoftBody: Attaching to rigid body entity {}", static_cast<uint32_t>(attachedEntity)));
+            }
+            else if (auto *vehicleInternal = registry.try_get<Component::VehicleInternal>(attachedEntity))
+            {
+                attachedBodyID = vehicleInternal->chassisBodyID;
+                Log::Info(fmt::format("SoftBody: Attaching to vehicle entity {}", static_cast<uint32_t>(attachedEntity)));
+            }
+            else
+            {
+                Log::Warn("SoftBody: attachedEntityId specified but entity has no RigidBodyInternal or VehicleInternal");
+            }
+
+            // Determine which vertices to make kinematic
+            if (!softBody.kinematicVertexIndices.empty())
+            {
+                // Use manual list - convert from original mesh indices to deduplicated Jolt indices
+                for (uint32_t origIdx : softBody.kinematicVertexIndices)
+                {
+                    if (origIdx < settingsResult.vertexMap.size())
+                    {
+                        uint32_t joltIdx = settingsResult.vertexMap[origIdx];
+                        // Avoid duplicates
+                        if (std::find(kinematicJoltIndices.begin(), kinematicJoltIndices.end(), joltIdx) == kinematicJoltIndices.end())
+                        {
+                            kinematicJoltIndices.push_back(joltIdx);
+                        }
+                    }
+                }
+            }
+            else if (softBody.kinematicVertexPercent > 0.0f)
+            {
+                // Auto-select based on Y position (bottom vertices)
+                // We need the deduplicated vertices from the settings
+                std::vector<glm::vec3> dedupedVertices;
+                dedupedVertices.reserve(settingsResult.settings->mVertices.size());
+                for (const auto &v : settingsResult.settings->mVertices)
+                {
+                    dedupedVertices.emplace_back(v.mPosition.x, v.mPosition.y, v.mPosition.z);
+                }
+                kinematicJoltIndices = SelectKinematicVerticesByY(dedupedVertices, softBody.kinematicVertexPercent);
+            }
+
+            // Set invMass = 0 for kinematic vertices in Jolt settings
+            for (uint32_t joltIdx : kinematicJoltIndices)
+            {
+                if (joltIdx < settingsResult.settings->mVertices.size())
+                {
+                    settingsResult.settings->mVertices[joltIdx].mInvMass = 0.0f;
+                    // Store initial position in local space (relative to soft body origin)
+                    // These are already in the softbody's local coordinate system
+                    const auto &v = settingsResult.settings->mVertices[joltIdx];
+                    kinematicLocalPositions.emplace_back(v.mPosition.x, v.mPosition.y, v.mPosition.z);
+                }
+            }
+
+            Log::Info(fmt::format("SoftBody: {} kinematic vertices configured for attachment", kinematicJoltIndices.size()));
+        }
+
+        // Choose layer based on whether attached (DEBRIS doesn't collide with MOVING)
+        JPH::ObjectLayer layer = attachedBodyID.IsInvalid() ? Utils::Layers::MOVING : Utils::Layers::DEBRIS;
+
         // Create body settings
-        auto creationSettings = CreateJoltCreationSettings(softBody, settingsResult.settings, position, rotation);
+        auto creationSettings = CreateJoltCreationSettings(softBody, settingsResult.settings, position, rotation, layer);
 
         // Create the soft body
         auto &bodyInterface = physicsManager.GetBodyInterface();
@@ -441,13 +578,18 @@ static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::Entity
 
         // Store internal component with vertex mapping AND initial scale for sync
         // The initial scale is needed to convert Jolt vertices back to mesh local space
-        registry.emplace<Component::SoftBodyInternal>(entity, bodyID, std::move(settingsResult.vertexMap), scale);
+        auto &internal = registry.emplace<Component::SoftBodyInternal>(entity, bodyID, std::move(settingsResult.vertexMap), scale);
+
+        // Store attachment info
+        internal.attachedToBodyID = attachedBodyID;
+        internal.kinematicVertexIndices = std::move(kinematicJoltIndices);
+        internal.kinematicVertexLocalPositions = std::move(kinematicLocalPositions);
 
         Log::Info(fmt::format(
             "Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f}), scale "
-            "({:.2f}, {:.2f}, {:.2f})",
+            "({:.2f}, {:.2f}, {:.2f}), layer {}",
             entity, meshVertices.size(), mesh->GetIndices().size() / 3, position.GetX(), position.GetY(),
-            position.GetZ(), scale.x, scale.y, scale.z));
+            position.GetZ(), scale.x, scale.y, scale.z, layer == Utils::Layers::DEBRIS ? "DEBRIS" : "MOVING"));
     }
     catch (const Physics::Exception::SoftBodyError &e)
     {
@@ -556,13 +698,50 @@ void SyncSoftBodyVertices(Engine::Core &core)
         // Write to Mesh.vertices (used by graphics plugin for rendering)
         auto *mesh = registry.try_get<Object::Component::Mesh>(entity);
         if (!mesh || mesh->GetVertices().empty())
-            continue;
+        {
+            if (auto *convexHullMesh = registry.try_get<Component::ConvexHullMeshCollider>(entity); convexHullMesh && convexHullMesh->mesh && !convexHullMesh->mesh->GetVertices().empty())
+            {
+                mesh = &(convexHullMesh->mesh.value());
+                Log::Warn("SoftBody: Using ConvexHullMeshCollider mesh as geometry for SoftBody");
+            }
+            else if (auto *meshCollider = registry.try_get<Component::MeshCollider>(entity); meshCollider && meshCollider->mesh && !meshCollider->mesh->GetVertices().empty())
+            {
+                mesh = &(meshCollider->mesh.value());
+                Log::Warn("SoftBody: Using MeshCollider mesh as geometry for SoftBody");
+            }
+            else
+            {
+                Log::Warn("SoftBody: No Mesh component found during sync. Skipping vertex update.");
+                continue;
+            }
+        }
 
         // Update Transform with center of mass position (like RigidBody sync)
         // This way the GPU applies the Transform, and vertices stay in local space
+        // EXCEPTION: If attached to another body, don't override Transform - it follows the parent
         auto *transform = registry.try_get<Object::Component::Transform>(entity);
-        if (transform)
+        
+        // For attached softbodies, we need the parent transform to convert world vertices to local
+        JPH::RVec3 parentPos = JPH::RVec3::sZero();
+        JPH::Quat parentRot = JPH::Quat::sIdentity();
+        bool isAttached = !internal.attachedToBodyID.IsInvalid();
+        
+        if (transform && isAttached)
         {
+            // Softbody is attached - get the parent body's transform
+            JPH::BodyLockRead parentLock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(), internal.attachedToBodyID);
+            if (parentLock.Succeeded())
+            {
+                const JPH::Body &parentBody = parentLock.GetBody();
+                parentPos = parentBody.GetCenterOfMassPosition();
+                parentRot = parentBody.GetRotation();
+                transform->SetPosition(Utils::FromJoltRVec3(parentPos));
+                transform->SetRotation(Utils::FromJoltQuat(parentRot));
+            }
+        }
+        else if (transform)
+        {
+            // Standard softbody - use its own center of mass
             transform->SetPosition(Utils::FromJoltRVec3(bodyPosition));
             // Note: Soft bodies don't have a single rotation, so we leave it as-is
         }
@@ -580,6 +759,10 @@ void SyncSoftBodyVertices(Engine::Core &core)
                                signOrOne(internal.initialScale.z));
         const glm::vec3 invScale = glm::vec3(1.0f) / safeScale;
 
+        // For attached softbodies: convert world positions to parent-local space
+        // The GPU will then apply the parent's transform, giving us world positions
+        JPH::Quat invParentRot = isAttached ? parentRot.Conjugated() : JPH::Quat::sIdentity();
+
         if (!internal.vertexMap.empty())
         {
             // Use vertex map: original mesh vertices are mapped to deduplicated Jolt vertices
@@ -590,9 +773,22 @@ void SyncSoftBodyVertices(Engine::Core &core)
                 if (joltIdx < joltVertices.size())
                 {
                     const auto &v = joltVertices[joltIdx];
-                    // Convert from Jolt world-scale space back to mesh local space
-                    glm::vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
-                    mesh->SetVertexAt(origIdx, worldPos * invScale);
+                    // Get world position from Jolt
+                    JPH::Vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
+                    
+                    if (isAttached)
+                    {
+                        // Convert from world space to parent-local space
+                        // 1. Subtract parent position to get offset from parent
+                        // 2. Rotate by inverse parent rotation to get local offset
+                        JPH::Vec3 localOffset = invParentRot * (worldPos - JPH::Vec3(parentPos));
+                        mesh->SetVertexAt(origIdx, glm::vec3(localOffset.GetX(), localOffset.GetY(), localOffset.GetZ()) * invScale);
+                    }
+                    else
+                    {
+                        // Standard: just apply inverse scale
+                        mesh->SetVertexAt(origIdx, glm::vec3(worldPos.GetX(), worldPos.GetY(), worldPos.GetZ()) * invScale);
+                    }
                 }
             }
         }
@@ -602,14 +798,94 @@ void SyncSoftBodyVertices(Engine::Core &core)
             for (size_t i = 0u; i < joltVertices.size() && i < mesh->GetVertices().size(); ++i)
             {
                 const auto &v = joltVertices[i];
-                // Convert from Jolt world-scale space back to mesh local space
-                glm::vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
-                mesh->SetVertexAt(i, worldPos * invScale);
+                JPH::Vec3 worldPos(v.mPosition.GetX(), v.mPosition.GetY(), v.mPosition.GetZ());
+                
+                if (isAttached)
+                {
+                    JPH::Vec3 localOffset = invParentRot * (worldPos - JPH::Vec3(parentPos));
+                    mesh->SetVertexAt(i, glm::vec3(localOffset.GetX(), localOffset.GetY(), localOffset.GetZ()) * invScale);
+                }
+                else
+                {
+                    mesh->SetVertexAt(i, glm::vec3(worldPos.GetX(), worldPos.GetY(), worldPos.GetZ()) * invScale);
+                }
             }
         }
 
         // Recalculate normals for correct lighting on deformed soft bodies
         Object::Utils::RecalculateNormals(*mesh);
+    }
+}
+
+void UpdateKinematicVertices(Engine::Core &core)
+{
+    auto &registry = core.GetRegistry();
+
+    auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
+    if (!physicsManager.IsPhysicsActivated())
+        return;
+
+    auto &bodyInterface = physicsManager.GetBodyInterface();
+
+    // Update kinematic vertex positions for attached soft bodies
+    auto view = registry.view<Component::SoftBody, Component::SoftBodyInternal>();
+
+    for (auto entity : view)
+    {
+        auto &internal = view.get<Component::SoftBodyInternal>(entity);
+
+        if (!internal.IsValid())
+            continue;
+
+        // Skip if not attached to any body
+        if (internal.attachedToBodyID.IsInvalid() || internal.kinematicVertexIndices.empty())
+            continue;
+
+        // Get the parent body's current transform
+        JPH::BodyLockRead parentLock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(), internal.attachedToBodyID);
+        if (!parentLock.Succeeded())
+            continue;
+
+        const JPH::Body &parentBody = parentLock.GetBody();
+        JPH::RVec3 parentPos = parentBody.GetCenterOfMassPosition();
+        JPH::Quat parentRot = parentBody.GetRotation();
+
+        // Get writable access to soft body
+        JPH::BodyLockWrite softLock(physicsManager.GetPhysicsSystem().GetBodyLockInterface(), internal.bodyID);
+        if (!softLock.Succeeded())
+            continue;
+
+        JPH::Body &softBody = softLock.GetBody();
+        if (!softBody.IsSoftBody())
+            continue;
+
+        JPH::SoftBodyMotionProperties *motionProps =
+            static_cast<JPH::SoftBodyMotionProperties *>(softBody.GetMotionPropertiesUnchecked());
+
+        // Get mutable vertices
+        JPH::Array<JPH::SoftBodyMotionProperties::Vertex> &vertices = motionProps->GetVertices();
+
+        // Update each kinematic vertex position based on parent transform
+        // The local positions are stored in the softbody's local coordinate system (mesh space)
+        // We rotate them by parent rotation and translate by parent position
+        for (size_t i = 0; i < internal.kinematicVertexIndices.size() && i < internal.kinematicVertexLocalPositions.size(); ++i)
+        {
+            uint32_t joltIdx = internal.kinematicVertexIndices[i];
+            if (joltIdx >= vertices.size())
+                continue;
+
+            // Get the local offset from softbody origin
+            const glm::vec3 &localOffset = internal.kinematicVertexLocalPositions[i];
+            JPH::Vec3 joltLocalOffset(localOffset.x, localOffset.y, localOffset.z);
+
+            // Rotate the local offset by parent rotation, then add parent position
+            JPH::Vec3 rotatedOffset = parentRot * joltLocalOffset;
+            JPH::RVec3 worldPos = parentPos + rotatedOffset;
+
+            // Update vertex position (kinematic vertices have invMass = 0, so they won't be affected by physics)
+            vertices[joltIdx].mPosition = JPH::Vec3(worldPos);
+            vertices[joltIdx].mVelocity = JPH::Vec3::sZero(); // Reset velocity for kinematic vertices
+        }
     }
 }
 

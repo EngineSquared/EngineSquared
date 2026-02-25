@@ -22,6 +22,7 @@ class BPLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface {
         // Create a mapping table from object to broad phase layer
         _objectToBroadPhase[Layers::NON_MOVING] = BroadPhaseLayers::NON_MOVING;
         _objectToBroadPhase[Layers::MOVING] = BroadPhaseLayers::MOVING;
+        _objectToBroadPhase[Layers::DEBRIS] = BroadPhaseLayers::DEBRIS;
     }
 
     virtual JPH::uint GetNumBroadPhaseLayers() const override { return BroadPhaseLayers::NUM_LAYERS; }
@@ -38,6 +39,7 @@ class BPLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface {
         {
         case (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::NON_MOVING: return "NON_MOVING";
         case (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::MOVING: return "MOVING";
+        case (JPH::BroadPhaseLayer::Type) BroadPhaseLayers::DEBRIS: return "DEBRIS";
         default: JPH_ASSERT(false); return "INVALID";
         }
     }
