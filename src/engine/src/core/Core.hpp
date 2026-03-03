@@ -268,6 +268,8 @@ class Core {
      */
     template <typename... TPlugins> void AddPlugins();
 
+    void AddPlugin(std::string name, std::unique_ptr<IPlugin> plugin);
+
     /**
      * @brief Checks if a plugin of the specified type is present.
      *
