@@ -9,7 +9,7 @@
 class MetaPlugin : public Engine::APlugin {
   public:
     explicit MetaPlugin(Engine::Core &core)
-        : Engine::APlugin(core) {
+        : Engine::APlugin(core){
               // empty
           };
     ~MetaPlugin() override = default;
