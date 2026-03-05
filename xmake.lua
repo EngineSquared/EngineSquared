@@ -46,7 +46,7 @@ includes("src/plugin/event/xmake.lua")
 includes("src/plugin/camera-movement/xmake.lua")
 includes("src/plugin/default-pipeline/xmake.lua")
 includes("src/plugin/rmlui/xmake.lua")
-includes("src/plugin/zig/xmake.lua")
+includes("src/plugin/dynamic-library/xmake.lua")
 
 add_rules("plugin.vsxmake.autoupdate")
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
@@ -72,7 +72,7 @@ target("EngineSquared")
     add_deps("PluginEvent")
     add_deps("PluginDefaultPipeline")
     add_deps("PluginRmlui")
-    add_deps("PluginZig")
+    add_deps("PluginDynamicLibrary")
 
     add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native",
                  "rmlui", "freetype", "zlib")

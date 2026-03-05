@@ -1,23 +1,32 @@
 includes("../../engine/xmake.lua")
 
-local plugin_name = "PluginZig"
+add_requires("nlohmann_json v3.12.0")
+
+local plugin_name = "PluginDynamicLibrary"
 
 local required_packages = {
     "entt",
     "spdlog",
-    "fmt"
+    "fmt",
+    "nlohmann_json"
 }
+
+
+includes("tests/zig_project/xmake.lua")
 
 target(plugin_name)
     set_group(PLUGINS_GROUP_NAME)
-    set_kind("headeronly")
+    set_kind("static")
     set_languages("cxx20")
 
     add_packages(required_packages)
 
-    add_headerfiles("src/(component/*.hpp)")
-    add_headerfiles("src/(utils/*.hpp)")
     add_headerfiles("src/(*.hpp)")
+    add_headerfiles("src/(plugin/*.hpp)")
+    add_headerfiles("src/(resource/*.hpp)")
+    add_headerfiles("src/(system/*.hpp)")
+
+    add_deps("ZigSharedLib", {inherit = false})
 
     add_deps("EngineSquaredCore")
 

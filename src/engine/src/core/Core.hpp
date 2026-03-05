@@ -344,6 +344,7 @@ class Core {
     std::type_index _defaultScheduler = typeid(Engine::Scheduler::Update);
     std::vector<std::type_index> _schedulersToDelete;
     std::unordered_map<std::type_index, std::unique_ptr<IPlugin>> _plugins;
+    std::unordered_map<std::string, std::unique_ptr<IPlugin>> _namedPlugins;
     bool _running = false;
 };
 } // namespace Engine
