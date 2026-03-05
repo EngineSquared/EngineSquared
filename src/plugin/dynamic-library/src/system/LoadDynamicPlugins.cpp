@@ -1,9 +1,9 @@
 #include "system/LoadDynamicPlugins.hpp"
 #include "resource/DynamicPlugin.hpp"
 #include "scheduler/Startup.hpp"
+#include <filesystem>
 #include <fstream>
 #include <nlohmann/json.hpp>
-#include <filesystem>
 
 namespace DynamicLibrary::System {
 static std::unordered_map<std::string, std::filesystem::path> GetDynamicPlugins(std::filesystem::path pluginsFile)

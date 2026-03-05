@@ -3,5 +3,5 @@
 #include "core/Core.hpp"
 
 namespace DynamicLibrary::System {
-    void LoadDynamicPlugins(Engine::Core &core);
+void LoadDynamicPlugins(Engine::Core &core);
 }
