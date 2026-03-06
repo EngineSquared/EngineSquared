@@ -74,7 +74,7 @@ class DynamicPlugin : public Engine::APlugin {
     using BindFunctionPtr = void (*)(CoreInterface *);
 
   public:
-    explicit DynamicPlugin(Engine::Core &core, std::filesystem::path dynamicLibraryPath)
+    explicit DynamicPlugin(Engine::Core &core, const std::filesystem::path &dynamicLibraryPath)
         : Engine::APlugin(core), _handle(dynamicLibraryPath)
     {
         _coreInterface.core = &core;
