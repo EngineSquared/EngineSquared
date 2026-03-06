@@ -70,7 +70,7 @@ class DynamicPlugin : public Engine::APlugin {
         };
     } _coreInterface;
 
-    using BindFunction = void (CoreInterface *);
+    using BindFunction = void(CoreInterface *);
     using BindFunctionPtr = void (*)(CoreInterface *);
 
   public:
