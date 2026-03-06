@@ -28,7 +28,7 @@ rule("library")
         json.savefile(libs_db_file_path, libs_db)
     end)
 
-target("ZigSharedLib")
+target("ZigLib")
     set_kind("shared")
     add_files("src/test.zig")
     set_toolchains("@zig")

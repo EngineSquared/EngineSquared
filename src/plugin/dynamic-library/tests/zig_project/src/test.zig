@@ -20,8 +20,18 @@ fn viewForEachCallback(entityId: u32, userData: *anyopaque) callconv(.c) void {
     const core: *MetaCore = @ptrCast(@alignCast(userData));
     std.debug.print("Entity ID: {d}, User Data: {d}\n", .{ entityId, @intFromPtr(core) });
     const component_id = core.GetComponentId(core, "Position");
-    const position: *Position = @ptrCast(@alignCast(core.GetEntityComponentFromView(core, component_id, entityId)));
+    var position: *Position = @ptrCast(@alignCast(core.GetEntityComponentFromView(core, component_id, entityId)));
     std.debug.print("Position: x={d}, y={d}\n", .{ position.x, position.y });
+    if (position.x == 69) {
+        position.x = 0;
+    } else if (position.x == 67) {
+        position.x = 2;
+    }
+    if (position.y == 42) {
+        position.y = 1;
+    } else if (position.y == 123456789.0) {
+        position.y = 3;
+    }
 }
 
 export fn system(core: *MetaCore) callconv(.c) void {
@@ -35,12 +45,11 @@ export fn system(core: *MetaCore) callconv(.c) void {
     std.debug.print("Component ID for Position: {d}\n", .{component_id});
 
     const view = core.CreateView();
+    defer core.DestroyView(view);
 
     core.AggregateComponentToView(core, view, component_id);
 
     core.ViewForEach(core, view, core, &viewForEachCallback);
-
-    core.DestroyView(view);
 }
 
 export fn plugin_bind(core: *MetaCore) callconv(.c) void {

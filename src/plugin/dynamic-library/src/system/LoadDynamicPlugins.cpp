@@ -6,14 +6,15 @@
 #include <nlohmann/json.hpp>
 
 namespace DynamicLibrary::System {
-static std::unordered_map<std::string, std::filesystem::path> GetDynamicPlugins(std::filesystem::path pluginsFile)
+static std::optional<std::unordered_map<std::string, std::filesystem::path>>
+GetDynamicPlugins(std::filesystem::path pluginsFile)
 {
     std::unordered_map<std::string, std::filesystem::path> plugins;
     if (!std::filesystem::exists(pluginsFile))
     {
         std::string pluginsFileStr = pluginsFile.string();
         Log::Error(fmt::format("Plugins file not found at path: {}", pluginsFileStr));
-        return plugins;
+        return std::nullopt;
     }
     std::ifstream file(pluginsFile);
     nlohmann::json data = nlohmann::json::parse(file);
@@ -26,8 +27,19 @@ static std::unordered_map<std::string, std::filesystem::path> GetDynamicPlugins(
 
 void LoadDynamicPlugins(Engine::Core &core)
 {
-    auto libs = GetDynamicPlugins(std::filesystem::current_path() / "libs.json");
-    for (const auto &[name, path] : libs)
+    const std::filesystem::path pluginsFile = std::filesystem::current_path() / "libs.json";
+    if (!std::filesystem::exists(pluginsFile))
+    {
+        Log::Info(fmt::format("No plugins file found at path: {}", pluginsFile.string()));
+        return;
+    }
+    auto libs = GetDynamicPlugins(pluginsFile);
+    if (!libs)
+    {
+        Log::Error("Failed to load dynamic plugins");
+        return;
+    }
+    for (const auto &[name, path] : *libs)
     {
         core.AddPlugin(name, std::make_unique<Resource::DynamicPlugin>(core, path));
     }

@@ -4,6 +4,8 @@
 #include "resource/ComponentsMeta.hpp"
 #include "resource/Handle.hpp"
 #include "resource/RuntimeView.hpp"
+#include <any>
+#include <unordered_map>
 
 namespace DynamicLibrary::Resource {
 class DynamicPlugin : public Engine::APlugin {
@@ -68,38 +70,37 @@ class DynamicPlugin : public Engine::APlugin {
         };
     } _coreInterface;
 
+    using BindFunction = void (CoreInterface *);
+    using BindFunctionPtr = void (*)(CoreInterface *);
+
   public:
     explicit DynamicPlugin(Engine::Core &core, std::filesystem::path dynamicLibraryPath)
         : Engine::APlugin(core), _handle(dynamicLibraryPath)
     {
         _coreInterface.core = &core;
-        LoadSymbol("plugin_bind");
+        LoadSymbol<void(CoreInterface *)>("plugin_bind");
     }
     void Bind() override
     {
-        using BindFunction = void (*)(CoreInterface *);
-        BindFunction bindFunction = reinterpret_cast<BindFunction>(_symbols["plugin_bind"]);
-        if (!bindFunction)
+        try
         {
-            Log::Error("Failed to load bind function from plugin");
+            auto bindFunction = std::any_cast<BindFunctionPtr>(_symbols["plugin_bind"]);
+            bindFunction(&_coreInterface);
+        }
+        catch (const std::bad_any_cast &e)
+        {
+            Log::Error(fmt::format("Failed to cast bind function: {}", e.what()));
             return;
         }
-        bindFunction(&_coreInterface);
     }
 
   private:
-    void LoadSymbol(const std::string &symbolName)
+    template <typename TFunctionType> void LoadSymbol(const std::string &symbolName)
     {
-        void *symbol = _handle.GetSymbol(symbolName);
-        if (!symbol)
-        {
-            Log::Error(fmt::format("Failed to load symbol: {}", symbolName));
-            throw std::runtime_error("Failed to load symbol");
-        }
-        _symbols[symbolName] = symbol;
+        _symbols[symbolName] = _handle.GetFunction<TFunctionType>(symbolName);
     }
 
     Handle _handle;
-    std::unordered_map<std::string, void *> _symbols;
+    std::unordered_map<std::string, std::any> _symbols;
 };
 } // namespace DynamicLibrary::Resource

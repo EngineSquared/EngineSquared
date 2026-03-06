@@ -1,31 +1,21 @@
 #pragma once
 
 #include "Logger.hpp"
-#include <dlfcn.h>
+#include <dylib.hpp>
 #include <filesystem>
 
 namespace DynamicLibrary::Resource {
 class Handle {
   public:
-    Handle(std::filesystem::path path) : handle(dlopen(path.c_str(), RTLD_LAZY))
-    {
-        if (!handle)
-        {
-            Log::Error(fmt::format("Failed to load library at path: {}, error: {}", path.string(), dlerror()));
-            throw std::runtime_error("Failed to load library");
-        }
-    }
-    ~Handle()
-    {
-        if (handle)
-        {
-            dlclose(handle);
-        }
-    }
+    Handle(const std::string &path) : lib(path, dylib::decorations::none()) {}
+    ~Handle() = default;
 
-    void *GetSymbol(const std::string &symbolName) { return dlsym(handle, symbolName.c_str()); }
+    template <typename TFunctionType> auto GetFunction(const std::string &functionName)
+    {
+        return lib.get_function<TFunctionType>(functionName);
+    }
 
   private:
-    void *handle = nullptr;
+    dylib::library lib;
 };
 } // namespace DynamicLibrary::Resource

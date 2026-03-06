@@ -7,7 +7,7 @@ struct Position {
     float y;
 };
 
-TEST(Meta, smoke)
+TEST(DynamicLibrary, Smoke)
 {
     Engine::Core core;
 
@@ -23,4 +23,9 @@ TEST(Meta, smoke)
     entity2.AddComponent<Position>(67.0f, 123456789.0f);
 
     core.RunSystems();
+
+    ASSERT_EQ(entity1.GetComponents<Position>().x, 0.0f);
+    ASSERT_EQ(entity1.GetComponents<Position>().y, 1.0f);
+    ASSERT_EQ(entity2.GetComponents<Position>().x, 2.0f);
+    ASSERT_EQ(entity2.GetComponents<Position>().y, 3.0f);
 }
