@@ -31,10 +31,10 @@ rule("library")
 target("ZigLib")
     set_kind("shared")
     add_files("src/test.zig")
+    set_toolchains("@zig")
     add_rules("library")
 
-    if not is_plat("windows") then
-        set_toolchains("@zig")
-    else
+    if is_plat("windows") then
+        set_runtimes("MD")
         add_syslinks("kernel32", "ntdll")
     end
