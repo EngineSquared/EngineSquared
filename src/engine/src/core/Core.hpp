@@ -268,6 +268,8 @@ class Core {
      */
     template <typename... TPlugins> void AddPlugins();
 
+    void AddPlugin(std::string name, std::unique_ptr<IPlugin> plugin);
+
     /**
      * @brief Checks if a plugin of the specified type is present.
      *
@@ -342,6 +344,7 @@ class Core {
     std::type_index _defaultScheduler = typeid(Engine::Scheduler::Update);
     std::vector<std::type_index> _schedulersToDelete;
     std::unordered_map<std::type_index, std::unique_ptr<IPlugin>> _plugins;
+    std::unordered_map<std::string, std::unique_ptr<IPlugin>> _namedPlugins;
     bool _running = false;
 };
 } // namespace Engine
