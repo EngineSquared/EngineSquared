@@ -36,8 +36,4 @@ target("ZigLib")
 
     if is_plat("windows") then
         add_syslinks("kernel32", "ntdll")
-
-        if is_toolchain("msvc") then
-            add_ldflags("/DEFAULTLIB:msvcrt")
-        end
     end
