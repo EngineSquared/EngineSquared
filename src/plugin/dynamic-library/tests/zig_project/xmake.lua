@@ -33,3 +33,11 @@ target("ZigLib")
     add_files("src/test.zig")
     set_toolchains("@zig")
     add_rules("library")
+
+    if is_plat("windows") then
+        add_syslinks("kernel32", "ntdll")
+
+        if is_toolchain("msvc") then
+            add_ldflags("/DEFAULTLIB:msvcrt")
+        end
+    end
