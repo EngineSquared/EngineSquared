@@ -37,4 +37,5 @@ target("ZigLib")
     if is_plat("windows") then
         set_runtimes("MD")
         add_syslinks("kernel32", "ntdll", "advapi32", "ws2_32", "c")
+        add_ldflags("/DEF:src/exports.def", {force = true})
     end
