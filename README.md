@@ -7,16 +7,16 @@ Open-source game engine written in C++.
 
 ## Description
 
-Engine² is a game engine that aims to provide a developer friendly and open-source alternative for 3D game development.
+Engine² is a game engine that aims to provide a developer-friendly and open-source alternative for 3D game development.
 It is designed to provide truly open-source project and be accessible to everyone.
 
 ## Examples
 
 <div align="center">
-<a href="https://github.com/EngineSquared/ES-RS"><img src="docs/images/ES-RS-Menu.png" width="40%"></a>
-<a href="https://github.com/EngineSquared/ES-RS"><img src="docs/images/ES-RS-InGame.png" width="40%"></a> </br>
-<a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_light_usage"><img src="docs/images/Lights.png" width="40%"></a>
-<a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_material_usage"><img src="docs/images/Material.png" width="40%"></a> </br>
+<a href="https://github.com/EngineSquared/ES-RS"><img src="docs/images/ES-RS-Menu.png" width="40%" alt="ES-RS Menu"></a>
+<a href="https://github.com/EngineSquared/ES-RS"><img src="docs/images/ES-RS-InGame.png" width="40%" alt="ES-RS In-Game"></a> <br />
+<a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_light_usage"><img src="docs/images/Lights.png" width="40%" alt="Lights"></a>
+<a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_material_usage"><img src="docs/images/Material.png" width="40%" alt="Material"></a> <br />
 </div>
 
 ## Getting started
