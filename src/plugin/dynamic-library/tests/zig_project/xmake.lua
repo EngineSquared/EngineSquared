@@ -31,7 +31,6 @@ rule("library")
 target("ZigLib")
     set_kind("shared")
     add_files("src/test.zig")
-    set_toolchains("@zig")
     add_rules("library")
 
     add_rules("utils.symbols.export_all")
