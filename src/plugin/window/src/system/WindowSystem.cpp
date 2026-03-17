@@ -58,10 +58,11 @@ void SetupWindowCallbacks(Engine::Core &core)
 
     glfwSetFramebufferSizeCallback(glfwWindow, [](GLFWwindow *window, int width, int height) {
         auto core = static_cast<Engine::Core *>(glfwGetWindowUserPointer(window));
+        const auto &windowResource = core->GetResource<Resource::Window>();
+        const auto size = windowResource.GetSize();
+        const glm::ivec2 newSize{static_cast<int>(size.x), static_cast<int>(size.y)};
         auto &eventManager = core->GetResource<::Event::Resource::EventManager>();
-        eventManager.PushEvent(Window::Event::OnResize{
-            glm::ivec2{width, height}
-        });
+        eventManager.PushEvent(Window::Event::OnResize{newSize});
     });
 }
 
