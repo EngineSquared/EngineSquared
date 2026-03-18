@@ -46,4 +46,4 @@ Use the summary field to provide a succinct description of the change:
 * use the imperative, present tense: "change" not "changed" nor "changes"
 * don't capitalize the first letter
 * no dot (.) at the end
-* commit must be in english
+* commit must be in English
