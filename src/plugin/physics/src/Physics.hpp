@@ -57,6 +57,7 @@
 #include "builder/VehicleBuilder.hpp"
 
 // Utils
+#include "utils/BiMap.hpp"
 #include "utils/BroadPhaseLayerImpl.hpp"
 #include "utils/BroadPhaseLayers.hpp"
 #include "utils/ContactListenerImpl.hpp"
@@ -64,7 +65,6 @@
 #include "utils/Layers.hpp"
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
-#include "utils/BiMap.hpp"
 
 // Plugin
 #include "plugin/PhysicsPlugin.hpp"

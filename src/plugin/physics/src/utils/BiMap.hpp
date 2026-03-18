@@ -45,4 +45,4 @@ template <typename TLeft, typename TRight> class BiMap {
     std::unordered_map<TLeft, const TRight *> _leftToRight;
     std::unordered_map<TRight, const TLeft *> _rightToLeft;
 };
-} // namespace Physics::Resource
+} // namespace Physics::Utils
