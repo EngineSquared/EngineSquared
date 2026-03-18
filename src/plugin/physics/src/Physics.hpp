@@ -64,6 +64,7 @@
 #include "utils/Layers.hpp"
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
+#include "utils/BiMap.hpp"
 
 // Plugin
 #include "plugin/PhysicsPlugin.hpp"

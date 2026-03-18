@@ -187,6 +187,13 @@ struct EntityId : Id {
 static_assert(sizeof(EntityId) == sizeof(EntityId::ValueType), "EntityId size must be equal to Id size");
 } // namespace Engine
 
+template <> struct std::hash<Engine::EntityId> {
+    std::size_t operator()(const Engine::EntityId &entityId) const noexcept
+    {
+        return std::hash<entt::id_type>{}(entityId.value);
+    }
+};
+
 template <> struct fmt::formatter<Engine::EntityId> : fmt::formatter<std::string> {
     template <typename FormatContext> auto format(const Engine::EntityId &entityId, FormatContext &ctx) const
     {
