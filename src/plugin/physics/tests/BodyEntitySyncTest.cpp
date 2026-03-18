@@ -12,13 +12,13 @@
 
 TEST(PhysicsPlugin, BodyEntityMapAddition)
 {
-    Engine::Core core;
+    Engine::Core c;
 
-    core.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
+    c.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
 
-    core.AddPlugins<Physics::Plugin>();
+    c.AddPlugins<Physics::Plugin>();
 
-    core.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core &core) {
+    c.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core &core) {
         auto entity1 = core.CreateEntity();
         auto entity2 = core.CreateEntity();
         auto entity3 = core.CreateEntity();
@@ -40,60 +40,47 @@ TEST(PhysicsPlugin, BodyEntityMapAddition)
         EXPECT_EQ(bodyEntityMap.Size(), 3);
     });
 
-    core.RunSystems();
+    c.RunSystems();
 }
 
 TEST(PhysicsPlugin, BodyEntityMapRemoval)
 {
-    Engine::Core core;
+    Engine::Core c;
 
-    core.AddPlugins<Physics::Plugin>();
+    c.AddPlugins<Physics::Plugin>();
 
-    core.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core &core) {
-        auto entity1 = core.CreateEntity();
-        auto entity2 = core.CreateEntity();
-        auto entity3 = core.CreateEntity();
+    c.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core &core) {
+        std::array<Engine::Entity, 3> entities{core.CreateEntity(), core.CreateEntity(), core.CreateEntity()};
 
         auto &bodyEntityMap = core.GetResource<Physics::Resource::BodyEntityMap>();
 
         EXPECT_EQ(bodyEntityMap.Size(), 0);
 
-        entity1.AddComponent<Object::Component::Transform>();
-        entity1.AddComponent<Physics::Component::BoxCollider>();
-        entity1.AddComponent<Physics::Component::RigidBody>();
-        entity2.AddComponent<Object::Component::Transform>();
-        entity2.AddComponent<Physics::Component::BoxCollider>();
-        entity2.AddComponent<Physics::Component::RigidBody>();
-        entity3.AddComponent<Object::Component::Transform>();
-        entity3.AddComponent<Physics::Component::BoxCollider>();
-        entity3.AddComponent<Physics::Component::RigidBody>();
+        for (auto &entity : entities)
+        {
+            entity.AddComponent<Object::Component::Transform>();
+            entity.AddComponent<Physics::Component::BoxCollider>();
+            entity.AddComponent<Physics::Component::RigidBody>();
+        }
 
-        EXPECT_EQ(bodyEntityMap.Size(), 3);
-
-        entity1.Kill();
-
-        EXPECT_EQ(bodyEntityMap.Size(), 2);
-
-        entity2.Kill();
-
-        EXPECT_EQ(bodyEntityMap.Size(), 1);
-
-        entity3.Kill();
-
-        EXPECT_EQ(bodyEntityMap.Size(), 0);
+        for (std::uint8_t cursor = 0; cursor < entities.size(); cursor++)
+        {
+            EXPECT_EQ(bodyEntityMap.Size(), entities.size() - cursor);
+            entities[cursor].Kill();
+        }
     });
-    core.RunSystems();
+    c.RunSystems();
 }
 
 TEST(PhysicsPlugin, BodyEntityMapRetrieval)
 {
-    Engine::Core core;
+    Engine::Core c;
 
-    core.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
+    c.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
 
-    core.AddPlugins<Physics::Plugin>();
+    c.AddPlugins<Physics::Plugin>();
 
-    core.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core &core) {
+    c.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core &core) {
         std::array<Engine::Entity, 3> entities{core.CreateEntity(), core.CreateEntity(), core.CreateEntity()};
 
         auto &bodyEntityMap = core.GetResource<Physics::Resource::BodyEntityMap>();
@@ -111,16 +98,16 @@ TEST(PhysicsPlugin, BodyEntityMapRetrieval)
             EXPECT_EQ(entity, bodyEntityMap.Get(entity.GetComponents<Physics::Component::RigidBodyInternal>().bodyID));
         }
     });
-    core.RunSystems();
+    c.RunSystems();
 }
 
 TEST(PhysicsPlugin, BodyEntityMapErroneousRetrieval)
 {
-    Engine::Core core;
+    Engine::Core c;
 
-    core.AddPlugins<Physics::Plugin>();
+    c.AddPlugins<Physics::Plugin>();
 
-    core.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core &core) {
+    c.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core &core) {
         Engine::Entity entityWithComponents = core.CreateEntity();
         Engine::Entity entityWithoutComponents = core.CreateEntity();
 
@@ -134,5 +121,5 @@ TEST(PhysicsPlugin, BodyEntityMapErroneousRetrieval)
         EXPECT_EQ(bodyEntityMap.Contains(entityWithComponents), true);
         EXPECT_EQ(bodyEntityMap.Size(), 1);
     });
-    core.RunSystems();
+    c.RunSystems();
 }

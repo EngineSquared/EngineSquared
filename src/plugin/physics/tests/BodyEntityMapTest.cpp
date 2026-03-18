@@ -50,15 +50,15 @@ TEST(PhysicsPlugin, BodyEntityMapRetrieval)
 
     Physics::Resource::BodyEntityMap map;
 
-    for (auto &entity : entities)
+    for (auto &[entityId, bodyId] : entities)
     {
-        map.Add(Engine::EntityId{entity.first}, JPH::BodyID{entity.second});
+        map.Add(Engine::EntityId{entityId}, JPH::BodyID{bodyId});
     }
 
-    for (const auto &entity : entities)
+    for (const auto &[entityId, bodyId] : entities)
     {
-        EXPECT_EQ(map.Get(Engine::EntityId{entity.first}), JPH::BodyID{entity.second});
-        EXPECT_EQ(Engine::EntityId{entity.first}, map.Get(JPH::BodyID{entity.second}));
+        EXPECT_EQ(map.Get(Engine::EntityId{entityId}), JPH::BodyID{bodyId});
+        EXPECT_EQ(Engine::EntityId{entityId}, map.Get(JPH::BodyID{bodyId}));
     }
 }
 
