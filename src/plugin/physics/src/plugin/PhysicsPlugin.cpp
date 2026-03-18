@@ -5,7 +5,9 @@
 #include "plugin/PhysicsPlugin.hpp"
 #include "plugin/PluginEvent.hpp"
 
+#include "resource/BodyEntityMap.hpp"
 #include "resource/VehicleTelemetry.hpp"
+
 #include "system/ConstraintSystem.hpp"
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
@@ -22,7 +24,8 @@ void Physics::Plugin::Bind()
 {
     RequirePlugins<Event::Plugin>();
 
-    RegisterResource<Resource::VehicleTelemetry>(Resource::VehicleTelemetry{});
+    RegisterResource(Resource::VehicleTelemetry{});
+    RegisterResource(Resource::BodyEntityMap{});
 
     RegisterSystems<Engine::Scheduler::Startup>(System::InitJoltPhysics);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitPhysicsManager);

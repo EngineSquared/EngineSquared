@@ -36,6 +36,7 @@
 #include "component/SoftBodyInternal.hpp"
 
 // Resources
+#include "resource/BodyEntityMap.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "resource/VehicleTelemetry.hpp"
 

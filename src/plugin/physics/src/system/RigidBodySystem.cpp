@@ -11,6 +11,7 @@
 #include "component/RigidBodyInternal.hpp"
 #include "component/SphereCollider.hpp"
 #include "exception/RigidBodyError.hpp"
+#include "resource/BodyEntityMap.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
 #include <fmt/format.h>
@@ -255,11 +256,12 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
  * 2. Jolt physics body with all properties
  * 3. RigidBodyInternal component with BodyID
  */
-static void OnRigidBodyConstruct(Engine::Core::Registry &registry, Engine::EntityId entity)
+static void OnRigidBodyConstruct(Engine::Core::Registry &registry, Engine::EntityId entityId)
 {
     try
     {
-        auto &core = registry.ctx().get<Engine::Core *>();
+        auto core = registry.ctx().get<Engine::Core *>();
+        Engine::Entity entity{*core, entityId};
 
         auto &physicsManager = core->GetResource<Resource::PhysicsManager>();
         if (!physicsManager.IsPhysicsActivated())
@@ -268,13 +270,13 @@ static void OnRigidBodyConstruct(Engine::Core::Registry &registry, Engine::Entit
             return;
         }
 
-        auto &rigidBody = registry.get<Component::RigidBody>(entity);
+        auto &rigidBody = entity.GetComponents<Component::RigidBody>();
 
-        auto *transform = registry.try_get<Object::Component::Transform>(entity);
+        auto *transform = entity.TryGetComponent<Object::Component::Transform>();
         if (!transform)
         {
             Log::Warn("RigidBody added to entity without Transform - creating default Transform");
-            transform = &registry.emplace<Object::Component::Transform>(entity);
+            transform = &entity.AddComponent<Object::Component::Transform>();
         }
 
         auto shape = CreateShapeFromColliders(registry, entity);
@@ -288,7 +290,7 @@ static void OnRigidBodyConstruct(Engine::Core::Registry &registry, Engine::Entit
                                                Utils::ToJoltQuat(transform->GetRotation()), rigidBody.motionType,
                                                rigidBody.objectLayer);
 
-        bodySettings.mUserData = static_cast<uint64_t>(entity);
+        bodySettings.mUserData = static_cast<uint64_t>(entity.Id());
         bodySettings.mFriction = rigidBody.friction;
         bodySettings.mRestitution = rigidBody.restitution;
         bodySettings.mLinearDamping = rigidBody.linearDamping;
@@ -314,15 +316,32 @@ static void OnRigidBodyConstruct(Engine::Core::Registry &registry, Engine::Entit
         JPH::BodyID bodyID = body->GetID();
         bodyInterface.AddBody(bodyID, rigidBody.activation);
 
-        registry.emplace<Component::RigidBodyInternal>(entity, bodyID);
+        entity.AddComponent<Component::RigidBodyInternal>(bodyID);
+        core->GetResource<Resource::BodyEntityMap>().Add(entity, bodyID);
 
-        Log::Debug(fmt::format("Created RigidBody for entity {} with BodyID {}", static_cast<uint32_t>(entity),
-                               bodyID.GetIndexAndSequenceNumber()));
+        Log::Debug(
+            fmt::format("Created RigidBody for entity {} with BodyID {}", entity, bodyID.GetIndexAndSequenceNumber()));
     }
     catch (const Exception::RigidBodyError &e)
     {
         Log::Error(fmt::format("RigidBodyError in OnRigidBodyConstruct: {}", e.what()));
     }
+}
+
+static void OnRigidBodyInternalConstruct(Engine::Core::Registry &registry, Engine::EntityId entityId)
+{
+    auto &core = registry.ctx().get<Engine::Core *>();
+    Engine::Entity entity{*core, entityId};
+
+    auto internalComponent = entity.GetComponents<Component::RigidBodyInternal>();
+
+    if (!internalComponent.IsValid())
+    {
+        Log::Warn("RigidBodyInternal has invalid BodyID, skipping body addition to BodyEntityMap");
+        return;
+    }
+
+    core->GetResource<Resource::BodyEntityMap>().Add(entity, internalComponent.bodyID);
 }
 
 /**
@@ -334,33 +353,55 @@ static void OnRigidBodyConstruct(Engine::Core::Registry &registry, Engine::Entit
  *
  * @note Colliders are NOT automatically removed (user may want to keep them)
  */
-static void OnRigidBodyDestroy(Engine::Core::Registry &registry, Engine::EntityId entity)
+static void OnRigidBodyDestroy(Engine::Core::Registry &registry, Engine::EntityId entityId)
 {
     try
     {
         auto &core = registry.ctx().get<Engine::Core *>();
+        Engine::Entity entity{*core, entityId};
 
         auto &physicsManager = core->GetResource<Resource::PhysicsManager>();
         if (!physicsManager.IsPhysicsActivated())
+        {
             return;
+        }
 
-        auto *internalComponent = registry.try_get<Component::RigidBodyInternal>(entity);
+        auto *internalComponent = entity.TryGetComponent<Component::RigidBodyInternal>();
         if (!internalComponent || !internalComponent->IsValid())
+        {
             return;
+        }
 
         auto &bodyInterface = physicsManager.GetBodyInterface();
         bodyInterface.RemoveBody(internalComponent->bodyID);
         bodyInterface.DestroyBody(internalComponent->bodyID);
 
-        Log::Debug(fmt::format("Destroyed RigidBody for entity {} with BodyID {}", static_cast<uint32_t>(entity),
+        Log::Debug(fmt::format("Destroyed RigidBody for entity {} with BodyID {}", entity,
                                internalComponent->bodyID.GetIndexAndSequenceNumber()));
 
-        registry.remove<Component::RigidBodyInternal>(entity);
+        core->GetResource<Resource::BodyEntityMap>().Remove(internalComponent->bodyID);
+        entity.RemoveComponent<Component::RigidBodyInternal>();
     }
     catch (const Exception::RigidBodyError &e)
     {
         Log::Error(fmt::format("RigidBodyError in OnRigidBodyDestroy: {}", e.what()));
     }
+}
+
+static void OnRigidBodyInternalDestroy(Engine::Core::Registry &registry, Engine::EntityId entityId)
+{
+    auto &core = registry.ctx().get<Engine::Core *>();
+    Engine::Entity entity{*core, entityId};
+
+    auto internalComponent = entity.GetComponents<Component::RigidBodyInternal>();
+
+    if (!internalComponent.IsValid())
+    {
+        Log::Warn("RigidBodyInternal has invalid BodyID, skipping body removal from BodyEntityMap");
+        return;
+    }
+
+    core->GetResource<Resource::BodyEntityMap>().Remove(internalComponent.bodyID);
 }
 
 //=============================================================================
@@ -375,6 +416,7 @@ void InitRigidBodySystem(Engine::Core &core)
 
     registry.on_construct<Component::RigidBody>().connect<&OnRigidBodyConstruct>();
     registry.on_destroy<Component::RigidBody>().connect<&OnRigidBodyDestroy>();
+    registry.on_destroy<Component::RigidBodyInternal>().connect<&OnRigidBodyInternalDestroy>();
 }
 
 } // namespace Physics::System
