@@ -12,6 +12,7 @@ concurrency:
 
 env:
   UNWANTED_REGEX: '^(?!.*tests\/).*gc(no|da|ov)$|(.*\.(a|o|so|lib))$|(.*~)$|^(#.*#)$|^tmp\/.*|.*\/tmp\/.*'
+  XMAKE_VERSION: branch@dev
 
 jobs:
   check_repository_cleanliness:
@@ -114,7 +115,7 @@ jobs:
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
         with:
-          xmake-version: branch@dev
+          xmake-version: '{{ env.XMAKE_VERSION }}'
           actions-cache-folder: '.xmake-cache-${{ runner.os }}'
           actions-cache-key: 'xmake-actions-cache-key-${{ runner.os }}-compilation'
           package-cache: true
@@ -162,7 +163,7 @@ jobs:
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
         with:
-          xmake-version: latest
+          xmake-version: '{{ env.XMAKE_VERSION }}'
           actions-cache-folder: '.xmake-cache-${{ runner.os }}'
           actions-cache-key: 'xmake-actions-cache-key-${{ runner.os }}-tests'
           package-cache: true
@@ -211,7 +212,7 @@ jobs:
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
         with:
-          xmake-version: latest
+          xmake-version: '{{ env.XMAKE_VERSION }}'
           package-cache: true
           project-path: '.'
           build-cache: true
