@@ -9,8 +9,23 @@ template <typename TLeft, typename TRight> class BiMap {
     BiMap() = default;
     ~BiMap() = default;
 
+    BiMap(const BiMap &) = delete;
+    BiMap &operator=(const BiMap &) = delete;
+    BiMap(BiMap &&) = default;
+    BiMap &operator=(BiMap &&) = default;
+
     void Add(const TLeft &left, const TRight &right)
     {
+        auto existingIt = this->_leftToRight.find(left);
+        if (existingIt != this->_leftToRight.end())
+        {
+            this->_rightToLeft.erase(*(existingIt->second));
+        }
+        auto existingRightIt = this->_rightToLeft.find(right);
+        if (existingRightIt != this->_rightToLeft.end())
+        {
+            this->_leftToRight.erase(*(existingRightIt->second));
+        }
         auto aitr = this->_leftToRight.insert_or_assign(left, nullptr);
         auto bp = &((*aitr.first).first);
         auto bitr = this->_rightToLeft.insert_or_assign(right, bp).first;

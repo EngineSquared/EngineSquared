@@ -75,3 +75,17 @@ TEST(PhysicsPlugin, BodyEntityMapErroneousRetrieval)
     EXPECT_EQ(map.Contains(validEntity), true);
     EXPECT_EQ(map.Size(), 1);
 }
+
+TEST(PhysicsPlugin, BodyEntityMapUpdate)
+{
+    Physics::Resource::BodyEntityMap map;
+
+    map.Add(Engine::EntityId{1}, JPH::BodyID{10});
+    EXPECT_EQ(map.Get(Engine::EntityId{1}), JPH::BodyID{10});
+
+    map.Add(Engine::EntityId{1}, JPH::BodyID{20});
+
+    EXPECT_EQ(map.Size(), 1);
+    EXPECT_EQ(map.Get(Engine::EntityId{1}), JPH::BodyID{20});
+    EXPECT_FALSE(map.Contains(JPH::BodyID{10}));
+}

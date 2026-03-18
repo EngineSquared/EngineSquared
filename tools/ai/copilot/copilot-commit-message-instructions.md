@@ -2,7 +2,7 @@
 
 ### Commit structure
 
-```
+```text
 <type>(<scope>): <short summary>
   │       │             │
   │       │             └─⫸ Summary in present tense. Not capitalized. No period at the end.

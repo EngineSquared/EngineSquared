@@ -47,6 +47,8 @@ TEST(PhysicsPlugin, BodyEntityMapRemoval)
 {
     Engine::Core c;
 
+    c.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
+
     c.AddPlugins<Physics::Plugin>();
 
     c.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core &core) {
@@ -104,6 +106,8 @@ TEST(PhysicsPlugin, BodyEntityMapRetrieval)
 TEST(PhysicsPlugin, BodyEntityMapErroneousRetrieval)
 {
     Engine::Core c;
+
+    c.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
 
     c.AddPlugins<Physics::Plugin>();
 

@@ -415,6 +415,7 @@ void InitRigidBodySystem(Engine::Core &core)
     registry.ctx().emplace<Engine::Core *>(&core);
 
     registry.on_construct<Component::RigidBody>().connect<&OnRigidBodyConstruct>();
+    registry.on_construct<Component::RigidBodyInternal>().connect<&OnRigidBodyInternalConstruct>();
     registry.on_destroy<Component::RigidBody>().connect<&OnRigidBodyDestroy>();
     registry.on_destroy<Component::RigidBodyInternal>().connect<&OnRigidBodyInternalDestroy>();
 }

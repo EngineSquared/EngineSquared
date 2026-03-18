@@ -537,6 +537,7 @@ void InitSoftBodySystem(Engine::Core &core)
         registry.ctx().emplace<Engine::Core *>(&core);
 
     registry.on_construct<Component::SoftBody>().connect<&OnSoftBodyConstruct>();
+    registry.on_construct<Component::SoftBodyInternal>().connect<&OnSoftBodyInternalConstruct>();
     registry.on_destroy<Component::SoftBody>().connect<&OnSoftBodyDestroy>();
     registry.on_destroy<Component::SoftBodyInternal>().connect<&OnSoftBodyInternalDestroy>();
 
@@ -549,7 +550,9 @@ void ShutdownSoftBodySystem(Engine::Core &core)
 
     // Disconnect hooks
     registry.on_construct<Component::SoftBody>().disconnect<&OnSoftBodyConstruct>();
+    registry.on_construct<Component::SoftBodyInternal>().disconnect<&OnSoftBodyInternalConstruct>();
     registry.on_destroy<Component::SoftBody>().disconnect<&OnSoftBodyDestroy>();
+    registry.on_destroy<Component::SoftBodyInternal>().disconnect<&OnSoftBodyInternalDestroy>();
 
     Log::Debug("SoftBodySystem shutdown");
 }
