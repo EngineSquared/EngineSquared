@@ -11,18 +11,16 @@ template <typename TLeft, typename TRight> class BiMap {
 
     BiMap(const BiMap &) = delete;
     BiMap &operator=(const BiMap &) = delete;
-    BiMap(BiMap &&) = default;
-    BiMap &operator=(BiMap &&) = default;
+    BiMap(BiMap &&) noexcept = default;
+    BiMap &operator=(BiMap &&) noexcept = default;
 
     void Add(const TLeft &left, const TRight &right)
     {
-        auto existingIt = this->_leftToRight.find(left);
-        if (existingIt != this->_leftToRight.end())
+        if (auto existingIt = this->_leftToRight.find(left); existingIt != this->_leftToRight.end())
         {
             this->_rightToLeft.erase(*(existingIt->second));
         }
-        auto existingRightIt = this->_rightToLeft.find(right);
-        if (existingRightIt != this->_rightToLeft.end())
+        if (auto existingRightIt = this->_rightToLeft.find(right); existingRightIt != this->_rightToLeft.end())
         {
             this->_leftToRight.erase(*(existingRightIt->second));
         }
