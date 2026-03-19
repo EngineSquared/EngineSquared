@@ -499,7 +499,6 @@ static void OnSoftBodyDestroy(Engine::Core::Registry &registry, Engine::EntityId
 
         Log::Debug(fmt::format("Destroyed SoftBody for entity {}", entity));
 
-        core.GetResource<Resource::BodyEntityMap>().Remove(internal->bodyID);
         entity.RemoveComponent<Component::SoftBodyInternal>();
     }
     catch (const Physics::Exception::SoftBodyError &e)

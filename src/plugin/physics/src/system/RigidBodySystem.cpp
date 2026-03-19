@@ -379,7 +379,6 @@ static void OnRigidBodyDestroy(Engine::Core::Registry &registry, Engine::EntityI
         Log::Debug(fmt::format("Destroyed RigidBody for entity {} with BodyID {}", entity,
                                internalComponent->bodyID.GetIndexAndSequenceNumber()));
 
-        core->GetResource<Resource::BodyEntityMap>().Remove(internalComponent->bodyID);
         entity.RemoveComponent<Component::RigidBodyInternal>();
     }
     catch (const Exception::RigidBodyError &e)
