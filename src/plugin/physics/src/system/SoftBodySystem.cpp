@@ -29,6 +29,7 @@
 #include "component/SoftBody.hpp"
 #include "component/SoftBodyInternal.hpp"
 #include "component/SphereCollider.hpp"
+#include "resource/BodyEntityMap.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "utils/JoltConversions.hpp"
 #include "utils/Layers.hpp"
@@ -329,12 +330,13 @@ static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::Entity
     try
     {
         auto *corePtr = registry.ctx().get<Engine::Core *>();
-        Engine::Entity entity{*corePtr, entityId};
         if (!corePtr)
         {
             Log::Error("Cannot create SoftBody: Engine::Core not available");
             return;
         }
+        Engine::Entity entity{*corePtr, entityId};
+
         auto &core = *corePtr;
 
         auto &physicsManager = core.GetResource<Resource::PhysicsManager>();
@@ -441,7 +443,8 @@ static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::Entity
 
         // Store internal component with vertex mapping AND initial scale for sync
         // The initial scale is needed to convert Jolt vertices back to mesh local space
-        registry.emplace<Component::SoftBodyInternal>(entity, bodyID, std::move(settingsResult.vertexMap), scale);
+        entity.AddComponent<Component::SoftBodyInternal>(bodyID, std::move(settingsResult.vertexMap), scale);
+        core.GetResource<Resource::BodyEntityMap>().Add(entity, bodyID);
 
         Log::Info(fmt::format(
             "Created SoftBody for entity {} with {} vertices, {} faces at position ({:.2f}, {:.2f}, {:.2f}), scale "
@@ -453,6 +456,23 @@ static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::Entity
     {
         Log::Error(fmt::format("SoftBody error: {}", e.what()));
     }
+}
+
+static void OnSoftBodyInternalConstruct(Engine::Core::Registry &registry, Engine::EntityId entityId)
+{
+    auto *corePtr = registry.ctx().get<Engine::Core *>();
+    if (!corePtr)
+        return;
+    Engine::Entity entity{*corePtr, entityId};
+
+    auto internalComponent = entity.GetComponents<Component::SoftBodyInternal>();
+    if (!internalComponent.IsValid())
+    {
+        Log::Warn("SoftBodyInternal has invalid BodyID, skipping body removal from BodyEntityMap");
+        return;
+    }
+
+    corePtr->GetResource<Resource::BodyEntityMap>().Add(entity, internalComponent.bodyID);
 }
 
 static void OnSoftBodyDestroy(Engine::Core::Registry &registry, Engine::EntityId entityId)
@@ -487,6 +507,23 @@ static void OnSoftBodyDestroy(Engine::Core::Registry &registry, Engine::EntityId
     }
 }
 
+static void OnSoftBodyInternalDestroy(Engine::Core::Registry &registry, Engine::EntityId entityId)
+{
+    auto *corePtr = registry.ctx().get<Engine::Core *>();
+    if (!corePtr)
+        return;
+    Engine::Entity entity{*corePtr, entityId};
+
+    auto internalComponent = entity.GetComponents<Component::SoftBodyInternal>();
+    if (!internalComponent.IsValid())
+    {
+        Log::Warn("SoftBodyInternal has invalid BodyID, skipping body removal from BodyEntityMap");
+        return;
+    }
+
+    corePtr->GetResource<Resource::BodyEntityMap>().Remove(internalComponent.bodyID);
+}
+
 //=============================================================================
 // Public System Functions
 //=============================================================================
@@ -499,7 +536,9 @@ void InitSoftBodySystem(Engine::Core &core)
         registry.ctx().emplace<Engine::Core *>(&core);
 
     registry.on_construct<Component::SoftBody>().connect<&OnSoftBodyConstruct>();
+    registry.on_construct<Component::SoftBodyInternal>().connect<&OnSoftBodyInternalConstruct>();
     registry.on_destroy<Component::SoftBody>().connect<&OnSoftBodyDestroy>();
+    registry.on_destroy<Component::SoftBodyInternal>().connect<&OnSoftBodyInternalDestroy>();
 
     Log::Debug("SoftBodySystem initialized");
 }
@@ -510,7 +549,9 @@ void ShutdownSoftBodySystem(Engine::Core &core)
 
     // Disconnect hooks
     registry.on_construct<Component::SoftBody>().disconnect<&OnSoftBodyConstruct>();
+    registry.on_construct<Component::SoftBodyInternal>().disconnect<&OnSoftBodyInternalConstruct>();
     registry.on_destroy<Component::SoftBody>().disconnect<&OnSoftBodyDestroy>();
+    registry.on_destroy<Component::SoftBodyInternal>().disconnect<&OnSoftBodyInternalDestroy>();
 
     Log::Debug("SoftBodySystem shutdown");
 }
