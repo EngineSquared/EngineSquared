@@ -46,7 +46,7 @@ template <typename TLeft, typename TRight> class BiMap {
             this->_rightToLeft.erase(it);
         }
     }
-    std::uint32_t Size() const { return static_cast<std::uint32_t>(this->_leftToRight.size()); }
+    auto Size() const { return static_cast<std::uint32_t>(this->_leftToRight.size()); }
     const TRight &Get(const TLeft &left) const { return this->_leftToRight.at(left); }
     const TLeft &Get(const TRight &right) const { return this->_rightToLeft.at(right); }
     bool Contains(const TLeft &left) const { return this->_leftToRight.contains(left); }

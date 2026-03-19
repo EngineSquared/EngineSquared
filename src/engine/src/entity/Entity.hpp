@@ -53,8 +53,8 @@ class Entity {
 
     explicit(false) inline operator EntityId() const { return _entityId; }
 
-    /***
-     * Kill the entity. It will remove all components from the entity and make it invalid.
+    /**
+     * @brief Kill the entity, removing all components and making it invalid.
      */
     void Kill();
 
