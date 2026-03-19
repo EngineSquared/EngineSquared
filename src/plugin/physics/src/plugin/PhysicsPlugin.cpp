@@ -42,4 +42,5 @@ void Physics::Plugin::Bind()
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::WheelTransformSyncSystem);
 
     RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownSoftBodySystem);
+    RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownRigidBodySystem);
 }

@@ -330,13 +330,13 @@ static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::Entity
     try
     {
         auto *corePtr = registry.ctx().get<Engine::Core *>();
-        Engine::Entity entity{*corePtr, entityId};
-
         if (!corePtr)
         {
             Log::Error("Cannot create SoftBody: Engine::Core not available");
             return;
         }
+        Engine::Entity entity{*corePtr, entityId};
+
         auto &core = *corePtr;
 
         auto &physicsManager = core.GetResource<Resource::PhysicsManager>();

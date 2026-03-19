@@ -12,7 +12,7 @@
   └─⫸ Commit Type: build|ci|docs|feat|fix|perf|refactor|test|chore
 ```
 
-The `<type>` and `<summary>` fields are mandatory, the `(<scope>)` field is optional.
+The `<type>` and `<short summary>` fields are mandatory, the `(<scope>)` field is optional.
 
 #### Type
 

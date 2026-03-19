@@ -419,4 +419,14 @@ void InitRigidBodySystem(Engine::Core &core)
     registry.on_destroy<Component::RigidBodyInternal>().connect<&OnRigidBodyInternalDestroy>();
 }
 
+void ShutdownRigidBodySystem(Engine::Core &core)
+{
+    auto &registry = core.GetRegistry();
+
+    registry.on_construct<Component::RigidBody>().disconnect<&OnRigidBodyConstruct>();
+    registry.on_construct<Component::RigidBodyInternal>().disconnect<&OnRigidBodyInternalConstruct>();
+    registry.on_destroy<Component::RigidBody>().disconnect<&OnRigidBodyDestroy>();
+    registry.on_destroy<Component::RigidBodyInternal>().disconnect<&OnRigidBodyInternalDestroy>();
+}
+
 } // namespace Physics::System
