@@ -1,5 +1,6 @@
 #pragma once
 
+#include "component/Camera.hpp"
 #include "component/GPUCamera.hpp"
 #include "component/Transform.hpp"
 #include "entity/Entity.hpp"
@@ -17,8 +18,8 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         glm::mat4 invViewProjectionMatrix;
         glm::vec3 position;
 
-        explicit CameraTransfer(const Component::GPUCamera &gpuCamera, const Object::Component::Transform &transform)
-            : viewProjectionMatrix(gpuCamera.viewProjection), invViewProjectionMatrix(gpuCamera.inverseViewProjection),
+        explicit CameraTransfer(const Object::Component::Camera &camera, const Object::Component::Transform &transform)
+            : viewProjectionMatrix(camera.viewProjection), invViewProjectionMatrix(camera.inverseViewProjection),
               position(transform.GetPosition())
         {
         }
@@ -32,12 +33,12 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
 
     void Create(Engine::Core &core) override
     {
-        const auto &gpuCamera = _entity.GetComponents<Component::GPUCamera>();
+        const auto &camera = _entity.GetComponents<Object::Component::Camera>();
         const auto &transform = _entity.GetComponents<Object::Component::Transform>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
 
         _buffer = _CreateBuffer(context.deviceContext);
-        _UpdateBuffer(gpuCamera, transform, context);
+        _UpdateBuffer(camera, transform, context);
         _isCreated = true;
     }
 
@@ -60,7 +61,7 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU camera buffer that is not created.");
         }
-        const auto &cameraComponent = _entity.GetComponents<Component::GPUCamera>();
+        const auto &cameraComponent = _entity.GetComponents<Object::Component::Camera>();
         const auto &transform = _entity.GetComponents<Object::Component::Transform>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
         _UpdateBuffer(cameraComponent, transform, context);
@@ -80,10 +81,10 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         return context.GetDevice()->createBuffer(bufferDesc);
     }
 
-    void _UpdateBuffer(const Component::GPUCamera &GPUCameraComponent, const Object::Component::Transform &transform,
+    void _UpdateBuffer(const Object::Component::Camera &camera, const Object::Component::Transform &transform,
                        const Graphic::Resource::Context &context)
     {
-        const CameraTransfer cameraTransfer(GPUCameraComponent, transform);
+        const CameraTransfer cameraTransfer(camera, transform);
         context.queue->writeBuffer(_buffer, 0, std::addressof(cameraTransfer), CameraTransfer::CPUSize());
     }
 

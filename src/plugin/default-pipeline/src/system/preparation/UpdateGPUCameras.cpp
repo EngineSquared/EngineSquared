@@ -19,9 +19,9 @@ void DefaultPipeline::System::UpdateGPUCameras(Engine::Core &core)
             if (gpuCamera.targetTexture.value() != 0 && textureContainer.Contains(gpuCamera.targetTexture))
             {
                 const auto &texture = textureContainer.Get(gpuCamera.targetTexture);
-                gpuCamera.UpdateAspectRatio(texture.GetSize());
+                camera.UpdateAspectRatio(texture.GetSize());
             }
-            gpuCamera.Update(camera, transform);
+            camera.Update(transform);
             auto &gpuBuffer = gpuBufferContainer.Get(gpuCamera.buffer);
             gpuBuffer->Update(core);
         });
