@@ -20,3 +20,6 @@
 # linter
 .cache
 .cache-*/
+
+# Dynamic libraries
+libs.json
