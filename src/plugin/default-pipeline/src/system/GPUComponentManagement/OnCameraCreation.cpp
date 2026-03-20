@@ -16,11 +16,11 @@
 void DefaultPipeline::System::OnCameraCreation(Engine::Core &core, Engine::EntityId entityId)
 {
     Engine::Entity entity{core, entityId};
-    const auto &cameraComponent = entity.GetComponents<Object::Component::Camera>();
+    auto &cameraComponent = entity.GetComponents<Object::Component::Camera>();
     const auto &transformComponent = entity.GetComponents<Object::Component::Transform>();
 
+    cameraComponent.Update(transformComponent);
     Component::GPUCamera gpuCameraComponent;
-    gpuCameraComponent.Update(cameraComponent, transformComponent);
     gpuCameraComponent.targetTexture = Graphic::Utils::END_RENDER_TEXTURE_ID;
 
     std::string cameraBufferName = fmt::format("CAMERA_UNIFORM_BUFFER_{}", entity);
