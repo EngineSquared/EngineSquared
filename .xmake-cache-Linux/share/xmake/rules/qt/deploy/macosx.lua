@@ -1,0 +1,198 @@
+--!A cross-platform build utility based on Lua
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--     http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Copyright (C) 2015-present, Xmake Open Source Community.
+--
+-- @author      ruki
+-- @file        macosx.lua
+--
+
+-- imports
+import("core.theme.theme")
+import("core.base.option")
+import("core.project.config")
+import("core.project.depend")
+import("core.tool.toolchain")
+import("lib.detect.find_file")
+import("lib.detect.find_path")
+import("detect.sdks.find_qt")
+import("utils.progress")
+import("private.tools.codesign")
+import("private.utils.target", {alias = "target_utils"})
+
+-- save Info.plist
+function _save_info_plist(target, info_plist_file)
+
+    -- get target minver
+    local target_minver = nil
+    local toolchain_xcode = toolchain.load("xcode", {plat = target:plat(), arch = target:arch()})
+    if toolchain_xcode then
+        target_minver = toolchain_xcode:config("target_minver")
+    end
+
+    -- generate info.plist
+    local name = target:basename()
+    io.writefile(info_plist_file, string.format([[<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildMachineOSBuild</key>
+	<string>18G95</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>%s</string>
+	<key>CFBundleExecutable</key>
+	<string>%s</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.example.%s</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>%s</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1.0.0</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>%s</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>]], name, name, name, name, target_minver or (macos.version():major() .. "." .. macos.version():minor())))
+end
+
+-- copy install files to Contents/Resources
+function _install_target_files(target, target_contents)
+    local srcfiles, dstfiles = target:installfiles(path.join(target_contents, "Resources"))
+    if srcfiles and dstfiles then
+        for idx, srcfile in ipairs(srcfiles) do
+            os.cp(srcfile, dstfiles[idx])
+        end
+    end
+    for _, dep in ipairs(target:orderdeps()) do
+        local srcfiles, dstfiles = dep:installfiles(path.join(target_contents, "Resources"), {interface = true})
+        if srcfiles and dstfiles then
+            for idx, srcfile in ipairs(srcfiles) do
+                os.cp(srcfile, dstfiles[idx])
+            end
+        end
+    end
+end
+
+-- copy package libraries to Contents/Frameworks
+function _install_target_frameworks(target, target_contents)
+    local libfiles = {}
+    target_utils.get_target_libfiles(target, libfiles, target:targetfile(), {})
+    libfiles = table.unique(libfiles)
+    if #libfiles > 0 then
+        local frameworks_dir = path.join(target_contents, "Frameworks")
+        os.mkdir(frameworks_dir)
+        for _, libfile in ipairs(libfiles) do
+            os.cp(libfile, path.join(frameworks_dir, path.filename(libfile)))
+        end
+    end
+end
+
+-- deploy application package for macosx
+function main(target, opt)
+
+    -- need re-generate this app?
+    local target_app = path.join(target:targetdir(), target:basename() .. ".app")
+    local targetfile = target:targetfile()
+    local dependfile = target:dependfile(target_app)
+    local dependinfo = target:is_rebuilt() and {} or (depend.load(dependfile) or {})
+    if not depend.is_changed(dependinfo, {lastmtime = os.mtime(dependfile)}) then
+        return
+    end
+
+    -- trace progress info
+    progress.show(opt.progress, "${color.build.target}generating.qt.app %s.app", target:basename())
+
+    -- get qt sdk
+    local qt = assert(find_qt(), "Qt SDK not found!")
+
+    -- get macdeployqt
+    local search_dirs = {}
+    if qt.bindir_host then table.insert(search_dirs, qt.bindir_host) end
+    if qt.bindir then table.insert(search_dirs, qt.bindir) end
+    local macdeployqt = find_file("macdeployqt" .. (is_host("windows") and ".exe" or ""), search_dirs)
+    assert(os.isexec(macdeployqt), "macdeployqt not found!")
+
+    -- generate target app
+    local target_contents = path.join(target_app, "Contents")
+    os.tryrm(target_app)
+    local target_binary = path.join(target_contents, "MacOS", target:basename())
+    os.cp(target:targetfile(), target_binary)
+    os.cp(path.join(os.programdir(), "scripts", "PkgInfo"), target_contents)
+
+    -- generate Info.plist
+    _save_info_plist(target, path.join(target_contents, "Info.plist"))
+
+    -- copy install files to Contents/Resources
+    _install_target_files(target, target_contents)
+
+    -- copy package libraries to Contents/Frameworks
+    _install_target_frameworks(target, target_contents)
+
+    -- find qml directory
+    local qmldir = target:values("qt.deploy.qmldir")
+    if not qmldir then
+        for _, sourcebatch in pairs(target:sourcebatches()) do
+            if sourcebatch.rulename == "qt.qrc" then
+                for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
+                    qmldir = find_path("*.qml", path.directory(sourcefile))
+                    if qmldir then
+                        break
+                    end
+                end
+            end
+        end
+    else
+        qmldir = path.join(target:scriptdir(), qmldir)
+    end
+
+    -- do deploy
+    local argv = {target_app, "-always-overwrite"}
+    if option.get("diagnosis") then
+        table.insert(argv, "-verbose=3")
+    elseif option.get("verbose") then
+        table.insert(argv, "-verbose=1")
+    else
+        table.insert(argv, "-verbose=0")
+    end
+    if qmldir then
+        table.insert(argv, "-qmldir=" .. qmldir)
+    end
+    local codesign_identity = target:values("xcode.codesign_identity") or codesign.xcode_codesign_identity()
+    if codesign_identity then
+        -- e.g. "Apple Development: waruqi@gmail.com (T3NA4MRVPU)"
+        table.insert(argv, "-codesign=" .. codesign_identity)
+    end
+
+    -- add user flags
+    local user_flags = target:values("qt.deploy.flags") or {}
+    if user_flags then
+        argv = table.join(argv, user_flags)
+    end
+
+    os.vrunv(macdeployqt, argv)
+
+    -- update files and values to the dependent file
+    dependinfo.files = {targetfile}
+    depend.save(dependinfo, dependfile)
+end
+
