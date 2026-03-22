@@ -8,6 +8,7 @@
 #include "component/RigidBody.hpp"
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
+#include "entity/Entity.hpp"
 #include "plugin/PhysicsPlugin.hpp"
 #include "resource/Time.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
