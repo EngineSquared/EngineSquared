@@ -36,6 +36,7 @@
 #include "component/SoftBodyInternal.hpp"
 
 // Resources
+#include "resource/BodyEntityMap.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "resource/VehicleTelemetry.hpp"
 
@@ -56,6 +57,7 @@
 #include "builder/VehicleBuilder.hpp"
 
 // Utils
+#include "utils/BiMap.hpp"
 #include "utils/BroadPhaseLayerImpl.hpp"
 #include "utils/BroadPhaseLayers.hpp"
 #include "utils/ContactListenerImpl.hpp"

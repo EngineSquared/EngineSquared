@@ -54,6 +54,11 @@ class Entity {
     explicit(false) inline operator EntityId() const { return _entityId; }
 
     /**
+     * @brief Kill the entity, removing all components and making it invalid.
+     */
+    void Kill();
+
+    /**
      * Utility method to add a component to an entity.
      *
      * @tparam  TComponent  type to add to registry

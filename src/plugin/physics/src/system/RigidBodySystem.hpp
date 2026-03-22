@@ -39,4 +39,14 @@ namespace Physics::System {
  */
 void InitRigidBodySystem(Engine::Core &core);
 
+/**
+ * @brief Shutdown RigidBody system and unregister entt hooks
+ *
+ * This system disconnects the entt hooks for RigidBody component.
+ *
+ * @param core The engine core
+ * @note To be used with the "Shutdown" scheduler
+ */
+void ShutdownRigidBodySystem(Engine::Core &core);
+
 } // namespace Physics::System
