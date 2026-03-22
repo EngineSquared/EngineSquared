@@ -1,7 +1,5 @@
 add_rules("mode.debug", "mode.release")
 
-add_requires("rust 1.86.0")
-
 rule("library")
     after_build(function (target)
         if (not target:is_library() or not target:is_shared()) then
