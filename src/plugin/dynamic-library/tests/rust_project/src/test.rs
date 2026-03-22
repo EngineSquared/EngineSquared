@@ -21,6 +21,7 @@ pub struct RustPosition {
 
 extern "C" fn view_for_each_callback(entity_id: u32, user_data: *mut c_void) {
     if user_data.is_null() {
+        println!("User data is null");
         return;
     }
 
@@ -36,6 +37,7 @@ extern "C" fn view_for_each_callback(entity_id: u32, user_data: *mut c_void) {
             .cast::<RustPosition>();
 
         if position_ptr.is_null() {
+            println!("Entity {entity_id} does not have RustPosition component");
             return;
         }
 
@@ -59,6 +61,7 @@ extern "C" fn view_for_each_callback(entity_id: u32, user_data: *mut c_void) {
 #[no_mangle]
 pub extern "C" fn system(core: *mut MetaCore) {
     if core.is_null() {
+        println!("Core is null");
         return;
     }
 
@@ -86,6 +89,7 @@ pub extern "C" fn system(core: *mut MetaCore) {
 #[no_mangle]
 pub extern "C" fn plugin_bind(core: *mut MetaCore) {
     if core.is_null() {
+        println!("Core is null");
         return;
     }
 
