@@ -5,6 +5,7 @@
 // clang-format on
 
 // Exceptions
+#include "exception/CharacterControllerError.hpp"
 #include "exception/ConstraintError.hpp"
 #include "exception/RigidBodyError.hpp"
 #include "exception/SoftBodyError.hpp"
@@ -12,6 +13,8 @@
 // Components - Colliders
 #include "component/BoxCollider.hpp"
 #include "component/CapsuleCollider.hpp"
+#include "component/CharacterController.hpp"
+#include "component/CharacterControllerInternal.hpp"
 #include "component/MeshCollider.hpp"
 #include "component/RigidBody.hpp"
 #include "component/RigidBodyInternal.hpp"
@@ -41,6 +44,7 @@
 #include "resource/VehicleTelemetry.hpp"
 
 // Systems
+#include "system/CharacterControllerSystem.hpp"
 #include "system/ConstraintSystem.hpp"
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
