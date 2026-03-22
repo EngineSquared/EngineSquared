@@ -26,7 +26,7 @@ class SystemContainer : public FunctionUtils::FunctionContainer<void, Core &> {
   public:
     template <typename... TSystem> inline decltype(auto) AddSystems(TSystem... systems)
     {
-        return AddFunctions(systems...);
+        return AddFunctions(std::forward<TSystem>(systems)...);
     }
 
     inline decltype(auto) GetSystems() { return GetFunctions(); }

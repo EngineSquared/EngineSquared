@@ -1,7 +1,7 @@
 includes("../../engine/xmake.lua")
 
 add_requires("nlohmann_json v3.12.0")
-add_requires("dylib v3.0.1")
+add_requires("dylib v3.0.1", {debug = is_mode("debug")})
 
 local plugin_name = "PluginDynamicLibrary"
 
@@ -14,6 +14,7 @@ local required_packages = {
 }
 
 includes("tests/zig_project/xmake.lua")
+includes("tests/rust_project/xmake.lua")
 
 target(plugin_name)
     set_group(PLUGINS_GROUP_NAME)
@@ -28,6 +29,7 @@ target(plugin_name)
     add_headerfiles("src/(system/*.hpp)")
 
     add_deps("ZigLib", {inherit = false})
+    add_deps("RustLib", {inherit = false})
 
     add_deps("EngineSquaredCore")
 

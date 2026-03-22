@@ -11,7 +11,7 @@ const MetaCore = extern struct {
     AddSystem: *const fn (*MetaCore, *const fn (*MetaCore) callconv(.c) void) callconv(.c) void,
 };
 
-const Position = extern struct {
+const ZigPosition = extern struct {
     x: f32,
     y: f32,
 };
@@ -19,9 +19,9 @@ const Position = extern struct {
 fn viewForEachCallback(entityId: u32, userData: *anyopaque) callconv(.c) void {
     const core: *MetaCore = @ptrCast(@alignCast(userData));
     std.debug.print("Entity ID: {d}, User Data: {d}\n", .{ entityId, @intFromPtr(core) });
-    const component_id = core.GetComponentId(core, "Position");
-    var position: *Position = @ptrCast(@alignCast(core.GetEntityComponentFromView(core, component_id, entityId)));
-    std.debug.print("Position: x={d}, y={d}\n", .{ position.x, position.y });
+    const component_id = core.GetComponentId(core, "ZigPosition");
+    var position: *ZigPosition = @ptrCast(@alignCast(core.GetEntityComponentFromView(core, component_id, entityId)));
+    std.debug.print("ZigPosition: x={d}, y={d}\n", .{ position.x, position.y });
     if (position.x == 69) {
         position.x = 0;
     } else if (position.x == 67) {
@@ -35,14 +35,15 @@ fn viewForEachCallback(entityId: u32, userData: *anyopaque) callconv(.c) void {
 }
 
 export fn system(core: *MetaCore) callconv(.c) void {
-    std.debug.print("Hello from the System function!\n", .{});
+    std.debug.print("------------------------\n", .{});
+    std.debug.print("Hello from Zig!\n", .{});
 
-    const component_id = core.GetComponentId(core, "Position");
+    const component_id = core.GetComponentId(core, "ZigPosition");
     if (component_id == 0) {
-        std.debug.print("Component 'Position' not found!\n", .{});
+        std.debug.print("Component 'ZigPosition' not found!\n", .{});
         return;
     }
-    std.debug.print("Component ID for Position: {d}\n", .{component_id});
+    std.debug.print("Component ID for ZigPosition: {d}\n", .{component_id});
 
     const view = core.CreateView();
     defer core.DestroyView(view);

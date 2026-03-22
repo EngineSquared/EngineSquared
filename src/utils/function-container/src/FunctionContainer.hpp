@@ -76,7 +76,7 @@ template <typename TReturn, typename... TArgs> class FunctionContainer {
      */
     template <typename... TFunctions> decltype(auto) AddFunctions(TFunctions... functions)
     {
-        std::array<FunctionID, sizeof...(TFunctions)> temp{AddFunction(functions)...};
+        std::array<FunctionID, sizeof...(TFunctions)> temp{AddFunction(std::forward<TFunctions>(functions))...};
         return std::tuple_cat(temp);
     }
 

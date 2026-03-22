@@ -27,7 +27,7 @@ class AScheduler : public IScheduler {
      */
     template <typename... TSystems> inline decltype(auto) AddSystems(TSystems... systems)
     {
-        return _enabledSystemsList.AddSystems(systems...);
+        return _enabledSystemsList.AddSystems(std::forward<TSystems>(systems)...);
     }
 
     /**

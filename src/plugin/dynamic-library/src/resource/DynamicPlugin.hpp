@@ -8,8 +8,33 @@
 #include <unordered_map>
 
 namespace DynamicLibrary::Resource {
+class DynamicSystem : public Engine::SystemBase {
+  public:
+    template <typename TCallable>
+    explicit DynamicSystem(TCallable callable, FunctionUtils::FunctionID id) : _function(callable), _id(id)
+    {
+    }
+    ~DynamicSystem() override = default;
+
+    std::string GetName() const override { return "DynamicSystem"; }
+
+    FunctionUtils::FunctionID GetID() const override { return _id; }
+
+    void operator()(Engine::Core &core) const override { _function(core); }
+
+  private:
+    std::function<void(Engine::Core &)> _function;
+    FunctionUtils::FunctionID _id;
+};
+
 class DynamicPlugin : public Engine::APlugin {
   private:
+    template <typename TCallable>
+    static std::unique_ptr<Engine::SystemBase> _generateSystem(TCallable callable, FunctionUtils::FunctionID id)
+    {
+        return std::make_unique<DynamicSystem>(callable, id);
+    }
+
     struct CoreInterface {
         Engine::Core *core = nullptr;
         uint32_t (*constGetComponentId)(CoreInterface *, const char *) = [](CoreInterface *ctx,
@@ -65,8 +90,12 @@ class DynamicPlugin : public Engine::APlugin {
                 Log::Warn("System function pointer is null");
                 return;
             }
-            coreInterface->core->RegisterSystem(
-                [coreInterface = coreInterface, system = system](Engine::Core &) { system(coreInterface); });
+            std::unique_ptr<Engine::SystemBase> dynamicSystem = _generateSystem(
+                [coreInterface = coreInterface, system = system](Engine::Core &) { system(coreInterface); },
+                static_cast<FunctionUtils::FunctionID>(reinterpret_cast<std::uintptr_t>(system)));
+            coreInterface->core->RegisterSystem(std::move(dynamicSystem));
+            // coreInterface->core->RegisterSystem(
+            //     [coreInterface = coreInterface, system = system](Engine::Core &) { system(coreInterface); });
         };
     } _coreInterface;
 
