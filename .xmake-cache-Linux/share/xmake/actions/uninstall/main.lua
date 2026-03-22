@@ -1,0 +1,93 @@
+--!A cross-platform build utility based on Lua
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--     http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Copyright (C) 2015-present, Xmake Open Source Community.
+--
+-- @author      ruki
+-- @file        main.lua
+--
+
+-- imports
+import("core.base.option")
+import("core.base.task")
+import("core.platform.platform")
+import("core.base.privilege")
+import("privilege.sudo")
+import("uninstall")
+import("private.action.utils", {alias = "action_utils"})
+
+function main()
+
+    -- load config first
+    task.run("config", {require = false}, {disable_dump = true})
+
+    -- attempt to uninstall directly, TODO group_pattern
+    local targetname, group_pattern = action_utils.get_target_and_group()
+    try
+    {
+        function ()
+            uninstall(targetname)
+            cprint("${color.success}uninstall ok!")
+        end,
+
+        catch
+        {
+            -- failed or not permission? request administrator permission and uninstall it again
+            function (errors)
+
+                -- try get privilege
+                if privilege.get() then
+                    local ok = try
+                    {
+                        function ()
+                            uninstall(targetname)
+                            cprint("${color.success}uninstall ok!")
+                            return true
+                        end
+                    }
+
+                    -- release privilege
+                    privilege.store()
+                    if ok then
+                        return
+                    end
+                end
+
+                -- continue to uninstall with administrator permission?
+                local ok = false
+                if sudo.has() and option.get("admin") then
+
+                    -- uninstall target with administrator permission
+                    sudo.execl(path.join(os.scriptdir(), "uninstall_admin.lua"), {
+                        targetname or "__all",
+                        option.get("installdir") or "",
+                        option.get("bindir"),
+                        option.get("libdir"),
+                        option.get("includedir")})
+
+                    -- trace
+                    cprint("${color.success}uninstall ok!")
+                    ok = true
+                end
+                if not ok then
+                    local syserror = os.syserror()
+                    if syserror == os.SYSERR_NOT_PERM or syserror == os.SYSERR_NOT_ACCESS then
+                        wprint("please pass the --admin parameter to `xmake uninstall` to request administrator permissions!")
+                    end
+                end
+                assert(ok, "uninstall failed, %s", errors or "unknown reason")
+            end
+        }
+    }
+end

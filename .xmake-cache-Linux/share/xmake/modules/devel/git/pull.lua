@@ -1,0 +1,90 @@
+--!A cross-platform build utility based on Lua
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--     http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Copyright (C) 2015-present, Xmake Open Source Community.
+--
+-- @author      ruki
+-- @file        pull.lua
+--
+
+-- imports
+import("core.base.option")
+import("devel.git.remote")
+import("lib.detect.find_tool")
+import("net.proxy")
+
+-- pull remote commits
+--
+-- @param opt   the argument options
+--
+-- @code
+--
+-- import("devel.git")
+--
+-- git.pull()
+-- git.pull({remote = "origin", tags = true, branch = "master", repodir = "/tmp/xmake"})
+--
+-- @endcode
+--
+function main(opt)
+
+    -- init options
+    opt = opt or {}
+
+    -- find git
+    local git = assert(find_tool("git"), "git not found!")
+
+    -- init argv
+    local argv = {}
+    if opt.fsmonitor then
+        table.insert(argv, "-c")
+        table.insert(argv, "core.fsmonitor=true")
+    else
+        table.insert(argv, "-c")
+        table.insert(argv, "core.fsmonitor=false")
+    end
+    table.insert(argv, "pull")
+
+    -- set remote
+    table.insert(argv, opt.remote or "origin")
+
+    -- set branch
+    if opt.branch then
+        table.insert(argv, opt.branch)
+    end
+
+    -- set tags
+    if opt.tags then
+        table.insert(argv, "--tags")
+    end
+
+    if opt.force then
+        table.insert(argv, "-f")
+    end
+
+    -- use proxy?
+    local envs
+    local proxy_conf = proxy.config()
+    if proxy_conf then
+        -- get proxy configuration from the current remote url
+        local url = remote.get_url({remote = opt.remote or "origin", repodir = opt.repodir})
+        if url then
+            proxy_conf = proxy.config(url)
+        end
+        envs = {ALL_PROXY = proxy_conf}
+    end
+
+    -- pull it
+    os.vrunv(git.program, argv, {envs = envs, curdir = opt.repodir})
+end

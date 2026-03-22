@@ -1,0 +1,257 @@
+--!A cross-platform build utility based on Lua
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--     http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Copyright (C) 2015-present, Xmake Open Source Community.
+--
+-- @author      ruki
+-- @file        nim.lua
+--
+
+-- imports
+import("core.base.option")
+import("core.project.config")
+import("core.project.project")
+import("core.language.language")
+
+-- init it
+--
+-- @see https://nim-lang.org/docs/nimc.html
+function init(self)
+
+    -- init arflags
+    self:set("ncarflags", "--app:staticlib", "--noMain")
+
+    -- init shflags
+    self:set("ncshflags", "--app:lib", "--noMain")
+
+    -- init arch flags
+    local arch = self:arch()
+    if arch then
+        if self:is_arch("x86", "i386") then
+            self:add("ncflags", "--cpu:i386", "--define:bit32")
+            if self:is_plat("linux", "macosx", "bsd", "mingw") then
+                self:add("ncflags", '--passC:"-m32"', '--passL:"-m32"')
+            end
+        elseif self:is_arch("x64", "x86_64") then
+            self:add("ncflags", "--cpu:amd64", "--define:bit64")
+        elseif self:is_arch("arm64.*") then
+            self:add("ncflags", "--cpu:arm64", "--define:bit64")
+        elseif self:is_arch("arm.*") then
+            self:add("ncflags", "--cpu:arm", "--define:bit32")
+        end
+    end
+end
+
+-- make the warning flag
+function nf_warning(self, level)
+    local maps =
+    {
+        none       = "--warning:X:off"
+    ,   less       = "--warning:X:on"
+    ,   more       = "--warning:X:on"
+    ,   all        = "--warning:X:on"
+    ,   allextra   = "--warning:X:on"
+    ,   everything = "--warning:X:on"
+    ,   error      = "--warningAsError:X:on"
+    }
+    return maps[level]
+end
+
+-- make the define flag
+function nf_define(self, macro)
+    return {"--define:" .. macro}
+end
+
+-- make the undefine flag
+function nf_undefine(self, macro)
+    return "--undef:" .. macro
+end
+
+-- make the optimize flag
+function nf_optimize(self, level)
+    -- only for source kind
+    local kind = self:kind()
+    if language.sourcekinds()[kind] then
+        local maps =
+        {
+            none        = "--opt:none"
+        ,   fast        = "-d:release"
+        ,   faster      = "-d:release"
+        ,   fastest     = "-d:release"
+        ,   smallest    = {"-d:release", "--opt:size"}
+        ,   aggressive  = "-d:danger"
+        }
+        return maps[level]
+    end
+end
+
+-- make the symbol flag
+function nf_symbol(self, level)
+    local maps =
+    {
+        debug = "--debugger:native"
+    }
+    return maps[level]
+end
+
+-- make the strip flag
+function nf_strip(self, level)
+    if self:is_plat("linux", "macosx", "bsd") then
+        if level == "debug" or level == "all" then
+            return '--passL:"-s"'
+        end
+    end
+end
+
+-- make the includedir flag
+function nf_includedir(self, dir)
+    return {string.format('--passC:"-I%s"', path.translate(dir))}
+end
+
+-- make the sysincludedir flag
+function nf_sysincludedir(self, dir)
+    return nf_includedir(self, dir)
+end
+
+-- make the link flag
+function nf_link(self, lib)
+    if self:is_plat("windows") then
+        return string.format('--passL:"%s.lib"', lib)
+    else
+        return string.format('--passL:"-l%s"', lib)
+    end
+end
+
+-- make the syslink flag
+function nf_syslink(self, lib)
+    if self:is_plat("windows") then
+        return string.format('--passL:"%s.lib"', lib)
+    else
+        if lib == "pthread" then
+            return {"--threads:on", string.format('--passL:"-l%s"', lib), '--dynlibOverride:"pthread"'}
+        else
+            return string.format('--passL:"-l%s"', lib)
+        end
+    end
+end
+
+-- make the linkdir flag
+function nf_linkdir(self, dir)
+    if self:is_plat("windows") then
+        return {string.format('--passL:"-libpath:%s"', path.translate(dir))}
+    else
+        return {string.format('--passL:"-L%s"', path.translate(dir))}
+    end
+end
+
+-- make the rpathdir flag
+function nf_rpathdir(self, dir, opt)
+    if self:is_plat("windows") then
+        return
+    end
+    opt = opt or {}
+    local extra = opt.extra
+    if extra and extra.installonly then
+        return
+    end
+    dir = path.translate(dir)
+
+    -- Use --passL:"-Wl,-rpath=<dir>" to pass rpath to the linker
+    -- We use standard -Wl,-rpath for gcc/clang on linux/macosx/bsd without check mainly.
+    if self:is_plat("macosx", "iphoneos") then
+         dir = dir:gsub("([@$][%w_]+)", function (name)
+            if name == "$ORIGIN" then
+                return "@loader_path"
+            end
+            return name
+         end)
+        local rpath = string.format("-Wl,-rpath,%s", dir)
+        return {string.format('--passL:"%s"', rpath)}
+    elseif self:is_plat("linux", "bsd", "android") then
+         dir = dir:gsub("([@$][%w_]+)", function (name)
+            if name == "@loader_path" or name == "@executable_path" then
+                return "\\$ORIGIN"
+            elseif name == "$ORIGIN" then
+                return "\\$ORIGIN"
+            end
+            return name
+         end)
+        local rpath = string.format("-Wl,-rpath=%s", dir)
+        local flags = {string.format('--passL:"%s"', rpath)}
+        if extra then
+            if extra.runpath == false and self:has_flags(string.format('--passL:"%s,--disable-new-dtags"', rpath), "ldflags") then
+                flags[1] = string.format('--passL:"%s,--disable-new-dtags"', rpath)
+            elseif extra.runpath == true and self:has_flags(string.format('--passL:"%s,--enable-new-dtags"', rpath), "ldflags") then
+                flags[1] = string.format('--passL:"%s,--enable-new-dtags"', rpath)
+            end
+        end
+        return flags
+    end
+
+    -- fallback
+    if self:has_flags(string.format('--passL:"-Wl,-rpath=%s"', dir), "ldflags") then
+        local flags = {string.format('--passL:"-Wl,-rpath=%s"', (dir:gsub("@[%w_]+", function (name)
+            local maps = { ["@loader_path"] = "$ORIGIN", ["@executable_path"] = "$ORIGIN" }
+            return maps[name]
+        end)))}
+        -- add_rpathdirs("...", {runpath = false})
+        if extra then
+            if extra.runpath == false and self:has_flags(string.format('--passL:"-Wl,-rpath=%s,--disable-new-dtags"', dir), "ldflags") then
+                flags[1] = string.format('--passL:"-Wl,-rpath=%s,--disable-new-dtags"', dir)
+            elseif extra.runpath == true and self:has_flags(string.format('--passL:"-Wl,-rpath=%s,--enable-new-dtags"', dir), "ldflags") then
+                flags[1] = string.format('--passL:"-Wl,-rpath=%s,--enable-new-dtags"', dir)
+            end
+        end
+        return flags
+    elseif self:has_flags('--passL:"-Xlinker" --passL:"-rpath" --passL:"-Xlinker" ' .. string.format('--passL:"%s"', dir), "ldflags") then
+        return {'--passL:"-Xlinker"', '--passL:"-rpath"', '--passL:"-Xlinker"', string.format('--passL:"%s"', (dir:gsub("%$ORIGIN", "@loader_path")))}
+    end
+end
+
+-- make the build arguments list
+function buildargv(self, sourcefiles, targetkind, targetfile, flags)
+    local flags_extra = {}
+    if targetkind ~= "static" and self:is_plat("windows") then
+        -- fix link flags for windows
+        -- @see https://github.com/nim-lang/Nim/issues/19033
+        local flags_new = {}
+        local flags_link = {}
+        for _, flag in ipairs(flags) do
+            if flag:find("passL:", 1, true) then
+                table.insert(flags_link, flag)
+            else
+                table.insert(flags_new, flag)
+            end
+        end
+        if #flags_link > 0 then
+            table.insert(flags_new, "--passL:-link")
+            table.join2(flags_new, flags_link)
+        end
+        flags = flags_new
+    end
+    if targetkind == "static" then
+        local targetname = path.basename(targetkind)
+        table.insert(flags_extra, "--nimMainPrefix:lib" .. targetname)
+    end
+    return self:program(), table.join("c", flags, flags_extra, "-o:" .. targetfile, sourcefiles)
+end
+
+-- build the target file
+function build(self, sourcefiles, targetkind, targetfile, flags)
+    os.mkdir(path.directory(targetfile))
+    local program, argv = buildargv(self, sourcefiles, targetkind, targetfile, flags)
+    os.runv(program, argv, {envs = self:runenvs()})
+end
+
+
