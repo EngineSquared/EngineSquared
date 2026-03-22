@@ -47,7 +47,7 @@ namespace Object {
  */
 class OBJLoaderError : public std::exception {
   public:
-    explicit OBJLoaderError(const std::string &message) : _msg("OBJLoader error: " + message){};
+    explicit OBJLoaderError(const std::string &message) : _msg("OBJLoader error: " + message) {};
 
     const char *what() const throw() override { return this->_msg.c_str(); };
 
