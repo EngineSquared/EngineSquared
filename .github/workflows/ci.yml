@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
@@ -54,7 +54,7 @@ jobs:
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         if: steps.check_bot.outputs.skip != 'true'
         with:
           token: ${{ secrets.PAT_CI_TEST }}
@@ -64,11 +64,24 @@ jobs:
         if: steps.check_bot.outputs.skip != 'true'
         run: sudo apt-get install -y clang-format
 
+      - name: Install xmake
+        if: steps.check_bot.outputs.skip != 'true'
+        uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
+        with:
+          xmake-version: latest
+          actions-cache-folder: '.xmake-cache-${{ runner.os }}'
+          actions-cache-key: 'xmake-actions-cache-key-${{ runner.os }}-compilation'
+          package-cache: true
+          package-cache-key: 'xmake-package-cache-key-${{ runner.os }}-compilation'
+          project-path: '.'
+          build-cache: true
+          build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-compilation'
+          build-cache-path: 'build/.build_cache'
+
       - name: Run clang-format
         if: steps.check_bot.outputs.skip != 'true'
         run: |
-          git ls-files -z "*.cpp" "*.hpp" "*.inl" | while IFS= read -rd '' f; do tail -c1 < "$f" | read -r _ || echo >> "$f"; done
-          find . -iname '*.hpp' -o -iname '*.cpp' -o -iname '*.inl' | xargs clang-format -i
+          xmake format
 
       - name: Set up Git
         if: steps.check_bot.outputs.skip != 'true'
@@ -97,7 +110,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
@@ -143,7 +156,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
@@ -191,7 +204,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
