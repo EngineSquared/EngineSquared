@@ -10,6 +10,7 @@
 **/*.spv
 **/.clangd
 **/compile_commands.json
+**/.xmake*/**
 
 # sonar
 **/.sonarlint/*
