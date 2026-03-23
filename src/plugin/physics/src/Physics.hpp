@@ -71,4 +71,4 @@
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
 
 // Plugin
-#include "plugin/PhysicsPlugin.hpp"
+#include "plugin/PluginPhysics.hpp"
