@@ -67,7 +67,7 @@ template <typename... Systems> inline decltype(auto) Core::RegisterSystem(System
 {
     if (!this->_schedulers.Contains(_defaultScheduler))
     {
-        Log::Warn(fmt::format("Trying to register systems with a default scheduler that does not exist: {}",
+        Log::Warning(fmt::format("Trying to register systems with a default scheduler that does not exist: {}",
                               _defaultScheduler.name()));
     }
     return this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(std::forward<Systems>(systems)...);
@@ -91,7 +91,7 @@ template <typename TPlugin> void Core::AddPlugin()
 {
     if (this->_plugins.contains(std::type_index(typeid(TPlugin))))
     {
-        Log::Warn(fmt::format("Plugin {} already added", typeid(TPlugin).name()));
+        Log::Warning(fmt::format("Plugin {} already added", typeid(TPlugin).name()));
     }
     this->_plugins.emplace(std::type_index(typeid(TPlugin)), std::make_unique<TPlugin>(*this));
     this->_plugins.at(std::type_index(typeid(TPlugin)))->Bind();
@@ -106,7 +106,7 @@ inline void Core::SetDefaultScheduler(std::type_index scheduler)
 {
     if (!this->_schedulers.Contains(scheduler))
     {
-        Log::Warn(fmt::format("Trying to set a default scheduler that does not exist: {}", scheduler.name()));
+        Log::Warning(fmt::format("Trying to set a default scheduler that does not exist: {}", scheduler.name()));
     }
     this->_defaultScheduler = scheduler;
 }

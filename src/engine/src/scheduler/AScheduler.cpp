@@ -13,11 +13,11 @@ void AScheduler::Disable(FunctionUtils::FunctionID id)
     }
     else if (_disabledSystemsList.Contains(id))
     {
-        Log::Warn(fmt::format("System with id {} is already disabled", id));
+        Log::Warning(fmt::format("System with id {} is already disabled", id));
     }
     else
     {
-        Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
+        Log::Warning(fmt::format("System with id {} don't exist in the scheduler", id));
     }
 }
 
@@ -29,11 +29,11 @@ void AScheduler::Enable(FunctionUtils::FunctionID id)
     }
     else if (_enabledSystemsList.Contains(id))
     {
-        Log::Warn(fmt::format("System with id {} is already enabled", id));
+        Log::Warning(fmt::format("System with id {} is already enabled", id));
     }
     else
     {
-        Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
+        Log::Warning(fmt::format("System with id {} don't exist in the scheduler", id));
     }
 }
 
@@ -91,7 +91,7 @@ void AScheduler::Remove(FunctionUtils::FunctionID id)
     }
     else
     {
-        Log::Warn(fmt::format("System with id {} don't exist in the scheduler", id));
+        Log::Warning(fmt::format("System with id {} don't exist in the scheduler", id));
     }
 }
 } // namespace Engine::Scheduler

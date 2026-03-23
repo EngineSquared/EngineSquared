@@ -37,7 +37,7 @@ struct Camera {
         }
         else
         {
-            Log::Warn("GPUCamera::UpdateAspectRatio: texture height is zero, cannot update aspect ratio.");
+            Log::Warning("GPUCamera::UpdateAspectRatio: texture height is zero, cannot update aspect ratio.");
         }
     }
 };

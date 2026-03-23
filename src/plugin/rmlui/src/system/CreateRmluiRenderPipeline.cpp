@@ -22,7 +22,7 @@ void Rmlui::System::CreateRmluiRenderPipeline(Engine::Core &core)
     auto &renderGraphContainer = core.GetResource<Graphic::Resource::RenderGraphContainer>();
     if (!renderGraphContainer.HasDefault())
     {
-        Log::Warn("Rmlui render pass skipped: no default render graph available yet.");
+        Log::Warning("Rmlui render pass skipped: no default render graph available yet.");
         return;
     }
 
