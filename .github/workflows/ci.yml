@@ -5,6 +5,9 @@ on:
     branches-ignore:
       - 'ga-ignore-**'
       - 'gh-pages'
+  pull_request:
+    branches:
+      - '**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -16,6 +19,7 @@ env:
 
 jobs:
   check_repository_cleanliness:
+    if: ${{ github.event_name != 'pull_request' || (!startsWith(github.head_ref, 'ga-ignore-') && github.head_ref != 'gh-pages') }}
     name: Checks if the repository is clean and void of any unwanted files (temp files, binary files, etc.)
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +27,6 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          ref: ${{ github.ref_name }}
 
       - name: Find unwanted files
         run: |
@@ -58,7 +61,6 @@ jobs:
         if: steps.check_bot.outputs.skip != 'true'
         with:
           token: ${{ secrets.PAT_CI_TEST }}
-          ref: ${{ github.ref_name }}
 
       - name: Install clang-format
         if: steps.check_bot.outputs.skip != 'true'
@@ -113,7 +115,6 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          ref: ${{ github.ref_name }}
 
       - name: Setup Linux dependencies
         if: contains(runner.os, 'linux')
@@ -159,7 +160,6 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          ref: ${{ github.ref_name }}
 
       - name: Install rust
         uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606
@@ -218,10 +218,6 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          ref: ${{ github.ref_name }}
-
-      - name: Pull latest changes
-        run: git pull origin ${{ github.ref_name }} || true
 
       - name: Setup Linux dependencies
         if: contains(runner.os, 'linux')
