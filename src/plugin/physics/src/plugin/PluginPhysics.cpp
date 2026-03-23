@@ -2,8 +2,8 @@
 #include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
 
-#include "plugin/PluginEvent.hpp"
 #include "plugin/PluginPhysics.hpp"
+#include "plugin/PluginEvent.hpp"
 
 #include "resource/BodyEntityMap.hpp"
 #include "resource/VehicleTelemetry.hpp"
