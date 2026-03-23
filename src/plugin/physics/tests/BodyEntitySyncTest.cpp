@@ -6,11 +6,11 @@
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "entity/Entity.hpp"
-#include "plugin/PhysicsPlugin.hpp"
+#include "plugin/PluginPhysics.hpp"
 #include "resource/BodyEntityMap.hpp"
 #include "scheduler/Startup.hpp"
 
-TEST(PhysicsPlugin, BodyEntityMapAddition)
+TEST(PluginPhysics, BodyEntityMapAddition)
 {
     Engine::Core c;
 
@@ -43,7 +43,7 @@ TEST(PhysicsPlugin, BodyEntityMapAddition)
     c.RunSystems();
 }
 
-TEST(PhysicsPlugin, BodyEntityMapRemoval)
+TEST(PluginPhysics, BodyEntityMapRemoval)
 {
     Engine::Core c;
 
@@ -74,7 +74,7 @@ TEST(PhysicsPlugin, BodyEntityMapRemoval)
     c.RunSystems();
 }
 
-TEST(PhysicsPlugin, BodyEntityMapRetrieval)
+TEST(PluginPhysics, BodyEntityMapRetrieval)
 {
     Engine::Core c;
 
@@ -103,7 +103,7 @@ TEST(PhysicsPlugin, BodyEntityMapRetrieval)
     c.RunSystems();
 }
 
-TEST(PhysicsPlugin, BodyEntityMapErroneousRetrieval)
+TEST(PluginPhysics, BodyEntityMapErroneousRetrieval)
 {
     Engine::Core c;
 
