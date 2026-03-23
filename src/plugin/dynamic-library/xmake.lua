@@ -13,8 +13,10 @@ local required_packages = {
     "dylib"
 }
 
-includes("tests/zig_project/xmake.lua")
-includes("tests/rust_project/xmake.lua")
+-- includes("tests/zig_project/xmake.lua")
+-- includes("tests/rust_project/xmake.lua")
+includes("tests/cpp_project/xmake.lua")
+includes("tests/c_project/xmake.lua")
 
 target(plugin_name)
     set_group(PLUGINS_GROUP_NAME)
@@ -28,8 +30,10 @@ target(plugin_name)
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(system/*.hpp)")
 
-    add_deps("ZigLib", {inherit = false})
-    add_deps("RustLib", {inherit = false})
+    -- add_deps("ZigLib", {inherit = false})
+    -- add_deps("RustLib", {inherit = false})
+    add_deps("CppLib", {inherit = false})
+    add_deps("CLib", {inherit = false})
 
     add_deps("EngineSquaredCore")
 
