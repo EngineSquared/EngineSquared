@@ -6,9 +6,8 @@ on:
       - 'ga-ignore-**'
       - 'gh-pages'
   pull_request:
-    branches-ignore:
-      - 'ga-ignore-**'
-      - 'gh-pages'
+    branches:
+      - '**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -19,6 +18,7 @@ env:
 
 jobs:
   check_repository_cleanliness:
+    if: ${{ github.event_name != 'pull_request' || (!startsWith(github.head_ref, 'ga-ignore-') && github.head_ref != 'gh-pages') }}
     name: Checks if the repository is clean and void of any unwanted files (temp files, binary files, etc.)
     runs-on: ubuntu-latest
     steps:
