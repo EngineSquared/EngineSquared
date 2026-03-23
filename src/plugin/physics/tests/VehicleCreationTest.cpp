@@ -8,7 +8,7 @@
 #include "component/VehicleController.hpp"
 #include "component/VehicleInternal.hpp"
 #include "core/Core.hpp"
-#include "plugin/PhysicsPlugin.hpp"
+#include "plugin/PluginPhysics.hpp"
 #include "resource/Time.hpp"
 #include "scheduler/Startup.hpp"
 #include "utils/ShapeGenerator.hpp"
