@@ -52,7 +52,7 @@ void Engine::Core::KillEntity(Engine::Id entity)
 {
     if (!IsEntityValid(entity))
     {
-        Log::Warn(fmt::format("[EntityID:{}] KillEntity ignored: invalid entity", entity));
+        Log::Warning(fmt::format("[EntityID:{}] KillEntity ignored: invalid entity", entity));
         return;
     }
     this->_registry->destroy(entity);
@@ -65,7 +65,7 @@ void Engine::Core::Stop()
 {
     if (!_running)
     {
-        Log::Warn("The core is already shutted down");
+        Log::Warning("The core is already shutted down");
         return;
     }
     _running = false;

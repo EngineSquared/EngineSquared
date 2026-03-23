@@ -23,7 +23,7 @@ void Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
     }
     else
     {
-        Log::Warn(fmt::format("Trying to delete Scheduler but it does not exist: {}", id.name()));
+        Log::Warning(fmt::format("Trying to delete Scheduler but it does not exist: {}", id.name()));
     }
 }
 

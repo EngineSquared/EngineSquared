@@ -63,7 +63,7 @@ template <typename TFunc> auto ForEachChild(Engine::Entity parent, TFunc func) -
         parent.TryGetComponent<Relationship::Component::Relationship>();
     if (!parentRS)
     {
-        Log::Warn(fmt::format("Entity({}) has no Relationship component in ForEachChild", parent));
+        Log::Warning(fmt::format("Entity({}) has no Relationship component in ForEachChild", parent));
         return;
     }
 

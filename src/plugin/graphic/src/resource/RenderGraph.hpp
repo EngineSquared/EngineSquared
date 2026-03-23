@@ -36,7 +36,8 @@ class RenderGraph {
         ID id = GetID(name);
         if (_renderPasses.contains(id))
         {
-            Log::Warn(fmt::format("RenderGraph: Render pass with name '{}' already exists. Skipping addition.", name));
+            Log::Warning(
+                fmt::format("RenderGraph: Render pass with name '{}' already exists. Skipping addition.", name));
             return;
         }
         Log::Debug(fmt::format("RenderGraph: Added render pass '{}'.", name));

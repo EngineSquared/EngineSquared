@@ -19,7 +19,7 @@ bool SystemInterface::LogMessage(Rml::Log::Type type, const Rml::String &message
     switch (type)
     {
     case Rml::Log::Type::LT_INFO: Log::Info(message); break;
-    case Rml::Log::Type::LT_WARNING: Log::Warn(message); break;
+    case Rml::Log::Type::LT_WARNING: Log::Warning(message); break;
     case Rml::Log::Type::LT_ERROR: Log::Error(message); break;
     case Rml::Log::Type::LT_ASSERT: Log::Critical(message); break;
     case Rml::Log::Type::LT_DEBUG: Log::Debug(message); break;

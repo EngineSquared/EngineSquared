@@ -134,7 +134,7 @@ static void CreateConstraintGeneric(Engine::Core::Registry &registry, Engine::En
     }
     catch (const Physics::Exception::ConstraintError &e)
     {
-        Log::Warn(fmt::format("{} constraint error: {}", safeName, e.what()));
+        Log::Warning(fmt::format("{} constraint error: {}", safeName, e.what()));
     }
     catch (const std::bad_alloc &e)
     {
