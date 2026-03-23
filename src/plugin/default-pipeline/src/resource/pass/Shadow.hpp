@@ -181,7 +181,7 @@ class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
                 else if (validation.severity == Graphic::Utils::ValidationError::Severity::Warning)
                 {
                     Log::Warning(fmt::format("Shader Descriptor Validation Warning: {} at {}", validation.message,
-                                          validation.location));
+                                             validation.location));
                 }
             }
         }

@@ -100,7 +100,7 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
         if (skippedCount > 0)
         {
             Log::Warning(fmt::format("Maximum number of point lights ({}) reached. {} light(s) skipped.",
-                                  Utils::MAX_POINT_LIGHTS, skippedCount));
+                                     Utils::MAX_POINT_LIGHTS, skippedCount));
         }
 
         context.queue->writeBuffer(_buffer, 0, &data, sizeof(PointLightsData));

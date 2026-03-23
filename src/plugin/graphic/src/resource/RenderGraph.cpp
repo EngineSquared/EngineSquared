@@ -92,8 +92,8 @@ void RenderGraph::TopologicalSort(void)
         }
         else
         {
-            Log::Warning(fmt::format("RenderGraph: Dependency references non-existent render pass with ID '{}'. Skipping.",
-                                  after.value()));
+            Log::Warning(fmt::format(
+                "RenderGraph: Dependency references non-existent render pass with ID '{}'. Skipping.", after.value()));
         }
     }
 

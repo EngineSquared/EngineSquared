@@ -83,7 +83,7 @@ Graphic::Resource::Shader Rmlui::Utils::RmluiRenderPass::CreateShader(Graphic::R
             else if (validation.severity == Graphic::Utils::ValidationError::Severity::Warning)
             {
                 Log::Warning(fmt::format("Rmlui Shader Descriptor Validation Warning: {} at {}", validation.message,
-                                      validation.location));
+                                         validation.location));
             }
         }
     }

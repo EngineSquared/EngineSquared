@@ -203,7 +203,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
         if (!mesh)
         {
             Log::Warning("ConvexHullMeshCollider: trying to create shape without mesh data (no embedded mesh or "
-                      "Object::Mesh component)");
+                         "Object::Mesh component)");
             return nullptr;
         }
 

@@ -368,7 +368,7 @@ static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::Entity
         if (registry.any_of<Component::BoxCollider, Component::SphereCollider, Component::CapsuleCollider>(entity))
         {
             Log::Warning("SoftBody: Collider components (BoxCollider, SphereCollider, CapsuleCollider) are ignored "
-                      "for soft bodies. Use SoftBodySettings::vertexRadius for collision detection.");
+                         "for soft bodies. Use SoftBodySettings::vertexRadius for collision detection.");
         }
 
         //=====================================================================

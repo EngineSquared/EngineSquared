@@ -624,7 +624,7 @@ class SoundManager {
             if (startFrame >= totalFrames || endFrame > totalFrames || startFrame >= endFrame)
             {
                 Log::Warning(fmt::format("Invalid loop range for \"{}\": {}s to {}s, ignored", soundName, startSeconds,
-                                      endSeconds));
+                                         endSeconds));
                 return;
             }
             it->second.loopStartFrame = startFrame;
