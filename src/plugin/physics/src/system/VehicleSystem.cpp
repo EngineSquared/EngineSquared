@@ -112,7 +112,7 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
 
     if (vehicle.engine.normalizedTorque.empty())
     {
-        Log::Warn("Vehicle engine normalized torque curve is empty. Falling back to default values.");
+        Log::Warning("Vehicle engine normalized torque curve is empty. Falling back to default values.");
         Component::EngineSettings defaultSettings;
         controllerSettings.mEngine.mNormalizedTorque.Clear();
         controllerSettings.mEngine.mNormalizedTorque.Reserve(
@@ -159,7 +159,7 @@ static void OnVehicleConstruct(Engine::Core::Registry &registry, Engine::EntityI
     controllerSettings.mTransmission.mReverseGearRatios.clear();
     if (vehicle.gearbox.reverseGearRatios.empty())
     {
-        Log::Warn("Gearbox has no reverse gears defined. Using default reverse gear ratio based on first "
+        Log::Warning("Gearbox has no reverse gears defined. Using default reverse gear ratio based on first "
                   "forward gear.");
         float defaultReverseRatio = -vehicle.gearbox.forwardGearRatios[0];
         controllerSettings.mTransmission.mReverseGearRatios.push_back(defaultReverseRatio);

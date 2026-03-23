@@ -66,7 +66,7 @@ class ARenderPass {
     {
         if (_inputs.contains(groupIndex))
         {
-            Log::Warn(fmt::format("RenderPass {}: Overwriting existing bind group at index {}", _name, groupIndex));
+            Log::Warning(fmt::format("RenderPass {}: Overwriting existing bind group at index {}", _name, groupIndex));
         }
         _inputs[groupIndex] = bindGroupName;
     }
@@ -75,7 +75,7 @@ class ARenderPass {
     {
         if (_outputs.colorBuffers.contains(id))
         {
-            Log::Warn(fmt::format("RenderPass {}: Overwriting existing color buffer at index {}", _name, id));
+            Log::Warning(fmt::format("RenderPass {}: Overwriting existing color buffer at index {}", _name, id));
         }
         _outputs.colorBuffers[id] = std::move(output);
     }
@@ -84,7 +84,7 @@ class ARenderPass {
     {
         if (_outputs.depthBuffer.has_value())
         {
-            Log::Warn(fmt::format("RenderPass {}: Overwriting existing depth buffer", _name));
+            Log::Warning(fmt::format("RenderPass {}: Overwriting existing depth buffer", _name));
         }
         _outputs.depthBuffer = output;
     }

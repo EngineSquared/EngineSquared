@@ -48,7 +48,7 @@ static JPH::RefConst<JPH::Shape> CreateConvexHullFromMesh(const Object::Componen
 
     if (vertices.empty())
     {
-        Log::Warn("ConvexHullMeshCollider: Mesh has no vertices, cannot create convex hull");
+        Log::Warning("ConvexHullMeshCollider: Mesh has no vertices, cannot create convex hull");
         return nullptr;
     }
 
@@ -92,7 +92,7 @@ static JPH::RefConst<JPH::Shape> CreateMeshShapeFromMesh(const Object::Component
 
     if (vertices.empty() || indices.empty())
     {
-        Log::Warn("MeshCollider: Mesh has no vertices or indices, cannot create mesh shape");
+        Log::Warning("MeshCollider: Mesh has no vertices or indices, cannot create mesh shape");
         return nullptr;
     }
 
@@ -152,7 +152,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
     {
         if (!sphereCollider->IsValid())
         {
-            Log::Warn("SphereCollider: Invalid radius, using default 0.5");
+            Log::Warning("SphereCollider: Invalid radius, using default 0.5");
             return new JPH::SphereShape(0.5f);
         }
 
@@ -167,7 +167,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
     {
         if (!capsuleCollider->IsValid())
         {
-            Log::Warn("CapsuleCollider: Invalid dimensions, using default");
+            Log::Warning("CapsuleCollider: Invalid dimensions, using default");
             return new JPH::CapsuleShape(0.5f, 0.25f);
         }
 
@@ -202,7 +202,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
 
         if (!mesh)
         {
-            Log::Warn("ConvexHullMeshCollider: trying to create shape without mesh data (no embedded mesh or "
+            Log::Warning("ConvexHullMeshCollider: trying to create shape without mesh data (no embedded mesh or "
                       "Object::Mesh component)");
             return nullptr;
         }
@@ -230,7 +230,7 @@ static JPH::RefConst<JPH::Shape> CreateShapeFromColliders(Engine::Core::Registry
 
     if (!mesh)
     {
-        Log::Warn(
+        Log::Warning(
             "MeshCollider: trying to create shape without mesh data (no embedded mesh or Object::Mesh component)");
         return nullptr;
     }
@@ -275,7 +275,7 @@ static void OnRigidBodyConstruct(Engine::Core::Registry &registry, Engine::Entit
         auto *transform = entity.TryGetComponent<Object::Component::Transform>();
         if (!transform)
         {
-            Log::Warn("RigidBody added to entity without Transform - creating default Transform");
+            Log::Warning("RigidBody added to entity without Transform - creating default Transform");
             transform = &entity.AddComponent<Object::Component::Transform>();
         }
 
@@ -337,7 +337,7 @@ static void OnRigidBodyInternalConstruct(Engine::Core::Registry &registry, Engin
 
     if (!internalComponent.IsValid())
     {
-        Log::Warn("RigidBodyInternal has invalid BodyID, skipping body addition to BodyEntityMap");
+        Log::Warning("RigidBodyInternal has invalid BodyID, skipping body addition to BodyEntityMap");
         return;
     }
 
@@ -396,7 +396,7 @@ static void OnRigidBodyInternalDestroy(Engine::Core::Registry &registry, Engine:
 
     if (!internalComponent.IsValid())
     {
-        Log::Warn("RigidBodyInternal has invalid BodyID, skipping body removal from BodyEntityMap");
+        Log::Warning("RigidBodyInternal has invalid BodyID, skipping body removal from BodyEntityMap");
         return;
     }
 

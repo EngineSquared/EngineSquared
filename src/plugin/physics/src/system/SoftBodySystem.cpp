@@ -258,7 +258,7 @@ static CreateSettingsResult CreateJoltSharedSettings(const Component::SoftBody &
             // Validate indices are within bounds
             if (idx0 >= deduped.vertices.size() || idx1 >= deduped.vertices.size() || idx2 >= deduped.vertices.size())
             {
-                Log::Warn(
+                Log::Warning(
                     fmt::format("SoftBody: Skipping face with out-of-bounds indices ({}, {}, {})", idx0, idx1, idx2));
                 continue;
             }
@@ -367,7 +367,7 @@ static void OnSoftBodyConstruct(Engine::Core::Registry &registry, Engine::Entity
         // Warn if Collider components are present (they are ignored for SoftBody)
         if (registry.any_of<Component::BoxCollider, Component::SphereCollider, Component::CapsuleCollider>(entity))
         {
-            Log::Warn("SoftBody: Collider components (BoxCollider, SphereCollider, CapsuleCollider) are ignored "
+            Log::Warning("SoftBody: Collider components (BoxCollider, SphereCollider, CapsuleCollider) are ignored "
                       "for soft bodies. Use SoftBodySettings::vertexRadius for collision detection.");
         }
 
@@ -468,7 +468,7 @@ static void OnSoftBodyInternalConstruct(Engine::Core::Registry &registry, Engine
     auto internalComponent = entity.GetComponents<Component::SoftBodyInternal>();
     if (!internalComponent.IsValid())
     {
-        Log::Warn("SoftBodyInternal has invalid BodyID, skipping body removal from BodyEntityMap");
+        Log::Warning("SoftBodyInternal has invalid BodyID, skipping body removal from BodyEntityMap");
         return;
     }
 
@@ -517,7 +517,7 @@ static void OnSoftBodyInternalDestroy(Engine::Core::Registry &registry, Engine::
     auto internalComponent = entity.GetComponents<Component::SoftBodyInternal>();
     if (!internalComponent.IsValid())
     {
-        Log::Warn("SoftBodyInternal has invalid BodyID, skipping body removal from BodyEntityMap");
+        Log::Warning("SoftBodyInternal has invalid BodyID, skipping body removal from BodyEntityMap");
         return;
     }
 

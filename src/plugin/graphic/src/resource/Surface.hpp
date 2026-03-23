@@ -23,7 +23,7 @@ struct Surface {
         wgpu::Status status = value->getCapabilities(adapter, &caps);
         if (capabilities.has_value())
         {
-            Log::Warn("Surface capabilities already requested, overwriting");
+            Log::Warning("Surface capabilities already requested, overwriting");
             capabilities->freeMembers();
         }
         capabilities = caps;

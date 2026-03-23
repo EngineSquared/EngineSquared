@@ -9,7 +9,7 @@ void RenderGraph::Remove(std::string_view name)
     ID id = GetID(name);
     if (!this->Contains(name))
     {
-        Log::Warn(fmt::format("RenderGraph: Cannot remove render pass '{}', it does not exist.", name));
+        Log::Warning(fmt::format("RenderGraph: Cannot remove render pass '{}', it does not exist.", name));
         return;
     }
     Log::Debug(fmt::format("RenderGraph: Removed render pass '{}'.", name));
@@ -47,13 +47,13 @@ void RenderGraph::SetDependency(std::string_view nameBefore, std::string_view na
 
     if (!this->Contains(nameBefore))
     {
-        Log::Warn(
+        Log::Warning(
             fmt::format("RenderGraph: Cannot set dependency, render pass '{}' (Before) does not exist.", nameBefore));
         errorFound = true;
     }
     if (!this->Contains(nameAfter))
     {
-        Log::Warn(
+        Log::Warning(
             fmt::format("RenderGraph: Cannot set dependency, render pass '{}' (After) does not exist.", nameAfter));
         errorFound = true;
     }
@@ -92,7 +92,7 @@ void RenderGraph::TopologicalSort(void)
         }
         else
         {
-            Log::Warn(fmt::format("RenderGraph: Dependency references non-existent render pass with ID '{}'. Skipping.",
+            Log::Warning(fmt::format("RenderGraph: Dependency references non-existent render pass with ID '{}'. Skipping.",
                                   after.value()));
         }
     }

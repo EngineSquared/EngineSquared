@@ -10,7 +10,7 @@ void Rmlui::System::BindInputCallbacks(Engine::Core &core)
     auto &uiContext = core.GetResource<Rmlui::Resource::UIContext>();
     if (uiContext.AreInputCallbacksRegistered())
     {
-        Log::Warn("Rmlui input callbacks already registered for this core");
+        Log::Warning("Rmlui input callbacks already registered for this core");
         return;
     }
     uiContext.SetInputCallbacksRegistered(true);

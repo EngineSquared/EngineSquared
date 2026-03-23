@@ -187,7 +187,7 @@ class Texture {
     {
         if (image.width != this->_webgpuTexture.getWidth() || image.height != this->_webgpuTexture.getHeight())
         {
-            Log::Warn("Image data size does not match texture size.");
+            Log::Warning("Image data size does not match texture size.");
         }
 
         wgpu::Extent3D textureSize = {this->_webgpuTexture.getWidth(), this->_webgpuTexture.getHeight(), 1};

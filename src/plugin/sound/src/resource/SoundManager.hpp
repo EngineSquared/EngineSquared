@@ -337,7 +337,7 @@ class SoundManager {
     {
         if (_soundsToPlay.contains(soundName))
         {
-            Log::Warn(fmt::format("Could not register: Sound \"{}\" already exists", soundName));
+            Log::Warning(fmt::format("Could not register: Sound \"{}\" already exists", soundName));
             return;
         }
 
@@ -623,7 +623,7 @@ class SoundManager {
 
             if (startFrame >= totalFrames || endFrame > totalFrames || startFrame >= endFrame)
             {
-                Log::Warn(fmt::format("Invalid loop range for \"{}\": {}s to {}s, ignored", soundName, startSeconds,
+                Log::Warning(fmt::format("Invalid loop range for \"{}\": {}s to {}s, ignored", soundName, startSeconds,
                                       endSeconds));
                 return;
             }
@@ -657,7 +657,7 @@ class SoundManager {
         Sound &sound = it->second;
         if (!sound.isPlaying)
         {
-            Log::Warn(fmt::format("Sound \"{}\" is not currently playing", soundName));
+            Log::Warning(fmt::format("Sound \"{}\" is not currently playing", soundName));
             return 0.0f;
         }
 

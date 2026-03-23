@@ -95,7 +95,7 @@ class DirectionalLightsBuffer : public Graphic::Resource::AGPUBuffer {
 
         if (skippedCount > 0)
         {
-            Log::Warn(fmt::format("Maximum number of directional lights ({}) reached. {} light(s) skipped.",
+            Log::Warning(fmt::format("Maximum number of directional lights ({}) reached. {} light(s) skipped.",
                                   Utils::MAX_DIRECTIONAL_LIGHTS, skippedCount));
         }
 

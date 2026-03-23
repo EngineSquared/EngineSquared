@@ -6,7 +6,7 @@ auto Relationship::Utils::SetChildOf(Engine::Entity child, Engine::Entity parent
 {
     if (IsChildOf(parent, child))
     {
-        Log::Warn(fmt::format("Entity {} is already a child of the parent {}", child, parent));
+        Log::Warning(fmt::format("Entity {} is already a child of the parent {}", child, parent));
         return;
     }
     auto &parentRS = parent.AddComponentIfNotExists<Relationship::Component::Relationship>();
@@ -39,7 +39,7 @@ auto Relationship::Utils::RemoveParent(Engine::Entity child) -> void
     std::optional<Engine::Entity> parentOpt = GetParent(child);
     if (!parentOpt.has_value())
     {
-        Log::Warn(fmt::format("Entity {} has no parent to remove", child));
+        Log::Warning(fmt::format("Entity {} has no parent to remove", child));
         return;
     }
     Engine::Entity parent = parentOpt.value();
