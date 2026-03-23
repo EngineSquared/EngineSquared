@@ -20,7 +20,7 @@
 #include <iostream>
 
 struct CharacterControllerExampleRuntime {
-    Engine::EntityId player = Engine::EntityId::Null;
+    Engine::EntityId player = Engine::EntityId::Null();
     bool jumpQueued = false;
 };
 
@@ -34,9 +34,9 @@ void EscapeKeySystem(Engine::Core &core)
 void CharacterControllerInputSystem(Engine::Core &core)
 {
     auto &runtime = core.GetResource<CharacterControllerExampleRuntime>();
-    auto player = Engine::Entity(core, runtime.player);
-    if (player.IsNull())
+    if (runtime.player.IsValid(core) == false)
         return;
+    auto player = Engine::Entity(core, runtime.player);
 
     auto &inputManager = core.GetResource<Input::Resource::InputManager>();
     auto &controller = player.GetComponents<Physics::Component::CharacterController>();
@@ -82,7 +82,8 @@ void SetupCharacterControllerScene(Engine::Core &core)
     auto player =
         Object::Helper::CreateCapsule(core, {.radius = 0.3f, .height = 1.6f, .position = glm::vec3(0.0f, 4.0f, 0.0f)});
     player.AddComponent<Physics::Component::CapsuleCollider>(0.8f, 0.3f);
-    player.AddComponent<Physics::Component::CharacterController>(Physics::Component::CharacterController::Create(70.0f));
+    player.AddComponent<Physics::Component::CharacterController>(
+        Physics::Component::CharacterController::Create(70.0f));
 
     auto camera = core.CreateEntity();
     camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 3.0f, -8.0f));
@@ -99,7 +100,7 @@ void SetupCharacterControllerScene(Engine::Core &core)
     cameraManager.SetActiveCamera(camera);
     cameraManager.SetMovementSpeed(4.0f);
 
-    core.RegisterResource(CharacterControllerExampleRuntime{.player = player.GetId(), .jumpQueued = false});
+    core.RegisterResource(CharacterControllerExampleRuntime{.player = player.Id(), .jumpQueued = false});
     core.RegisterSystem(EscapeKeySystem);
 
     std::cout << "Controls: WASD/ZQSD to move, SPACE to jump, ESC to quit." << std::endl;
