@@ -5,6 +5,10 @@ on:
     branches-ignore:
       - 'ga-ignore-**'
       - 'gh-pages'
+  pull_request:
+    branches-ignore:
+      - 'ga-ignore-**'
+      - 'gh-pages'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
