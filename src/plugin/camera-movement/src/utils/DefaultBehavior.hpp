@@ -35,7 +35,7 @@ class DefaultBehavior : public ICameraBehavior {
     {
         if (!core.HasResource<Input::Resource::InputManager>())
         {
-            Log::Warn("InputManager resource not found, cannot register camera callbacks");
+            Log::Warning("InputManager resource not found, cannot register camera callbacks");
             return;
         }
 
@@ -219,7 +219,7 @@ class DefaultBehavior : public ICameraBehavior {
 
         if (!core.GetRegistry().ctx().contains<Resource::CameraManager>())
         {
-            Log::Warn("CameraManager resource not found in MouseButtonCallback");
+            Log::Warning("CameraManager resource not found in MouseButtonCallback");
             return;
         }
 
@@ -245,13 +245,13 @@ class DefaultBehavior : public ICameraBehavior {
     {
         if (!core.GetRegistry().ctx().contains<Resource::CameraManager>())
         {
-            Log::Warn("CameraManager resource not found in CursorPosCallback");
+            Log::Warning("CameraManager resource not found in CursorPosCallback");
             return;
         }
 
         if (!core.GetRegistry().ctx().contains<Window::Resource::Window>())
         {
-            Log::Warn("Window resource not found in CursorPosCallback");
+            Log::Warning("Window resource not found in CursorPosCallback");
             return;
         }
 

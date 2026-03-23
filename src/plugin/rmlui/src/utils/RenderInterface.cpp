@@ -286,7 +286,7 @@ Rml::TextureHandle RenderInterface::LoadTexture(Rml::Vector2i &texture_dimension
     if (source.empty())
     {
         texture_dimensions = Rml::Vector2i(0, 0);
-        Log::Warn("Rmlui texture source is empty.");
+        Log::Warning("Rmlui texture source is empty.");
         return 0;
     }
 
@@ -303,13 +303,13 @@ Rml::TextureHandle RenderInterface::LoadTexture(Rml::Vector2i &texture_dimension
     catch (const Graphic::Exception::UnknownFileError &error)
     {
         texture_dimensions = Rml::Vector2i(0, 0);
-        Log::Warn(fmt::format("Rmlui failed to load texture '{}': {}", source, error.what()));
+        Log::Warning(fmt::format("Rmlui failed to load texture '{}': {}", source, error.what()));
         return 0;
     }
     catch (const Graphic::Exception::FileReadingError &error)
     {
         texture_dimensions = Rml::Vector2i(0, 0);
-        Log::Warn(fmt::format("Rmlui failed to load texture '{}': {}", source, error.what()));
+        Log::Warning(fmt::format("Rmlui failed to load texture '{}': {}", source, error.what()));
         return 0;
     }
 }
@@ -324,7 +324,7 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
 {
     if (source_dimensions.x <= 0 || source_dimensions.y <= 0)
     {
-        Log::Warn("Rmlui texture dimensions are invalid.");
+        Log::Warning("Rmlui texture dimensions are invalid.");
         return 0;
     }
 
@@ -353,7 +353,7 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
         }
         else
         {
-            Log::Warn("Rmlui texture data size does not match expected RGBA pixel count.");
+            Log::Warning("Rmlui texture data size does not match expected RGBA pixel count.");
         }
     }
 

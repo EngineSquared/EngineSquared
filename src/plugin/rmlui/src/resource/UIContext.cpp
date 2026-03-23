@@ -252,7 +252,7 @@ void UIContext::Render(Engine::Core &core)
 {
     if (!_isReady())
     {
-        Log::Warn("Rmlui is not ready to render");
+        Log::Warning("Rmlui is not ready to render");
         return;
     }
 
@@ -299,7 +299,7 @@ void UIContext::SetFont(const std::string &fontPath)
     }
     else
     {
-        Log::Warn("Rmlui font can not be assign as it has not been initialized");
+        Log::Warning("Rmlui font can not be assign as it has not been initialized");
     }
 }
 

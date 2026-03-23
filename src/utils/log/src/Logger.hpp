@@ -16,7 +16,7 @@ template <typename T> inline void Debug(const T &msg) noexcept { spdlog::debug(m
 
 template <typename T> inline void Info(const T &msg) noexcept { spdlog::info(msg); };
 
-template <typename T> inline void Warn(const T &msg) noexcept { spdlog::warn(msg); };
+template <typename T> inline void Warning(const T &msg) noexcept { spdlog::warn(msg); };
 
 template <typename T> inline void Error(const T &msg) noexcept { spdlog::error(msg); };
 
@@ -29,7 +29,7 @@ template <typename T> inline void Log(Level level, const T &msg) noexcept
     if (level == Level::info)
         Log::Info(msg);
     else if (level == Level::warn)
-        Log::Warn(msg);
+        Log::Warning(msg);
     else if (level == Level::err)
         Log::Error(msg);
     else if (level == Level::critical)

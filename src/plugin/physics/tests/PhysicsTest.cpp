@@ -8,6 +8,7 @@
 #include "event/CollisionEvent.hpp"
 #include "plugin/PluginPhysics.hpp"
 #include "plugin/PluginEvent.hpp"
+#include "plugin/PluginPhysics.hpp"
 #include "resource/EventManager.hpp"
 #include "resource/Time.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"

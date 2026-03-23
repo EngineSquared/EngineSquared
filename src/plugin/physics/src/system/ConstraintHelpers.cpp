@@ -134,7 +134,7 @@ void DestroyConstraint(Engine::Core::Registry &registry, Engine::EntityId entity
     }
     catch (const Physics::Exception::ConstraintError &e)
     {
-        Log::Warn(fmt::format("{} destroy constraint error: {}", safeName, e.what()));
+        Log::Warning(fmt::format("{} destroy constraint error: {}", safeName, e.what()));
     }
     catch (const std::bad_alloc &e)
     {

@@ -55,7 +55,7 @@ template <typename ResourceType> class ResourceManager {
 
         if (!ret.second)
         {
-            Log::Warn(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
+            Log::Warning(fmt::format("Resource with id {} already exists. Overwriting.", id.data()));
             ret = cache.force_load(id, std::forward<Args>(args)...);
         }
 

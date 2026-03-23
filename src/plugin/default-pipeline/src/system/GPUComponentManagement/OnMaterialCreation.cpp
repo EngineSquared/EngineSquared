@@ -41,7 +41,7 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     }
     else if (!material.diffuseTexName.empty())
     {
-        Log::Warn(fmt::format("Texture '{}' not found as file or in texture container", material.diffuseTexName));
+        Log::Warning(fmt::format("Texture '{}' not found as file or in texture container", material.diffuseTexName));
     }
 
     if (!samplerContainer.Contains(samplerId))
