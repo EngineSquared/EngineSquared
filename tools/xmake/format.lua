@@ -12,27 +12,29 @@ task("format")
 
         local projectdir = "$(projectdir)"
 
-
-
-        local flags = {"--style=file:./.clang-format"}
-        -- local flags = {}
-
-        if option.get("check") then
-            flags = table.join(flags, {"--Werror", "--dry-run"})
-        end
+        local flags = {"--style=file:./.clang-format", "--verbose"}
 
         for _, pattern in ipairs(files) do
             local filelist = os.files(pattern)
             for _, file in ipairs(filelist) do
-                local params = table.join(flags, {"-i", file})
-                os.execv(tool, params)
-                if not option.get("check") then
-                    print("Formatted: " .. file)
+                if option.get("check") then
+                    local params = table.join(flags, {file})
+                    local outpath = os.tmpfile()
+                    os.execv(tool, params, {stdout = outpath})
+                    local out = io.readfile(outpath)
+                    os.rm(outpath)
+                    local ref = io.readfile(file)
+                    if out ~= ref then
+                        os.execv(tool, params)
+                        local a = table.join(flags, {"--Werror", "--dry-run",file})
+                        os.execv(tool, a)
+                    end
+                else
+                    local params = table.join(flags, {"-i", file})
+                    os.execv(tool, params)
                 end
             end
         end
-
-        os.execv(tool, {"--help"})
     end)
 
     set_menu {
