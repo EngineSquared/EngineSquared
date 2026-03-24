@@ -12,7 +12,9 @@ task("format")
 
         local projectdir = "$(projectdir)"
 
-        local flags = {"--style=file:./.clang-format", "--verbose"}
+        local flags = {"--style=file:.clang-format", "--verbose"}
+
+        os.execv(tool, {"--dump-config"})
 
         for _, pattern in ipairs(files) do
             local filelist = os.files(pattern)
