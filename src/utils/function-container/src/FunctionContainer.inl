@@ -22,7 +22,7 @@ FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::A
 
     if (_idToIterator.contains(id))
     {
-        Log::Warn(fmt::format("Function already exists: {}", name)); // TODO: be able to change container thing name
+        Log::Warning(fmt::format("Function already exists: {}", name)); // TODO: be able to change container thing name
         return id;
     }
 
@@ -43,7 +43,7 @@ FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::A
 
     if (_idToIterator.contains(id))
     {
-        Log::Warn("Function already exists: " + function->GetName()); // TODO: be able to change container thing name
+        Log::Warning("Function already exists: " + function->GetName()); // TODO: be able to change container thing name
         return id;
     }
 
@@ -62,7 +62,7 @@ FunctionUtils::FunctionContainer<TReturn, TArgs...>::DeleteFunction(FunctionUtil
     auto mapIt = _idToIterator.find(id);
     if (mapIt == _idToIterator.end())
     {
-        Log::Warn("Function not found");
+        Log::Warning("Function not found");
         return nullptr;
     }
 

@@ -44,7 +44,7 @@ class SceneManager {
         static_assert(std::is_base_of_v<Utils::AScene, TScene>, "TScene must inherit from Utils::AScene");
         if (_scenes.contains(name))
         {
-            Log::Warn(fmt::format("Scene {} already exists", name));
+            Log::Warning(fmt::format("Scene {} already exists", name));
         }
         std::shared_ptr<TScene> new_scene = std::make_shared<TScene>();
         _scenes[name] = new_scene;

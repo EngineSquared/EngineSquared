@@ -6,8 +6,9 @@
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "event/CollisionEvent.hpp"
-#include "plugin/PhysicsPlugin.hpp"
+#include "plugin/PluginPhysics.hpp"
 #include "plugin/PluginEvent.hpp"
+#include "plugin/PluginPhysics.hpp"
 #include "resource/EventManager.hpp"
 #include "resource/Time.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
@@ -22,7 +23,7 @@ class TestScheduler : public Engine::Scheduler::Update {
     using Engine::Scheduler::Update::Update;
 };
 
-TEST(PhysicsPlugin, CubeFallingOnPlane)
+TEST(PluginPhysics, CubeFallingOnPlane)
 {
     Engine::Core c;
 

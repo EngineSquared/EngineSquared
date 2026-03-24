@@ -5,7 +5,7 @@ void Engine::SchedulerContainer::AddScheduler(Core &core, Args &&...args)
 {
     if (this->_schedulers.contains(std::type_index(typeid(TScheduler))))
     {
-        Log::Warn(fmt::format("Scheduler already exists: {}", typeid(TScheduler).name()));
+        Log::Warning(fmt::format("Scheduler already exists: {}", typeid(TScheduler).name()));
         return;
     }
     Log::Debug(fmt::format("Adding scheduler: {}", typeid(TScheduler).name()));
@@ -47,7 +47,7 @@ template <typename TBefore, typename TAfter> void Engine::SchedulerContainer::Re
     }
     else
     {
-        Log::Warn(fmt::format("Dependency not found: {} -> {}", typeid(TBefore).name(), typeid(TAfter).name()));
+        Log::Warning(fmt::format("Dependency not found: {} -> {}", typeid(TBefore).name(), typeid(TAfter).name()));
     }
 }
 

@@ -2,7 +2,7 @@
 
 #include "resource/BodyEntityMap.hpp"
 
-TEST(PhysicsPlugin, BodyEntityMapAddition)
+TEST(PluginPhysics, BodyEntityMapAddition)
 {
     Physics::Resource::BodyEntityMap map;
 
@@ -15,7 +15,7 @@ TEST(PhysicsPlugin, BodyEntityMapAddition)
     EXPECT_EQ(map.Size(), 3);
 }
 
-TEST(PhysicsPlugin, BodyEntityMapRemoval)
+TEST(PluginPhysics, BodyEntityMapRemoval)
 {
     Physics::Resource::BodyEntityMap map;
 
@@ -40,7 +40,7 @@ TEST(PhysicsPlugin, BodyEntityMapRemoval)
     EXPECT_EQ(map.Size(), 0);
 }
 
-TEST(PhysicsPlugin, BodyEntityMapRetrieval)
+TEST(PluginPhysics, BodyEntityMapRetrieval)
 {
     std::array<std::pair<unsigned int, uint32_t>, 3> entities{
         std::make_pair(1, 10),
@@ -62,7 +62,7 @@ TEST(PhysicsPlugin, BodyEntityMapRetrieval)
     }
 }
 
-TEST(PhysicsPlugin, BodyEntityMapErroneousRetrieval)
+TEST(PluginPhysics, BodyEntityMapErroneousRetrieval)
 {
     Physics::Resource::BodyEntityMap map;
 
@@ -76,7 +76,7 @@ TEST(PhysicsPlugin, BodyEntityMapErroneousRetrieval)
     EXPECT_EQ(map.Size(), 1);
 }
 
-TEST(PhysicsPlugin, BodyEntityMapUpdate)
+TEST(PluginPhysics, BodyEntityMapUpdate)
 {
     Physics::Resource::BodyEntityMap map;
 

@@ -195,13 +195,13 @@ class EventManager {
         auto schedulerID = std::type_index(typeid(TScheduler));
         if (!_eventCallbacks.contains(schedulerID) || !_eventCallbacks[schedulerID].contains(typeID))
         {
-            Log::Warn("EventManager::UnregisterCallback: No callbacks registered for this event type.");
+            Log::Warning("EventManager::UnregisterCallback: No callbacks registered for this event type.");
             return;
         }
         auto container = std::static_pointer_cast<Utils::EventContainer<TEvent>>(_eventCallbacks[schedulerID][typeID]);
         if (!container->Contains(callbackID))
         {
-            Log::Warn("EventManager::UnregisterCallback: Callback ID not found.");
+            Log::Warning("EventManager::UnregisterCallback: Callback ID not found.");
             return;
         }
         container->DeleteFunction(callbackID);
