@@ -8,7 +8,7 @@ task("format")
             raise("clang-format not found!")
         end
 
-        local files = option.get("files") or {"**/*.cpp", "**/*.hpp", "**/*.inl"}
+        local files = option.get("files") or {"src/**/*.cpp", "src/**/*.hpp", "src/**/*.inl", "examples/**/*.cpp", "examples/**/*.hpp", "examples/**/*.inl"}
 
         local flags = {}
 
