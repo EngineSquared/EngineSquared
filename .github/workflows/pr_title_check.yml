@@ -1,0 +1,44 @@
+name: PR Title Checker
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+jobs:
+  validate-pr-title:
+    name: Validate pull request title format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check pull request title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          # Conventional commit format used by this repository:
+          # <type>(<scope>): <short summary>
+          BASIC_REGEX='^(build|ci|docs|feat|fix|perf|refactor|test|chore)(\([0-9A-Za-z_.-]+\))?: .+$'
+          LOWERCASE_SUMMARY_REGEX='^(build|ci|docs|feat|fix|perf|refactor|test|chore)(\([0-9A-Za-z_.-]+\))?: [a-z].+$'
+
+          if [[ ! "$PR_TITLE" =~ $BASIC_REGEX ]]; then
+            echo "::error title=Invalid pull request title::PR title '$PR_TITLE' does not match '<type>(<scope>): <short summary>'."
+            echo "Allowed types: build, ci, docs, feat, fix, perf, refactor, test, chore."
+            echo "Examples: 'feat(Physics): add collision layers', 'fix: handle null scene'."
+            exit 1
+          fi
+
+          if [[ ! "$PR_TITLE" =~ $LOWERCASE_SUMMARY_REGEX ]]; then
+            echo "::error title=Invalid pull request summary::Summary must start with a lowercase letter."
+            echo "Example: 'feat(Core): add plugin registry'."
+            exit 1
+          fi
+
+          if [[ "$PR_TITLE" =~ \.$ ]]; then
+            echo "::error title=Invalid pull request summary::Summary must not end with a period."
+            exit 1
+          fi
+
+          echo "PR title follows the required naming convention."
