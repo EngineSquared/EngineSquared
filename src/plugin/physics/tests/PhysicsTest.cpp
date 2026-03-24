@@ -6,7 +6,6 @@
 #include "component/Transform.hpp"
 #include "core/Core.hpp"
 #include "event/CollisionEvent.hpp"
-#include "plugin/PluginPhysics.hpp"
 #include "plugin/PluginEvent.hpp"
 #include "plugin/PluginPhysics.hpp"
 #include "resource/EventManager.hpp"

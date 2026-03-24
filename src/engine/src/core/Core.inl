@@ -68,7 +68,7 @@ template <typename... Systems> inline decltype(auto) Core::RegisterSystem(System
     if (!this->_schedulers.Contains(_defaultScheduler))
     {
         Log::Warning(fmt::format("Trying to register systems with a default scheduler that does not exist: {}",
-                              _defaultScheduler.name()));
+                                 _defaultScheduler.name()));
     }
     return this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(std::forward<Systems>(systems)...);
 }
