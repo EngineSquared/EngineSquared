@@ -14,6 +14,8 @@ task("format")
 
         local flags = {"--style=file:.clang-format", "--verbose"}
 
+        os.execv(tool, {"--version"})
+
         for _, pattern in ipairs(files) do
             local filelist = os.files(pattern)
             for _, file in ipairs(filelist) do
