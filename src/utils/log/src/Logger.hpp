@@ -10,7 +10,37 @@
 
 namespace Log {
 
-using Level = spdlog::level::level_enum;
+enum class Level {
+    trace,
+    debug,
+    info,
+    warning,
+    error,
+    critical,
+    off,
+};
+
+constexpr spdlog::level::level_enum ToSpdlogLevel(Level level) noexcept
+{
+    using enum Log::Level;
+
+    if (level == trace)
+        return spdlog::level::trace;
+    else if (level == debug)
+        return spdlog::level::debug;
+    else if (level == info)
+        return spdlog::level::info;
+    else if (level == warning)
+        return spdlog::level::warn;
+    else if (level == error)
+        return spdlog::level::err;
+    else if (level == critical)
+        return spdlog::level::critical;
+    else if (level == off)
+        return spdlog::level::off;
+    else
+        return spdlog::level::trace;
+}
 
 template <typename T> inline void Debug(const T &msg) noexcept { spdlog::debug(msg); };
 
@@ -26,19 +56,25 @@ template <typename T> inline void Trace(const T &msg) noexcept { spdlog::trace(m
 
 template <typename T> inline void Log(Level level, const T &msg) noexcept
 {
-    if (level == Level::info)
+    using enum Log::Level;
+
+    if (level == info)
         Log::Info(msg);
-    else if (level == Level::warn)
+    else if (level == warning)
         Log::Warning(msg);
-    else if (level == Level::err)
+    else if (level == error)
         Log::Error(msg);
-    else if (level == Level::critical)
+    else if (level == critical)
         Log::Critical(msg);
-    else if (level == Level::debug)
+    else if (level == debug)
         Log::Debug(msg);
+    else if (level == off)
+        return;
     else
         Log::Trace(msg);
 };
+
+inline void SetLevel(Level level) { spdlog::set_level(ToSpdlogLevel(level)); };
 
 inline void SetPattern(const std::string &pattern,
                        spdlog::pattern_time_type time_type = spdlog::pattern_time_type::local)
