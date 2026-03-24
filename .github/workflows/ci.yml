@@ -47,10 +47,8 @@ jobs:
 
       - name: Install clang-format
         run: |
-          sudo apt-get install -y clang-format
-          sudo apt-get update
-          sudo apt-get install --only-upgrade -y clang-format
-          sudo apt-get install --only-upgrade -y clang
+          sudo apt update
+          sudo apt install clang-format-22
 
 
       - name: Install xmake
