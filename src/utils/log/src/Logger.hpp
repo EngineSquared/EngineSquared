@@ -20,7 +20,7 @@ enum class Level {
     off,
 };
 
-inline constexpr spdlog::level::level_enum ToSpdlogLevel(Level level) noexcept
+constexpr spdlog::level::level_enum ToSpdlogLevel(Level level) noexcept
 {
     using enum Log::Level;
 
