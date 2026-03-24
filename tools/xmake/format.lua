@@ -14,8 +14,6 @@ task("format")
 
         local flags = {"--style=file:.clang-format", "--verbose"}
 
-        os.execv(tool, {"--dump-config"})
-
         for _, pattern in ipairs(files) do
             local filelist = os.files(pattern)
             for _, file in ipairs(filelist) do
@@ -28,7 +26,7 @@ task("format")
                     local ref = io.readfile(file)
                     if out ~= ref then
                         os.execv(tool, params)
-                        local a = table.join(flags, {"--Werror", "--dry-run",file})
+                        local a = table.join(flags, {"--Werror", "--dry-run", file})
                         os.execv(tool, a)
                     end
                 else
