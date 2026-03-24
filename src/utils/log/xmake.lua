@@ -32,5 +32,6 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         if is_mode("debug") then
             add_defines("DEBUG")
             add_defines("ES_DEBUG")
+        end
     ::continue::
 end
