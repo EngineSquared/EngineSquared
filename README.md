@@ -36,6 +36,21 @@ It is designed to provide truly open-source project and be accessible to everyon
 2. Install required dependencies if needed (or use `xmake test -y` to install them automatically)
 3. Tests will be executed individually
 
+## Logging
+
+You can configure the global log verbosity at runtime through the engine logging API:
+
+```cpp
+#include <Logger.hpp>
+
+int main()
+{
+	Log::SetLevel(Log::Level::warning);
+	Log::Info("This message is filtered out");
+	Log::Error("This message is still printed");
+}
+```
+
 ### Apply the coding style
 
 For bash users, you can use the following command to apply the coding style to the project:
