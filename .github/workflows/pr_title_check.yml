@@ -16,6 +16,9 @@ jobs:
       image: python:3.12-slim
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Check pull request title
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
