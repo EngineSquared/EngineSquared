@@ -3,7 +3,7 @@ task("format")
         import("core.base.option")
         import("lib.detect.find_program")
 
-        local tool = find_program("clang-format") or find_program("clang-format-22")
+        local tool = find_program("clang-format-22") or find_program("clang-format")
         if not tool then
             raise("clang-format not found!")
         end
