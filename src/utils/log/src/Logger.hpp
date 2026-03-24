@@ -22,19 +22,21 @@ enum class Level {
 
 inline constexpr spdlog::level::level_enum ToSpdlogLevel(Level level) noexcept
 {
-    if (level == Level::trace)
+    using enum Log::Level;
+
+    if (level == trace)
         return spdlog::level::trace;
-    else if (level == Level::debug)
+    else if (level == debug)
         return spdlog::level::debug;
-    else if (level == Level::info)
+    else if (level == info)
         return spdlog::level::info;
-    else if (level == Level::warning)
+    else if (level == warning)
         return spdlog::level::warn;
-    else if (level == Level::error)
+    else if (level == error)
         return spdlog::level::err;
-    else if (level == Level::critical)
+    else if (level == critical)
         return spdlog::level::critical;
-    else if (level == Level::off)
+    else if (level == off)
         return spdlog::level::off;
     else
         return spdlog::level::trace;
@@ -54,17 +56,19 @@ template <typename T> inline void Trace(const T &msg) noexcept { spdlog::trace(m
 
 template <typename T> inline void Log(Level level, const T &msg) noexcept
 {
-    if (level == Level::info)
+    using enum Log::Level;
+
+    if (level == info)
         Log::Info(msg);
-    else if (level == Level::warning)
+    else if (level == warning)
         Log::Warning(msg);
-    else if (level == Level::error)
+    else if (level == error)
         Log::Error(msg);
-    else if (level == Level::critical)
+    else if (level == critical)
         Log::Critical(msg);
-    else if (level == Level::debug)
+    else if (level == debug)
         Log::Debug(msg);
-    else if (level == Level::off)
+    else if (level == off)
         return;
     else
         Log::Trace(msg);
