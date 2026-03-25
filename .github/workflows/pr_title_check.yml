@@ -1,0 +1,26 @@
+name: PR Title Checker
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+jobs:
+  validate-pr-title:
+    name: Validate pull request title format
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.14-slim
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Check pull request title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          python .github/scripts/pr_title_check.py
