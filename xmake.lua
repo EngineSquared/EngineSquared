@@ -4,7 +4,10 @@ TEST_GROUP_NAME = "UnitTests"
 PLUGINS_GROUP_NAME = "Plugins"
 UTILS_GROUP_NAME = "Utils"
 
-includes("tools/xmake/format.lua")
+add_requires("doxygen 669aeeefca743c148e2d935b3d3c69535c7491e6", { debug = is_mode("debug") })
+
+includes("tools/xmake/*.lua")
+-- includes("tools/xmake/format.lua")
 
 add_rules("mode.debug", "mode.release")
 add_requires(
@@ -76,6 +79,7 @@ target("EngineSquared")
 
     add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native",
                  "rmlui", "freetype", "zlib")
+    add_packages("doxygen")
     if is_plat("windows") then
         add_links("freetype", "zlib")
     else
