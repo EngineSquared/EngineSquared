@@ -10,26 +10,23 @@ task("build_documentation")
 
         local doxygen_package = project.required_package("doxygen")
         if not doxygen_package then
-            raise("Doxygen package not found. Please install it first. By running:\n\nxmake require -yvD \"doxygen " .. doxygen_version .. "\"")
+            raise("Doxygen package not found. Please install it first. By running:\n\nxmake require -yvD \"doxygen " .. doxygen_version .. "\"\n")
         end
 
         local doxygen = path.join(doxygen_package:installdir(), "bin", "doxygen")
 
-        if not os.isdir(path.join(os.projectdir(), "docs", "doxygen", "doxygen-awesome-css")) then
+        local docs_doxygen = path.join(os.projectdir(), "docs", "doxygen")
+
+        local doxygen_theme_path = path.join(docs_doxygen, "doxygen-awesome-css")
+        if not os.isdir(doxygen_theme_path) then
             print("Cloning doxygen-awesome-css repository...")
             git.clone("https://github.com/jothepro/doxygen-awesome-css.git", {
                 branch = "v2.4.2",
-                outputdir = path.join(os.projectdir(), "docs", "doxygen", "doxygen-awesome-css")
-            })
-        else
-            print("Updating doxygen-awesome-css repository...")
-            git.pull({
-                repodir = path.join(os.projectdir(), "docs", "doxygen", "doxygen-awesome-css"),
-                branch = "v2.4.2"
+                outputdir = doxygen_theme_path
             })
         end
 
-        os.exec(doxygen .. " " .. path.join(os.projectdir(), "docs", "doxygen", "Doxyfile.cfg"))
+        os.execv(doxygen, {path.join(docs_doxygen, "Doxyfile.cfg") })
     end)
 
     set_menu {
