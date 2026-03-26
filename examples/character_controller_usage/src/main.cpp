@@ -1,10 +1,3 @@
-/**************************************************************************
- * EngineSquared - CharacterController Usage Example
- *
- * This example demonstrates a player entity using CharacterController
- * with rendering and keyboard input.
- **************************************************************************/
-
 #include "Engine.hpp"
 
 #include "CameraMovement.hpp"
@@ -20,23 +13,25 @@
 #include <iostream>
 
 struct CharacterControllerExampleRuntime {
-    Engine::EntityId player = Engine::EntityId::Null();
+    std::optional<Engine::Entity> player;
     bool jumpQueued = false;
 };
 
 void EscapeKeySystem(Engine::Core &core)
 {
     auto &inputManager = core.GetResource<Input::Resource::InputManager>();
-    if (inputManager.IsKeyPressed(GLFW_KEY_ESCAPE))
-        core.Stop();
+    inputManager.RegisterKeyCallback([&core](Engine::Core &, int key, int, int action, int) {
+        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+            core.Stop();
+    });
 }
 
 void CharacterControllerInputSystem(Engine::Core &core)
 {
     auto &runtime = core.GetResource<CharacterControllerExampleRuntime>();
-    if (runtime.player.IsValid(core) == false)
+    if (runtime.player.has_value() == false)
         return;
-    auto player = Engine::Entity(core, runtime.player);
+    auto player = runtime.player.value();
 
     auto &inputManager = core.GetResource<Input::Resource::InputManager>();
     auto &controller = player.GetComponents<Physics::Component::CharacterController>();
@@ -82,8 +77,7 @@ void SetupCharacterControllerScene(Engine::Core &core)
     auto player =
         Object::Helper::CreateCapsule(core, {.radius = 0.3f, .height = 1.6f, .position = glm::vec3(0.0f, 4.0f, 0.0f)});
     player.AddComponent<Physics::Component::CapsuleCollider>(0.8f, 0.3f);
-    player.AddComponent<Physics::Component::CharacterController>(
-        Physics::Component::CharacterController::Create(70.0f));
+    player.AddComponent<Physics::Component::CharacterController>();
 
     auto camera = core.CreateEntity();
     camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 3.0f, -8.0f));
@@ -100,10 +94,11 @@ void SetupCharacterControllerScene(Engine::Core &core)
     cameraManager.SetActiveCamera(camera);
     cameraManager.SetMovementSpeed(4.0f);
 
-    core.RegisterResource(CharacterControllerExampleRuntime{.player = player.Id(), .jumpQueued = false});
-    core.RegisterSystem(EscapeKeySystem);
+    core.RegisterResource(CharacterControllerExampleRuntime{.player = player, .jumpQueued = false});
 
-    std::cout << "Controls: WASD/ZQSD to move, SPACE to jump, ESC to quit." << std::endl;
+    core.RegisterSystem<Engine::Scheduler::Startup>(EscapeKeySystem);
+
+    Log::Info("Controls: WASD/ZQSD to move, SPACE to jump, ESC to quit.");
 }
 
 class CharacterControllerExampleError : public std::runtime_error {
