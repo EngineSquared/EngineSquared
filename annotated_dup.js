@@ -222,6 +222,8 @@ var annotated_dup =
       [ "Component", "namespacePhysics_1_1Component.html", [
         [ "BoxCollider", "structPhysics_1_1Component_1_1BoxCollider.html", "structPhysics_1_1Component_1_1BoxCollider" ],
         [ "CapsuleCollider", "structPhysics_1_1Component_1_1CapsuleCollider.html", "structPhysics_1_1Component_1_1CapsuleCollider" ],
+        [ "CharacterController", "structPhysics_1_1Component_1_1CharacterController.html", "structPhysics_1_1Component_1_1CharacterController" ],
+        [ "CharacterControllerInternal", "structPhysics_1_1Component_1_1CharacterControllerInternal.html", "structPhysics_1_1Component_1_1CharacterControllerInternal" ],
         [ "ConstraintInternal", "structPhysics_1_1Component_1_1ConstraintInternal.html", "structPhysics_1_1Component_1_1ConstraintInternal" ],
         [ "ConstraintSettings", "structPhysics_1_1Component_1_1ConstraintSettings.html", "structPhysics_1_1Component_1_1ConstraintSettings" ],
         [ "ConvexHullMeshCollider", "structPhysics_1_1Component_1_1ConvexHullMeshCollider.html", "structPhysics_1_1Component_1_1ConvexHullMeshCollider" ],
@@ -252,6 +254,7 @@ var annotated_dup =
         [ "CollisionRemovedEvent", "structPhysics_1_1Event_1_1CollisionRemovedEvent.html", "structPhysics_1_1Event_1_1CollisionRemovedEvent" ]
       ] ],
       [ "Exception", "namespacePhysics_1_1Exception.html", [
+        [ "CharacterControllerError", "classPhysics_1_1Exception_1_1CharacterControllerError.html", null ],
         [ "ConstraintError", "classPhysics_1_1Exception_1_1ConstraintError.html", null ],
         [ "RigidBodyError", "classPhysics_1_1Exception_1_1RigidBodyError.html", null ],
         [ "SoftBodyError", "classPhysics_1_1Exception_1_1SoftBodyError.html", null ],
@@ -353,6 +356,8 @@ var annotated_dup =
     [ "ActionHistory", "structActionHistory.html", "structActionHistory" ],
     [ "B", "structB.html", "structB" ],
     [ "C", "structC.html", "structC" ],
+    [ "CharacterControllerExampleError", "classCharacterControllerExampleError.html", null ],
+    [ "CharacterControllerExampleRuntime", "structCharacterControllerExampleRuntime.html", "structCharacterControllerExampleRuntime" ],
     [ "ChaseCameraBehavior", "classChaseCameraBehavior.html", "classChaseCameraBehavior" ],
     [ "CounterComponent", "structCounterComponent.html", "structCounterComponent" ],
     [ "DirectorMonitorSystem", "classDirectorMonitorSystem.html", "classDirectorMonitorSystem" ],
@@ -388,6 +393,7 @@ var annotated_dup =
     [ "TestSchedulerB", "classTestSchedulerB.html", "classTestSchedulerB" ],
     [ "TestScript", "classTestScript.html", "classTestScript" ],
     [ "TestSystemClass", "classTestSystemClass.html", "classTestSystemClass" ],
+    [ "ThirdPlayerCameraBehavior", "classThirdPlayerCameraBehavior.html", "classThirdPlayerCameraBehavior" ],
     [ "WorkHoursUpdateSystem", "classWorkHoursUpdateSystem.html", "classWorkHoursUpdateSystem" ],
     [ "WorkTimeComponent", "structWorkTimeComponent.html", "structWorkTimeComponent" ]
 ];

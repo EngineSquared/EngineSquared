@@ -80,6 +80,9 @@ var hierarchy =
     [ "CameraMovement::Resource::CameraManager", "classCameraMovement_1_1Resource_1_1CameraManager.html", null ],
     [ "DefaultPipeline::Resource::CameraGPUBuffer::CameraTransfer", "structDefaultPipeline_1_1Resource_1_1CameraGPUBuffer_1_1CameraTransfer.html", null ],
     [ "Physics::Component::CapsuleCollider", "structPhysics_1_1Component_1_1CapsuleCollider.html", null ],
+    [ "Physics::Component::CharacterController", "structPhysics_1_1Component_1_1CharacterController.html", null ],
+    [ "CharacterControllerExampleRuntime", "structCharacterControllerExampleRuntime.html", null ],
+    [ "Physics::Component::CharacterControllerInternal", "structPhysics_1_1Component_1_1CharacterControllerInternal.html", null ],
     [ "Physics::Event::CollisionAddedEvent", "structPhysics_1_1Event_1_1CollisionAddedEvent.html", null ],
     [ "Physics::Event::CollisionPersistedEvent", "structPhysics_1_1Event_1_1CollisionPersistedEvent.html", null ],
     [ "Physics::Event::CollisionRemovedEvent", "structPhysics_1_1Event_1_1CollisionRemovedEvent.html", null ],
@@ -136,6 +139,7 @@ var hierarchy =
       [ "std::runtime_error", null, [
         [ "RmluiExampleError", "classRmluiExampleError.html", null ],
         [ "CameraMovement::CameraMovementError", "classCameraMovement_1_1CameraMovementError.html", null ],
+        [ "CharacterControllerExampleError", "classCharacterControllerExampleError.html", null ],
         [ "Engine::Exception::MissingResourceError", "classEngine_1_1Exception_1_1MissingResourceError.html", null ],
         [ "Engine::Exception::MissingSchedulerError", "classEngine_1_1Exception_1_1MissingSchedulerError.html", null ],
         [ "Graphic::Exception::AdapterCreationError", "classGraphic_1_1Exception_1_1AdapterCreationError.html", null ],
@@ -167,6 +171,7 @@ var hierarchy =
         [ "GraphicExampleError", "classGraphicExampleError.html", null ],
         [ "GraphicExampleError", "classGraphicExampleError.html", null ],
         [ "GraphicExampleError", "classGraphicExampleError.html", null ],
+        [ "Physics::Exception::CharacterControllerError", "classPhysics_1_1Exception_1_1CharacterControllerError.html", null ],
         [ "Physics::Exception::ConstraintError", "classPhysics_1_1Exception_1_1ConstraintError.html", null ],
         [ "Physics::Exception::RigidBodyError", "classPhysics_1_1Exception_1_1RigidBodyError.html", null ],
         [ "Physics::Exception::SoftBodyError", "classPhysics_1_1Exception_1_1SoftBodyError.html", null ],
@@ -211,7 +216,8 @@ var hierarchy =
     [ "CameraMovement::Utils::ICameraBehavior", "classCameraMovement_1_1Utils_1_1ICameraBehavior.html", [
       [ "CameraMovement::Utils::DefaultBehavior", "classCameraMovement_1_1Utils_1_1DefaultBehavior.html", null ],
       [ "CameraMovement::Utils::DontMoveBehavior", "classCameraMovement_1_1Utils_1_1DontMoveBehavior.html", null ],
-      [ "ChaseCameraBehavior", "classChaseCameraBehavior.html", null ]
+      [ "ChaseCameraBehavior", "classChaseCameraBehavior.html", null ],
+      [ "ThirdPlayerCameraBehavior", "classThirdPlayerCameraBehavior.html", null ]
     ] ],
     [ "Event::Utils::IEventContainer", "structEvent_1_1Utils_1_1IEventContainer.html", [
       [ "Event::Utils::EventContainer< TEvent >", "classEvent_1_1Utils_1_1EventContainer.html", null ]
@@ -255,6 +261,7 @@ var hierarchy =
           [ "RenderingPipeline::Preparation", "classRenderingPipeline_1_1Preparation.html", null ],
           [ "RenderingPipeline::Presentation", "classRenderingPipeline_1_1Presentation.html", null ],
           [ "RenderingPipeline::Submission", "classRenderingPipeline_1_1Submission.html", null ],
+          [ "TestScheduler", "classTestScheduler.html", null ],
           [ "TestScheduler", "classTestScheduler.html", null ],
           [ "TestScheduler", "classTestScheduler.html", null ],
           [ "TestScheduler", "classTestScheduler.html", null ],

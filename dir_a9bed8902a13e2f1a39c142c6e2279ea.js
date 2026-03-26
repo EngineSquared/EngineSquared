@@ -2,6 +2,8 @@ var dir_a9bed8902a13e2f1a39c142c6e2279ea =
 [
     [ "BoxCollider.hpp", "BoxCollider_8hpp.html", "BoxCollider_8hpp" ],
     [ "CapsuleCollider.hpp", "CapsuleCollider_8hpp.html", "CapsuleCollider_8hpp" ],
+    [ "CharacterController.hpp", "CharacterController_8hpp.html", "CharacterController_8hpp" ],
+    [ "CharacterControllerInternal.hpp", "CharacterControllerInternal_8hpp.html", "CharacterControllerInternal_8hpp" ],
     [ "ConstraintInternal.hpp", "ConstraintInternal_8hpp.html", "ConstraintInternal_8hpp" ],
     [ "ConstraintSettings.hpp", "ConstraintSettings_8hpp.html", "ConstraintSettings_8hpp" ],
     [ "ConvexHullMeshCollider.hpp", "ConvexHullMeshCollider_8hpp.html", "ConvexHullMeshCollider_8hpp" ],

@@ -1,6 +1,7 @@
 var dir_d28a4824dc47e487b107a5db32ef43c4 =
 [
     [ "basic_core_usage", "dir_97e235505628f6c2fb22f220c8a92a54.html", "dir_97e235505628f6c2fb22f220c8a92a54" ],
+    [ "character_controller_usage", "dir_17156535a07bfc7109f80f41babe16ae.html", "dir_17156535a07bfc7109f80f41babe16ae" ],
     [ "event_usage", "dir_423c5852632b5cea9ad35ab225713bd2.html", "dir_423c5852632b5cea9ad35ab225713bd2" ],
     [ "graphic_light_usage", "dir_8cc5fa46db9b93cfd56791f822df7620.html", "dir_8cc5fa46db9b93cfd56791f822df7620" ],
     [ "graphic_material_usage", "dir_52561b1dfc4cb455a3412560c46288cb.html", "dir_52561b1dfc4cb455a3412560c46288cb" ],

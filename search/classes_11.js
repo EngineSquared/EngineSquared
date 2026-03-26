@@ -14,10 +14,11 @@ var searchData=
   ['testsystemclass_11',['TestSystemClass',['../classTestSystemClass.html',1,'']]],
   ['texture_12',['Texture',['../classGraphic_1_1Resource_1_1Texture.html',1,'Graphic::Resource']]],
   ['texturebindgrouplayoutentry_13',['TextureBindGroupLayoutEntry',['../classGraphic_1_1Utils_1_1TextureBindGroupLayoutEntry.html',1,'Graphic::Utils']]],
-  ['time_14',['Time',['../structEngine_1_1Resource_1_1Time.html',1,'Engine::Resource']]],
-  ['torquecurvepoint_15',['TorqueCurvePoint',['../structPhysics_1_1Component_1_1TorqueCurvePoint.html',1,'Physics::Component']]],
-  ['transform_16',['Transform',['../structObject_1_1Component_1_1Transform.html',1,'Object::Component']]],
-  ['transformgpubuffer_17',['TransformGPUBuffer',['../classDefaultPipeline_1_1Resource_1_1TransformGPUBuffer.html',1,'DefaultPipeline::Resource']]],
-  ['transformgpudata_18',['TransformGPUData',['../structDefaultPipeline_1_1Resource_1_1TransformGPUData.html',1,'DefaultPipeline::Resource']]],
-  ['tweeningparameters_19',['TweeningParameters',['../structdemo__setup_1_1TweeningParameters.html',1,'demo_setup']]]
+  ['thirdplayercamerabehavior_14',['ThirdPlayerCameraBehavior',['../classThirdPlayerCameraBehavior.html',1,'']]],
+  ['time_15',['Time',['../structEngine_1_1Resource_1_1Time.html',1,'Engine::Resource']]],
+  ['torquecurvepoint_16',['TorqueCurvePoint',['../structPhysics_1_1Component_1_1TorqueCurvePoint.html',1,'Physics::Component']]],
+  ['transform_17',['Transform',['../structObject_1_1Component_1_1Transform.html',1,'Object::Component']]],
+  ['transformgpubuffer_18',['TransformGPUBuffer',['../classDefaultPipeline_1_1Resource_1_1TransformGPUBuffer.html',1,'DefaultPipeline::Resource']]],
+  ['transformgpudata_19',['TransformGPUData',['../structDefaultPipeline_1_1Resource_1_1TransformGPUData.html',1,'DefaultPipeline::Resource']]],
+  ['tweeningparameters_20',['TweeningParameters',['../structdemo__setup_1_1TweeningParameters.html',1,'demo_setup']]]
 ];

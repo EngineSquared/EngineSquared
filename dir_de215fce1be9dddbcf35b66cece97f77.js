@@ -1,5 +1,6 @@
 var dir_de215fce1be9dddbcf35b66cece97f77 =
 [
+    [ "CharacterControllerError.hpp", "CharacterControllerError_8hpp.html", "CharacterControllerError_8hpp" ],
     [ "ConstraintError.hpp", "ConstraintError_8hpp.html", "ConstraintError_8hpp" ],
     [ "RigidBodyError.hpp", "RigidBodyError_8hpp.html", "RigidBodyError_8hpp" ],
     [ "SoftBodyError.hpp", "SoftBodyError_8hpp.html", "SoftBodyError_8hpp" ],

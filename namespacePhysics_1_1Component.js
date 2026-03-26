@@ -2,6 +2,8 @@ var namespacePhysics_1_1Component =
 [
     [ "BoxCollider", "structPhysics_1_1Component_1_1BoxCollider.html", "structPhysics_1_1Component_1_1BoxCollider" ],
     [ "CapsuleCollider", "structPhysics_1_1Component_1_1CapsuleCollider.html", "structPhysics_1_1Component_1_1CapsuleCollider" ],
+    [ "CharacterController", "structPhysics_1_1Component_1_1CharacterController.html", "structPhysics_1_1Component_1_1CharacterController" ],
+    [ "CharacterControllerInternal", "structPhysics_1_1Component_1_1CharacterControllerInternal.html", "structPhysics_1_1Component_1_1CharacterControllerInternal" ],
     [ "ConstraintInternal", "structPhysics_1_1Component_1_1ConstraintInternal.html", "structPhysics_1_1Component_1_1ConstraintInternal" ],
     [ "ConstraintSettings", "structPhysics_1_1Component_1_1ConstraintSettings.html", "structPhysics_1_1Component_1_1ConstraintSettings" ],
     [ "ConvexHullMeshCollider", "structPhysics_1_1Component_1_1ConvexHullMeshCollider.html", "structPhysics_1_1Component_1_1ConvexHullMeshCollider" ],

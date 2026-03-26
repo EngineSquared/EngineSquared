@@ -1,5 +1,7 @@
 var dir_27a3e47d6f13453bac481559c55520c5 =
 [
+    [ "CharacterControllerSystem.cpp", "CharacterControllerSystem_8cpp.html", "CharacterControllerSystem_8cpp" ],
+    [ "CharacterControllerSystem.hpp", "CharacterControllerSystem_8hpp.html", "CharacterControllerSystem_8hpp" ],
     [ "ConstraintHelpers.cpp", "ConstraintHelpers_8cpp.html", "ConstraintHelpers_8cpp" ],
     [ "ConstraintHelpers.hpp", "ConstraintHelpers_8hpp.html", "ConstraintHelpers_8hpp" ],
     [ "ConstraintSystem.cpp", "ConstraintSystem_8cpp.html", "ConstraintSystem_8cpp" ],

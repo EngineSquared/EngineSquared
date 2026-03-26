@@ -109,6 +109,14 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a5a8e196054c15002f2165a464cd38d1c" id="r_a5a8e196054c15002f2165a464cd38d1c"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#a5a8e196054c15002f2165a464cd38d1c">OnCharacterControllerConstruct</a> (<a class="el" href="classEngine_1_1Core.html#a92a3143c58cadead136a795f192ee544">Engine::Core::Registry</a> &amp;registry, <a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a> entityId)</td></tr>
+<tr class="memitem:a2969beceb7203851461261f885c68aad" id="r_a2969beceb7203851461261f885c68aad"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#a2969beceb7203851461261f885c68aad">OnCharacterControllerDestroy</a> (<a class="el" href="classEngine_1_1Core.html#a92a3143c58cadead136a795f192ee544">Engine::Core::Registry</a> &amp;registry, <a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a> entityId)</td></tr>
+<tr class="memitem:a2f5f38bd35ec27d6535699274e89d829" id="r_a2f5f38bd35ec27d6535699274e89d829"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2f5f38bd35ec27d6535699274e89d829">CharacterControllerUpdate</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+<tr class="memdesc:a2f5f38bd35ec27d6535699274e89d829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the character controller system. This will process all entities with character controllers and update their state based on input and physics interactions.  <br /></td></tr>
+<tr class="memitem:a256da447ce14cc02caa999e92aa18165" id="r_a256da447ce14cc02caa999e92aa18165"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a256da447ce14cc02caa999e92aa18165">InitCharacterControllerSystem</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+<tr class="memdesc:a256da447ce14cc02caa999e92aa18165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the character controller system. This will set up necessary resources and state for character controllers to function.  <br /></td></tr>
+<tr class="memitem:a99ced9c4e2beb7dd1a0f02b8fcb0a6e9" id="r_a99ced9c4e2beb7dd1a0f02b8fcb0a6e9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a99ced9c4e2beb7dd1a0f02b8fcb0a6e9">ShutdownCharacterControllerSystem</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+<tr class="memdesc:a99ced9c4e2beb7dd1a0f02b8fcb0a6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shutdown the character controller system. This will clean up any resources used by the system.  <br /></td></tr>
 <tr class="memitem:aaf3759cb69edec7597e9b10dd7233240" id="r_aaf3759cb69edec7597e9b10dd7233240"><td class="memItemLeft"><a class="el" href="structPhysics_1_1Component_1_1RigidBodyInternal.html">Component::RigidBodyInternal</a> *&#160;</td><td class="memItemRight"><a class="el" href="#aaf3759cb69edec7597e9b10dd7233240">GetBodyInternal</a> (<a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> entity, const char *constraintName, const char *bodyName)</td></tr>
 <tr class="memitem:a76fef0594e67eb13565da21d2cd766e2" id="r_a76fef0594e67eb13565da21d2cd766e2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a76fef0594e67eb13565da21d2cd766e2">FinalizeConstraint</a> (<a class="el" href="structPhysics_1_1System_1_1ConstraintContext.html">ConstraintContext</a> &amp;ctx, <a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> entity, JPH::Constraint *joltConstraint, <a class="el" href="namespacePhysics_1_1Component.html#adbd3f098c9d4f22544549ab72475347c">Component::ConstraintType</a> type, const <a class="el" href="structPhysics_1_1Component_1_1ConstraintSettings.html">Component::ConstraintSettings</a> &amp;settings, const char *constraintName)</td></tr>
 <tr class="memitem:a9ff7dce27585ff31c5cdb1e632aa140c" id="r_a9ff7dce27585ff31c5cdb1e632aa140c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9ff7dce27585ff31c5cdb1e632aa140c">DestroyConstraint</a> (<a class="el" href="classEngine_1_1Core.html#a92a3143c58cadead136a795f192ee544">Engine::Core::Registry</a> &amp;registry, <a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a> entity, const char *constraintName)</td></tr>
@@ -183,6 +191,31 @@ Functions</h2></td></tr>
 <tr class="memdesc:a604bcdc7aa04408b24b31fde178ac0d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sync wheel entity transforms with Jolt vehicle wheel positions.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="a2f5f38bd35ec27d6535699274e89d829" name="a2f5f38bd35ec27d6535699274e89d829"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f5f38bd35ec27d6535699274e89d829">&#9670;&#160;</a></span>CharacterControllerUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Physics::System::CharacterControllerUpdate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update the character controller system. This will process all entities with character controllers and update their state based on input and physics interactions. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">core</td><td>The engine core to update the system with. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ab78aeae27e939e64599decf3a0bfe393" name="ab78aeae27e939e64599decf3a0bfe393"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab78aeae27e939e64599decf3a0bfe393">&#9670;&#160;</a></span>CreateConstraintGeneric()</h2>
 
@@ -697,6 +730,31 @@ If no collider is found, it will default to the MeshCollider with default settin
 
 </div>
 </div>
+<a id="a256da447ce14cc02caa999e92aa18165" name="a256da447ce14cc02caa999e92aa18165"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a256da447ce14cc02caa999e92aa18165">&#9670;&#160;</a></span>InitCharacterControllerSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Physics::System::InitCharacterControllerSystem </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize the character controller system. This will set up necessary resources and state for character controllers to function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">core</td><td>The engine core to initialize the system with. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a39566de928e393d0d0e1007bfef6a9fa" name="a39566de928e393d0d0e1007bfef6a9fa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a39566de928e393d0d0e1007bfef6a9fa">&#9670;&#160;</a></span>InitConstraintSystem()</h2>
 
@@ -843,6 +901,64 @@ If no collider is found, it will default to the MeshCollider with default settin
 
 <p>Initialize the vehicle system with entt lifecycle hooks. </p>
 <p>Registers callbacks for Vehicle component construction and destruction. Must be called during <a class="el" href="namespaceEngine.html">Engine</a> startup (Scheduler::Startup). </p>
+
+</div>
+</div>
+<a id="a5a8e196054c15002f2165a464cd38d1c" name="a5a8e196054c15002f2165a464cd38d1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a8e196054c15002f2165a464cd38d1c">&#9670;&#160;</a></span>OnCharacterControllerConstruct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Physics::System::OnCharacterControllerConstruct </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html#a92a3143c58cadead136a795f192ee544">Engine::Core::Registry</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>registry</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a></td>          <td class="paramname"><span class="paramname"><em>entityId</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2969beceb7203851461261f885c68aad" name="a2969beceb7203851461261f885c68aad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2969beceb7203851461261f885c68aad">&#9670;&#160;</a></span>OnCharacterControllerDestroy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Physics::System::OnCharacterControllerDestroy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html#a92a3143c58cadead136a795f192ee544">Engine::Core::Registry</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>registry</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a></td>          <td class="paramname"><span class="paramname"><em>entityId</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1365,6 +1481,31 @@ Colliders are NOT automatically removed (user may want to keep them) </dd></dl>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>To be used with the "RelativeTimeUpdate" scheduler. </dd></dl>
+
+</div>
+</div>
+<a id="a99ced9c4e2beb7dd1a0f02b8fcb0a6e9" name="a99ced9c4e2beb7dd1a0f02b8fcb0a6e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99ced9c4e2beb7dd1a0f02b8fcb0a6e9">&#9670;&#160;</a></span>ShutdownCharacterControllerSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Physics::System::ShutdownCharacterControllerSystem </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shutdown the character controller system. This will clean up any resources used by the system. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">core</td><td>The engine core to shut down the system from. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
