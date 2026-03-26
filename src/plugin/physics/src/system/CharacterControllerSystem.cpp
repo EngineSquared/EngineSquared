@@ -1,56 +1,19 @@
-/**************************************************************************
- * EngineSquared v0.1.1
- *
- * EngineSquared is a software package, part of the Engine² organization.
- *
- * This file is part of the EngineSquared project that is under MIT License.
- * Copyright © 2025-present by @EngineSquared, All rights reserved.
- *
- * EngineSquared is a free software: you can redistribute it and/or modify
- * it under the terms of the MIT License. See the project's LICENSE file for
- * the full license text and details.
- *
- * @file CharacterControllerSystem.cpp
- * @brief CharacterController lifecycle and per-frame update implementation
- *
- * @author @EngineSquared
- * @version 0.1.1
- * @date 2025-03-22
- **************************************************************************/
-
-#include "Physics.pch.hpp"
-
 #include "system/CharacterControllerSystem.hpp"
-
 #include "Logger.hpp"
 #include "component/CapsuleCollider.hpp"
 #include "component/CharacterController.hpp"
 #include "component/CharacterControllerInternal.hpp"
+#include "component/Transform.hpp"
+#include "entity/Entity.hpp"
 #include "exception/CharacterControllerError.hpp"
 #include "resource/PhysicsManager.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
 #include "utils/JoltConversions.hpp"
-
-#include "Object.hpp"
-
 #include <Jolt/Physics/Character/CharacterVirtual.h>
 #include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
 
-#include <fmt/format.h>
-
 namespace Physics::System {
 
-//=============================================================================
-// Entt hook callbacks
-//=============================================================================
-
-/**
- * @brief Called when CharacterController is added to an entity.
- *
- * Builds a JPH::CharacterVirtual from the component settings and from
- * the CapsuleCollider (if present), then stores it in
- * CharacterControllerInternal.
- */
 static void OnCharacterControllerConstruct(Engine::Core::Registry &registry, Engine::EntityId entityId)
 {
     try
@@ -70,7 +33,7 @@ static void OnCharacterControllerConstruct(Engine::Core::Registry &registry, Eng
         auto *transform = entity.TryGetComponent<Object::Component::Transform>();
         if (!transform)
         {
-            Log::Warn("CharacterController added to entity without Transform - creating default Transform");
+            Log::Warning("CharacterController added to entity without Transform - creating default Transform");
             transform = &entity.AddComponent<Object::Component::Transform>();
         }
 
@@ -85,7 +48,7 @@ static void OnCharacterControllerConstruct(Engine::Core::Registry &registry, Eng
             }
             else
             {
-                Log::Warn("CharacterController: CapsuleCollider is invalid, using default capsule shape");
+                Log::Warning("CharacterController: CapsuleCollider is invalid, using default capsule shape");
                 shape = new JPH::CapsuleShape(0.5f, 0.3f);
             }
         }
@@ -99,10 +62,9 @@ static void OnCharacterControllerConstruct(Engine::Core::Registry &registry, Eng
         settings.mShape = shape;
         settings.mMass = cc.mass;
 
-        auto *character = new JPH::CharacterVirtual(&settings, Utils::ToJoltRVec3(transform->GetPosition()),
-                                                    Utils::ToJoltQuat(transform->GetRotation()),
-                                                    static_cast<JPH::uint64>(entityId),
-                                                    &physicsManager.GetPhysicsSystem());
+        auto *character = new JPH::CharacterVirtual(
+            &settings, Utils::ToJoltRVec3(transform->GetPosition()), Utils::ToJoltQuat(transform->GetRotation()),
+            static_cast<JPH::uint64>(entityId), &physicsManager.GetPhysicsSystem());
 
         entity.AddComponent<Component::CharacterControllerInternal>(character);
 
@@ -114,11 +76,6 @@ static void OnCharacterControllerConstruct(Engine::Core::Registry &registry, Eng
     }
 }
 
-/**
- * @brief Called when CharacterController is removed from an entity.
- *
- * Releases the Jolt CharacterVirtual and removes CharacterControllerInternal.
- */
 static void OnCharacterControllerDestroy(Engine::Core::Registry &registry, Engine::EntityId entityId)
 {
     try
@@ -158,55 +115,33 @@ void CharacterControllerUpdate(Engine::Core &core)
     auto view = registry.view<Component::CharacterController, Component::CharacterControllerInternal,
                               Object::Component::Transform>();
 
-    for (auto entityId : view)
-    {
-        auto &cc = view.get<Component::CharacterController>(entityId);
-        auto &internal = view.get<Component::CharacterControllerInternal>(entityId);
-        auto &transform = view.get<Object::Component::Transform>(entityId);
+    view.each([&](Engine::EntityId entityId, Component::CharacterController &characterController,
+                  Component::CharacterControllerInternal &characterControllerInternal,
+                  Object::Component::Transform &transform) {
+        if (!characterControllerInternal.IsValid())
+            return;
 
-        if (!internal.IsValid())
-            continue;
+        auto &character = *characterControllerInternal.character;
 
-        auto &character = *internal.character;
+        JPH::Vec3 gravity = physicsManager.GetPhysicsSystem().GetGravity() * characterController.gravityFactor;
 
-        // Gravity in world space scaled by this character's factor.
-        JPH::Vec3 gravity = physicsManager.GetPhysicsSystem().GetGravity() * cc.gravityFactor;
-
-        // Build the velocity to apply this frame.
-        // The CharacterVirtual::Update comment states: "It is the application's
-        // responsibility to apply gravity to the character velocity."
-        // So we accumulate gravity into the vertical component ourselves:
-        // - When airborne  : add gravity * dt to keep falling.
-        // - When supported : clamp downward velocity to 0 (character rests on floor).
-        //   This lets the user set a positive Y (jump impulse) that survives until the
-        //   character leaves the ground, while preventing gravity from piling up
-        //   across frames once we've landed.
-        JPH::Vec3 velocity = Utils::ToJoltVec3(cc.linearVelocity);
+        JPH::Vec3 velocity = Utils::ToJoltVec3(characterController.linearVelocity);
 
         if (character.IsSupported())
         {
-            // On surface – don't accumulate downward velocity, but preserve any
-            // upward impulse the user may have set this frame (e.g. for jumping).
             if (velocity.GetY() < 0.0f)
                 velocity.SetY(0.0f);
         }
         else
         {
-            // Airborne – accumulate gravity into the vertical component.
             velocity.SetY(velocity.GetY() + gravity.GetY() * dt);
         }
 
         character.SetLinearVelocity(velocity);
 
-        // Extended update handles stair-stepping via mWalkStairsStepUp /
-        // mStickToFloorStepDown so the character can climb steps up to
-        // maxStepHeight metres tall.
         JPH::CharacterVirtual::ExtendedUpdateSettings extendedSettings;
-        extendedSettings.mStickToFloorStepDown = JPH::Vec3(0.0f, -cc.maxStepHeight, 0.0f);
-        extendedSettings.mWalkStairsStepUp = JPH::Vec3(0.0f, cc.maxStepHeight, 0.0f);
-
-        // Use default filters: the CharacterVirtual will collide with all
-        // broad-phase layers and object layers.
+        extendedSettings.mStickToFloorStepDown = JPH::Vec3(0.0f, -characterController.maxStepHeight, 0.0f);
+        extendedSettings.mWalkStairsStepUp = JPH::Vec3(0.0f, characterController.maxStepHeight, 0.0f);
         JPH::BroadPhaseLayerFilter broadPhaseFilter;
         JPH::ObjectLayerFilter objectLayerFilter;
         JPH::BodyFilter bodyFilter;
@@ -214,21 +149,12 @@ void CharacterControllerUpdate(Engine::Core &core)
 
         character.ExtendedUpdate(dt, gravity, extendedSettings, broadPhaseFilter, objectLayerFilter, bodyFilter,
                                  shapeFilter, *physicsManager.GetTempAllocator());
+        characterController.linearVelocity = Utils::FromJoltVec3(character.GetLinearVelocity());
 
-        // Write back the resulting velocity so that:
-        //   1) The user can read the current speed (including accumulated gravity).
-        //   2) The accumulated Y velocity is preserved across frames without extra state.
-        cc.linearVelocity = Utils::FromJoltVec3(character.GetLinearVelocity());
-
-        // Sync Jolt position/rotation back to the entity Transform.
         transform.SetPosition(Utils::FromJoltRVec3(character.GetPosition()));
         transform.SetRotation(Utils::FromJoltQuat(character.GetRotation()));
-    }
+    });
 }
-
-//=============================================================================
-// Public system functions
-//=============================================================================
 
 void InitCharacterControllerSystem(Engine::Core &core)
 {
