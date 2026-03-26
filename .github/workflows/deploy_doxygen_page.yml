@@ -3,9 +3,15 @@ name: Doxygen GitHub Pages Deploy Action
 on:
   workflow_dispatch:
   push:
+      branches:
+        - main
       paths:
         - '.github/workflows/deploy_doxygen_page.yml'
-        - 'Doxyfile.cfg'
+        - 'docs/doxygen/Doxyfile.cfg'
+        - 'tools/xmake/build_documentation.lua'
+        - 'src/**'
+        - 'examples/**'
+        - 'README.md'
 
 jobs:
   generate_doxygen:
