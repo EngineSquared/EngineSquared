@@ -1,8 +1,6 @@
 -- IMPORTANT: if you want to update the doxygen version, please also update the version in .github/workflows/deploy_doxygen_page.yml
 local doxygen_version = "669aeeefca743c148e2d935b3d3c69535c7491e6"
 
-add_requires("doxygen " .. doxygen_version, { debug = is_mode("debug") })
-
 task("build_documentation")
     on_run(function ()
         import("core.project.project")
