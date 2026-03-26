@@ -16,92 +16,72 @@ namespace Physics::System {
 
 static void OnCharacterControllerConstruct(Engine::Core::Registry &registry, Engine::EntityId entityId)
 {
-    try
+    auto &core = registry.ctx().get<Engine::Core *>();
+    Engine::Entity entity{*core, entityId};
+
+    auto &physicsManager = core->GetResource<Resource::PhysicsManager>();
+    if (!physicsManager.IsPhysicsActivated())
     {
-        auto &core = registry.ctx().get<Engine::Core *>();
-        Engine::Entity entity{*core, entityId};
+        Log::Error("Cannot create CharacterController: Physics system not activated");
+        return;
+    }
 
-        auto &physicsManager = core->GetResource<Resource::PhysicsManager>();
-        if (!physicsManager.IsPhysicsActivated())
+    auto &characterController = entity.GetComponents<Component::CharacterController>();
+
+    auto *transform = entity.TryGetComponent<Object::Component::Transform>();
+    if (!transform)
+    {
+        Log::Warning("CharacterController added to entity without Transform - creating default Transform");
+        transform = &entity.AddComponent<Object::Component::Transform>();
+    }
+
+    JPH::RefConst<JPH::Shape> shape;
+    if (auto *capsule = entity.TryGetComponent<Component::CapsuleCollider>())
+    {
+        if (capsule->IsValid())
         {
-            Log::Error("Cannot create CharacterController: Physics system not activated");
-            return;
-        }
-
-        auto &cc = entity.GetComponents<Component::CharacterController>();
-
-        auto *transform = entity.TryGetComponent<Object::Component::Transform>();
-        if (!transform)
-        {
-            Log::Warning("CharacterController added to entity without Transform - creating default Transform");
-            transform = &entity.AddComponent<Object::Component::Transform>();
-        }
-
-        // Build collision shape: prefer a CapsuleCollider on the entity,
-        // fall back to a sensible default (0.5 m half-height, 0.3 m radius).
-        JPH::RefConst<JPH::Shape> shape;
-        if (auto *capsule = entity.TryGetComponent<Component::CapsuleCollider>())
-        {
-            if (capsule->IsValid())
-            {
-                shape = new JPH::CapsuleShape(capsule->halfHeight, capsule->radius);
-            }
-            else
-            {
-                Log::Warning("CharacterController: CapsuleCollider is invalid, using default capsule shape");
-                shape = new JPH::CapsuleShape(0.5f, 0.3f);
-            }
+            shape = new JPH::CapsuleShape(capsule->halfHeight, capsule->radius);
         }
         else
         {
+            Log::Warning("CharacterController: CapsuleCollider is invalid, using default capsule shape");
             shape = new JPH::CapsuleShape(0.5f, 0.3f);
         }
-
-        JPH::CharacterVirtualSettings settings;
-        settings.mMaxSlopeAngle = JPH::DegreesToRadians(cc.maxSlopeAngle);
-        settings.mShape = shape;
-        settings.mMass = cc.mass;
-
-        auto *character = new JPH::CharacterVirtual(
-            &settings, Utils::ToJoltRVec3(transform->GetPosition()), Utils::ToJoltQuat(transform->GetRotation()),
-            static_cast<JPH::uint64>(entityId), &physicsManager.GetPhysicsSystem());
-
-        entity.AddComponent<Component::CharacterControllerInternal>(character);
-
-        Log::Debug(fmt::format("Created CharacterController for entity {}", entity));
     }
-    catch (const Exception::CharacterControllerError &e)
+    else
     {
-        Log::Error(fmt::format("CharacterControllerError in OnCharacterControllerConstruct: {}", e.what()));
+        shape = new JPH::CapsuleShape(0.5f, 0.3f);
     }
+
+    JPH::CharacterVirtualSettings settings;
+    settings.mMaxSlopeAngle = JPH::DegreesToRadians(characterController.maxSlopeAngle);
+    settings.mShape = shape;
+    settings.mMass = characterController.mass;
+
+    auto *character = new JPH::CharacterVirtual(&settings, Utils::ToJoltRVec3(transform->GetPosition()),
+                                                Utils::ToJoltQuat(transform->GetRotation()),
+                                                static_cast<JPH::uint64>(entityId), &physicsManager.GetPhysicsSystem());
+
+    entity.AddComponent<Component::CharacterControllerInternal>(character);
+
+    Log::Debug(fmt::format("Created CharacterController for entity {}", entity));
 }
 
 static void OnCharacterControllerDestroy(Engine::Core::Registry &registry, Engine::EntityId entityId)
 {
-    try
-    {
-        auto &core = registry.ctx().get<Engine::Core *>();
-        Engine::Entity entity{*core, entityId};
+    auto &core = registry.ctx().get<Engine::Core *>();
+    Engine::Entity entity{*core, entityId};
 
-        auto *internal = entity.TryGetComponent<Component::CharacterControllerInternal>();
-        if (!internal || !internal->IsValid())
-            return;
+    auto *internal = entity.TryGetComponent<Component::CharacterControllerInternal>();
+    if (!internal || !internal->IsValid())
+        return;
 
-        internal->character = nullptr;
+    internal->character = nullptr;
 
-        Log::Debug(fmt::format("Destroyed CharacterController for entity {}", entity));
+    Log::Debug(fmt::format("Destroyed CharacterController for entity {}", entity));
 
-        entity.RemoveComponent<Component::CharacterControllerInternal>();
-    }
-    catch (const Exception::CharacterControllerError &e)
-    {
-        Log::Error(fmt::format("CharacterControllerError in OnCharacterControllerDestroy: {}", e.what()));
-    }
+    entity.RemoveComponent<Component::CharacterControllerInternal>();
 }
-
-//=============================================================================
-// Per-frame update
-//=============================================================================
 
 void CharacterControllerUpdate(Engine::Core &core)
 {
