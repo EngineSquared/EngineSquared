@@ -25,6 +25,19 @@
 var NAVTREE =
 [
   [ "Engine²", "index.html", [
+    [ "Engine² (or Engine Squared)", "index.html#autotoc_md32", [
+      [ "Description", "index.html#autotoc_md33", null ],
+      [ "Examples", "index.html#autotoc_md34", null ],
+      [ "Getting started", "index.html#autotoc_md35", [
+        [ "Requirements", "index.html#autotoc_md36", null ],
+        [ "Compile the library", "index.html#autotoc_md37", null ]
+      ] ],
+      [ "Run unit tests", "index.html#autotoc_md38", [
+        [ "Apply the coding style", "index.html#autotoc_md39", null ]
+      ] ],
+      [ "Documentation", "index.html#autotoc_md40", null ],
+      [ "Code of Conduct", "index.html#autotoc_md41", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -78,15 +91,15 @@ var NAVTREEINDEX =
 "classRmlui_1_1Resource_1_1UIContext.html#ac44b5078adf97dfe857c1fc8ef93fe22",
 "classWindow_1_1Resource_1_1Window.html#ac9901471ddf29aec60c5a026141cde8a",
 "examples_2graphic__usage_2src_2main_8cpp.html#a9b434a6c209cc01abf6532743b35accf",
-"namespaceDefaultPipeline_1_1Utils.html#a1d4f4012922bd986d704540b3e1464b4",
-"namespacePhysics_1_1System.html#ac2a4d862222600d45b01545bd242c18a",
-"namespacewgpu.html#a37cd779f9d615e7e0fc9d28bf3d6557e",
-"namespacewgpu.html#ab92b9b2b9037bef229e03ef3ebcd02e5",
-"structDefaultPipeline_1_1Resource_1_1CameraGPUBuffer_1_1CameraTransfer.html#a613b6d0faca6461f77d4252b1dc6061e",
-"structHistoryStorage.html",
-"structObject_1_1Helper_1_1CreateCylinderInfo.html#a937ac4eac42e266e74d97bcc652442f0",
-"structPhysics_1_1Component_1_1EngineSettings.html#a1beed2e08f736988ff6d8259961c70b2",
-"structPhysics_1_1Component_1_1TorqueCurvePoint.html#a1b7d7c3c2be929dae04a0a3e96818c35"
+"namespaceDefaultPipeline_1_1System.html#acf108ccc8ab7fd54855d752d16323ce7",
+"namespacePhysics_1_1System.html#aa0ee62cb4bcf4d942439476980f7947a",
+"namespacewgpu.html#a345b4a6023bce29fb63c510678f77e62",
+"namespacewgpu.html#ab4d11d46fb393600ddd660ed15b28ee7",
+"structDefaultPipeline_1_1Resource_1_1AmbientLight.html#ad9b8c6d9e4102f1b871c9099ed32049f",
+"structGraphic_1_1Utils_1_1ValidationError.html#a9e4243b82956b06b32ffe6c08e157218a902b0d55fddef6f8d651fe1035b7d4bd",
+"structObject_1_1Helper_1_1CreateCylinderInfo.html",
+"structPhysics_1_1Component_1_1DistanceConstraint.html#abae187058fcb0e419441a827de56eab7",
+"structPhysics_1_1Component_1_1SphereCollider.html#ab5fdf34c97a7752ee7a16c62305c5e2b"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';
