@@ -5,6 +5,7 @@ add_requires("doxygen " .. doxygen_version, { debug = is_mode("debug"), optional
 
 task("build_documentation")
     on_run(function ()
+        import("core.base.option")
         import("core.project.project")
         import("devel.git")
 
@@ -27,10 +28,22 @@ task("build_documentation")
         end
 
         os.execv(doxygen, {path.join(docs_doxygen, "Doxyfile.cfg") })
+
+        if option.get("open") then
+            local index_path = path.join(docs_doxygen, "output", "html", "index.html")
+            if os.isfile(index_path) then
+                os.execv("open", {index_path})
+            else
+                print("Documentation generated, but index.html not found at: " .. index_path)
+            end
+        end
     end)
 
     set_menu {
         usage = "xmake build_documentation",
-        description = "Generate code documentation"
+        description = "Generate code documentation",
+        options = {
+            {'o', "open", "k", false, "Open generated documentation after building"}
+        }
     }
 

@@ -8,6 +8,7 @@
 #include "resource/BodyEntityMap.hpp"
 #include "resource/VehicleTelemetry.hpp"
 
+#include "system/CharacterControllerSystem.hpp"
 #include "system/ConstraintSystem.hpp"
 #include "system/InitJoltPhysics.hpp"
 #include "system/InitPhysicsManager.hpp"
@@ -33,8 +34,10 @@ void Physics::Plugin::Bind()
     RegisterSystems<Engine::Scheduler::Startup>(System::InitVehicleSystem);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitConstraintSystem);
     RegisterSystems<Engine::Scheduler::Startup>(System::InitSoftBodySystem);
+    RegisterSystems<Engine::Scheduler::Startup>(System::InitCharacterControllerSystem);
 
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::PhysicsUpdate);
+    RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::CharacterControllerUpdate);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::VehicleControlSystem);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::VehicleRPMUpdate);
     RegisterSystems<Engine::Scheduler::FixedTimeUpdate>(System::SyncTransformWithPhysics);
@@ -43,4 +46,5 @@ void Physics::Plugin::Bind()
 
     RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownSoftBodySystem);
     RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownRigidBodySystem);
+    RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownCharacterControllerSystem);
 }
