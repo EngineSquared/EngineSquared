@@ -1,0 +1,25 @@
+var namespaceGraphic_1_1Exception =
+[
+    [ "AdapterCreationError", "classGraphic_1_1Exception_1_1AdapterCreationError.html", null ],
+    [ "BindGroupCreationError", "classGraphic_1_1Exception_1_1BindGroupCreationError.html", null ],
+    [ "CapabilitiesRequestError", "classGraphic_1_1Exception_1_1CapabilitiesRequestError.html", null ],
+    [ "DeviceCreationError", "classGraphic_1_1Exception_1_1DeviceCreationError.html", null ],
+    [ "DuplicatedVertexAttributeLocationError", "classGraphic_1_1Exception_1_1DuplicatedVertexAttributeLocationError.html", null ],
+    [ "EndRenderTextureCreationError", "classGraphic_1_1Exception_1_1EndRenderTextureCreationError.html", null ],
+    [ "FailToCreateCommandEncoderError", "classGraphic_1_1Exception_1_1FailToCreateCommandEncoderError.html", null ],
+    [ "FileReadingError", "classGraphic_1_1Exception_1_1FileReadingError.html", null ],
+    [ "FileWritingError", "classGraphic_1_1Exception_1_1FileWritingError.html", null ],
+    [ "InstanceCreationError", "classGraphic_1_1Exception_1_1InstanceCreationError.html", null ],
+    [ "MissingOutputRenderPassError", "classGraphic_1_1Exception_1_1MissingOutputRenderPassError.html", null ],
+    [ "NonexistentComponentError", "classGraphic_1_1Exception_1_1NonexistentComponentError.html", null ],
+    [ "QueueCreationError", "classGraphic_1_1Exception_1_1QueueCreationError.html", null ],
+    [ "RenderPassSortError", "classGraphic_1_1Exception_1_1RenderPassSortError.html", null ],
+    [ "SurfaceCreationError", "classGraphic_1_1Exception_1_1SurfaceCreationError.html", null ],
+    [ "UncapturedDeviceError", "classGraphic_1_1Exception_1_1UncapturedDeviceError.html", null ],
+    [ "UnknownFileError", "classGraphic_1_1Exception_1_1UnknownFileError.html", null ],
+    [ "UnknownFormatType", "classGraphic_1_1Exception_1_1UnknownFormatType.html", null ],
+    [ "UnsetAttributeTextureDescriptor", "classGraphic_1_1Exception_1_1UnsetAttributeTextureDescriptor.html", null ],
+    [ "UnsupportedTextureFormatError", "classGraphic_1_1Exception_1_1UnsupportedTextureFormatError.html", null ],
+    [ "UpdateBufferError", "classGraphic_1_1Exception_1_1UpdateBufferError.html", null ],
+    [ "VertexAttributeOverlappingError", "classGraphic_1_1Exception_1_1VertexAttributeOverlappingError.html", null ]
+];

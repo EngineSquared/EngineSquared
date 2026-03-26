@@ -24,65 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "EngineSquared", "index.html", [
-    [ "Graphic Plugin", "d6/dfc/md_src_2plugin_2graphic_2README.html", [
-      [ "Description", "d6/dfc/md_src_2plugin_2graphic_2README.html#description", null ],
-      [ "Dependencies", "d6/dfc/md_src_2plugin_2graphic_2README.html#dependencies", [
-        [ "External (xmake packages)", "d6/dfc/md_src_2plugin_2graphic_2README.html#external-xmake-packages", null ],
-        [ "Engine", "d6/dfc/md_src_2plugin_2graphic_2README.html#engine", null ]
-      ] ],
-      [ "Install", "d6/dfc/md_src_2plugin_2graphic_2README.html#install", null ],
-      [ "Configuration", "d6/dfc/md_src_2plugin_2graphic_2README.html#configuration", [
-        [ "Window system", "d6/dfc/md_src_2plugin_2graphic_2README.html#window-system", null ],
-        [ "Power preference", "d6/dfc/md_src_2plugin_2graphic_2README.html#power-preference", null ],
-        [ "Device limits and features", "d6/dfc/md_src_2plugin_2graphic_2README.html#device-limits-and-features", null ],
-        [ "Uncaptured device errors", "d6/dfc/md_src_2plugin_2graphic_2README.html#uncaptured-device-errors", null ]
-      ] ],
-      [ "Usage", "d6/dfc/md_src_2plugin_2graphic_2README.html#usage", [
-        [ "Adding the plugin", "d6/dfc/md_src_2plugin_2graphic_2README.html#adding-the-plugin", null ],
-        [ "Configuring settings at startup", "d6/dfc/md_src_2plugin_2graphic_2README.html#configuring-settings-at-startup", null ],
-        [ "Headless (no window)", "d6/dfc/md_src_2plugin_2graphic_2README.html#headless-no-window", null ],
-        [ "Accessing graphics resources", "d6/dfc/md_src_2plugin_2graphic_2README.html#accessing-graphics-resources", null ],
-        [ "Shader from WGSL source", "d6/dfc/md_src_2plugin_2graphic_2README.html#shader-from-wgsl-source", null ],
-        [ "Render graph with a render pass", "d6/dfc/md_src_2plugin_2graphic_2README.html#render-graph-with-a-render-pass", null ],
-        [ "Full example (minimal app with error callback)", "d6/dfc/md_src_2plugin_2graphic_2README.html#full-example-minimal-app-with-error-callback", null ]
-      ] ],
-      [ "License", "d6/dfc/md_src_2plugin_2graphic_2README.html#license", null ]
-    ] ],
-    [ "Examples", "d2/d19/md_examples_2README.html", [
-      [ "Building and Running Examples", "d2/d19/md_examples_2README.html#building-and-running-examples", null ],
-      [ "Non-exhaustive list of examples", "d2/d19/md_examples_2README.html#non-exhaustive-list-of-examples", null ],
-      [ "Some flags that you can use when building examples", "d2/d19/md_examples_2README.html#some-flags-that-you-can-use-when-building-examples", null ]
-    ] ],
-    [ "Engine² (or Engine Squared)", "d0/d30/md_README.html", [
-      [ "Description", "d0/d30/md_README.html#description-1", null ],
-      [ "Getting started", "d0/d30/md_README.html#getting-started", [
-        [ "Requirements", "d0/d30/md_README.html#requirements", null ],
-        [ "Compile the library", "d0/d30/md_README.html#compile-the-library", null ],
-        [ "Set up a development environment", "d0/d30/md_README.html#set-up-a-development-environment", null ]
-      ] ],
-      [ "Run unit tests", "d0/d30/md_README.html#run-unit-tests", null ],
-      [ "Coding style", "d0/d30/md_README.html#coding-style", [
-        [ "Apply the coding style", "d0/d30/md_README.html#apply-the-coding-style", null ]
-      ] ],
-      [ "Build the documentation", "d0/d30/md_README.html#build-the-documentation", null ],
-      [ "Code of Conduct", "d0/d30/md_README.html#code-of-conduct", null ]
-    ] ],
-    [ "CONTRIBUTING GUIDELINES", "d2/dc1/md_CONTRIBUTING.html", null ],
-    [ "Contributor Covenant Code of Conduct", "d4/dbe/md_CODE__OF__CONDUCT.html", [
-      [ "Our Pledge", "d4/dbe/md_CODE__OF__CONDUCT.html#our-pledge", null ],
-      [ "Our Standards", "d4/dbe/md_CODE__OF__CONDUCT.html#our-standards", null ],
-      [ "Enforcement Responsibilities", "d4/dbe/md_CODE__OF__CONDUCT.html#enforcement-responsibilities", null ],
-      [ "Scope", "d4/dbe/md_CODE__OF__CONDUCT.html#scope", null ],
-      [ "Enforcement", "d4/dbe/md_CODE__OF__CONDUCT.html#enforcement", null ],
-      [ "Enforcement Guidelines", "d4/dbe/md_CODE__OF__CONDUCT.html#enforcement-guidelines", [
-        [ "1. Correction", "d4/dbe/md_CODE__OF__CONDUCT.html#autotoc_md1-correction", null ],
-        [ "2. Warning", "d4/dbe/md_CODE__OF__CONDUCT.html#autotoc_md2-warning", null ],
-        [ "3. Temporary Ban", "d4/dbe/md_CODE__OF__CONDUCT.html#autotoc_md3-temporary-ban", null ],
-        [ "4. Permanent Ban", "d4/dbe/md_CODE__OF__CONDUCT.html#autotoc_md4-permanent-ban", null ]
-      ] ],
-      [ "Attribution", "d4/dbe/md_CODE__OF__CONDUCT.html#attribution", null ]
-    ] ],
+  [ "Engine²", "index.html", [
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -122,32 +64,31 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"d0/dba/object_2src_2component_2AmbientLight_8hpp.html",
-"d1/d6e/classGraphic_1_1Resource_1_1Shader.html#ae24e1df392749561fc53141537fbbce4",
-"d2/d47/classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer.html#ade58053dfdacb6401b835ce62fb93a18",
-"d3/d7d/structGraphic_1_1Resource_1_1Surface.html#ab29f9626ac5b816c077411d5e4637d32",
-"d4/d18/classEngine_1_1Core.html#aa9793256fcc5501a02b19149d2954e1f",
-"d4/df1/InputUtils_8hpp_source.html",
-"d5/d40/webgpu_8hpp.html#a4f6353534ef9eac2cc9fe240d3dd07cc",
-"d5/d40/webgpu_8hpp.html#ad060a6346d79e0e8de748317a8f9f8ec",
-"d5/dd4/structPhysics_1_1Component_1_1WheelSettings.html#a280a8d3df07fea237e07a574fefaee88",
-"d6/d9e/SoundManager_8hpp.html#a8bd2b95c2978169cfbd1c19279684f27",
-"d6/dce/namespacewgpu.html#a4889a2ddeddc5b6b8d2277fa81f7c8c4",
-"d6/dce/namespacewgpu.html#acb8fa9456d5439a65b7a6967f64ae723",
-"d7/d53/BaseFunction_8hpp_source.html",
-"d7/df6/classRenderingPipeline_1_1Init.html#a6e468eea2f511ac83b33eec6b9089bb2",
-"d8/de8/classEngine_1_1Scheduler_1_1Startup.html",
-"d9/db5/structObject_1_1Component_1_1Camera.html#a6e86f12e7cae512ccf06cdc60d0e39ac",
-"da/d6e/classEngine_1_1Entity.html#a316e305136e6fd461260d9f6ce539fb3",
-"db/d28/classWindow_1_1Plugin.html#ae0552e57e3ca33d469abdbab89bd8468",
-"dc/d01/ClothGenerator_8hpp.html#add154ec512eaff35c1c7c09c87495cfd",
-"dc/dba/structPhysics_1_1Component_1_1VehicleInternal.html",
-"dd/db8/classCameraMovement_1_1CameraMovementError.html",
-"de/d89/structPhysics_1_1Component_1_1SoftBody.html#accffbf98b0b23cc24cc8d51caee9973b",
-"df/d86/classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a2151746323aa8b08b7757307feabc93d",
-"dir_89760e66f664ad53dbcbb8775e2d7068.html"
+"ABindGroupLayoutEntry_8hpp.html",
+"Creating_01a_01plane_01entity_1-example.html",
+"MeshTest_8cpp.html#a2c716bdcd50b28656c97a20b727780e0",
+"RenderPassTest_8cpp.html#ae43b9abd704be3d18a2c5e8ee5ad2984",
+"VehicleBuilder_8hpp.html",
+"classDefaultPipeline_1_1Resource_1_1DirectionalLightsBuffer.html",
+"classEngine_1_1Entity.html#a465b7e27d496784b45e929bdc7ce02e8",
+"classFunctionUtils_1_1FunctionContainer.html",
+"classGraphic_1_1Resource_1_1RenderGraph.html#aeb0fa974a3bc7cf394e14fd33d798452",
+"classGraphic_1_1Utils_1_1TextureBindGroupLayoutEntry.html#a90dc04a7636dade32309df1cd9ad938c",
+"classPhysics_1_1Resource_1_1PhysicsManager.html#a573fdec623c6547d3a1b1dbcbc36bad3",
+"classRmlui_1_1Resource_1_1UIContext.html#ac44b5078adf97dfe857c1fc8ef93fe22",
+"classWindow_1_1Resource_1_1Window.html#ac9901471ddf29aec60c5a026141cde8a",
+"examples_2graphic__usage_2src_2main_8cpp.html#a9b434a6c209cc01abf6532743b35accf",
+"namespaceDefaultPipeline_1_1Utils.html#a1d4f4012922bd986d704540b3e1464b4",
+"namespacePhysics_1_1System.html#ac2a4d862222600d45b01545bd242c18a",
+"namespacewgpu.html#a37cd779f9d615e7e0fc9d28bf3d6557e",
+"namespacewgpu.html#ab92b9b2b9037bef229e03ef3ebcd02e5",
+"structDefaultPipeline_1_1Resource_1_1CameraGPUBuffer_1_1CameraTransfer.html#a613b6d0faca6461f77d4252b1dc6061e",
+"structHistoryStorage.html",
+"structObject_1_1Helper_1_1CreateCylinderInfo.html#a937ac4eac42e266e74d97bcc652442f0",
+"structPhysics_1_1Component_1_1EngineSettings.html#a1beed2e08f736988ff6d8259961c70b2",
+"structPhysics_1_1Component_1_1TorqueCurvePoint.html#a1b7d7c3c2be929dae04a0a3e96818c35"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';
+var LISTOFALLMEMBERS = 'List of all members';

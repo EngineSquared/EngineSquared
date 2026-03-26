@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['devicelostcallback_0',['DeviceLostCallback',['../d6/dce/namespacewgpu.html#aa7e6d980a58294ea7454892b3120edaa',1,'wgpu']]]
+  ['devicelostcallback_0',['DeviceLostCallback',['../namespacewgpu.html#ace841e3a7827e13aeba34b0f491d5adc',1,'wgpu']]]
 ];

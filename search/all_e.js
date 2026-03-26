@@ -1,9 +1,27 @@
 var searchData=
 [
-  ['jelly_0',['Jelly',['../d3/dfd/structPhysics_1_1Component_1_1SoftBodySettings.html#af3aa215cac310caed6d04247ad86374c',1,'Physics::Component::SoftBodySettings']]],
-  ['jellycubegenerator_2ecpp_1',['JellyCubeGenerator.cpp',['../d7/daa/JellyCubeGenerator_8cpp.html',1,'']]],
-  ['jellycubegenerator_2ehpp_2',['JellyCubeGenerator.hpp',['../df/d61/JellyCubeGenerator_8hpp.html',1,'']]],
-  ['joltconversions_2ehpp_3',['JoltConversions.hpp',['../d0/d9e/JoltConversions_8hpp.html',1,'']]],
-  ['joystickaxes_4',['JoystickAxes',['../d1/d8b/namespaceInput_1_1Utils.html#ab9593e3200a609fe8a2a78cd56e32951',1,'Input::Utils']]],
-  ['joystickbuttons_5',['JoystickButtons',['../d1/d8b/namespaceInput_1_1Utils.html#ab3d0cf841f8152ff3f7d104650033444',1,'Input::Utils']]]
+  ['name_0',['name',['../structGraphic_1_1Resource_1_1BindGroup_1_1Asset.html#a2108e4aee05c26a9a8daee0c4b9006ed',1,'Graphic::Resource::BindGroup::Asset::name'],['../structObject_1_1Component_1_1Material.html#a2fb889241c30d3b1c6e249b8ded9a273',1,'Object::Component::Material::name'],['../structObject_1_1Resource_1_1Shape.html#afa058dcf753371b669b4111a67a7094d',1,'Object::Resource::Shape::name'],['../structDirectorResource.html#abbd1becffd18983e48a9fc100e70ec6a',1,'DirectorResource::name'],['../structNameComponent.html#a1c2d765f1636e4427afbc28b3aa049b9',1,'NameComponent::name']]],
+  ['namecomponent_1',['NameComponent',['../structNameComponent.html',1,'']]],
+  ['nativescripting_2',['NativeScripting',['../structNativeScripting_1_1Component_1_1NativeScripting.html',1,'NativeScripting::Component::NativeScripting'],['../namespaceNativeScripting.html',1,'NativeScripting']]],
+  ['nativescripting_2ehpp_3',['NativeScripting.hpp',['../NativeScripting_8hpp.html',1,'']]],
+  ['nativescripting_3a_3acomponent_4',['Component',['../namespaceNativeScripting_1_1Component.html',1,'NativeScripting']]],
+  ['nativescripting_3a_3asystem_5',['System',['../namespaceNativeScripting_1_1System.html',1,'NativeScripting']]],
+  ['nativescripting_3a_3autils_6',['Utils',['../namespaceNativeScripting_1_1Utils.html',1,'NativeScripting']]],
+  ['nativescriptingcomponent_2ehpp_7',['NativeScriptingComponent.hpp',['../NativeScriptingComponent_8hpp.html',1,'']]],
+  ['nearplane_8',['nearPlane',['../structObject_1_1Component_1_1Camera.html#abbcb166b99aaff9631ed5d8af70ef61e',1,'Object::Component::Camera']]],
+  ['newsize_9',['newSize',['../structWindow_1_1Event_1_1OnResize.html#a97f60738338e85b02bc674b436dee091',1,'Window::Event::OnResize']]],
+  ['next_10',['next',['../structRelationship_1_1Component_1_1Relationship.html#a86c7bae2b9e914608ad43a9260496ee0',1,'Relationship::Component::Relationship']]],
+  ['no_20window_11',['Headless (no window)',['../dir_456e1ed94ccb5b3e2842ecc161ff9b22.html#autotoc_md19',1,'']]],
+  ['no_5fdiscard_12',['NO_DISCARD',['../webgpu_8hpp.html#ac794180b779a02917f29f913c79abeff',1,'webgpu.hpp']]],
+  ['non_20exhaustive_20list_20of_20examples_13',['Non-exhaustive list of examples',['../dir_d28a4824dc47e487b107a5db32ef43c4.html#autotoc_md30',1,'']]],
+  ['non_5fmoving_14',['NON_MOVING',['../namespacePhysics_1_1Utils_1_1Layers.html#ae5e261c390dce3030540bb14a7dd11eb',1,'Physics::Utils::Layers::NON_MOVING'],['../namespacePhysics_1_1Utils_1_1BroadPhaseLayers.html#a5fed448691ca942c3baa41a1d10006ec',1,'Physics::Utils::BroadPhaseLayers::NON_MOVING()']]],
+  ['none_15',['None',['../namespaceGraphic_1_1Resource.html#ac2c45a0ed51d066a783af740db2d718aa6adf97f83acf6453d4a6a4b1070f3754',1,'Graphic::Resource']]],
+  ['nonexistentcomponenterror_16',['NonexistentComponentError',['../classGraphic_1_1Exception_1_1NonexistentComponentError.html',1,'Graphic::Exception']]],
+  ['nonexistentcomponenterror_2ehpp_17',['NonexistentComponentError.hpp',['../NonexistentComponentError_8hpp.html',1,'']]],
+  ['normalizedtorque_18',['normalizedTorque',['../structPhysics_1_1Component_1_1EngineSettings.html#a91afc5dcd60777d090e589d90631214d',1,'Physics::Component::EngineSettings']]],
+  ['normalizevector_19',['NormalizeVector',['../namespaceObject_1_1Utils.html#a4a00a2fdd9b55e43a6639730b0562775',1,'Object::Utils']]],
+  ['normalmatrix_20',['normalMatrix',['../structDefaultPipeline_1_1Resource_1_1TransformGPUData.html#aeff72a501837463a437d297106587fbe',1,'DefaultPipeline::Resource::TransformGPUData']]],
+  ['nothing_21',['Nothing',['../namespaceEngine_1_1Scheduler.html#adc9f665f0ab46064c8714e86f3089217af80a4ad87fee7c9fdc19b7769495fdb5',1,'Engine::Scheduler']]],
+  ['num_5flayers_22',['NUM_LAYERS',['../namespacePhysics_1_1Utils_1_1Layers.html#a7ec5af835726425947697c60bb374783',1,'Physics::Utils::Layers::NUM_LAYERS'],['../namespacePhysics_1_1Utils_1_1BroadPhaseLayers.html#a60bbcd6de2dab879f1344b58273ca261',1,'Physics::Utils::BroadPhaseLayers::NUM_LAYERS()']]],
+  ['num_5fsteps_23',['NUM_STEPS',['../structCounterComponent.html#aea6fc9fb3034575e624335b7fd60551d',1,'CounterComponent']]]
 ];

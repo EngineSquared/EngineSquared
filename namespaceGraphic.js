@@ -1,0 +1,36 @@
+var namespaceGraphic =
+[
+    [ "Exception", "namespaceGraphic_1_1Exception.html", "namespaceGraphic_1_1Exception" ],
+    [ "Resource", "namespaceGraphic_1_1Resource.html", "namespaceGraphic_1_1Resource" ],
+    [ "System", "namespaceGraphic_1_1System.html", [
+      [ "ConfigureSurface", "namespaceGraphic_1_1System.html#ad29572d38c3465d3d829fdb6d9e4596a", null ],
+      [ "CreateAdapter", "namespaceGraphic_1_1System.html#aac1296f5576851861330e73f91644e79", null ],
+      [ "CreateDefaultSampler", "namespaceGraphic_1_1System.html#ab69e37f5d7801324240d3f32ebdcf1f3", null ],
+      [ "CreateDefaultTexture", "namespaceGraphic_1_1System.html#afb742ea22a09c5c16028f87c7a3cbfb1", null ],
+      [ "CreateDevice", "namespaceGraphic_1_1System.html#adca5bf3a91ed78bf7ed7070d01069566", null ],
+      [ "CreateEmptyTexture", "namespaceGraphic_1_1System.html#ad97a0a5d214658514bfd75c62b0c0af9", null ],
+      [ "CreateInstance", "namespaceGraphic_1_1System.html#ab5294ea71c7ff1bd2df7562008a4b74b", null ],
+      [ "CreateQueue", "namespaceGraphic_1_1System.html#a85da79c69fff5c9ebab304834d3a7160", null ],
+      [ "CreateSurface", "namespaceGraphic_1_1System.html#afe044bea02a23e6fe29b7cb916998e09", null ],
+      [ "ExecuteRenderPass", "namespaceGraphic_1_1System.html#a352fa310d718e2face8468721133d3b2", null ],
+      [ "OnWindowResize", "namespaceGraphic_1_1System.html#a1b3547b15079d14397b123bbb2a83d7f", null ],
+      [ "PrepareEndRenderTexture", "namespaceGraphic_1_1System.html#a264a07004289c852d432898756324b92", null ],
+      [ "Present", "namespaceGraphic_1_1System.html#a3d8095000a4c8015896329a50f006a6f", null ],
+      [ "ReleaseAdapter", "namespaceGraphic_1_1System.html#a0f7820bce4139b34ff121ad4f6520dd0", null ],
+      [ "ReleaseBindingGroup", "namespaceGraphic_1_1System.html#a38fbff0818734d67ca5d0bbf7559707f", null ],
+      [ "ReleaseContext", "namespaceGraphic_1_1System.html#a92acc0782fe4a8328bca5f9a633f2b8c", null ],
+      [ "ReleaseGPUBuffer", "namespaceGraphic_1_1System.html#a624d1757da9a23d01a0fcd6cb2fa60b8", null ],
+      [ "ReleaseInstance", "namespaceGraphic_1_1System.html#ae544f859c7dc8d5ebebc10dcf073bda0", null ],
+      [ "ReleaseSampler", "namespaceGraphic_1_1System.html#ad36bc896ea05c8b305ecb19573d0277f", null ],
+      [ "ReleaseShader", "namespaceGraphic_1_1System.html#a4364367914b73b58f6d323149c82779f", null ],
+      [ "ReleaseTexture", "namespaceGraphic_1_1System.html#a52c2b30cafbeabd5ccc5c19c5b0764ea", null ],
+      [ "RequestCapabilities", "namespaceGraphic_1_1System.html#adf7ee3af0d66b760423a6badbd4a8f19", null ],
+      [ "SetupDeviceDescriptor", "namespaceGraphic_1_1System.html#a0984358dd1d771fcccf80fc0fa797161", null ],
+      [ "SetupQueue", "namespaceGraphic_1_1System.html#aa885a79da9dbf02763114acc1d0fa797", null ],
+      [ "SetupResizableRenderTexture", "namespaceGraphic_1_1System.html#a687e8261f68bc016b7e3c2f5bff6c407", null ],
+      [ "END_DEPTH_RENDER_TEXTURE_ID", "namespaceGraphic_1_1System.html#a4b6356652680a5602b0e19ea98932092", null ]
+    ] ],
+    [ "Utils", "namespaceGraphic_1_1Utils.html", "namespaceGraphic_1_1Utils" ],
+    [ "Tests", "namespaceGraphic_1_1Tests.html", "namespaceGraphic_1_1Tests" ],
+    [ "Plugin", "classGraphic_1_1Plugin.html", "classGraphic_1_1Plugin" ]
+];
