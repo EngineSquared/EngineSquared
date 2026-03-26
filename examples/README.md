@@ -29,6 +29,7 @@ xmake run -y BasicCoreUsage
 - `input_usage`: An example illustrating how to handle user input.
 - `nativescripting_usage`: An example showcasing how to use native scripting.
 - `physics_usage`: An example showcasing the basic physics features.
+- `character_controller_usage`: An example demonstrating how to use the CharacterController component.
 - `relationships_usage`: An example demonstrating how to use relationships between entities.
 - `rmlui_usage`: An example showcasing how to use RmlUI for user interfaces.
 - `softbody_usage`: An example demonstrating how to use soft body physics features.
