@@ -1,11 +1,16 @@
-task("run_doxygen")
+-- IMPORTANT: if you want to update the doxygen version, please also update the version in .github/workflows/deploy_doxygen_page.yml
+local doxygen_version = "669aeeefca743c148e2d935b3d3c69535c7491e6"
+
+add_requires("doxygen " .. doxygen_version, { debug = is_mode("debug") })
+
+task("build_documentation")
     on_run(function ()
         import("core.project.project")
         import("devel.git")
 
         local doxygen_package = project.required_package("doxygen")
-        if not doxygen_package then
-            raise("Doxygen package not found. Please install it first. By running `xmake q -y`")
+        if not doxygen_package or not doxygen_package:installdir() then
+            raise("Doxygen package not found. Please install it first. By running 'xmake require -yvD \"doxygen " .. doxygen_version .. "\"'.")
         end
 
         local doxygen = path.join(doxygen_package:installdir(), "bin", "doxygen")
@@ -24,11 +29,11 @@ task("run_doxygen")
             })
         end
 
-        os.run(doxygen .. " " .. path.join(os.projectdir(), "docs", "doxygen", "Doxyfile.cfg"))
+        os.exec(doxygen .. " " .. path.join(os.projectdir(), "docs", "doxygen", "Doxyfile.cfg"))
     end)
 
     set_menu {
-        usage = "xmake run_doxygen",
-        description = "Generate documentation using Doxygen"
+        usage = "xmake build_documentation",
+        description = "Generate code documentation"
     }
 
