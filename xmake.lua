@@ -4,7 +4,7 @@ TEST_GROUP_NAME = "UnitTests"
 PLUGINS_GROUP_NAME = "Plugins"
 UTILS_GROUP_NAME = "Utils"
 
-includes("tools/xmake/format.lua")
+includes("tools/xmake/*.lua")
 
 add_rules("mode.debug", "mode.release")
 add_requires(
