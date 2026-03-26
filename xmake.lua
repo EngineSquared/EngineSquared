@@ -76,7 +76,6 @@ target("EngineSquared")
 
     add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native",
                  "rmlui", "freetype", "zlib")
-    add_packages("doxygen")
     if is_plat("windows") then
         add_links("freetype", "zlib")
     else
