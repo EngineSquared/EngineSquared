@@ -29,7 +29,7 @@ jobs:
           build-cache-path: 'build/.build_cache'
 
       - name: Install Doxygen
-        run: xmake require -y
+        run: xmake require -y "doxygen 669aeeefca743c148e2d935b3d3c69535c7491e6"
 
       - name: Generate Doxygen Documentation
         run: xmake run_doxygen
