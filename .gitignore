@@ -5,7 +5,6 @@
 **/CMakeLists.txt
 **/Makefile
 **/build
-**/docs
 **/.Test
 **/*.spv
 **/.clangd
@@ -20,3 +19,6 @@
 # linter
 .cache
 .cache-*/
+
+docs/doxygen/output
+docs/doxygen/doxygen-awesome-css
