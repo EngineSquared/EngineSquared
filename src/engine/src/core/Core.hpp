@@ -46,11 +46,13 @@ class Core {
     /// @brief Get the entt::registry that contains all components.
     ///     It should be used to update component through systems.
     /// @return registry that contains all components.
+    /// @todo put the implementation in the cpp file, (remove inline)
     inline Registry &GetRegistry() { return *_registry; }
 
     /// @brief Get the entt::registry that contains all components.
     ///     It should be used to update component through systems.
     /// @return registry that contains all components.
+    /// @todo put the implementation in the cpp file, (remove inline)
     inline const Registry &GetRegistry() const { return *_registry; }
 
     /// @brief Create an entity in the context of the registry.

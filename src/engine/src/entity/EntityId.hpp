@@ -43,7 +43,7 @@ struct EntityId : Id {
     ///     in the Core's registry.
     /// @param core The Core instance to check the validity against.
     /// @return true if the EntityId is valid, false otherwise.
-    /// @todo put the implementation in the cpp file
+    /// @todo put the implementation in the cpp file, (remove inline)
     inline bool IsValid(const Engine::Core &core) const { return core.IsEntityValid(value); }
 
     /// @brief Add a component to an entity.
