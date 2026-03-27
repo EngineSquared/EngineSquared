@@ -180,7 +180,8 @@ class Core {
 
     /// @brief Add a system to the @b default scheduler, associated with a callback that should run if the system fails
     ///     (throw).
-    /// @tparam TScheduler The type of scheduler to use. It must be derived from AScheduler. @link Engine::CScheduler.
+    /// @tparam TScheduler The type of scheduler to use.
+    /// @see Engine::CScheduler.
     /// @param system The system to add.
     /// @param callback The callback to run if the system fails (throw).
     /// @return Return the identifier of the system added. See FunctionUtils::FunctionID.
