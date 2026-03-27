@@ -124,6 +124,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:af9bd0df943a7b68ddb9f8e347108249b inherit pub_methods_classFunctionUtils_1_1BaseFunction"><td class="mdescLeft">&#160;</td><td class="mdescRight">External Call function.  <br /></td></tr>
 <tr class="memitem:afdc9ace0ff175a45513e900e111581c8 inherit pub_methods_classFunctionUtils_1_1BaseFunction" id="r_afdc9ace0ff175a45513e900e111581c8"><td class="memItemLeft">virtual std::string&#160;</td><td class="memItemRight"><a class="el" href="classFunctionUtils_1_1BaseFunction.html#afdc9ace0ff175a45513e900e111581c8">GetName</a> () const=0</td></tr>
 <tr class="memdesc:afdc9ace0ff175a45513e900e111581c8 inherit pub_methods_classFunctionUtils_1_1BaseFunction"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pure virtual function to get the name of the function.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a09c6ca1cd83a55733b9f5ef2ee8a9de4" id="r_a09c6ca1cd83a55733b9f5ef2ee8a9de4"><td class="memTemplParams" colspan="2">template&lt;typename... Cs&gt; </td></tr>
+<tr class="memitem:a09c6ca1cd83a55733b9f5ef2ee8a9de4 template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a09c6ca1cd83a55733b9f5ef2ee8a9de4">hasAllComponents</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core, const <a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> &amp;entity) const</td></tr>
+<tr class="memitem:a070539d337bb4165a1be0c7d229dfca5" id="r_a070539d337bb4165a1be0c7d229dfca5"><td class="memTemplParams" colspan="2">template&lt;typename C1, typename C2&gt; </td></tr>
+<tr class="memitem:a070539d337bb4165a1be0c7d229dfca5 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a070539d337bb4165a1be0c7d229dfca5">callIfComponentMatch</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core, <a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> &amp;a, <a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> &amp;b) const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a58bc70fe9a14aa2330a2ed273183a8f5" id="r_a58bc70fe9a14aa2330a2ed273183a8f5"><td class="memItemLeft"><a class="el" href="#aa4389aa528d9316b4c53d193864d6f79">CallbackFunc</a>&#160;</td><td class="memItemRight"><a class="el" href="#a58bc70fe9a14aa2330a2ed273183a8f5">_callback</a></td></tr>
+<tr class="memdesc:a58bc70fe9a14aa2330a2ed273183a8f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback function to call.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="aa4389aa528d9316b4c53d193864d6f79" name="aa4389aa528d9316b4c53d193864d6f79"></a>
@@ -171,6 +183,44 @@ template&lt;typename... Components&gt; </div>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a070539d337bb4165a1be0c7d229dfca5" name="a070539d337bb4165a1be0c7d229dfca5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a070539d337bb4165a1be0c7d229dfca5">&#9670;&#160;</a></span>callIfComponentMatch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<div class="memtemplate">
+template&lt;typename C1, typename C2&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classPhysics_1_1Utils_1_1ContactCallback.html">Physics::Utils::ContactCallback</a>&lt; Components &gt;::callIfComponentMatch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>b</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ac553f3e9aee932e8237d21c3412691d4" name="ac553f3e9aee932e8237d21c3412691d4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac553f3e9aee932e8237d21c3412691d4">&#9670;&#160;</a></span>GetID()</h2>
 
@@ -200,6 +250,39 @@ template&lt;typename... Components&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>Unique ID of the function. </dd></dl>
 
 <p>Implements <a class="el" href="classFunctionUtils_1_1BaseFunction.html#a6342c906170ab976353d8759955c6d8e">FunctionUtils::BaseFunction&lt; void, Engine::Core &amp;, Engine::Entity &amp;, Engine::Entity &amp; &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a09c6ca1cd83a55733b9f5ef2ee8a9de4" name="a09c6ca1cd83a55733b9f5ef2ee8a9de4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09c6ca1cd83a55733b9f5ef2ee8a9de4">&#9670;&#160;</a></span>hasAllComponents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Cs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classPhysics_1_1Utils_1_1ContactCallback.html">Physics::Utils::ContactCallback</a>&lt; Components &gt;::hasAllComponents </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>entity</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -236,6 +319,33 @@ template&lt;typename... Components&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a58bc70fe9a14aa2330a2ed273183a8f5" name="a58bc70fe9a14aa2330a2ed273183a8f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58bc70fe9a14aa2330a2ed273183a8f5">&#9670;&#160;</a></span>_callback</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aa4389aa528d9316b4c53d193864d6f79">CallbackFunc</a> <a class="el" href="classPhysics_1_1Utils_1_1ContactCallback.html">Physics::Utils::ContactCallback</a>&lt; Components &gt;::_callback</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The callback function to call. </p>
 
 </div>
 </div>

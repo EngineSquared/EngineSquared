@@ -122,6 +122,22 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aee4668f025ff71425adce6a89cc0fac8 inherit pub_methods_classCameraMovement_1_1Utils_1_1ICameraBehavior" id="r_aee4668f025ff71425adce6a89cc0fac8"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="classCameraMovement_1_1Utils_1_1ICameraBehavior.html#aee4668f025ff71425adce6a89cc0fac8">ICameraBehavior</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;)</td></tr>
 <tr class="memdesc:aee4668f025ff71425adce6a89cc0fac8 inherit pub_methods_classCameraMovement_1_1Utils_1_1ICameraBehavior"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional constructor that receives the engine core.  <br /></td></tr>
 <tr class="memitem:a6a0a17e04c258b14be3037ad47f08b9a inherit pub_methods_classCameraMovement_1_1Utils_1_1ICameraBehavior" id="r_a6a0a17e04c258b14be3037ad47f08b9a"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="classCameraMovement_1_1Utils_1_1ICameraBehavior.html#a6a0a17e04c258b14be3037ad47f08b9a">~ICameraBehavior</a> ()=default</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a495dcffdda3455800f938c461c4f6576" id="r_a495dcffdda3455800f938c461c4f6576"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a495dcffdda3455800f938c461c4f6576">HandleTranslation</a> (<a class="el" href="classInput_1_1Resource_1_1InputManager.html">Input::Resource::InputManager</a> &amp;inputManager, <a class="el" href="structObject_1_1Component_1_1Transform.html">Object::Component::Transform</a> &amp;transform, float speed, float deltaTime)</td></tr>
+<tr class="memitem:a6a6c52d1d9458e83eaf04721b428b3ec" id="r_a6a6c52d1d9458e83eaf04721b428b3ec"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a6a6c52d1d9458e83eaf04721b428b3ec">HandleJoystickInput</a> (<a class="el" href="classCameraMovement_1_1Resource_1_1CameraManager.html">Resource::CameraManager</a> &amp;manager, <a class="el" href="structObject_1_1Component_1_1Transform.html">Object::Component::Transform</a> &amp;transform, float deltaTime)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-static-methods" class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a4312c6235540e80f584547e5ffb0e89b" id="r_a4312c6235540e80f584547e5ffb0e89b"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#a4312c6235540e80f584547e5ffb0e89b">MouseButtonCallback</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core, int button, int action, int)</td></tr>
+<tr class="memitem:a7a8eff149c1e5b59df850102c70456b3" id="r_a7a8eff149c1e5b59df850102c70456b3"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#a7a8eff149c1e5b59df850102c70456b3">CursorPosCallback</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core, double xpos, double ypos)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a67ed24ac78220154bf11540b7cdb802a" id="r_a67ed24ac78220154bf11540b7cdb802a"><td class="memItemLeft"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a67ed24ac78220154bf11540b7cdb802a">_core</a> = nullptr</td></tr>
+<tr class="memitem:a68af11b03db3db6434d408744946dc94" id="r_a68af11b03db3db6434d408744946dc94"><td class="memItemLeft"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a>&#160;</td><td class="memItemRight"><a class="el" href="#a68af11b03db3db6434d408744946dc94">_mouseButtonCallbackId</a></td></tr>
+<tr class="memitem:a4eb5b770b5df94b9dda7cd33471477cd" id="r_a4eb5b770b5df94b9dda7cd33471477cd"><td class="memItemLeft"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4eb5b770b5df94b9dda7cd33471477cd">_cursorPosCallbackId</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Default camera behavior with WASD movement and mouse look. </p>
@@ -209,6 +225,152 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a7a8eff149c1e5b59df850102c70456b3" name="a7a8eff149c1e5b59df850102c70456b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a8eff149c1e5b59df850102c70456b3">&#9670;&#160;</a></span>CursorPosCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CameraMovement::Utils::DefaultBehavior::CursorPosCallback </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>xpos</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>ypos</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6a6c52d1d9458e83eaf04721b428b3ec" name="a6a6c52d1d9458e83eaf04721b428b3ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a6c52d1d9458e83eaf04721b428b3ec">&#9670;&#160;</a></span>HandleJoystickInput()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CameraMovement::Utils::DefaultBehavior::HandleJoystickInput </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCameraMovement_1_1Resource_1_1CameraManager.html">Resource::CameraManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>manager</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structObject_1_1Component_1_1Transform.html">Object::Component::Transform</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>transform</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>deltaTime</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a495dcffdda3455800f938c461c4f6576" name="a495dcffdda3455800f938c461c4f6576"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a495dcffdda3455800f938c461c4f6576">&#9670;&#160;</a></span>HandleTranslation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CameraMovement::Utils::DefaultBehavior::HandleTranslation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classInput_1_1Resource_1_1InputManager.html">Input::Resource::InputManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>inputManager</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structObject_1_1Component_1_1Transform.html">Object::Component::Transform</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>transform</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>speed</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>deltaTime</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4312c6235540e80f584547e5ffb0e89b" name="a4312c6235540e80f584547e5ffb0e89b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4312c6235540e80f584547e5ffb0e89b">&#9670;&#160;</a></span>MouseButtonCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CameraMovement::Utils::DefaultBehavior::MouseButtonCallback </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>button</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>action</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aff88e3a3d246e2202cb8634254d2f90b" name="aff88e3a3d246e2202cb8634254d2f90b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aff88e3a3d246e2202cb8634254d2f90b">&#9670;&#160;</a></span>Update()</h2>
 
@@ -264,6 +426,73 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Implements <a class="el" href="classCameraMovement_1_1Utils_1_1ICameraBehavior.html#ad2558a3ddd91059600046ce491cf52d2">CameraMovement::Utils::ICameraBehavior</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a67ed24ac78220154bf11540b7cdb802a" name="a67ed24ac78220154bf11540b7cdb802a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67ed24ac78220154bf11540b7cdb802a">&#9670;&#160;</a></span>_core</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a>* CameraMovement::Utils::DefaultBehavior::_core = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4eb5b770b5df94b9dda7cd33471477cd" name="a4eb5b770b5df94b9dda7cd33471477cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eb5b770b5df94b9dda7cd33471477cd">&#9670;&#160;</a></span>_cursorPosCallbackId</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a> CameraMovement::Utils::DefaultBehavior::_cursorPosCallbackId</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a68af11b03db3db6434d408744946dc94" name="a68af11b03db3db6434d408744946dc94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68af11b03db3db6434d408744946dc94">&#9670;&#160;</a></span>_mouseButtonCallbackId</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a> CameraMovement::Utils::DefaultBehavior::_mouseButtonCallbackId</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

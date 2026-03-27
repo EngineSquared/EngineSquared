@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logcallback_0',['LogCallback',['../namespacewgpu.html#ac43be9cfdb61d6966b4b41b3ea84c1ee',1,'wgpu']]]
+  ['keycallbackcontainer_0',['KeyCallbackContainer',['../classInput_1_1Resource_1_1InputManager.html#adb625441419347aaf2e05cfa605b8185',1,'Input::Resource::InputManager']]]
 ];

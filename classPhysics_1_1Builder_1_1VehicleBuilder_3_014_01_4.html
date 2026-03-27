@@ -130,6 +130,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a898edd9bf7c7f62226654d20e3c35cc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the collision tester type for wheel-ground detection.  <br /></td></tr>
 <tr class="memitem:a9b9c70fb3865df3cc1df6e22eda97204" id="r_a9b9c70fb3865df3cc1df6e22eda97204"><td class="memItemLeft"><a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">VehicleBuilder</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a9b9c70fb3865df3cc1df6e22eda97204">SetConvexRadiusFraction</a> (float fraction)</td></tr>
 <tr class="memdesc:a9b9c70fb3865df3cc1df6e22eda97204"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the convex radius fraction for CastCylinder tester.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a78de8fbc7775b448cd12d1493b2b2116" id="r_a78de8fbc7775b448cd12d1493b2b2116"><td class="memItemLeft"><a class="el" href="structPhysics_1_1Component_1_1Vehicle.html">Component::Vehicle</a>&#160;</td><td class="memItemRight"><a class="el" href="#a78de8fbc7775b448cd12d1493b2b2116">_vehicle</a> = <a class="el" href="structPhysics_1_1Component_1_1Vehicle.html#a5506fe14d3f3423159f47a739cdd4f7b">Component::Vehicle::CreateDefaultCar</a>()</td></tr>
+<tr class="memitem:aed364057e870647a114f695f3e800e47" id="r_aed364057e870647a114f695f3e800e47"><td class="memItemLeft"><a class="el" href="structObject_1_1Component_1_1Mesh.html">Object::Component::Mesh</a>&#160;</td><td class="memItemRight"><a class="el" href="#aed364057e870647a114f695f3e800e47">_chassisMesh</a></td></tr>
+<tr class="memitem:ae5b4b7ad9ff5d398f0b196e477ead4cc" id="r_ae5b4b7ad9ff5d398f0b196e477ead4cc"><td class="memItemLeft">glm::vec3&#160;</td><td class="memItemRight"><a class="el" href="#ae5b4b7ad9ff5d398f0b196e477ead4cc">_chassisPosition</a> = glm::vec3(0.0f)</td></tr>
+<tr class="memitem:a611d639aceadf06a28f7d2104d437538" id="r_a611d639aceadf06a28f7d2104d437538"><td class="memItemLeft">glm::quat&#160;</td><td class="memItemRight"><a class="el" href="#a611d639aceadf06a28f7d2104d437538">_chassisRotation</a> = glm::quat(1.0f, 0.0f, 0.0f, 0.0f)</td></tr>
+<tr class="memitem:ae680f4c7af39d78eb0dceb760cb00b86" id="r_ae680f4c7af39d78eb0dceb760cb00b86"><td class="memItemLeft">glm::vec3&#160;</td><td class="memItemRight"><a class="el" href="#ae680f4c7af39d78eb0dceb760cb00b86">_chassisScale</a> = glm::vec3(1.0f)</td></tr>
+<tr class="memitem:ab967f9db6e82be156badee36b12e7b5d" id="r_ab967f9db6e82be156badee36b12e7b5d"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#ab967f9db6e82be156badee36b12e7b5d">_chassisMass</a> = 1500.0f</td></tr>
+<tr class="memitem:a8ce83bff01926707de2bfc15e0e4edb8" id="r_a8ce83bff01926707de2bfc15e0e4edb8"><td class="memItemLeft">std::array&lt; <a class="el" href="structObject_1_1Component_1_1Mesh.html">Object::Component::Mesh</a>, 4 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a8ce83bff01926707de2bfc15e0e4edb8">_wheelMeshes</a></td></tr>
+<tr class="memitem:a97452c70edff4024c5474db5805876e3" id="r_a97452c70edff4024c5474db5805876e3"><td class="memItemLeft">std::array&lt; glm::vec3, 4 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a97452c70edff4024c5474db5805876e3">_wheelPositions</a> = <a class="el" href="structPhysics_1_1Component_1_1Vehicle.html#a1013d911f936b4554031fbffaf61b67c">Component::Vehicle::GetDefaultWheelPositions</a>()</td></tr>
+<tr class="memitem:a4bda1afa1958a7a0b52eb82b2550a160" id="r_a4bda1afa1958a7a0b52eb82b2550a160"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4bda1afa1958a7a0b52eb82b2550a160">_hasChassisSet</a> = false</td></tr>
+<tr class="memitem:a8f7023bf7da018d94068caee387f4ea8" id="r_a8f7023bf7da018d94068caee387f4ea8"><td class="memItemLeft">std::array&lt; bool, 4 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a8f7023bf7da018d94068caee387f4ea8">_hasWheelMesh</a> = {false, false, false, false}</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Specialized builder for 4-wheel vehicles. </p>
@@ -623,6 +636,227 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ab967f9db6e82be156badee36b12e7b5d" name="ab967f9db6e82be156badee36b12e7b5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab967f9db6e82be156badee36b12e7b5d">&#9670;&#160;</a></span>_chassisMass</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">Physics::Builder::VehicleBuilder</a>&lt; 4 &gt;::_chassisMass = 1500.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aed364057e870647a114f695f3e800e47" name="aed364057e870647a114f695f3e800e47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed364057e870647a114f695f3e800e47">&#9670;&#160;</a></span>_chassisMesh</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structObject_1_1Component_1_1Mesh.html">Object::Component::Mesh</a> <a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">Physics::Builder::VehicleBuilder</a>&lt; 4 &gt;::_chassisMesh</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae5b4b7ad9ff5d398f0b196e477ead4cc" name="ae5b4b7ad9ff5d398f0b196e477ead4cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5b4b7ad9ff5d398f0b196e477ead4cc">&#9670;&#160;</a></span>_chassisPosition</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::vec3 <a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">Physics::Builder::VehicleBuilder</a>&lt; 4 &gt;::_chassisPosition = glm::vec3(0.0f)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a611d639aceadf06a28f7d2104d437538" name="a611d639aceadf06a28f7d2104d437538"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a611d639aceadf06a28f7d2104d437538">&#9670;&#160;</a></span>_chassisRotation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::quat <a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">Physics::Builder::VehicleBuilder</a>&lt; 4 &gt;::_chassisRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae680f4c7af39d78eb0dceb760cb00b86" name="ae680f4c7af39d78eb0dceb760cb00b86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae680f4c7af39d78eb0dceb760cb00b86">&#9670;&#160;</a></span>_chassisScale</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::vec3 <a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">Physics::Builder::VehicleBuilder</a>&lt; 4 &gt;::_chassisScale = glm::vec3(1.0f)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4bda1afa1958a7a0b52eb82b2550a160" name="a4bda1afa1958a7a0b52eb82b2550a160"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bda1afa1958a7a0b52eb82b2550a160">&#9670;&#160;</a></span>_hasChassisSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">Physics::Builder::VehicleBuilder</a>&lt; 4 &gt;::_hasChassisSet = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8f7023bf7da018d94068caee387f4ea8" name="a8f7023bf7da018d94068caee387f4ea8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f7023bf7da018d94068caee387f4ea8">&#9670;&#160;</a></span>_hasWheelMesh</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt;bool, 4&gt; <a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">Physics::Builder::VehicleBuilder</a>&lt; 4 &gt;::_hasWheelMesh = {false, false, false, false}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a78de8fbc7775b448cd12d1493b2b2116" name="a78de8fbc7775b448cd12d1493b2b2116"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78de8fbc7775b448cd12d1493b2b2116">&#9670;&#160;</a></span>_vehicle</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structPhysics_1_1Component_1_1Vehicle.html">Component::Vehicle</a> <a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">Physics::Builder::VehicleBuilder</a>&lt; 4 &gt;::_vehicle = <a class="el" href="structPhysics_1_1Component_1_1Vehicle.html#a5506fe14d3f3423159f47a739cdd4f7b">Component::Vehicle::CreateDefaultCar</a>()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8ce83bff01926707de2bfc15e0e4edb8" name="a8ce83bff01926707de2bfc15e0e4edb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ce83bff01926707de2bfc15e0e4edb8">&#9670;&#160;</a></span>_wheelMeshes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt;<a class="el" href="structObject_1_1Component_1_1Mesh.html">Object::Component::Mesh</a>, 4&gt; <a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">Physics::Builder::VehicleBuilder</a>&lt; 4 &gt;::_wheelMeshes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a97452c70edff4024c5474db5805876e3" name="a97452c70edff4024c5474db5805876e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97452c70edff4024c5474db5805876e3">&#9670;&#160;</a></span>_wheelPositions</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt;glm::vec3, 4&gt; <a class="el" href="classPhysics_1_1Builder_1_1VehicleBuilder.html">Physics::Builder::VehicleBuilder</a>&lt; 4 &gt;::_wheelPositions = <a class="el" href="structPhysics_1_1Component_1_1Vehicle.html#a1013d911f936b4554031fbffaf61b67c">Component::Vehicle::GetDefaultWheelPositions</a>()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

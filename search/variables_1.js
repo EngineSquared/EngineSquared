@@ -16,5 +16,6 @@ var searchData=
   ['animationdirty_13',['animationDirty',['../structOverlayState.html#a69a8c225e49022c91a922b3c5461e108',1,'OverlayState']]],
   ['animationinitialized_14',['animationInitialized',['../structOverlayState.html#aa639588f85076c63059882b593de09ab',1,'OverlayState']]],
   ['animationlastfadetime_15',['animationLastFadeTime',['../structOverlayState.html#a7442cb7cc5f4b06feae598ecde5aca6e',1,'OverlayState']]],
-  ['aspectratio_16',['aspectRatio',['../structObject_1_1Component_1_1Camera.html#afc9152c5463033285868272148191ca8',1,'Object::Component::Camera']]]
+  ['arraystride_16',['arrayStride',['../classGraphic_1_1Utils_1_1VertexBufferLayout.html#acad4daba17d048792f664ad84f8a1d8e',1,'Graphic::Utils::VertexBufferLayout']]],
+  ['aspectratio_17',['aspectRatio',['../structObject_1_1Component_1_1Camera.html#afc9152c5463033285868272148191ca8',1,'Object::Component::Camera']]]
 ];

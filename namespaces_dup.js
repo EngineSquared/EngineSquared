@@ -4,7 +4,6 @@ var namespaces_dup =
     [ "DefaultPipeline", "namespaceDefaultPipeline.html", "namespaceDefaultPipeline" ],
     [ "demo_setup", "namespacedemo__setup.html", "namespacedemo__setup" ],
     [ "Engine", "namespaceEngine.html", "namespaceEngine" ],
-    [ "entt", "namespaceentt.html", "namespaceentt" ],
     [ "Event", "namespaceEvent.html", "namespaceEvent" ],
     [ "FunctionUtils", "namespaceFunctionUtils.html", "namespaceFunctionUtils" ],
     [ "Graphic", "namespaceGraphic.html", "namespaceGraphic" ],

@@ -122,6 +122,13 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a12670e2577f1ae689afc58929b83ad57" id="r_a12670e2577f1ae689afc58929b83ad57"><td class="memItemLeft">wgpu::BindGroupLayoutEntry &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a12670e2577f1ae689afc58929b83ad57">getEntry</a> ()</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae159990b4bbfc17f9e4ee25fa3e5e591" id="r_ae159990b4bbfc17f9e4ee25fa3e5e591"><td class="memItemLeft">wgpu::BindGroupLayoutEntry&#160;</td><td class="memItemRight"><a class="el" href="#ae159990b4bbfc17f9e4ee25fa3e5e591">entry</a> = wgpu::BindGroupLayoutEntry(<a class="el" href="namespacewgpu.html#a0fbf5c4c5168202c330cbe3f65008db0">wgpu::Default</a>)</td></tr>
+<tr class="memitem:acf72bab92a06097ae57224ccdd044a65" id="r_acf72bab92a06097ae57224ccdd044a65"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#acf72bab92a06097ae57224ccdd044a65">isBindingSet</a> = false</td></tr>
+<tr class="memitem:a2e5e93be3d30de160a10335f9cb9c387" id="r_a2e5e93be3d30de160a10335f9cb9c387"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2e5e93be3d30de160a10335f9cb9c387">isVisibilitySet</a> = false</td></tr>
+<tr class="memitem:ada956278a369810e269d54a96502937d" id="r_ada956278a369810e269d54a96502937d"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada956278a369810e269d54a96502937d">name</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad66dfced3b8ff55ec45d183af38813c1" name="ad66dfced3b8ff55ec45d183af38813c1"></a>
@@ -346,6 +353,103 @@ template&lt;typename TDerived&gt; </div>
 <p>Implements <a class="el" href="classGraphic_1_1Utils_1_1IValidable.html#abdd586a0fc6330f8bd15ea9ad5136a7b">Graphic::Utils::IValidable</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classGraphic_1_1Utils_1_1BufferBindGroupLayoutEntry.html#a1eb1f686735afbef19a976b05ccd6b9e">Graphic::Utils::BufferBindGroupLayoutEntry</a>, <a class="el" href="classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#a7cfcf518eb9bbbd298608d9e75c0f55e">Graphic::Utils::SamplerBindGroupLayoutEntry</a>, and <a class="el" href="classGraphic_1_1Utils_1_1TextureBindGroupLayoutEntry.html#ade1c50a5625733a07665184fd2345875">Graphic::Utils::TextureBindGroupLayoutEntry</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ae159990b4bbfc17f9e4ee25fa3e5e591" name="ae159990b4bbfc17f9e4ee25fa3e5e591"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae159990b4bbfc17f9e4ee25fa3e5e591">&#9670;&#160;</a></span>entry</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TDerived&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::BindGroupLayoutEntry <a class="el" href="classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html">Graphic::Utils::ABindGroupLayoutEntry</a>&lt; TDerived &gt;::entry = wgpu::BindGroupLayoutEntry(<a class="el" href="namespacewgpu.html#a0fbf5c4c5168202c330cbe3f65008db0">wgpu::Default</a>)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acf72bab92a06097ae57224ccdd044a65" name="acf72bab92a06097ae57224ccdd044a65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf72bab92a06097ae57224ccdd044a65">&#9670;&#160;</a></span>isBindingSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TDerived&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html">Graphic::Utils::ABindGroupLayoutEntry</a>&lt; TDerived &gt;::isBindingSet = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2e5e93be3d30de160a10335f9cb9c387" name="a2e5e93be3d30de160a10335f9cb9c387"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e5e93be3d30de160a10335f9cb9c387">&#9670;&#160;</a></span>isVisibilitySet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TDerived&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html">Graphic::Utils::ABindGroupLayoutEntry</a>&lt; TDerived &gt;::isVisibilitySet = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ada956278a369810e269d54a96502937d" name="ada956278a369810e269d54a96502937d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada956278a369810e269d54a96502937d">&#9670;&#160;</a></span>name</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TDerived&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html">Graphic::Utils::ABindGroupLayoutEntry</a>&lt; TDerived &gt;::name</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

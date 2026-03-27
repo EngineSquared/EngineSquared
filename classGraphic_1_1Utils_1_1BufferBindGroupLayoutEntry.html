@@ -110,7 +110,7 @@ Inheritance diagram for Graphic::Utils::BufferBindGroupLayoutEntry:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a37a2d1bdfe568dc8379593aa210e41c3" id="r_a37a2d1bdfe568dc8379593aa210e41c3"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a37a2d1bdfe568dc8379593aa210e41c3">BufferBindGroupLayoutEntry</a> (const std::string &amp;name)</td></tr>
+<tr class="memitem:a37a2d1bdfe568dc8379593aa210e41c3" id="r_a37a2d1bdfe568dc8379593aa210e41c3"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a37a2d1bdfe568dc8379593aa210e41c3">BufferBindGroupLayoutEntry</a> (const std::string &amp;<a class="el" href="classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#ada956278a369810e269d54a96502937d">name</a>)</td></tr>
 <tr class="memitem:a6ac25fde806f1ecd6ea9dac21c1a0f98" id="r_a6ac25fde806f1ecd6ea9dac21c1a0f98"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6ac25fde806f1ecd6ea9dac21c1a0f98">~BufferBindGroupLayoutEntry</a> () override=default</td></tr>
 <tr class="memitem:a5fd4bce7d54babd3684b076ad01168af" id="r_a5fd4bce7d54babd3684b076ad01168af"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a5fd4bce7d54babd3684b076ad01168af">BufferBindGroupLayoutEntry</a> (const BufferBindGroupLayoutEntry &amp;other)=default</td></tr>
 <tr class="memitem:a5bba490e76886d5f71ff857eaf1e913d" id="r_a5bba490e76886d5f71ff857eaf1e913d"><td class="memItemLeft"><a class="el" href="#a37a2d1bdfe568dc8379593aa210e41c3">BufferBindGroupLayoutEntry</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a5bba490e76886d5f71ff857eaf1e913d">operator=</a> (const <a class="el" href="#a37a2d1bdfe568dc8379593aa210e41c3">BufferBindGroupLayoutEntry</a> &amp;other)=default</td></tr>
@@ -129,6 +129,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5108f705054c1b6f2c4fd95f352fd0e9 inherit pub_methods_classGraphic_1_1Utils_1_1ABindGroupLayoutEntry" id="r_a5108f705054c1b6f2c4fd95f352fd0e9"><td class="memItemLeft"><a class="el" href="classGraphic_1_1Utils_1_1BufferBindGroupLayoutEntry.html">BufferBindGroupLayoutEntry</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#a5108f705054c1b6f2c4fd95f352fd0e9">setVisibility</a> (wgpu::ShaderStage visibility)</td></tr>
 <tr class="inherit_header pub_methods_classGraphic_1_1Utils_1_1IValidable"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classGraphic_1_1Utils_1_1IValidable')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classGraphic_1_1Utils_1_1IValidable.html">Graphic::Utils::IValidable</a></td></tr>
 <tr class="memitem:a7c92f08ae392d61b4a18c17cc166b0df inherit pub_methods_classGraphic_1_1Utils_1_1IValidable" id="r_a7c92f08ae392d61b4a18c17cc166b0df"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Utils_1_1IValidable.html#a7c92f08ae392d61b4a18c17cc166b0df">~IValidable</a> ()=default</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a60adb3160ac3fb0952d0e6728dcbea3f" id="r_a60adb3160ac3fb0952d0e6728dcbea3f"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a60adb3160ac3fb0952d0e6728dcbea3f template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a60adb3160ac3fb0952d0e6728dcbea3f">computeMinBindingSize</a> (uint64_t &amp;size)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ac129f76bd5348b08f8161951fe7ed8ca" id="r_ac129f76bd5348b08f8161951fe7ed8ca"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ac129f76bd5348b08f8161951fe7ed8ca">isTypeSet</a> = false</td></tr>
+<tr class="memitem:a726631bccdc3c4e3e510211a0cdfe5a3" id="r_a726631bccdc3c4e3e510211a0cdfe5a3"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a726631bccdc3c4e3e510211a0cdfe5a3">isMinBindingSizeSet</a> = false</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a37a2d1bdfe568dc8379593aa210e41c3" name="a37a2d1bdfe568dc8379593aa210e41c3"></a>
@@ -207,6 +217,33 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a60adb3160ac3fb0952d0e6728dcbea3f" name="a60adb3160ac3fb0952d0e6728dcbea3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60adb3160ac3fb0952d0e6728dcbea3f">&#9670;&#160;</a></span>computeMinBindingSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Graphic::Utils::BufferBindGroupLayoutEntry::computeMinBindingSize </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t &amp;</td>          <td class="paramname"><span class="paramname"><em>size</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a5bba490e76886d5f71ff857eaf1e913d" name="a5bba490e76886d5f71ff857eaf1e913d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5bba490e76886d5f71ff857eaf1e913d">&#9670;&#160;</a></span>operator=()</h2>
 
@@ -358,6 +395,51 @@ template&lt;typename... TBuffer&gt; </div>
 </div><div class="memdoc">
 
 <p>Reimplemented from <a class="el" href="classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#aadf3f98c1299b84a35e711236fab5463">Graphic::Utils::ABindGroupLayoutEntry&lt; BufferBindGroupLayoutEntry &gt;</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a726631bccdc3c4e3e510211a0cdfe5a3" name="a726631bccdc3c4e3e510211a0cdfe5a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a726631bccdc3c4e3e510211a0cdfe5a3">&#9670;&#160;</a></span>isMinBindingSizeSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Graphic::Utils::BufferBindGroupLayoutEntry::isMinBindingSizeSet = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac129f76bd5348b08f8161951fe7ed8ca" name="ac129f76bd5348b08f8161951fe7ed8ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac129f76bd5348b08f8161951fe7ed8ca">&#9670;&#160;</a></span>isTypeSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Graphic::Utils::BufferBindGroupLayoutEntry::isTypeSet = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

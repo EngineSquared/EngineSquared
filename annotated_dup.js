@@ -77,7 +77,7 @@ var annotated_dup =
       [ "SystemContainer", "classEngine_1_1SystemContainer.html", "classEngine_1_1SystemContainer" ],
       [ "WrappedSystem", "classEngine_1_1WrappedSystem.html", "classEngine_1_1WrappedSystem" ]
     ] ],
-    [ "entt", "namespaceentt.html", [
+    [ "entt", null, [
       [ "entt_traits&lt; Engine::Id &gt;", "structentt_1_1entt__traits_3_01Engine_1_1Id_01_4.html", "structentt_1_1entt__traits_3_01Engine_1_1Id_01_4" ]
     ] ],
     [ "Event", "namespaceEvent.html", [

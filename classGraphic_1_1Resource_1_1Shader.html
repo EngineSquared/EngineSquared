@@ -110,7 +110,21 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af3ba74e1a77696fdfb97bbd1eb110873" id="r_af3ba74e1a77696fdfb97bbd1eb110873"><td class="memItemLeft">static <a class="el" href="#aa4d394b3e83701f8e8c0f5730d968578">Shader</a>&#160;</td><td class="memItemRight"><a class="el" href="#af3ba74e1a77696fdfb97bbd1eb110873">Create</a> (const <a class="el" href="classGraphic_1_1Resource_1_1ShaderDescriptor.html">ShaderDescriptor</a> &amp;descriptor, <a class="el" href="classGraphic_1_1Resource_1_1Context.html">Context</a> &amp;context)</td></tr>
+<tr class="memitem:af3ba74e1a77696fdfb97bbd1eb110873" id="r_af3ba74e1a77696fdfb97bbd1eb110873"><td class="memItemLeft">static <a class="el" href="#aa4d394b3e83701f8e8c0f5730d968578">Shader</a>&#160;</td><td class="memItemRight"><a class="el" href="#af3ba74e1a77696fdfb97bbd1eb110873">Create</a> (const <a class="el" href="classGraphic_1_1Resource_1_1ShaderDescriptor.html">ShaderDescriptor</a> &amp;<a class="el" href="#a4f8974e4100adbf1fd8087b786a5b0d1">descriptor</a>, <a class="el" href="classGraphic_1_1Resource_1_1Context.html">Context</a> &amp;context)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:acb0e8e48617a5e53295f285a05b76c40" id="r_acb0e8e48617a5e53295f285a05b76c40"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#acb0e8e48617a5e53295f285a05b76c40">Shader</a> (void)=default</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-static-methods" class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:afacc6dc53463d589f7c9439852b109df" id="r_afacc6dc53463d589f7c9439852b109df"><td class="memItemLeft">static wgpu::ShaderModule&#160;</td><td class="memItemRight"><a class="el" href="#afacc6dc53463d589f7c9439852b109df">_createShaderModule</a> (std::string_view name, std::string_view source, const wgpu::Device &amp;device)</td></tr>
+<tr class="memitem:a79dfd4b35834a833ca96ff4d39a67b55" id="r_a79dfd4b35834a833ca96ff4d39a67b55"><td class="memItemLeft">static std::vector&lt; wgpu::VertexBufferLayout &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a79dfd4b35834a833ca96ff4d39a67b55">_createVertexBufferLayouts</a> (const <a class="el" href="classGraphic_1_1Resource_1_1ShaderDescriptor.html">ShaderDescriptor</a> &amp;<a class="el" href="#a4f8974e4100adbf1fd8087b786a5b0d1">descriptor</a>)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a4f8974e4100adbf1fd8087b786a5b0d1" id="r_a4f8974e4100adbf1fd8087b786a5b0d1"><td class="memItemLeft"><a class="el" href="classGraphic_1_1Resource_1_1ShaderDescriptor.html">ShaderDescriptor</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4f8974e4100adbf1fd8087b786a5b0d1">descriptor</a></td></tr>
+<tr class="memitem:aa123bb6b01667ca398f2efa0b6c6ed82" id="r_aa123bb6b01667ca398f2efa0b6c6ed82"><td class="memItemLeft">wgpu::RenderPipeline&#160;</td><td class="memItemRight"><a class="el" href="#aa123bb6b01667ca398f2efa0b6c6ed82">pipeline</a> = nullptr</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab17bf94ff912c54d7b80f393cb4f2800" name="ab17bf94ff912c54d7b80f393cb4f2800"></a>
@@ -139,7 +153,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aa4d394b3e83701f8e8c0f5730d968578" name="aa4d394b3e83701f8e8c0f5730d968578"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4d394b3e83701f8e8c0f5730d968578">&#9670;&#160;</a></span>Shader() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4d394b3e83701f8e8c0f5730d968578">&#9670;&#160;</a></span>Shader() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -164,7 +178,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a23159766e3b33eeb9a3d9318eec61488" name="a23159766e3b33eeb9a3d9318eec61488"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23159766e3b33eeb9a3d9318eec61488">&#9670;&#160;</a></span>Shader() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a23159766e3b33eeb9a3d9318eec61488">&#9670;&#160;</a></span>Shader() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,7 +202,91 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="acb0e8e48617a5e53295f285a05b76c40" name="acb0e8e48617a5e53295f285a05b76c40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb0e8e48617a5e53295f285a05b76c40">&#9670;&#160;</a></span>Shader() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Graphic::Resource::Shader::Shader </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="afacc6dc53463d589f7c9439852b109df" name="afacc6dc53463d589f7c9439852b109df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afacc6dc53463d589f7c9439852b109df">&#9670;&#160;</a></span>_createShaderModule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::ShaderModule Graphic::Resource::Shader::_createShaderModule </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const wgpu::Device &amp;</td>          <td class="paramname"><span class="paramname"><em>device</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a79dfd4b35834a833ca96ff4d39a67b55" name="a79dfd4b35834a833ca96ff4d39a67b55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79dfd4b35834a833ca96ff4d39a67b55">&#9670;&#160;</a></span>_createVertexBufferLayouts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; wgpu::VertexBufferLayout &gt; Graphic::Resource::Shader::_createVertexBufferLayouts </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGraphic_1_1Resource_1_1ShaderDescriptor.html">ShaderDescriptor</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>descriptor</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="af3ba74e1a77696fdfb97bbd1eb110873" name="af3ba74e1a77696fdfb97bbd1eb110873"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af3ba74e1a77696fdfb97bbd1eb110873">&#9670;&#160;</a></span>Create()</h2>
 
@@ -337,6 +435,51 @@ Static Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a4f8974e4100adbf1fd8087b786a5b0d1" name="a4f8974e4100adbf1fd8087b786a5b0d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f8974e4100adbf1fd8087b786a5b0d1">&#9670;&#160;</a></span>descriptor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGraphic_1_1Resource_1_1ShaderDescriptor.html">ShaderDescriptor</a> Graphic::Resource::Shader::descriptor</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa123bb6b01667ca398f2efa0b6c6ed82" name="aa123bb6b01667ca398f2efa0b6c6ed82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa123bb6b01667ca398f2efa0b6c6ed82">&#9670;&#160;</a></span>pipeline</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::RenderPipeline Graphic::Resource::Shader::pipeline = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

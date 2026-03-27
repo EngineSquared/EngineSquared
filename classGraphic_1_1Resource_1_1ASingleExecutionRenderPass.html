@@ -123,6 +123,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a25cb1d0462cb7c194803fc71700eab98 inherit pub_methods_classGraphic_1_1Resource_1_1ARenderPass" id="r_a25cb1d0462cb7c194803fc71700eab98"><td class="memItemLeft">const auto &amp;&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Resource_1_1ARenderPass.html#a25cb1d0462cb7c194803fc71700eab98">GetName</a> (void) const</td></tr>
 <tr class="memitem:ac5961b83b075dad9fb2a53ab0b2bdb01 inherit pub_methods_classGraphic_1_1Resource_1_1ARenderPass" id="r_ac5961b83b075dad9fb2a53ab0b2bdb01"><td class="memItemLeft">const auto &amp;&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Resource_1_1ARenderPass.html#ac5961b83b075dad9fb2a53ab0b2bdb01">GetOutputs</a> (void) const</td></tr>
 <tr class="memitem:aa6c4d1f4a0cde97857dbc7cbfb50580a inherit pub_methods_classGraphic_1_1Resource_1_1ARenderPass" id="r_aa6c4d1f4a0cde97857dbc7cbfb50580a"><td class="memItemLeft">auto &amp;&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Resource_1_1ARenderPass.html#aa6c4d1f4a0cde97857dbc7cbfb50580a">GetOutputs</a> (void)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a6c93b64483f409643446136c90f6f60f" id="r_a6c93b64483f409643446136c90f6f60f"><td class="memItemLeft">wgpu::RenderPassEncoder&#160;</td><td class="memItemRight"><a class="el" href="#a6c93b64483f409643446136c90f6f60f">_CreateRenderPass</a> (<a class="el" href="structGraphic_1_1Resource_1_1DeviceContext.html">Resource::DeviceContext</a> &amp;context, <a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a504608886bc86471d41f3fd4dba6195b" id="r_a504608886bc86471d41f3fd4dba6195b"><td class="memItemLeft">wgpu::CommandEncoder&#160;</td><td class="memItemRight"><a class="el" href="#a504608886bc86471d41f3fd4dba6195b">_commandEncoder</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="afd922850d862ab6cc18a27a37334f324" name="afd922850d862ab6cc18a27a37334f324"></a>
@@ -153,6 +161,37 @@ template&lt;typename TDerived&gt; </div>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a6c93b64483f409643446136c90f6f60f" name="a6c93b64483f409643446136c90f6f60f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c93b64483f409643446136c90f6f60f">&#9670;&#160;</a></span>_CreateRenderPass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TDerived&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::RenderPassEncoder <a class="el" href="classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html">Graphic::Resource::ASingleExecutionRenderPass</a>&lt; TDerived &gt;::_CreateRenderPass </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structGraphic_1_1Resource_1_1DeviceContext.html">Resource::DeviceContext</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ac248a40b515337df917d9b929f7746b5" name="ac248a40b515337df917d9b929f7746b5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac248a40b515337df917d9b929f7746b5">&#9670;&#160;</a></span>Execute()</h2>
 
@@ -212,6 +251,31 @@ template&lt;typename TDerived&gt; </div>
 </div><div class="memdoc">
 
 <p>Implemented in <a class="el" href="classDefaultPipeline_1_1Resource_1_1Deferred.html#af1770fc2f79aafc8c637c42a26647823">DefaultPipeline::Resource::Deferred</a>, <a class="el" href="classDefaultPipeline_1_1Resource_1_1GBuffer.html#a862b755fb36d34d9c12533f906e0a971">DefaultPipeline::Resource::GBuffer</a>, <a class="el" href="classRmlui_1_1Utils_1_1RmluiRenderPass.html#aa5b0f0bdf58636cfd0f8ae675f00353c">Rmlui::Utils::RmluiRenderPass</a>, and <a class="el" href="classSingleExecutionRenderPassTest.html#a4c647f08d8e91f72aeefe33313bf1b3e">SingleExecutionRenderPassTest</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a504608886bc86471d41f3fd4dba6195b" name="a504608886bc86471d41f3fd4dba6195b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a504608886bc86471d41f3fd4dba6195b">&#9670;&#160;</a></span>_commandEncoder</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TDerived&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::CommandEncoder <a class="el" href="classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html">Graphic::Resource::ASingleExecutionRenderPass</a>&lt; TDerived &gt;::_commandEncoder</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

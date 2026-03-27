@@ -1,9 +1,9 @@
 var classEngine_1_1Core =
 [
     [ "Registry", "classEngine_1_1Core.html#a92a3143c58cadead136a795f192ee544", null ],
-    [ "USystem", "classEngine_1_1Core.html#a185bead0784deed0db185b1c51891608", null ],
     [ "Core", "classEngine_1_1Core.html#a706b1589c7441ca20081fd72ded54810", null ],
     [ "~Core", "classEngine_1_1Core.html#a2d19fea89a9b35071d1490662c55f5a6", null ],
+    [ "AddPlugin", "classEngine_1_1Core.html#a082a78f304fdb2550407cb6c4153f3b5", null ],
     [ "AddPlugins", "classEngine_1_1Core.html#a8cc206912a07ab15537481fdcbd78289", null ],
     [ "ClearEntities", "classEngine_1_1Core.html#a564e1c80d80e4899556656d9da45cf83", null ],
     [ "CreateEntity", "classEngine_1_1Core.html#ae8d49483d71929b61f383056da94c7fb", null ],
@@ -36,5 +36,11 @@ var classEngine_1_1Core =
     [ "SetErrorPolicyForAllSchedulers", "classEngine_1_1Core.html#a13071ecb02dd46bca87a16107e915cbb", null ],
     [ "SetSchedulerAfter", "classEngine_1_1Core.html#aa9793256fcc5501a02b19149d2954e1f", null ],
     [ "SetSchedulerBefore", "classEngine_1_1Core.html#a372ca61f2b67f8617e732a711ddcff78", null ],
-    [ "Stop", "classEngine_1_1Core.html#a28072ec0219ef5805612645a609237ae", null ]
+    [ "Stop", "classEngine_1_1Core.html#a28072ec0219ef5805612645a609237ae", null ],
+    [ "_defaultScheduler", "classEngine_1_1Core.html#a7a21dde5f94642d49372e4e8ca9e4617", null ],
+    [ "_plugins", "classEngine_1_1Core.html#ad91af01c3aa7d516541c73e7b3ed4b77", null ],
+    [ "_registry", "classEngine_1_1Core.html#a1cabc39ce1fd3d4596ae5195b2355ca0", null ],
+    [ "_running", "classEngine_1_1Core.html#a99c23c80627903b1d5f0981ad11e0bc7", null ],
+    [ "_schedulers", "classEngine_1_1Core.html#a4387f4e83b2cbf27818a7948313bd775", null ],
+    [ "_schedulersToDelete", "classEngine_1_1Core.html#aa467e11197852c4b10c78c049a3b1c39", null ]
 ];

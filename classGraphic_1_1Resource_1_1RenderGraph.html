@@ -97,6 +97,10 @@ $(function(){initNavTree('classGraphic_1_1Resource_1_1RenderGraph.html','','clas
 
 <p><code>#include &lt;<a class="el" href="RenderGraph_8hpp_source.html">RenderGraph.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:IDHash" id="r_IDHash"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html">IDHash</a></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a28c234bc8ee405bba9f95d682b614df6" id="r_a28c234bc8ee405bba9f95d682b614df6"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a28c234bc8ee405bba9f95d682b614df6">RenderGraph</a> (void)=default</td></tr>
@@ -111,7 +115,51 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a446d10c5c60add96141291994005b429" id="r_a446d10c5c60add96141291994005b429"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a446d10c5c60add96141291994005b429">Execute</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
 <tr class="memitem:aeb0fa974a3bc7cf394e14fd33d798452" id="r_aeb0fa974a3bc7cf394e14fd33d798452"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aeb0fa974a3bc7cf394e14fd33d798452">Contains</a> (std::string_view name) const</td></tr>
 <tr class="memitem:a4944a5208dbe4e1aaa39a7ff4d67dae4" id="r_a4944a5208dbe4e1aaa39a7ff4d67dae4"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4944a5208dbe4e1aaa39a7ff4d67dae4">SetDependency</a> (std::string_view nameBefore, std::string_view nameAfter)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-types" class="groupheader"><a id="pri-types" name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:ac05ffe10c8ea6139c8c5a0c4c513ac31" id="r_ac05ffe10c8ea6139c8c5a0c4c513ac31"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a> = entt::hashed_string</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a45885a3367fd8ee8b6a31aafd4f9b015" id="r_a45885a3367fd8ee8b6a31aafd4f9b015"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a45885a3367fd8ee8b6a31aafd4f9b015">Update</a> (void)</td></tr>
+<tr class="memitem:a553b45625ecce1a438c425ff1c99dec2" id="r_a553b45625ecce1a438c425ff1c99dec2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a553b45625ecce1a438c425ff1c99dec2">TopologicalSort</a> (void)</td></tr>
+<tr class="memitem:a2637e3891d3fe15f9f126583f07b775c" id="r_a2637e3891d3fe15f9f126583f07b775c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2637e3891d3fe15f9f126583f07b775c">ProcessDependencies</a> (<a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a> current, std::queue&lt; <a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a> &gt; &amp;queue, std::unordered_map&lt; <a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a>, size_t, <a class="el" href="structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html">IDHash</a> &gt; &amp;inDegree) const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-static-methods" class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a9b3d0cfcbf7a51f71d3d104af98ad910" id="r_a9b3d0cfcbf7a51f71d3d104af98ad910"><td class="memItemLeft">static <a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9b3d0cfcbf7a51f71d3d104af98ad910">GetID</a> (std::string_view name)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a4fe9b4407e561af8e9192563201a4d4b" id="r_a4fe9b4407e561af8e9192563201a4d4b"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4fe9b4407e561af8e9192563201a4d4b">_dirty</a> = false</td></tr>
+<tr class="memitem:ac1602b985e97c6a8f2b7d47a1020ee28" id="r_ac1602b985e97c6a8f2b7d47a1020ee28"><td class="memItemLeft">std::unordered_map&lt; <a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a>, std::shared_ptr&lt; <a class="el" href="classGraphic_1_1Resource_1_1ARenderPass.html">ARenderPass</a> &gt;, <a class="el" href="structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html">IDHash</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ac1602b985e97c6a8f2b7d47a1020ee28">_renderPasses</a></td></tr>
+<tr class="memitem:ac4cdeb32e0ef8ffbf117761364879ea8" id="r_ac4cdeb32e0ef8ffbf117761364879ea8"><td class="memItemLeft">std::unordered_map&lt; <a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a>, std::unordered_set&lt; <a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a>, <a class="el" href="structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html">IDHash</a> &gt;, <a class="el" href="structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html">IDHash</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ac4cdeb32e0ef8ffbf117761364879ea8">_dependencies</a></td></tr>
+<tr class="memitem:a92e643d990579248f46480b536e28f04" id="r_a92e643d990579248f46480b536e28f04"><td class="memItemLeft">std::list&lt; <a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a92e643d990579248f46480b536e28f04">_orderedIDs</a></td></tr>
 </table>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a id="ac05ffe10c8ea6139c8c5a0c4c513ac31" name="ac05ffe10c8ea6139c8c5a0c4c513ac31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">&#9670;&#160;</a></span>ID</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">Graphic::Resource::RenderGraph::ID</a> = entt::hashed_string</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a28c234bc8ee405bba9f95d682b614df6" name="a28c234bc8ee405bba9f95d682b614df6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a28c234bc8ee405bba9f95d682b614df6">&#9670;&#160;</a></span>RenderGraph() <span class="overload">[1/3]</span></h2>
@@ -279,6 +327,31 @@ template&lt;<a class="el" href="conceptCRenderPass.html">CRenderPass</a> TRender
 
 </div>
 </div>
+<a id="a9b3d0cfcbf7a51f71d3d104af98ad910" name="a9b3d0cfcbf7a51f71d3d104af98ad910"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b3d0cfcbf7a51f71d3d104af98ad910">&#9670;&#160;</a></span>GetID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a> Graphic::Resource::RenderGraph::GetID </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a1c6a771ad917edbd1c4f48fadcf014e8" name="a1c6a771ad917edbd1c4f48fadcf014e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1c6a771ad917edbd1c4f48fadcf014e8">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
@@ -329,6 +402,40 @@ template&lt;<a class="el" href="conceptCRenderPass.html">CRenderPass</a> TRender
 
 </div>
 </div>
+<a id="a2637e3891d3fe15f9f126583f07b775c" name="a2637e3891d3fe15f9f126583f07b775c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2637e3891d3fe15f9f126583f07b775c">&#9670;&#160;</a></span>ProcessDependencies()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Graphic::Resource::RenderGraph::ProcessDependencies </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a></td>          <td class="paramname"><span class="paramname"><em>current</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::queue&lt; <a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>queue</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unordered_map&lt; <a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a>, size_t, <a class="el" href="structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html">IDHash</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>inDegree</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a689f698fb31ecf21e08fc63034e8b52e" name="a689f698fb31ecf21e08fc63034e8b52e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a689f698fb31ecf21e08fc63034e8b52e">&#9670;&#160;</a></span>Remove()</h2>
 
@@ -363,6 +470,145 @@ template&lt;<a class="el" href="conceptCRenderPass.html">CRenderPass</a> TRender
           <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>nameAfter</em></span>&#160;)</td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a553b45625ecce1a438c425ff1c99dec2" name="a553b45625ecce1a438c425ff1c99dec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a553b45625ecce1a438c425ff1c99dec2">&#9670;&#160;</a></span>TopologicalSort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Graphic::Resource::RenderGraph::TopologicalSort </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a45885a3367fd8ee8b6a31aafd4f9b015" name="a45885a3367fd8ee8b6a31aafd4f9b015"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45885a3367fd8ee8b6a31aafd4f9b015">&#9670;&#160;</a></span>Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Graphic::Resource::RenderGraph::Update </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ac4cdeb32e0ef8ffbf117761364879ea8" name="ac4cdeb32e0ef8ffbf117761364879ea8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4cdeb32e0ef8ffbf117761364879ea8">&#9670;&#160;</a></span>_dependencies</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a>, std::unordered_set&lt;<a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a>, <a class="el" href="structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html">IDHash</a>&gt;, <a class="el" href="structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html">IDHash</a>&gt; Graphic::Resource::RenderGraph::_dependencies</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4fe9b4407e561af8e9192563201a4d4b" name="a4fe9b4407e561af8e9192563201a4d4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fe9b4407e561af8e9192563201a4d4b">&#9670;&#160;</a></span>_dirty</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Graphic::Resource::RenderGraph::_dirty = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a92e643d990579248f46480b536e28f04" name="a92e643d990579248f46480b536e28f04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92e643d990579248f46480b536e28f04">&#9670;&#160;</a></span>_orderedIDs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::list&lt;<a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a>&gt; Graphic::Resource::RenderGraph::_orderedIDs</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac1602b985e97c6a8f2b7d47a1020ee28" name="ac1602b985e97c6a8f2b7d47a1020ee28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1602b985e97c6a8f2b7d47a1020ee28">&#9670;&#160;</a></span>_renderPasses</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="#ac05ffe10c8ea6139c8c5a0c4c513ac31">ID</a>, std::shared_ptr&lt;<a class="el" href="classGraphic_1_1Resource_1_1ARenderPass.html">ARenderPass</a>&gt;, <a class="el" href="structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html">IDHash</a>&gt; Graphic::Resource::RenderGraph::_renderPasses</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

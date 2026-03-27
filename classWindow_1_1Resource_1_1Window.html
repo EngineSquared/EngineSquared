@@ -123,6 +123,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a877bc0f6ed7fd42e3746362f410be25d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show the cursor and unlock it from the window.  <br /></td></tr>
 <tr class="memitem:a68c1380aec817a0a0f8f03be32b1c114" id="r_a68c1380aec817a0a0f8f03be32b1c114"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a68c1380aec817a0a0f8f03be32b1c114">IsCursorMasked</a> () const</td></tr>
 <tr class="memdesc:a68c1380aec817a0a0f8f03be32b1c114"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the cursor is currently masked (hidden and locked).  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:acb702eaaa6657bb935b426b74f2095dd" id="r_acb702eaaa6657bb935b426b74f2095dd"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#acb702eaaa6657bb935b426b74f2095dd">_title</a></td></tr>
+<tr class="memitem:a0f57416a6bb17e3f62fc9fda12b603f3" id="r_a0f57416a6bb17e3f62fc9fda12b603f3"><td class="memItemLeft">GLFWwindow *&#160;</td><td class="memItemRight"><a class="el" href="#a0f57416a6bb17e3f62fc9fda12b603f3">_window</a></td></tr>
+<tr class="memitem:a83f51803d7801611959a08247dbcae2d" id="r_a83f51803d7801611959a08247dbcae2d"><td class="memItemLeft">GLFWmonitor *&#160;</td><td class="memItemRight"><a class="el" href="#a83f51803d7801611959a08247dbcae2d">_monitor</a></td></tr>
+<tr class="memitem:aac9501e93e5194bf4bc7cf4b45a591bb" id="r_aac9501e93e5194bf4bc7cf4b45a591bb"><td class="memItemLeft">GLFWwindow *&#160;</td><td class="memItemRight"><a class="el" href="#aac9501e93e5194bf4bc7cf4b45a591bb">_share</a></td></tr>
+<tr class="memitem:a0923e3a19aafa2919efa4b9f45986c35" id="r_a0923e3a19aafa2919efa4b9f45986c35"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a0923e3a19aafa2919efa4b9f45986c35">_isFullscreen</a> = false</td></tr>
+<tr class="memitem:a45d9facf03051fdea6bae336a130cd97" id="r_a45d9facf03051fdea6bae336a130cd97"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a45d9facf03051fdea6bae336a130cd97">_windowedX</a> = 0</td></tr>
+<tr class="memitem:ae003854489bba068ddf64379d6cc3df3" id="r_ae003854489bba068ddf64379d6cc3df3"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#ae003854489bba068ddf64379d6cc3df3">_windowedY</a> = 0</td></tr>
+<tr class="memitem:a0c7f0f9bee9a37faa47c58c0edca83ab" id="r_a0c7f0f9bee9a37faa47c58c0edca83ab"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a0c7f0f9bee9a37faa47c58c0edca83ab">_windowedWidth</a> = 0</td></tr>
+<tr class="memitem:a6bbd92c5ec657ab2355de9fa51f740da" id="r_a6bbd92c5ec657ab2355de9fa51f740da"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a6bbd92c5ec657ab2355de9fa51f740da">_windowedHeight</a> = 0</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a783287c35a9e0fc80b97bb138b8b5c6d" name="a783287c35a9e0fc80b97bb138b8b5c6d"></a>
@@ -471,6 +483,205 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Toggle fullscreen mode. </p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a0923e3a19aafa2919efa4b9f45986c35" name="a0923e3a19aafa2919efa4b9f45986c35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0923e3a19aafa2919efa4b9f45986c35">&#9670;&#160;</a></span>_isFullscreen</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Window::Resource::Window::_isFullscreen = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a83f51803d7801611959a08247dbcae2d" name="a83f51803d7801611959a08247dbcae2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83f51803d7801611959a08247dbcae2d">&#9670;&#160;</a></span>_monitor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLFWmonitor* Window::Resource::Window::_monitor</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aac9501e93e5194bf4bc7cf4b45a591bb" name="aac9501e93e5194bf4bc7cf4b45a591bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac9501e93e5194bf4bc7cf4b45a591bb">&#9670;&#160;</a></span>_share</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLFWwindow* Window::Resource::Window::_share</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acb702eaaa6657bb935b426b74f2095dd" name="acb702eaaa6657bb935b426b74f2095dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb702eaaa6657bb935b426b74f2095dd">&#9670;&#160;</a></span>_title</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Window::Resource::Window::_title</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0f57416a6bb17e3f62fc9fda12b603f3" name="a0f57416a6bb17e3f62fc9fda12b603f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f57416a6bb17e3f62fc9fda12b603f3">&#9670;&#160;</a></span>_window</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLFWwindow* Window::Resource::Window::_window</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6bbd92c5ec657ab2355de9fa51f740da" name="a6bbd92c5ec657ab2355de9fa51f740da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bbd92c5ec657ab2355de9fa51f740da">&#9670;&#160;</a></span>_windowedHeight</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Window::Resource::Window::_windowedHeight = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0c7f0f9bee9a37faa47c58c0edca83ab" name="a0c7f0f9bee9a37faa47c58c0edca83ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c7f0f9bee9a37faa47c58c0edca83ab">&#9670;&#160;</a></span>_windowedWidth</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Window::Resource::Window::_windowedWidth = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a45d9facf03051fdea6bae336a130cd97" name="a45d9facf03051fdea6bae336a130cd97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45d9facf03051fdea6bae336a130cd97">&#9670;&#160;</a></span>_windowedX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Window::Resource::Window::_windowedX = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae003854489bba068ddf64379d6cc3df3" name="ae003854489bba068ddf64379d6cc3df3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae003854489bba068ddf64379d6cc3df3">&#9670;&#160;</a></span>_windowedY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Window::Resource::Window::_windowedY = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

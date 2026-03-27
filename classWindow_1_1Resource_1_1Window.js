@@ -12,5 +12,14 @@ var classWindow_1_1Resource_1_1Window =
     [ "SetTitle", "classWindow_1_1Resource_1_1Window.html#afc6d2ef782143c68076e64cdedc21d05", null ],
     [ "ShouldClose", "classWindow_1_1Resource_1_1Window.html#a549961bcd7667878e2ca2d955ebbb0c4", null ],
     [ "ShowCursor", "classWindow_1_1Resource_1_1Window.html#a877bc0f6ed7fd42e3746362f410be25d", null ],
-    [ "ToggleFullscreen", "classWindow_1_1Resource_1_1Window.html#a96eb340a9c949e0635277ada15f07252", null ]
+    [ "ToggleFullscreen", "classWindow_1_1Resource_1_1Window.html#a96eb340a9c949e0635277ada15f07252", null ],
+    [ "_isFullscreen", "classWindow_1_1Resource_1_1Window.html#a0923e3a19aafa2919efa4b9f45986c35", null ],
+    [ "_monitor", "classWindow_1_1Resource_1_1Window.html#a83f51803d7801611959a08247dbcae2d", null ],
+    [ "_share", "classWindow_1_1Resource_1_1Window.html#aac9501e93e5194bf4bc7cf4b45a591bb", null ],
+    [ "_title", "classWindow_1_1Resource_1_1Window.html#acb702eaaa6657bb935b426b74f2095dd", null ],
+    [ "_window", "classWindow_1_1Resource_1_1Window.html#a0f57416a6bb17e3f62fc9fda12b603f3", null ],
+    [ "_windowedHeight", "classWindow_1_1Resource_1_1Window.html#a6bbd92c5ec657ab2355de9fa51f740da", null ],
+    [ "_windowedWidth", "classWindow_1_1Resource_1_1Window.html#a0c7f0f9bee9a37faa47c58c0edca83ab", null ],
+    [ "_windowedX", "classWindow_1_1Resource_1_1Window.html#a45d9facf03051fdea6bae336a130cd97", null ],
+    [ "_windowedY", "classWindow_1_1Resource_1_1Window.html#ae003854489bba068ddf64379d6cc3df3", null ]
 ];

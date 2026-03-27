@@ -111,6 +111,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5a9d1a2eca55012ebe3460a11bf69698" id="r_a5a9d1a2eca55012ebe3460a11bf69698"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#a5a9d1a2eca55012ebe3460a11bf69698">GetLayoutIndex</a> () const</td></tr>
 <tr class="memitem:a8e42fe7041b117bdcc159c988951b4de" id="r_a8e42fe7041b117bdcc159c988951b4de"><td class="memItemLeft">const std::vector&lt; wgpu::BindGroupEntry &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a8e42fe7041b117bdcc159c988951b4de">GetEntries</a> () const</td></tr>
 <tr class="memitem:a454bb5e38400ea726f080256e4a24fc7" id="r_a454bb5e38400ea726f080256e4a24fc7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a454bb5e38400ea726f080256e4a24fc7">Refresh</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a02debdd1d1d85e6629f5a553a5aaba17" id="r_a02debdd1d1d85e6629f5a553a5aaba17"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a02debdd1d1d85e6629f5a553a5aaba17">_RefreshBindGroupEntries</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+<tr class="memitem:a0cf0b4820e999a8a8e32d78c60d640fc" id="r_a0cf0b4820e999a8a8e32d78c60d640fc"><td class="memItemLeft">std::vector&lt; wgpu::BindGroupEntry &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a0cf0b4820e999a8a8e32d78c60d640fc">_CreateBindGroupEntries</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+<tr class="memitem:ab2c8b795b0803ead24591123eb60172a" id="r_ab2c8b795b0803ead24591123eb60172a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab2c8b795b0803ead24591123eb60172a">_RefreshBindGroup</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+<tr class="memitem:a3d6d0045238b92601d09d7f913a16692" id="r_a3d6d0045238b92601d09d7f913a16692"><td class="memItemLeft">wgpu::BindGroup&#160;</td><td class="memItemRight"><a class="el" href="#a3d6d0045238b92601d09d7f913a16692">_CreateBindGroup</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+<tr class="memitem:a5e7ed1447c45bac76d53fe64c1e06871" id="r_a5e7ed1447c45bac76d53fe64c1e06871"><td class="memItemLeft">wgpu::BindGroupEntry&#160;</td><td class="memItemRight"><a class="el" href="#a5e7ed1447c45bac76d53fe64c1e06871">_CreateBindGroupEntry</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core, const <a class="el" href="structGraphic_1_1Resource_1_1BindGroup_1_1Asset.html">Asset</a> &amp;asset)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad528393e3db7b8176ea1f0439a417299" id="r_ad528393e3db7b8176ea1f0439a417299"><td class="memItemLeft">entt::hashed_string&#160;</td><td class="memItemRight"><a class="el" href="#ad528393e3db7b8176ea1f0439a417299">_shaderId</a></td></tr>
+<tr class="memitem:af57bf00ec5261a0bc6aa0143bca1efef" id="r_af57bf00ec5261a0bc6aa0143bca1efef"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#af57bf00ec5261a0bc6aa0143bca1efef">_layoutIndex</a> = 0</td></tr>
+<tr class="memitem:a247c9a457d2419fe23b4df22b38ba181" id="r_a247c9a457d2419fe23b4df22b38ba181"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a247c9a457d2419fe23b4df22b38ba181">_name</a></td></tr>
+<tr class="memitem:a22004cc4034fb66b453ae5c98edb80f9" id="r_a22004cc4034fb66b453ae5c98edb80f9"><td class="memItemLeft">std::vector&lt; <a class="el" href="structGraphic_1_1Resource_1_1BindGroup_1_1Asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a22004cc4034fb66b453ae5c98edb80f9">_assets</a></td></tr>
+<tr class="memitem:a7383e93460bdff94d8cb3c6a10051047" id="r_a7383e93460bdff94d8cb3c6a10051047"><td class="memItemLeft">std::vector&lt; wgpu::BindGroupEntry &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a7383e93460bdff94d8cb3c6a10051047">_entries</a></td></tr>
+<tr class="memitem:ac2b86a6f01e59c49886c31ed11070ac9" id="r_ac2b86a6f01e59c49886c31ed11070ac9"><td class="memItemLeft">wgpu::BindGroup&#160;</td><td class="memItemRight"><a class="el" href="#ac2b86a6f01e59c49886c31ed11070ac9">_bindGroup</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aff0d9adc0aef1ed23ec17581a7f0e294" name="aff0d9adc0aef1ed23ec17581a7f0e294"></a>
@@ -233,6 +250,135 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a3d6d0045238b92601d09d7f913a16692" name="a3d6d0045238b92601d09d7f913a16692"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d6d0045238b92601d09d7f913a16692">&#9670;&#160;</a></span>_CreateBindGroup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::BindGroup Graphic::Resource::BindGroup::_CreateBindGroup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0cf0b4820e999a8a8e32d78c60d640fc" name="a0cf0b4820e999a8a8e32d78c60d640fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cf0b4820e999a8a8e32d78c60d640fc">&#9670;&#160;</a></span>_CreateBindGroupEntries()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; wgpu::BindGroupEntry &gt; Graphic::Resource::BindGroup::_CreateBindGroupEntries </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5e7ed1447c45bac76d53fe64c1e06871" name="a5e7ed1447c45bac76d53fe64c1e06871"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e7ed1447c45bac76d53fe64c1e06871">&#9670;&#160;</a></span>_CreateBindGroupEntry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::BindGroupEntry Graphic::Resource::BindGroup::_CreateBindGroupEntry </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structGraphic_1_1Resource_1_1BindGroup_1_1Asset.html">Asset</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>asset</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab2c8b795b0803ead24591123eb60172a" name="ab2c8b795b0803ead24591123eb60172a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2c8b795b0803ead24591123eb60172a">&#9670;&#160;</a></span>_RefreshBindGroup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Graphic::Resource::BindGroup::_RefreshBindGroup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a02debdd1d1d85e6629f5a553a5aaba17" name="a02debdd1d1d85e6629f5a553a5aaba17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02debdd1d1d85e6629f5a553a5aaba17">&#9670;&#160;</a></span>_RefreshBindGroupEntries()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Graphic::Resource::BindGroup::_RefreshBindGroupEntries </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ad75298a12eb2010727eb432358b417ff" name="ad75298a12eb2010727eb432358b417ff"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad75298a12eb2010727eb432358b417ff">&#9670;&#160;</a></span>GetBindGroup()</h2>
 
@@ -327,6 +473,139 @@ Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a22004cc4034fb66b453ae5c98edb80f9" name="a22004cc4034fb66b453ae5c98edb80f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22004cc4034fb66b453ae5c98edb80f9">&#9670;&#160;</a></span>_assets</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structGraphic_1_1Resource_1_1BindGroup_1_1Asset.html">Asset</a>&gt; Graphic::Resource::BindGroup::_assets</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac2b86a6f01e59c49886c31ed11070ac9" name="ac2b86a6f01e59c49886c31ed11070ac9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2b86a6f01e59c49886c31ed11070ac9">&#9670;&#160;</a></span>_bindGroup</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::BindGroup Graphic::Resource::BindGroup::_bindGroup</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7383e93460bdff94d8cb3c6a10051047" name="a7383e93460bdff94d8cb3c6a10051047"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7383e93460bdff94d8cb3c6a10051047">&#9670;&#160;</a></span>_entries</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;wgpu::BindGroupEntry&gt; Graphic::Resource::BindGroup::_entries</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af57bf00ec5261a0bc6aa0143bca1efef" name="af57bf00ec5261a0bc6aa0143bca1efef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af57bf00ec5261a0bc6aa0143bca1efef">&#9670;&#160;</a></span>_layoutIndex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Graphic::Resource::BindGroup::_layoutIndex = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a247c9a457d2419fe23b4df22b38ba181" name="a247c9a457d2419fe23b4df22b38ba181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a247c9a457d2419fe23b4df22b38ba181">&#9670;&#160;</a></span>_name</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Graphic::Resource::BindGroup::_name</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad528393e3db7b8176ea1f0439a417299" name="ad528393e3db7b8176ea1f0439a417299"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad528393e3db7b8176ea1f0439a417299">&#9670;&#160;</a></span>_shaderId</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">entt::hashed_string Graphic::Resource::BindGroup::_shaderId</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

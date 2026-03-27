@@ -97,6 +97,10 @@ $(function(){initNavTree('classScene_1_1Resource_1_1SceneManager.html','','class
 
 <p><code>#include &lt;<a class="el" href="SceneManager_8hpp_source.html">SceneManager.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:TransparentHash" id="r_TransparentHash"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structScene_1_1Resource_1_1SceneManager_1_1TransparentHash.html">TransparentHash</a></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af361daece895e572d7723e2ef3520de3" id="r_af361daece895e572d7723e2ef3520de3"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#af361daece895e572d7723e2ef3520de3">SceneManager</a> ()=default</td></tr>
@@ -109,6 +113,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4889a14bc8be1974c1bce11679424826 template"><td class="memItemLeft">TScene &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4889a14bc8be1974c1bce11679424826">RegisterScene</a> (const std::string &amp;name)</td></tr>
 <tr class="memdesc:a4889a14bc8be1974c1bce11679424826"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a scene using a name as a key.  <br /></td></tr>
 <tr class="memitem:ac3a9b0552cd3f9eacf3c35a56e00dec1" id="r_ac3a9b0552cd3f9eacf3c35a56e00dec1"><td class="memItemLeft">const std::optional&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac3a9b0552cd3f9eacf3c35a56e00dec1">GetCurrentScene</a> () const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a2fdbf0a3e14885eeea6448fba8d13230" id="r_a2fdbf0a3e14885eeea6448fba8d13230"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2fdbf0a3e14885eeea6448fba8d13230">_loadScene</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core, const std::string &amp;name)</td></tr>
+<tr class="memitem:af0bac40cb9e157d1ebf92f9c17b9d61d" id="r_af0bac40cb9e157d1ebf92f9c17b9d61d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af0bac40cb9e157d1ebf92f9c17b9d61d">_unloadScene</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core, const std::string &amp;name)</td></tr>
+<tr class="memitem:a378edb8453e84e4bf761b4e810049b02" id="r_a378edb8453e84e4bf761b4e810049b02"><td class="memItemLeft">std::optional&lt; std::shared_ptr&lt; <a class="el" href="classScene_1_1Utils_1_1AScene.html">Utils::AScene</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a378edb8453e84e4bf761b4e810049b02">_getScene</a> (const std::string &amp;name)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a712c049dd8866407dab346e3760fa2d2" id="r_a712c049dd8866407dab346e3760fa2d2"><td class="memItemLeft">std::unordered_map&lt; std::string, std::shared_ptr&lt; <a class="el" href="classScene_1_1Utils_1_1AScene.html">Utils::AScene</a> &gt;, <a class="el" href="structScene_1_1Resource_1_1SceneManager_1_1TransparentHash.html">TransparentHash</a>, std::equal_to&lt;&gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a712c049dd8866407dab346e3760fa2d2">_scenes</a></td></tr>
+<tr class="memitem:aefd2c48f49fadd7ff55a949c5db0f885" id="r_aefd2c48f49fadd7ff55a949c5db0f885"><td class="memItemLeft">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aefd2c48f49fadd7ff55a949c5db0f885">_nextScene</a></td></tr>
+<tr class="memitem:ae7159d5515726f96e3cda14e56694d8b" id="r_ae7159d5515726f96e3cda14e56694d8b"><td class="memItemLeft">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ae7159d5515726f96e3cda14e56694d8b">_currentScene</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af361daece895e572d7723e2ef3520de3" name="af361daece895e572d7723e2ef3520de3"></a>
@@ -162,6 +178,89 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a378edb8453e84e4bf761b4e810049b02" name="a378edb8453e84e4bf761b4e810049b02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a378edb8453e84e4bf761b4e810049b02">&#9670;&#160;</a></span>_getScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; std::shared_ptr&lt; <a class="el" href="classScene_1_1Utils_1_1AScene.html">Scene::Utils::AScene</a> &gt; &gt; Scene::Resource::SceneManager::_getScene </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2fdbf0a3e14885eeea6448fba8d13230" name="a2fdbf0a3e14885eeea6448fba8d13230"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fdbf0a3e14885eeea6448fba8d13230">&#9670;&#160;</a></span>_loadScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Scene::Resource::SceneManager::_loadScene </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af0bac40cb9e157d1ebf92f9c17b9d61d" name="af0bac40cb9e157d1ebf92f9c17b9d61d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0bac40cb9e157d1ebf92f9c17b9d61d">&#9670;&#160;</a></span>_unloadScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Scene::Resource::SceneManager::_unloadScene </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ac3a9b0552cd3f9eacf3c35a56e00dec1" name="ac3a9b0552cd3f9eacf3c35a56e00dec1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac3a9b0552cd3f9eacf3c35a56e00dec1">&#9670;&#160;</a></span>GetCurrentScene()</h2>
 
@@ -284,6 +383,73 @@ template&lt;typename TScene&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ae7159d5515726f96e3cda14e56694d8b" name="ae7159d5515726f96e3cda14e56694d8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7159d5515726f96e3cda14e56694d8b">&#9670;&#160;</a></span>_currentScene</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;std::string&gt; Scene::Resource::SceneManager::_currentScene</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aefd2c48f49fadd7ff55a949c5db0f885" name="aefd2c48f49fadd7ff55a949c5db0f885"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefd2c48f49fadd7ff55a949c5db0f885">&#9670;&#160;</a></span>_nextScene</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;std::string&gt; Scene::Resource::SceneManager::_nextScene</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a712c049dd8866407dab346e3760fa2d2" name="a712c049dd8866407dab346e3760fa2d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a712c049dd8866407dab346e3760fa2d2">&#9670;&#160;</a></span>_scenes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, std::shared_ptr&lt;<a class="el" href="classScene_1_1Utils_1_1AScene.html">Utils::AScene</a>&gt;, <a class="el" href="structScene_1_1Resource_1_1SceneManager_1_1TransparentHash.html">TransparentHash</a>, std::equal_to&lt;&gt; &gt; Scene::Resource::SceneManager::_scenes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

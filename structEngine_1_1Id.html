@@ -95,7 +95,7 @@ $(function(){initNavTree('structEngine_1_1Id.html','','structEngine_1_1Id-member
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="structA.html">A</a> strongly-typed identifier wrapper based on entt::id_type.  
+<p><a class="el" href="structA.html">A</a> strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapper around EnTT's id_type, offering implicit conversion to the underlying type for seamless integration with EnTT components. It inherits from <a class="el" href="structEngine_1_1BasicId.html" title="An Id class for creating strongly-typed ID wrappers. This template provides a common interface for ID...">BasicId</a> to provide null checking and other common ID operations.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Id_8hpp_source.html">Id.hpp</a>&gt;</code></p>
@@ -106,7 +106,7 @@ Inheritance diagram for Engine::Id:</div>
   <img src="structEngine_1_1Id.png" usemap="#Engine_3A_3AId_map" alt=""/>
   <map id="Engine_3A_3AId_map" name="Engine_3A_3AId_map">
 <area href="structEngine_1_1BasicId.html" alt="Engine::BasicId&lt; Id, entt::id_type &gt;" shape="rect" coords="0,0,208,24"/>
-<area href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system." alt="Engine::EntityId" shape="rect" coords="0,112,208,136"/>
+<area href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system...." alt="Engine::EntityId" shape="rect" coords="0,112,208,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -116,24 +116,31 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af0f91c21a25786c6438a85cafd7bd257" id="r_af0f91c21a25786c6438a85cafd7bd257"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#af0f91c21a25786c6438a85cafd7bd257">explicit</a> (false) <a class="el" href="structEngine_1_1Id.html">Id</a>(<a class="el" href="#ad3163cbbda2d2752e69413a2c194a32a">ValueType</a> v</td></tr>
+<tr class="memitem:a19da9176e488918a0ae1e81d471b0b7c" id="r_a19da9176e488918a0ae1e81d471b0b7c"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a19da9176e488918a0ae1e81d471b0b7c">Id</a> (<a class="el" href="#ad3163cbbda2d2752e69413a2c194a32a">ValueType</a> v=<a class="el" href="#a0fe9970b58534b16c8fc723fd4d7b61f">NullValue</a>())</td></tr>
+<tr class="memdesc:a19da9176e488918a0ae1e81d471b0b7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a>.  <br /></td></tr>
+<tr class="memitem:a968804efcd2baf6bc5c9ac110e86e388" id="r_a968804efcd2baf6bc5c9ac110e86e388"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a968804efcd2baf6bc5c9ac110e86e388">operator ValueType</a> () const</td></tr>
+<tr class="memdesc:a968804efcd2baf6bc5c9ac110e86e388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion operator to the underlying entt::id_type, allowing seamless use of <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a> instances where entt::id_type is expected.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a0fe9970b58534b16c8fc723fd4d7b61f" id="r_a0fe9970b58534b16c8fc723fd4d7b61f"><td class="memItemLeft">static constexpr <a class="el" href="#ad3163cbbda2d2752e69413a2c194a32a">ValueType</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0fe9970b58534b16c8fc723fd4d7b61f">NullValue</a> ()</td></tr>
+<tr class="memdesc:a0fe9970b58534b16c8fc723fd4d7b61f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the null value for this ID type. This returns the null value defined by EnTT's id_type, which is typically.  <br /></td></tr>
+<tr class="memitem:a929ed8fc4ed05a9f290aa4d307f79bfd" id="r_a929ed8fc4ed05a9f290aa4d307f79bfd"><td class="memItemLeft">static constexpr <a class="el" href="#a19da9176e488918a0ae1e81d471b0b7c">Id</a>&#160;</td><td class="memItemRight"><a class="el" href="#a929ed8fc4ed05a9f290aa4d307f79bfd">Null</a> ()</td></tr>
+<tr class="memdesc:a929ed8fc4ed05a9f290aa4d307f79bfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a null instance of <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a>, which has its value set to the null value defined by <a class="el" href="#a0fe9970b58534b16c8fc723fd4d7b61f" title="Get the null value for this ID type. This returns the null value defined by EnTT&#39;s id_type,...">NullValue()</a>.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_attribs_structEngine_1_1BasicId"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_structEngine_1_1BasicId')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Attributes inherited from <a class="el" href="structEngine_1_1BasicId.html">Engine::BasicId&lt; Id, entt::id_type &gt;</a></td></tr>
 <tr class="memitem:ae035487a7f647c9548989a9f9c61ffb0 inherit pub_attribs_structEngine_1_1BasicId" id="r_ae035487a7f647c9548989a9f9c61ffb0"><td class="memItemLeft">entt::id_type&#160;</td><td class="memItemRight"><a class="el" href="structEngine_1_1BasicId.html#ae035487a7f647c9548989a9f9c61ffb0">value</a></td></tr>
+<tr class="memdesc:ae035487a7f647c9548989a9f9c61ffb0 inherit pub_attribs_structEngine_1_1BasicId"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying value of the ID.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="structA.html">A</a> strongly-typed identifier wrapper based on entt::id_type. </p>
-<p>This structure provides a type-safe wrapper around EnTT's id_type, offering implicit conversion to the underlying type for seamless integration with EnTT components. It inherits from <a class="el" href="structEngine_1_1BasicId.html" title="A CRTP (Curiously Recurring Template Pattern) base class for creating strongly-typed ID wrappers.">BasicId</a> to provide null checking and other common ID operations.</p>
+<div class="textblock"><p><a class="el" href="structA.html">A</a> strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapper around EnTT's id_type, offering implicit conversion to the underlying type for seamless integration with EnTT components. It inherits from <a class="el" href="structEngine_1_1BasicId.html" title="An Id class for creating strongly-typed ID wrappers. This template provides a common interface for ID...">BasicId</a> to provide null checking and other common ID operations. </p>
 <dl class="section note"><dt>Note</dt><dd>Supports implicit construction from entt::id_type values </dd>
 <dd>
 Supports implicit conversion back to entt::id_type for compatibility </dd>
 <dd>
-Size is guaranteed to match entt::id_type through static assertion</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="structEngine_1_1BasicId.html" title="A CRTP (Curiously Recurring Template Pattern) base class for creating strongly-typed ID wrappers.">BasicId</a> for base functionality </dd>
-<dd>
-<a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string.">StringId</a> for string-based identifiers </dd></dl>
+Size is guaranteed to match entt::id_type through static assertion </dd></dl>
 </div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="ad3163cbbda2d2752e69413a2c194a32a" name="ad3163cbbda2d2752e69413a2c194a32a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad3163cbbda2d2752e69413a2c194a32a">&#9670;&#160;</a></span>ValueType</h2>
@@ -149,9 +156,9 @@ Size is guaranteed to match entt::id_type through static assertion</dd></dl>
 
 </div>
 </div>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="af0f91c21a25786c6438a85cafd7bd257" name="af0f91c21a25786c6438a85cafd7bd257"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0f91c21a25786c6438a85cafd7bd257">&#9670;&#160;</a></span>explicit()</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a19da9176e488918a0ae1e81d471b0b7c" name="a19da9176e488918a0ae1e81d471b0b7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19da9176e488918a0ae1e81d471b0b7c">&#9670;&#160;</a></span>Id()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,18 +167,115 @@ Size is guaranteed to match entt::id_type through static assertion</dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Engine::Id::explicit </td>
+          <td class="memname">Engine::Id::Id </td>
           <td>(</td>
-          <td class="paramtype">false</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#ad3163cbbda2d2752e69413a2c194a32a">ValueType</a></td>          <td class="paramname"><span class="paramname"><em>v</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a0fe9970b58534b16c8fc723fd4d7b61f">NullValue</a>()</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructor for <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>The value to initialize the ID with. Defaults to the null value defined by the <a class="el" href="#a0fe9970b58534b16c8fc723fd4d7b61f" title="Get the null value for this ID type. This returns the null value defined by EnTT&#39;s id_type,...">NullValue()</a> method. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000043">Todo</a></b></dt><dd><p class="startdd">Put the implementation in the cpp file if possible </p>
+<p class="enddd">rename v to something more descriptive, like idValue or rawValue </p>
+</dd></dl>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a929ed8fc4ed05a9f290aa4d307f79bfd" name="a929ed8fc4ed05a9f290aa4d307f79bfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a929ed8fc4ed05a9f290aa4d307f79bfd">&#9670;&#160;</a></span>Null()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="#a19da9176e488918a0ae1e81d471b0b7c">Id</a> Engine::Id::Null </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get a null instance of <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a>, which has its value set to the null value defined by <a class="el" href="#a0fe9970b58534b16c8fc723fd4d7b61f" title="Get the null value for this ID type. This returns the null value defined by EnTT&#39;s id_type,...">NullValue()</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> null instance of <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a>. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000045">Todo</a></b></dt><dd>Put the implementation in the cpp file if possible </dd></dl>
+
+</div>
+</div>
+<a id="a0fe9970b58534b16c8fc723fd4d7b61f" name="a0fe9970b58534b16c8fc723fd4d7b61f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fe9970b58534b16c8fc723fd4d7b61f">&#9670;&#160;</a></span>NullValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="#ad3163cbbda2d2752e69413a2c194a32a">ValueType</a> Engine::Id::NullValue </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the null value for this ID type. This returns the null value defined by EnTT's id_type, which is typically. </p>
+<dl class="section return"><dt>Returns</dt><dd>The value representing a null/invalid ID for this type. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000044">Todo</a></b></dt><dd>Put the implementation in the cpp file if possible </dd></dl>
+
+</div>
+</div>
+<a id="a968804efcd2baf6bc5c9ac110e86e388" name="a968804efcd2baf6bc5c9ac110e86e388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a968804efcd2baf6bc5c9ac110e86e388">&#9670;&#160;</a></span>operator ValueType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Engine::Id::operator <a class="el" href="#ad3163cbbda2d2752e69413a2c194a32a">ValueType</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicit conversion operator to the underlying entt::id_type, allowing seamless use of <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a> instances where entt::id_type is expected. </p>
 
 </div>
 </div>

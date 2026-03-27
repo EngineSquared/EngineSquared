@@ -118,6 +118,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9e70dceaac14dd8aa68f6644cd557b35" id="r_a9e70dceaac14dd8aa68f6644cd557b35"><td class="memItemLeft">const wgpu::Buffer &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a9e70dceaac14dd8aa68f6644cd557b35">GetBuffer</a> () const override</td></tr>
 <tr class="inherit_header pub_methods_classGraphic_1_1Resource_1_1AGPUBuffer"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classGraphic_1_1Resource_1_1AGPUBuffer')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classGraphic_1_1Resource_1_1AGPUBuffer.html">Graphic::Resource::AGPUBuffer</a></td></tr>
 <tr class="memitem:a95d8a39f0449acfa6716585542cf28f4 inherit pub_methods_classGraphic_1_1Resource_1_1AGPUBuffer" id="r_a95d8a39f0449acfa6716585542cf28f4"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Resource_1_1AGPUBuffer.html#a95d8a39f0449acfa6716585542cf28f4">~AGPUBuffer</a> ()=default</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a2a1ab25e04de7b996eb1449ec3c88f4b" id="r_a2a1ab25e04de7b996eb1449ec3c88f4b"><td class="memItemLeft">wgpu::Buffer&#160;</td><td class="memItemRight"><a class="el" href="#a2a1ab25e04de7b996eb1449ec3c88f4b">_CreateBuffer</a> (const <a class="el" href="structGraphic_1_1Resource_1_1DeviceContext.html">Graphic::Resource::DeviceContext</a> &amp;context)</td></tr>
+<tr class="memitem:a2bcd58a927fb6d56a5b92580f0c7e9f5" id="r_a2bcd58a927fb6d56a5b92580f0c7e9f5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2bcd58a927fb6d56a5b92580f0c7e9f5">_UpdateBuffer</a> (const <a class="el" href="structObject_1_1Component_1_1Transform.html">Object::Component::Transform</a> &amp;transformComponent, const <a class="el" href="classGraphic_1_1Resource_1_1Context.html">Graphic::Resource::Context</a> &amp;context)</td></tr>
+<tr class="memdesc:a2bcd58a927fb6d56a5b92580f0c7e9f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the GPU buffer with the entity's current model and normal matrices.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a56edcf220b72356354dfd809ea623cce" id="r_a56edcf220b72356354dfd809ea623cce"><td class="memItemLeft">wgpu::Buffer&#160;</td><td class="memItemRight"><a class="el" href="#a56edcf220b72356354dfd809ea623cce">_buffer</a></td></tr>
+<tr class="memitem:a9845caad07cd078aa684bc03ae94a9fd" id="r_a9845caad07cd078aa684bc03ae94a9fd"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a9845caad07cd078aa684bc03ae94a9fd">_isCreated</a> = false</td></tr>
+<tr class="memitem:a092f8b4d50489712f1f0cf899d903446" id="r_a092f8b4d50489712f1f0cf899d903446"><td class="memItemLeft"><a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a>&#160;</td><td class="memItemRight"><a class="el" href="#a092f8b4d50489712f1f0cf899d903446">_entity</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aba889aacc661b7d060a2632023cf8b9e" name="aba889aacc661b7d060a2632023cf8b9e"></a>
@@ -171,6 +183,70 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a2a1ab25e04de7b996eb1449ec3c88f4b" name="a2a1ab25e04de7b996eb1449ec3c88f4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a1ab25e04de7b996eb1449ec3c88f4b">&#9670;&#160;</a></span>_CreateBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::Buffer DefaultPipeline::Resource::TransformGPUBuffer::_CreateBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structGraphic_1_1Resource_1_1DeviceContext.html">Graphic::Resource::DeviceContext</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2bcd58a927fb6d56a5b92580f0c7e9f5" name="a2bcd58a927fb6d56a5b92580f0c7e9f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bcd58a927fb6d56a5b92580f0c7e9f5">&#9670;&#160;</a></span>_UpdateBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DefaultPipeline::Resource::TransformGPUBuffer::_UpdateBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structObject_1_1Component_1_1Transform.html">Object::Component::Transform</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>transformComponent</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classGraphic_1_1Resource_1_1Context.html">Graphic::Resource::Context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update the GPU buffer with the entity's current model and normal matrices. </p>
+<p>Computes the model matrix from the provided Transform component, derives the normal matrix as the transpose of the inverse of the model matrix, packs both into a <a class="el" href="structDefaultPipeline_1_1Resource_1_1TransformGPUData.html" title="GPU buffer structure for model transform data.">TransformGPUData</a> instance, and writes the data to the GPU buffer at offset 0 using the provided graphics context queue.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">transformComponent</td><td><a class="el" href="namespaceDefaultPipeline_1_1Component.html">Component</a> used to compute the model transformation matrix. </td></tr>
+    <tr><td class="paramname">context</td><td>Graphics context containing the queue used to write to the GPU buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a5eccb94167935cf5fb58a9c0150be7b3" name="a5eccb94167935cf5fb58a9c0150be7b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5eccb94167935cf5fb58a9c0150be7b3">&#9670;&#160;</a></span>Create()</h2>
 
@@ -328,6 +404,73 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classGraphic_1_1Resource_1_1AGPUBuffer.html#af942b1494498c1ff7f05e9bb08b8f667">Graphic::Resource::AGPUBuffer</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a56edcf220b72356354dfd809ea623cce" name="a56edcf220b72356354dfd809ea623cce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56edcf220b72356354dfd809ea623cce">&#9670;&#160;</a></span>_buffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::Buffer DefaultPipeline::Resource::TransformGPUBuffer::_buffer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a092f8b4d50489712f1f0cf899d903446" name="a092f8b4d50489712f1f0cf899d903446"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a092f8b4d50489712f1f0cf899d903446">&#9670;&#160;</a></span>_entity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> DefaultPipeline::Resource::TransformGPUBuffer::_entity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9845caad07cd078aa684bc03ae94a9fd" name="a9845caad07cd078aa684bc03ae94a9fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9845caad07cd078aa684bc03ae94a9fd">&#9670;&#160;</a></span>_isCreated</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DefaultPipeline::Resource::TransformGPUBuffer::_isCreated = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

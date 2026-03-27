@@ -23,5 +23,7 @@ var classRmlui_1_1Resource_1_1AUIContext =
     [ "Render", "classRmlui_1_1Resource_1_1AUIContext.html#a2ccf4c339458050faab3a82b431f36fa", null ],
     [ "SetFont", "classRmlui_1_1Resource_1_1AUIContext.html#a9a0c48acef37aed7557ebb6d18c35e70", null ],
     [ "Update", "classRmlui_1_1Resource_1_1AUIContext.html#a011a59d7c1f8e09313b4361f462ecc76", null ],
-    [ "UpdateMouseMoveEvent", "classRmlui_1_1Resource_1_1AUIContext.html#ad8d1b3bcbfcaba9282bdc88b35067e2f", null ]
+    [ "UpdateMouseMoveEvent", "classRmlui_1_1Resource_1_1AUIContext.html#ad8d1b3bcbfcaba9282bdc88b35067e2f", null ],
+    [ "_renderInterface", "classRmlui_1_1Resource_1_1AUIContext.html#adcea29b21dfddf2facd1a5a6ccdd07f3", null ],
+    [ "_systemInterface", "classRmlui_1_1Resource_1_1AUIContext.html#a60d782fff68adcd9f5d8c7d62a37c34b", null ]
 ];

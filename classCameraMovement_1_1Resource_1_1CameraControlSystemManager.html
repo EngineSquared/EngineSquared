@@ -107,6 +107,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab938b6af35217c03ae7a3667e965ea4a" id="r_ab938b6af35217c03ae7a3667e965ea4a"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="conceptEngine_1_1CScheduler.html">Engine::CScheduler</a> TScheduler&gt; </td></tr>
 <tr class="memitem:ab938b6af35217c03ae7a3667e965ea4a template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab938b6af35217c03ae7a3667e965ea4a">SetCameraControlSystemScheduler</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
 <tr class="memdesc:ab938b6af35217c03ae7a3667e965ea4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the CameraControlSystem to use a different scheduler.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a30fce5b72770a44e40b7296f95fecdb4" id="r_a30fce5b72770a44e40b7296f95fecdb4"><td class="memItemLeft"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a>&#160;</td><td class="memItemRight"><a class="el" href="#a30fce5b72770a44e40b7296f95fecdb4">_cameraControlSystemID</a></td></tr>
+<tr class="memitem:a4cb15d46514caa03f8139b0180868583" id="r_a4cb15d46514caa03f8139b0180868583"><td class="memItemLeft">std::type_index&#160;</td><td class="memItemRight"><a class="el" href="#a4cb15d46514caa03f8139b0180868583">_currentScheduler</a> = typeid(<a class="el" href="classEngine_1_1Scheduler_1_1Update.html">Engine::Scheduler::Update</a>)</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classCameraMovement_1_1Resource_1_1CameraControlSystemManager.html" title="CameraControlSystemManager is a resource that helps to manage the CameraControlSystem.">CameraControlSystemManager</a> is a resource that helps to manage the CameraControlSystem. </p>
@@ -201,6 +206,51 @@ template&lt;<a class="el" href="conceptEngine_1_1CScheduler.html">Engine::CSched
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a30fce5b72770a44e40b7296f95fecdb4" name="a30fce5b72770a44e40b7296f95fecdb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30fce5b72770a44e40b7296f95fecdb4">&#9670;&#160;</a></span>_cameraControlSystemID</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a> CameraMovement::Resource::CameraControlSystemManager::_cameraControlSystemID</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4cb15d46514caa03f8139b0180868583" name="a4cb15d46514caa03f8139b0180868583"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cb15d46514caa03f8139b0180868583">&#9670;&#160;</a></span>_currentScheduler</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::type_index CameraMovement::Resource::CameraControlSystemManager::_currentScheduler = typeid(<a class="el" href="classEngine_1_1Scheduler_1_1Update.html">Engine::Scheduler::Update</a>)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

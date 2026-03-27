@@ -121,19 +121,19 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>SoundManager {</div>
 <div class="line">  <span class="keyword">private</span>:</div>
-<div class="line">    ma_result _result;</div>
-<div class="line">    ma_device_config _deviceConfig;</div>
-<div class="line">    ma_device _device;</div>
-<div class="line">    <span class="keywordtype">bool</span> _deviceInit = <span class="keyword">false</span>;</div>
-<div class="line">    ma_engine _engine;</div>
-<div class="line">    <span class="keywordtype">bool</span> _engineInit = <span class="keyword">false</span>;</div>
+<div class="line">    ma_result <a id="a1" name="a1"></a><a class="code hl_variable" href="classSound_1_1Resource_1_1SoundManager.html#a3703045d94bb8506fbbd21bf14ca0194">_result</a>;</div>
+<div class="line">    ma_device_config <a id="a2" name="a2"></a><a class="code hl_variable" href="classSound_1_1Resource_1_1SoundManager.html#aacbdb8b075d063114237066775629d99">_deviceConfig</a>;</div>
+<div class="line">    ma_device <a id="a3" name="a3"></a><a class="code hl_variable" href="classSound_1_1Resource_1_1SoundManager.html#a68bd3165a11d26ddf45f9599632d8c4a">_device</a>;</div>
+<div class="line">    <span class="keywordtype">bool</span> <a id="a4" name="a4"></a><a class="code hl_variable" href="classSound_1_1Resource_1_1SoundManager.html#a681ddd8d99551bf7dc4542968e101bf7">_deviceInit</a> = <span class="keyword">false</span>;</div>
+<div class="line">    ma_engine <a id="a5" name="a5"></a><a class="code hl_variable" href="classSound_1_1Resource_1_1SoundManager.html#a0cb7e1ca585202b263dc8e8e27d966cf">_engine</a>;</div>
+<div class="line">    <span class="keywordtype">bool</span> <a id="a6" name="a6"></a><a class="code hl_variable" href="classSound_1_1Resource_1_1SoundManager.html#a1078c3d8a9a80f818561d249531429bb">_engineInit</a> = <span class="keyword">false</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Deferred error reporting for audio callback (avoid logging in real-time callback)</span></div>
 <div class="line">    <span class="comment">// Bit flags: 0x1 = frame count too large, 0x2 = decoder read error, 0x4 = unknown format</span></div>
-<div class="line">    std::atomic&lt;uint32_t&gt; _callbackErrorFlags{0};</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint32_t ERROR_FRAME_TOO_LARGE = 0x1;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint32_t ERROR_DECODER_READ = 0x2;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint32_t ERROR_UNKNOWN_FORMAT = 0x4;</div>
+<div class="line">    std::atomic&lt;uint32_t&gt; <a id="a7" name="a7"></a><a class="code hl_variable" href="classSound_1_1Resource_1_1SoundManager.html#aca5c591cb5f24318550fef90606145e7">_callbackErrorFlags</a>{0};</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint32_t <a id="a8" name="a8"></a><a class="code hl_variable" href="classSound_1_1Resource_1_1SoundManager.html#aea53c4d6cd115e58a2e27b39ca5a617f">ERROR_FRAME_TOO_LARGE</a> = 0x1;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint32_t <a id="a9" name="a9"></a><a class="code hl_variable" href="classSound_1_1Resource_1_1SoundManager.html#aecb012c6c549a9e61f03eba0d54335fe">ERROR_DECODER_READ</a> = 0x2;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint32_t <a id="a10" name="a10"></a><a class="code hl_variable" href="classSound_1_1Resource_1_1SoundManager.html#ab93d1b89a685ec3994cb54c865dcb631">ERROR_UNKNOWN_FORMAT</a> = 0x4;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">struct </span><a class="code hl_namespace" href="namespaceSound.html">Sound</a> {</div>
 <div class="line">        std::string name;</div>
@@ -165,7 +165,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line"> </div>
 <div class="line">    std::unordered_map&lt;std::string, Sound, TransparentHash, TransparentEqual&gt; _soundsToPlay;</div>
 <div class="line"> </div>
-<div class="line">    <a id="_a1" name="_a1"></a><a class="code hl_class" href="classFunctionUtils_1_1FunctionContainer.html">FunctionUtils::FunctionContainer&lt;void, ma_device *, void *, ma_uint32&gt;</a> _customCallbacks;</div>
+<div class="line">    <a id="_a11" name="_a11"></a><a class="code hl_class" href="classFunctionUtils_1_1FunctionContainer.html">FunctionUtils::FunctionContainer&lt;void, ma_device *, void *, ma_uint32&gt;</a> _customCallbacks;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">public</span>:</div>
 <div class="line">    SoundManager() = <span class="keywordflow">default</span>;</div>
@@ -228,8 +228,8 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line"></div>
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> data_callback(ma_device *pDevice, <span class="keywordtype">void</span> *pOutput, <span class="keyword">const</span> <span class="keywordtype">void</span> * <span class="comment">/*pInput*/</span>, ma_uint32 frameCount)</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keyword">auto</span> *core = <span class="keyword">static_cast&lt;</span><a id="_a2" name="_a2"></a><a class="code hl_class" href="classEngine_1_1Core.html">Engine::Core</a> *<span class="keyword">&gt;</span>(pDevice-&gt;pUserData);</div>
-<div class="line">        <span class="keyword">auto</span> &amp;self = core-&gt;<a id="a3" name="a3"></a><a class="code hl_function" href="classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451">GetResource</a>&lt;SoundManager&gt;();</div>
+<div class="line">        <span class="keyword">auto</span> *core = <span class="keyword">static_cast&lt;</span><a id="_a12" name="_a12"></a><a class="code hl_class" href="classEngine_1_1Core.html">Engine::Core</a> *<span class="keyword">&gt;</span>(pDevice-&gt;pUserData);</div>
+<div class="line">        <span class="keyword">auto</span> &amp;self = core-&gt;<a id="a13" name="a13"></a><a class="code hl_function" href="classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451">GetResource</a>&lt;SoundManager&gt;();</div>
 <div class="line">        <span class="keyword">const</span> ma_uint32 channels = pDevice-&gt;playback.channels;</div>
 <div class="line">        <span class="keyword">const</span> ma_uint32 totalSamples = frameCount * channels;</div>
 <div class="line"> </div>
@@ -347,7 +347,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        _result = ma_device_init(NULL, &amp;_deviceConfig, &amp;_device);</div>
 <div class="line">        <span class="keywordflow">if</span> (_result != MA_SUCCESS)</div>
 <div class="line">        {</div>
-<div class="line">            <a id="a4" name="a4"></a><a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to init audio device: {}&quot;</span>, ma_result_description(_result)));</div>
+<div class="line">            <a id="a14" name="a14"></a><a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to init audio device: {}&quot;</span>, ma_result_description(_result)));</div>
 <div class="line">            <span class="keywordflow">return</span>;</div>
 <div class="line">        }</div>
 <div class="line"> </div>
@@ -360,7 +360,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
 <div class="line">            _deviceInit = <span class="keyword">true</span>;</div>
-<div class="line">            <a id="a5" name="a5"></a><a class="code hl_function" href="namespaceLog.html#a1423ffcd222d8ec2afefb1c13e9fb3b1">Log::Info</a>(fmt::format(<span class="stringliteral">&quot;[Audio] Device started successfully. Device format={}, sample rate={}, channels={}&quot;</span>,</div>
+<div class="line">            <a id="a15" name="a15"></a><a class="code hl_function" href="namespaceLog.html#a1423ffcd222d8ec2afefb1c13e9fb3b1">Log::Info</a>(fmt::format(<span class="stringliteral">&quot;[Audio] Device started successfully. Device format={}, sample rate={}, channels={}&quot;</span>,</div>
 <div class="line">                                  <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(_device.playback.format), _device.sampleRate,</div>
 <div class="line">                                  _device.playback.channels));</div>
 <div class="line">        }</div>
@@ -387,7 +387,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">    {</div>
 <div class="line">        <span class="keywordflow">if</span> (_soundsToPlay.contains(soundName))</div>
 <div class="line">        {</div>
-<div class="line">            <a id="a6" name="a6"></a><a class="code hl_function" href="namespaceLog.html#a000853d1578cb42daa38a357883416ab">Log::Warning</a>(fmt::format(<span class="stringliteral">&quot;Could not register: Sound \&quot;{}\&quot; already exists&quot;</span>, soundName));</div>
+<div class="line">            <a id="a16" name="a16"></a><a class="code hl_function" href="namespaceLog.html#a000853d1578cb42daa38a357883416ab">Log::Warning</a>(fmt::format(<span class="stringliteral">&quot;Could not register: Sound \&quot;{}\&quot; already exists&quot;</span>, soundName));</div>
 <div class="line">            <span class="keywordflow">return</span>;</div>
 <div class="line">        }</div>
 <div class="line"> </div>
@@ -654,19 +654,19 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        <span class="keywordflow">return</span> position;</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">inline</span> <a id="_a7" name="_a7"></a><a class="code hl_typedef" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a> AddCustomCallback(<span class="keyword">const</span> CustomDataCallback &amp;callback)</div>
+<div class="line">    <span class="keyword">inline</span> <a id="_a17" name="_a17"></a><a class="code hl_typedef" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a> AddCustomCallback(<span class="keyword">const</span> CustomDataCallback &amp;callback)</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">return</span> _customCallbacks.<a id="a8" name="a8"></a><a class="code hl_function" href="classFunctionUtils_1_1FunctionContainer.html#a7be2efd8b242c3e6867ecc1b9a4c08d0">AddFunction</a>(callback);</div>
+<div class="line">        <span class="keywordflow">return</span> _customCallbacks.<a id="a18" name="a18"></a><a class="code hl_function" href="classFunctionUtils_1_1FunctionContainer.html#a7be2efd8b242c3e6867ecc1b9a4c08d0">AddFunction</a>(callback);</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="keyword">inline</span> <span class="keywordtype">bool</span> RemoveCustomCallback(<a class="code hl_typedef" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a> <span class="keywordtype">id</span>)</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">if</span> (!_customCallbacks.<a id="a9" name="a9"></a><a class="code hl_function" href="classFunctionUtils_1_1FunctionContainer.html#ad576785cd9f69968ea6af38cb55fb3fb">Contains</a>(<span class="keywordtype">id</span>))</div>
+<div class="line">        <span class="keywordflow">if</span> (!_customCallbacks.<a id="a19" name="a19"></a><a class="code hl_function" href="classFunctionUtils_1_1FunctionContainer.html#ad576785cd9f69968ea6af38cb55fb3fb">Contains</a>(<span class="keywordtype">id</span>))</div>
 <div class="line">        {</div>
 <div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not remove: Custom callback with ID {} does not exist&quot;</span>, <span class="keywordtype">id</span>));</div>
 <div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line">        }</div>
-<div class="line">        _customCallbacks.<a id="a10" name="a10"></a><a class="code hl_function" href="classFunctionUtils_1_1FunctionContainer.html#aec76d963da335a93184ec8412f0376b7">DeleteFunction</a>(<span class="keywordtype">id</span>);</div>
+<div class="line">        _customCallbacks.<a id="a20" name="a20"></a><a class="code hl_function" href="classFunctionUtils_1_1FunctionContainer.html#aec76d963da335a93184ec8412f0376b7">DeleteFunction</a>(<span class="keywordtype">id</span>);</div>
 <div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -676,7 +676,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">    {</div>
 <div class="line">        <span class="comment">// Delete all callbacks by iterating and collecting IDs first</span></div>
 <div class="line">        std::vector&lt;FunctionUtils::FunctionID&gt; ids;</div>
-<div class="line">        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;func : _customCallbacks.<a id="a11" name="a11"></a><a class="code hl_function" href="classFunctionUtils_1_1FunctionContainer.html#a595e14ee35a7a197e35bf9a3744eb303">GetFunctions</a>())</div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;func : _customCallbacks.<a id="a21" name="a21"></a><a class="code hl_function" href="classFunctionUtils_1_1FunctionContainer.html#a595e14ee35a7a197e35bf9a3744eb303">GetFunctions</a>())</div>
 <div class="line">        {</div>
 <div class="line">            ids.push_back(func-&gt;GetID());</div>
 <div class="line">        }</div>
@@ -690,13 +690,23 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">} <span class="comment">// namespace Sound::Resource</span></div>
 <div class="ttc" id="aEngine_8hpp_html"><div class="ttname"><a href="Engine_8hpp.html">Engine.hpp</a></div></div>
 <div class="ttc" id="aFunctionContainer_8hpp_html"><div class="ttname"><a href="FunctionContainer_8hpp.html">FunctionContainer.hpp</a></div></div>
-<div class="ttc" id="aclassEngine_1_1Core_html"><div class="ttname"><a href="classEngine_1_1Core.html">Engine::Core</a></div><div class="ttdef"><b>Definition</b> Core.hpp:24</div></div>
-<div class="ttc" id="aclassEngine_1_1Core_html_a29ab23da9acb31dbd5b13fa935754451"><div class="ttname"><a href="classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451">Engine::Core::GetResource</a></div><div class="ttdeci">TResource &amp; GetResource()</div><div class="ttdef"><b>Definition</b> Core.inl:14</div></div>
+<div class="ttc" id="aclassEngine_1_1Core_html"><div class="ttname"><a href="classEngine_1_1Core.html">Engine::Core</a></div><div class="ttdoc">The core is the place where all the data of the engine is stored. It contains the registry (entities)...</div><div class="ttdef"><b>Definition</b> Core.hpp:33</div></div>
+<div class="ttc" id="aclassEngine_1_1Core_html_a29ab23da9acb31dbd5b13fa935754451"><div class="ttname"><a href="classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451">Engine::Core::GetResource</a></div><div class="ttdeci">TResource &amp; GetResource()</div><div class="ttdoc">Get a reference of a resource.</div><div class="ttdef"><b>Definition</b> Core.inl:14</div></div>
 <div class="ttc" id="aclassFunctionUtils_1_1FunctionContainer_html"><div class="ttname"><a href="classFunctionUtils_1_1FunctionContainer.html">FunctionUtils::FunctionContainer</a></div><div class="ttdoc">Container for functions, allowing for dynamic storage and invocation.</div><div class="ttdef"><b>Definition</b> FunctionContainer.hpp:14</div></div>
 <div class="ttc" id="aclassFunctionUtils_1_1FunctionContainer_html_a595e14ee35a7a197e35bf9a3744eb303"><div class="ttname"><a href="classFunctionUtils_1_1FunctionContainer.html#a595e14ee35a7a197e35bf9a3744eb303">FunctionUtils::FunctionContainer::GetFunctions</a></div><div class="ttdeci">const std::list&lt; std::unique_ptr&lt; FunctionType &gt; &gt; &amp; GetFunctions()</div><div class="ttdoc">Gets the list of functions in the container.</div><div class="ttdef"><b>Definition</b> FunctionContainer.hpp:87</div></div>
 <div class="ttc" id="aclassFunctionUtils_1_1FunctionContainer_html_a7be2efd8b242c3e6867ecc1b9a4c08d0"><div class="ttname"><a href="classFunctionUtils_1_1FunctionContainer.html#a7be2efd8b242c3e6867ecc1b9a4c08d0">FunctionUtils::FunctionContainer::AddFunction</a></div><div class="ttdeci">FunctionID AddFunction(TCallable callable)</div><div class="ttdoc">Adds a function to the container.</div></div>
 <div class="ttc" id="aclassFunctionUtils_1_1FunctionContainer_html_ad576785cd9f69968ea6af38cb55fb3fb"><div class="ttname"><a href="classFunctionUtils_1_1FunctionContainer.html#ad576785cd9f69968ea6af38cb55fb3fb">FunctionUtils::FunctionContainer::Contains</a></div><div class="ttdeci">bool Contains(FunctionID id) const</div><div class="ttdef"><b>Definition</b> FunctionContainer.hpp:108</div></div>
 <div class="ttc" id="aclassFunctionUtils_1_1FunctionContainer_html_aec76d963da335a93184ec8412f0376b7"><div class="ttname"><a href="classFunctionUtils_1_1FunctionContainer.html#aec76d963da335a93184ec8412f0376b7">FunctionUtils::FunctionContainer::DeleteFunction</a></div><div class="ttdeci">std::unique_ptr&lt; FunctionType &gt; DeleteFunction(FunctionID id)</div><div class="ttdoc">Deletes a function from the container.</div><div class="ttdef"><b>Definition</b> FunctionContainer.inl:60</div></div>
+<div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_a0cb7e1ca585202b263dc8e8e27d966cf"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#a0cb7e1ca585202b263dc8e8e27d966cf">Sound::Resource::SoundManager::_engine</a></div><div class="ttdeci">ma_engine _engine</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:23</div></div>
+<div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_a1078c3d8a9a80f818561d249531429bb"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#a1078c3d8a9a80f818561d249531429bb">Sound::Resource::SoundManager::_engineInit</a></div><div class="ttdeci">bool _engineInit</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:24</div></div>
+<div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_a3703045d94bb8506fbbd21bf14ca0194"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#a3703045d94bb8506fbbd21bf14ca0194">Sound::Resource::SoundManager::_result</a></div><div class="ttdeci">ma_result _result</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:19</div></div>
+<div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_a681ddd8d99551bf7dc4542968e101bf7"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#a681ddd8d99551bf7dc4542968e101bf7">Sound::Resource::SoundManager::_deviceInit</a></div><div class="ttdeci">bool _deviceInit</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:22</div></div>
+<div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_a68bd3165a11d26ddf45f9599632d8c4a"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#a68bd3165a11d26ddf45f9599632d8c4a">Sound::Resource::SoundManager::_device</a></div><div class="ttdeci">ma_device _device</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:21</div></div>
+<div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_aacbdb8b075d063114237066775629d99"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#aacbdb8b075d063114237066775629d99">Sound::Resource::SoundManager::_deviceConfig</a></div><div class="ttdeci">ma_device_config _deviceConfig</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:20</div></div>
+<div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_ab93d1b89a685ec3994cb54c865dcb631"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#ab93d1b89a685ec3994cb54c865dcb631">Sound::Resource::SoundManager::ERROR_UNKNOWN_FORMAT</a></div><div class="ttdeci">static constexpr uint32_t ERROR_UNKNOWN_FORMAT</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:31</div></div>
+<div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_aca5c591cb5f24318550fef90606145e7"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#aca5c591cb5f24318550fef90606145e7">Sound::Resource::SoundManager::_callbackErrorFlags</a></div><div class="ttdeci">std::atomic&lt; uint32_t &gt; _callbackErrorFlags</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:28</div></div>
+<div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_aea53c4d6cd115e58a2e27b39ca5a617f"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#aea53c4d6cd115e58a2e27b39ca5a617f">Sound::Resource::SoundManager::ERROR_FRAME_TOO_LARGE</a></div><div class="ttdeci">static constexpr uint32_t ERROR_FRAME_TOO_LARGE</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:29</div></div>
+<div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_aecb012c6c549a9e61f03eba0d54335fe"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#aecb012c6c549a9e61f03eba0d54335fe">Sound::Resource::SoundManager::ERROR_DECODER_READ</a></div><div class="ttdeci">static constexpr uint32_t ERROR_DECODER_READ</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:30</div></div>
 <div class="ttc" id="anamespaceFunctionUtils_html_ab5353af47186eee5ae03e3c0fdef63e9"><div class="ttname"><a href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a></div><div class="ttdeci">std::size_t FunctionID</div><div class="ttdoc">FunctionID class to represent a unique identifier for functions.</div><div class="ttdef"><b>Definition</b> FunctionID.hpp:9</div></div>
 <div class="ttc" id="anamespaceLog_html_a000853d1578cb42daa38a357883416ab"><div class="ttname"><a href="namespaceLog.html#a000853d1578cb42daa38a357883416ab">Log::Warning</a></div><div class="ttdeci">void Warning(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:49</div></div>
 <div class="ttc" id="anamespaceLog_html_a1423ffcd222d8ec2afefb1c13e9fb3b1"><div class="ttname"><a href="namespaceLog.html#a1423ffcd222d8ec2afefb1c13e9fb3b1">Log::Info</a></div><div class="ttdeci">void Info(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:47</div></div>

@@ -110,7 +110,7 @@ Inheritance diagram for Graphic::Utils::TextureBindGroupLayoutEntry:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa0c49c62b60a6d5d280a6087daf5ce13" id="r_aa0c49c62b60a6d5d280a6087daf5ce13"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa0c49c62b60a6d5d280a6087daf5ce13">TextureBindGroupLayoutEntry</a> (const std::string &amp;name)</td></tr>
+<tr class="memitem:aa0c49c62b60a6d5d280a6087daf5ce13" id="r_aa0c49c62b60a6d5d280a6087daf5ce13"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa0c49c62b60a6d5d280a6087daf5ce13">TextureBindGroupLayoutEntry</a> (const std::string &amp;<a class="el" href="classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#ada956278a369810e269d54a96502937d">name</a>)</td></tr>
 <tr class="memitem:ad907c99ab0b0ef6186f3309462bb3597" id="r_ad907c99ab0b0ef6186f3309462bb3597"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad907c99ab0b0ef6186f3309462bb3597">~TextureBindGroupLayoutEntry</a> () override=default</td></tr>
 <tr class="memitem:a90dc04a7636dade32309df1cd9ad938c" id="r_a90dc04a7636dade32309df1cd9ad938c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a90dc04a7636dade32309df1cd9ad938c">TextureBindGroupLayoutEntry</a> (const TextureBindGroupLayoutEntry &amp;other)=default</td></tr>
 <tr class="memitem:ac209ba2d86729e15edffb40b5a1564d0" id="r_ac209ba2d86729e15edffb40b5a1564d0"><td class="memItemLeft"><a class="el" href="#aa0c49c62b60a6d5d280a6087daf5ce13">TextureBindGroupLayoutEntry</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac209ba2d86729e15edffb40b5a1564d0">operator=</a> (const <a class="el" href="#aa0c49c62b60a6d5d280a6087daf5ce13">TextureBindGroupLayoutEntry</a> &amp;other)=default</td></tr>
@@ -127,6 +127,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5108f705054c1b6f2c4fd95f352fd0e9 inherit pub_methods_classGraphic_1_1Utils_1_1ABindGroupLayoutEntry" id="r_a5108f705054c1b6f2c4fd95f352fd0e9"><td class="memItemLeft"><a class="el" href="classGraphic_1_1Utils_1_1TextureBindGroupLayoutEntry.html">TextureBindGroupLayoutEntry</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#a5108f705054c1b6f2c4fd95f352fd0e9">setVisibility</a> (wgpu::ShaderStage visibility)</td></tr>
 <tr class="inherit_header pub_methods_classGraphic_1_1Utils_1_1IValidable"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classGraphic_1_1Utils_1_1IValidable')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classGraphic_1_1Utils_1_1IValidable.html">Graphic::Utils::IValidable</a></td></tr>
 <tr class="memitem:a7c92f08ae392d61b4a18c17cc166b0df inherit pub_methods_classGraphic_1_1Utils_1_1IValidable" id="r_a7c92f08ae392d61b4a18c17cc166b0df"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Utils_1_1IValidable.html#a7c92f08ae392d61b4a18c17cc166b0df">~IValidable</a> ()=default</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:acfbee50f38fb0e3c1885a9e55a1c04b0" id="r_acfbee50f38fb0e3c1885a9e55a1c04b0"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#acfbee50f38fb0e3c1885a9e55a1c04b0">_isSampleTypeSet</a> = false</td></tr>
+<tr class="memitem:a2c98ac28c93ec65e86bc104a6bab2022" id="r_a2c98ac28c93ec65e86bc104a6bab2022"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2c98ac28c93ec65e86bc104a6bab2022">_isViewDimensionSet</a> = false</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa0c49c62b60a6d5d280a6087daf5ce13" name="aa0c49c62b60a6d5d280a6087daf5ce13"></a>
@@ -329,6 +334,51 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reimplemented from <a class="el" href="classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#aadf3f98c1299b84a35e711236fab5463">Graphic::Utils::ABindGroupLayoutEntry&lt; TextureBindGroupLayoutEntry &gt;</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="acfbee50f38fb0e3c1885a9e55a1c04b0" name="acfbee50f38fb0e3c1885a9e55a1c04b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfbee50f38fb0e3c1885a9e55a1c04b0">&#9670;&#160;</a></span>_isSampleTypeSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Graphic::Utils::TextureBindGroupLayoutEntry::_isSampleTypeSet = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2c98ac28c93ec65e86bc104a6bab2022" name="a2c98ac28c93ec65e86bc104a6bab2022"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c98ac28c93ec65e86bc104a6bab2022">&#9670;&#160;</a></span>_isViewDimensionSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Graphic::Utils::TextureBindGroupLayoutEntry::_isViewDimensionSet = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

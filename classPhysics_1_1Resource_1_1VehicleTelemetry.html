@@ -97,11 +97,20 @@ $(function(){initNavTree('classPhysics_1_1Resource_1_1VehicleTelemetry.html','',
 
 <p><code>#include &lt;<a class="el" href="VehicleTelemetry_8hpp_source.html">VehicleTelemetry.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:EntityIdHash" id="r_EntityIdHash"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structPhysics_1_1Resource_1_1VehicleTelemetry_1_1EntityIdHash.html">EntityIdHash</a></td></tr>
+<tr class="memitem:EntityIdEqual" id="r_EntityIdEqual"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structPhysics_1_1Resource_1_1VehicleTelemetry_1_1EntityIdEqual.html">EntityIdEqual</a></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a75fe073931809c9606320053699bd813" id="r_a75fe073931809c9606320053699bd813"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a75fe073931809c9606320053699bd813">SetRPM</a> (<a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a> entity, float rpm)</td></tr>
 <tr class="memitem:af2a014c8b70c650558b3807de92a78b7" id="r_af2a014c8b70c650558b3807de92a78b7"><td class="memItemLeft">std::optional&lt; float &gt;&#160;</td><td class="memItemRight"><a class="el" href="#af2a014c8b70c650558b3807de92a78b7">GetRPM</a> (<a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a> entity) const</td></tr>
 <tr class="memitem:a4bfa88193dd9e261c4d23942fd887df2" id="r_a4bfa88193dd9e261c4d23942fd887df2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4bfa88193dd9e261c4d23942fd887df2">Clear</a> (<a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a> entity)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a6c88c0d120b570f64b522b630dbba717" id="r_a6c88c0d120b570f64b522b630dbba717"><td class="memItemLeft">std::unordered_map&lt; <a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a>, float, <a class="el" href="structPhysics_1_1Resource_1_1VehicleTelemetry_1_1EntityIdHash.html">EntityIdHash</a>, <a class="el" href="structPhysics_1_1Resource_1_1VehicleTelemetry_1_1EntityIdEqual.html">EntityIdEqual</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a6c88c0d120b570f64b522b630dbba717">_rpmByEntity</a></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a4bfa88193dd9e261c4d23942fd887df2" name="a4bfa88193dd9e261c4d23942fd887df2"></a>
@@ -177,6 +186,29 @@ Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a6c88c0d120b570f64b522b630dbba717" name="a6c88c0d120b570f64b522b630dbba717"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c88c0d120b570f64b522b630dbba717">&#9670;&#160;</a></span>_rpmByEntity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a>, float, <a class="el" href="structPhysics_1_1Resource_1_1VehicleTelemetry_1_1EntityIdHash.html">EntityIdHash</a>, <a class="el" href="structPhysics_1_1Resource_1_1VehicleTelemetry_1_1EntityIdEqual.html">EntityIdEqual</a>&gt; Physics::Resource::VehicleTelemetry::_rpmByEntity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

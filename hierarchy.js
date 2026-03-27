@@ -17,6 +17,7 @@ var hierarchy =
     ] ],
     [ "DefaultPipeline::Resource::AmbientLight", "structDefaultPipeline_1_1Resource_1_1AmbientLight.html", null ],
     [ "Object::Component::AmbientLight", "structObject_1_1Component_1_1AmbientLight.html", null ],
+    [ "DefaultPipeline::Resource::AmbientLightBuffer::AmbientLightTransfer", "structDefaultPipeline_1_1Resource_1_1AmbientLightBuffer_1_1AmbientLightTransfer.html", null ],
     [ "Graphic::Resource::ARenderPass", "classGraphic_1_1Resource_1_1ARenderPass.html", [
       [ "Graphic::Resource::AMultipleExecutionRenderPass< Shadow >", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html", [
         [ "DefaultPipeline::Resource::Shadow", "classDefaultPipeline_1_1Resource_1_1Shadow.html", null ]
@@ -112,14 +113,18 @@ var hierarchy =
     [ "demo_setup::DemoState", "structdemo__setup_1_1DemoState.html", null ],
     [ "Graphic::Resource::DepthOutput", "structGraphic_1_1Resource_1_1DepthOutput.html", null ],
     [ "Graphic::Resource::DeviceContext", "structGraphic_1_1Resource_1_1DeviceContext.html", null ],
+    [ "Event::Resource::EventManager::DirectCallbackSchedulerTag", "structEvent_1_1Resource_1_1EventManager_1_1DirectCallbackSchedulerTag.html", null ],
     [ "Object::Component::DirectionalLight", "structObject_1_1Component_1_1DirectionalLight.html", null ],
     [ "DefaultPipeline::Resource::DirectionalLightBuffer::DirectionalLightTransfer", "structDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer_1_1DirectionalLightTransfer.html", null ],
     [ "DirectorMonitorSystem", "classDirectorMonitorSystem.html", null ],
     [ "DirectorResource", "structDirectorResource.html", null ],
     [ "Physics::Component::DistanceConstraint", "structPhysics_1_1Component_1_1DistanceConstraint.html", null ],
+    [ "Rmlui::Utils::RenderInterface::DrawCommand", "structRmlui_1_1Utils_1_1RenderInterface_1_1DrawCommand.html", null ],
     [ "Physics::Component::EngineSettings", "structPhysics_1_1Component_1_1EngineSettings.html", null ],
     [ "Engine::Entity", "classEngine_1_1Entity.html", null ],
-    [ "entt_traits", null, [
+    [ "Physics::Resource::VehicleTelemetry::EntityIdEqual", "structPhysics_1_1Resource_1_1VehicleTelemetry_1_1EntityIdEqual.html", null ],
+    [ "Physics::Resource::VehicleTelemetry::EntityIdHash", "structPhysics_1_1Resource_1_1VehicleTelemetry_1_1EntityIdHash.html", null ],
+    [ "entt::entt_traits", null, [
       [ "entt::entt_traits< Engine::Id >", "structentt_1_1entt__traits_3_01Engine_1_1Id_01_4.html", null ]
     ] ],
     [ "EventExample", "structEventExample.html", null ],
@@ -127,6 +132,7 @@ var hierarchy =
       [ "demo_setup::DemoEventListener", "classdemo__setup_1_1DemoEventListener.html", null ],
       [ "demo_setup::DemoWindow", "classdemo__setup_1_1DemoWindow.html", null ]
     ] ],
+    [ "Rmlui::Resource::UIContext::EventListenerEntry", "structRmlui_1_1Resource_1_1UIContext_1_1EventListenerEntry.html", null ],
     [ "Rml::EventListenerInstancer", null, [
       [ "demo_setup::DemoEventListenerInstancer", "classdemo__setup_1_1DemoEventListenerInstancer.html", null ]
     ] ],
@@ -203,10 +209,14 @@ var hierarchy =
     [ "FunctionContainerTest::Functor", "structFunctionContainerTest_1_1Functor.html", null ],
     [ "Functor", "structFunctor.html", null ],
     [ "Physics::Component::GearboxSettings", "structPhysics_1_1Component_1_1GearboxSettings.html", null ],
+    [ "Rmlui::Utils::RenderInterface::GeometryData", "structRmlui_1_1Utils_1_1RenderInterface_1_1GeometryData.html", null ],
     [ "DefaultPipeline::Component::GPUCamera", "structDefaultPipeline_1_1Component_1_1GPUCamera.html", null ],
     [ "DefaultPipeline::Component::GPUDirectionalLight", "structDefaultPipeline_1_1Component_1_1GPUDirectionalLight.html", null ],
+    [ "DefaultPipeline::Resource::DirectionalLightsBuffer::GPUDirectionalLight", "structDefaultPipeline_1_1Resource_1_1DirectionalLightsBuffer_1_1GPUDirectionalLight.html", null ],
+    [ "DefaultPipeline::Resource::DirectionalLightsBuffer::GPUDirectionalLights", "structDefaultPipeline_1_1Resource_1_1DirectionalLightsBuffer_1_1GPUDirectionalLights.html", null ],
     [ "DefaultPipeline::Component::GPUMaterial", "structDefaultPipeline_1_1Component_1_1GPUMaterial.html", null ],
     [ "DefaultPipeline::Component::GPUMesh", "structDefaultPipeline_1_1Component_1_1GPUMesh.html", null ],
+    [ "DefaultPipeline::Resource::PointLightsBuffer::GPUPointLight", "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html", null ],
     [ "DefaultPipeline::Component::GPUTransform", "structDefaultPipeline_1_1Component_1_1GPUTransform.html", null ],
     [ "Graphic::Resource::GraphicSettings", "classGraphic_1_1Resource_1_1GraphicSettings.html", null ],
     [ "Tools::HasChanged&lt; T &gt;", "structTools_1_1HasChanged.html", null ],
@@ -219,6 +229,7 @@ var hierarchy =
       [ "ChaseCameraBehavior", "classChaseCameraBehavior.html", null ],
       [ "ThirdPlayerCameraBehavior", "classThirdPlayerCameraBehavior.html", null ]
     ] ],
+    [ "Graphic::Resource::RenderGraph::IDHash", "structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html", null ],
     [ "Event::Utils::IEventContainer", "structEvent_1_1Utils_1_1IEventContainer.html", [
       [ "Event::Utils::EventContainer< TEvent >", "classEvent_1_1Utils_1_1EventContainer.html", null ]
     ] ],
@@ -320,6 +331,7 @@ var hierarchy =
     [ "PlayerVehicle", "structPlayerVehicle.html", null ],
     [ "Physics::Component::PointConstraint", "structPhysics_1_1Component_1_1PointConstraint.html", null ],
     [ "Object::Component::PointLight", "structObject_1_1Component_1_1PointLight.html", null ],
+    [ "DefaultPipeline::Resource::PointLightsBuffer::PointLightsData", "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html", null ],
     [ "Relationship::Component::Relationship", "structRelationship_1_1Component_1_1Relationship.html", null ],
     [ "Graphic::Resource::RenderGraph", "classGraphic_1_1Resource_1_1RenderGraph.html", null ],
     [ "Rml::RenderInterface", null, [
@@ -327,6 +339,7 @@ var hierarchy =
         [ "Rmlui::Utils::RenderInterface", "classRmlui_1_1Utils_1_1RenderInterface.html", null ]
       ] ]
     ] ],
+    [ "Object::Resource::ResourceManager&lt; ResourceType &gt;::ResourceLoader", "structObject_1_1Resource_1_1ResourceManager_1_1ResourceLoader.html", null ],
     [ "Object::Resource::ResourceManager&lt; ResourceType &gt;", "classObject_1_1Resource_1_1ResourceManager.html", null ],
     [ "ResourceTest", "structResourceTest.html", null ],
     [ "Physics::Component::RigidBody", "structPhysics_1_1Component_1_1RigidBody.html", null ],
@@ -344,6 +357,7 @@ var hierarchy =
     [ "Physics::Component::SoftBody", "structPhysics_1_1Component_1_1SoftBody.html", null ],
     [ "Physics::Component::SoftBodyInternal", "structPhysics_1_1Component_1_1SoftBodyInternal.html", null ],
     [ "Physics::Component::SoftBodySettings", "structPhysics_1_1Component_1_1SoftBodySettings.html", null ],
+    [ "Sound::Resource::SoundManager::Sound", "structSound_1_1Resource_1_1SoundManager_1_1Sound.html", null ],
     [ "Sound::Resource::SoundManager", "classSound_1_1Resource_1_1SoundManager.html", null ],
     [ "Physics::Component::SphereCollider", "structPhysics_1_1Component_1_1SphereCollider.html", null ],
     [ "Graphic::Resource::Surface", "structGraphic_1_1Resource_1_1Surface.html", null ],
@@ -362,10 +376,14 @@ var hierarchy =
     [ "TestResource", "structTestResource.html", null ],
     [ "TestSystemClass", "classTestSystemClass.html", null ],
     [ "Graphic::Resource::Texture", "classGraphic_1_1Resource_1_1Texture.html", null ],
+    [ "Rmlui::Utils::RenderInterface::TextureData", "structRmlui_1_1Utils_1_1RenderInterface_1_1TextureData.html", null ],
     [ "Engine::Resource::Time", "structEngine_1_1Resource_1_1Time.html", null ],
     [ "Physics::Component::TorqueCurvePoint", "structPhysics_1_1Component_1_1TorqueCurvePoint.html", null ],
     [ "Object::Component::Transform", "structObject_1_1Component_1_1Transform.html", null ],
     [ "DefaultPipeline::Resource::TransformGPUData", "structDefaultPipeline_1_1Resource_1_1TransformGPUData.html", null ],
+    [ "Sound::Resource::SoundManager::TransparentEqual", "structSound_1_1Resource_1_1SoundManager_1_1TransparentEqual.html", null ],
+    [ "Scene::Resource::SceneManager::TransparentHash", "structScene_1_1Resource_1_1SceneManager_1_1TransparentHash.html", null ],
+    [ "Sound::Resource::SoundManager::TransparentHash", "structSound_1_1Resource_1_1SoundManager_1_1TransparentHash.html", null ],
     [ "demo_setup::TweeningParameters", "structdemo__setup_1_1TweeningParameters.html", null ],
     [ "Graphic::Utils::ValidationError", "structGraphic_1_1Utils_1_1ValidationError.html", null ],
     [ "Physics::System::Vec3Equal", "structPhysics_1_1System_1_1Vec3Equal.html", null ],

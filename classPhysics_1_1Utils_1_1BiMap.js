@@ -13,5 +13,7 @@ var classPhysics_1_1Utils_1_1BiMap =
     [ "operator=", "classPhysics_1_1Utils_1_1BiMap.html#acf9776949e53b42b69b7bb5c6ecb08d3", null ],
     [ "Remove", "classPhysics_1_1Utils_1_1BiMap.html#ab3dd7697e99e04bcb397ef5fc4fde59c", null ],
     [ "Remove", "classPhysics_1_1Utils_1_1BiMap.html#a220e51df02023031db445feb0c664106", null ],
-    [ "Size", "classPhysics_1_1Utils_1_1BiMap.html#ae3600348120b967158d70f5995d239bd", null ]
+    [ "Size", "classPhysics_1_1Utils_1_1BiMap.html#ae3600348120b967158d70f5995d239bd", null ],
+    [ "_leftToRight", "classPhysics_1_1Utils_1_1BiMap.html#a9e7a2b04649d988298ff1ec91ca3c207", null ],
+    [ "_rightToLeft", "classPhysics_1_1Utils_1_1BiMap.html#a3a6ba0bc19af8991866b783c72aca9e9", null ]
 ];

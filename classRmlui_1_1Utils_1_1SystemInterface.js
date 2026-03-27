@@ -5,5 +5,7 @@ var classRmlui_1_1Utils_1_1SystemInterface =
     [ "GetClipboardText", "classRmlui_1_1Utils_1_1SystemInterface.html#a33356c04a142da4f1a82d48e6b909075", null ],
     [ "GetElapsedTime", "classRmlui_1_1Utils_1_1SystemInterface.html#a2a61ed023fd863b3265f3f460f4c40b9", null ],
     [ "LogMessage", "classRmlui_1_1Utils_1_1SystemInterface.html#a56c016b5ee62ff6af66cd5365e064289", null ],
-    [ "SetClipboardText", "classRmlui_1_1Utils_1_1SystemInterface.html#afc32708c4213965670a47026ad46e021", null ]
+    [ "SetClipboardText", "classRmlui_1_1Utils_1_1SystemInterface.html#afc32708c4213965670a47026ad46e021", null ],
+    [ "_clipboard", "classRmlui_1_1Utils_1_1SystemInterface.html#adcfa7390b13cdf1a7b396c1756f2734c", null ],
+    [ "_startTime", "classRmlui_1_1Utils_1_1SystemInterface.html#aefab6157a11554f56d6eeda81aad0f49", null ]
 ];

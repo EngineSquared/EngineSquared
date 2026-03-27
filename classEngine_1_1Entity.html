@@ -95,69 +95,119 @@ $(function(){initNavTree('classEngine_1_1Entity.html','','classEngine_1_1Entity-
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper class providing a convenient interface for entity manipulation in the ECS system.  
+<p>Wrapper class providing a convenient interface for entity manipulation with the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a>. <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> acts as a handle to an entity in the registry, combining a <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> reference with an <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a>. It provides utility methods to add, remove, and query components, and maintains context relative to the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> it belongs to.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Entity_8hpp_source.html">Entity.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5aa83d14cb60da47f062efa6ba78843e" id="r_a5aa83d14cb60da47f062efa6ba78843e"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a5aa83d14cb60da47f062efa6ba78843e">explicit</a> (false) <a class="el" href="classEngine_1_1Entity.html">Entity</a>(<a class="el" href="classEngine_1_1Core.html">Core</a> &amp;core</td></tr>
-<tr class="memitem:ad349a0e1a71068b990aa1efd02bdc01e" id="r_ad349a0e1a71068b990aa1efd02bdc01e"><td class="memItemLeft"><a class="el" href="structEngine_1_1EntityId.html">EntityId</a>&#160;</td><td class="memItemRight"><a class="el" href="#ad349a0e1a71068b990aa1efd02bdc01e">_entityId</a> (<a class="el" href="#a986b362babb93cd70021db86cb36bf85">entityId</a>)</td></tr>
+<tr class="memitem:a68b16353b00d00bfaea6620a626fe05b" id="r_a68b16353b00d00bfaea6620a626fe05b"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a68b16353b00d00bfaea6620a626fe05b">Entity</a> (<a class="el" href="classEngine_1_1Core.html">Core</a> &amp;core, <a class="el" href="structEngine_1_1EntityId.html">EntityId</a> entityId)</td></tr>
+<tr class="memdesc:a68b16353b00d00bfaea6620a626fe05b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> from <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> and the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> it belongs to.  <br /></td></tr>
 <tr class="memitem:a0f9d13bb0808c90bb05eb48fa579ebdd" id="r_a0f9d13bb0808c90bb05eb48fa579ebdd"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0f9d13bb0808c90bb05eb48fa579ebdd">~Entity</a> ()=default</td></tr>
+<tr class="memdesc:a0f9d13bb0808c90bb05eb48fa579ebdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor for <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a>. It does not perform any special cleanup, as the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> is responsible for managing the entity's lifecycle.  <br /></td></tr>
 <tr class="memitem:a9d498e8835bedd70bea734d5eb595478" id="r_a9d498e8835bedd70bea734d5eb595478"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a9d498e8835bedd70bea734d5eb595478">IsAlive</a> () const</td></tr>
+<tr class="memdesc:a9d498e8835bedd70bea734d5eb595478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the entity is alive.  <br /></td></tr>
 <tr class="memitem:a316e305136e6fd461260d9f6ce539fb3" id="r_a316e305136e6fd461260d9f6ce539fb3"><td class="memItemLeft"><a class="el" href="structEngine_1_1EntityId.html">EntityId</a>&#160;</td><td class="memItemRight"><a class="el" href="#a316e305136e6fd461260d9f6ce539fb3">Id</a> () const</td></tr>
+<tr class="memdesc:a316e305136e6fd461260d9f6ce539fb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> associated with this <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a>.  <br /></td></tr>
 <tr class="memitem:a21a26447af540467a7cddd69b0ede6b2" id="r_a21a26447af540467a7cddd69b0ede6b2"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a21a26447af540467a7cddd69b0ede6b2">explicit</a> (false) inline operator <a class="el" href="structEngine_1_1EntityId.html">EntityId</a>() const</td></tr>
+<tr class="memdesc:a21a26447af540467a7cddd69b0ede6b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion operator to <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a>.  <br /></td></tr>
 <tr class="memitem:ad39f4368810d6b41d69853eb53da3ef6" id="r_ad39f4368810d6b41d69853eb53da3ef6"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad39f4368810d6b41d69853eb53da3ef6">Kill</a> ()</td></tr>
-<tr class="memdesc:ad39f4368810d6b41d69853eb53da3ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kill the entity, removing all components and making it invalid.  <br /></td></tr>
+<tr class="memdesc:ad39f4368810d6b41d69853eb53da3ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kill the entity, removing all components and making it invalid. After calling this method, the <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> will no longer correspond to a valid entity in the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a>'s registry, and the <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> will be considered dead.  <br /></td></tr>
 <tr class="memitem:a816b3a2c6e9a074c61cfee1b0bcfdfa0" id="r_a816b3a2c6e9a074c61cfee1b0bcfdfa0"><td class="memTemplParams" colspan="2">template&lt;typename TComponent&gt; </td></tr>
 <tr class="memitem:a816b3a2c6e9a074c61cfee1b0bcfdfa0 template"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a816b3a2c6e9a074c61cfee1b0bcfdfa0">AddComponent</a> (TComponent &amp;&amp;component)</td></tr>
+<tr class="memdesc:a816b3a2c6e9a074c61cfee1b0bcfdfa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a component to an entity.  <br /></td></tr>
 <tr class="memitem:ae84add0450677942bb737053175c3d2c" id="r_ae84add0450677942bb737053175c3d2c"><td class="memTemplParams" colspan="2">template&lt;typename TComponent, typename... TArgs&gt; </td></tr>
 <tr class="memitem:ae84add0450677942bb737053175c3d2c template"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#ae84add0450677942bb737053175c3d2c">AddComponent</a> (TArgs &amp;&amp;...args)</td></tr>
+<tr class="memdesc:ae84add0450677942bb737053175c3d2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a component to an entity.  <br /></td></tr>
 <tr class="memitem:a02a2048bea00ab3f727df6531e2b63c5" id="r_a02a2048bea00ab3f727df6531e2b63c5"><td class="memTemplParams" colspan="2">template&lt;typename TComponent, typename... TArgs&gt; </td></tr>
 <tr class="memitem:a02a2048bea00ab3f727df6531e2b63c5 template"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a02a2048bea00ab3f727df6531e2b63c5">AddComponentIfNotExists</a> (TArgs &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a02a2048bea00ab3f727df6531e2b63c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a component to an entity if it does not already exist.  <br /></td></tr>
 <tr class="memitem:a591627f4862cd3ace3a9996b8c70bc7f" id="r_a591627f4862cd3ace3a9996b8c70bc7f"><td class="memTemplParams" colspan="2">template&lt;typename TTempComponent, typename... TArgs&gt; </td></tr>
 <tr class="memitem:a591627f4862cd3ace3a9996b8c70bc7f template"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a591627f4862cd3ace3a9996b8c70bc7f">AddTemporaryComponent</a> (TArgs &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a591627f4862cd3ace3a9996b8c70bc7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a temporary component to an entity. Temporary component are removed when calling RemoveTemporaryComponents system.  <br /></td></tr>
 <tr class="memitem:ae29ffec08bec57123c16a045e47a6368" id="r_ae29ffec08bec57123c16a045e47a6368"><td class="memTemplParams" colspan="2">template&lt;typename TComponent&gt; </td></tr>
 <tr class="memitem:ae29ffec08bec57123c16a045e47a6368 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae29ffec08bec57123c16a045e47a6368">RemoveComponent</a> ()</td></tr>
+<tr class="memdesc:ae29ffec08bec57123c16a045e47a6368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a component from an entity.  <br /></td></tr>
 <tr class="memitem:aa11ba9b59eea8f31bd917bfaf89f6a28" id="r_aa11ba9b59eea8f31bd917bfaf89f6a28"><td class="memTemplParams" colspan="2">template&lt;typename... TComponent&gt; </td></tr>
 <tr class="memitem:aa11ba9b59eea8f31bd917bfaf89f6a28 template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa11ba9b59eea8f31bd917bfaf89f6a28">HasComponents</a> () const</td></tr>
+<tr class="memdesc:aa11ba9b59eea8f31bd917bfaf89f6a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if entity have one or multiple component's type.  <br /></td></tr>
 <tr class="memitem:acd36f75b5b6b5245dbb1fcd0adcd0893" id="r_acd36f75b5b6b5245dbb1fcd0adcd0893"><td class="memTemplParams" colspan="2">template&lt;typename... TComponent&gt; </td></tr>
 <tr class="memitem:acd36f75b5b6b5245dbb1fcd0adcd0893 template"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#acd36f75b5b6b5245dbb1fcd0adcd0893">GetComponents</a> ()</td></tr>
+<tr class="memdesc:acd36f75b5b6b5245dbb1fcd0adcd0893"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get components of type TComponent from the entity.  <br /></td></tr>
 <tr class="memitem:a13d8044ddcb5ada775d8786caedc03e4" id="r_a13d8044ddcb5ada775d8786caedc03e4"><td class="memTemplParams" colspan="2">template&lt;typename... TComponent&gt; </td></tr>
 <tr class="memitem:a13d8044ddcb5ada775d8786caedc03e4 template"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a13d8044ddcb5ada775d8786caedc03e4">GetComponents</a> () const</td></tr>
+<tr class="memdesc:a13d8044ddcb5ada775d8786caedc03e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get components of type TComponent from the entity.  <br /></td></tr>
 <tr class="memitem:a9c234a44f74acc04f5c46ba8d61d471c" id="r_a9c234a44f74acc04f5c46ba8d61d471c"><td class="memTemplParams" colspan="2">template&lt;typename TComponent&gt; </td></tr>
 <tr class="memitem:a9c234a44f74acc04f5c46ba8d61d471c template"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a9c234a44f74acc04f5c46ba8d61d471c">TryGetComponent</a> ()</td></tr>
-<tr class="memitem:aa2785e2cc9ca649ecb3084fdedfe0e0b" id="r_aa2785e2cc9ca649ecb3084fdedfe0e0b"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa2785e2cc9ca649ecb3084fdedfe0e0b">operator==</a> (const <a class="el" href="classEngine_1_1Entity.html">Entity</a> &amp;rhs) const</td></tr>
+<tr class="memdesc:a9c234a44f74acc04f5c46ba8d61d471c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to get a component of type TComponent from the entity. It returns a pointer to the component if it exists, or nullptr if it does not exist.  <br /></td></tr>
+<tr class="memitem:aa2785e2cc9ca649ecb3084fdedfe0e0b" id="r_aa2785e2cc9ca649ecb3084fdedfe0e0b"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa2785e2cc9ca649ecb3084fdedfe0e0b">operator==</a> (const <a class="el" href="#a68b16353b00d00bfaea6620a626fe05b">Entity</a> &amp;rhs) const</td></tr>
+<tr class="memdesc:aa2785e2cc9ca649ecb3084fdedfe0e0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality operator for <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a>. It compares the underlying <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> values to determine if two <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> instances refer to the same entity in the registry.  <br /></td></tr>
 <tr class="memitem:a551d1b9a4e50f8b16d0ba161ba5c0fc1" id="r_a551d1b9a4e50f8b16d0ba161ba5c0fc1"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a551d1b9a4e50f8b16d0ba161ba5c0fc1">operator==</a> (const <a class="el" href="structEngine_1_1EntityId.html">EntityId</a> &amp;rhs) const</td></tr>
+<tr class="memdesc:a551d1b9a4e50f8b16d0ba161ba5c0fc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality operator for <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> and <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a>. It compares the underlying <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> value of the <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> with the <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> to determine if they refer to the same entity in the registry.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a465b7e27d496784b45e929bdc7ce02e8" id="r_a465b7e27d496784b45e929bdc7ce02e8"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#a465b7e27d496784b45e929bdc7ce02e8">RemoveTemporaryComponents</a> (<a class="el" href="classEngine_1_1Core.html">Core</a> &amp;core)</td></tr>
+<tr class="memdesc:a465b7e27d496784b45e929bdc7ce02e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all temporary components from the registry.  <br /></td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a986b362babb93cd70021db86cb36bf85" id="r_a986b362babb93cd70021db86cb36bf85"><td class="memItemLeft"><a class="el" href="structEngine_1_1EntityId.html">EntityId</a>&#160;</td><td class="memItemRight"><a class="el" href="#a986b362babb93cd70021db86cb36bf85">entityId</a>: _core(core)</td></tr>
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a7f15bb5b5abe1e83f2c0c4fc117547fe" id="r_a7f15bb5b5abe1e83f2c0c4fc117547fe"><td class="memItemLeft">constexpr <a class="el" href="classEngine_1_1Core.html">Core</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a7f15bb5b5abe1e83f2c0c4fc117547fe">GetCore</a> () const</td></tr>
+<tr class="memdesc:a7f15bb5b5abe1e83f2c0c4fc117547fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> instance that this <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> belongs to. This is used internally to access the registry and other resources when manipulating components.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae1e735de0eb632f3cbe82febb1e7215d" id="r_ae1e735de0eb632f3cbe82febb1e7215d"><td class="memItemLeft">std::reference_wrapper&lt; <a class="el" href="classEngine_1_1Core.html">Core</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ae1e735de0eb632f3cbe82febb1e7215d">_core</a></td></tr>
+<tr class="memdesc:ae1e735de0eb632f3cbe82febb1e7215d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structA.html">A</a> reference to the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> instance that this <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> belongs to.  <br /></td></tr>
+<tr class="memitem:ac53032c0815a8327d50d3989f98c090b" id="r_ac53032c0815a8327d50d3989f98c090b"><td class="memItemLeft"><a class="el" href="structEngine_1_1EntityId.html">EntityId</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac53032c0815a8327d50d3989f98c090b">_entityId</a></td></tr>
+<tr class="memdesc:ac53032c0815a8327d50d3989f98c090b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> that identifies the entity in the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a>'s registry. This is the underlying identifier for the entity that this <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> class wraps around, and is used for all operations that manipulate the entity in the registry.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper class providing a convenient interface for entity manipulation in the ECS system. </p>
-<p><a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation in the ECS system.">Entity</a> acts as a handle to an entity in the registry, combining a <a class="el" href="classEngine_1_1Core.html">Core</a> reference with an <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system.">EntityId</a>. It provides utility methods to add, remove, and query components, and maintains context relative to the <a class="el" href="classEngine_1_1Core.html">Core</a> it belongs to.</p>
-<p>Key features:</p><ul>
-<li>Supports both valid entities (with <a class="el" href="classEngine_1_1Core.html">Core</a> reference) and null entities</li>
-<li>Implicit conversion to/from <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system.">EntityId</a></li>
-<li>Null entities created via Entity::Null()</li>
-</ul>
-<div class="fragment"><div class="line"><a class="code hl_class" href="classEngine_1_1Entity.html">Entity</a> entity{core, <a class="code hl_variable" href="#a986b362babb93cd70021db86cb36bf85">entityId</a>};</div>
-<div class="line">entity.<a class="code hl_function" href="#a816b3a2c6e9a074c61cfee1b0bcfdfa0">AddComponent</a>&lt;Transform&gt;(position, rotation);</div>
-<div class="line"><span class="keywordflow">if</span> (entity.<a class="code hl_function" href="#aa11ba9b59eea8f31bd917bfaf89f6a28">HasComponents</a>&lt;Transform, Renderable&gt;()) {</div>
-<div class="line">    <span class="keyword">auto</span>&amp; transform = entity.<a class="code hl_function" href="#acd36f75b5b6b5245dbb1fcd0adcd0893">GetComponents</a>&lt;Transform&gt;();</div>
-<div class="line">}</div>
-<div class="ttc" id="aclassEngine_1_1Entity_html"><div class="ttname"><a href="classEngine_1_1Entity.html">Engine::Entity</a></div><div class="ttdoc">Wrapper class providing a convenient interface for entity manipulation in the ECS system.</div><div class="ttdef"><b>Definition</b> Entity.hpp:34</div></div>
-<div class="ttc" id="aclassEngine_1_1Entity_html_a816b3a2c6e9a074c61cfee1b0bcfdfa0"><div class="ttname"><a href="#a816b3a2c6e9a074c61cfee1b0bcfdfa0">Engine::Entity::AddComponent</a></div><div class="ttdeci">decltype(auto) AddComponent(TComponent &amp;&amp;component)</div><div class="ttdef"><b>Definition</b> Entity.hpp:68</div></div>
-<div class="ttc" id="aclassEngine_1_1Entity_html_a986b362babb93cd70021db86cb36bf85"><div class="ttname"><a href="#a986b362babb93cd70021db86cb36bf85">Engine::Entity::entityId</a></div><div class="ttdeci">EntityId entityId</div><div class="ttdef"><b>Definition</b> Entity.hpp:42</div></div>
-<div class="ttc" id="aclassEngine_1_1Entity_html_aa11ba9b59eea8f31bd917bfaf89f6a28"><div class="ttname"><a href="#aa11ba9b59eea8f31bd917bfaf89f6a28">Engine::Entity::HasComponents</a></div><div class="ttdeci">bool HasComponents() const</div><div class="ttdef"><b>Definition</b> Entity.hpp:135</div></div>
-<div class="ttc" id="aclassEngine_1_1Entity_html_acd36f75b5b6b5245dbb1fcd0adcd0893"><div class="ttname"><a href="#acd36f75b5b6b5245dbb1fcd0adcd0893">Engine::Entity::GetComponents</a></div><div class="ttdeci">decltype(auto) GetComponents()</div><div class="ttdef"><b>Definition</b> Entity.hpp:146</div></div>
-</div><!-- fragment --> </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<div class="textblock"><p>Wrapper class providing a convenient interface for entity manipulation with the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a>. <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> acts as a handle to an entity in the registry, combining a <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> reference with an <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a>. It provides utility methods to add, remove, and query components, and maintains context relative to the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> it belongs to. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Engine::Core</a> </dd>
+<dd>
+<a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">Engine::EntityId</a> </dd></dl>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a68b16353b00d00bfaea6620a626fe05b" name="a68b16353b00d00bfaea6620a626fe05b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68b16353b00d00bfaea6620a626fe05b">&#9670;&#160;</a></span>Entity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Engine::Entity::Entity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structEngine_1_1EntityId.html">EntityId</a></td>          <td class="paramname"><span class="paramname"><em>entityId</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create an <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> from <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> and the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> it belongs to. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">core</td><td>Reference to the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> instance that the <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> belongs to. </td></tr>
+    <tr><td class="paramname">entityId</td><td>The <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> that identifies the entity in the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a>'s registry. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo</a></b></dt><dd>put the implementation in the cpp file </dd></dl>
+
+</div>
+</div>
 <a id="a0f9d13bb0808c90bb05eb48fa579ebdd" name="a0f9d13bb0808c90bb05eb48fa579ebdd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f9d13bb0808c90bb05eb48fa579ebdd">&#9670;&#160;</a></span>~Entity()</h2>
 
@@ -181,34 +231,11 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Default destructor for <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a>. It does not perform any special cleanup, as the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> is responsible for managing the entity's lifecycle. </p>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="ad349a0e1a71068b990aa1efd02bdc01e" name="ad349a0e1a71068b990aa1efd02bdc01e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad349a0e1a71068b990aa1efd02bdc01e">&#9670;&#160;</a></span>_entityId()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structEngine_1_1EntityId.html">EntityId</a> Engine::Entity::_entityId </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="#a986b362babb93cd70021db86cb36bf85">entityId</a></td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ae84add0450677942bb737053175c3d2c" name="ae84add0450677942bb737053175c3d2c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae84add0450677942bb737053175c3d2c">&#9670;&#160;</a></span>AddComponent() <span class="overload">[1/2]</span></h2>
 
@@ -233,21 +260,23 @@ template&lt;typename TComponent, typename... TArgs&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Utility method to add a component to an entity.</p>
+
+<p>Add a component to an entity. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TComponent</td><td>type to add to registry </td></tr>
-    <tr><td class="paramname">TArgs</td><td>type used to create the component </td></tr>
+    <tr><td class="paramname">TComponent</td><td>The type of the component to add to the registry. </td></tr>
+    <tr><td class="paramname">TArgs</td><td>The types of the arguments to construct the component in-place in the registry. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">args</td><td>parameters used to instanciate component directly in registry memory </td></tr>
+    <tr><td class="paramname">args</td><td>The arguments to construct the component in-place in the registry. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>reference of the added component </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> reference to the added component. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -275,20 +304,22 @@ template&lt;typename TComponent&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Utility method to add a component to an entity.</p>
+
+<p>Add a component to an entity. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TComponent</td><td>type to add to registry </td></tr>
+    <tr><td class="paramname">TComponent</td><td>The type of the component to add to the registry. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">component</td><td>rvalue to add to registry </td></tr>
+    <tr><td class="paramname">component</td><td>The rvalue of the component to add to the registry. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>reference of the added component </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> reference to the added component. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Creating_01a_012-unit_01jelly_01cube_01with_015x5x5_01grid_1-example.html#a1">Creating a 2-unit jelly cube with 5x5x5 grid:</a>, <a class="el" href="Creating_01a_01cloth_01for_01soft_01body_01simulation_1-example.html#a1">Creating a cloth for soft body simulation:</a>, <a class="el" href="Creating_01a_01cube_01entity_1-example.html#a1">Creating a cube entity:</a>, <a class="el" href="Creating_01a_01cylinder_01entity_1-example.html#a1">Creating a cylinder entity:</a>, <a class="el" href="Creating_01a_01plane_01entity_1-example.html#a1">Creating a plane entity:</a>, <a class="el" href="Creating_01a_01rope_01for_01soft_01body_01simulation_1-example.html#a1">Creating a rope for soft body simulation:</a>, and <a class="el" href="Creating_01a_01sphere_01entity_1-example.html#a1">Creating a sphere entity:</a>.</dd>
 </dl>
 
@@ -318,21 +349,23 @@ template&lt;typename TComponent, typename... TArgs&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Utility method to add a component to an entity if it does not already exist.</p>
+
+<p>Add a component to an entity if it does not already exist. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TComponent</td><td>type to add to registry </td></tr>
-    <tr><td class="paramname">TArgs</td><td>type used to create the component </td></tr>
+    <tr><td class="paramname">TComponent</td><td>type to add to registry. </td></tr>
+    <tr><td class="paramname">TArgs</td><td>type used to create the component. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">args</td><td>parameters used to instanciate component directly in registry memory </td></tr>
+    <tr><td class="paramname">args</td><td>parameters used to instanciate component directly in registry memory. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>reference of the added component </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>reference of the added component. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo</a></b></dt><dd>put the implementation in the inl file. </dd></dl>
 
 </div>
 </div>
@@ -360,7 +393,8 @@ template&lt;typename TTempComponent, typename... TArgs&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Utility method to add a temporary component to an entity. Temporary component are removed when calling RemoveTemporaryComponents system.</p>
+
+<p>Add a temporary component to an entity. Temporary component are removed when calling RemoveTemporaryComponents system. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TTempComponent</td><td>type to add to registry </td></tr>
@@ -375,37 +409,12 @@ template&lt;typename TTempComponent, typename... TArgs&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>reference of the added component </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a465b7e27d496784b45e929bdc7ce02e8">RemoveTemporaryComponents</a> </dd></dl>
-
-</div>
-</div>
-<a id="a5aa83d14cb60da47f062efa6ba78843e" name="a5aa83d14cb60da47f062efa6ba78843e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5aa83d14cb60da47f062efa6ba78843e">&#9670;&#160;</a></span>explicit() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Engine::Entity::explicit </td>
-          <td>(</td>
-          <td class="paramtype">false</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> &amp;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Create an <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation in the ECS system.">Entity</a> from <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system.">EntityId</a></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">core</td><td>reference to the core </td></tr>
-    <tr><td class="paramname">entity</td><td>index value in the registry </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structEngine_1_1EntityId.html#ad25b8d300490e5736af394f09fb96025" title="Remove all temporary components from the registry. This system should be called at the end of each lo...">Engine::EntityId::RemoveTemporaryComponents</a> </dd></dl>
 
 </div>
 </div>
 <a id="a21a26447af540467a7cddd69b0ede6b2" name="a21a26447af540467a7cddd69b0ede6b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21a26447af540467a7cddd69b0ede6b2">&#9670;&#160;</a></span>explicit() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a21a26447af540467a7cddd69b0ede6b2">&#9670;&#160;</a></span>explicit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -426,6 +435,10 @@ template&lt;typename TTempComponent, typename... TArgs&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Implicit conversion operator to <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> of this <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a>. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo</a></b></dt><dd>put the implementation in the cpp file, (remove inline) </dd></dl>
 
 </div>
 </div>
@@ -453,14 +466,16 @@ template&lt;typename... TComponent&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Get components of type TComponent from the entity.</p>
+
+<p>Get components of type TComponent from the entity. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TComponent</td><td>components to get </td></tr>
+    <tr><td class="paramname">TComponent</td><td>components to get. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>components of type TComponent from the entity </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>components of type TComponent from the entity. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -488,14 +503,45 @@ template&lt;typename... TComponent&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Get components of type TComponent from the entity.</p>
+
+<p>Get components of type TComponent from the entity. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TComponent</td><td>components to get </td></tr>
+    <tr><td class="paramname">TComponent</td><td>components to get. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>components of type TComponent from the entity </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>components of type TComponent from the entity. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
+
+</div>
+</div>
+<a id="a7f15bb5b5abe1e83f2c0c4fc117547fe" name="a7f15bb5b5abe1e83f2c0c4fc117547fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f15bb5b5abe1e83f2c0c4fc117547fe">&#9670;&#160;</a></span>GetCore()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1Core.html">Core</a> &amp; Engine::Entity::GetCore </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get a reference to the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> instance that this <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> belongs to. This is used internally to access the registry and other resources when manipulating components. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> reference to the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> instance. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo</a></b></dt><dd>put the implementation in the cpp file </dd></dl>
 
 </div>
 </div>
@@ -523,14 +569,16 @@ template&lt;typename... TComponent&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Check if entity have one or multiple component's type.</p>
+
+<p>Check if entity have one or multiple component's type. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TComponent</td><td>components to check </td></tr>
+    <tr><td class="paramname">TComponent</td><td>components to check. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if entity have all requested component </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if entity have all requested component, false otherwise. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -557,6 +605,10 @@ template&lt;typename... TComponent&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Get the <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> associated with this <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> of this <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a>. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo</a></b></dt><dd>put the implementation in the cpp file, (remove inline) </dd></dl>
+
 </div>
 </div>
 <a id="a9d498e8835bedd70bea734d5eb595478" name="a9d498e8835bedd70bea734d5eb595478"></a>
@@ -573,7 +625,9 @@ template&lt;typename... TComponent&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Check whenever if entity id is a valid id. </p><dl class="section return"><dt>Returns</dt><dd>entity's validity </dd></dl>
+
+<p>Check if the entity is alive. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if the entity is alive, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -592,7 +646,7 @@ template&lt;typename... TComponent&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Kill the entity, removing all components and making it invalid. </p>
+<p>Kill the entity, removing all components and making it invalid. After calling this method, the <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> will no longer correspond to a valid entity in the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a>'s registry, and the <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> will be considered dead. </p>
 
 </div>
 </div>
@@ -608,7 +662,7 @@ template&lt;typename... TComponent&gt; </div>
         <tr>
           <td class="memname">bool Engine::Entity::operator== </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classEngine_1_1Entity.html">Entity</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#a68b16353b00d00bfaea6620a626fe05b">Entity</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -618,6 +672,16 @@ template&lt;typename... TComponent&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Equality operator for <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a>. It compares the underlying <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> values to determine if two <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> instances refer to the same entity in the registry. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>The other <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the entities are equal, false otherwise. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo</a></b></dt><dd>put the implementation in the cpp file </dd></dl>
 
 </div>
 </div>
@@ -643,6 +707,16 @@ template&lt;typename... TComponent&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Equality operator for <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> and <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a>. It compares the underlying <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> value of the <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> with the <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> to determine if they refer to the same entity in the registry. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>The <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> and <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> are equal, false otherwise. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo</a></b></dt><dd>put the implementation in the cpp file </dd></dl>
 
 </div>
 </div>
@@ -670,13 +744,15 @@ template&lt;typename TComponent&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Utility method to remove a component from an entity.</p>
+
+<p>Remove a component from an entity. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TComponent</td><td>type to remove from registry </td></tr>
+    <tr><td class="paramname">TComponent</td><td>The type of the component to remove from the registry. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -702,9 +778,16 @@ template&lt;typename TComponent&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p><a class="el" href="namespaceEngine.html#a63636e936479d870dcdf3a2b60fddcff">System</a> to remove all temporary component from the registry.</p>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a591627f4862cd3ace3a9996b8c70bc7f">AddTemporaryComponent</a> </dd></dl>
+
+<p>Remove all temporary components from the registry. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">core</td><td>The <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> instance whose registry is used to store the component. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structEngine_1_1EntityId.html#a5038f61443f9484562943b3cf12b938a" title="Add a temporary component to an entity. Temporary component are removed when calling RemoveTemporaryC...">Engine::EntityId::AddTemporaryComponent</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo</a></b></dt><dd>put the implementation in the cpp file, (remove inline) </dd></dl>
 
 </div>
 </div>
@@ -732,29 +815,65 @@ template&lt;typename TComponent&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Try to get a component of type TComponent from the entity.</p>
+
+<p>Try to get a component of type TComponent from the entity. It returns a pointer to the component if it exists, or nullptr if it does not exist. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TComponent</td><td>components to get </td></tr>
+    <tr><td class="paramname">TComponent</td><td>The type of the component to get from the entity. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>components of type TComponent from the entity </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The component of type TComponent from the entity if it exists, or nullptr if it does not exist. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a986b362babb93cd70021db86cb36bf85" name="a986b362babb93cd70021db86cb36bf85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a986b362babb93cd70021db86cb36bf85">&#9670;&#160;</a></span>entityId</h2>
+<a id="ae1e735de0eb632f3cbe82febb1e7215d" name="ae1e735de0eb632f3cbe82febb1e7215d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1e735de0eb632f3cbe82febb1e7215d">&#9670;&#160;</a></span>_core</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structEngine_1_1EntityId.html">EntityId</a> Engine::Entity::entityId</td>
+          <td class="memname">std::reference_wrapper&lt;<a class="el" href="classEngine_1_1Core.html">Core</a>&gt; Engine::Entity::_core</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
+<p><a class="el" href="structA.html">A</a> reference to the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> instance that this <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> belongs to. </p>
+
+</div>
+</div>
+<a id="ac53032c0815a8327d50d3989f98c090b" name="ac53032c0815a8327d50d3989f98c090b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac53032c0815a8327d50d3989f98c090b">&#9670;&#160;</a></span>_entityId</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structEngine_1_1EntityId.html">EntityId</a> Engine::Entity::_entityId</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">EntityId</a> that identifies the entity in the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a>'s registry. This is the underlying identifier for the entity that this <a class="el" href="classEngine_1_1Entity.html" title="Wrapper class providing a convenient interface for entity manipulation with the Core....">Entity</a> class wraps around, and is used for all operations that manipulate the entity in the registry. </p>
 
 </div>
 </div>

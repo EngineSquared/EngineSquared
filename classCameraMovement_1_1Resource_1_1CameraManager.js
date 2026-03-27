@@ -22,5 +22,16 @@ var classCameraMovement_1_1Resource_1_1CameraManager =
     [ "SetMovementSpeed", "classCameraMovement_1_1Resource_1_1CameraManager.html#a3124a455d1d710cc952354b0973fae76", null ],
     [ "SetOriginRotation", "classCameraMovement_1_1Resource_1_1CameraManager.html#ad9344a5c81d586a366a18efdc571bb56", null ],
     [ "SetWasCursorMasked", "classCameraMovement_1_1Resource_1_1CameraManager.html#a93ab87c1295a7af7fe1a65de7e1bd34b", null ],
-    [ "WasCursorMasked", "classCameraMovement_1_1Resource_1_1CameraManager.html#ad2ff574e53659b6ada9feb7bb62b8403", null ]
+    [ "WasCursorMasked", "classCameraMovement_1_1Resource_1_1CameraManager.html#ad2ff574e53659b6ada9feb7bb62b8403", null ],
+    [ "_behavior", "classCameraMovement_1_1Resource_1_1CameraManager.html#aeba5e93479eb99966cecf5ba8d54b1d6", null ],
+    [ "_cameraEntity", "classCameraMovement_1_1Resource_1_1CameraManager.html#aa2c8551d6cbaf48cebd1f9591ce7b818", null ],
+    [ "_core", "classCameraMovement_1_1Resource_1_1CameraManager.html#a1f017c6544e44cf1807b4c86450fdee9", null ],
+    [ "_isMouseDragging", "classCameraMovement_1_1Resource_1_1CameraManager.html#a06f8ac628eca4beb87833da43017c323", null ],
+    [ "_joystickId", "classCameraMovement_1_1Resource_1_1CameraManager.html#aa69bdcaa78da67bbfe65413178526c04", null ],
+    [ "_lastMouseX", "classCameraMovement_1_1Resource_1_1CameraManager.html#a0e3ce838115d04a4840bf9a0cf4e6454", null ],
+    [ "_lastMouseY", "classCameraMovement_1_1Resource_1_1CameraManager.html#a828db75e883053a5340e5c4cdb746817", null ],
+    [ "_mouseSensitivity", "classCameraMovement_1_1Resource_1_1CameraManager.html#a71afb3bf680f087f0911c72a9f898569", null ],
+    [ "_movementSpeed", "classCameraMovement_1_1Resource_1_1CameraManager.html#a76be07745378e846036bf40f1f2ac5c7", null ],
+    [ "_originRotation", "classCameraMovement_1_1Resource_1_1CameraManager.html#a41b5d7bdd0d44e9dff776679cf64fb4f", null ],
+    [ "_wasCursorMasked", "classCameraMovement_1_1Resource_1_1CameraManager.html#a77d9a43456d87d174e9c1107d16c7b14", null ]
 ];

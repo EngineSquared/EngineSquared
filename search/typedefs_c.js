@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['queueworkdonecallback_0',['QueueWorkDoneCallback',['../namespacewgpu.html#affedc46cbd35d7c998959b3eb6c14ab5',1,'wgpu']]]
+  ['poperrorscopecallback_0',['PopErrorScopeCallback',['../namespacewgpu.html#a155f31de6c613c5804fbb645adcd858f',1,'wgpu']]]
 ];

@@ -3,6 +3,7 @@ var structObject_1_1Component_1_1Transform =
     [ "Transform", "structObject_1_1Component_1_1Transform.html#a9427892dd960a998d5135c286e7a5e24", null ],
     [ "Transform", "structObject_1_1Component_1_1Transform.html#a07d94ec1cdbcf08cb96b75a00af5e54b", null ],
     [ "Transform", "structObject_1_1Component_1_1Transform.html#ab80df969532fa36b1cd8c4c73b7204b1", null ],
+    [ "_BuildTransformationMatrix", "structObject_1_1Component_1_1Transform.html#adf249777301dc6a7b3372f54f7d28360", null ],
     [ "ComputeTransformationMatrix", "structObject_1_1Component_1_1Transform.html#abd796605dac106b470ac338cf8dc6d96", null ],
     [ "GetForwardVector", "structObject_1_1Component_1_1Transform.html#a524753353733cf8c5615658cf66fd19c", null ],
     [ "GetPosition", "structObject_1_1Component_1_1Transform.html#aa6aac06a32cb15828de3c27de2736a74", null ],
@@ -17,5 +18,10 @@ var structObject_1_1Component_1_1Transform =
     [ "SetRotation", "structObject_1_1Component_1_1Transform.html#ab5f440e18f90aef6f5eea288af76f0fe", null ],
     [ "SetRotation", "structObject_1_1Component_1_1Transform.html#aeb9846b6e1a5927f66ab68e25477f3b2", null ],
     [ "SetScale", "structObject_1_1Component_1_1Transform.html#a983b6ab2e6128b338d44958c1ee5b449", null ],
-    [ "SetScale", "structObject_1_1Component_1_1Transform.html#a0ec82356d123244fa1cfd47f19540a3c", null ]
+    [ "SetScale", "structObject_1_1Component_1_1Transform.html#a0ec82356d123244fa1cfd47f19540a3c", null ],
+    [ "_dirty", "structObject_1_1Component_1_1Transform.html#afc6fdb6511efd56114a6c22dcc8a4932", null ],
+    [ "_position", "structObject_1_1Component_1_1Transform.html#a454c48d54195a4819ed4997a9dcbc0fc", null ],
+    [ "_rotation", "structObject_1_1Component_1_1Transform.html#acff86167aa3ba1793cf1014e4b02b19c", null ],
+    [ "_scale", "structObject_1_1Component_1_1Transform.html#a2212e19f43e2bb0794d757d73bc966ff", null ],
+    [ "_transformationMatrixCache", "structObject_1_1Component_1_1Transform.html#a8418ae1ec10d0f32555998e6695922ed", null ]
 ];

@@ -95,6 +95,9 @@ $(function(){initNavTree('classEngine_1_1IPlugin.html','','classEngine_1_1IPlugi
 </div><!--header-->
 <div class="contents">
 
+<p>Interface for plugins that can be added to the engine.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="IPlugin_8hpp_source.html">IPlugin.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Engine::IPlugin:</div>
@@ -102,7 +105,7 @@ Inheritance diagram for Engine::IPlugin:</div>
  <div class="center">
   <img src="classEngine_1_1IPlugin.png" usemap="#Engine_3A_3AIPlugin_map" alt=""/>
   <map id="Engine_3A_3AIPlugin_map" name="Engine_3A_3AIPlugin_map">
-<area href="classEngine_1_1APlugin.html" alt="Engine::APlugin" shape="rect" coords="0,56,156,80"/>
+<area href="classEngine_1_1APlugin.html" title="Abstract plugin class that add some utility functions to make it easier to register systems and resou..." alt="Engine::APlugin" shape="rect" coords="0,56,156,80"/>
 <area href="classCameraMovement_1_1Plugin.html" title="Plugin for camera movement control." alt="CameraMovement::Plugin" shape="rect" coords="166,112,322,136"/>
 <area href="classDefaultPipeline_1_1Plugin.html" alt="DefaultPipeline::Plugin" shape="rect" coords="166,168,322,192"/>
 <area href="classEvent_1_1Plugin.html" alt="Event::Plugin" shape="rect" coords="166,224,322,248"/>
@@ -123,9 +126,13 @@ Inheritance diagram for Engine::IPlugin:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9e4f47cc66c26ea74fbc5f64cb1f87d8" id="r_a9e4f47cc66c26ea74fbc5f64cb1f87d8"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="#a9e4f47cc66c26ea74fbc5f64cb1f87d8">~IPlugin</a> ()=default</td></tr>
+<tr class="memdesc:a9e4f47cc66c26ea74fbc5f64cb1f87d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for <a class="el" href="classEngine_1_1IPlugin.html" title="Interface for plugins that can be added to the engine.">IPlugin</a>.  <br /></td></tr>
 <tr class="memitem:ae11bb5d858de8329b9964e9a3cf93ea9" id="r_ae11bb5d858de8329b9964e9a3cf93ea9"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#ae11bb5d858de8329b9964e9a3cf93ea9">Bind</a> (void)=0</td></tr>
+<tr class="memdesc:ae11bb5d858de8329b9964e9a3cf93ea9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pure virtual method that must be implemented by derived plugin classes. This method is called when the plugin is added to the engine, and is where the plugin should register its systems, resources, and any other functionality it provides to the engine.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Interface for plugins that can be added to the engine. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9e4f47cc66c26ea74fbc5f64cb1f87d8" name="a9e4f47cc66c26ea74fbc5f64cb1f87d8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9e4f47cc66c26ea74fbc5f64cb1f87d8">&#9670;&#160;</a></span>~IPlugin()</h2>
 
@@ -148,6 +155,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Virtual destructor for <a class="el" href="classEngine_1_1IPlugin.html" title="Interface for plugins that can be added to the engine.">IPlugin</a>. </p>
 
 </div>
 </div>
@@ -174,6 +183,11 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Pure virtual method that must be implemented by derived plugin classes. This method is called when the plugin is added to the engine, and is where the plugin should register its systems, resources, and any other functionality it provides to the engine. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Engine::Core</a> </dd>
+<dd>
+<a class="el" href="classEngine_1_1APlugin.html" title="Abstract plugin class that add some utility functions to make it easier to register systems and resou...">Engine::APlugin</a> </dd></dl>
 
 <p>Implemented in <a class="el" href="classCameraMovement_1_1Plugin.html#acd42b08739bab3def2b83a0bbf0f6ecd">CameraMovement::Plugin</a>, <a class="el" href="classDefaultPipeline_1_1Plugin.html#a17ab8b8699a6a431c5c8c876d658e98b">DefaultPipeline::Plugin</a>, <a class="el" href="classEngine_1_1APlugin.html#aee62385734af32eca5fc7cef835ee7c7">Engine::APlugin</a>, <a class="el" href="classEvent_1_1Plugin.html#ac57afda2a4c5aa1e6aa0b70887779680">Event::Plugin</a>, <a class="el" href="classGraphic_1_1Plugin.html#a4c23605dbc7f2b540772f49563cf2ccf">Graphic::Plugin</a>, <a class="el" href="classInput_1_1Plugin.html#a88df4edb361e97869f88528b970a3592">Input::Plugin</a>, <a class="el" href="classNativeScripting_1_1Plugin.html#a7d546e3ca336ead0d775bb5d8e808853">NativeScripting::Plugin</a>, <a class="el" href="classPhysics_1_1Plugin.html#af6acbeb9df7b23776199729ab6ad0312">Physics::Plugin</a>, <a class="el" href="classPluginTestA.html#aaa3d2ff71eb37fdc8b0cfc5359be5904">PluginTestA</a>, <a class="el" href="classPluginTestB.html#a83d126d3407181a81c94bcc397b83f79">PluginTestB</a>, <a class="el" href="classRenderingPipeline_1_1Plugin.html#a252bbb72b821e7f0302a93e693a919c9">RenderingPipeline::Plugin</a>, <a class="el" href="classRmlui_1_1Plugin.html#addc6e04af549ead27b92d497a4671a73">Rmlui::Plugin</a>, <a class="el" href="classScene_1_1Plugin.html#a4a3ae923b70e66bb34394ca43062a9a9">Scene::Plugin</a>, <a class="el" href="classSound_1_1Plugin.html#a2ba829ba63d946dc097a9f293f98c1be">Sound::Plugin</a>, and <a class="el" href="classWindow_1_1Plugin.html#ae0552e57e3ca33d469abdbab89bd8468">Window::Plugin</a>.</p>
 

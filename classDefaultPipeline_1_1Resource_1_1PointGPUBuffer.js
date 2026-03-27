@@ -7,5 +7,8 @@ var classDefaultPipeline_1_1Resource_1_1PointGPUBuffer =
     [ "Destroy", "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#a29da999b37eee0e1b595dc8b25f5c3e2", null ],
     [ "GetBuffer", "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#a625d2971082f35574df4519992f437cc", null ],
     [ "IsCreated", "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#a98c89639c933c27ca9b03aa84a3d4452", null ],
-    [ "Update", "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#a0b511879d060c9bf0658ba4a1328930a", null ]
+    [ "Update", "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#a0b511879d060c9bf0658ba4a1328930a", null ],
+    [ "_buffer", "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#a17047b473e2ddc0ef028a9e6540cc862", null ],
+    [ "_entity", "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#a6daf2074faa8759851c0e0ca38e018ea", null ],
+    [ "_isCreated", "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#a2466fb41b5427627fde7c1017c2cd674", null ]
 ];

@@ -95,6 +95,9 @@ $(function(){initNavTree('classEngine_1_1SchedulerError.html','','classEngine_1_
 </div><!--header-->
 <div class="contents">
 
+<p>Custom exception class for scheduler-related errors.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="SchedulerContainer_8hpp_source.html">SchedulerContainer.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Engine::SchedulerError:</div>
@@ -106,9 +109,19 @@ Inheritance diagram for Engine::SchedulerError:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae2c5ea7aaee94cd61f0825f3edd92831" id="r_ae2c5ea7aaee94cd61f0825f3edd92831"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ae2c5ea7aaee94cd61f0825f3edd92831">SchedulerError</a> (const std::string &amp;message)</td></tr>
+<tr class="memdesc:ae2c5ea7aaee94cd61f0825f3edd92831"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classEngine_1_1SchedulerError.html" title="Custom exception class for scheduler-related errors.">SchedulerError</a>.  <br /></td></tr>
 <tr class="memitem:a9cb45f122be42e8e8f813cf12ca34584" id="r_a9cb45f122be42e8e8f813cf12ca34584"><td class="memItemLeft">const char *&#160;</td><td class="memItemRight"><a class="el" href="#a9cb45f122be42e8e8f813cf12ca34584">what</a> () const override  throw ()</td></tr>
+<tr class="memdesc:a9cb45f122be42e8e8f813cf12ca34584"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the error message.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a268d007d9d8dd3ca5e40899c54f0f430" id="r_a268d007d9d8dd3ca5e40899c54f0f430"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a268d007d9d8dd3ca5e40899c54f0f430">msg</a></td></tr>
+<tr class="memdesc:a268d007d9d8dd3ca5e40899c54f0f430"><td class="mdescLeft">&#160;</td><td class="mdescRight">The error message associated with the exception.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Custom exception class for scheduler-related errors. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000073">Todo</a></b></dt><dd>Put this in <a class="el" href="namespaceEngine_1_1Exception.html">Exception</a> folder. </dd></dl>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae2c5ea7aaee94cd61f0825f3edd92831" name="ae2c5ea7aaee94cd61f0825f3edd92831"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae2c5ea7aaee94cd61f0825f3edd92831">&#9670;&#160;</a></span>SchedulerError()</h2>
 
@@ -131,6 +144,14 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructor for <a class="el" href="classEngine_1_1SchedulerError.html" title="Custom exception class for scheduler-related errors.">SchedulerError</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The error message to be included in the exception. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -160,6 +181,34 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the error message. </p>
+<dl class="section return"><dt>Returns</dt><dd>The error message as a C-style string. </dd></dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a268d007d9d8dd3ca5e40899c54f0f430" name="a268d007d9d8dd3ca5e40899c54f0f430"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a268d007d9d8dd3ca5e40899c54f0f430">&#9670;&#160;</a></span>msg</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Engine::SchedulerError::msg</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The error message associated with the exception. </p>
 
 </div>
 </div>

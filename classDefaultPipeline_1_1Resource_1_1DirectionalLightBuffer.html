@@ -127,6 +127,19 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a414c33882446b551714b33991cbeb7f5" id="r_a414c33882446b551714b33991cbeb7f5"><td class="memItemLeft">static std::string&#160;</td><td class="memItemRight"><a class="el" href="#a414c33882446b551714b33991cbeb7f5">prefix</a> = &quot;DirectionalLightBuffer_&quot;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:abbf551d7594c59d18fb06e8fb94c90f2" id="r_abbf551d7594c59d18fb06e8fb94c90f2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abbf551d7594c59d18fb06e8fb94c90f2">_UpdateDebugName</a> ()</td></tr>
+<tr class="memitem:a8326eeefaa3cd245fd035d5c37c3995a" id="r_a8326eeefaa3cd245fd035d5c37c3995a"><td class="memItemLeft">wgpu::Buffer&#160;</td><td class="memItemRight"><a class="el" href="#a8326eeefaa3cd245fd035d5c37c3995a">_CreateBuffer</a> (const <a class="el" href="structGraphic_1_1Resource_1_1DeviceContext.html">Graphic::Resource::DeviceContext</a> &amp;context)</td></tr>
+<tr class="memitem:ae5437b335e261c91cc2593a69383971e" id="r_ae5437b335e261c91cc2593a69383971e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae5437b335e261c91cc2593a69383971e">_UpdateBuffer</a> (const <a class="el" href="classGraphic_1_1Resource_1_1Context.html">Graphic::Resource::Context</a> &amp;context, const <a class="el" href="structDefaultPipeline_1_1Component_1_1GPUDirectionalLight.html">Component::GPUDirectionalLight</a> &amp;GPUDirectionalLight)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a644cb93ee0b66c9ed32a829bd8f536c4" id="r_a644cb93ee0b66c9ed32a829bd8f536c4"><td class="memItemLeft">wgpu::Buffer&#160;</td><td class="memItemRight"><a class="el" href="#a644cb93ee0b66c9ed32a829bd8f536c4">_buffer</a></td></tr>
+<tr class="memitem:aa5263006f19f8c0857aa1f2a0de3d630" id="r_aa5263006f19f8c0857aa1f2a0de3d630"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa5263006f19f8c0857aa1f2a0de3d630">_isCreated</a> = false</td></tr>
+<tr class="memitem:acd2ae8bc04033cf55b5a53cfc6e3a909" id="r_acd2ae8bc04033cf55b5a53cfc6e3a909"><td class="memItemLeft"><a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a>&#160;</td><td class="memItemRight"><a class="el" href="#acd2ae8bc04033cf55b5a53cfc6e3a909">_entity</a></td></tr>
+<tr class="memitem:acb7f0fe4d6b935baf39026332fb089cc" id="r_acb7f0fe4d6b935baf39026332fb089cc"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#acb7f0fe4d6b935baf39026332fb089cc">_debugName</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6448bedcd247a65217798eb27e1a7a97" name="a6448bedcd247a65217798eb27e1a7a97"></a>
@@ -180,6 +193,85 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a8326eeefaa3cd245fd035d5c37c3995a" name="a8326eeefaa3cd245fd035d5c37c3995a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8326eeefaa3cd245fd035d5c37c3995a">&#9670;&#160;</a></span>_CreateBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::Buffer DefaultPipeline::Resource::DirectionalLightBuffer::_CreateBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structGraphic_1_1Resource_1_1DeviceContext.html">Graphic::Resource::DeviceContext</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae5437b335e261c91cc2593a69383971e" name="ae5437b335e261c91cc2593a69383971e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5437b335e261c91cc2593a69383971e">&#9670;&#160;</a></span>_UpdateBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DefaultPipeline::Resource::DirectionalLightBuffer::_UpdateBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGraphic_1_1Resource_1_1Context.html">Graphic::Resource::Context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structDefaultPipeline_1_1Component_1_1GPUDirectionalLight.html">Component::GPUDirectionalLight</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>GPUDirectionalLight</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abbf551d7594c59d18fb06e8fb94c90f2" name="abbf551d7594c59d18fb06e8fb94c90f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbf551d7594c59d18fb06e8fb94c90f2">&#9670;&#160;</a></span>_UpdateDebugName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DefaultPipeline::Resource::DirectionalLightBuffer::_UpdateDebugName </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="af837c6046cf2bd24416d30c9f8cf586f" name="af837c6046cf2bd24416d30c9f8cf586f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af837c6046cf2bd24416d30c9f8cf586f">&#9670;&#160;</a></span>Create()</h2>
 
@@ -366,6 +458,94 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a644cb93ee0b66c9ed32a829bd8f536c4" name="a644cb93ee0b66c9ed32a829bd8f536c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a644cb93ee0b66c9ed32a829bd8f536c4">&#9670;&#160;</a></span>_buffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::Buffer DefaultPipeline::Resource::DirectionalLightBuffer::_buffer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acb7f0fe4d6b935baf39026332fb089cc" name="acb7f0fe4d6b935baf39026332fb089cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb7f0fe4d6b935baf39026332fb089cc">&#9670;&#160;</a></span>_debugName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string DefaultPipeline::Resource::DirectionalLightBuffer::_debugName</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acd2ae8bc04033cf55b5a53cfc6e3a909" name="acd2ae8bc04033cf55b5a53cfc6e3a909"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd2ae8bc04033cf55b5a53cfc6e3a909">&#9670;&#160;</a></span>_entity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> DefaultPipeline::Resource::DirectionalLightBuffer::_entity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa5263006f19f8c0857aa1f2a0de3d630" name="aa5263006f19f8c0857aa1f2a0de3d630"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5263006f19f8c0857aa1f2a0de3d630">&#9670;&#160;</a></span>_isCreated</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DefaultPipeline::Resource::DirectionalLightBuffer::_isCreated = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a414c33882446b551714b33991cbeb7f5" name="a414c33882446b551714b33991cbeb7f5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a414c33882446b551714b33991cbeb7f5">&#9670;&#160;</a></span>prefix</h2>
 

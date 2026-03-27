@@ -1,6 +1,7 @@
 var classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass =
 [
     [ "AMultipleExecutionRenderPass", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#a0d25f5efeab2a3ef569f47176b44316c", null ],
+    [ "_CreateRenderPass", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#a0e5b0bccec68af7dfaefebc8a7f52a47", null ],
     [ "Execute", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#adf55d29a6c31060a42c8f9e16849b9eb", null ],
     [ "ExecuteSinglePass", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#a28f3f365abbcab8a36e0499dc03d6c84", null ],
     [ "GetNumberOfPasses", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#aec6ae0ccd87095001a6e2428c0bfe9bc", null ],
@@ -8,5 +9,6 @@ var classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass =
     [ "postMultiplePass", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#a53da1067ecac43c62b84d7ef0b188305", null ],
     [ "postPass", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#a9a33a222318f7c831f92c4e04ee934f4", null ],
     [ "preMultiplePass", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#af85406568fe705428d99eb6e357e0537", null ],
-    [ "UniqueRenderCallback", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#a1176cc1e31f7c3d330d494f6983c3bdc", null ]
+    [ "UniqueRenderCallback", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#a1176cc1e31f7c3d330d494f6983c3bdc", null ],
+    [ "_commandEncoder", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html#aeac878f047fad9afa3d7f46ae6d5cdfc", null ]
 ];

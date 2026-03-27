@@ -97,6 +97,11 @@ $(function(){initNavTree('classObject_1_1Resource_1_1ResourceManager.html','','c
 
 <p><code>#include &lt;<a class="el" href="ResourceManager_8hpp_source.html">ResourceManager.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:ResourceLoader" id="r_ResourceLoader"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structObject_1_1Resource_1_1ResourceManager_1_1ResourceLoader.html">ResourceLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structObject_1_1Resource_1_1ResourceManager_1_1ResourceLoader.html" title="ResourceLoader structure is used to load a resource from another resource or from arguments.">ResourceLoader</a> structure is used to load a resource from another resource or from arguments.  <a href="structObject_1_1Resource_1_1ResourceManager_1_1ResourceLoader.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9d8fd5607cc30c524966ecd9fd4c9b70" id="r_a9d8fd5607cc30c524966ecd9fd4c9b70"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9d8fd5607cc30c524966ecd9fd4c9b70">ResourceManager</a> ()=default</td></tr>
@@ -130,6 +135,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5a01804988f8d22d149599f4b5d21400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the reference to a stored resource, or the default resource if it doesn't exist.  <br /></td></tr>
 <tr class="memitem:acc1c1881f7ad93f46b7170090b5f2a87" id="r_acc1c1881f7ad93f46b7170090b5f2a87"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#acc1c1881f7ad93f46b7170090b5f2a87">HasDefault</a> () const</td></tr>
 <tr class="memdesc:acc1c1881f7ad93f46b7170090b5f2a87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a default resource has been set.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad53243de249dea15a3cb8ddfe7a8c964" id="r_ad53243de249dea15a3cb8ddfe7a8c964"><td class="memItemLeft">entt::resource_cache&lt; ResourceType, <a class="el" href="structObject_1_1Resource_1_1ResourceManager_1_1ResourceLoader.html">ResourceLoader</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ad53243de249dea15a3cb8ddfe7a8c964">cache</a> {}</td></tr>
+<tr class="memitem:a51625c3c859e8e162c28508b8f6286be" id="r_a51625c3c859e8e162c28508b8f6286be"><td class="memItemLeft">std::optional&lt; ResourceType &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a51625c3c859e8e162c28508b8f6286be">defaultResource</a> = std::nullopt</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename ResourceType&gt;<br />
@@ -751,6 +761,55 @@ template&lt;typename ResourceType&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ad53243de249dea15a3cb8ddfe7a8c964" name="ad53243de249dea15a3cb8ddfe7a8c964"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad53243de249dea15a3cb8ddfe7a8c964">&#9670;&#160;</a></span>cache</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">entt::resource_cache&lt;ResourceType, <a class="el" href="structObject_1_1Resource_1_1ResourceManager_1_1ResourceLoader.html">ResourceLoader</a>&gt; <a class="el" href="classObject_1_1Resource_1_1ResourceManager.html">Object::Resource::ResourceManager</a>&lt; ResourceType &gt;::cache {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a51625c3c859e8e162c28508b8f6286be" name="a51625c3c859e8e162c28508b8f6286be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51625c3c859e8e162c28508b8f6286be">&#9670;&#160;</a></span>defaultResource</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;ResourceType&gt; <a class="el" href="classObject_1_1Resource_1_1ResourceManager.html">Object::Resource::ResourceManager</a>&lt; ResourceType &gt;::defaultResource = std::nullopt</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

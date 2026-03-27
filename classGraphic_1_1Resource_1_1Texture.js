@@ -7,6 +7,9 @@ var classGraphic_1_1Resource_1_1Texture =
     [ "~Texture", "classGraphic_1_1Resource_1_1Texture.html#aeae9e2e7d3ef1c408cae996ddfcbd3d7", null ],
     [ "Texture", "classGraphic_1_1Resource_1_1Texture.html#a8757222222c514a52b2f31b57495a235", null ],
     [ "Texture", "classGraphic_1_1Resource_1_1Texture.html#aa21d3440a4fbc398cf666f11677340b4", null ],
+    [ "Texture", "classGraphic_1_1Resource_1_1Texture.html#a47169400dba08bb78f42ef6b3acfa0e0", null ],
+    [ "_BuildDescriptor", "classGraphic_1_1Resource_1_1Texture.html#a3bef87f21ea3c9135197839333a87a5f", null ],
+    [ "_GetBytesPerPixel", "classGraphic_1_1Resource_1_1Texture.html#a8e4ce0b0766b23b427de866e2cecc347", null ],
     [ "CreateView", "classGraphic_1_1Resource_1_1Texture.html#a7c9f2e855b52e538e507f494a1db3c1e", null ],
     [ "GetDefaultView", "classGraphic_1_1Resource_1_1Texture.html#a0c450ee9bdf0c4980fc16161fdfbbba1", null ],
     [ "GetSize", "classGraphic_1_1Resource_1_1Texture.html#ae66cd7fbb1844bcf3cf6fa38854727da", null ],
@@ -16,5 +19,9 @@ var classGraphic_1_1Resource_1_1Texture =
     [ "ReleaseOwnership", "classGraphic_1_1Resource_1_1Texture.html#ae7612fd1015f6fdfa3c4be5681146150", null ],
     [ "RetrieveImage", "classGraphic_1_1Resource_1_1Texture.html#acff20a61c2d1567268928db54b4120fe", null ],
     [ "TakeOwnership", "classGraphic_1_1Resource_1_1Texture.html#a678ebeda153df757489897a7ddbf1c49", null ],
-    [ "Write", "classGraphic_1_1Resource_1_1Texture.html#a680b1d8934c39649ed05e9bd21213b32", null ]
+    [ "Write", "classGraphic_1_1Resource_1_1Texture.html#a680b1d8934c39649ed05e9bd21213b32", null ],
+    [ "_defaultView", "classGraphic_1_1Resource_1_1Texture.html#aeb5c967036ab19aaef7909591d7fa88f", null ],
+    [ "_name", "classGraphic_1_1Resource_1_1Texture.html#a5e04e6af59d09cb092810b1bd4d1f89c", null ],
+    [ "_ownsResources", "classGraphic_1_1Resource_1_1Texture.html#aa7a60bcda20f9e4f1f4649bb5118a49c", null ],
+    [ "_webgpuTexture", "classGraphic_1_1Resource_1_1Texture.html#a248b8349be134b381197d3a0de7eb5f1", null ]
 ];

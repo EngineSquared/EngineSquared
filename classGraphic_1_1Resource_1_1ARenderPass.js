@@ -11,5 +11,9 @@ var classGraphic_1_1Resource_1_1ARenderPass =
     [ "GetName", "classGraphic_1_1Resource_1_1ARenderPass.html#a25cb1d0462cb7c194803fc71700eab98", null ],
     [ "GetOutputs", "classGraphic_1_1Resource_1_1ARenderPass.html#aa6c4d1f4a0cde97857dbc7cbfb50580a", null ],
     [ "GetOutputs", "classGraphic_1_1Resource_1_1ARenderPass.html#ac5961b83b075dad9fb2a53ab0b2bdb01", null ],
-    [ "validate", "classGraphic_1_1Resource_1_1ARenderPass.html#a8f5010e57128706bee362cab71ac58bf", null ]
+    [ "validate", "classGraphic_1_1Resource_1_1ARenderPass.html#a8f5010e57128706bee362cab71ac58bf", null ],
+    [ "_boundShader", "classGraphic_1_1Resource_1_1ARenderPass.html#a1fe4549940f991109cdc66597343e76e", null ],
+    [ "_inputs", "classGraphic_1_1Resource_1_1ARenderPass.html#ab01646fc89f3753df2bf79b25f11fa87", null ],
+    [ "_name", "classGraphic_1_1Resource_1_1ARenderPass.html#a00c779134e947cfd744e637546d283dc", null ],
+    [ "_outputs", "classGraphic_1_1Resource_1_1ARenderPass.html#a7f04d3bc8ee945cdc8ae4460def244a9", null ]
 ];

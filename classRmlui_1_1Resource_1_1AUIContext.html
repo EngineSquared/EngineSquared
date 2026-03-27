@@ -136,6 +136,11 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ab6533e1398b224d16204bd6bcfef8cb3" id="r_ab6533e1398b224d16204bd6bcfef8cb3"><td class="memItemLeft"><a class="el" href="classRmlui_1_1Utils_1_1IRenderer.html">Rmlui::Utils::IRenderer</a> *&#160;</td><td class="memItemRight"><a class="el" href="#ab6533e1398b224d16204bd6bcfef8cb3">GetRenderInterface</a> ()</td></tr>
 <tr class="memitem:aeebdb21f12d5af0a6e4034c2bc756f1e" id="r_aeebdb21f12d5af0a6e4034c2bc756f1e"><td class="memItemLeft">const <a class="el" href="classRmlui_1_1Utils_1_1IRenderer.html">Rmlui::Utils::IRenderer</a> *&#160;</td><td class="memItemRight"><a class="el" href="#aeebdb21f12d5af0a6e4034c2bc756f1e">GetRenderInterface</a> () const</td></tr>
 <tr class="memitem:a73cee4306751e1dee43f7a925cb147ea" id="r_a73cee4306751e1dee43f7a925cb147ea"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a73cee4306751e1dee43f7a925cb147ea">_setup</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)=0</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a60d782fff68adcd9f5d8c7d62a37c34b" id="r_a60d782fff68adcd9f5d8c7d62a37c34b"><td class="memItemLeft">std::unique_ptr&lt; Rml::SystemInterface &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a60d782fff68adcd9f5d8c7d62a37c34b">_systemInterface</a></td></tr>
+<tr class="memitem:adcea29b21dfddf2facd1a5a6ccdd07f3" id="r_adcea29b21dfddf2facd1a5a6ccdd07f3"><td class="memItemLeft">std::unique_ptr&lt; <a class="el" href="classRmlui_1_1Utils_1_1IRenderer.html">Rmlui::Utils::IRenderer</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#adcea29b21dfddf2facd1a5a6ccdd07f3">_renderInterface</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3c7249d0696700ec5417a915053e5132" name="a3c7249d0696700ec5417a915053e5132"></a>
@@ -800,6 +805,51 @@ template&lt;<a class="el" href="conceptCSystemInterface.html">CSystemInterface</
 </div><div class="memdoc">
 
 <p>Implemented in <a class="el" href="classRmlui_1_1Resource_1_1UIContext.html#a2daf5b48e28aff6cd6df8e8f32c65f6d">Rmlui::Resource::UIContext</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="adcea29b21dfddf2facd1a5a6ccdd07f3" name="adcea29b21dfddf2facd1a5a6ccdd07f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcea29b21dfddf2facd1a5a6ccdd07f3">&#9670;&#160;</a></span>_renderInterface</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classRmlui_1_1Utils_1_1IRenderer.html">Rmlui::Utils::IRenderer</a>&gt; Rmlui::Resource::AUIContext::_renderInterface</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a60d782fff68adcd9f5d8c7d62a37c34b" name="a60d782fff68adcd9f5d8c7d62a37c34b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60d782fff68adcd9f5d8c7d62a37c34b">&#9670;&#160;</a></span>_systemInterface</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;Rml::SystemInterface&gt; Rmlui::Resource::AUIContext::_systemInterface</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

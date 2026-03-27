@@ -11,8 +11,15 @@ var classEngine_1_1SchedulerContainer =
     [ "DeleteScheduler", "classEngine_1_1SchedulerContainer.html#af6f0fb60131ae9461397331547c0eb5b", null ],
     [ "GetScheduler", "classEngine_1_1SchedulerContainer.html#a8a80a624ff22268de3eb32ec22bcfe19", null ],
     [ "GetScheduler", "classEngine_1_1SchedulerContainer.html#a4b3e89596de8c43d50ef34650452fd8f", null ],
+    [ "ProcessDependencies", "classEngine_1_1SchedulerContainer.html#ac73fd3c50d566eaadf225382457e9847", null ],
     [ "RemoveDependencyAfter", "classEngine_1_1SchedulerContainer.html#a88536157d2c1c924f393ab02ad67c990", null ],
     [ "RemoveDependencyBefore", "classEngine_1_1SchedulerContainer.html#aeb32815c9d09dc967cd2b168917a7f18", null ],
     [ "RunSchedulers", "classEngine_1_1SchedulerContainer.html#a49324e0da554d4d02d2761b7b71e3374", null ],
-    [ "SetErrorPolicyForAllSchedulers", "classEngine_1_1SchedulerContainer.html#a68aa694b6ecb6a898aad58b6bc81b471", null ]
+    [ "SetErrorPolicyForAllSchedulers", "classEngine_1_1SchedulerContainer.html#a68aa694b6ecb6a898aad58b6bc81b471", null ],
+    [ "TopologicalSort", "classEngine_1_1SchedulerContainer.html#a041c592a103d7ab4482f5a7428611b7b", null ],
+    [ "Update", "classEngine_1_1SchedulerContainer.html#a1c86813b5cd3ea70a32a7068ad0c4fb3", null ],
+    [ "_dependencies", "classEngine_1_1SchedulerContainer.html#a04a022972d38517c1802e88b785b4a02", null ],
+    [ "_dirty", "classEngine_1_1SchedulerContainer.html#a6c7a8748e283515aa860764ee9c0cd4e", null ],
+    [ "_orderedSchedulers", "classEngine_1_1SchedulerContainer.html#a06d983800810d7eaababce3753e73620", null ],
+    [ "_schedulers", "classEngine_1_1SchedulerContainer.html#a4e31260c2272995eb29decce3a11b3bd", null ]
 ];

@@ -6,5 +6,9 @@ var classEngine_1_1WrappedSystem =
     [ "GetCallableName", "classEngine_1_1WrappedSystem.html#ae2b2052a5c9c42e49a4b52b70de0521a", null ],
     [ "GetID", "classEngine_1_1WrappedSystem.html#a2352e391b99b9d87151507783d00b5ae", null ],
     [ "GetName", "classEngine_1_1WrappedSystem.html#afa6faf8d7777cf90246857cddcdc995b", null ],
-    [ "operator()", "classEngine_1_1WrappedSystem.html#acd157874df1642d7574dbeb1ca75eeca", null ]
+    [ "operator()", "classEngine_1_1WrappedSystem.html#acd157874df1642d7574dbeb1ca75eeca", null ],
+    [ "_errorCallback", "classEngine_1_1WrappedSystem.html#aaeccc17457eb85752011e0bcd1e3d8be", null ],
+    [ "_id", "classEngine_1_1WrappedSystem.html#aedb3aed25e70341d44e4187e187c6fd0", null ],
+    [ "_name", "classEngine_1_1WrappedSystem.html#a2aeb08c3998377955678ed6283e6d813", null ],
+    [ "_system", "classEngine_1_1WrappedSystem.html#a91e56dc7db69b7bfe33d42a1c6b99259", null ]
 ];

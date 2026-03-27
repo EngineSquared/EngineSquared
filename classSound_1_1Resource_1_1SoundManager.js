@@ -1,5 +1,8 @@
 var classSound_1_1Resource_1_1SoundManager =
 [
+    [ "Sound", "structSound_1_1Resource_1_1SoundManager_1_1Sound.html", "structSound_1_1Resource_1_1SoundManager_1_1Sound" ],
+    [ "TransparentHash", "structSound_1_1Resource_1_1SoundManager_1_1TransparentHash.html", "structSound_1_1Resource_1_1SoundManager_1_1TransparentHash" ],
+    [ "TransparentEqual", "structSound_1_1Resource_1_1SoundManager_1_1TransparentEqual.html", "structSound_1_1Resource_1_1SoundManager_1_1TransparentEqual" ],
     [ "SoundManager", "classSound_1_1Resource_1_1SoundManager.html#a62e5732db7721b0730a31b1a11adbbac", null ],
     [ "~SoundManager", "classSound_1_1Resource_1_1SoundManager.html#a0e413e2471cc624942c9adab16e9e7b3", null ],
     [ "SoundManager", "classSound_1_1Resource_1_1SoundManager.html#a712aba99f8d1e81ebdd18c7c5807bc36", null ],
@@ -23,5 +26,17 @@ var classSound_1_1Resource_1_1SoundManager =
     [ "SetPitch", "classSound_1_1Resource_1_1SoundManager.html#a3a9eb7139f1cf119a14f18b962f34aeb", null ],
     [ "SetVolume", "classSound_1_1Resource_1_1SoundManager.html#a7aa6431b22ec4903e5a2d9f5ca8aef5d", null ],
     [ "Stop", "classSound_1_1Resource_1_1SoundManager.html#a18251c047711802f39192e8a1003870a", null ],
-    [ "UnregisterSound", "classSound_1_1Resource_1_1SoundManager.html#aeb27f77bebd77963fe9c5f1c86c2f80c", null ]
+    [ "UnregisterSound", "classSound_1_1Resource_1_1SoundManager.html#aeb27f77bebd77963fe9c5f1c86c2f80c", null ],
+    [ "_callbackErrorFlags", "classSound_1_1Resource_1_1SoundManager.html#aca5c591cb5f24318550fef90606145e7", null ],
+    [ "_customCallbacks", "classSound_1_1Resource_1_1SoundManager.html#ae78756cdf58a6a83806ed5cd4057ab1d", null ],
+    [ "_device", "classSound_1_1Resource_1_1SoundManager.html#a68bd3165a11d26ddf45f9599632d8c4a", null ],
+    [ "_deviceConfig", "classSound_1_1Resource_1_1SoundManager.html#aacbdb8b075d063114237066775629d99", null ],
+    [ "_deviceInit", "classSound_1_1Resource_1_1SoundManager.html#a681ddd8d99551bf7dc4542968e101bf7", null ],
+    [ "_engine", "classSound_1_1Resource_1_1SoundManager.html#a0cb7e1ca585202b263dc8e8e27d966cf", null ],
+    [ "_engineInit", "classSound_1_1Resource_1_1SoundManager.html#a1078c3d8a9a80f818561d249531429bb", null ],
+    [ "_result", "classSound_1_1Resource_1_1SoundManager.html#a3703045d94bb8506fbbd21bf14ca0194", null ],
+    [ "_soundsToPlay", "classSound_1_1Resource_1_1SoundManager.html#a8358b4081b5e014cd25d0c728a9b26ed", null ],
+    [ "ERROR_DECODER_READ", "classSound_1_1Resource_1_1SoundManager.html#aecb012c6c549a9e61f03eba0d54335fe", null ],
+    [ "ERROR_FRAME_TOO_LARGE", "classSound_1_1Resource_1_1SoundManager.html#aea53c4d6cd115e58a2e27b39ca5a617f", null ],
+    [ "ERROR_UNKNOWN_FORMAT", "classSound_1_1Resource_1_1SoundManager.html#ab93d1b89a685ec3994cb54c865dcb631", null ]
 ];

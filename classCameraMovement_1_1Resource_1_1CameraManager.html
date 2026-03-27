@@ -146,6 +146,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a98851bcbe5e0b253526a9065e0a8c84f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the camera behavior instance.  <br /></td></tr>
 <tr class="memitem:a39d1f0f2bd536d17443f4b876142b03f" id="r_a39d1f0f2bd536d17443f4b876142b03f"><td class="memItemLeft">std::shared_ptr&lt; <a class="el" href="classCameraMovement_1_1Utils_1_1ICameraBehavior.html">CameraMovement::Utils::ICameraBehavior</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a39d1f0f2bd536d17443f4b876142b03f">GetBehavior</a> () const</td></tr>
 <tr class="memdesc:a39d1f0f2bd536d17443f4b876142b03f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current camera behavior instance.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a1f017c6544e44cf1807b4c86450fdee9" id="r_a1f017c6544e44cf1807b4c86450fdee9"><td class="memItemLeft"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a1f017c6544e44cf1807b4c86450fdee9">_core</a></td></tr>
+<tr class="memitem:aa2c8551d6cbaf48cebd1f9591ce7b818" id="r_aa2c8551d6cbaf48cebd1f9591ce7b818"><td class="memItemLeft">std::optional&lt; <a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa2c8551d6cbaf48cebd1f9591ce7b818">_cameraEntity</a> = std::nullopt</td></tr>
+<tr class="memitem:a76be07745378e846036bf40f1f2ac5c7" id="r_a76be07745378e846036bf40f1f2ac5c7"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a76be07745378e846036bf40f1f2ac5c7">_movementSpeed</a> = 5.0f</td></tr>
+<tr class="memitem:a71afb3bf680f087f0911c72a9f898569" id="r_a71afb3bf680f087f0911c72a9f898569"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a71afb3bf680f087f0911c72a9f898569">_mouseSensitivity</a> = 0.002f</td></tr>
+<tr class="memitem:a0e3ce838115d04a4840bf9a0cf4e6454" id="r_a0e3ce838115d04a4840bf9a0cf4e6454"><td class="memItemLeft">double&#160;</td><td class="memItemRight"><a class="el" href="#a0e3ce838115d04a4840bf9a0cf4e6454">_lastMouseX</a> = 0.0</td></tr>
+<tr class="memitem:a828db75e883053a5340e5c4cdb746817" id="r_a828db75e883053a5340e5c4cdb746817"><td class="memItemLeft">double&#160;</td><td class="memItemRight"><a class="el" href="#a828db75e883053a5340e5c4cdb746817">_lastMouseY</a> = 0.0</td></tr>
+<tr class="memitem:a06f8ac628eca4beb87833da43017c323" id="r_a06f8ac628eca4beb87833da43017c323"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a06f8ac628eca4beb87833da43017c323">_isMouseDragging</a> = false</td></tr>
+<tr class="memitem:a77d9a43456d87d174e9c1107d16c7b14" id="r_a77d9a43456d87d174e9c1107d16c7b14"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a77d9a43456d87d174e9c1107d16c7b14">_wasCursorMasked</a> = false</td></tr>
+<tr class="memitem:a41b5d7bdd0d44e9dff776679cf64fb4f" id="r_a41b5d7bdd0d44e9dff776679cf64fb4f"><td class="memItemLeft">glm::quat&#160;</td><td class="memItemRight"><a class="el" href="#a41b5d7bdd0d44e9dff776679cf64fb4f">_originRotation</a> = glm::quat(1.0f, 0.0f, 0.0f, 0.0f)</td></tr>
+<tr class="memitem:aa69bdcaa78da67bbfe65413178526c04" id="r_aa69bdcaa78da67bbfe65413178526c04"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#aa69bdcaa78da67bbfe65413178526c04">_joystickId</a> = GLFW_JOYSTICK_1</td></tr>
+<tr class="memitem:aeba5e93479eb99966cecf5ba8d54b1d6" id="r_aeba5e93479eb99966cecf5ba8d54b1d6"><td class="memItemLeft">std::shared_ptr&lt; <a class="el" href="classCameraMovement_1_1Utils_1_1ICameraBehavior.html">CameraMovement::Utils::ICameraBehavior</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aeba5e93479eb99966cecf5ba8d54b1d6">_behavior</a> = nullptr</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classCameraMovement_1_1Resource_1_1CameraManager.html" title="CameraManager is a resource that manages the active camera entity.">CameraManager</a> is a resource that manages the active camera entity. </p>
@@ -849,6 +863,249 @@ Public Member Functions</h2></td></tr>
 
 <p>Check if the cursor was masked in the previous frame. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if cursor was masked, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="aeba5e93479eb99966cecf5ba8d54b1d6" name="aeba5e93479eb99966cecf5ba8d54b1d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeba5e93479eb99966cecf5ba8d54b1d6">&#9670;&#160;</a></span>_behavior</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classCameraMovement_1_1Utils_1_1ICameraBehavior.html">CameraMovement::Utils::ICameraBehavior</a>&gt; CameraMovement::Resource::CameraManager::_behavior = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa2c8551d6cbaf48cebd1f9591ce7b818" name="aa2c8551d6cbaf48cebd1f9591ce7b818"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2c8551d6cbaf48cebd1f9591ce7b818">&#9670;&#160;</a></span>_cameraEntity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;<a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a>&gt; CameraMovement::Resource::CameraManager::_cameraEntity = std::nullopt</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1f017c6544e44cf1807b4c86450fdee9" name="a1f017c6544e44cf1807b4c86450fdee9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f017c6544e44cf1807b4c86450fdee9">&#9670;&#160;</a></span>_core</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a>&amp; CameraMovement::Resource::CameraManager::_core</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a06f8ac628eca4beb87833da43017c323" name="a06f8ac628eca4beb87833da43017c323"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06f8ac628eca4beb87833da43017c323">&#9670;&#160;</a></span>_isMouseDragging</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CameraMovement::Resource::CameraManager::_isMouseDragging = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa69bdcaa78da67bbfe65413178526c04" name="aa69bdcaa78da67bbfe65413178526c04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa69bdcaa78da67bbfe65413178526c04">&#9670;&#160;</a></span>_joystickId</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CameraMovement::Resource::CameraManager::_joystickId = GLFW_JOYSTICK_1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0e3ce838115d04a4840bf9a0cf4e6454" name="a0e3ce838115d04a4840bf9a0cf4e6454"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e3ce838115d04a4840bf9a0cf4e6454">&#9670;&#160;</a></span>_lastMouseX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double CameraMovement::Resource::CameraManager::_lastMouseX = 0.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a828db75e883053a5340e5c4cdb746817" name="a828db75e883053a5340e5c4cdb746817"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a828db75e883053a5340e5c4cdb746817">&#9670;&#160;</a></span>_lastMouseY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double CameraMovement::Resource::CameraManager::_lastMouseY = 0.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a71afb3bf680f087f0911c72a9f898569" name="a71afb3bf680f087f0911c72a9f898569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71afb3bf680f087f0911c72a9f898569">&#9670;&#160;</a></span>_mouseSensitivity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CameraMovement::Resource::CameraManager::_mouseSensitivity = 0.002f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a76be07745378e846036bf40f1f2ac5c7" name="a76be07745378e846036bf40f1f2ac5c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76be07745378e846036bf40f1f2ac5c7">&#9670;&#160;</a></span>_movementSpeed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CameraMovement::Resource::CameraManager::_movementSpeed = 5.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a41b5d7bdd0d44e9dff776679cf64fb4f" name="a41b5d7bdd0d44e9dff776679cf64fb4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41b5d7bdd0d44e9dff776679cf64fb4f">&#9670;&#160;</a></span>_originRotation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::quat CameraMovement::Resource::CameraManager::_originRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a77d9a43456d87d174e9c1107d16c7b14" name="a77d9a43456d87d174e9c1107d16c7b14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77d9a43456d87d174e9c1107d16c7b14">&#9670;&#160;</a></span>_wasCursorMasked</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CameraMovement::Resource::CameraManager::_wasCursorMasked = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

@@ -120,7 +120,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2352e391b99b9d87151507783d00b5ae" id="r_a2352e391b99b9d87151507783d00b5ae"><td class="memItemLeft"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a>&#160;</td><td class="memItemRight"><a class="el" href="#a2352e391b99b9d87151507783d00b5ae">GetID</a> () const override</td></tr>
 <tr class="memdesc:a2352e391b99b9d87151507783d00b5ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the unique ID of the system.  <br /></td></tr>
 <tr class="memitem:afa6faf8d7777cf90246857cddcdc995b" id="r_afa6faf8d7777cf90246857cddcdc995b"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#afa6faf8d7777cf90246857cddcdc995b">GetName</a> () const override</td></tr>
-<tr class="memdesc:afa6faf8d7777cf90246857cddcdc995b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of the system.  <br /></td></tr>
+<tr class="memdesc:afa6faf8d7777cf90246857cddcdc995b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the system.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classFunctionUtils_1_1BaseFunction"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classFunctionUtils_1_1BaseFunction')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classFunctionUtils_1_1BaseFunction.html">FunctionUtils::BaseFunction&lt; void, Core &amp; &gt;</a></td></tr>
 <tr class="memitem:a96a62dc30cfb4e8c902c2422112ba6f6 inherit pub_methods_classFunctionUtils_1_1BaseFunction" id="r_a96a62dc30cfb4e8c902c2422112ba6f6"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="classFunctionUtils_1_1BaseFunction.html#a96a62dc30cfb4e8c902c2422112ba6f6">~BaseFunction</a> ()=default</td></tr>
 <tr class="memitem:ac8ccde18e6114cdd472063823414b9c1 inherit pub_methods_classFunctionUtils_1_1BaseFunction" id="r_ac8ccde18e6114cdd472063823414b9c1"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="classFunctionUtils_1_1BaseFunction.html#ac8ccde18e6114cdd472063823414b9c1">operator()</a> (TArgs... args) const=0</td></tr>
@@ -134,10 +134,28 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa02b94011a05e6f0cccdb2f20def0800"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the ID of the system.  <br /></td></tr>
 <tr class="memitem:ae2b2052a5c9c42e49a4b52b70de0521a" id="r_ae2b2052a5c9c42e49a4b52b70de0521a"><td class="memItemLeft">static std::string&#160;</td><td class="memItemRight"><a class="el" href="#ae2b2052a5c9c42e49a4b52b70de0521a">GetCallableName</a> (const TSystem &amp;callable)</td></tr>
 <tr class="memdesc:ae2b2052a5c9c42e49a4b52b70de0521a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the system.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a91e56dc7db69b7bfe33d42a1c6b99259" id="r_a91e56dc7db69b7bfe33d42a1c6b99259"><td class="memItemLeft">TSystem&#160;</td><td class="memItemRight"><a class="el" href="#a91e56dc7db69b7bfe33d42a1c6b99259">_system</a></td></tr>
+<tr class="memdesc:a91e56dc7db69b7bfe33d42a1c6b99259"><td class="mdescLeft">&#160;</td><td class="mdescRight">The wrapped system.  <br /></td></tr>
+<tr class="memitem:aaeccc17457eb85752011e0bcd1e3d8be" id="r_aaeccc17457eb85752011e0bcd1e3d8be"><td class="memItemLeft">TErrorCallback&#160;</td><td class="memItemRight"><a class="el" href="#aaeccc17457eb85752011e0bcd1e3d8be">_errorCallback</a></td></tr>
+<tr class="memdesc:aaeccc17457eb85752011e0bcd1e3d8be"><td class="mdescLeft">&#160;</td><td class="mdescRight">The error callback to be called if the system throws an exception.  <br /></td></tr>
+<tr class="memitem:aedb3aed25e70341d44e4187e187c6fd0" id="r_aedb3aed25e70341d44e4187e187c6fd0"><td class="memItemLeft"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a>&#160;</td><td class="memItemRight"><a class="el" href="#aedb3aed25e70341d44e4187e187c6fd0">_id</a> = 0</td></tr>
+<tr class="memdesc:aedb3aed25e70341d44e4187e187c6fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique ID for the system.  <br /></td></tr>
+<tr class="memitem:a2aeb08c3998377955678ed6283e6d813" id="r_a2aeb08c3998377955678ed6283e6d813"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a2aeb08c3998377955678ed6283e6d813">_name</a></td></tr>
+<tr class="memdesc:a2aeb08c3998377955678ed6283e6d813"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the system.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename TSystem, typename TErrorCallback&gt;<br />
 class Engine::WrappedSystem&lt; TSystem, TErrorCallback &gt;</div><p>Wrapper around a system that allows to add an error callback to it. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TSystem</td><td>The type of the system to wrap. </td></tr>
+    <tr><td class="paramname">TErrorCallback</td><td>The type of the error callback to wrap. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a110fd702a9035bdfc00c669b614e6e14" name="a110fd702a9035bdfc00c669b614e6e14"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a110fd702a9035bdfc00c669b614e6e14">&#9670;&#160;</a></span>WrappedSystem()</h2>
@@ -171,11 +189,12 @@ template&lt;typename TSystem, typename TErrorCallback&gt; </div>
 <p>Constructor for <a class="el" href="classEngine_1_1WrappedSystem.html" title="Wrapper around a system that allows to add an error callback to it.">WrappedSystem</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">callable</td><td>The callable object to be stored. </td></tr>
-    <tr><td class="paramname">errorCallback</td><td>The error callback to be stored. </td></tr>
+    <tr><td class="paramname">system</td><td>The system to be wrapped. </td></tr>
+    <tr><td class="paramname">errorCallback</td><td>The error callback to be called if the system throws an exception. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000079">Todo</a></b></dt><dd>Put the implementation in the cpp file </dd></dl>
 
 </div>
 </div>
@@ -243,11 +262,12 @@ template&lt;typename TSystem, typename TErrorCallback&gt; </div>
 </dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TCallable</td><td>The type of the system. </td></tr>
+    <tr><td class="paramname">TSystem</td><td>The type of the system. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The ID of the system. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000083">Todo</a></b></dt><dd>Put the implementation in the cpp file </dd></dl>
 
 </div>
 </div>
@@ -285,11 +305,12 @@ template&lt;typename TSystem, typename TErrorCallback&gt; </div>
 </dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TCallable</td><td>The type of the system. </td></tr>
+    <tr><td class="paramname">TSystem</td><td>The type of the system. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The name of the system. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000084">Todo</a></b></dt><dd>Put the implementation in the cpp file </dd></dl>
 
 </div>
 </div>
@@ -320,6 +341,7 @@ template&lt;typename TSystem, typename TErrorCallback&gt; </div>
 
 <p>Returns the unique ID of the system. </p>
 <dl class="section return"><dt>Returns</dt><dd>Unique ID of the system. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000081">Todo</a></b></dt><dd>Put the implementation in the cpp file </dd></dl>
 
 <p>Implements <a class="el" href="classFunctionUtils_1_1BaseFunction.html#a6342c906170ab976353d8759955c6d8e">FunctionUtils::BaseFunction&lt; void, Core &amp; &gt;</a>.</p>
 
@@ -350,8 +372,9 @@ template&lt;typename TSystem, typename TErrorCallback&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns the name of the system. </p>
+<p>Get the name of the system. </p>
 <dl class="section return"><dt>Returns</dt><dd>Name of the system. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000082">Todo</a></b></dt><dd>Put the implementation in the cpp file </dd></dl>
 
 <p>Implements <a class="el" href="classFunctionUtils_1_1BaseFunction.html#afdc9ace0ff175a45513e900e111581c8">FunctionUtils::BaseFunction&lt; void, Core &amp; &gt;</a>.</p>
 
@@ -385,11 +408,116 @@ template&lt;typename TSystem, typename TErrorCallback&gt; </div>
 <p>Calls the system. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">args</td><td>Arguments to pass to the system. </td></tr>
+    <tr><td class="paramname">core</td><td>The core to pass to the system. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Return value of the system. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000080">Todo</a></b></dt><dd>Put the implementation in the cpp file </dd></dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="aaeccc17457eb85752011e0bcd1e3d8be" name="aaeccc17457eb85752011e0bcd1e3d8be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaeccc17457eb85752011e0bcd1e3d8be">&#9670;&#160;</a></span>_errorCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TSystem, typename TErrorCallback&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TErrorCallback <a class="el" href="classEngine_1_1WrappedSystem.html">Engine::WrappedSystem</a>&lt; TSystem, TErrorCallback &gt;::_errorCallback</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The error callback to be called if the system throws an exception. </p>
+
+</div>
+</div>
+<a id="aedb3aed25e70341d44e4187e187c6fd0" name="aedb3aed25e70341d44e4187e187c6fd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedb3aed25e70341d44e4187e187c6fd0">&#9670;&#160;</a></span>_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TSystem, typename TErrorCallback&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a> <a class="el" href="classEngine_1_1WrappedSystem.html">Engine::WrappedSystem</a>&lt; TSystem, TErrorCallback &gt;::_id = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Unique ID for the system. </p>
+
+</div>
+</div>
+<a id="a2aeb08c3998377955678ed6283e6d813" name="a2aeb08c3998377955678ed6283e6d813"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2aeb08c3998377955678ed6283e6d813">&#9670;&#160;</a></span>_name</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TSystem, typename TErrorCallback&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classEngine_1_1WrappedSystem.html">Engine::WrappedSystem</a>&lt; TSystem, TErrorCallback &gt;::_name</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Name of the system. </p>
+
+</div>
+</div>
+<a id="a91e56dc7db69b7bfe33d42a1c6b99259" name="a91e56dc7db69b7bfe33d42a1c6b99259"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91e56dc7db69b7bfe33d42a1c6b99259">&#9670;&#160;</a></span>_system</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TSystem, typename TErrorCallback&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TSystem <a class="el" href="classEngine_1_1WrappedSystem.html">Engine::WrappedSystem</a>&lt; TSystem, TErrorCallback &gt;::_system</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The wrapped system. </p>
 
 </div>
 </div>

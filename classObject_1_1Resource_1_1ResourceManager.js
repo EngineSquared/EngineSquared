@@ -1,5 +1,6 @@
 var classObject_1_1Resource_1_1ResourceManager =
 [
+    [ "ResourceLoader", "structObject_1_1Resource_1_1ResourceManager_1_1ResourceLoader.html", "structObject_1_1Resource_1_1ResourceManager_1_1ResourceLoader" ],
     [ "ResourceManager", "classObject_1_1Resource_1_1ResourceManager.html#a9d8fd5607cc30c524966ecd9fd4c9b70", null ],
     [ "~ResourceManager", "classObject_1_1Resource_1_1ResourceManager.html#a4dab20c304b93a24c930b9a776ef9e8b", null ],
     [ "ResourceManager", "classObject_1_1Resource_1_1ResourceManager.html#a7c8c78f546b1db64068726c4ae055cfa", null ],
@@ -17,5 +18,7 @@ var classObject_1_1Resource_1_1ResourceManager =
     [ "operator=", "classObject_1_1Resource_1_1ResourceManager.html#ab5a23ac42cc2582f471c376d4382f187", null ],
     [ "Remove", "classObject_1_1Resource_1_1ResourceManager.html#a18b399f30feec86750096e8264fe253f", null ],
     [ "SetDefault", "classObject_1_1Resource_1_1ResourceManager.html#a3ad2089bea25b1e874a7ddd3d85c1b34", null ],
-    [ "SetDefault", "classObject_1_1Resource_1_1ResourceManager.html#aba03fb2f53b57702a49fc88156a76572", null ]
+    [ "SetDefault", "classObject_1_1Resource_1_1ResourceManager.html#aba03fb2f53b57702a49fc88156a76572", null ],
+    [ "cache", "classObject_1_1Resource_1_1ResourceManager.html#ad53243de249dea15a3cb8ddfe7a8c964", null ],
+    [ "defaultResource", "classObject_1_1Resource_1_1ResourceManager.html#a51625c3c859e8e162c28508b8f6286be", null ]
 ];

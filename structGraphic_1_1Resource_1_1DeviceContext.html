@@ -105,6 +105,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a48de338d9051d188d1f4e29439c114ae" id="r_a48de338d9051d188d1f4e29439c114ae"><td class="memItemLeft">auto &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a48de338d9051d188d1f4e29439c114ae">GetDevice</a> ()</td></tr>
 <tr class="memitem:a089e5d0bd0cb959f9cb06077eaeac0e5" id="r_a089e5d0bd0cb959f9cb06077eaeac0e5"><td class="memItemLeft">const auto &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a089e5d0bd0cb959f9cb06077eaeac0e5">GetDevice</a> () const</td></tr>
 <tr class="memitem:ae42fa96122e45f9b37df4f8cb804130d" id="r_ae42fa96122e45f9b37df4f8cb804130d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae42fa96122e45f9b37df4f8cb804130d">Release</a> () noexcept</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a319caca553b749b8a0d35e5f3dd9ed95" id="r_a319caca553b749b8a0d35e5f3dd9ed95"><td class="memItemLeft">wgpu::DeviceDescriptor&#160;</td><td class="memItemRight"><a class="el" href="#a319caca553b749b8a0d35e5f3dd9ed95">_descriptor</a> = wgpu::DeviceDescriptor(<a class="el" href="namespacewgpu.html#a0fbf5c4c5168202c330cbe3f65008db0">wgpu::Default</a>)</td></tr>
+<tr class="memitem:a3afefa41350c7088e98cf4388710cfe7" id="r_a3afefa41350c7088e98cf4388710cfe7"><td class="memItemLeft">std::optional&lt; wgpu::Device &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a3afefa41350c7088e98cf4388710cfe7">_device</a> = std::nullopt</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab9b91417fc2b605dfeb02a3516d2f84d" name="ab9b91417fc2b605dfeb02a3516d2f84d"></a>
@@ -252,6 +257,51 @@ Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a319caca553b749b8a0d35e5f3dd9ed95" name="a319caca553b749b8a0d35e5f3dd9ed95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a319caca553b749b8a0d35e5f3dd9ed95">&#9670;&#160;</a></span>_descriptor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::DeviceDescriptor Graphic::Resource::DeviceContext::_descriptor = wgpu::DeviceDescriptor(<a class="el" href="namespacewgpu.html#a0fbf5c4c5168202c330cbe3f65008db0">wgpu::Default</a>)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3afefa41350c7088e98cf4388710cfe7" name="a3afefa41350c7088e98cf4388710cfe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3afefa41350c7088e98cf4388710cfe7">&#9670;&#160;</a></span>_device</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;wgpu::Device&gt; Graphic::Resource::DeviceContext::_device = std::nullopt</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

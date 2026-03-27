@@ -2,7 +2,7 @@ var searchData=
 [
   ['failtocreatecommandencodererror_0',['FailToCreateCommandEncoderError',['../classGraphic_1_1Exception_1_1FailToCreateCommandEncoderError.html',1,'Graphic::Exception']]],
   ['failtocreatecommandencodererror_2ehpp_1',['FailToCreateCommandEncoderError.hpp',['../FailToCreateCommandEncoderError_8hpp.html',1,'']]],
-  ['falloff_2',['falloff',['../structObject_1_1Component_1_1PointLight.html#a9af8a9a0c0426a072ff5e904da3e1b04',1,'Object::Component::PointLight']]],
+  ['falloff_2',['falloff',['../structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#aa71e014d1ee82487c5b32508708e1a3b',1,'DefaultPipeline::Resource::PointLightsBuffer::GPUPointLight::falloff'],['../structObject_1_1Component_1_1PointLight.html#a9af8a9a0c0426a072ff5e904da3e1b04',1,'Object::Component::PointLight::falloff']]],
   ['farplane_3',['farPlane',['../structObject_1_1Component_1_1Camera.html#acdc52efe9232251d1cd3a2b70e029bfb',1,'Object::Component::Camera']]],
   ['features_4',['Device limits and features',['../dir_456e1ed94ccb5b3e2842ecc161ff9b22.html#autotoc_md13',1,'']]],
   ['filereadingerror_5',['FileReadingError',['../classGraphic_1_1Exception_1_1FileReadingError.html',1,'Graphic::Exception']]],

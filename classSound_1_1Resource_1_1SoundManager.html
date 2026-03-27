@@ -97,6 +97,12 @@ $(function(){initNavTree('classSound_1_1Resource_1_1SoundManager.html','','class
 
 <p><code>#include &lt;<a class="el" href="SoundManager_8hpp_source.html">SoundManager.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:Sound" id="r_Sound"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structSound_1_1Resource_1_1SoundManager_1_1Sound.html">Sound</a></td></tr>
+<tr class="memitem:TransparentHash" id="r_TransparentHash"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structSound_1_1Resource_1_1SoundManager_1_1TransparentHash.html">TransparentHash</a></td></tr>
+<tr class="memitem:TransparentEqual" id="r_TransparentEqual"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structSound_1_1Resource_1_1SoundManager_1_1TransparentEqual.html">TransparentEqual</a></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a62e5732db7721b0730a31b1a11adbbac" id="r_a62e5732db7721b0730a31b1a11adbbac"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a62e5732db7721b0730a31b1a11adbbac">SoundManager</a> ()=default</td></tr>
@@ -143,6 +149,24 @@ Public Member Functions</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a86ef2b9fc31ec613e66e600feeb28e3e" id="r_a86ef2b9fc31ec613e66e600feeb28e3e"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#a86ef2b9fc31ec613e66e600feeb28e3e">data_callback</a> (ma_device *pDevice, void *pOutput, const void *, ma_uint32 frameCount)</td></tr>
 <tr class="memdesc:a86ef2b9fc31ec613e66e600feeb28e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio data callback used by the playback device to fill the output buffer.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a3703045d94bb8506fbbd21bf14ca0194" id="r_a3703045d94bb8506fbbd21bf14ca0194"><td class="memItemLeft">ma_result&#160;</td><td class="memItemRight"><a class="el" href="#a3703045d94bb8506fbbd21bf14ca0194">_result</a></td></tr>
+<tr class="memitem:aacbdb8b075d063114237066775629d99" id="r_aacbdb8b075d063114237066775629d99"><td class="memItemLeft">ma_device_config&#160;</td><td class="memItemRight"><a class="el" href="#aacbdb8b075d063114237066775629d99">_deviceConfig</a></td></tr>
+<tr class="memitem:a68bd3165a11d26ddf45f9599632d8c4a" id="r_a68bd3165a11d26ddf45f9599632d8c4a"><td class="memItemLeft">ma_device&#160;</td><td class="memItemRight"><a class="el" href="#a68bd3165a11d26ddf45f9599632d8c4a">_device</a></td></tr>
+<tr class="memitem:a681ddd8d99551bf7dc4542968e101bf7" id="r_a681ddd8d99551bf7dc4542968e101bf7"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a681ddd8d99551bf7dc4542968e101bf7">_deviceInit</a> = false</td></tr>
+<tr class="memitem:a0cb7e1ca585202b263dc8e8e27d966cf" id="r_a0cb7e1ca585202b263dc8e8e27d966cf"><td class="memItemLeft">ma_engine&#160;</td><td class="memItemRight"><a class="el" href="#a0cb7e1ca585202b263dc8e8e27d966cf">_engine</a></td></tr>
+<tr class="memitem:a1078c3d8a9a80f818561d249531429bb" id="r_a1078c3d8a9a80f818561d249531429bb"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a1078c3d8a9a80f818561d249531429bb">_engineInit</a> = false</td></tr>
+<tr class="memitem:aca5c591cb5f24318550fef90606145e7" id="r_aca5c591cb5f24318550fef90606145e7"><td class="memItemLeft">std::atomic&lt; uint32_t &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aca5c591cb5f24318550fef90606145e7">_callbackErrorFlags</a> {0}</td></tr>
+<tr class="memitem:a8358b4081b5e014cd25d0c728a9b26ed" id="r_a8358b4081b5e014cd25d0c728a9b26ed"><td class="memItemLeft">std::unordered_map&lt; std::string, <a class="el" href="structSound_1_1Resource_1_1SoundManager_1_1Sound.html">Sound</a>, <a class="el" href="structSound_1_1Resource_1_1SoundManager_1_1TransparentHash.html">TransparentHash</a>, <a class="el" href="structSound_1_1Resource_1_1SoundManager_1_1TransparentEqual.html">TransparentEqual</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a8358b4081b5e014cd25d0c728a9b26ed">_soundsToPlay</a></td></tr>
+<tr class="memitem:ae78756cdf58a6a83806ed5cd4057ab1d" id="r_ae78756cdf58a6a83806ed5cd4057ab1d"><td class="memItemLeft"><a class="el" href="classFunctionUtils_1_1FunctionContainer.html">FunctionUtils::FunctionContainer</a>&lt; void, ma_device *, void *, ma_uint32 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ae78756cdf58a6a83806ed5cd4057ab1d">_customCallbacks</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-static-attribs" class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:aea53c4d6cd115e58a2e27b39ca5a617f" id="r_aea53c4d6cd115e58a2e27b39ca5a617f"><td class="memItemLeft">static constexpr uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#aea53c4d6cd115e58a2e27b39ca5a617f">ERROR_FRAME_TOO_LARGE</a> = 0x1</td></tr>
+<tr class="memitem:aecb012c6c549a9e61f03eba0d54335fe" id="r_aecb012c6c549a9e61f03eba0d54335fe"><td class="memItemLeft">static constexpr uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#aecb012c6c549a9e61f03eba0d54335fe">ERROR_DECODER_READ</a> = 0x2</td></tr>
+<tr class="memitem:ab93d1b89a685ec3994cb54c865dcb631" id="r_ab93d1b89a685ec3994cb54c865dcb631"><td class="memItemLeft">static constexpr uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ab93d1b89a685ec3994cb54c865dcb631">ERROR_UNKNOWN_FORMAT</a> = 0x4</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a62e5732db7721b0730a31b1a11adbbac" name="a62e5732db7721b0730a31b1a11adbbac"></a>
@@ -928,6 +952,291 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="aca5c591cb5f24318550fef90606145e7" name="aca5c591cb5f24318550fef90606145e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca5c591cb5f24318550fef90606145e7">&#9670;&#160;</a></span>_callbackErrorFlags</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;uint32_t&gt; Sound::Resource::SoundManager::_callbackErrorFlags {0}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a7">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="ae78756cdf58a6a83806ed5cd4057ab1d" name="ae78756cdf58a6a83806ed5cd4057ab1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae78756cdf58a6a83806ed5cd4057ab1d">&#9670;&#160;</a></span>_customCallbacks</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFunctionUtils_1_1FunctionContainer.html">FunctionUtils::FunctionContainer</a>&lt;void, ma_device *, void *, ma_uint32&gt; Sound::Resource::SoundManager::_customCallbacks</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a68bd3165a11d26ddf45f9599632d8c4a" name="a68bd3165a11d26ddf45f9599632d8c4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68bd3165a11d26ddf45f9599632d8c4a">&#9670;&#160;</a></span>_device</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ma_device Sound::Resource::SoundManager::_device</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a3">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="aacbdb8b075d063114237066775629d99" name="aacbdb8b075d063114237066775629d99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacbdb8b075d063114237066775629d99">&#9670;&#160;</a></span>_deviceConfig</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ma_device_config Sound::Resource::SoundManager::_deviceConfig</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a2">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a681ddd8d99551bf7dc4542968e101bf7" name="a681ddd8d99551bf7dc4542968e101bf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a681ddd8d99551bf7dc4542968e101bf7">&#9670;&#160;</a></span>_deviceInit</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Sound::Resource::SoundManager::_deviceInit = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a4">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a0cb7e1ca585202b263dc8e8e27d966cf" name="a0cb7e1ca585202b263dc8e8e27d966cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cb7e1ca585202b263dc8e8e27d966cf">&#9670;&#160;</a></span>_engine</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ma_engine Sound::Resource::SoundManager::_engine</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a5">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a1078c3d8a9a80f818561d249531429bb" name="a1078c3d8a9a80f818561d249531429bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1078c3d8a9a80f818561d249531429bb">&#9670;&#160;</a></span>_engineInit</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Sound::Resource::SoundManager::_engineInit = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a6">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a3703045d94bb8506fbbd21bf14ca0194" name="a3703045d94bb8506fbbd21bf14ca0194"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3703045d94bb8506fbbd21bf14ca0194">&#9670;&#160;</a></span>_result</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ma_result Sound::Resource::SoundManager::_result</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a1">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a8358b4081b5e014cd25d0c728a9b26ed" name="a8358b4081b5e014cd25d0c728a9b26ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8358b4081b5e014cd25d0c728a9b26ed">&#9670;&#160;</a></span>_soundsToPlay</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, <a class="el" href="structSound_1_1Resource_1_1SoundManager_1_1Sound.html">Sound</a>, <a class="el" href="structSound_1_1Resource_1_1SoundManager_1_1TransparentHash.html">TransparentHash</a>, <a class="el" href="structSound_1_1Resource_1_1SoundManager_1_1TransparentEqual.html">TransparentEqual</a>&gt; Sound::Resource::SoundManager::_soundsToPlay</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aecb012c6c549a9e61f03eba0d54335fe" name="aecb012c6c549a9e61f03eba0d54335fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecb012c6c549a9e61f03eba0d54335fe">&#9670;&#160;</a></span>ERROR_DECODER_READ</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Sound::Resource::SoundManager::ERROR_DECODER_READ = 0x2</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a9">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="aea53c4d6cd115e58a2e27b39ca5a617f" name="aea53c4d6cd115e58a2e27b39ca5a617f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea53c4d6cd115e58a2e27b39ca5a617f">&#9670;&#160;</a></span>ERROR_FRAME_TOO_LARGE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Sound::Resource::SoundManager::ERROR_FRAME_TOO_LARGE = 0x1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a8">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="ab93d1b89a685ec3994cb54c865dcb631" name="ab93d1b89a685ec3994cb54c865dcb631"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab93d1b89a685ec3994cb54c865dcb631">&#9670;&#160;</a></span>ERROR_UNKNOWN_FORMAT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Sound::Resource::SoundManager::ERROR_UNKNOWN_FORMAT = 0x4</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a10">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+</dl>
 
 </div>
 </div>

@@ -106,6 +106,11 @@ Inheritance diagram for DefaultPipeline::Resource::DirectionalLightsBuffer:</div
   </map>
 </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:GPUDirectionalLight" id="r_GPUDirectionalLight"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structDefaultPipeline_1_1Resource_1_1DirectionalLightsBuffer_1_1GPUDirectionalLight.html">GPUDirectionalLight</a></td></tr>
+<tr class="memitem:GPUDirectionalLights" id="r_GPUDirectionalLights"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structDefaultPipeline_1_1Resource_1_1DirectionalLightsBuffer_1_1GPUDirectionalLights.html">GPUDirectionalLights</a></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad8d64c3bdfec2d9c869585bb41949991" id="r_ad8d64c3bdfec2d9c869585bb41949991"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad8d64c3bdfec2d9c869585bb41949991">DirectionalLightsBuffer</a> ()=default</td></tr>
@@ -123,6 +128,19 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a61780be7bbd2f509162f20c1b88dcd8c" id="r_a61780be7bbd2f509162f20c1b88dcd8c"><td class="memItemLeft">static uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#a61780be7bbd2f509162f20c1b88dcd8c">GPUSize</a> ()</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a52d942e519188c56b3db440f9ba4d3a6" id="r_a52d942e519188c56b3db440f9ba4d3a6"><td class="memItemLeft">wgpu::Buffer&#160;</td><td class="memItemRight"><a class="el" href="#a52d942e519188c56b3db440f9ba4d3a6">_CreateBuffer</a> (const <a class="el" href="structGraphic_1_1Resource_1_1DeviceContext.html">Graphic::Resource::DeviceContext</a> &amp;context)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a58a6c5a0322873f1e1de6b5aaf7d7b6a" id="r_a58a6c5a0322873f1e1de6b5aaf7d7b6a"><td class="memItemLeft">wgpu::Buffer&#160;</td><td class="memItemRight"><a class="el" href="#a58a6c5a0322873f1e1de6b5aaf7d7b6a">_buffer</a></td></tr>
+<tr class="memitem:a64f9492333651c68ae9e5ebbc9ef9dba" id="r_a64f9492333651c68ae9e5ebbc9ef9dba"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a64f9492333651c68ae9e5ebbc9ef9dba">_isCreated</a> = false</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-static-attribs" class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a7d7ea0e2bdcea92d7c81d88a83ed76c6" id="r_a7d7ea0e2bdcea92d7c81d88a83ed76c6"><td class="memItemLeft">static std::string&#160;</td><td class="memItemRight"><a class="el" href="#a7d7ea0e2bdcea92d7c81d88a83ed76c6">_debugName</a> = &quot;DirectionalLightsBuffer&quot;</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad8d64c3bdfec2d9c869585bb41949991" name="ad8d64c3bdfec2d9c869585bb41949991"></a>
@@ -176,6 +194,31 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a52d942e519188c56b3db440f9ba4d3a6" name="a52d942e519188c56b3db440f9ba4d3a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52d942e519188c56b3db440f9ba4d3a6">&#9670;&#160;</a></span>_CreateBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::Buffer DefaultPipeline::Resource::DirectionalLightsBuffer::_CreateBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structGraphic_1_1Resource_1_1DeviceContext.html">Graphic::Resource::DeviceContext</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a9872c7c6a994f3b04bc715df00dafba3" name="a9872c7c6a994f3b04bc715df00dafba3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9872c7c6a994f3b04bc715df00dafba3">&#9670;&#160;</a></span>Create()</h2>
 
@@ -383,6 +426,73 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classGraphic_1_1Resource_1_1AGPUBuffer.html#af942b1494498c1ff7f05e9bb08b8f667">Graphic::Resource::AGPUBuffer</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a58a6c5a0322873f1e1de6b5aaf7d7b6a" name="a58a6c5a0322873f1e1de6b5aaf7d7b6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58a6c5a0322873f1e1de6b5aaf7d7b6a">&#9670;&#160;</a></span>_buffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::Buffer DefaultPipeline::Resource::DirectionalLightsBuffer::_buffer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7d7ea0e2bdcea92d7c81d88a83ed76c6" name="a7d7ea0e2bdcea92d7c81d88a83ed76c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d7ea0e2bdcea92d7c81d88a83ed76c6">&#9670;&#160;</a></span>_debugName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string DefaultPipeline::Resource::DirectionalLightsBuffer::_debugName = &quot;DirectionalLightsBuffer&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a64f9492333651c68ae9e5ebbc9ef9dba" name="a64f9492333651c68ae9e5ebbc9ef9dba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64f9492333651c68ae9e5ebbc9ef9dba">&#9670;&#160;</a></span>_isCreated</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DefaultPipeline::Resource::DirectionalLightsBuffer::_isCreated = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

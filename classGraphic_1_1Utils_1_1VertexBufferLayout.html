@@ -119,6 +119,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afe35db9ffe42a7026ac058e3de1c4fb3" id="r_afe35db9ffe42a7026ac058e3de1c4fb3"><td class="memItemLeft">std::vector&lt; <a class="el" href="structGraphic_1_1Utils_1_1ValidationError.html">ValidationError</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#afe35db9ffe42a7026ac058e3de1c4fb3">validate</a> (void) const override</td></tr>
 <tr class="inherit_header pub_methods_classGraphic_1_1Utils_1_1IValidable"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classGraphic_1_1Utils_1_1IValidable')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classGraphic_1_1Utils_1_1IValidable.html">Graphic::Utils::IValidable</a></td></tr>
 <tr class="memitem:a7c92f08ae392d61b4a18c17cc166b0df inherit pub_methods_classGraphic_1_1Utils_1_1IValidable" id="r_a7c92f08ae392d61b4a18c17cc166b0df"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Utils_1_1IValidable.html#a7c92f08ae392d61b4a18c17cc166b0df">~IValidable</a> ()=default</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ade6e598c80c0d49faea1cddc24a82aad" id="r_ade6e598c80c0d49faea1cddc24a82aad"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ade6e598c80c0d49faea1cddc24a82aad">_computeArrayStride</a> () const</td></tr>
+<tr class="memitem:ae39f81aec58abf280e3c99c1542e1ce2" id="r_ae39f81aec58abf280e3c99c1542e1ce2"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ae39f81aec58abf280e3c99c1542e1ce2">_getVertexFormatSize</a> (wgpu::VertexFormat format) const</td></tr>
+<tr class="memitem:a058afdc3147fce691f0bd583b937feb2" id="r_a058afdc3147fce691f0bd583b937feb2"><td class="memItemLeft">std::vector&lt; std::pair&lt; uint64_t, uint64_t &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a058afdc3147fce691f0bd583b937feb2">_getDuplicatedShaderLocation</a> (void) const</td></tr>
+<tr class="memitem:acf7c49b1aaf02bac3c89a0e78412ea1d" id="r_acf7c49b1aaf02bac3c89a0e78412ea1d"><td class="memItemLeft">std::vector&lt; std::pair&lt; uint64_t, uint64_t &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#acf7c49b1aaf02bac3c89a0e78412ea1d">_getOverlappingVertexAttributes</a> (void) const</td></tr>
+<tr class="memitem:a43f3d2f9caaecb26ee24abb85f036f4d" id="r_a43f3d2f9caaecb26ee24abb85f036f4d"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a43f3d2f9caaecb26ee24abb85f036f4d">_doVertexAttributeOverlap</a> (const wgpu::VertexAttribute &amp;firstAttribute, const wgpu::VertexAttribute &amp;secondAttribute) const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aa7eaf630de311c3ed5ca88c23f368c9f" id="r_aa7eaf630de311c3ed5ca88c23f368c9f"><td class="memItemLeft">std::vector&lt; wgpu::VertexAttribute &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa7eaf630de311c3ed5ca88c23f368c9f">vertexAttributes</a></td></tr>
+<tr class="memitem:acad4daba17d048792f664ad84f8a1d8e" id="r_acad4daba17d048792f664ad84f8a1d8e"><td class="memItemLeft">std::optional&lt; uint32_t &gt;&#160;</td><td class="memItemRight"><a class="el" href="#acad4daba17d048792f664ad84f8a1d8e">arrayStride</a></td></tr>
+<tr class="memitem:a84ecd67a62881e85313f9094a3a5ec44" id="r_a84ecd67a62881e85313f9094a3a5ec44"><td class="memItemLeft">wgpu::VertexStepMode&#160;</td><td class="memItemRight"><a class="el" href="#a84ecd67a62881e85313f9094a3a5ec44">stepMode</a> = wgpu::VertexStepMode::Vertex</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac9023d22d373b8970a0f0e42593c2b69" name="ac9023d22d373b8970a0f0e42593c2b69"></a>
@@ -172,6 +186,135 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ade6e598c80c0d49faea1cddc24a82aad" name="ade6e598c80c0d49faea1cddc24a82aad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade6e598c80c0d49faea1cddc24a82aad">&#9670;&#160;</a></span>_computeArrayStride()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Graphic::Utils::VertexBufferLayout::_computeArrayStride </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a43f3d2f9caaecb26ee24abb85f036f4d" name="a43f3d2f9caaecb26ee24abb85f036f4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43f3d2f9caaecb26ee24abb85f036f4d">&#9670;&#160;</a></span>_doVertexAttributeOverlap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Graphic::Utils::VertexBufferLayout::_doVertexAttributeOverlap </td>
+          <td>(</td>
+          <td class="paramtype">const wgpu::VertexAttribute &amp;</td>          <td class="paramname"><span class="paramname"><em>firstAttribute</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const wgpu::VertexAttribute &amp;</td>          <td class="paramname"><span class="paramname"><em>secondAttribute</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a058afdc3147fce691f0bd583b937feb2" name="a058afdc3147fce691f0bd583b937feb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a058afdc3147fce691f0bd583b937feb2">&#9670;&#160;</a></span>_getDuplicatedShaderLocation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; uint64_t, uint64_t &gt; &gt; Graphic::Utils::VertexBufferLayout::_getDuplicatedShaderLocation </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acf7c49b1aaf02bac3c89a0e78412ea1d" name="acf7c49b1aaf02bac3c89a0e78412ea1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf7c49b1aaf02bac3c89a0e78412ea1d">&#9670;&#160;</a></span>_getOverlappingVertexAttributes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; uint64_t, uint64_t &gt; &gt; Graphic::Utils::VertexBufferLayout::_getOverlappingVertexAttributes </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae39f81aec58abf280e3c99c1542e1ce2" name="ae39f81aec58abf280e3c99c1542e1ce2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae39f81aec58abf280e3c99c1542e1ce2">&#9670;&#160;</a></span>_getVertexFormatSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Graphic::Utils::VertexBufferLayout::_getVertexFormatSize </td>
+          <td>(</td>
+          <td class="paramtype">wgpu::VertexFormat</td>          <td class="paramname"><span class="paramname"><em>format</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a8ad0df4c7a714e0ed8a5e9aeeb651614" name="a8ad0df4c7a714e0ed8a5e9aeeb651614"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8ad0df4c7a714e0ed8a5e9aeeb651614">&#9670;&#160;</a></span>addVertexAttribute()</h2>
 
@@ -355,6 +498,73 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classGraphic_1_1Utils_1_1IValidable.html#abdd586a0fc6330f8bd15ea9ad5136a7b">Graphic::Utils::IValidable</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="acad4daba17d048792f664ad84f8a1d8e" name="acad4daba17d048792f664ad84f8a1d8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acad4daba17d048792f664ad84f8a1d8e">&#9670;&#160;</a></span>arrayStride</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;uint32_t&gt; Graphic::Utils::VertexBufferLayout::arrayStride</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a84ecd67a62881e85313f9094a3a5ec44" name="a84ecd67a62881e85313f9094a3a5ec44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84ecd67a62881e85313f9094a3a5ec44">&#9670;&#160;</a></span>stepMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::VertexStepMode Graphic::Utils::VertexBufferLayout::stepMode = wgpu::VertexStepMode::Vertex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa7eaf630de311c3ed5ca88c23f368c9f" name="aa7eaf630de311c3ed5ca88c23f368c9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7eaf630de311c3ed5ca88c23f368c9f">&#9670;&#160;</a></span>vertexAttributes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;wgpu::VertexAttribute&gt; Graphic::Utils::VertexBufferLayout::vertexAttributes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

@@ -12,5 +12,15 @@ var classPhysics_1_1Resource_1_1PhysicsManager =
     [ "GetTempAllocator", "classPhysics_1_1Resource_1_1PhysicsManager.html#a10eb94f504e9e9ca488a81990ad7bf63", null ],
     [ "Init", "classPhysics_1_1Resource_1_1PhysicsManager.html#a27a198e8d5e02f700769f9dc9218a89d", null ],
     [ "IsPhysicsActivated", "classPhysics_1_1Resource_1_1PhysicsManager.html#a79f667aea673310b4cafea02d2af96f9", null ],
-    [ "SetCollisionSteps", "classPhysics_1_1Resource_1_1PhysicsManager.html#ad976d41452db77eee6d566ef1747c792", null ]
+    [ "SetCollisionSteps", "classPhysics_1_1Resource_1_1PhysicsManager.html#ad976d41452db77eee6d566ef1747c792", null ],
+    [ "_broadPhaseLayerInterface", "classPhysics_1_1Resource_1_1PhysicsManager.html#a99de70dd3d6bdc3169774e68b8850787", null ],
+    [ "_collisionSteps", "classPhysics_1_1Resource_1_1PhysicsManager.html#ac04cf79b0b3a5d705578f8b5eb98ed8e", null ],
+    [ "_contactListener", "classPhysics_1_1Resource_1_1PhysicsManager.html#adc042ca223a6d69bc65b13c6550d5cab", null ],
+    [ "_factory", "classPhysics_1_1Resource_1_1PhysicsManager.html#a7d2be39822e5e32f5074197904e7c354", null ],
+    [ "_jobSystem", "classPhysics_1_1Resource_1_1PhysicsManager.html#a7641e4a526fa3187c3d8f6a3e2bb39d9", null ],
+    [ "_objectLayerPairFilter", "classPhysics_1_1Resource_1_1PhysicsManager.html#ac3b01a38d085ebe72ba5a8b831174d8e", null ],
+    [ "_objectVsBroadPhaseLayerFilter", "classPhysics_1_1Resource_1_1PhysicsManager.html#a87e4dc28e15d1d0f6ef191f5f128b914", null ],
+    [ "_physicsSystem", "classPhysics_1_1Resource_1_1PhysicsManager.html#a27a2e5f3b0a3237584da332a092b6deb", null ],
+    [ "_shouldUpdatePhysics", "classPhysics_1_1Resource_1_1PhysicsManager.html#a32fd00516fc6c38a9a8dcf0cba22af0c", null ],
+    [ "_tempAllocator", "classPhysics_1_1Resource_1_1PhysicsManager.html#aa9b44d3a7cd1a046960adad32ff3b0de", null ]
 ];

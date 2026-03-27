@@ -95,6 +95,9 @@ $(function(){initNavTree('structfmt_1_1formatter_3_01Engine_1_1EntityId_01_4.htm
 </div><!--header-->
 <div class="contents">
 
+<p>Specialization of fmt::formatter for <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">Engine::EntityId</a> to allow it to be formatted using the {fmt} library.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="EntityId_8hpp_source.html">EntityId.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for fmt::formatter&lt; Engine::EntityId &gt;:</div>
@@ -102,7 +105,7 @@ Inheritance diagram for fmt::formatter&lt; Engine::EntityId &gt;:</div>
  <div class="center">
   <img src="structfmt_1_1formatter_3_01Engine_1_1EntityId_01_4.png" usemap="#fmt_3A_3Aformatter_3C_20Engine_3A_3AEntityId_20_3E_map" alt=""/>
   <map id="fmt_3A_3Aformatter_3C_20Engine_3A_3AEntityId_20_3E_map" name="fmt_3A_3Aformatter_3C_20Engine_3A_3AEntityId_20_3E_map">
-<area href="structfmt_1_1formatter_3_01Engine_1_1Entity_01_4.html" alt="fmt::formatter&lt; Engine::Entity &gt;" shape="rect" coords="0,112,194,136"/>
+<area href="structfmt_1_1formatter_3_01Engine_1_1Entity_01_4.html" title="Specialization of fmt::formatter for Engine::Entity to allow it to be formatted as a string using the..." alt="fmt::formatter&lt; Engine::Entity &gt;" shape="rect" coords="0,112,194,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -110,8 +113,11 @@ Inheritance diagram for fmt::formatter&lt; Engine::EntityId &gt;:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae0b966c65dd1ba08e3af939837f9880a" id="r_ae0b966c65dd1ba08e3af939837f9880a"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext&gt; </td></tr>
 <tr class="memitem:ae0b966c65dd1ba08e3af939837f9880a template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#ae0b966c65dd1ba08e3af939837f9880a">format</a> (const <a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a> &amp;entityId, FormatContext &amp;ctx) const</td></tr>
+<tr class="memdesc:ae0b966c65dd1ba08e3af939837f9880a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats an EntityId for output. If the EntityId is null, it will format as "null_entity". Otherwise, it will format using the <a class="el" href="namespaceLog.html#a74e8c689080e47e02ba842b480581b08">Log::EntityToDebugString</a> function to provide a human-readable representation of the EntityId.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Specialization of fmt::formatter for <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">Engine::EntityId</a> to allow it to be formatted using the {fmt} library. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="ae0b966c65dd1ba08e3af939837f9880a" name="ae0b966c65dd1ba08e3af939837f9880a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae0b966c65dd1ba08e3af939837f9880a">&#9670;&#160;</a></span>format()</h2>
 
@@ -140,6 +146,23 @@ template&lt;typename FormatContext&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Formats an EntityId for output. If the EntityId is null, it will format as "null_entity". Otherwise, it will format using the <a class="el" href="namespaceLog.html#a74e8c689080e47e02ba842b480581b08">Log::EntityToDebugString</a> function to provide a human-readable representation of the EntityId. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FormatContext</td><td>The type of the format context used by the {fmt} library. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entityId</td><td>The EntityId to format. </td></tr>
+    <tr><td class="paramname">ctx</td><td>The format context used by the {fmt} library. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The formatted string representation of the EntityId. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000041">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>

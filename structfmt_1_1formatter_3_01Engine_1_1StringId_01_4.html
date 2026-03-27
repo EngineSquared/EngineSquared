@@ -95,6 +95,9 @@ $(function(){initNavTree('structfmt_1_1formatter_3_01Engine_1_1StringId_01_4.htm
 </div><!--header-->
 <div class="contents">
 
+<p>Specialization of fmt::formatter for <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">Engine::StringId</a>, allowing it to be formatted using the fmt library. This formatter formats the StringId by extracting the original string representation from the underlying entt::hashed_string and formatting it as a std::string_view, which provides a human-readable representation of the StringId for debugging and logging purposes.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="Id_8hpp_source.html">Id.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for fmt::formatter&lt; Engine::StringId &gt;:</div>
@@ -107,8 +110,11 @@ Inheritance diagram for fmt::formatter&lt; Engine::StringId &gt;:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af621f1bd3e0e1bed529dbf0142786697" id="r_af621f1bd3e0e1bed529dbf0142786697"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext&gt; </td></tr>
 <tr class="memitem:af621f1bd3e0e1bed529dbf0142786697 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#af621f1bd3e0e1bed529dbf0142786697">format</a> (const <a class="el" href="structEngine_1_1StringId.html">Engine::StringId</a> &amp;id, FormatContext &amp;ctx) const</td></tr>
+<tr class="memdesc:af621f1bd3e0e1bed529dbf0142786697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format an <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">Engine::StringId</a> by extracting its original string representation and formatting it as a std::string_view.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Specialization of fmt::formatter for <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">Engine::StringId</a>, allowing it to be formatted using the fmt library. This formatter formats the StringId by extracting the original string representation from the underlying entt::hashed_string and formatting it as a std::string_view, which provides a human-readable representation of the StringId for debugging and logging purposes. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="af621f1bd3e0e1bed529dbf0142786697" name="af621f1bd3e0e1bed529dbf0142786697"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af621f1bd3e0e1bed529dbf0142786697">&#9670;&#160;</a></span>format()</h2>
 
@@ -137,6 +143,23 @@ template&lt;typename FormatContext&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Format an <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">Engine::StringId</a> by extracting its original string representation and formatting it as a std::string_view. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FormatContext</td><td>The type of the format context provided by fmt during formatting. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">Engine::StringId</a> instance to format. </td></tr>
+    <tr><td class="paramname">ctx</td><td>The format context provided by fmt. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of formatting the original string representation of the <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">Engine::StringId</a> instance, extracted from its underlying entt::hashed_string value, as a std::string_view for human-readable output. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000050">Todo</a></b></dt><dd>Put the implementation in the inl file if possible </dd></dl>
 
 </div>
 </div>

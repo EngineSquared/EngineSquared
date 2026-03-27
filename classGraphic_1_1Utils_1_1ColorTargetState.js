@@ -6,5 +6,8 @@ var classGraphic_1_1Utils_1_1ColorTargetState =
     [ "getFormat", "classGraphic_1_1Utils_1_1ColorTargetState.html#aabf41e127f64e7ce8cd162b94d319fff", null ],
     [ "setBlendState", "classGraphic_1_1Utils_1_1ColorTargetState.html#acb2c9573aed0bbed88afa3cb1da89465", null ],
     [ "setFormat", "classGraphic_1_1Utils_1_1ColorTargetState.html#a03fea227f0f649622c91769da616136d", null ],
-    [ "validate", "classGraphic_1_1Utils_1_1ColorTargetState.html#a0f666de56ed4b7a7c01936d112ce0247", null ]
+    [ "validate", "classGraphic_1_1Utils_1_1ColorTargetState.html#a0f666de56ed4b7a7c01936d112ce0247", null ],
+    [ "_blendState", "classGraphic_1_1Utils_1_1ColorTargetState.html#a4cfa57c661c2964097bc4e7785084b26", null ],
+    [ "_format", "classGraphic_1_1Utils_1_1ColorTargetState.html#a0803a071adba87d70d1dabca59452f0b", null ],
+    [ "_name", "classGraphic_1_1Utils_1_1ColorTargetState.html#a18da0988ac7cefdf315bbf1a9c44b5b8", null ]
 ];

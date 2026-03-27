@@ -95,13 +95,19 @@ $(function(){initNavTree('structstd_1_1hash_3_01Engine_1_1EntityId_01_4.html',''
 </div><!--header-->
 <div class="contents">
 
+<p>Specialization of std::hash for <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">Engine::EntityId</a> to allow it to be used as a key in data containers like std::unordered_map.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="EntityId_8hpp_source.html">EntityId.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4ff5f4e9d691a47b55f5f821249d88e5" id="r_a4ff5f4e9d691a47b55f5f821249d88e5"><td class="memItemLeft">std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#a4ff5f4e9d691a47b55f5f821249d88e5">operator()</a> (const <a class="el" href="structEngine_1_1EntityId.html">Engine::EntityId</a> &amp;entityId) const noexcept</td></tr>
+<tr class="memdesc:a4ff5f4e9d691a47b55f5f821249d88e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hash function for EntityId. It uses the hash of the underlying ValueType to compute the hash of the EntityId.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Specialization of std::hash for <a class="el" href="structEngine_1_1EntityId.html" title="Represents a unique identifier for an entity in the Engine&#39;s entity-component system....">Engine::EntityId</a> to allow it to be used as a key in data containers like std::unordered_map. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a4ff5f4e9d691a47b55f5f821249d88e5" name="a4ff5f4e9d691a47b55f5f821249d88e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4ff5f4e9d691a47b55f5f821249d88e5">&#9670;&#160;</a></span>operator()()</h2>
 
@@ -124,6 +130,16 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Hash function for EntityId. It uses the hash of the underlying ValueType to compute the hash of the EntityId. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entityId</td><td>The EntityId to hash. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The hash of the EntityId. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000040">Todo</a></b></dt><dd>put the implementation in the cpp file </dd></dl>
 
 </div>
 </div>

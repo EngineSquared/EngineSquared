@@ -16,5 +16,7 @@ var classFunctionUtils_1_1FunctionContainer =
     [ "IsEmpty", "classFunctionUtils_1_1FunctionContainer.html#a19361c03a1c8d40635c95331cde9b67b", null ],
     [ "operator=", "classFunctionUtils_1_1FunctionContainer.html#aab5b175866cf0c7c1f7569050811b591", null ],
     [ "operator=", "classFunctionUtils_1_1FunctionContainer.html#ab30784d915473aaaad7a80d9df7a81fa", null ],
-    [ "Size", "classFunctionUtils_1_1FunctionContainer.html#a9f8ab8f6673780cbeec76d33c198f45b", null ]
+    [ "Size", "classFunctionUtils_1_1FunctionContainer.html#a9f8ab8f6673780cbeec76d33c198f45b", null ],
+    [ "_idToIterator", "classFunctionUtils_1_1FunctionContainer.html#ac6a9634c6001e756e7a2e9a203a4148b", null ],
+    [ "_orderedFunctions", "classFunctionUtils_1_1FunctionContainer.html#af408cb15b8ff83e7ffc64fb67b16ef7c", null ]
 ];

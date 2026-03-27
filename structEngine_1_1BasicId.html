@@ -95,7 +95,7 @@ $(function(){initNavTree('structEngine_1_1BasicId.html','','structEngine_1_1Basi
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="structA.html">A</a> CRTP (Curiously Recurring Template Pattern) base class for creating strongly-typed ID wrappers.  
+<p>An <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a> class for creating strongly-typed ID wrappers. This template provides a common interface for ID types by wrapping a value type with type-safe operations. Derived classes should implement static NullValue() and Null() methods to define null/invalid ID semantics.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Id_8hpp_source.html">Id.hpp</a>&gt;</code></p>
@@ -103,21 +103,19 @@ $(function(){initNavTree('structEngine_1_1BasicId.html','','structEngine_1_1Basi
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae035487a7f647c9548989a9f9c61ffb0" id="r_ae035487a7f647c9548989a9f9c61ffb0"><td class="memItemLeft">TValue&#160;</td><td class="memItemRight"><a class="el" href="#ae035487a7f647c9548989a9f9c61ffb0">value</a></td></tr>
+<tr class="memdesc:ae035487a7f647c9548989a9f9c61ffb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying value of the ID.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename TDerived, typename TValue&gt;<br />
-struct Engine::BasicId&lt; TDerived, TValue &gt;</div><p><a class="el" href="structA.html">A</a> CRTP (Curiously Recurring Template Pattern) base class for creating strongly-typed ID wrappers. </p>
-<p>This template provides a common interface for ID types by wrapping a value type with type-safe operations. Derived classes should implement static NullValue() and Null() methods to define null/invalid ID semantics.</p>
+struct Engine::BasicId&lt; TDerived, TValue &gt;</div><p>An <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a> class for creating strongly-typed ID wrappers. This template provides a common interface for ID types by wrapping a value type with type-safe operations. Derived classes should implement static NullValue() and Null() methods to define null/invalid ID semantics. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TDerived</td><td>The derived class type (CRTP pattern) </td></tr>
-    <tr><td class="paramname">TValue</td><td>The underlying value type for the ID (e.g., int, uint64_t, etc.)</td></tr>
+    <tr><td class="paramname">TValue</td><td>The underlying value type for the ID (e.g., int, uint64_t, etc.) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The constructor is explicitly(false), allowing implicit conversions from TValue to <a class="el" href="structEngine_1_1BasicId.html" title="A CRTP (Curiously Recurring Template Pattern) base class for creating strongly-typed ID wrappers.">BasicId</a>. </dd>
-<dd>
-Derived classes must provide:<ul>
+<dl class="section note"><dt>Note</dt><dd>Derived classes must provide:<ul>
 <li>static constexpr TValue NullValue() - Returns the value representing a null/invalid ID</li>
 <li>static constexpr TDerived Null() - Returns a null instance of the derived type </li>
 </ul>
@@ -136,6 +134,8 @@ template&lt;typename TDerived, typename TValue&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The underlying value of the ID. </p>
 
 </div>
 </div>

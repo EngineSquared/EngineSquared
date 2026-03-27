@@ -5,5 +5,6 @@ var classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry =
     [ "SamplerBindGroupLayoutEntry", "classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#abbb5baa2f64398e445551b444ca02b76", null ],
     [ "operator=", "classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#a8a44a179406f4918a518160fcee2ed36", null ],
     [ "setType", "classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#aa8985b703d6a435e448c03dc62d224aa", null ],
-    [ "validate", "classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#a7cfcf518eb9bbbd298608d9e75c0f55e", null ]
+    [ "validate", "classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#a7cfcf518eb9bbbd298608d9e75c0f55e", null ],
+    [ "_isSamplerTypeSet", "classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#a261b35a32233634af9fe1a5f37452ecf", null ]
 ];

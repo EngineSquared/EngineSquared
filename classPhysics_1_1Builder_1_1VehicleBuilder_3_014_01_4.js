@@ -13,5 +13,15 @@ var classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4 =
     [ "SetRollbar", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a0ec79ceb56d803819b667e06df3d44eb", null ],
     [ "SetWheelMesh", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a6c1765b64c0336173ffe02f22fc6dfc0", null ],
     [ "SetWheelPositions", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a70778dd1142fab6e8f4ae32cf914513f", null ],
-    [ "SetWheelSettings", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#ab8c94d54efbd16924885ff7d2a25d858", null ]
+    [ "SetWheelSettings", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#ab8c94d54efbd16924885ff7d2a25d858", null ],
+    [ "_chassisMass", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#ab967f9db6e82be156badee36b12e7b5d", null ],
+    [ "_chassisMesh", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#aed364057e870647a114f695f3e800e47", null ],
+    [ "_chassisPosition", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#ae5b4b7ad9ff5d398f0b196e477ead4cc", null ],
+    [ "_chassisRotation", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a611d639aceadf06a28f7d2104d437538", null ],
+    [ "_chassisScale", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#ae680f4c7af39d78eb0dceb760cb00b86", null ],
+    [ "_hasChassisSet", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a4bda1afa1958a7a0b52eb82b2550a160", null ],
+    [ "_hasWheelMesh", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a8f7023bf7da018d94068caee387f4ea8", null ],
+    [ "_vehicle", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a78de8fbc7775b448cd12d1493b2b2116", null ],
+    [ "_wheelMeshes", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a8ce83bff01926707de2bfc15e0e4edb8", null ],
+    [ "_wheelPositions", "classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a97452c70edff4024c5474db5805876e3", null ]
 ];

@@ -27,5 +27,10 @@ var structObject_1_1Component_1_1Mesh =
     [ "SetTexCoordAt", "structObject_1_1Component_1_1Mesh.html#a53d39f44dd8775e5582fd10d3ce6aa05", null ],
     [ "SetTexCoords", "structObject_1_1Component_1_1Mesh.html#a79b4506bd198d342f1ab720dce584604", null ],
     [ "SetVertexAt", "structObject_1_1Component_1_1Mesh.html#a540d6f7fffd6b0e98ad8844acc647b61", null ],
-    [ "SetVertices", "structObject_1_1Component_1_1Mesh.html#a222ee6df319635f6bdf75ab9e8f52d30", null ]
+    [ "SetVertices", "structObject_1_1Component_1_1Mesh.html#a222ee6df319635f6bdf75ab9e8f52d30", null ],
+    [ "_dirty", "structObject_1_1Component_1_1Mesh.html#a73cd3a2d17fb1c6c1a79923bcfdf49fd", null ],
+    [ "indices", "structObject_1_1Component_1_1Mesh.html#a3da2db436288665c9abc23a4bb9f1122", null ],
+    [ "normals", "structObject_1_1Component_1_1Mesh.html#a731007dc227570f8adcb535260f61720", null ],
+    [ "texCoords", "structObject_1_1Component_1_1Mesh.html#a5c3a24b5fe524031e4ee91e4936ededd", null ],
+    [ "vertices", "structObject_1_1Component_1_1Mesh.html#a4c7fa032323b0a612ca16f9ff432f336", null ]
 ];

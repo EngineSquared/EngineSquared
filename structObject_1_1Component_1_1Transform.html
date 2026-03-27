@@ -117,6 +117,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5efe835537d482a9531f0573264a3f05" id="r_a5efe835537d482a9531f0573264a3f05"><td class="memItemLeft">glm::vec3&#160;</td><td class="memItemRight"><a class="el" href="#a5efe835537d482a9531f0573264a3f05">GetRightVector</a> () const</td></tr>
 <tr class="memitem:aa1da3acb97ccd21de9759a02309b6cd0" id="r_aa1da3acb97ccd21de9759a02309b6cd0"><td class="memItemLeft">glm::vec3&#160;</td><td class="memItemRight"><a class="el" href="#aa1da3acb97ccd21de9759a02309b6cd0">GetUpVector</a> () const</td></tr>
 <tr class="memitem:abd796605dac106b470ac338cf8dc6d96" id="r_abd796605dac106b470ac338cf8dc6d96"><td class="memItemLeft">glm::mat4&#160;</td><td class="memItemRight"><a class="el" href="#abd796605dac106b470ac338cf8dc6d96">ComputeTransformationMatrix</a> () const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:adf249777301dc6a7b3372f54f7d28360" id="r_adf249777301dc6a7b3372f54f7d28360"><td class="memItemLeft">glm::mat4&#160;</td><td class="memItemRight"><a class="el" href="#adf249777301dc6a7b3372f54f7d28360">_BuildTransformationMatrix</a> () const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a454c48d54195a4819ed4997a9dcbc0fc" id="r_a454c48d54195a4819ed4997a9dcbc0fc"><td class="memItemLeft">glm::vec3&#160;</td><td class="memItemRight"><a class="el" href="#a454c48d54195a4819ed4997a9dcbc0fc">_position</a></td></tr>
+<tr class="memitem:a2212e19f43e2bb0794d757d73bc966ff" id="r_a2212e19f43e2bb0794d757d73bc966ff"><td class="memItemLeft">glm::vec3&#160;</td><td class="memItemRight"><a class="el" href="#a2212e19f43e2bb0794d757d73bc966ff">_scale</a></td></tr>
+<tr class="memitem:acff86167aa3ba1793cf1014e4b02b19c" id="r_acff86167aa3ba1793cf1014e4b02b19c"><td class="memItemLeft">glm::quat&#160;</td><td class="memItemRight"><a class="el" href="#acff86167aa3ba1793cf1014e4b02b19c">_rotation</a></td></tr>
+<tr class="memitem:afc6fdb6511efd56114a6c22dcc8a4932" id="r_afc6fdb6511efd56114a6c22dcc8a4932"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#afc6fdb6511efd56114a6c22dcc8a4932">_dirty</a> = true</td></tr>
+<tr class="memitem:a8418ae1ec10d0f32555998e6695922ed" id="r_a8418ae1ec10d0f32555998e6695922ed"><td class="memItemLeft">glm::mat4&#160;</td><td class="memItemRight"><a class="el" href="#a8418ae1ec10d0f32555998e6695922ed">_transformationMatrixCache</a> = glm::mat4(1.0f)</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespaceObject_1_1Component.html">Component</a> used to represent a 3D transformation for a game object. It can be used as a 2D transformation. This transformation is represented by position, scale, and rotation. </p>
@@ -214,6 +226,31 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="adf249777301dc6a7b3372f54f7d28360" name="adf249777301dc6a7b3372f54f7d28360"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf249777301dc6a7b3372f54f7d28360">&#9670;&#160;</a></span>_BuildTransformationMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::mat4 Object::Component::Transform::_BuildTransformationMatrix </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="abd796605dac106b470ac338cf8dc6d96" name="abd796605dac106b470ac338cf8dc6d96"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abd796605dac106b470ac338cf8dc6d96">&#9670;&#160;</a></span>ComputeTransformationMatrix()</h2>
 
@@ -617,6 +654,120 @@ Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="afc6fdb6511efd56114a6c22dcc8a4932" name="afc6fdb6511efd56114a6c22dcc8a4932"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc6fdb6511efd56114a6c22dcc8a4932">&#9670;&#160;</a></span>_dirty</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Object::Component::Transform::_dirty = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel mutable">mutable</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a454c48d54195a4819ed4997a9dcbc0fc" name="a454c48d54195a4819ed4997a9dcbc0fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a454c48d54195a4819ed4997a9dcbc0fc">&#9670;&#160;</a></span>_position</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::vec3 Object::Component::Transform::_position</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Position of the entity </p>
+
+</div>
+</div>
+<a id="acff86167aa3ba1793cf1014e4b02b19c" name="acff86167aa3ba1793cf1014e4b02b19c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acff86167aa3ba1793cf1014e4b02b19c">&#9670;&#160;</a></span>_rotation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::quat Object::Component::Transform::_rotation</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Rotation of the entity Represents a rotation around the origin, represented as a quaternion. </p>
+
+</div>
+</div>
+<a id="a2212e19f43e2bb0794d757d73bc966ff" name="a2212e19f43e2bb0794d757d73bc966ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2212e19f43e2bb0794d757d73bc966ff">&#9670;&#160;</a></span>_scale</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::vec3 Object::Component::Transform::_scale</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Scale of the entity </p>
+
+</div>
+</div>
+<a id="a8418ae1ec10d0f32555998e6695922ed" name="a8418ae1ec10d0f32555998e6695922ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8418ae1ec10d0f32555998e6695922ed">&#9670;&#160;</a></span>_transformationMatrixCache</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::mat4 Object::Component::Transform::_transformationMatrixCache = glm::mat4(1.0f)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel mutable">mutable</span><span class="mlabel private">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

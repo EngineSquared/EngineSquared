@@ -106,13 +106,53 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a367a6fc30caf97feaf0fb839aec18e2d" id="r_a367a6fc30caf97feaf0fb839aec18e2d"><td class="memItemLeft"><a class="el" href="namespaceGraphic_1_1Resource.html#ad53aae45d666db53fcb656a0dc13e271">PowerPreference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a367a6fc30caf97feaf0fb839aec18e2d">GetPowerPreference</a> () const</td></tr>
 <tr class="memitem:ac9a261888f78fee62653db3e0d2d1f7e" id="r_ac9a261888f78fee62653db3e0d2d1f7e"><td class="memItemLeft"><a class="el" href="#ac44ad34a09ac3aefd69a8fb838861ae9">GraphicSettings</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac9a261888f78fee62653db3e0d2d1f7e">SetPowerPreference</a> (<a class="el" href="namespaceGraphic_1_1Resource.html#ad53aae45d666db53fcb656a0dc13e271">PowerPreference</a> preference)</td></tr>
 <tr class="memitem:aa3d2a9b37a981efd0237d86c643231b5" id="r_aa3d2a9b37a981efd0237d86c643231b5"><td class="memItemLeft"><a class="el" href="structGraphic_1_1Resource_1_1Limits.html">Limits</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa3d2a9b37a981efd0237d86c643231b5">GetWantedLimits</a> ()</td></tr>
-<tr class="memitem:af07b6724301f6d31d2b76d76693a4e2e" id="r_af07b6724301f6d31d2b76d76693a4e2e"><td class="memItemLeft">const RequiredFeatureContainer &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af07b6724301f6d31d2b76d76693a4e2e">GetRequiredFeatures</a> () const</td></tr>
+<tr class="memitem:af07b6724301f6d31d2b76d76693a4e2e" id="r_af07b6724301f6d31d2b76d76693a4e2e"><td class="memItemLeft">const <a class="el" href="#a58fce302c5b58fe8c0d6d7393c584c3d">RequiredFeatureContainer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af07b6724301f6d31d2b76d76693a4e2e">GetRequiredFeatures</a> () const</td></tr>
 <tr class="memitem:aa9391b4923a8c7262ef88e15cdf93aae" id="r_aa9391b4923a8c7262ef88e15cdf93aae"><td class="memItemLeft"><a class="el" href="#ac44ad34a09ac3aefd69a8fb838861ae9">GraphicSettings</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa9391b4923a8c7262ef88e15cdf93aae">AddRequiredFeature</a> (wgpu::FeatureName feature)</td></tr>
 <tr class="memitem:a0ac374a0deb6a7f2ea981bc8e41b7798" id="r_a0ac374a0deb6a7f2ea981bc8e41b7798"><td class="memItemLeft"><a class="el" href="#ac44ad34a09ac3aefd69a8fb838861ae9">GraphicSettings</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a0ac374a0deb6a7f2ea981bc8e41b7798">RemoveRequiredFeature</a> (wgpu::FeatureName feature)</td></tr>
 <tr class="memitem:a662125abd93209f32cf021ba42629acd" id="r_a662125abd93209f32cf021ba42629acd"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a662125abd93209f32cf021ba42629acd">HasRequiredFeature</a> (wgpu::FeatureName feature) const</td></tr>
 <tr class="memitem:a55c06cc3133421493e42038482544572" id="r_a55c06cc3133421493e42038482544572"><td class="memItemLeft"><a class="el" href="#ac44ad34a09ac3aefd69a8fb838861ae9">GraphicSettings</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a55c06cc3133421493e42038482544572">SetOnErrorCallback</a> (WGPUUncapturedErrorCallback callback)</td></tr>
 <tr class="memitem:aad6f2d2f8d0a112ebc5c93f79ece6818" id="r_aad6f2d2f8d0a112ebc5c93f79ece6818"><td class="memItemLeft">WGPUUncapturedErrorCallback&#160;</td><td class="memItemRight"><a class="el" href="#aad6f2d2f8d0a112ebc5c93f79ece6818">GetOnErrorCallback</a> () const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-types" class="groupheader"><a id="pri-types" name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a58fce302c5b58fe8c0d6d7393c584c3d" id="r_a58fce302c5b58fe8c0d6d7393c584c3d"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a58fce302c5b58fe8c0d6d7393c584c3d">RequiredFeatureContainer</a> = std::vector&lt;WGPUFeatureName&gt;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a27f6337b929679d98171771899803bed" id="r_a27f6337b929679d98171771899803bed"><td class="memItemLeft">RequiredFeatureContainer::iterator&#160;</td><td class="memItemRight"><a class="el" href="#a27f6337b929679d98171771899803bed">_GetRequiredFeature</a> (const wgpu::FeatureName &amp;feature)</td></tr>
+<tr class="memitem:af7cdec4cd15018edf98335f6f58c269a" id="r_af7cdec4cd15018edf98335f6f58c269a"><td class="memItemLeft">RequiredFeatureContainer::const_iterator&#160;</td><td class="memItemRight"><a class="el" href="#af7cdec4cd15018edf98335f6f58c269a">_GetRequiredFeature</a> (const wgpu::FeatureName &amp;feature) const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a64f6dc45bc0d0489f7d38a45a7928cf6" id="r_a64f6dc45bc0d0489f7d38a45a7928cf6"><td class="memItemLeft">WGPUUncapturedErrorCallback&#160;</td><td class="memItemRight"><a class="el" href="#a64f6dc45bc0d0489f7d38a45a7928cf6">onErrorCallback</a></td></tr>
+<tr class="memitem:adef51bdfed3c4df0fbdd9d23cd4368c0" id="r_adef51bdfed3c4df0fbdd9d23cd4368c0"><td class="memItemLeft"><a class="el" href="namespaceGraphic_1_1Resource.html#ac2c45a0ed51d066a783af740db2d718a">WindowSystem</a>&#160;</td><td class="memItemRight"><a class="el" href="#adef51bdfed3c4df0fbdd9d23cd4368c0">windowSystem</a> = <a class="el" href="namespaceGraphic_1_1Resource.html#ac2c45a0ed51d066a783af740db2d718aab274032f1807b8cd2f7553d82555c73c">WindowSystem::GLFW</a></td></tr>
+<tr class="memitem:ab3adfd3ecdb6474b9bc64a975eb0b0e3" id="r_ab3adfd3ecdb6474b9bc64a975eb0b0e3"><td class="memItemLeft"><a class="el" href="namespaceGraphic_1_1Resource.html#ad53aae45d666db53fcb656a0dc13e271">PowerPreference</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab3adfd3ecdb6474b9bc64a975eb0b0e3">powerPreference</a> = <a class="el" href="namespaceGraphic_1_1Resource.html#ad53aae45d666db53fcb656a0dc13e271afc3d9ab96ac1103a7581af5eade2ad15">PowerPreference::HighPerformance</a></td></tr>
+<tr class="memitem:ae6a62046b2e550678d99dab55c700f14" id="r_ae6a62046b2e550678d99dab55c700f14"><td class="memItemLeft"><a class="el" href="structGraphic_1_1Resource_1_1Limits.html">Limits</a>&#160;</td><td class="memItemRight"><a class="el" href="#ae6a62046b2e550678d99dab55c700f14">wantedLimits</a> = <a class="el" href="structGraphic_1_1Resource_1_1Limits.html">Limits</a>(<a class="el" href="namespacewgpu.html#a0fbf5c4c5168202c330cbe3f65008db0">wgpu::Default</a>)</td></tr>
+<tr class="memitem:a6337770178f83f15c5cbe62161f9464b" id="r_a6337770178f83f15c5cbe62161f9464b"><td class="memItemLeft"><a class="el" href="#a58fce302c5b58fe8c0d6d7393c584c3d">RequiredFeatureContainer</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6337770178f83f15c5cbe62161f9464b">requiredFeatures</a></td></tr>
 </table>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a id="a58fce302c5b58fe8c0d6d7393c584c3d" name="a58fce302c5b58fe8c0d6d7393c584c3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58fce302c5b58fe8c0d6d7393c584c3d">&#9670;&#160;</a></span>RequiredFeatureContainer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a58fce302c5b58fe8c0d6d7393c584c3d">Graphic::Resource::GraphicSettings::RequiredFeatureContainer</a> = std::vector&lt;WGPUFeatureName&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac44ad34a09ac3aefd69a8fb838861ae9" name="ac44ad34a09ac3aefd69a8fb838861ae9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac44ad34a09ac3aefd69a8fb838861ae9">&#9670;&#160;</a></span>GraphicSettings()</h2>
@@ -165,6 +205,56 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a27f6337b929679d98171771899803bed" name="a27f6337b929679d98171771899803bed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27f6337b929679d98171771899803bed">&#9670;&#160;</a></span>_GetRequiredFeature() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RequiredFeatureContainer::iterator Graphic::Resource::GraphicSettings::_GetRequiredFeature </td>
+          <td>(</td>
+          <td class="paramtype">const wgpu::FeatureName &amp;</td>          <td class="paramname"><span class="paramname"><em>feature</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af7cdec4cd15018edf98335f6f58c269a" name="af7cdec4cd15018edf98335f6f58c269a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7cdec4cd15018edf98335f6f58c269a">&#9670;&#160;</a></span>_GetRequiredFeature() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RequiredFeatureContainer::const_iterator Graphic::Resource::GraphicSettings::_GetRequiredFeature </td>
+          <td>(</td>
+          <td class="paramtype">const wgpu::FeatureName &amp;</td>          <td class="paramname"><span class="paramname"><em>feature</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aa9391b4923a8c7262ef88e15cdf93aae" name="aa9391b4923a8c7262ef88e15cdf93aae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa9391b4923a8c7262ef88e15cdf93aae">&#9670;&#160;</a></span>AddRequiredFeature()</h2>
 
@@ -250,7 +340,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const RequiredFeatureContainer &amp; Graphic::Resource::GraphicSettings::GetRequiredFeatures </td>
+          <td class="memname">const <a class="el" href="#a58fce302c5b58fe8c0d6d7393c584c3d">RequiredFeatureContainer</a> &amp; Graphic::Resource::GraphicSettings::GetRequiredFeatures </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -434,6 +524,124 @@ Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a64f6dc45bc0d0489f7d38a45a7928cf6" name="a64f6dc45bc0d0489f7d38a45a7928cf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64f6dc45bc0d0489f7d38a45a7928cf6">&#9670;&#160;</a></span>onErrorCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">WGPUUncapturedErrorCallback Graphic::Resource::GraphicSettings::onErrorCallback</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">                                            = [](WGPUDevice <span class="keyword">const</span> *device, WGPUErrorType type,</div>
+<div class="line">                                                 WGPUStringView message, WGPU_NULLABLE <span class="keywordtype">void</span> *userdata1,</div>
+<div class="line">                                                 WGPU_NULLABLE <span class="keywordtype">void</span> *userdata2) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Uncaptured device error: type {:x} ({})&quot;</span>, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(type),</div>
+<div class="line">                           std::string(message.data, message.length)));</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespaceLog_html_a57f205dd59a28db869b6be0bd2441660"><div class="ttname"><a href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a></div><div class="ttdeci">void Error(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:51</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab3adfd3ecdb6474b9bc64a975eb0b0e3" name="ab3adfd3ecdb6474b9bc64a975eb0b0e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3adfd3ecdb6474b9bc64a975eb0b0e3">&#9670;&#160;</a></span>powerPreference</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceGraphic_1_1Resource.html#ad53aae45d666db53fcb656a0dc13e271">PowerPreference</a> Graphic::Resource::GraphicSettings::powerPreference = <a class="el" href="namespaceGraphic_1_1Resource.html#ad53aae45d666db53fcb656a0dc13e271afc3d9ab96ac1103a7581af5eade2ad15">PowerPreference::HighPerformance</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6337770178f83f15c5cbe62161f9464b" name="a6337770178f83f15c5cbe62161f9464b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6337770178f83f15c5cbe62161f9464b">&#9670;&#160;</a></span>requiredFeatures</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a58fce302c5b58fe8c0d6d7393c584c3d">RequiredFeatureContainer</a> Graphic::Resource::GraphicSettings::requiredFeatures</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae6a62046b2e550678d99dab55c700f14" name="ae6a62046b2e550678d99dab55c700f14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6a62046b2e550678d99dab55c700f14">&#9670;&#160;</a></span>wantedLimits</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structGraphic_1_1Resource_1_1Limits.html">Limits</a> Graphic::Resource::GraphicSettings::wantedLimits = <a class="el" href="structGraphic_1_1Resource_1_1Limits.html">Limits</a>(<a class="el" href="namespacewgpu.html#a0fbf5c4c5168202c330cbe3f65008db0">wgpu::Default</a>)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adef51bdfed3c4df0fbdd9d23cd4368c0" name="adef51bdfed3c4df0fbdd9d23cd4368c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adef51bdfed3c4df0fbdd9d23cd4368c0">&#9670;&#160;</a></span>windowSystem</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceGraphic_1_1Resource.html#ac2c45a0ed51d066a783af740db2d718a">WindowSystem</a> Graphic::Resource::GraphicSettings::windowSystem = <a class="el" href="namespaceGraphic_1_1Resource.html#ac2c45a0ed51d066a783af740db2d718aab274032f1807b8cd2f7553d82555c73c">WindowSystem::GLFW</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

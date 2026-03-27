@@ -129,6 +129,19 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a13e78bfed28d2d2de536a26134a847f9" id="r_a13e78bfed28d2d2de536a26134a847f9"><td class="memItemLeft">static std::string&#160;</td><td class="memItemRight"><a class="el" href="#a13e78bfed28d2d2de536a26134a847f9">prefix</a> = &quot;MaterialGPUBuffer_&quot;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a89d94cc4562225408d29e63f0d2cc2de" id="r_a89d94cc4562225408d29e63f0d2cc2de"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a89d94cc4562225408d29e63f0d2cc2de">_UpdateDebugName</a> ()</td></tr>
+<tr class="memitem:a338efa66edf6acc4be8845dbf7e7578c" id="r_a338efa66edf6acc4be8845dbf7e7578c"><td class="memItemLeft">wgpu::Buffer&#160;</td><td class="memItemRight"><a class="el" href="#a338efa66edf6acc4be8845dbf7e7578c">_CreateBuffer</a> (const <a class="el" href="structGraphic_1_1Resource_1_1DeviceContext.html">Graphic::Resource::DeviceContext</a> &amp;context)</td></tr>
+<tr class="memitem:a52dc7f5f67368ed4364c54c3c47423ed" id="r_a52dc7f5f67368ed4364c54c3c47423ed"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a52dc7f5f67368ed4364c54c3c47423ed">_UpdateBuffer</a> (const <a class="el" href="structObject_1_1Component_1_1Material.html">Object::Component::Material</a> &amp;materialComponent, const <a class="el" href="classGraphic_1_1Resource_1_1Context.html">Graphic::Resource::Context</a> &amp;context)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a14fdf6698be3b3b04aa8c6957bbc27fa" id="r_a14fdf6698be3b3b04aa8c6957bbc27fa"><td class="memItemLeft">wgpu::Buffer&#160;</td><td class="memItemRight"><a class="el" href="#a14fdf6698be3b3b04aa8c6957bbc27fa">_buffer</a></td></tr>
+<tr class="memitem:a57184582fb3c4573780c8a866e3dae38" id="r_a57184582fb3c4573780c8a866e3dae38"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a57184582fb3c4573780c8a866e3dae38">_isCreated</a> = false</td></tr>
+<tr class="memitem:a026ab6f8cd6be508a5796725034b153c" id="r_a026ab6f8cd6be508a5796725034b153c"><td class="memItemLeft">std::optional&lt; <a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a026ab6f8cd6be508a5796725034b153c">_entity</a></td></tr>
+<tr class="memitem:aa7c2d95b2106837e95e617a9fd78c5e5" id="r_aa7c2d95b2106837e95e617a9fd78c5e5"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#aa7c2d95b2106837e95e617a9fd78c5e5">_debugName</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0d8977a752b80502c6568d4c45217a3e" name="a0d8977a752b80502c6568d4c45217a3e"></a>
@@ -207,6 +220,85 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a338efa66edf6acc4be8845dbf7e7578c" name="a338efa66edf6acc4be8845dbf7e7578c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a338efa66edf6acc4be8845dbf7e7578c">&#9670;&#160;</a></span>_CreateBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::Buffer DefaultPipeline::Resource::MaterialGPUBuffer::_CreateBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structGraphic_1_1Resource_1_1DeviceContext.html">Graphic::Resource::DeviceContext</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a52dc7f5f67368ed4364c54c3c47423ed" name="a52dc7f5f67368ed4364c54c3c47423ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52dc7f5f67368ed4364c54c3c47423ed">&#9670;&#160;</a></span>_UpdateBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DefaultPipeline::Resource::MaterialGPUBuffer::_UpdateBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structObject_1_1Component_1_1Material.html">Object::Component::Material</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>materialComponent</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classGraphic_1_1Resource_1_1Context.html">Graphic::Resource::Context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a89d94cc4562225408d29e63f0d2cc2de" name="a89d94cc4562225408d29e63f0d2cc2de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89d94cc4562225408d29e63f0d2cc2de">&#9670;&#160;</a></span>_UpdateDebugName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DefaultPipeline::Resource::MaterialGPUBuffer::_UpdateDebugName </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="af7bce6eae6ca7d8e0a053f224dd9ac36" name="af7bce6eae6ca7d8e0a053f224dd9ac36"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af7bce6eae6ca7d8e0a053f224dd9ac36">&#9670;&#160;</a></span>Create()</h2>
 
@@ -422,6 +514,94 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a14fdf6698be3b3b04aa8c6957bbc27fa" name="a14fdf6698be3b3b04aa8c6957bbc27fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14fdf6698be3b3b04aa8c6957bbc27fa">&#9670;&#160;</a></span>_buffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::Buffer DefaultPipeline::Resource::MaterialGPUBuffer::_buffer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa7c2d95b2106837e95e617a9fd78c5e5" name="aa7c2d95b2106837e95e617a9fd78c5e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7c2d95b2106837e95e617a9fd78c5e5">&#9670;&#160;</a></span>_debugName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string DefaultPipeline::Resource::MaterialGPUBuffer::_debugName</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a026ab6f8cd6be508a5796725034b153c" name="a026ab6f8cd6be508a5796725034b153c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a026ab6f8cd6be508a5796725034b153c">&#9670;&#160;</a></span>_entity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;<a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a>&gt; DefaultPipeline::Resource::MaterialGPUBuffer::_entity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a57184582fb3c4573780c8a866e3dae38" name="a57184582fb3c4573780c8a866e3dae38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57184582fb3c4573780c8a866e3dae38">&#9670;&#160;</a></span>_isCreated</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DefaultPipeline::Resource::MaterialGPUBuffer::_isCreated = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a13e78bfed28d2d2de536a26134a847f9" name="a13e78bfed28d2d2de536a26134a847f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a13e78bfed28d2d2de536a26134a847f9">&#9670;&#160;</a></span>prefix</h2>
 

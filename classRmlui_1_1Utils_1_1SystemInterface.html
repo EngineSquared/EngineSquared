@@ -111,6 +111,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a56c016b5ee62ff6af66cd5365e064289" id="r_a56c016b5ee62ff6af66cd5365e064289"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a56c016b5ee62ff6af66cd5365e064289">LogMessage</a> (Rml::Log::Type type, const Rml::String &amp;message) override</td></tr>
 <tr class="memitem:afc32708c4213965670a47026ad46e021" id="r_afc32708c4213965670a47026ad46e021"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afc32708c4213965670a47026ad46e021">SetClipboardText</a> (const Rml::String &amp;text) override</td></tr>
 <tr class="memitem:a33356c04a142da4f1a82d48e6b909075" id="r_a33356c04a142da4f1a82d48e6b909075"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a33356c04a142da4f1a82d48e6b909075">GetClipboardText</a> (Rml::String &amp;text) override</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aefab6157a11554f56d6eeda81aad0f49" id="r_aefab6157a11554f56d6eeda81aad0f49"><td class="memItemLeft">std::chrono::steady_clock::time_point&#160;</td><td class="memItemRight"><a class="el" href="#aefab6157a11554f56d6eeda81aad0f49">_startTime</a> = std::chrono::steady_clock::now()</td></tr>
+<tr class="memitem:adcfa7390b13cdf1a7b396c1756f2734c" id="r_adcfa7390b13cdf1a7b396c1756f2734c"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#adcfa7390b13cdf1a7b396c1756f2734c">_clipboard</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab76516dd1ae88323af85b0f98b9297ae" name="ab76516dd1ae88323af85b0f98b9297ae"></a>
@@ -262,6 +267,51 @@ Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel override">override</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="adcfa7390b13cdf1a7b396c1756f2734c" name="adcfa7390b13cdf1a7b396c1756f2734c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcfa7390b13cdf1a7b396c1756f2734c">&#9670;&#160;</a></span>_clipboard</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Rmlui::Utils::SystemInterface::_clipboard</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aefab6157a11554f56d6eeda81aad0f49" name="aefab6157a11554f56d6eeda81aad0f49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefab6157a11554f56d6eeda81aad0f49">&#9670;&#160;</a></span>_startTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::steady_clock::time_point Rmlui::Utils::SystemInterface::_startTime = std::chrono::steady_clock::now()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

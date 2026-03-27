@@ -142,11 +142,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad576785cd9f69968ea6af38cb55fb3fb" id="r_ad576785cd9f69968ea6af38cb55fb3fb"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ad576785cd9f69968ea6af38cb55fb3fb">Contains</a> (<a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionID</a> id) const</td></tr>
 <tr class="memitem:a873b0a4daafa0179a8ddd4ef2d13c2c3" id="r_a873b0a4daafa0179a8ddd4ef2d13c2c3"><td class="memTemplParams" colspan="2">template&lt;typename TCallable&gt; </td></tr>
 <tr class="memitem:a873b0a4daafa0179a8ddd4ef2d13c2c3 template"><td class="memItemLeft"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a>&#160;</td><td class="memItemRight"><a class="el" href="#a873b0a4daafa0179a8ddd4ef2d13c2c3">AddFunction</a> (TCallable callable)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af408cb15b8ff83e7ffc64fb67b16ef7c" id="r_af408cb15b8ff83e7ffc64fb67b16ef7c"><td class="memItemLeft">std::list&lt; std::unique_ptr&lt; <a class="el" href="#a7040c93077ef656151bc5434b9a0c898">FunctionType</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#af408cb15b8ff83e7ffc64fb67b16ef7c">_orderedFunctions</a></td></tr>
+<tr class="memdesc:af408cb15b8ff83e7ffc64fb67b16ef7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">List to store functions in order.  <br /></td></tr>
+<tr class="memitem:ac6a9634c6001e756e7a2e9a203a4148b" id="r_ac6a9634c6001e756e7a2e9a203a4148b"><td class="memItemLeft">std::unordered_map&lt; <a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionID</a>, typename std::list&lt; std::unique_ptr&lt; <a class="el" href="#a7040c93077ef656151bc5434b9a0c898">FunctionType</a> &gt; &gt;::iterator &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ac6a9634c6001e756e7a2e9a203a4148b">_idToIterator</a></td></tr>
+<tr class="memdesc:ac6a9634c6001e756e7a2e9a203a4148b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map to store iterators for O(1) deletion.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename TReturn, typename... TArgs&gt;<br />
 class FunctionUtils::FunctionContainer&lt; TReturn, TArgs &gt;</div><p>Container for functions, allowing for dynamic storage and invocation. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#_a1">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#_a11">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
 </dl>
 </div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="a7040c93077ef656151bc5434b9a0c898" name="a7040c93077ef656151bc5434b9a0c898"></a>
@@ -343,7 +350,7 @@ template&lt;typename TCallable&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a8">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a18">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
 </dl>
 
 </div>
@@ -437,7 +444,7 @@ template&lt;typename TReturn, typename... TArgs&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a9">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a19">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
 </dl>
 
 </div>
@@ -467,7 +474,7 @@ template&lt;typename TReturn, typename... TArgs&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the function was deleted, false otherwise. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a10">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a20">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
 </dl>
 
 </div>
@@ -499,7 +506,7 @@ template&lt;typename TReturn, typename... TArgs&gt; </div>
 
 <p>Gets the list of functions in the container. </p>
 <dl class="section return"><dt>Returns</dt><dd>Const reference to the vector of unique pointers to <a class="el" href="classFunctionUtils_1_1BaseFunction.html" title="Base class for all functions contained in a FunctionContainer.">BaseFunction</a>. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a11">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html#a21">/home/runner/work/EngineSquared/EngineSquared/src/plugin/sound/src/resource/SoundManager.hpp</a>.</dd>
 </dl>
 
 </div>
@@ -619,6 +626,59 @@ template&lt;typename TReturn, typename... TArgs&gt; </div>
 
 <p>Returns the number of functions in the container. </p>
 <dl class="section return"><dt>Returns</dt><dd>The number of functions in the container. </dd></dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ac6a9634c6001e756e7a2e9a203a4148b" name="ac6a9634c6001e756e7a2e9a203a4148b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6a9634c6001e756e7a2e9a203a4148b">&#9670;&#160;</a></span>_idToIterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TReturn, typename... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionID</a>, typename std::list&lt;std::unique_ptr&lt;<a class="el" href="#a7040c93077ef656151bc5434b9a0c898">FunctionType</a>&gt; &gt;::iterator&gt; <a class="el" href="classFunctionUtils_1_1FunctionContainer.html">FunctionUtils::FunctionContainer</a>&lt; TReturn, TArgs &gt;::_idToIterator</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Map to store iterators for O(1) deletion. </p>
+
+</div>
+</div>
+<a id="af408cb15b8ff83e7ffc64fb67b16ef7c" name="af408cb15b8ff83e7ffc64fb67b16ef7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af408cb15b8ff83e7ffc64fb67b16ef7c">&#9670;&#160;</a></span>_orderedFunctions</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TReturn, typename... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::list&lt;std::unique_ptr&lt;<a class="el" href="#a7040c93077ef656151bc5434b9a0c898">FunctionType</a>&gt; &gt; <a class="el" href="classFunctionUtils_1_1FunctionContainer.html">FunctionUtils::FunctionContainer</a>&lt; TReturn, TArgs &gt;::_orderedFunctions</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>List to store functions in order. </p>
 
 </div>
 </div>

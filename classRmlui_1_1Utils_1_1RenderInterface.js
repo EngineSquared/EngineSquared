@@ -1,5 +1,8 @@
 var classRmlui_1_1Utils_1_1RenderInterface =
 [
+    [ "GeometryData", "structRmlui_1_1Utils_1_1RenderInterface_1_1GeometryData.html", "structRmlui_1_1Utils_1_1RenderInterface_1_1GeometryData" ],
+    [ "TextureData", "structRmlui_1_1Utils_1_1RenderInterface_1_1TextureData.html", "structRmlui_1_1Utils_1_1RenderInterface_1_1TextureData" ],
+    [ "DrawCommand", "structRmlui_1_1Utils_1_1RenderInterface_1_1DrawCommand.html", "structRmlui_1_1Utils_1_1RenderInterface_1_1DrawCommand" ],
     [ "RenderInterface", "classRmlui_1_1Utils_1_1RenderInterface.html#ace0038869b5fc74a7e337813a760ad2b", null ],
     [ "RenderInterface", "classRmlui_1_1Utils_1_1RenderInterface.html#a60b62cec0eae55c85bbbc469b5c670ed", null ],
     [ "~RenderInterface", "classRmlui_1_1Utils_1_1RenderInterface.html#ae34a0d4a0e4d54b99a40793fb4342282", null ],
@@ -16,7 +19,21 @@ var classRmlui_1_1Utils_1_1RenderInterface =
     [ "ReleaseGeometry", "classRmlui_1_1Utils_1_1RenderInterface.html#a3f137125f4b2381d7286b2c59deaa910", null ],
     [ "ReleaseTexture", "classRmlui_1_1Utils_1_1RenderInterface.html#a43584fb7490b4a801cd121b4abaaa9ed", null ],
     [ "RenderGeometry", "classRmlui_1_1Utils_1_1RenderInterface.html#adfd45eb6885944663e238214d76a5614", null ],
+    [ "ResolveTextureBindGroup", "classRmlui_1_1Utils_1_1RenderInterface.html#a1e8a08d604a3f25b987e1969975052c7", null ],
     [ "SetScissor", "classRmlui_1_1Utils_1_1RenderInterface.html#a523c03e4fd7ccf1a01d4c5266cd6d79f", null ],
     [ "SetScissorRegion", "classRmlui_1_1Utils_1_1RenderInterface.html#a01eb5b07992a97ae640f08907f8d6a34", null ],
-    [ "SetTransform", "classRmlui_1_1Utils_1_1RenderInterface.html#a3e01efd5124ce078344cb2f5397737a8", null ]
+    [ "SetTransform", "classRmlui_1_1Utils_1_1RenderInterface.html#a3e01efd5124ce078344cb2f5397737a8", null ],
+    [ "_active", "classRmlui_1_1Utils_1_1RenderInterface.html#a3e2ffaeb09447cda5526d2c9bf897551", null ],
+    [ "_core", "classRmlui_1_1Utils_1_1RenderInterface.html#a0746e98d3477510bf887cfa4cbb7b591", null ],
+    [ "_defaultTexture", "classRmlui_1_1Utils_1_1RenderInterface.html#a3de9b6a38d8715dfc6add3e339cef569", null ],
+    [ "_drawCommands", "classRmlui_1_1Utils_1_1RenderInterface.html#a864f8fee6ab0460fd1d2edcdbe5b7fcf", null ],
+    [ "_geometries", "classRmlui_1_1Utils_1_1RenderInterface.html#a1ed774cdf724eeec421829e3d374a9f6", null ],
+    [ "_nextTextureHandle", "classRmlui_1_1Utils_1_1RenderInterface.html#a3d28990e01ac28cf655cb4cfbcd5379a", null ],
+    [ "_scissorEnabled", "classRmlui_1_1Utils_1_1RenderInterface.html#ab6f9ff5cf6b42eb6b570cca56a1156d7", null ],
+    [ "_scissorRegion", "classRmlui_1_1Utils_1_1RenderInterface.html#af3dee2ea4f23e1259d8e924f2d42d07a", null ],
+    [ "_screenBindGroup", "classRmlui_1_1Utils_1_1RenderInterface.html#a51612703aa941fdb41d257e386fcf3a1", null ],
+    [ "_screenBuffer", "classRmlui_1_1Utils_1_1RenderInterface.html#ac45273bd058e39c495c5e0497a167d73", null ],
+    [ "_textureCounter", "classRmlui_1_1Utils_1_1RenderInterface.html#a64cccb681e60971eccf8e44e0ee8874f", null ],
+    [ "_textures", "classRmlui_1_1Utils_1_1RenderInterface.html#a46c07c6d29a0b2f6e6a98eefb2befedc", null ],
+    [ "_transform", "classRmlui_1_1Utils_1_1RenderInterface.html#aa6b1e0c3d6594c728121bac72774724f", null ]
 ];

@@ -1,10 +1,12 @@
 var classRmlui_1_1Resource_1_1UIContext =
 [
     [ "InputCallbackIds", "structRmlui_1_1Resource_1_1UIContext_1_1InputCallbackIds.html", "structRmlui_1_1Resource_1_1UIContext_1_1InputCallbackIds" ],
+    [ "EventListenerEntry", "structRmlui_1_1Resource_1_1UIContext_1_1EventListenerEntry.html", "structRmlui_1_1Resource_1_1UIContext_1_1EventListenerEntry" ],
     [ "UIContext", "classRmlui_1_1Resource_1_1UIContext.html#a57b12bdb4328cabf7ff029e31c89845a", null ],
     [ "~UIContext", "classRmlui_1_1Resource_1_1UIContext.html#a932f07a027c424744b3519827970e57e", null ],
     [ "UIContext", "classRmlui_1_1Resource_1_1UIContext.html#a113a2828980cf8c3f479a46881f22e5d", null ],
     [ "UIContext", "classRmlui_1_1Resource_1_1UIContext.html#a13d9ff163449b6f479ce298497dae1f4", null ],
+    [ "_isReady", "classRmlui_1_1Resource_1_1UIContext.html#af6a9eeac8fa0d11ab5f3d871782d398a", null ],
     [ "_setup", "classRmlui_1_1Resource_1_1UIContext.html#a112534dd5e9fc85cbe13c5eb6d26338f", null ],
     [ "AreInputCallbacksRegistered", "classRmlui_1_1Resource_1_1UIContext.html#a12bfdb87202903d36c8520ad7a1cf1f6", null ],
     [ "Destroy", "classRmlui_1_1Resource_1_1UIContext.html#a60cfefffa89de7fc87a4b6d6a5eb34c2", null ],
@@ -33,5 +35,14 @@ var classRmlui_1_1Resource_1_1UIContext =
     [ "UnloadOverlayDocument", "classRmlui_1_1Resource_1_1UIContext.html#af1bb14feab31f159ef2c3c96950ef80f", null ],
     [ "UnregisterEventListener", "classRmlui_1_1Resource_1_1UIContext.html#a5730d82df1db38c9e2affee524505bb7", null ],
     [ "Update", "classRmlui_1_1Resource_1_1UIContext.html#a09e435f236cc2793cffb2eafdb2c3723", null ],
-    [ "UpdateMouseMoveEvent", "classRmlui_1_1Resource_1_1UIContext.html#a2daf5b48e28aff6cd6df8e8f32c65f6d", null ]
+    [ "UpdateMouseMoveEvent", "classRmlui_1_1Resource_1_1UIContext.html#a2daf5b48e28aff6cd6df8e8f32c65f6d", null ],
+    [ "_context", "classRmlui_1_1Resource_1_1UIContext.html#af4fe11914fce53ed4cf3e5b613df13fe", null ],
+    [ "_debuggerInitialized", "classRmlui_1_1Resource_1_1UIContext.html#a6d2b1a39486be891b201115ad80ae08e", null ],
+    [ "_document", "classRmlui_1_1Resource_1_1UIContext.html#a1eb795799272b81d3f12c8a8ccaeea65", null ],
+    [ "_eventListeners", "classRmlui_1_1Resource_1_1UIContext.html#a436bcf7073370f0e57a06044f5aad99b", null ],
+    [ "_inputCallbackIds", "classRmlui_1_1Resource_1_1UIContext.html#aefd958a0ecf6013ae8a01cec0b08869f", null ],
+    [ "_inputCallbacksRegistered", "classRmlui_1_1Resource_1_1UIContext.html#a3c906f2c3d9dc1f6a9b2ac08ddd389e4", null ],
+    [ "_lateUpdateRequested", "classRmlui_1_1Resource_1_1UIContext.html#a363a7b16cb3b4fe2a3e43b3010e61181", null ],
+    [ "_overlayDocuments", "classRmlui_1_1Resource_1_1UIContext.html#a46cdb47b72b9f2f3589ee1962a97cab9", null ],
+    [ "_titleCache", "classRmlui_1_1Resource_1_1UIContext.html#adb729a4fee15385aade24b24f67d1258", null ]
 ];

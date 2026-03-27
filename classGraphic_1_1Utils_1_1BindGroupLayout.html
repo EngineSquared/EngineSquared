@@ -108,7 +108,7 @@ Inheritance diagram for Graphic::Utils::BindGroupLayout:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7591d2cfecd2a5ba5e27e7b2dab0aa5c" id="r_a7591d2cfecd2a5ba5e27e7b2dab0aa5c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7591d2cfecd2a5ba5e27e7b2dab0aa5c">BindGroupLayout</a> (const std::string &amp;name)</td></tr>
+<tr class="memitem:a7591d2cfecd2a5ba5e27e7b2dab0aa5c" id="r_a7591d2cfecd2a5ba5e27e7b2dab0aa5c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7591d2cfecd2a5ba5e27e7b2dab0aa5c">BindGroupLayout</a> (const std::string &amp;<a class="el" href="#a50259794890c07fd9c13c53a3b0d1dd2">name</a>)</td></tr>
 <tr class="memitem:afbd624c8fc079c797b15e3bdd567ef9d" id="r_afbd624c8fc079c797b15e3bdd567ef9d"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#afbd624c8fc079c797b15e3bdd567ef9d">~BindGroupLayout</a> () override=default</td></tr>
 <tr class="memitem:a4af2765f46bc7aaf9cec0f57d1cb8171" id="r_a4af2765f46bc7aaf9cec0f57d1cb8171"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="conceptCBindGroupLayoutEntry.html">CBindGroupLayoutEntry</a> TEntry&gt; </td></tr>
 <tr class="memitem:a4af2765f46bc7aaf9cec0f57d1cb8171 template"><td class="memItemLeft"><a class="el" href="#a7591d2cfecd2a5ba5e27e7b2dab0aa5c">BindGroupLayout</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4af2765f46bc7aaf9cec0f57d1cb8171">addEntry</a> (const TEntry &amp;entry)</td></tr>
@@ -117,6 +117,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a73636bcb9bb6bc35697c93a2dcdeebf8" id="r_a73636bcb9bb6bc35697c93a2dcdeebf8"><td class="memItemLeft">std::vector&lt; <a class="el" href="structGraphic_1_1Utils_1_1ValidationError.html">ValidationError</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a73636bcb9bb6bc35697c93a2dcdeebf8">validate</a> (void) const override</td></tr>
 <tr class="inherit_header pub_methods_classGraphic_1_1Utils_1_1IValidable"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classGraphic_1_1Utils_1_1IValidable')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classGraphic_1_1Utils_1_1IValidable.html">Graphic::Utils::IValidable</a></td></tr>
 <tr class="memitem:a7c92f08ae392d61b4a18c17cc166b0df inherit pub_methods_classGraphic_1_1Utils_1_1IValidable" id="r_a7c92f08ae392d61b4a18c17cc166b0df"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Utils_1_1IValidable.html#a7c92f08ae392d61b4a18c17cc166b0df">~IValidable</a> ()=default</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae3f96ce569281da379f59e83d5d2e330" id="r_ae3f96ce569281da379f59e83d5d2e330"><td class="memItemLeft">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classGraphic_1_1Utils_1_1IBindGroupLayoutEntry.html">IBindGroupLayoutEntry</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ae3f96ce569281da379f59e83d5d2e330">entries</a></td></tr>
+<tr class="memitem:a50259794890c07fd9c13c53a3b0d1dd2" id="r_a50259794890c07fd9c13c53a3b0d1dd2"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a50259794890c07fd9c13c53a3b0d1dd2">name</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7591d2cfecd2a5ba5e27e7b2dab0aa5c" name="a7591d2cfecd2a5ba5e27e7b2dab0aa5c"></a>
@@ -271,6 +276,51 @@ template&lt;<a class="el" href="conceptCBindGroupLayoutEntry.html">CBindGroupLay
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classGraphic_1_1Utils_1_1IValidable.html#abdd586a0fc6330f8bd15ea9ad5136a7b">Graphic::Utils::IValidable</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ae3f96ce569281da379f59e83d5d2e330" name="ae3f96ce569281da379f59e83d5d2e330"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3f96ce569281da379f59e83d5d2e330">&#9670;&#160;</a></span>entries</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::shared_ptr&lt;<a class="el" href="classGraphic_1_1Utils_1_1IBindGroupLayoutEntry.html">IBindGroupLayoutEntry</a>&gt; &gt; Graphic::Utils::BindGroupLayout::entries</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a50259794890c07fd9c13c53a3b0d1dd2" name="a50259794890c07fd9c13c53a3b0d1dd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50259794890c07fd9c13c53a3b0d1dd2">&#9670;&#160;</a></span>name</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Graphic::Utils::BindGroupLayout::name</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

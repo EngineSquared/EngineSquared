@@ -103,7 +103,9 @@ $(function(){initNavTree('classEngine_1_1SchedulerContainer.html','','classEngin
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2ebc90dc34fc277763824d6364e1d791" id="r_a2ebc90dc34fc277763824d6364e1d791"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a2ebc90dc34fc277763824d6364e1d791">SchedulerContainer</a> ()=default</td></tr>
+<tr class="memdesc:a2ebc90dc34fc277763824d6364e1d791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor for <a class="el" href="classEngine_1_1SchedulerContainer.html" title="Manages a collection of schedulers, allowing addition, retrieval, and deletion of schedulers.">SchedulerContainer</a>.  <br /></td></tr>
 <tr class="memitem:a7c48bf8bc394d2be1825a621163a22ab" id="r_a7c48bf8bc394d2be1825a621163a22ab"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7c48bf8bc394d2be1825a621163a22ab">~SchedulerContainer</a> ()=default</td></tr>
+<tr class="memdesc:a7c48bf8bc394d2be1825a621163a22ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor for <a class="el" href="classEngine_1_1SchedulerContainer.html" title="Manages a collection of schedulers, allowing addition, retrieval, and deletion of schedulers.">SchedulerContainer</a>.  <br /></td></tr>
 <tr class="memitem:af89ac393b1dc477c6c87fcf18431c17d" id="r_af89ac393b1dc477c6c87fcf18431c17d"><td class="memTemplParams" colspan="2">template&lt;typename TScheduler, typename... Args&gt; </td></tr>
 <tr class="memitem:af89ac393b1dc477c6c87fcf18431c17d template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af89ac393b1dc477c6c87fcf18431c17d">AddScheduler</a> (<a class="el" href="classEngine_1_1Core.html">Core</a> &amp;core, Args &amp;&amp;...args)</td></tr>
 <tr class="memdesc:af89ac393b1dc477c6c87fcf18431c17d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a scheduler to the container.  <br /></td></tr>
@@ -113,7 +115,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4b3e89596de8c43d50ef34650452fd8f" id="r_a4b3e89596de8c43d50ef34650452fd8f"><td class="memItemLeft">std::shared_ptr&lt; <a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html">Scheduler::AScheduler</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4b3e89596de8c43d50ef34650452fd8f">GetScheduler</a> (std::type_index id)</td></tr>
 <tr class="memdesc:a4b3e89596de8c43d50ef34650452fd8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a scheduler identified by the given type index.  <br /></td></tr>
 <tr class="memitem:a49324e0da554d4d02d2761b7b71e3374" id="r_a49324e0da554d4d02d2761b7b71e3374"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a49324e0da554d4d02d2761b7b71e3374">RunSchedulers</a> ()</td></tr>
-<tr class="memdesc:a49324e0da554d4d02d2761b7b71e3374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs all schedulers in the container.  <br /></td></tr>
+<tr class="memdesc:a49324e0da554d4d02d2761b7b71e3374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs all schedulers in the container. This function iterates through the ordered list of schedulers and calls the RunSystems method on each scheduler. It ensures that the schedulers are executed in the order defined by their dependencies.  <br /></td></tr>
 <tr class="memitem:a1c7ad118fb265acd623edb2dc8b3358e" id="r_a1c7ad118fb265acd623edb2dc8b3358e"><td class="memTemplParams" colspan="2">template&lt;typename TScheduler&gt; </td></tr>
 <tr class="memitem:a1c7ad118fb265acd623edb2dc8b3358e template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1c7ad118fb265acd623edb2dc8b3358e">DeleteScheduler</a> ()</td></tr>
 <tr class="memdesc:a1c7ad118fb265acd623edb2dc8b3358e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes a scheduler of the specified type.  <br /></td></tr>
@@ -127,10 +129,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a3ae1ddea23ac7cb1c0cf26ac79bba480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a dependency between two schedulers. It will set the first scheduler to be after the second one.  <br /></td></tr>
 <tr class="memitem:aeb32815c9d09dc967cd2b168917a7f18" id="r_aeb32815c9d09dc967cd2b168917a7f18"><td class="memTemplParams" colspan="2">template&lt;typename TBefore, typename TAfter&gt; </td></tr>
 <tr class="memitem:aeb32815c9d09dc967cd2b168917a7f18 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aeb32815c9d09dc967cd2b168917a7f18">RemoveDependencyBefore</a> ()</td></tr>
-<tr class="memdesc:aeb32815c9d09dc967cd2b168917a7f18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a scheduler of the specified type exists in the container.  <br /></td></tr>
+<tr class="memdesc:aeb32815c9d09dc967cd2b168917a7f18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a dependency between two schedulers. It will remove the dependency that the first scheduler is before the second one.  <br /></td></tr>
 <tr class="memitem:a88536157d2c1c924f393ab02ad67c990" id="r_a88536157d2c1c924f393ab02ad67c990"><td class="memTemplParams" colspan="2">template&lt;typename TAfter, typename TBefore&gt; </td></tr>
 <tr class="memitem:a88536157d2c1c924f393ab02ad67c990 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a88536157d2c1c924f393ab02ad67c990">RemoveDependencyAfter</a> ()</td></tr>
-<tr class="memdesc:a88536157d2c1c924f393ab02ad67c990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a scheduler identified by the given type index exists in the container.  <br /></td></tr>
+<tr class="memdesc:a88536157d2c1c924f393ab02ad67c990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a dependency between two schedulers. It will remove the dependency that the first scheduler is after the second one.  <br /></td></tr>
 <tr class="memitem:a4969a8956116a2274e9e294e882ca0ff" id="r_a4969a8956116a2274e9e294e882ca0ff"><td class="memTemplParams" colspan="2">template&lt;typename TScheduler&gt; </td></tr>
 <tr class="memitem:a4969a8956116a2274e9e294e882ca0ff template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4969a8956116a2274e9e294e882ca0ff">Contains</a> () const</td></tr>
 <tr class="memdesc:a4969a8956116a2274e9e294e882ca0ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a scheduler of the specified type exists in the container.  <br /></td></tr>
@@ -138,10 +140,34 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a48af2db9bb0782115c8b04d4c1c49e3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a scheduler identified by the given type index exists in the container.  <br /></td></tr>
 <tr class="memitem:a68aa694b6ecb6a898aad58b6bc81b471" id="r_a68aa694b6ecb6a898aad58b6bc81b471"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a68aa694b6ecb6a898aad58b6bc81b471">SetErrorPolicyForAllSchedulers</a> (<a class="el" href="namespaceEngine_1_1Scheduler.html#adc9f665f0ab46064c8714e86f3089217">Scheduler::SchedulerErrorPolicy</a> policy)</td></tr>
 <tr class="memdesc:a68aa694b6ecb6a898aad58b6bc81b471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the error policy for all schedulers in the container.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a1c86813b5cd3ea70a32a7068ad0c4fb3" id="r_a1c86813b5cd3ea70a32a7068ad0c4fb3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1c86813b5cd3ea70a32a7068ad0c4fb3">Update</a> ()</td></tr>
+<tr class="memdesc:a1c86813b5cd3ea70a32a7068ad0c4fb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the order of schedulers based on their dependencies. This function performs a topological sort on the schedulers to determine the correct execution order. It checks for circular dependencies.  <br /></td></tr>
+<tr class="memitem:a041c592a103d7ab4482f5a7428611b7b" id="r_a041c592a103d7ab4482f5a7428611b7b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a041c592a103d7ab4482f5a7428611b7b">TopologicalSort</a> ()</td></tr>
+<tr class="memdesc:a041c592a103d7ab4482f5a7428611b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply a topological sort between all schedulers based on their dependencies.  <br /></td></tr>
+<tr class="memitem:ac73fd3c50d566eaadf225382457e9847" id="r_ac73fd3c50d566eaadf225382457e9847"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac73fd3c50d566eaadf225382457e9847">ProcessDependencies</a> (std::type_index current, std::queue&lt; std::type_index &gt; &amp;q, std::map&lt; std::type_index, size_t &gt; &amp;inDegree) const</td></tr>
+<tr class="memdesc:ac73fd3c50d566eaadf225382457e9847"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to process the dependencies of a scheduler during the topological sort. It updates the in-degree of the dependent schedulers and adds them to the queue if their in-degree becomes zero.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a6c7a8748e283515aa860764ee9c0cd4e" id="r_a6c7a8748e283515aa860764ee9c0cd4e"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a6c7a8748e283515aa860764ee9c0cd4e">_dirty</a> = false</td></tr>
+<tr class="memdesc:a6c7a8748e283515aa860764ee9c0cd4e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structA.html">A</a> flag indicating whether the order of schedulers needs to be updated.  <br /></td></tr>
+<tr class="memitem:a4e31260c2272995eb29decce3a11b3bd" id="r_a4e31260c2272995eb29decce3a11b3bd"><td class="memItemLeft">std::map&lt; std::type_index, std::shared_ptr&lt; <a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html">Scheduler::AScheduler</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4e31260c2272995eb29decce3a11b3bd">_schedulers</a></td></tr>
+<tr class="memdesc:a4e31260c2272995eb29decce3a11b3bd"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structA.html">A</a> map of the schedulers.  <br /></td></tr>
+<tr class="memitem:a04a022972d38517c1802e88b785b4a02" id="r_a04a022972d38517c1802e88b785b4a02"><td class="memItemLeft">std::unordered_map&lt; std::type_index, std::unordered_set&lt; std::type_index &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a04a022972d38517c1802e88b785b4a02">_dependencies</a></td></tr>
+<tr class="memdesc:a04a022972d38517c1802e88b785b4a02"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structA.html">A</a> map of the dependencies between schedulers. The key is the type index of a scheduler, and the value is a set of type indices of schedulers that depend on the key scheduler.  <br /></td></tr>
+<tr class="memitem:a06d983800810d7eaababce3753e73620" id="r_a06d983800810d7eaababce3753e73620"><td class="memItemLeft">std::list&lt; std::shared_ptr&lt; <a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html">Scheduler::AScheduler</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a06d983800810d7eaababce3753e73620">_orderedSchedulers</a></td></tr>
+<tr class="memdesc:a06d983800810d7eaababce3753e73620"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structA.html">A</a> list of the the ordered list of schedulers.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manages a collection of schedulers, allowing addition, retrieval, and deletion of schedulers. </p>
-<p>The <a class="el" href="classEngine_1_1SchedulerContainer.html" title="Manages a collection of schedulers, allowing addition, retrieval, and deletion of schedulers.">SchedulerContainer</a> class provides functionality to add, retrieve, and delete schedulers. It maintains an ordered list of schedulers and a mapping from type_index to their position in the list. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classEngine_1_1Scheduler_1_1IScheduler.html" title="Interface for the schedulers. A scheduler is responsible for running systems according to a specific ...">Engine::Scheduler::IScheduler</a> </dd>
+<dd>
+<a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html" title="AScheduler is an abstract class that implements the IScheduler interface. It provides common function...">Engine::Scheduler::AScheduler</a> </dd>
+<dd>
+Engine::Scheduler::SchedulerError </dd></dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2ebc90dc34fc277763824d6364e1d791" name="a2ebc90dc34fc277763824d6364e1d791"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2ebc90dc34fc277763824d6364e1d791">&#9670;&#160;</a></span>SchedulerContainer()</h2>
@@ -165,6 +191,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Default constructor for <a class="el" href="classEngine_1_1SchedulerContainer.html" title="Manages a collection of schedulers, allowing addition, retrieval, and deletion of schedulers.">SchedulerContainer</a>. </p>
 
 </div>
 </div>
@@ -191,6 +219,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Destructor for <a class="el" href="classEngine_1_1SchedulerContainer.html" title="Manages a collection of schedulers, allowing addition, retrieval, and deletion of schedulers.">SchedulerContainer</a>. </p>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -216,18 +246,17 @@ template&lt;typename TScheduler, typename... Args&gt; </div>
 </div><div class="memdoc">
 
 <p>Adds a scheduler to the container. </p>
-<p>This function creates a new scheduler of type TScheduler with the provided arguments and adds it to the container. If a scheduler of the same type already exists, a warning is logged and the function returns without adding a new scheduler.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">core</td><td><a class="el" href="structA.html">A</a> reference to the <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a>. </td></tr>
+    <tr><td class="paramname">args</td><td>The arguments to be forwarded to the scheduler's constructor. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TScheduler</td><td>The type of the scheduler to be added. </td></tr>
     <tr><td class="paramname">Args</td><td>The types of the arguments to be forwarded to the scheduler's constructor. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">core</td><td><a class="el" href="structA.html">A</a> reference to the <a class="el" href="classEngine_1_1Core.html">Core</a> object required by the scheduler's constructor. </td></tr>
-    <tr><td class="paramname">args</td><td>The arguments to be forwarded to the scheduler's constructor. </td></tr>
   </table>
   </dd>
 </dl>
@@ -332,10 +361,9 @@ template&lt;typename TScheduler&gt; </div>
 </div><div class="memdoc">
 
 <p>Checks if a scheduler of the specified type exists in the container. </p>
-<p>This function checks if a scheduler of the specified type TScheduler exists in the container. It returns true if the scheduler is found, otherwise false.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>The type index of the scheduler to check for. </td></tr>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TScheduler</td><td>The type of the scheduler to check for. </td></tr>
   </table>
   </dd>
 </dl>
@@ -367,7 +395,6 @@ template&lt;typename TScheduler&gt; </div>
 </div><div class="memdoc">
 
 <p>Checks if a scheduler identified by the given type index exists in the container. </p>
-<p>This function checks if a scheduler associated with the specified type index exists in the container. It returns true if the scheduler is found, otherwise false.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>The type index of the scheduler to check for. </td></tr>
@@ -404,13 +431,13 @@ template&lt;typename TScheduler&gt; </div>
 </div><div class="memdoc">
 
 <p>Deletes a scheduler of the specified type. </p>
-<p>This function deletes a scheduler instance identified by the type provided as the template parameter. It internally calls the DeleteScheduler function with the type index of the specified scheduler type.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TScheduler</td><td>The type of the scheduler to be deleted. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000074">Todo</a></b></dt><dd>Put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -430,16 +457,12 @@ template&lt;typename TScheduler&gt; </div>
 </div><div class="memdoc">
 
 <p>Deletes a scheduler identified by the given type index. </p>
-<p>This function removes the scheduler associated with the specified type index from the container. If the scheduler exists, it will be erased from the ordered list of schedulers and the internal mapping of type indices to their respective positions will be updated accordingly.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>The type index of the scheduler to be deleted.</td></tr>
+    <tr><td class="paramname">id</td><td>The type index of the scheduler to be deleted. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>If the scheduler does not exist, a warning message will be logged. </dd>
-<dd>
-In debug mode, an informational message will be logged when a scheduler is deleted. </dd></dl>
 
 </div>
 </div>
@@ -469,17 +492,9 @@ template&lt;typename TScheduler&gt; </div>
 </div><div class="memdoc">
 
 <p>Retrieves a scheduler of the specified type. </p>
-<p>This function searches for a scheduler of the specified type TScheduler within the container. If the scheduler is found, it returns a reference to it. If the scheduler is not found, it throws an error.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TScheduler</td><td>The type of the scheduler to retrieve. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>TScheduler&amp; <a class="el" href="structA.html">A</a> reference to the scheduler of the specified type. </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classEngine_1_1SchedulerError.html">SchedulerError</a></td><td>If the scheduler of the specified type is not found. </td></tr>
   </table>
   </dd>
 </dl>
@@ -510,17 +525,54 @@ template&lt;typename TScheduler&gt; </div>
 </div><div class="memdoc">
 
 <p>Retrieves a scheduler identified by the given type index. </p>
-<p>This function searches for a scheduler associated with the specified type index. If the scheduler is found, it returns a weak pointer to it. If not found, it throws an error.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>The type index of the scheduler to retrieve. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::weak_ptr&lt;Scheduler::AScheduler&gt; <a class="el" href="structA.html">A</a> weak pointer to the scheduler of the specified type. </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classEngine_1_1SchedulerError.html">SchedulerError</a></td><td>If the scheduler of the specified type is not found. </td></tr>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> shared pointer to the scheduler of the specified type. </dd></dl>
+
+</div>
+</div>
+<a id="ac73fd3c50d566eaadf225382457e9847" name="ac73fd3c50d566eaadf225382457e9847"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac73fd3c50d566eaadf225382457e9847">&#9670;&#160;</a></span>ProcessDependencies()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Engine::SchedulerContainer::ProcessDependencies </td>
+          <td>(</td>
+          <td class="paramtype">std::type_index</td>          <td class="paramname"><span class="paramname"><em>current</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::queue&lt; std::type_index &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>q</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::map&lt; std::type_index, size_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>inDegree</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Helper function to process the dependencies of a scheduler during the topological sort. It updates the in-degree of the dependent schedulers and adds them to the queue if their in-degree becomes zero. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">current</td><td>The type index of the current scheduler being processed. </td></tr>
+    <tr><td class="paramname">q</td><td>The queue used for the topological sort, containing schedulers with zero in-degree. </td></tr>
+    <tr><td class="paramname">inDegree</td><td><a class="el" href="structA.html">A</a> map that keeps track of the in-degree of each scheduler, which is the number of dependencies it has. </td></tr>
   </table>
   </dd>
 </dl>
@@ -544,8 +596,7 @@ template&lt;typename TAfter, typename TBefore&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if a scheduler identified by the given type index exists in the container. </p>
-<p>This function checks if a scheduler associated with the specified type index exists in the container. It returns true if the scheduler is found, otherwise false.</p>
+<p>Remove a dependency between two schedulers. It will remove the dependency that the first scheduler is after the second one. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TAfter</td><td>The type of the first scheduler. </td></tr>
@@ -573,15 +624,14 @@ template&lt;typename TBefore, typename TAfter&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if a scheduler of the specified type exists in the container. </p>
-<p>This function checks if a scheduler of the specified type TScheduler exists in the container. It returns true if the scheduler is found, otherwise false.</p>
+<p>Remove a dependency between two schedulers. It will remove the dependency that the first scheduler is before the second one. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TScheduler</td><td>The type of the scheduler to check for. </td></tr>
+    <tr><td class="paramname">TBefore</td><td>The type of the first scheduler. </td></tr>
+    <tr><td class="paramname">TAfter</td><td>The type of the second scheduler. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the scheduler exists, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -608,8 +658,7 @@ template&lt;typename TBefore, typename TAfter&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Runs all schedulers in the container. </p>
-<p>This function iterates through the ordered list of schedulers and calls the RunSystems method on each scheduler. It ensures that the schedulers are executed in the order defined by their dependencies. </p>
+<p>Runs all schedulers in the container. This function iterates through the ordered list of schedulers and calls the RunSystems method on each scheduler. It ensures that the schedulers are executed in the order defined by their dependencies. </p>
 
 </div>
 </div>
@@ -629,13 +678,164 @@ template&lt;typename TBefore, typename TAfter&gt; </div>
 </div><div class="memdoc">
 
 <p>Sets the error policy for all schedulers in the container. </p>
-<p>This function iterates through all schedulers in the container and sets their error policy to the specified value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">policy</td><td>The error policy to be applied to all schedulers. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceEngine_1_1Scheduler.html#adc9f665f0ab46064c8714e86f3089217" title="Enum that defines how the scheduler will handle errors.">Engine::Scheduler::SchedulerErrorPolicy</a> </dd></dl>
+
+</div>
+</div>
+<a id="a041c592a103d7ab4482f5a7428611b7b" name="a041c592a103d7ab4482f5a7428611b7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a041c592a103d7ab4482f5a7428611b7b">&#9670;&#160;</a></span>TopologicalSort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Engine::SchedulerContainer::TopologicalSort </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Apply a topological sort between all schedulers based on their dependencies. </p>
+
+</div>
+</div>
+<a id="a1c86813b5cd3ea70a32a7068ad0c4fb3" name="a1c86813b5cd3ea70a32a7068ad0c4fb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c86813b5cd3ea70a32a7068ad0c4fb3">&#9670;&#160;</a></span>Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Engine::SchedulerContainer::Update </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates the order of schedulers based on their dependencies. This function performs a topological sort on the schedulers to determine the correct execution order. It checks for circular dependencies. </p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a04a022972d38517c1802e88b785b4a02" name="a04a022972d38517c1802e88b785b4a02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04a022972d38517c1802e88b785b4a02">&#9670;&#160;</a></span>_dependencies</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::type_index, std::unordered_set&lt;std::type_index&gt; &gt; Engine::SchedulerContainer::_dependencies</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="structA.html">A</a> map of the dependencies between schedulers. The key is the type index of a scheduler, and the value is a set of type indices of schedulers that depend on the key scheduler. </p>
+
+</div>
+</div>
+<a id="a6c7a8748e283515aa860764ee9c0cd4e" name="a6c7a8748e283515aa860764ee9c0cd4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c7a8748e283515aa860764ee9c0cd4e">&#9670;&#160;</a></span>_dirty</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Engine::SchedulerContainer::_dirty = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="structA.html">A</a> flag indicating whether the order of schedulers needs to be updated. </p>
+
+</div>
+</div>
+<a id="a06d983800810d7eaababce3753e73620" name="a06d983800810d7eaababce3753e73620"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06d983800810d7eaababce3753e73620">&#9670;&#160;</a></span>_orderedSchedulers</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::list&lt;std::shared_ptr&lt;<a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html">Scheduler::AScheduler</a>&gt; &gt; Engine::SchedulerContainer::_orderedSchedulers</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="structA.html">A</a> list of the the ordered list of schedulers. </p>
+
+</div>
+</div>
+<a id="a4e31260c2272995eb29decce3a11b3bd" name="a4e31260c2272995eb29decce3a11b3bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e31260c2272995eb29decce3a11b3bd">&#9670;&#160;</a></span>_schedulers</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt;std::type_index, std::shared_ptr&lt;<a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html">Scheduler::AScheduler</a>&gt; &gt; Engine::SchedulerContainer::_schedulers</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="structA.html">A</a> map of the schedulers. </p>
 
 </div>
 </div>

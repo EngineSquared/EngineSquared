@@ -131,6 +131,14 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a1d3cfb5d2af05d3868a8d35100407447" id="r_a1d3cfb5d2af05d3868a8d35100407447"><td class="memItemLeft">static <a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionID</a>&#160;</td><td class="memItemRight"><a class="el" href="#a1d3cfb5d2af05d3868a8d35100407447">GetCallableID</a> (TCallable callable)</td></tr>
 <tr class="memdesc:a1d3cfb5d2af05d3868a8d35100407447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the ID of the callable object.  <br /></td></tr>
 <tr class="memitem:a960aab6adc677c84b0916d70dbd24d1e" id="r_a960aab6adc677c84b0916d70dbd24d1e"><td class="memItemLeft">static std::string&#160;</td><td class="memItemRight"><a class="el" href="#a960aab6adc677c84b0916d70dbd24d1e">GetCallableName</a> (TCallable callable)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a59c87696fefd3bfad0eeaf8dde69a357" id="r_a59c87696fefd3bfad0eeaf8dde69a357"><td class="memItemLeft">TCallable&#160;</td><td class="memItemRight"><a class="el" href="#a59c87696fefd3bfad0eeaf8dde69a357">_callable</a></td></tr>
+<tr class="memitem:af888ce6323ae53dc1c00d58016590803" id="r_af888ce6323ae53dc1c00d58016590803"><td class="memItemLeft"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionID</a>&#160;</td><td class="memItemRight"><a class="el" href="#af888ce6323ae53dc1c00d58016590803">_id</a> = 0</td></tr>
+<tr class="memdesc:af888ce6323ae53dc1c00d58016590803"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique ID for the function.  <br /></td></tr>
+<tr class="memitem:a51b42003f9cea883c94487458f6fcb70" id="r_a51b42003f9cea883c94487458f6fcb70"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a51b42003f9cea883c94487458f6fcb70">_name</a></td></tr>
+<tr class="memdesc:a51b42003f9cea883c94487458f6fcb70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the function.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename TCallable, typename TReturn, typename... TArgs&gt;<br />
@@ -369,6 +377,83 @@ template&lt;typename TCallable, typename TReturn, typename... TArgs&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>Return value of the callable object. </dd></dl>
 
 <p>Implements <a class="el" href="classFunctionUtils_1_1BaseFunction.html#ac8ccde18e6114cdd472063823414b9c1">FunctionUtils::BaseFunction&lt; TReturn, TArgs... &gt;</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a59c87696fefd3bfad0eeaf8dde69a357" name="a59c87696fefd3bfad0eeaf8dde69a357"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59c87696fefd3bfad0eeaf8dde69a357">&#9670;&#160;</a></span>_callable</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TCallable, typename TReturn, typename... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TCallable <a class="el" href="classFunctionUtils_1_1CallableFunction.html">FunctionUtils::CallableFunction</a>&lt; TCallable, TReturn, TArgs &gt;::_callable</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af888ce6323ae53dc1c00d58016590803" name="af888ce6323ae53dc1c00d58016590803"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af888ce6323ae53dc1c00d58016590803">&#9670;&#160;</a></span>_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TCallable, typename TReturn, typename... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionID</a> <a class="el" href="classFunctionUtils_1_1CallableFunction.html">FunctionUtils::CallableFunction</a>&lt; TCallable, TReturn, TArgs &gt;::_id = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Unique ID for the function. </p>
+
+</div>
+</div>
+<a id="a51b42003f9cea883c94487458f6fcb70" name="a51b42003f9cea883c94487458f6fcb70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51b42003f9cea883c94487458f6fcb70">&#9670;&#160;</a></span>_name</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TCallable, typename TReturn, typename... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classFunctionUtils_1_1CallableFunction.html">FunctionUtils::CallableFunction</a>&lt; TCallable, TReturn, TArgs &gt;::_name</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Name of the function. </p>
 
 </div>
 </div>

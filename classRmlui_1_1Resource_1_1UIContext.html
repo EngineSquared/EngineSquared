@@ -109,6 +109,7 @@ Inheritance diagram for Rmlui::Resource::UIContext:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:InputCallbackIds" id="r_InputCallbackIds"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structRmlui_1_1Resource_1_1UIContext_1_1InputCallbackIds.html">InputCallbackIds</a></td></tr>
+<tr class="memitem:EventListenerEntry" id="r_EventListenerEntry"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structRmlui_1_1Resource_1_1UIContext_1_1EventListenerEntry.html">EventListenerEntry</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -162,6 +163,22 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a7aa6f9503e9701edfdad5d39abb34af7 inherit pro_methods_classRmlui_1_1Resource_1_1AUIContext" id="r_a7aa6f9503e9701edfdad5d39abb34af7"><td class="memItemLeft">const Rml::SystemInterface *&#160;</td><td class="memItemRight"><a class="el" href="classRmlui_1_1Resource_1_1AUIContext.html#a7aa6f9503e9701edfdad5d39abb34af7">GetSystemInterface</a> () const</td></tr>
 <tr class="memitem:ab6533e1398b224d16204bd6bcfef8cb3 inherit pro_methods_classRmlui_1_1Resource_1_1AUIContext" id="r_ab6533e1398b224d16204bd6bcfef8cb3"><td class="memItemLeft"><a class="el" href="classRmlui_1_1Utils_1_1IRenderer.html">Rmlui::Utils::IRenderer</a> *&#160;</td><td class="memItemRight"><a class="el" href="classRmlui_1_1Resource_1_1AUIContext.html#ab6533e1398b224d16204bd6bcfef8cb3">GetRenderInterface</a> ()</td></tr>
 <tr class="memitem:aeebdb21f12d5af0a6e4034c2bc756f1e inherit pro_methods_classRmlui_1_1Resource_1_1AUIContext" id="r_aeebdb21f12d5af0a6e4034c2bc756f1e"><td class="memItemLeft">const <a class="el" href="classRmlui_1_1Utils_1_1IRenderer.html">Rmlui::Utils::IRenderer</a> *&#160;</td><td class="memItemRight"><a class="el" href="classRmlui_1_1Resource_1_1AUIContext.html#aeebdb21f12d5af0a6e4034c2bc756f1e">GetRenderInterface</a> () const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:af6a9eeac8fa0d11ab5f3d871782d398a" id="r_af6a9eeac8fa0d11ab5f3d871782d398a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#af6a9eeac8fa0d11ab5f3d871782d398a">_isReady</a> () const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af4fe11914fce53ed4cf3e5b613df13fe" id="r_af4fe11914fce53ed4cf3e5b613df13fe"><td class="memItemLeft">Rml::Context *&#160;</td><td class="memItemRight"><a class="el" href="#af4fe11914fce53ed4cf3e5b613df13fe">_context</a> = nullptr</td></tr>
+<tr class="memitem:a1eb795799272b81d3f12c8a8ccaeea65" id="r_a1eb795799272b81d3f12c8a8ccaeea65"><td class="memItemLeft">Rml::ElementDocument *&#160;</td><td class="memItemRight"><a class="el" href="#a1eb795799272b81d3f12c8a8ccaeea65">_document</a> = nullptr</td></tr>
+<tr class="memitem:a46cdb47b72b9f2f3589ee1962a97cab9" id="r_a46cdb47b72b9f2f3589ee1962a97cab9"><td class="memItemLeft">std::unordered_map&lt; std::string, Rml::ElementDocument * &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a46cdb47b72b9f2f3589ee1962a97cab9">_overlayDocuments</a></td></tr>
+<tr class="memitem:adb729a4fee15385aade24b24f67d1258" id="r_adb729a4fee15385aade24b24f67d1258"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#adb729a4fee15385aade24b24f67d1258">_titleCache</a></td></tr>
+<tr class="memitem:a6d2b1a39486be891b201115ad80ae08e" id="r_a6d2b1a39486be891b201115ad80ae08e"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a6d2b1a39486be891b201115ad80ae08e">_debuggerInitialized</a> = false</td></tr>
+<tr class="memitem:a436bcf7073370f0e57a06044f5aad99b" id="r_a436bcf7073370f0e57a06044f5aad99b"><td class="memItemLeft">std::vector&lt; <a class="el" href="structRmlui_1_1Resource_1_1UIContext_1_1EventListenerEntry.html">EventListenerEntry</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a436bcf7073370f0e57a06044f5aad99b">_eventListeners</a></td></tr>
+<tr class="memitem:aefd958a0ecf6013ae8a01cec0b08869f" id="r_aefd958a0ecf6013ae8a01cec0b08869f"><td class="memItemLeft"><a class="el" href="structRmlui_1_1Resource_1_1UIContext_1_1InputCallbackIds.html">InputCallbackIds</a>&#160;</td><td class="memItemRight"><a class="el" href="#aefd958a0ecf6013ae8a01cec0b08869f">_inputCallbackIds</a></td></tr>
+<tr class="memitem:a3c906f2c3d9dc1f6a9b2ac08ddd389e4" id="r_a3c906f2c3d9dc1f6a9b2ac08ddd389e4"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a3c906f2c3d9dc1f6a9b2ac08ddd389e4">_inputCallbacksRegistered</a> = false</td></tr>
+<tr class="memitem:a363a7b16cb3b4fe2a3e43b3010e61181" id="r_a363a7b16cb3b4fe2a3e43b3010e61181"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a363a7b16cb3b4fe2a3e43b3010e61181">_lateUpdateRequested</a> = false</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a57b12bdb4328cabf7ff029e31c89845a" name="a57b12bdb4328cabf7ff029e31c89845a"></a>
@@ -265,6 +282,31 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="af6a9eeac8fa0d11ab5f3d871782d398a" name="af6a9eeac8fa0d11ab5f3d871782d398a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6a9eeac8fa0d11ab5f3d871782d398a">&#9670;&#160;</a></span>_isReady()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Rmlui::Resource::UIContext::_isReady </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a112534dd5e9fc85cbe13c5eb6d26338f" name="a112534dd5e9fc85cbe13c5eb6d26338f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a112534dd5e9fc85cbe13c5eb6d26338f">&#9670;&#160;</a></span>_setup()</h2>
 
@@ -955,6 +997,205 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classRmlui_1_1Resource_1_1AUIContext.html#ad8d1b3bcbfcaba9282bdc88b35067e2f">Rmlui::Resource::AUIContext</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="af4fe11914fce53ed4cf3e5b613df13fe" name="af4fe11914fce53ed4cf3e5b613df13fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4fe11914fce53ed4cf3e5b613df13fe">&#9670;&#160;</a></span>_context</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Rml::Context* Rmlui::Resource::UIContext::_context = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6d2b1a39486be891b201115ad80ae08e" name="a6d2b1a39486be891b201115ad80ae08e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d2b1a39486be891b201115ad80ae08e">&#9670;&#160;</a></span>_debuggerInitialized</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Rmlui::Resource::UIContext::_debuggerInitialized = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1eb795799272b81d3f12c8a8ccaeea65" name="a1eb795799272b81d3f12c8a8ccaeea65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1eb795799272b81d3f12c8a8ccaeea65">&#9670;&#160;</a></span>_document</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Rml::ElementDocument* Rmlui::Resource::UIContext::_document = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a436bcf7073370f0e57a06044f5aad99b" name="a436bcf7073370f0e57a06044f5aad99b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a436bcf7073370f0e57a06044f5aad99b">&#9670;&#160;</a></span>_eventListeners</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structRmlui_1_1Resource_1_1UIContext_1_1EventListenerEntry.html">EventListenerEntry</a>&gt; Rmlui::Resource::UIContext::_eventListeners</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aefd958a0ecf6013ae8a01cec0b08869f" name="aefd958a0ecf6013ae8a01cec0b08869f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefd958a0ecf6013ae8a01cec0b08869f">&#9670;&#160;</a></span>_inputCallbackIds</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structRmlui_1_1Resource_1_1UIContext_1_1InputCallbackIds.html">InputCallbackIds</a> Rmlui::Resource::UIContext::_inputCallbackIds</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3c906f2c3d9dc1f6a9b2ac08ddd389e4" name="a3c906f2c3d9dc1f6a9b2ac08ddd389e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c906f2c3d9dc1f6a9b2ac08ddd389e4">&#9670;&#160;</a></span>_inputCallbacksRegistered</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Rmlui::Resource::UIContext::_inputCallbacksRegistered = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a363a7b16cb3b4fe2a3e43b3010e61181" name="a363a7b16cb3b4fe2a3e43b3010e61181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a363a7b16cb3b4fe2a3e43b3010e61181">&#9670;&#160;</a></span>_lateUpdateRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Rmlui::Resource::UIContext::_lateUpdateRequested = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a46cdb47b72b9f2f3589ee1962a97cab9" name="a46cdb47b72b9f2f3589ee1962a97cab9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46cdb47b72b9f2f3589ee1962a97cab9">&#9670;&#160;</a></span>_overlayDocuments</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, Rml::ElementDocument *&gt; Rmlui::Resource::UIContext::_overlayDocuments</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adb729a4fee15385aade24b24f67d1258" name="adb729a4fee15385aade24b24f67d1258"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb729a4fee15385aade24b24f67d1258">&#9670;&#160;</a></span>_titleCache</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Rmlui::Resource::UIContext::_titleCache</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

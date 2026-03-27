@@ -10,7 +10,8 @@ var searchData=
   ['pointgpubuffer_7',['PointGPUBuffer',['../classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html',1,'DefaultPipeline::Resource']]],
   ['pointlight_8',['PointLight',['../structObject_1_1Component_1_1PointLight.html',1,'Object::Component']]],
   ['pointlightsbuffer_9',['PointLightsBuffer',['../classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html',1,'DefaultPipeline::Resource']]],
-  ['preparation_10',['Preparation',['../classRenderingPipeline_1_1Preparation.html',1,'RenderingPipeline']]],
-  ['presentation_11',['Presentation',['../classRenderingPipeline_1_1Presentation.html',1,'RenderingPipeline']]],
-  ['preupdate_12',['PreUpdate',['../classRenderingPipeline_1_1PreUpdate.html',1,'RenderingPipeline']]]
+  ['pointlightsdata_10',['PointLightsData',['../structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html',1,'DefaultPipeline::Resource::PointLightsBuffer']]],
+  ['preparation_11',['Preparation',['../classRenderingPipeline_1_1Preparation.html',1,'RenderingPipeline']]],
+  ['presentation_12',['Presentation',['../classRenderingPipeline_1_1Presentation.html',1,'RenderingPipeline']]],
+  ['preupdate_13',['PreUpdate',['../classRenderingPipeline_1_1PreUpdate.html',1,'RenderingPipeline']]]
 ];

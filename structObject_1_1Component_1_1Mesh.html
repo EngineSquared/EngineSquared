@@ -136,6 +136,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6a8ad459383ba3b2f8af75992bde2f84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the mesh data has been modified since last GPU sync.  <br /></td></tr>
 <tr class="memitem:aecd91e4d485154857a0ca1e9f66707ec" id="r_aecd91e4d485154857a0ca1e9f66707ec"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aecd91e4d485154857a0ca1e9f66707ec">ClearDirty</a> () const</td></tr>
 <tr class="memdesc:aecd91e4d485154857a0ca1e9f66707ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the dirty flag after GPU buffer has been updated.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a4c7fa032323b0a612ca16f9ff432f336" id="r_a4c7fa032323b0a612ca16f9ff432f336"><td class="memItemLeft">std::vector&lt; glm::vec3 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4c7fa032323b0a612ca16f9ff432f336">vertices</a> {}</td></tr>
+<tr class="memitem:a731007dc227570f8adcb535260f61720" id="r_a731007dc227570f8adcb535260f61720"><td class="memItemLeft">std::vector&lt; glm::vec3 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a731007dc227570f8adcb535260f61720">normals</a> {}</td></tr>
+<tr class="memitem:a5c3a24b5fe524031e4ee91e4936ededd" id="r_a5c3a24b5fe524031e4ee91e4936ededd"><td class="memItemLeft">std::vector&lt; glm::vec2 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a5c3a24b5fe524031e4ee91e4936ededd">texCoords</a> {}</td></tr>
+<tr class="memitem:a3da2db436288665c9abc23a4bb9f1122" id="r_a3da2db436288665c9abc23a4bb9f1122"><td class="memItemLeft">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a3da2db436288665c9abc23a4bb9f1122">indices</a> {}</td></tr>
+<tr class="memitem:a73cd3a2d17fb1c6c1a79923bcfdf49fd" id="r_a73cd3a2d17fb1c6c1a79923bcfdf49fd"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a73cd3a2d17fb1c6c1a79923bcfdf49fd">_dirty</a> = false</td></tr>
+<tr class="memdesc:a73cd3a2d17fb1c6c1a79923bcfdf49fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dirty flag for GPU synchronization optimization.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structObject_1_1Component_1_1Mesh.html" title="Mesh structure.">Mesh</a> structure. </p>
@@ -871,6 +880,120 @@ false if mesh data is in sync with GPU buffer. </dd></dl>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a73cd3a2d17fb1c6c1a79923bcfdf49fd" name="a73cd3a2d17fb1c6c1a79923bcfdf49fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73cd3a2d17fb1c6c1a79923bcfdf49fd">&#9670;&#160;</a></span>_dirty</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Object::Component::Mesh::_dirty = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel mutable">mutable</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dirty flag for GPU synchronization optimization. </p>
+<p>Mutable to allow modification tracking on const mesh references. When true, indicates that mesh data has changed and the GPU buffer needs to be updated. </p>
+
+</div>
+</div>
+<a id="a3da2db436288665c9abc23a4bb9f1122" name="a3da2db436288665c9abc23a4bb9f1122"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3da2db436288665c9abc23a4bb9f1122">&#9670;&#160;</a></span>indices</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;uint32_t&gt; Object::Component::Mesh::indices {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a731007dc227570f8adcb535260f61720" name="a731007dc227570f8adcb535260f61720"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a731007dc227570f8adcb535260f61720">&#9670;&#160;</a></span>normals</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;glm::vec3&gt; Object::Component::Mesh::normals {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5c3a24b5fe524031e4ee91e4936ededd" name="a5c3a24b5fe524031e4ee91e4936ededd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c3a24b5fe524031e4ee91e4936ededd">&#9670;&#160;</a></span>texCoords</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;glm::vec2&gt; Object::Component::Mesh::texCoords {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4c7fa032323b0a612ca16f9ff432f336" name="a4c7fa032323b0a612ca16f9ff432f336"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c7fa032323b0a612ca16f9ff432f336">&#9670;&#160;</a></span>vertices</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;glm::vec3&gt; Object::Component::Mesh::vertices {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

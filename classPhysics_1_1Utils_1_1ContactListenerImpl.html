@@ -120,6 +120,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2020744e4cad6981994e27c502cec0cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when two bodies cease to make contact.  <br /></td></tr>
 <tr class="memitem:a77f04b6b4da2958e077f407a039d387f" id="r_a77f04b6b4da2958e077f407a039d387f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a77f04b6b4da2958e077f407a039d387f">ProcessBufferedEvents</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
 <tr class="memdesc:a77f04b6b4da2958e077f407a039d387f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush buffered events to the main thread EventManager (should be called from main thread).  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a89b56c92b3de785bfedd6e400fd6b367" id="r_a89b56c92b3de785bfedd6e400fd6b367"><td class="memItemLeft"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a89b56c92b3de785bfedd6e400fd6b367">_core</a></td></tr>
+<tr class="memitem:aeba9a197b800d1b6dc97676c6d0875a1" id="r_aeba9a197b800d1b6dc97676c6d0875a1"><td class="memItemLeft">std::mutex&#160;</td><td class="memItemRight"><a class="el" href="#aeba9a197b800d1b6dc97676c6d0875a1">_bufferMutex</a></td></tr>
+<tr class="memitem:aacb59e5f5f5cefe8279b193507bdf5f8" id="r_aacb59e5f5f5cefe8279b193507bdf5f8"><td class="memItemLeft">std::vector&lt; <a class="el" href="structPhysics_1_1Event_1_1CollisionAddedEvent.html">Physics::Event::CollisionAddedEvent</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aacb59e5f5f5cefe8279b193507bdf5f8">_bufferedAdded</a></td></tr>
+<tr class="memitem:a607195d33ea1a163e3e71d7c14bb2f1e" id="r_a607195d33ea1a163e3e71d7c14bb2f1e"><td class="memItemLeft">std::vector&lt; <a class="el" href="structPhysics_1_1Event_1_1CollisionPersistedEvent.html">Physics::Event::CollisionPersistedEvent</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a607195d33ea1a163e3e71d7c14bb2f1e">_bufferedPersisted</a></td></tr>
+<tr class="memitem:ad0cb6d1dfd3d2d8aaab3d0b7c7aba838" id="r_ad0cb6d1dfd3d2d8aaab3d0b7c7aba838"><td class="memItemLeft">std::vector&lt; <a class="el" href="structPhysics_1_1Event_1_1CollisionRemovedEvent.html">Physics::Event::CollisionRemovedEvent</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ad0cb6d1dfd3d2d8aaab3d0b7c7aba838">_bufferedRemoved</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>ContactListener implementation. </p>
@@ -396,6 +404,117 @@ Public Member Functions</h2></td></tr>
 
 <p>Flush buffered events to the main thread EventManager (should be called from main thread). </p>
 <p>Move buffers into local copies under lock then push events to the EventManager from main thread. </p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="aacb59e5f5f5cefe8279b193507bdf5f8" name="aacb59e5f5f5cefe8279b193507bdf5f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacb59e5f5f5cefe8279b193507bdf5f8">&#9670;&#160;</a></span>_bufferedAdded</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structPhysics_1_1Event_1_1CollisionAddedEvent.html">Physics::Event::CollisionAddedEvent</a>&gt; Physics::Utils::ContactListenerImpl::_bufferedAdded</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a607195d33ea1a163e3e71d7c14bb2f1e" name="a607195d33ea1a163e3e71d7c14bb2f1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a607195d33ea1a163e3e71d7c14bb2f1e">&#9670;&#160;</a></span>_bufferedPersisted</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structPhysics_1_1Event_1_1CollisionPersistedEvent.html">Physics::Event::CollisionPersistedEvent</a>&gt; Physics::Utils::ContactListenerImpl::_bufferedPersisted</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad0cb6d1dfd3d2d8aaab3d0b7c7aba838" name="ad0cb6d1dfd3d2d8aaab3d0b7c7aba838"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0cb6d1dfd3d2d8aaab3d0b7c7aba838">&#9670;&#160;</a></span>_bufferedRemoved</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structPhysics_1_1Event_1_1CollisionRemovedEvent.html">Physics::Event::CollisionRemovedEvent</a>&gt; Physics::Utils::ContactListenerImpl::_bufferedRemoved</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aeba9a197b800d1b6dc97676c6d0875a1" name="aeba9a197b800d1b6dc97676c6d0875a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeba9a197b800d1b6dc97676c6d0875a1">&#9670;&#160;</a></span>_bufferMutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex Physics::Utils::ContactListenerImpl::_bufferMutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a89b56c92b3de785bfedd6e400fd6b367" name="a89b56c92b3de785bfedd6e400fd6b367"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89b56c92b3de785bfedd6e400fd6b367">&#9670;&#160;</a></span>_core</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a>&amp; Physics::Utils::ContactListenerImpl::_core</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

@@ -108,7 +108,7 @@ Inheritance diagram for Graphic::Utils::DepthStencilState:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abc9b2b46ef8aa0b15d6f09404dea715f" id="r_abc9b2b46ef8aa0b15d6f09404dea715f"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#abc9b2b46ef8aa0b15d6f09404dea715f">DepthStencilState</a> (const std::string &amp;name)</td></tr>
+<tr class="memitem:abc9b2b46ef8aa0b15d6f09404dea715f" id="r_abc9b2b46ef8aa0b15d6f09404dea715f"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#abc9b2b46ef8aa0b15d6f09404dea715f">DepthStencilState</a> (const std::string &amp;<a class="el" href="#ac118ed84f26650ba8491bb5e5dbf9f22">name</a>)</td></tr>
 <tr class="memitem:a9f790fbf7f053f00dc5d9ef6c02fb669" id="r_a9f790fbf7f053f00dc5d9ef6c02fb669"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9f790fbf7f053f00dc5d9ef6c02fb669">~DepthStencilState</a> () override=default</td></tr>
 <tr class="memitem:aa36d45cb6caca40d1871365fb003ee8d" id="r_aa36d45cb6caca40d1871365fb003ee8d"><td class="memItemLeft">std::vector&lt; <a class="el" href="structGraphic_1_1Utils_1_1ValidationError.html">ValidationError</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa36d45cb6caca40d1871365fb003ee8d">validate</a> (void) const override</td></tr>
 <tr class="memitem:a481398adaf0a7ce2df99eae9c3a537ae" id="r_a481398adaf0a7ce2df99eae9c3a537ae"><td class="memItemLeft"><a class="el" href="#abc9b2b46ef8aa0b15d6f09404dea715f">DepthStencilState</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a481398adaf0a7ce2df99eae9c3a537ae">setCompareFunction</a> (wgpu::CompareFunction func)</td></tr>
@@ -117,6 +117,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeb13c6b3ee5f9774a0927933854d00de" id="r_aeb13c6b3ee5f9774a0927933854d00de"><td class="memItemLeft">const wgpu::DepthStencilState &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aeb13c6b3ee5f9774a0927933854d00de">getValue</a> () const</td></tr>
 <tr class="inherit_header pub_methods_classGraphic_1_1Utils_1_1IValidable"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classGraphic_1_1Utils_1_1IValidable')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classGraphic_1_1Utils_1_1IValidable.html">Graphic::Utils::IValidable</a></td></tr>
 <tr class="memitem:a7c92f08ae392d61b4a18c17cc166b0df inherit pub_methods_classGraphic_1_1Utils_1_1IValidable" id="r_a7c92f08ae392d61b4a18c17cc166b0df"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Utils_1_1IValidable.html#a7c92f08ae392d61b4a18c17cc166b0df">~IValidable</a> ()=default</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a2dff330ae535641f47c2ea261846e412" id="r_a2dff330ae535641f47c2ea261846e412"><td class="memItemLeft">wgpu::DepthStencilState&#160;</td><td class="memItemRight"><a class="el" href="#a2dff330ae535641f47c2ea261846e412">value</a> = wgpu::DepthStencilState(<a class="el" href="namespacewgpu.html#a0fbf5c4c5168202c330cbe3f65008db0">wgpu::Default</a>)</td></tr>
+<tr class="memitem:ac118ed84f26650ba8491bb5e5dbf9f22" id="r_ac118ed84f26650ba8491bb5e5dbf9f22"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ac118ed84f26650ba8491bb5e5dbf9f22">name</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="abc9b2b46ef8aa0b15d6f09404dea715f" name="abc9b2b46ef8aa0b15d6f09404dea715f"></a>
@@ -294,6 +299,51 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classGraphic_1_1Utils_1_1IValidable.html#abdd586a0fc6330f8bd15ea9ad5136a7b">Graphic::Utils::IValidable</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ac118ed84f26650ba8491bb5e5dbf9f22" name="ac118ed84f26650ba8491bb5e5dbf9f22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac118ed84f26650ba8491bb5e5dbf9f22">&#9670;&#160;</a></span>name</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Graphic::Utils::DepthStencilState::name</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2dff330ae535641f47c2ea261846e412" name="a2dff330ae535641f47c2ea261846e412"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dff330ae535641f47c2ea261846e412">&#9670;&#160;</a></span>value</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">wgpu::DepthStencilState Graphic::Utils::DepthStencilState::value = wgpu::DepthStencilState(<a class="el" href="namespacewgpu.html#a0fbf5c4c5168202c330cbe3f65008db0">wgpu::Default</a>)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

@@ -25,5 +25,18 @@ var classGraphic_1_1Resource_1_1ShaderDescriptor =
     [ "setShader", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#ae611755dd2708aebaab74bc90b1000b2", null ],
     [ "setShaderFromFile", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a56d755766869e5772c10c9f13ec35d30", null ],
     [ "setVertexEntryPoint", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a513ce513f785c904e74affc17438f9cb", null ],
-    [ "validate", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#abc02a246cd0dc6c1a9147aefa3fe72f3", null ]
+    [ "validate", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#abc02a246cd0dc6c1a9147aefa3fe72f3", null ],
+    [ "_bindGroupLayouts", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#ae3eb2704b520d7a0b9b0b78df3dc60a2", null ],
+    [ "_cullMode", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a4b00252ef4c63d48ee214a9bed9b547c", null ],
+    [ "_DEFAULT_FRAGMENT_ENTRY_POINT", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a8da2d654fcc3e27c67c03ee95863a374", null ],
+    [ "_DEFAULT_NAME", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a8126583fc0579adfd25526de0af53bf7", null ],
+    [ "_DEFAULT_VERTEX_ENTRY_POINT", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a8d480a21a20370dab3ba6308ef13f5ab", null ],
+    [ "_fragmentEntryPoint", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a319bcbe78bb9f83a408cca84256c75ac", null ],
+    [ "_name", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#ac9ef17df9d41c90c0bf2c9fa5c074f88", null ],
+    [ "_outputColorFormats", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a98f51a0c2af62fb4acfa035c960ec57e", null ],
+    [ "_outputDepthFormat", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a6364bcbb9d6f7d1122ba7e29e3df7bb8", null ],
+    [ "_primitiveTopology", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a9c9d198b1d90ea44c0badf0a97a92110", null ],
+    [ "_shaderSource", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#aa1b76c7dcb584dc86c2094106a6bd5c7", null ],
+    [ "_vertexBufferLayouts", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#aa28e74ffb222cc947ce03051ce87d231", null ],
+    [ "_vertexEntryPoint", "classGraphic_1_1Resource_1_1ShaderDescriptor.html#a28b8872fb7e79f9072600dcf6ae05c12", null ]
 ];

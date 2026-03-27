@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['samplercontainer_0',['SamplerContainer',['../namespaceGraphic_1_1Resource.html#a01ffa8ec94d7d957bfd320640763146d',1,'Graphic::Resource']]],
-  ['shadercontainer_1',['ShaderContainer',['../namespaceGraphic_1_1Resource.html#a71cd42f4e9643a10e2a62e8d41ccbf09',1,'Graphic::Resource']]],
-  ['submissionindex_2',['SubmissionIndex',['../namespacewgpu.html#a494b5f2b174087a5952b625f7bd8cbab',1,'wgpu']]],
-  ['system_3',['System',['../namespaceEngine.html#a63636e936479d870dcdf3a2b60fddcff',1,'Engine']]],
-  ['systembase_4',['SystemBase',['../namespaceEngine.html#a5fb82be08ce7a8491bb8b31eff0d5391',1,'Engine']]]
+  ['registry_0',['Registry',['../classEngine_1_1Core.html#a92a3143c58cadead136a795f192ee544',1,'Engine::Core']]],
+  ['rendergraphcontainer_1',['RenderGraphContainer',['../namespaceGraphic_1_1Resource.html#ad3a665ebe495e4ac53adb8a8448bceca',1,'Graphic::Resource']]],
+  ['requestadaptercallback_2',['RequestAdapterCallback',['../namespacewgpu.html#a3d5328f7eaa771a6fdb5b67651e5b2c6',1,'wgpu']]],
+  ['requestdevicecallback_3',['RequestDeviceCallback',['../namespacewgpu.html#a348e7fee710e29e6c63a61e1f6b9c655',1,'wgpu']]],
+  ['requiredfeaturecontainer_4',['RequiredFeatureContainer',['../classGraphic_1_1Resource_1_1GraphicSettings.html#a58fce302c5b58fe8c0d6d7393c584c3d',1,'Graphic::Resource::GraphicSettings']]],
+  ['result_5ftype_5',['result_type',['../structObject_1_1Resource_1_1ResourceManager_1_1ResourceLoader.html#acfc94a9b7f8213de1ed8393ec2239303',1,'Object::Resource::ResourceManager::ResourceLoader']]]
 ];

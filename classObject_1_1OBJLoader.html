@@ -108,6 +108,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a43808b3efffe98fca7f65ba4546626fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the loaded shapes data.  <br /></td></tr>
 <tr class="memitem:a7ba91d3e1bb16d0ee01fbb7d58ecb9b7" id="r_a7ba91d3e1bb16d0ee01fbb7d58ecb9b7"><td class="memItemLeft">std::vector&lt; <a class="el" href="structObject_1_1Component_1_1Material.html">Component::Material</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a7ba91d3e1bb16d0ee01fbb7d58ecb9b7">GetMaterials</a> ()</td></tr>
 <tr class="memdesc:a7ba91d3e1bb16d0ee01fbb7d58ecb9b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the loaded materials data.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a0176692c52d32200b3d5eac6253e0e18" id="r_a0176692c52d32200b3d5eac6253e0e18"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0176692c52d32200b3d5eac6253e0e18">ProcessMeshFace</a> (<a class="el" href="structObject_1_1Component_1_1Mesh.html">Component::Mesh</a> &amp;mesh, const std::vector&lt; tinyobj::shape_t &gt; &amp;shapes, size_t shape, size_t face_vertices, size_t &amp;index_offset) noexcept</td></tr>
+<tr class="memdesc:a0176692c52d32200b3d5eac6253e0e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a single face of the mesh and populates the Mesh object.  <br /></td></tr>
+<tr class="memitem:ac6d29b995308a1cf3f72614d6eef7e01" id="r_ac6d29b995308a1cf3f72614d6eef7e01"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac6d29b995308a1cf3f72614d6eef7e01">SetMaterialProperties</a> (<a class="el" href="structObject_1_1Component_1_1Material.html">Component::Material</a> &amp;material, const tinyobj::material_t &amp;mat) noexcept</td></tr>
+<tr class="memdesc:ac6d29b995308a1cf3f72614d6eef7e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the properties of a material according to the tinyobj::material_t structure.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a34441360d1819d14fecc8b8208451bba" id="r_a34441360d1819d14fecc8b8208451bba"><td class="memItemLeft">tinyobj::ObjReaderConfig&#160;</td><td class="memItemRight"><a class="el" href="#a34441360d1819d14fecc8b8208451bba">_reader_config</a></td></tr>
+<tr class="memitem:aade8894c3e3543e387a93a59c914f8e4" id="r_aade8894c3e3543e387a93a59c914f8e4"><td class="memItemLeft">tinyobj::ObjReader&#160;</td><td class="memItemRight"><a class="el" href="#aade8894c3e3543e387a93a59c914f8e4">_reader</a></td></tr>
+<tr class="memitem:af6a215e4a37be4e9fe0abb39db06e9f7" id="r_af6a215e4a37be4e9fe0abb39db06e9f7"><td class="memItemLeft"><a class="el" href="structObject_1_1Component_1_1Mesh.html">Component::Mesh</a>&#160;</td><td class="memItemRight"><a class="el" href="#af6a215e4a37be4e9fe0abb39db06e9f7">_mesh</a> {}</td></tr>
+<tr class="memitem:a6b1a7b25c3be0679590f04c206d08cca" id="r_a6b1a7b25c3be0679590f04c206d08cca"><td class="memItemLeft">std::vector&lt; <a class="el" href="structObject_1_1Resource_1_1Shape.html">Resource::Shape</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a6b1a7b25c3be0679590f04c206d08cca">_shapes</a> {}</td></tr>
+<tr class="memitem:a0fea958c537d73cb7cc8bf2b99c2d7ea" id="r_a0fea958c537d73cb7cc8bf2b99c2d7ea"><td class="memItemLeft">std::vector&lt; <a class="el" href="structObject_1_1Component_1_1Material.html">Component::Material</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a0fea958c537d73cb7cc8bf2b99c2d7ea">_materials</a> {}</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Loading_01an_01OBJ_01file-example.html#_a0">Loading an OBJ file</a>.</dd>
@@ -270,6 +285,212 @@ Public Member Functions</h2></td></tr>
 <p>Retrieves the loaded shapes data. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;Resource::Shape&gt; The shapes data extracted from the OBJ file.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structObject_1_1Resource_1_1Shape.html" title="Shape structure.">Resource::Shape</a> </dd></dl>
+
+</div>
+</div>
+<a id="a0176692c52d32200b3d5eac6253e0e18" name="a0176692c52d32200b3d5eac6253e0e18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0176692c52d32200b3d5eac6253e0e18">&#9670;&#160;</a></span>ProcessMeshFace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Object::OBJLoader::ProcessMeshFace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structObject_1_1Component_1_1Mesh.html">Component::Mesh</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mesh</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; tinyobj::shape_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>shapes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>shape</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>face_vertices</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>index_offset</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Processes a single face of the mesh and populates the Mesh object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mesh</td><td>The Mesh object to populate. </td></tr>
+    <tr><td class="paramname">shapes</td><td>The vector of shapes loaded from the OBJ file. </td></tr>
+    <tr><td class="paramname">shape</td><td>The index of the current shape being processed. </td></tr>
+    <tr><td class="paramname">face_vertices</td><td>The number of vertices in the current face. </td></tr>
+    <tr><td class="paramname">index_offset</td><td>The offset in the index array for the current face.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structObject_1_1Component_1_1Mesh.html" title="Mesh structure.">Component::Mesh</a> </dd></dl>
+
+</div>
+</div>
+<a id="ac6d29b995308a1cf3f72614d6eef7e01" name="ac6d29b995308a1cf3f72614d6eef7e01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6d29b995308a1cf3f72614d6eef7e01">&#9670;&#160;</a></span>SetMaterialProperties()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Object::OBJLoader::SetMaterialProperties </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structObject_1_1Component_1_1Material.html">Component::Material</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>material</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const tinyobj::material_t &amp;</td>          <td class="paramname"><span class="paramname"><em>mat</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the properties of a material according to the tinyobj::material_t structure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">material</td><td>The Material object to populate. </td></tr>
+    <tr><td class="paramname">mat</td><td>The tinyobj::material_t object containing the material properties. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a0fea958c537d73cb7cc8bf2b99c2d7ea" name="a0fea958c537d73cb7cc8bf2b99c2d7ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fea958c537d73cb7cc8bf2b99c2d7ea">&#9670;&#160;</a></span>_materials</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structObject_1_1Component_1_1Material.html">Component::Material</a>&gt; Object::OBJLoader::_materials {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af6a215e4a37be4e9fe0abb39db06e9f7" name="af6a215e4a37be4e9fe0abb39db06e9f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6a215e4a37be4e9fe0abb39db06e9f7">&#9670;&#160;</a></span>_mesh</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structObject_1_1Component_1_1Mesh.html">Component::Mesh</a> Object::OBJLoader::_mesh {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aade8894c3e3543e387a93a59c914f8e4" name="aade8894c3e3543e387a93a59c914f8e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aade8894c3e3543e387a93a59c914f8e4">&#9670;&#160;</a></span>_reader</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tinyobj::ObjReader Object::OBJLoader::_reader</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a34441360d1819d14fecc8b8208451bba" name="a34441360d1819d14fecc8b8208451bba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34441360d1819d14fecc8b8208451bba">&#9670;&#160;</a></span>_reader_config</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tinyobj::ObjReaderConfig Object::OBJLoader::_reader_config</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6b1a7b25c3be0679590f04c206d08cca" name="a6b1a7b25c3be0679590f04c206d08cca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b1a7b25c3be0679590f04c206d08cca">&#9670;&#160;</a></span>_shapes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structObject_1_1Resource_1_1Shape.html">Resource::Shape</a>&gt; Object::OBJLoader::_shapes {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

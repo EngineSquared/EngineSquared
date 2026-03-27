@@ -105,50 +105,68 @@ Inheritance diagram for Engine::Scheduler::FixedTimeUpdate:</div>
  <div class="center">
   <img src="classEngine_1_1Scheduler_1_1FixedTimeUpdate.png" usemap="#Engine_3A_3AScheduler_3A_3AFixedTimeUpdate_map" alt=""/>
   <map id="Engine_3A_3AScheduler_3A_3AFixedTimeUpdate_map" name="Engine_3A_3AScheduler_3A_3AFixedTimeUpdate_map">
-<area href="classEngine_1_1Scheduler_1_1AScheduler.html" title="Interface to be implemented for every schedulers." alt="Engine::Scheduler::AScheduler" shape="rect" coords="0,56,217,80"/>
-<area href="classEngine_1_1Scheduler_1_1IScheduler.html" title="Interface to be implemented for every schedulers." alt="Engine::Scheduler::IScheduler" shape="rect" coords="0,0,217,24"/>
+<area href="classEngine_1_1Scheduler_1_1AScheduler.html" title="AScheduler is an abstract class that implements the IScheduler interface. It provides common function..." alt="Engine::Scheduler::AScheduler" shape="rect" coords="0,56,217,80"/>
+<area href="classEngine_1_1Scheduler_1_1IScheduler.html" title="Interface for the schedulers. A scheduler is responsible for running systems according to a specific ..." alt="Engine::Scheduler::IScheduler" shape="rect" coords="0,0,217,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a47b1ed12f8fb667be89108623a310faa" id="r_a47b1ed12f8fb667be89108623a310faa"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a47b1ed12f8fb667be89108623a310faa">FixedTimeUpdate</a> (<a class="el" href="classEngine_1_1Core.html">Core</a> &amp;core, float tickRate=DEFAULT_TICK_RATE)</td></tr>
+<tr class="memitem:a47b1ed12f8fb667be89108623a310faa" id="r_a47b1ed12f8fb667be89108623a310faa"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a47b1ed12f8fb667be89108623a310faa">FixedTimeUpdate</a> (<a class="el" href="classEngine_1_1Core.html">Core</a> &amp;core, float tickRate=<a class="el" href="#a6a553ef8f789a4c50eb19751d68925de">DEFAULT_TICK_RATE</a>)</td></tr>
+<tr class="memdesc:a47b1ed12f8fb667be89108623a310faa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of the <a class="el" href="classEngine_1_1Scheduler_1_1FixedTimeUpdate.html" title="FixedTimeUpdate is a scheduler that runs systems at a fixed rate It is made to only be run a certain ...">FixedTimeUpdate</a> scheduler. It takes a reference to the core and an optional tick rate. If the tick rate is not provided, it will be set to the default tick rate (DEFAULT_TICK_RATE).  <br /></td></tr>
 <tr class="memitem:a9a2beb2494d3801012fdc9b33aba6b33" id="r_a9a2beb2494d3801012fdc9b33aba6b33"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9a2beb2494d3801012fdc9b33aba6b33">RunSystems</a> () override</td></tr>
-<tr class="memdesc:a9a2beb2494d3801012fdc9b33aba6b33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the systems according to the scheduler policy.  <br /></td></tr>
+<tr class="memdesc:a9a2beb2494d3801012fdc9b33aba6b33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for the schedulers. <a class="el" href="structA.html">A</a> scheduler is responsible for running systems according to a specific policy. Schedulers also manage how logic (system) should be handled.     <br /></td></tr>
 <tr class="memitem:ad8a43447ec9af4ec5a5a54e397fa6400" id="r_ad8a43447ec9af4ec5a5a54e397fa6400"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#ad8a43447ec9af4ec5a5a54e397fa6400">GetTickRate</a> () const</td></tr>
 <tr class="memdesc:ad8a43447ec9af4ec5a5a54e397fa6400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the fixed tick rate.  <br /></td></tr>
 <tr class="memitem:ac429417e0f467479574a29f63fe7d519" id="r_ac429417e0f467479574a29f63fe7d519"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac429417e0f467479574a29f63fe7d519">SetTickRate</a> (float tickRate)</td></tr>
 <tr class="memdesc:ac429417e0f467479574a29f63fe7d519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the fixed tick rate.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classEngine_1_1Scheduler_1_1AScheduler')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html">Engine::Scheduler::AScheduler</a></td></tr>
 <tr class="memitem:a809433d1f957e4c2817f6aae0a253b39 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler" id="r_a809433d1f957e4c2817f6aae0a253b39"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#a809433d1f957e4c2817f6aae0a253b39">AScheduler</a> (<a class="el" href="classEngine_1_1Core.html">Core</a> &amp;core)</td></tr>
+<tr class="memdesc:a809433d1f957e4c2817f6aae0a253b39 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of the <a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html" title="AScheduler is an abstract class that implements the IScheduler interface. It provides common function...">AScheduler</a> class.  <br /></td></tr>
 <tr class="memitem:a62bc8712f544cf5f7b85fd83c68e76a5 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler" id="r_a62bc8712f544cf5f7b85fd83c68e76a5"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#a62bc8712f544cf5f7b85fd83c68e76a5">GetSystems</a> ()</td></tr>
+<tr class="memdesc:a62bc8712f544cf5f7b85fd83c68e76a5 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get systems inside the scheduler.  <br /></td></tr>
 <tr class="memitem:ab25ad2fba5d3aede30df4244dc06b8fd inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler" id="r_ab25ad2fba5d3aede30df4244dc06b8fd"><td class="memTemplParams" colspan="2">template&lt;typename... TSystems&gt; </td></tr>
 <tr class="memitem:ab25ad2fba5d3aede30df4244dc06b8fd inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler template"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#ab25ad2fba5d3aede30df4244dc06b8fd">AddSystems</a> (TSystems... systems)</td></tr>
-<tr class="memdesc:ab25ad2fba5d3aede30df4244dc06b8fd inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the list of enabled systems.  <br /></td></tr>
+<tr class="memdesc:ab25ad2fba5d3aede30df4244dc06b8fd inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add systems to the scheduler.  <br /></td></tr>
 <tr class="memitem:a483329c72a418fef3baef42a29b09340 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler" id="r_a483329c72a418fef3baef42a29b09340"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#a483329c72a418fef3baef42a29b09340">Disable</a> (<a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a> id)</td></tr>
-<tr class="memdesc:a483329c72a418fef3baef42a29b09340 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable a system. It will remove the system from the "main" system list, and it will not be returned by the GetSystems function.  <br /></td></tr>
+<tr class="memdesc:a483329c72a418fef3baef42a29b09340 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable a system.  <br /></td></tr>
 <tr class="memitem:a1f4aba345553c49e8c19e2bd635fed90 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler" id="r_a1f4aba345553c49e8c19e2bd635fed90"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#a1f4aba345553c49e8c19e2bd635fed90">Enable</a> (<a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a> id)</td></tr>
-<tr class="memdesc:a1f4aba345553c49e8c19e2bd635fed90 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a system. It will add the system to the "main" system list, and it will be returned by the GetSystems function.  <br /></td></tr>
+<tr class="memdesc:a1f4aba345553c49e8c19e2bd635fed90 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a system.  <br /></td></tr>
 <tr class="memitem:acbc942e1b2b4e31ab083ed24981c71ee inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler" id="r_acbc942e1b2b4e31ab083ed24981c71ee"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#acbc942e1b2b4e31ab083ed24981c71ee">RunSystem</a> (const <a class="el" href="namespaceEngine.html#a5fb82be08ce7a8491bb8b31eff0d5391">SystemBase</a> *system, <a class="el" href="classEngine_1_1Core.html">Core</a> &amp;core)</td></tr>
-<tr class="memdesc:acbc942e1b2b4e31ab083ed24981c71ee inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a system according to the scheduler policy.  <br /></td></tr>
+<tr class="memdesc:acbc942e1b2b4e31ab083ed24981c71ee inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a system.  <br /></td></tr>
 <tr class="memitem:a9efce9b982fd2f70023c22c067c25f37 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler" id="r_a9efce9b982fd2f70023c22c067c25f37"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#a9efce9b982fd2f70023c22c067c25f37">ShouldRunNextScheduler</a> () const</td></tr>
-<tr class="memdesc:a9efce9b982fd2f70023c22c067c25f37 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the next scheduler should run or not.  <br /></td></tr>
+<tr class="memdesc:a9efce9b982fd2f70023c22c067c25f37 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get whether the next scheduler should run or not. This is mainly set by the error policy of the scheduler.  <br /></td></tr>
 <tr class="memitem:a4404067cc588ff20eac3cf06dc499130 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler" id="r_a4404067cc588ff20eac3cf06dc499130"><td class="memItemLeft"><a class="el" href="namespaceEngine_1_1Scheduler.html#adc9f665f0ab46064c8714e86f3089217">SchedulerErrorPolicy</a>&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#a4404067cc588ff20eac3cf06dc499130">GetErrorPolicy</a> () const override</td></tr>
-<tr class="memdesc:a4404067cc588ff20eac3cf06dc499130 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the error policy.  <br /></td></tr>
+<tr class="memdesc:a4404067cc588ff20eac3cf06dc499130 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the error policy of the scheduler.  <br /></td></tr>
 <tr class="memitem:a9627cc3b9c8bcfd39ee46dc62a48bb12 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler" id="r_a9627cc3b9c8bcfd39ee46dc62a48bb12"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#a9627cc3b9c8bcfd39ee46dc62a48bb12">SetErrorPolicy</a> (<a class="el" href="namespaceEngine_1_1Scheduler.html#adc9f665f0ab46064c8714e86f3089217">SchedulerErrorPolicy</a> errorPolicy) override</td></tr>
-<tr class="memdesc:a9627cc3b9c8bcfd39ee46dc62a48bb12 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the error policy.  <br /></td></tr>
+<tr class="memdesc:a9627cc3b9c8bcfd39ee46dc62a48bb12 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the error policy of the scheduler.  <br /></td></tr>
 <tr class="memitem:a52713b7b72ee49b90648a938a29781b1 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler" id="r_a52713b7b72ee49b90648a938a29781b1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#a52713b7b72ee49b90648a938a29781b1">Remove</a> (<a class="el" href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a> id)</td></tr>
 <tr class="memdesc:a52713b7b72ee49b90648a938a29781b1 inherit pub_methods_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a system from the scheduler.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classEngine_1_1Scheduler_1_1IScheduler"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classEngine_1_1Scheduler_1_1IScheduler')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classEngine_1_1Scheduler_1_1IScheduler.html">Engine::Scheduler::IScheduler</a></td></tr>
 <tr class="memitem:a4b65fca31cdd22977949d766ea610f98 inherit pub_methods_classEngine_1_1Scheduler_1_1IScheduler" id="r_a4b65fca31cdd22977949d766ea610f98"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1IScheduler.html#a4b65fca31cdd22977949d766ea610f98">~IScheduler</a> ()=default</td></tr>
+<tr class="memdesc:a4b65fca31cdd22977949d766ea610f98 inherit pub_methods_classEngine_1_1Scheduler_1_1IScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for <a class="el" href="classEngine_1_1Scheduler_1_1IScheduler.html" title="Interface for the schedulers. A scheduler is responsible for running systems according to a specific ...">IScheduler</a>.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aed7d33f3a894458934ab00e3f6d55441" id="r_aed7d33f3a894458934ab00e3f6d55441"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#aed7d33f3a894458934ab00e3f6d55441">_tickRate</a></td></tr>
+<tr class="memdesc:aed7d33f3a894458934ab00e3f6d55441"><td class="mdescLeft">&#160;</td><td class="mdescRight">The tick rate correspond to the number of update the scheduler should do in a second.  <br /></td></tr>
+<tr class="memitem:a2d6c6aa4d2039a133639891ce7abee03" id="r_a2d6c6aa4d2039a133639891ce7abee03"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a2d6c6aa4d2039a133639891ce7abee03">_bufferedTime</a> = 0.0f</td></tr>
+<tr class="memdesc:a2d6c6aa4d2039a133639891ce7abee03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffered time since the last update, this allow to not lose time.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-static-attribs" class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a6a553ef8f789a4c50eb19751d68925de" id="r_a6a553ef8f789a4c50eb19751d68925de"><td class="memItemLeft">static constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#a6a553ef8f789a4c50eb19751d68925de">DEFAULT_TICK_RATE</a> = 1.0f / 50.0f</td></tr>
+<tr class="memdesc:a6a553ef8f789a4c50eb19751d68925de"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default tick rate for the <a class="el" href="classEngine_1_1Scheduler_1_1FixedTimeUpdate.html" title="FixedTimeUpdate is a scheduler that runs systems at a fixed rate It is made to only be run a certain ...">FixedTimeUpdate</a> scheduler. It is set to 1/50 seconds, which means that the scheduler will run at 50 updates per second by default.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_classEngine_1_1Scheduler_1_1AScheduler"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classEngine_1_1Scheduler_1_1AScheduler')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Attributes inherited from <a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html">Engine::Scheduler::AScheduler</a></td></tr>
 <tr class="memitem:ab896a69149c85b5003950964fea9c002 inherit pro_attribs_classEngine_1_1Scheduler_1_1AScheduler" id="r_ab896a69149c85b5003950964fea9c002"><td class="memItemLeft"><a class="el" href="classEngine_1_1Core.html">Core</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html#ab896a69149c85b5003950964fea9c002">_core</a></td></tr>
+<tr class="memdesc:ab896a69149c85b5003950964fea9c002 inherit pro_attribs_classEngine_1_1Scheduler_1_1AScheduler"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the core.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classEngine_1_1Scheduler_1_1FixedTimeUpdate.html" title="FixedTimeUpdate is a scheduler that runs systems at a fixed rate It is made to only be run a certain ...">FixedTimeUpdate</a> is a scheduler that runs systems at a fixed rate It is made to only be run a certain amount of times per second, skipping updates when the framerate is high and running multiple updates when the framerate is low. The time that passes is accumulated if the time between updates is greater than the tick rate or if there is a remainder from the last update(s). </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html" title="AScheduler is an abstract class that implements the IScheduler interface. It provides common function...">Engine::Scheduler::AScheduler</a> </dd></dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a47b1ed12f8fb667be89108623a310faa" name="a47b1ed12f8fb667be89108623a310faa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a47b1ed12f8fb667be89108623a310faa">&#9670;&#160;</a></span>FixedTimeUpdate()</h2>
@@ -167,7 +185,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>tickRate</em></span><span class="paramdefsep"> = </span><span class="paramdefval">DEFAULT_TICK_RATE</span>&#160;)</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>tickRate</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a6a553ef8f789a4c50eb19751d68925de">DEFAULT_TICK_RATE</a></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -176,6 +194,19 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructor of the <a class="el" href="classEngine_1_1Scheduler_1_1FixedTimeUpdate.html" title="FixedTimeUpdate is a scheduler that runs systems at a fixed rate It is made to only be run a certain ...">FixedTimeUpdate</a> scheduler. It takes a reference to the core and an optional tick rate. If the tick rate is not provided, it will be set to the default tick rate (DEFAULT_TICK_RATE). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">core</td><td>Reference to the core. </td></tr>
+    <tr><td class="paramname">tickRate</td><td>The tick rate for the scheduler. It is the time in seconds between each update. It is recommended to set this value to a value that is a divisor of the frame time to avoid issues with the accumulation of time. For example, if the frame time is 16ms (60 FPS), it is recommended to set the tick rate to 1/60 seconds or 1/120 seconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Engine::Core</a> </dd>
+<dd>
+<a class="el" href="#a6a553ef8f789a4c50eb19751d68925de" title="The default tick rate for the FixedTimeUpdate scheduler. It is set to 1/50 seconds,...">Engine::Scheduler::FixedTimeUpdate::DEFAULT_TICK_RATE</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000065">Todo</a></b></dt><dd>Put the implementation inside cpp file </dd></dl>
 
 </div>
 </div>
@@ -204,7 +235,9 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the fixed tick rate. </p>
-<dl class="section return"><dt>Returns</dt><dd>float The fixed tick rate </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The tick rate in seconds </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000066">Todo</a></b></dt><dd>Put the implementation inside a cpp file (remove inline) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aed7d33f3a894458934ab00e3f6d55441" title="The tick rate correspond to the number of update the scheduler should do in a second.">Engine::Scheduler::FixedTimeUpdate::_tickRate</a> </dd></dl>
 
 </div>
 </div>
@@ -220,7 +253,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void Engine::Scheduler::FixedTimeUpdate::RunSystems </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -231,13 +264,8 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Run the systems according to the scheduler policy. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">systems</td><td>The systems to run </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Interface for the schedulers. <a class="el" href="structA.html">A</a> scheduler is responsible for running systems according to a specific policy. Schedulers also manage how logic (system) should be handled.    </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000068">Todo</a></b></dt><dd>Remove this interface and merge it with the <a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html" title="AScheduler is an abstract class that implements the IScheduler interface. It provides common function...">AScheduler</a> class. </dd></dl>
 
 <p>Implements <a class="el" href="classEngine_1_1Scheduler_1_1IScheduler.html#a7d8e00ad886e9d55cb7fd7a78e521e64">Engine::Scheduler::IScheduler</a>.</p>
 
@@ -274,6 +302,81 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This can cause issues if the value is changed during an update. It is recommended to change this value before the update loop starts. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aed7d33f3a894458934ab00e3f6d55441" title="The tick rate correspond to the number of update the scheduler should do in a second.">Engine::Scheduler::FixedTimeUpdate::_tickRate</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000067">Todo</a></b></dt><dd>Put the implementation inside a cpp file (remove inline) </dd></dl>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a2d6c6aa4d2039a133639891ce7abee03" name="a2d6c6aa4d2039a133639891ce7abee03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d6c6aa4d2039a133639891ce7abee03">&#9670;&#160;</a></span>_bufferedTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Engine::Scheduler::FixedTimeUpdate::_bufferedTime = 0.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Buffered time since the last update, this allow to not lose time. </p>
+
+</div>
+</div>
+<a id="aed7d33f3a894458934ab00e3f6d55441" name="aed7d33f3a894458934ab00e3f6d55441"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed7d33f3a894458934ab00e3f6d55441">&#9670;&#160;</a></span>_tickRate</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Engine::Scheduler::FixedTimeUpdate::_tickRate</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The tick rate correspond to the number of update the scheduler should do in a second. </p>
+
+</div>
+</div>
+<a id="a6a553ef8f789a4c50eb19751d68925de" name="a6a553ef8f789a4c50eb19751d68925de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a553ef8f789a4c50eb19751d68925de">&#9670;&#160;</a></span>DEFAULT_TICK_RATE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Engine::Scheduler::FixedTimeUpdate::DEFAULT_TICK_RATE = 1.0f / 50.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default tick rate for the <a class="el" href="classEngine_1_1Scheduler_1_1FixedTimeUpdate.html" title="FixedTimeUpdate is a scheduler that runs systems at a fixed rate It is made to only be run a certain ...">FixedTimeUpdate</a> scheduler. It is set to 1/50 seconds, which means that the scheduler will run at 50 updates per second by default. </p>
 
 </div>
 </div>

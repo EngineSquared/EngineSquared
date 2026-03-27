@@ -95,18 +95,26 @@ $(function(){initNavTree('structEngine_1_1Resource_1_1Time.html','','structEngin
 </div><!--header-->
 <div class="contents">
 
+<p><a class="el" href="namespaceEngine_1_1Resource.html">Resource</a> that stores the elapsed time since the last frame.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="Time_8hpp_source.html">Time.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a56773b4f17c7892180b1aca807b2c6ff" id="r_a56773b4f17c7892180b1aca807b2c6ff"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#a56773b4f17c7892180b1aca807b2c6ff">Update</a> (<a class="el" href="classEngine_1_1Core.html">Core</a> &amp;core)</td></tr>
+<tr class="memdesc:a56773b4f17c7892180b1aca807b2c6ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the _elapsedTime since the last frame. It should be called at the beginning of each frame to update the elapsed time. This is a system.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a8abe008bf942228a2510463771d717f1" id="r_a8abe008bf942228a2510463771d717f1"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a8abe008bf942228a2510463771d717f1">_elapsedTime</a> = 0.0f</td></tr>
+<tr class="memdesc:a8abe008bf942228a2510463771d717f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elapsed time since the last frame in seconds.  <br /></td></tr>
 <tr class="memitem:adc0ba52bf4a6b4a5dd42eaf7803cc8f8" id="r_adc0ba52bf4a6b4a5dd42eaf7803cc8f8"><td class="memItemLeft">std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight"><a class="el" href="#adc0ba52bf4a6b4a5dd42eaf7803cc8f8">_lastTime</a> = std::chrono::high_resolution_clock::now()</td></tr>
+<tr class="memdesc:adc0ba52bf4a6b4a5dd42eaf7803cc8f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The time point of the last frame. It is used to calculate the elapsed time since the last frame.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="namespaceEngine_1_1Resource.html">Resource</a> that stores the elapsed time since the last frame. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a56773b4f17c7892180b1aca807b2c6ff" name="a56773b4f17c7892180b1aca807b2c6ff"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a56773b4f17c7892180b1aca807b2c6ff">&#9670;&#160;</a></span>Update()</h2>
 
@@ -130,6 +138,16 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Update the _elapsedTime since the last frame. It should be called at the beginning of each frame to update the elapsed time. This is a system. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">core</td><td>Reference to the core. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a8abe008bf942228a2510463771d717f1" title="Elapsed time since the last frame in seconds.">Engine::Resource::Time::_elapsedTime</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000058">Todo</a></b></dt><dd>put the implementation in the cpp file </dd></dl>
+
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
@@ -145,6 +163,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Elapsed time since the last frame in seconds. </p>
+
 </div>
 </div>
 <a id="adc0ba52bf4a6b4a5dd42eaf7803cc8f8" name="adc0ba52bf4a6b4a5dd42eaf7803cc8f8"></a>
@@ -158,6 +178,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The time point of the last frame. It is used to calculate the elapsed time since the last frame. </p>
 
 </div>
 </div>
