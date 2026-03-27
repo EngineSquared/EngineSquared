@@ -85,9 +85,9 @@ inline decltype(auto) Core::RegisterSystemWithErrorHandler(System system, ErrorC
     return this->RegisterSystem(WrappedSystem(system, callback));
 }
 
-template <typename... TPlugins> void Core::AddPlugins() { (AddPlugin<TPlugins>(), ...); }
+template <CPlugin... TPlugins> void Core::AddPlugins() { (AddPlugin<TPlugins>(), ...); }
 
-template <typename TPlugin> void Core::AddPlugin()
+template <CPlugin TPlugin> void Core::AddPlugin()
 {
     if (this->_plugins.contains(std::type_index(typeid(TPlugin))))
     {
@@ -97,7 +97,7 @@ template <typename TPlugin> void Core::AddPlugin()
     this->_plugins.at(std::type_index(typeid(TPlugin)))->Bind();
 }
 
-template <typename TPlugin> bool Core::HasPlugin() const
+template <CPlugin TPlugin> bool Core::HasPlugin() const
 {
     return this->_plugins.contains(std::type_index(typeid(TPlugin)));
 }
