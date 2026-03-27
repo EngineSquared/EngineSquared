@@ -20,14 +20,13 @@ struct EntityId : Id {
     ///     Engine::Id.
     /// @todo rename v to value
     /// @todo put the implementation in the cpp file
-    constexpr explicit(false) EntityId(ValueType v = NullValue()) : Id{v} {}
+    constexpr EntityId(ValueType v = NullValue()) : Id{v} {}
 
     /// @brief Constructs an EntityId from an Engine::Id. This allows for implicit conversion from Engine::Id to
     ///     EntityId.
     /// @param id The Engine::Id to convert.
-    /// @return The constructed EntityId.
     /// @todo put the implementation in the cpp file
-    constexpr explicit(false) EntityId(Id id) : Id{id} {}
+    constexpr EntityId(Id id) : Id{id} {}
 
     /// @brief Implicit conversion operator to the underlying ValueType. This allows for seamless use of EntityId where
     ///     a ValueType is expected.
@@ -62,8 +61,9 @@ struct EntityId : Id {
 
     /// @brief Add a component to an entity.
     /// @tparam TComponent The type of the component to add to the registry.
+    /// @tparam TArgs The types of the arguments to construct the component in-place in the registry.
     /// @param core The Core instance whose registry is used to store the component.
-    /// @param component The rvalue of the component to add to the registry.
+    /// @param args The arguments to construct the component in-place in the registry.
     /// @return A reference to the added component.
     /// @todo put the implementation in the inl file
     template <typename TComponent, typename... TArgs>
@@ -194,20 +194,32 @@ struct EntityId : Id {
 static_assert(sizeof(EntityId) == sizeof(EntityId::ValueType), "EntityId size must be equal to Id size");
 } // namespace Engine
 
+/// @struct std::hash<Engine::EntityId>
 /// @brief Specialization of std::hash for Engine::EntityId to allow it to be used as a key in data containers like
 ///     std::unordered_map.
-/// @todo put the implementation in the cpp file
 template <> struct std::hash<Engine::EntityId> {
+    /// @brief Hash function for EntityId. It uses the hash of the underlying ValueType to compute the hash of the
+    ///     EntityId.
+    /// @param entityId The EntityId to hash.
+    /// @return The hash of the EntityId.
+    /// @todo put the implementation in the cpp file
     std::size_t operator()(const Engine::EntityId &entityId) const noexcept
     {
         return std::hash<entt::id_type>{}(entityId.value);
     }
 };
 
-/// @brief Specialization of fmt::formatter for Engine::EntityId to allow it to be formatted as a string using the fmt
-///     library. The format will be "null_entity" if the EntityId is null.
-/// @todo put the implementation in the cpp file
+/// @struct fmt::formatter<Engine::EntityId>
+/// @brief Specialization of fmt::formatter for Engine::EntityId to allow it to be formatted using the {fmt} library.
 template <> struct fmt::formatter<Engine::EntityId> : fmt::formatter<std::string> {
+    /// @brief Formats an EntityId for output. If the EntityId is null, it will format as "null_entity". Otherwise, it
+    ///     will format using the Log::EntityToDebugString function to provide a human-readable representation of the
+    ///     EntityId.
+    /// @tparam FormatContext The type of the format context used by the {fmt} library.
+    /// @param entityId The EntityId to format.
+    /// @param ctx The format context used by the {fmt} library.
+    /// @return The formatted string representation of the EntityId.
+    /// @todo put the implementation in the inl file
     template <typename FormatContext> auto format(const Engine::EntityId &entityId, FormatContext &ctx) const
     {
         if (entityId.IsNull())
