@@ -158,8 +158,8 @@ class Core {
     ///     the system variable and it will be deduced by the compiler. You can add as many systems as you want, they
     ///     will be called in the order they were added.
     /// @param systems The systems to add.
-    /// @return Return the identifiers of the systems added, in the same order as the systems were added. See
-    ///     FunctionUtils::FunctionID.
+    /// @return Return the identifiers of the systems added, in the same order as the systems were added.
+    /// @see FunctionUtils::FunctionID.
     template <CScheduler TScheduler, typename... Systems> decltype(auto) RegisterSystem(Systems... systems);
 
     /// @brief Add one or multiple systems associated to the default scheduler.
@@ -167,8 +167,8 @@ class Core {
     ///     the system variable and it will be deduced by the compiler. You can add as many systems as you want, they
     ///     will be called in the order they were added.
     /// @param systems The systems to add.
-    /// @return Return the identifiers of the systems added, in the same order as the systems were added. See
-    ///     FunctionUtils::FunctionID.
+    /// @return Return the identifiers of the systems added, in the same order as the systems were added.
+    /// @see FunctionUtils::FunctionID.
     template <typename... Systems> decltype(auto) RegisterSystem(Systems... systems);
 
     /// @brief Add a system to a @b specific scheduler, associated with a callback that should run if the system fails
