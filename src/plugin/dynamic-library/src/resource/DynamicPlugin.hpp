@@ -87,7 +87,7 @@ class DynamicPlugin : public Engine::APlugin {
             }
             if (!system)
             {
-                Log::Warn("System function pointer is null");
+                Log::Warning("System function pointer is null");
                 return;
             }
             std::unique_ptr<Engine::SystemBase> dynamicSystem = _generateSystem(

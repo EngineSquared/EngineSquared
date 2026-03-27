@@ -52,7 +52,7 @@ void Engine::Core::AddPlugin(std::string name, std::unique_ptr<IPlugin> plugin)
 {
     if (this->_namedPlugins.contains(name))
     {
-        Log::Warn(fmt::format("Plugin {} already added", name));
+        Log::Warning(fmt::format("Plugin {} already added", name));
     }
     this->_namedPlugins.emplace(name, std::move(plugin));
     this->_namedPlugins[name]->Bind();
