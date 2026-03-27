@@ -167,7 +167,7 @@ struct EntityId : Id {
 
     /// @brief Remove all temporary components from the registry. This system should be called at the end of each loop
     ///     to ensure that temporary components are removed after they have been used.
-    /// @param core The Core
+    /// @param core The Core instance whose registry is used to store the components.
     /// @todo put the implementation in the inl file
     /// @see Engine::EntityId::AddTemporaryComponent
     static void RemoveTemporaryComponents(Core &core)
