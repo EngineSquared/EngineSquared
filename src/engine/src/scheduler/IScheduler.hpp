@@ -23,6 +23,7 @@ enum class SchedulerErrorPolicy {
 
 /// @brief Interface for the schedulers. A scheduler is responsible for running systems according to a specific policy.
 ///   Schedulers also manage how logic (system) should be handled.
+/// @todo Remove this interface and merge it with the AScheduler class.
 class IScheduler {
   public:
     /// @brief Virtual destructor for IScheduler.
