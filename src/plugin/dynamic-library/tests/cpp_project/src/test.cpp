@@ -1,13 +1,14 @@
+#include <cstdint>
 #include <iostream>
 
 struct MetaCore {
     void *context;
-    uint32_t (*GetComponentId)(MetaCore *, const char *);
+    std::uint32_t (*GetComponentId)(MetaCore *, const char *);
     void *(*CreateView)();
     void (*DestroyView)(void *);
-    void (*AggregateComponentToView)(MetaCore *, void *, uint32_t);
-    void (*ViewForEach)(MetaCore *, void *, void *, void (*)(uint32_t, void *));
-    void *(*GetEntityComponentFromView)(MetaCore *, uint32_t, uint32_t);
+    void (*AggregateComponentToView)(MetaCore *, void *, std::uint32_t);
+    void (*ViewForEach)(MetaCore *, void *, void *, void (*)(std::uint32_t, void *));
+    void *(*GetEntityComponentFromView)(MetaCore *, std::uint32_t, std::uint32_t);
     void (*AddSystem)(MetaCore *, void (*)(MetaCore *));
 };
 
@@ -18,11 +19,11 @@ struct CppPosition {
 
 extern "C" {
 
-void viewForEachCallback(uint32_t entityId, void *userData)
+void viewForEachCallback(std::uint32_t entityId, void *userData)
 {
     MetaCore *core = static_cast<MetaCore *>(userData);
     std::cout << "Entity ID: " << entityId << ", User Data: " << reinterpret_cast<uintptr_t>(core) << "\n";
-    uint32_t component_id = core->GetComponentId(core, "CppPosition");
+    std::uint32_t component_id = core->GetComponentId(core, "CppPosition");
     CppPosition *position = static_cast<CppPosition *>(core->GetEntityComponentFromView(core, component_id, entityId));
     std::cout << "CppPosition: x=" << position->x << ", y=" << position->y << "\n";
 
@@ -49,7 +50,7 @@ void system_func(MetaCore *core)
     std::cout << "------------------------\n";
     std::cout << "Hello from C++!\n";
 
-    uint32_t component_id = core->GetComponentId(core, "CppPosition");
+    std::uint32_t component_id = core->GetComponentId(core, "CppPosition");
     if (component_id == 0)
     {
         std::cout << "Component 'CppPosition' not found!\n";
