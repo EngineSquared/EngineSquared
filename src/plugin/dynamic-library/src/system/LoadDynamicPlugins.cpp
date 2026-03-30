@@ -48,14 +48,9 @@ void LoadDynamicPlugins(Engine::Core &core)
     }
     for (const auto &[name, path] : *libs)
     {
-        try
-        {
-            core.AddPlugin(name, std::make_unique<Resource::DynamicPlugin>(core, path));
-        }
-        catch (const std::exception &e)
-        {
-            Log::Error(fmt::format("Failed to load dynamic plugin '{}': {}", name, e.what()));
-        }
+        const auto &name1 = name;
+        const auto &path1 = path;
+        core.AddPlugin(name1, std::make_unique<Resource::DynamicPlugin>(core, path1));
     }
 }
 } // namespace DynamicLibrary::System
