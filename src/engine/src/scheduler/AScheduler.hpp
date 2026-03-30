@@ -31,7 +31,7 @@ class AScheduler : public IScheduler {
     /// @return A tuple of FunctionIDs for the added systems. See FunctionUtils::FunctionContainer::AddFunctions for
     /// more details.
     /// @todo put the implementation in the inl file
-    template <typename... TSystems> inline decltype(auto) AddSystems(TSystems... systems)
+    template <typename... TSystems> inline decltype(auto) AddSystems(TSystems &&...systems)
     {
         return _enabledSystemsList.AddSystems(std::forward<TSystems>(systems)...);
     }

@@ -262,8 +262,17 @@ class Core {
     std::vector<std::type_index> _schedulersToDelete;
     /// @brief The plugins added to the core.
     std::unordered_map<std::type_index, std::unique_ptr<IPlugin>> _plugins;
+
+    /// @brief A transparent hash function for strings, allowing the use of std::string_view and const char* as keys in
+    ///     the unordered_map without the need for explicit conversions.
+    struct TransparentHash {
+        using is_transparent = void;
+        std::size_t operator()(const std::string &str) const noexcept { return std::hash<std::string>{}(str); }
+        std::size_t operator()(std::string_view str) const noexcept { return std::hash<std::string_view>{}(str); }
+        std::size_t operator()(const char *str) const noexcept { return std::hash<std::string_view>{}(str); }
+    };
     /// @brief The named plugins added to the core
-    std::unordered_map<std::string, std::unique_ptr<IPlugin>> _namedPlugins;
+    std::unordered_map<std::string, std::unique_ptr<IPlugin>, TransparentHash, std::equal_to<>> _namedPlugins;
     /// @brief The running state of the core. It is true if the core is running, false otherwise. It is used to stop the
     ///     core loop.
     bool _running = false;

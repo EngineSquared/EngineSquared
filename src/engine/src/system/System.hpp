@@ -29,7 +29,7 @@ class SystemContainer : public FunctionUtils::FunctionContainer<void, Core &> {
     /// @return a tuple of FunctionIDs for the added systems.
     /// @see FunctionUtils::FunctionID
     /// @todo Put the implementation in the inl file
-    template <typename... TSystem> inline decltype(auto) AddSystems(TSystem... systems)
+    template <typename... TSystem> inline decltype(auto) AddSystems(TSystem &&...systems)
     {
         return AddFunctions(std::forward<TSystem>(systems)...);
     }

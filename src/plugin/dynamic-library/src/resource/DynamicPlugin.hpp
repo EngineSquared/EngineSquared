@@ -37,8 +37,7 @@ class DynamicPlugin : public Engine::APlugin {
 
     struct CoreInterface {
         Engine::Core *core = nullptr;
-        uint32_t (*constGetComponentId)(CoreInterface *, const char *) = [](CoreInterface *ctx,
-                                                                            const char *name) -> uint32_t {
+        uint32_t (*constGetComponentId)(CoreInterface *, const char *) = [](CoreInterface *ctx, const char *name) {
             return ctx->core->GetResource<DynamicLibrary::Resource::ComponentsMeta>()
                 .GetComponent(name)
                 .value_or(DynamicLibrary::Resource::ComponentsMeta::errorComponentMeta)
