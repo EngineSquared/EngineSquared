@@ -8,86 +8,95 @@
 #include <typeindex>
 
 namespace Engine::Scheduler {
-/**
- * @brief Interface to be implemented for every schedulers.
- */
+/// @brief AScheduler is an abstract class that implements the IScheduler interface. It provides common functionalities
+///   for schedulers, such as enabling/disabling systems and error handling. It also provides a default implementation
+///   for the RunSystem function, which executes a system according to the scheduler policy.
+/// @see Engine::Scheduler::IScheduler
 class AScheduler : public IScheduler {
   public:
+    /// @brief Constructor of the AScheduler class.
+    /// @param core Reference to the core.
+    /// @see Engine::Core
     explicit AScheduler(Core &core) : _core(core) {}
 
+    /// @brief Get systems inside the scheduler.
+    /// @return A SystemContainer with enabled systems.
+    /// @see Engine::SystemContainer
+    /// @todo put the implementation in the cpp file, (remove inline)
     inline decltype(auto) GetSystems() { return _enabledSystemsList.GetSystems(); }
 
-    /**
-     * @brief Get the list of enabled systems
-     *
-     * @tparam  TSystems    Type of systems to add. (can be omitted)
-     * @param   systems     The systems to add
-     *
-     * @return  The list of enabled systems ids
-     */
+    /// @brief Add systems to the scheduler.
+    /// @tparam TSystems Types of the systems to add.
+    /// @param systems The systems to add.
+    /// @return A tuple of FunctionIDs for the added systems. See FunctionUtils::FunctionContainer::AddFunctions for
+    /// more details.
+    /// @todo put the implementation in the inl file
     template <typename... TSystems> inline decltype(auto) AddSystems(TSystems... systems)
     {
         return _enabledSystemsList.AddSystems(std::forward<TSystems>(systems)...);
     }
 
-    /**
-     * @brief Disable a system. It will remove the system from the "main" system list, and it will not be returned by
-     * the GetSystems function.
-     */
+    /// @brief Disable a system.
+    /// @param id The system to disable
     void Disable(FunctionUtils::FunctionID id);
 
-    /**
-     * @brief Enable a system. It will add the system to the "main" system list, and it will be returned by the
-     * GetSystems function.
-     *
-     * @param id The system to enable
-     */
+    /// @brief Enable a system.
+    /// @param id The system to enable
     void Enable(FunctionUtils::FunctionID id);
 
-    /**
-     * @brief Execute a system according to the scheduler policy
-     *
-     * @param system The system to run
-     * @param core The core to pass to the system
-     */
+    /// @brief Execute a system.
+    /// @note The system will be executed according to the scheduler policy of the scheduler.
+    /// @param system The system to execute.
+    /// @param core The core to pass to the system.
+    /// @todo Remove Core parameter from the function and use the reference to the core stored in the AScheduler class
+    /// instead.
+    /// @see Engine::SystemBase
     void RunSystem(const SystemBase *system, Core &core);
 
-    /**
-     * @brief Whether the next scheduler should run or not
-     *
-     * @return true if the next scheduler should run, false otherwise
-     */
+    /// @brief Get whether the next scheduler should run or not. This is mainly set by the error policy of the
+    ///   scheduler.
+    /// @return true if the next scheduler should run, false otherwise.
+    /// @todo check if we can remove this method and find a cleaner way to handle the error policy of the scheduler.
+    /// @todo put the implementation in the cpp file, (remove inline)
     inline bool ShouldRunNextScheduler() const { return _shouldRunNextScheduler; }
 
-    /**
-     * @brief Get the error policy
-     *
-     * @return The error policy
-     */
+    /// @brief Get the error policy of the scheduler.
+    /// @return The error policy of the scheduler.
+    /// @see Engine::Scheduler::SchedulerErrorPolicy
+    /// @todo put the implementation in the cpp file, (remove inline)
     inline SchedulerErrorPolicy GetErrorPolicy() const override { return _errorPolicy; }
 
-    /**
-     * @brief Set the error policy
-     *
-     * @param errorPolicy The error policy
-     */
+    /// @brief Set the error policy of the scheduler.
+    /// @param errorPolicy The error policy to set.
+    /// @see Engine::Scheduler::SchedulerErrorPolicy
+    /// @todo put the implementation in the cpp file, (remove inline)
     inline void SetErrorPolicy(SchedulerErrorPolicy errorPolicy) override { _errorPolicy = errorPolicy; }
 
-    /**
-     * @brief Remove a system from the scheduler
-     *
-     * @param id The system to remove
-     */
+    /// @brief Remove a system from the scheduler.
+    /// @param id The system to remove.
+    /// @see FunctionUtils::FunctionID
     void Remove(FunctionUtils::FunctionID id);
 
   protected:
+    /// @brief Reference to the core.
+    /// @note This reference is used to pass the core to the systems when executing them. It can also be used by the
+    ///   schedulers to access the core and its resources.
+    /// @see Engine::Core
     Core &_core;
 
   private:
+    /// @brief List of enabled systems in the scheduler.
     SystemContainer _enabledSystemsList;
+    /// @brief List of disabled systems in the scheduler.
     SystemContainer _disabledSystemsList;
+    /// @brief A state if the systems of the scheduler should be executed or not. If false, the scheduler will skip the
+    ///   execution of its systems. This is mainly used to handle the error policy of the scheduler.
     bool _shouldRunSystems = true;
+    /// @brief A state if the next scheduler should be executed or not. This is mainly used to handle the error policy
+    ///   of the scheduler.
     bool _shouldRunNextScheduler = true;
+    /// @brief The error policy of the scheduler. It defines how the scheduler should handle errors that occur during
+    ///   the execution of its systems.
     SchedulerErrorPolicy _errorPolicy = SchedulerErrorPolicy::LogAndContinue;
 };
 } // namespace Engine::Scheduler

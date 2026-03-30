@@ -5,47 +5,41 @@ class Core;
 }
 
 namespace Engine::Scheduler {
-/**
- * @brief Enum that defines how the scheduler will handle errors
- */
+/// @brief Enum that defines how the scheduler will handle errors
+/// @see Engine::Scheduler::IScheduler
+/// @see Engine::Scheduler::AScheduler
 enum class SchedulerErrorPolicy {
-    /// Fail silently
+    /// @brief Fail silently
     Silent,
-    /// Let the exception propagate
+    /// @brief Let the exception propagate
     Nothing,
-    /// Just log the error and resume execution
+    /// @brief Just log the error and resume execution
     LogAndContinue,
-    /// Log the error, run the next systems and stop execution of other schedulers
+    /// @brief Log the error, run the next systems and stop execution of other schedulers
     LogAndFinishScheduler,
-    /// Log the error and stop execution
+    /// @brief Log the error and stop execution
     LogAndStop,
 };
 
-/**
- * @brief Interface to be implemented for every schedulers
- */
+/// @brief Interface for the schedulers. A scheduler is responsible for running systems according to a specific policy.
+///   Schedulers also manage how logic (system) should be handled.
+/// @todo Remove this interface and merge it with the AScheduler class.
 class IScheduler {
   public:
+    /// @brief Virtual destructor for IScheduler.
     virtual ~IScheduler() = default;
-    /**
-     * @brief Run the systems according to the scheduler policy
-     *
-     * @param systems The systems to run
-     */
+
+    /// @brief Run the systems according to the scheduler policy.
     virtual void RunSystems(void) = 0;
 
-    /**
-     * @brief Get the scheduler policy
-     *
-     * @return The scheduler policy
-     */
+    /// @brief Get the scheduler policy
+    /// @return The scheduler policy
+    /// @see Engine::Scheduler::SchedulerErrorPolicy
     virtual SchedulerErrorPolicy GetErrorPolicy() const = 0;
 
-    /**
-     * @brief Set the scheduler policy
-     *
-     * @param errorPolicy The scheduler policy
-     */
+    /// @brief Set the scheduler policy
+    /// @param errorPolicy The scheduler policy
+    /// @see Engine::Scheduler::SchedulerErrorPolicy
     virtual void SetErrorPolicy(SchedulerErrorPolicy errorPolicy) = 0;
 };
 } // namespace Engine::Scheduler
