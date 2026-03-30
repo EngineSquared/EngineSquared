@@ -1,4 +1,5 @@
 import subprocess
+import shutil
 from typing import Optional
 
 class bcolors:
@@ -34,8 +35,12 @@ class Package:
 
 
 def main():
-    subprocess.run(["xmake", "g", "--theme=plain"], capture_output=True)
-    output = subprocess.run(["xmake", "q", "-l"], capture_output=True, text=True)
+    xmake = shutil.which("xmake")
+    if xmake is None:
+        raise FileNotFoundError("xmake executable not found in PATH")
+
+    subprocess.run([xmake, "g", "--theme=plain"], capture_output=True, text=True, check=True)
+    output = subprocess.run([xmake, "q", "-l"], capture_output=True, text=True, check=True)
     splited: list[str] = output.stdout.split("require(")[1:]
     packages: dict[Optional[str], Package] = {}
     for block in splited:

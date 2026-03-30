@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Id.hpp"
 #include <entt/entt.hpp>
 
 namespace DynamicLibrary::Resource {

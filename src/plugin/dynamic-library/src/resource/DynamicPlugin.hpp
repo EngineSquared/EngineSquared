@@ -45,7 +45,7 @@ class DynamicPlugin : public Engine::APlugin {
                 .get()
                 .id;
         };
-        RuntimeView *(*constCreateView)(CoreInterface *) = [](CoreInterface *ctx) -> RuntimeView * {
+        RuntimeView *(*constCreateView)() = []() -> RuntimeView * {
             return new RuntimeView();
         };
         void (*constDestroyView)(RuntimeView *) = [](RuntimeView *view) { delete view; };
@@ -70,8 +70,10 @@ class DynamicPlugin : public Engine::APlugin {
             };
         void *(*constGetEntityComponent)(CoreInterface *, uint32_t, Engine::Id) =
             [](CoreInterface *ctx, uint32_t componentId, Engine::Id entityId) -> void * {
-            auto component = ctx->core->GetRegistry().storage(componentId)->value(entityId);
-            return component;
+            auto componentStorage = ctx->core->GetRegistry().storage(componentId);
+            if (!componentStorage)
+                return nullptr;
+            return componentStorage->value(entityId);
         };
         void (*AddSystem)(CoreInterface *, void (*)(CoreInterface *)) = [](CoreInterface *coreInterface,
                                                                            void (*system)(CoreInterface *)) {
@@ -126,7 +128,14 @@ class DynamicPlugin : public Engine::APlugin {
   private:
     template <typename TFunctionType> void LoadSymbol(const std::string &symbolName)
     {
-        _symbols[symbolName] = _handle.GetFunction<TFunctionType>(symbolName);
+        try
+        {
+            _symbols[symbolName] = _handle.GetFunction<TFunctionType>(symbolName);
+        }
+        catch (const std::exception &e)
+        {
+            Log::Error(fmt::format("Failed to load symbol '{}': {}", symbolName, e.what()));
+        }
     }
 
     Handle _handle;

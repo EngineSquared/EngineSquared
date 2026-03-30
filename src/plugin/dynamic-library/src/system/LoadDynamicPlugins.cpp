@@ -20,7 +20,14 @@ GetDynamicPlugins(std::filesystem::path pluginsFile)
     nlohmann::json data = nlohmann::json::parse(file);
     for (const auto &pair : data.items())
     {
-        plugins[pair.key()] = pair.value().get<std::string>();
+        try
+        {
+            plugins[pair.key()] = pair.value().get<std::string>();
+        }
+        catch (const std::exception &e)
+        {
+            Log::Error(fmt::format("Failed to parse plugin path for '{}': {}", pair.key(), e.what()));
+        }
     }
     return plugins;
 }
@@ -41,7 +48,14 @@ void LoadDynamicPlugins(Engine::Core &core)
     }
     for (const auto &[name, path] : *libs)
     {
-        core.AddPlugin(name, std::make_unique<Resource::DynamicPlugin>(core, path));
+        try
+        {
+            core.AddPlugin(name, std::make_unique<Resource::DynamicPlugin>(core, path));
+        }
+        catch (const std::exception &e)
+        {
+            Log::Error(fmt::format("Failed to load dynamic plugin '{}': {}", name, e.what()));
+        }
     }
 }
 } // namespace DynamicLibrary::System
