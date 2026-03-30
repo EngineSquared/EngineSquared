@@ -45,9 +45,7 @@ class DynamicPlugin : public Engine::APlugin {
                 .get()
                 .id;
         };
-        RuntimeView *(*constCreateView)() = []() -> RuntimeView * {
-            return new RuntimeView();
-        };
+        RuntimeView *(*constCreateView)() = []() -> RuntimeView * { return new RuntimeView(); };
         void (*constDestroyView)(RuntimeView *) = [](RuntimeView *view) { delete view; };
         void (*constAggregateComponentToView)(CoreInterface *, void *, uint32_t) =
             [](CoreInterface *coreInterface, void *viewPtr, uint32_t componentId) {
