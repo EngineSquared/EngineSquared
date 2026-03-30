@@ -19,6 +19,12 @@ typedef struct {
     float y;
 } CPosition;
 
+#if defined(_WIN32)
+#    define DYNAMIC_TEST_EXPORT __declspec(dllexport)
+#else
+#    define DYNAMIC_TEST_EXPORT
+#endif
+
 void viewForEachCallback(uint32_t entityId, void *userData)
 {
     MetaCore *core = (MetaCore *) (userData);
@@ -45,7 +51,7 @@ void viewForEachCallback(uint32_t entityId, void *userData)
     }
 }
 
-void system_func(MetaCore *core)
+DYNAMIC_TEST_EXPORT void system_func(MetaCore *core)
 {
     printf("------------------------\n");
     printf("Hello from C!\n");
@@ -67,4 +73,4 @@ void system_func(MetaCore *core)
     core->DestroyView(view);
 }
 
-void plugin_bind(MetaCore *core) { core->AddSystem(core, &system_func); }
+DYNAMIC_TEST_EXPORT void plugin_bind(MetaCore *core) { core->AddSystem(core, &system_func); }

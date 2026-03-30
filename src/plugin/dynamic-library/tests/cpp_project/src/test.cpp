@@ -17,7 +17,11 @@ struct CppPosition {
     float y;
 };
 
-extern "C" {
+#if defined(_WIN32)
+#    define DYNAMIC_TEST_EXPORT extern "C" __declspec(dllexport)
+#else
+#    define DYNAMIC_TEST_EXPORT extern "C"
+#endif
 
 void viewForEachCallback(std::uint32_t entityId, void *userData)
 {
@@ -45,7 +49,7 @@ void viewForEachCallback(std::uint32_t entityId, void *userData)
     }
 }
 
-void system_func(MetaCore *core)
+DYNAMIC_TEST_EXPORT void system_func(MetaCore *core)
 {
     std::cout << "------------------------\n";
     std::cout << "Hello from C++!\n";
@@ -67,5 +71,4 @@ void system_func(MetaCore *core)
     core->DestroyView(view);
 }
 
-void plugin_bind(MetaCore *core) { core->AddSystem(core, &system_func); }
-}
+DYNAMIC_TEST_EXPORT void plugin_bind(MetaCore *core) { core->AddSystem(core, &system_func); }
