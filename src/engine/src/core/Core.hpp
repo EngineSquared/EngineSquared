@@ -204,10 +204,17 @@ class Core {
     bool IsEntityValid(Id entity) const;
 
     /// @brief Adds multiple plugins that will be call instantly through the Bind method to agregate their systems and
-    /// resources to the core.
+    ///     resources to the core.
     /// @note 2 same plugins can't be added.
     /// @tparam TPlugins Types of the plugins to add. See Engine::CPlugin.
     template <CPlugin... TPlugins> void AddPlugins();
+
+    /// @brief Adds a plugin that will be call instantly through the Bind method to agregate its systems and resources
+    ///     to the core.
+    /// @param name The name of the plugin to add. It is used to identify the plugin and to avoid adding multiple
+    ///     plugins with the same name.
+    /// @param plugin The plugin to add. See Engine::IPlugin.
+    void AddPlugin(std::string name, std::unique_ptr<IPlugin> plugin);
 
     /// @brief Checks if a plugin is present.
     /// @tparam TPlugin The type of the plugin to check for. See Engine::CPlugin.
