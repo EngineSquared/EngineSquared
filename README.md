@@ -2,6 +2,12 @@
 
 # Engine² (or Engine Squared)
 
+[![CI](https://github.com/EngineSquared/EngineSquared/actions/workflows/ci.yml/badge.svg)](https://github.com/EngineSquared/EngineSquared/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/EngineSquared/EngineSquared)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/EngineSquared/EngineSquared)](https://github.com/EngineSquared/EngineSquared/releases)
+[![Issues](https://img.shields.io/github/issues/EngineSquared/EngineSquared)](https://github.com/EngineSquared/EngineSquared/issues)
+[![Stars](https://img.shields.io/github/stars/EngineSquared/EngineSquared)](https://github.com/EngineSquared/EngineSquared/stargazers)
+
 Open-source game engine written in C++.
 <br>
 
