@@ -7,7 +7,9 @@ UTILS_GROUP_NAME = "Utils"
 includes("tools/xmake/*.lua")
 
 add_rules("mode.debug", "mode.release")
+
 add_requires(
+    "llvm 21.1.0",
     "entt v3.15.0",
     "gtest v1.17.0",
     "spdlog v1.16.0",
@@ -29,6 +31,8 @@ add_requires("fmt 12.1.0", { configs = { header_only = true }, debug = is_mode("
 add_requires("rmlui 6.2", { configs = { transform = true, font_effects = true }, debug = is_mode("debug") })
 
 set_languages("c++20")
+
+set_toolchains("llvm@clang")
 
 includes("src/engine/xmake.lua")
 includes("src/plugin/input/xmake.lua")
