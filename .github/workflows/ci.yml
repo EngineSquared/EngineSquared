@@ -58,8 +58,11 @@ jobs:
         with:
           xmake-version: latest
           actions-cache-folder: ".xmake-cache"
+          actions-cache-key: ${{ runner.os }}
           build-cache: true
+          build-cache-key: ${{ runner.os }}
           package-cache: true
+          package-cache-key: ${{ runner.os }}
 
       - name: Run clang-format
         run: |
@@ -96,8 +99,11 @@ jobs:
         with:
           xmake-version: latest
           actions-cache-folder: ".xmake-cache"
+          actions-cache-key: ${{ runner.os }}
           build-cache: true
+          build-cache-key: ${{ runner.os }}
           package-cache: true
+          package-cache-key: ${{ runner.os }}
 
       - name: Build project
         run: |
@@ -138,8 +144,11 @@ jobs:
         with:
           xmake-version: latest
           actions-cache-folder: ".xmake-cache"
+          actions-cache-key: ${{ runner.os }}
           build-cache: true
+          build-cache-key: ${{ runner.os }}
           package-cache: true
+          package-cache-key: ${{ runner.os }}
 
       - name: Run tests
         run: |
@@ -181,8 +190,11 @@ jobs:
         with:
           xmake-version: latest
           actions-cache-folder: ".xmake-cache"
+          actions-cache-key: ${{ runner.os }}
           build-cache: true
+          build-cache-key: ${{ runner.os }}
           package-cache: true
+          package-cache-key: ${{ runner.os }}
 
       - name: Build and test examples
         run: |
