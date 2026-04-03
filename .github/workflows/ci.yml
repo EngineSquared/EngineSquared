@@ -61,8 +61,6 @@ jobs:
           actions-cache-key: ${{ runner.os }}
           build-cache: true
           build-cache-key: ${{ runner.os }}
-          package-cache: true
-          package-cache-key: ${{ runner.os }}
 
       - name: Run clang-format
         run: |
@@ -102,8 +100,6 @@ jobs:
           actions-cache-key: ${{ runner.os }}
           build-cache: true
           build-cache-key: ${{ runner.os }}
-          package-cache: true
-          package-cache-key: ${{ runner.os }}
 
       - name: Build project
         run: |
@@ -147,8 +143,6 @@ jobs:
           actions-cache-key: ${{ runner.os }}
           build-cache: true
           build-cache-key: ${{ runner.os }}
-          package-cache: true
-          package-cache-key: ${{ runner.os }}
 
       - name: Run tests
         run: |
@@ -193,8 +187,6 @@ jobs:
           actions-cache-key: ${{ runner.os }}
           build-cache: true
           build-cache-key: ${{ runner.os }}
-          package-cache: true
-          package-cache-key: ${{ runner.os }}
 
       - name: Build and test examples
         run: |
