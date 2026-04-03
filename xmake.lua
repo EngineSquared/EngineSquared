@@ -8,15 +8,8 @@ includes("tools/xmake/*.lua")
 
 add_rules("mode.debug", "mode.release")
 
-if is_plat("windows") then
-    add_requires("msvc", {debug = is_mode("debug")})
-    set_toolchains("@msvc")
-else
-    add_requires("llvm", {debug = is_mode("debug")})
-    set_toolchains("@llvm")
-end
-
 add_requires(
+    "muslcc",
     "entt v3.15.0",
     "gtest v1.17.0",
     "spdlog v1.16.0",
@@ -38,6 +31,7 @@ add_requires("fmt 12.1.0", { configs = { header_only = true }, debug = is_mode("
 add_requires("rmlui 6.2", { configs = { transform = true, font_effects = true }, debug = is_mode("debug") })
 
 set_languages("c++20")
+set_toolchains("@muslcc")
 
 includes("src/engine/xmake.lua")
 includes("src/plugin/input/xmake.lua")
