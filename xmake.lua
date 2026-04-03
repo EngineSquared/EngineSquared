@@ -32,7 +32,7 @@ add_requires("rmlui 6.2", { configs = { transform = true, font_effects = true },
 
 set_languages("c++20")
 
-set_toolchains("llvm@clang")
+set_toolchains("llvm")
 
 includes("src/engine/xmake.lua")
 includes("src/plugin/input/xmake.lua")
