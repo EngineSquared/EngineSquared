@@ -12,9 +12,6 @@ if is_plat("windows") then
     add_requires("msvc")
     set_toolchains("@msvc")
 else
-    add_requires("llvm")
-    set_toolchains("@llvm")
-end
 
 add_requires(
     "entt v3.15.0",
