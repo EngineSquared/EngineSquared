@@ -11,7 +11,7 @@ add_rules("mode.debug", "mode.release")
 if is_plat("windows") then
     add_requires("msvc")
     set_toolchains("@msvc")
-else
+end
 
 add_requires(
     "entt v3.15.0",
