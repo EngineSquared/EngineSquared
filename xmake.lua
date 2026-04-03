@@ -7,6 +7,12 @@ UTILS_GROUP_NAME = "Utils"
 includes("tools/xmake/*.lua")
 
 add_rules("mode.debug", "mode.release")
+
+if is_plat("windows") then
+    add_requires("msvc")
+    set_toolchains("@msvc")
+end
+
 add_requires(
     "entt v3.15.0",
     "gtest v1.17.0",

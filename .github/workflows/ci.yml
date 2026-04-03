@@ -54,17 +54,13 @@ jobs:
           sudo apt install clang-format-22
 
       - name: Install xmake
-        uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
+        uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
         with:
           xmake-version: latest
-          actions-cache-folder: '.xmake-cache-${{ runner.os }}'
-          actions-cache-key: 'xmake-actions-cache-key-${{ runner.os }}-compilation'
-          package-cache: true
-          package-cache-key: 'xmake-package-cache-key-${{ runner.os }}-compilation'
-          project-path: '.'
+          actions-cache-folder: ".xmake-cache"
+          actions-cache-key: ${{ runner.os }}
           build-cache: true
-          build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-compilation'
-          build-cache-path: 'build/.build_cache'
+          build-cache-key: ${{ runner.os }}
 
       - name: Run clang-format
         run: |
@@ -92,22 +88,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
 
-      - name: Setup Windows dependencies
-        if: contains(runner.os, 'windows')
-        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
-
       - name: Install xmake
-        uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
+        uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
         with:
           xmake-version: latest
-          actions-cache-folder: '.xmake-cache-${{ runner.os }}'
-          actions-cache-key: 'xmake-actions-cache-key-${{ runner.os }}-compilation'
-          package-cache: true
-          package-cache-key: 'xmake-package-cache-key-${{ runner.os }}-compilation'
-          project-path: '.'
+          actions-cache-folder: ".xmake-cache"
+          actions-cache-key: ${{ runner.os }}
           build-cache: true
-          build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-compilation'
-          build-cache-path: 'build/.build_cache'
+          build-cache-key: ${{ runner.os }}
 
       - name: Build project
         run: |
@@ -139,19 +127,14 @@ jobs:
           sudo apt-get install -y python3 python3-pip
           pip3 install gcovr
 
-      - name: Setup Windows dependencies
-        if: contains(runner.os, 'windows')
-        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
-
       - name: Install xmake
-        uses: xmake-io/github-action-setup-xmake@e50494030a33fd120900e739f6418a48100cd6ce
+        uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
         with:
           xmake-version: latest
-          actions-cache-folder: '.xmake-cache-${{ runner.os }}'
-          actions-cache-key: 'xmake-actions-cache-key-${{ runner.os }}-tests'
-          package-cache: true
-          package-cache-key: 'xmake-package-cache-key-${{ runner.os }}-tests'
-          project-path: '.'
+          actions-cache-folder: ".xmake-cache"
+          actions-cache-key: ${{ runner.os }}
+          build-cache: true
+          build-cache-key: ${{ runner.os }}
 
       - name: Run tests
         run: |
@@ -184,17 +167,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
 
-      - name: Setup Windows dependencies
-        if: contains(runner.os, 'windows')
-        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
-
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
         with:
           xmake-version: latest
-          package-cache: true
-          project-path: '.'
+          actions-cache-folder: ".xmake-cache"
+          actions-cache-key: ${{ runner.os }}
           build-cache: true
+          build-cache-key: ${{ runner.os }}
 
       - name: Build and test examples
         run: |
