@@ -66,7 +66,7 @@ jobs:
         run: |
           xmake format -c
 
-  check_program_compilation_tests_and_examples:
+  check_program_compilation:
     name: Build and verify binaries
     needs: [check_repository_cleanliness, lint_code]
     strategy:
@@ -87,9 +87,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
-          sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
-          sudo apt-get install -y python3 python3-pip
-          pip3 install gcovr
 
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
@@ -106,6 +103,39 @@ jobs:
           xmake build -y
         timeout-minutes: 30
 
+  run_tests:
+    name: Run tests
+    needs: [check_repository_cleanliness, lint_code]
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+          - os: ubuntu-latest
+          - os: macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Linux test dependencies
+        if: contains(runner.os, 'linux')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
+          sudo apt-get install -y python3 python3-pip
+          pip3 install gcovr
+
+      - name: Install xmake
+        uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
+        with:
+          xmake-version: latest
+          actions-cache-folder: ".xmake-cache"
+          actions-cache-key: ${{ runner.os }}
+          build-cache: true
+          build-cache-key: ${{ runner.os }}
+
       - name: Run tests
         run: |
           xmake test -y -v
@@ -114,6 +144,37 @@ jobs:
       - name: Check test coverage (Linux)
         if: contains(runner.os, 'linux')
         uses: threeal/gcovr-action@1b53388d5f84b4f3afb1b9082782961dff911ba0
+
+  check_examples:
+    name: Build and test examples
+    needs: [check_repository_cleanliness, lint_code]
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+          - os: ubuntu-latest
+          - os: macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Linux dependencies
+        if: contains(runner.os, 'linux')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev mesa-utils
+
+      - name: Install xmake
+        uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
+        with:
+          xmake-version: latest
+          actions-cache-folder: ".xmake-cache"
+          actions-cache-key: ${{ runner.os }}
+          build-cache: true
+          build-cache-key: ${{ runner.os }}
 
       - name: Build and test examples
         run: |
