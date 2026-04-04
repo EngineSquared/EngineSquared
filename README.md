@@ -1,4 +1,4 @@
-<img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Banner.png?raw=true">
+<img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Banner.png?raw=true" alt="EngineSquared banner">
 # Engine² (or Engine Squared)
 
 [![CI](https://github.com/EngineSquared/EngineSquared/actions/workflows/ci.yml/badge.svg)](https://github.com/EngineSquared/EngineSquared/actions/workflows/ci.yml)
@@ -22,15 +22,15 @@ It is designed to provide truly open-source project and be accessible to everyon
 ---
 ## Prerequisites
 
-Make sure the following tool are installed before proceeding:
+Make sure the following tools are installed before proceeding:
 
 | Tool                         | Minimum version | Install                                                               |
 | ---------------------------- | --------------- | --------------------------------------------------------------------- |
 | [xmake](https://xmake.io/#/) | v3.0.x          | See [xmake installation guide](https://xmake.io/#/guide/installation) |
 
 > [!WARNING]
-> No other tools should be needed. If you stuck at some step, please report it by opening a [bug issue](https://github.com/EngineSquared/EngineSquared/issues/new?template=bug_report.md) 🙏
-> *(before doing that, checks the documentation about [how to create an issue](https://github.com/EngineSquared/EngineSquared/wiki/Contributing#creating-an-issue))*
+> No other tools should be needed. If you get stuck at some step, please report it by opening a [bug issue](https://github.com/EngineSquared/EngineSquared/issues/new?template=bug_report.md) 🙏
+> *(before doing that, check the documentation about [how to create an issue](https://github.com/EngineSquared/EngineSquared/wiki/Contributing#creating-an-issue))*
 
 ---
 ## Clone the repository
@@ -112,8 +112,9 @@ Here is a list of available plugins:
 | `camera-movement`    | Built-in camera controller            |
 | `rendering-pipeline` | Rendering pipeline abstraction        |
 | `default-pipeline`   | Pre-assembled default render pipeline |
+
 > [!WARNING]
-> Those scheduler may not be up to date as they are not updated automatically.
+> Those schedulers may not be up to date as they are not updated automatically.
 
 ---
 ### How a minimal program looks
@@ -126,7 +127,7 @@ Here is a very basic example that can be useful to understand the pattern before
 // A Component should only holds data related to an entity
 struct NameComponent { std::string value; };
 
-// A System is a callable element (function, class or lamda) that only run logic
+// A System is a callable element (function, class or lambda) that only run logic
 void HelloSystem(Engine::Core &core) {
     core.GetRegistry().view<NameComponent>().each(
         [](auto &name) { Log::Info(name.value + " arrived."); });
@@ -142,12 +143,12 @@ int main() {
     auto entity = core.CreateEntity();
     entity.AddComponent<NameComponent>("Alice");
 
-    core.RunSystems(); // starts the game loop, RunSystems() run them only one time and RunCore() run all scheduler undefinitely until Stop() is called
+    core.RunSystems(); // starts the game loop, RunSystems() run them only one time and RunCore() run all scheduler indefinitely until Stop() is called
 }
 ```
 
 > [!WARNING]
-> This example may not be up to date as it's not updated automatically. For concret working examples, you can check [examples folder](https://github.com/EngineSquared/EngineSquared/tree/main/examples).
+> This example may not be up to date as it's not updated automatically. For concrete working examples, you can check [examples folder](https://github.com/EngineSquared/EngineSquared/tree/main/examples).
 
 ---
 ## Where to go next
@@ -169,4 +170,4 @@ You can start to discover the engine through contribute to it through looking at
 ## Troubleshooting
 
 For now there is no troubleshooting found. If you encounter a problem, please report it by opening a [question issue](https://github.com/EngineSquared/EngineSquared/issues/new?template=question.md) 🙏
-*(before doing that, checks the documentation about [how to create an issue](https://github.com/EngineSquared/EngineSquared/wiki/Contributing#creating-an-issue))
+*(before doing that, check the documentation about [how to create an issue](https://github.com/EngineSquared/EngineSquared/wiki/Contributing#creating-an-issue))*
