@@ -58,9 +58,9 @@ jobs:
         with:
           xmake-version: latest
           actions-cache-folder: ".xmake-cache"
-          actions-cache-key: ${{ runner.os }}
+          actions-cache-key: "clang-format"
           build-cache: true
-          build-cache-key: ${{ runner.os }}
+          build-cache-key: "clang-format"
 
       - name: Run clang-format
         run: |
@@ -93,9 +93,9 @@ jobs:
         with:
           xmake-version: latest
           actions-cache-folder: ".xmake-cache"
-          actions-cache-key: ${{ runner.os }}
+          actions-cache-key: "${{ matrix.os }}-compilation"
           build-cache: true
-          build-cache-key: ${{ runner.os }}
+          build-cache-key: "${{ matrix.os }}-compilation"
 
       - name: Build project
         run: |
@@ -132,9 +132,9 @@ jobs:
         with:
           xmake-version: latest
           actions-cache-folder: ".xmake-cache"
-          actions-cache-key: ${{ runner.os }}
+          actions-cache-key: "${{ matrix.os }}-tests"
           build-cache: true
-          build-cache-key: ${{ runner.os }}
+          build-cache-key: "${{ matrix.os }}-tests"
 
       - name: Run tests
         run: |
@@ -172,9 +172,9 @@ jobs:
         with:
           xmake-version: latest
           actions-cache-folder: ".xmake-cache"
-          actions-cache-key: ${{ runner.os }}
+          actions-cache-key: "${{ matrix.os }}-examples"
           build-cache: true
-          build-cache-key: ${{ runner.os }}
+          build-cache-key: "${{ matrix.os }}-examples"
 
       - name: Build and test examples
         run: |

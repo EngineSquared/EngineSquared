@@ -30,14 +30,14 @@ Must be one of the following:
 
 #### Scope
 
-The scope should be the name of the file, the directory or the feature involved in the commit.
+The scope the feature or the plugin involved in the commit.
 
 Here are some examples:
 
-* gitignore
-* main
-* action
-* readme
+- core
+- graphic
+- physics
+- sound
 
 #### Summary
 
