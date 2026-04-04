@@ -26,17 +26,19 @@ var NAVTREE =
 [
   [ "Engine²", "index.html", [
     [ "Engine² (or Engine Squared)", "index.html#autotoc_md32", [
-      [ "Description", "index.html#autotoc_md33", null ],
       [ "Examples", "index.html#autotoc_md34", null ],
-      [ "Getting started", "index.html#autotoc_md35", [
-        [ "Requirements", "index.html#autotoc_md36", null ],
-        [ "Compile the library", "index.html#autotoc_md37", null ]
+      [ "", "index.html#autotoc_md35", null ],
+      [ "Prerequisites", "index.html#autotoc_md36", null ],
+      [ "Clone the repository", "index.html#autotoc_md38", null ],
+      [ "Configure and build", "index.html#autotoc_md40", null ],
+      [ "Run a minimal example", "index.html#autotoc_md42", null ],
+      [ "Project Overview", "index.html#autotoc_md44", [
+        [ "Available plugins", "index.html#autotoc_md45", null ],
+        [ "How a minimal program looks", "index.html#autotoc_md47", null ]
       ] ],
-      [ "Run unit tests", "index.html#autotoc_md38", [
-        [ "Apply the coding style", "index.html#autotoc_md39", null ]
-      ] ],
-      [ "Documentation", "index.html#autotoc_md40", null ],
-      [ "Code of Conduct", "index.html#autotoc_md41", null ]
+      [ "Where to go next", "index.html#autotoc_md49", null ],
+      [ "Interested ?", "index.html#autotoc_md51", null ],
+      [ "Troubleshooting", "index.html#autotoc_md53", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Namespaces", "namespaces.html", [
@@ -95,17 +97,17 @@ var NAVTREEINDEX =
 "classSchedulerTest2.html#ac282580b31f906b4455dd0d53723c5a3",
 "classdemo__setup_1_1DemoWindow.html#a28a07f3374266e0f1ba2ea77fbcf03d0",
 "examples_2graphic__material__usage_2src_2main_8cpp.html#a9b434a6c209cc01abf6532743b35accf",
-"namespaceDefaultPipeline_1_1System.html#a7f2df15ec797665c1a98386b785b52c7",
-"namespacePhysics_1_1System.html#a810ebc132a7a070af1e8970eea9280f8",
-"namespacewgpu.html#a2e3229f24264ccae362708bf2a686fef",
-"namespacewgpu.html#ab120489a3fad1d10b7c13afb4498a344",
-"structDefaultPipeline_1_1Resource_1_1AmbientLight.html",
-"structGraphic_1_1Resource_1_1ColorOutput.html#a39c4be3cdf41b51648110cace3d7c391",
-"structObject_1_1Component_1_1Mesh.html#a9c7e9db04985c47359a49138ad276757",
-"structPhysics_1_1Component_1_1BoxCollider.html#abb44ef3206a62e7c6290bfbdf4f23a23",
-"structPhysics_1_1Component_1_1PointConstraint.html#ac7bfee0ba085c8a3a1f91a4e5ba4b6cd",
-"structPhysics_1_1Component_1_1WheelSettings.html#aa9ab9705e9d56db29de6e358bbdcd853",
-"webgpu__impl_8cpp.html#aea7d79bb6a3d1010e46fb17f2a0a34c5"
+"namespaceDefaultPipeline_1_1System.html#a6834656d8d606f8b51b7098962a613eb",
+"namespacePhysics_1_1System.html#a76fef0594e67eb13565da21d2cd766e2",
+"namespacewgpu.html#a2c63997fd38e76b9036a95ca6a8fe45c",
+"namespacewgpu.html#aafb680c28ac7c8873ad2caad2025e194",
+"structDefaultPipeline_1_1Component_1_1GPUTransform.html#a85aa57835ed1d2a1231576c101ece234",
+"structGraphic_1_1Resource_1_1ColorOutput.html#a0a85d3bcf02539067e5c4ba4adcd64b4",
+"structObject_1_1Component_1_1Mesh.html#a9a811ab3d56d9df6adb94ee575a3dddd",
+"structPhysics_1_1Component_1_1BoxCollider.html#a7e42ff33665293e7f86d74fc2e3c54fd",
+"structPhysics_1_1Component_1_1PointConstraint.html#a9237060e4f0faccc24e0b98d640614ff",
+"structPhysics_1_1Component_1_1WheelSettings.html#aa3daaa749129d71f26a8bfea97ffbc61",
+"webgpu_8hpp.html#afa29eac2dec6a1f130f562a3b905cd6f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

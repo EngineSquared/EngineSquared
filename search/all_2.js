@@ -73,7 +73,8 @@ var searchData=
   ['buffermapcallback_70',['BufferMapCallback',['../namespacewgpu.html#a791f2affd7110a11e50018cc1e131f28',1,'wgpu']]],
   ['buffertest_2ecpp_71',['BufferTest.cpp',['../BufferTest_8cpp.html',1,'']]],
   ['build_72',['Build',['../classPhysics_1_1Builder_1_1VehicleBuilder_3_014_01_4.html#a703087424a2c9543d41a0322a77a6788',1,'Physics::Builder::VehicleBuilder&lt; 4 &gt;']]],
-  ['building_20and_20running_20examples_73',['Building and Running Examples',['../dir_d28a4824dc47e487b107a5db32ef43c4.html#autotoc_md29',1,'']]],
-  ['building_20examples_74',['Some flags that you can use when building examples',['../dir_d28a4824dc47e487b107a5db32ef43c4.html#autotoc_md31',1,'']]],
-  ['bytesperrow_75',['bytesPerRow',['../structGraphic_1_1Resource_1_1CallbackData.html#a9a76a5bfaee673f2b1c7d02c0fb7abd6',1,'Graphic::Resource::CallbackData']]]
+  ['build_73',['Configure and build',['../index.html#autotoc_md40',1,'']]],
+  ['building_20and_20running_20examples_74',['Building and Running Examples',['../dir_d28a4824dc47e487b107a5db32ef43c4.html#autotoc_md29',1,'']]],
+  ['building_20examples_75',['Some flags that you can use when building examples',['../dir_d28a4824dc47e487b107a5db32ef43c4.html#autotoc_md31',1,'']]],
+  ['bytesperrow_76',['bytesPerRow',['../structGraphic_1_1Resource_1_1CallbackData.html#a9a76a5bfaee673f2b1c7d02c0fb7abd6',1,'Graphic::Resource::CallbackData']]]
 ];

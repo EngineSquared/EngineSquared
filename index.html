@@ -94,51 +94,154 @@ $(function(){initNavTree('index.html','',''); });
   <div class="headertitle"><div class="title">Engine² </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> <img src="docs/images/Banner.png" alt="" class="inline"/></p>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> <img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Banner.png?raw=true" alt="EngineSquared banner" class="inline"/> </p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
 Engine² (or Engine Squared)</h1>
 <p><a href="https://github.com/EngineSquared/EngineSquared/actions/workflows/ci.yml"><img src="https://github.com/EngineSquared/EngineSquared/actions/workflows/ci.yml/badge.svg" alt="CI" style="pointer-events: none;" class="inline"/></a> [<img src="https://img.shields.io/github/license/EngineSquared/EngineSquared" alt="License" class="inline"/>](LICENSE) <a href="https://github.com/EngineSquared/EngineSquared/releases"><img src="https://img.shields.io/github/v/release/EngineSquared/EngineSquared" alt="Release" class="inline"/></a> <a href="https://github.com/EngineSquared/EngineSquared/issues"><img src="https://img.shields.io/github/issues/EngineSquared/EngineSquared" alt="Issues" class="inline"/></a> <a href="https://github.com/EngineSquared/EngineSquared/stargazers"><img src="https://img.shields.io/github/stars/EngineSquared/EngineSquared" alt="Stars" class="inline"/></a></p>
-<p>Open-source game engine written in C++. <br  />
-</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
-Description</h2>
 <p>Engine² is a game engine that aims to provide a developer-friendly and open-source alternative for 3D game development. It is designed to provide truly open-source project and be accessible to everyone.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+<hr  />
+ <h2 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
 Examples</h2>
-<div align="center"> <a href="https://github.com/EngineSquared/ES-RS"><img src="docs/images/ES-RS-Menu.png" alt="ES-RS Menu" width="40%" class="inline"/></a> <a href="https://github.com/EngineSquared/ES-RS"><img src="docs/images/ES-RS-InGame.png" alt="ES-RS In-Game" width="40%" class="inline"/></a> <br  />
- <a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_light_usage"><img src="docs/images/Lights.png" alt="Lights" width="40%" class="inline"/></a> <a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_material_usage"><img src="docs/images/Material.png" alt="Material" width="40%" class="inline"/></a> <br  />
+<div align="center"> <a href="https://github.com/EngineSquared/ES-RS"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/ES-RS-Menu.png?raw=true" alt="ES-RS Menu" width="40%" class="inline"/></a> <a href="https://github.com/EngineSquared/ES-RS"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/ES-RS-InGame.png?raw=true" alt="ES-RS In-Game" width="40%" class="inline"/></a> <br  />
+ <a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_light_usage"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Lights.png?raw=true" alt="Lights" width="40%" class="inline"/></a> <a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_material_usage"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Material.png?raw=true" alt="Material" width="40%" class="inline"/></a> <br  />
  </div><h2 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
-Getting started</h2>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
-Requirements</h3>
-<ul>
-<li><a href="https://xmake.io/#/">Xmake</a></li>
+<div align="center"></div></h2>
+<div align="center"></div><div align="center"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
+<div align="center">Prerequisites</div></h2>
+<div align="center"></div><div align="center">Make sure the following tools are installed before proceeding:</div><div align="center"><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Tool  </th><th class="markdownTableHeadNone">Minimum version  </th><th class="markdownTableHeadNone">Install  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="https://xmake.io/#/">xmake</a>  </td><td class="markdownTableBodyNone">v3.0.x  </td><td class="markdownTableBodyNone">See <a href="https://xmake.io/#/guide/installation">xmake installation guide</a>  </td></tr>
+</table>
+</div><div align="center"><dl class="section warning"><dt>Warning</dt><dd>No other tools should be needed. If you get stuck at some step, please report it by opening a <a href="https://github.com/EngineSquared/EngineSquared/issues/new?template=bug_report.md">bug issue</a> 🙏 <em>(before doing that, check the documentation about <a href="https://github.com/EngineSquared/EngineSquared/wiki/Contributing#creating-an-issue">how to create an issue</a>)</em></dd></dl>
+<hr  />
+ </div><h2 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
+<div align="center">Clone the repository</div></h2>
+<div align="center"></div><div align="center"><div class="fragment"><div class="line">git clone https://github.com/EngineSquared/EngineSquared.git</div>
+<div class="line">cd EngineSquared</div>
+</div><!-- fragment --></div><div align="center"><hr  />
+</div><div align="center"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
+<div align="center">Configure and build</div></h2>
+<div align="center"></div><div align="center"><div class="fragment"><div class="line"># Configure (downloads dependencies automatically)</div>
+<div class="line">xmake f -y</div>
+<div class="line"> </div>
+<div class="line"># Build the engine</div>
+<div class="line">xmake build -y</div>
+</div><!-- fragment --></div><div align="center"><dl class="section note"><dt>Note</dt><dd><b>Windows only</b> xmake will automatically pull the MSVC toolchain, so you don't need to have it already installed on your machine.</dd></dl>
+<hr  />
+ </div><h2 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
+<div align="center">Run a minimal example</div></h2>
+<div align="center"></div><div align="center">Build and run the <span class="tt">basic_core_usage</span> example to confirm everything works:</div><div align="center"><div class="fragment"><div class="line">xmake f --basic_core_usage=y -y</div>
+<div class="line">xmake run BasicCoreUsage</div>
+</div><!-- fragment --></div><div align="center">If the basic core usage run without errors, you're all set. ✅</div><div align="center"><hr  />
+ </div><h2 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
+<div align="center">Project Overview</div></h2>
+<div align="center"></div><div align="center">Here is a graphical overview of the project:</div><div align="center"><div class="fragment"><div class="line">graph TD</div>
+<div class="line">  ROOT[&quot;EngineSquared&quot;]</div>
+<div class="line"> </div>
+<div class="line">  ROOT --&gt; SRC[&quot;src/&quot;&lt;br/&gt;&lt;small&gt;All source files of the project&lt;/small&gt;]</div>
+<div class="line">  ROOT --&gt; EX[&quot;examples/&lt;br/&gt;&lt;small&gt;Runnable demos&lt;/small&gt;&quot;]</div>
+<div class="line">  ROOT --&gt; TOOLS[&quot;tools/&lt;br/&gt;&lt;small&gt;Some useful general tools&lt;/small&gt;&quot;]</div>
+<div class="line">  ROOT --&gt; DOCS[&quot;docs/&lt;br/&gt;&lt;small&gt;Images, doxygen&lt;/small&gt;&quot;]</div>
+<div class="line"> </div>
+<div class="line">  SRC --&gt; ENGINE[&quot;engine/&lt;br/&gt;&lt;small&gt;ECS Core of the engine&lt;/small&gt;&quot;]</div>
+<div class="line">  SRC --&gt; PLUGIN[&quot;plugin/&lt;br/&gt;&lt;small&gt;Groups of context&lt;/small&gt;&quot;]</div>
+<div class="line">  SRC --&gt; UTILS[&quot;utils/&lt;br/&gt;&lt;small&gt;Shared utility stuff&lt;/small&gt;&quot;]</div>
+<div class="line"> </div>
+<div class="line">  PLUGIN --&gt; PLUGIN_SRC[&quot;src/&lt;br/&gt;&lt;small&gt;Source files&lt;/small&gt;&quot;]</div>
+<div class="line">  PLUGIN --&gt; PLUGIN_XMAKE[&quot;tests/&lt;br/&gt;&lt;small&gt;Tests files&lt;/small&gt;&quot;]</div>
+</div><!-- fragment --></div><div align="center">Engine² is <b>STRONGLY</b> built around an <a href="https://en.wikipedia.org/wiki/Entity_component_system">ECS architectural design pattern</a>. The engine core (<span class="tt">src/engine/</span>) provides all necessary stuff to agglomerate logic and data to create any kind project. The Core class is the entry point of the framework, it allows to manipulate entities and systems through schedulers. All features (graphics, physics, sound, etc.) are implemented as <b>plugins</b> that you register into the engine core.</div><div align="center"></div><h3 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
+<div align="center">Available plugins</div></h3>
+<div align="center"></div><div align="center">Here is a list of available plugins:</div><div align="center"><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Plugin  </th><th class="markdownTableHeadNone">Description  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">graphic</span>  </td><td class="markdownTableBodyNone">3D rendering via WebGPU  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">physics</span>  </td><td class="markdownTableBodyNone">Rigid body physics via JoltPhysics  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">input</span>  </td><td class="markdownTableBodyNone">Keyboard/mouse input via GLFW  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">sound</span>  </td><td class="markdownTableBodyNone">Audio playback via miniaudio  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">window</span>  </td><td class="markdownTableBodyNone"><a class="el" href="namespaceWindow.html">Window</a> management via GLFW  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">scene</span>  </td><td class="markdownTableBodyNone"><a class="el" href="namespaceScene.html">Scene</a> graph management  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">event</span>  </td><td class="markdownTableBodyNone">Publish/subscribe event system  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">relationship</span>  </td><td class="markdownTableBodyNone">Parent/child entity relationships  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">native-scripting</span>  </td><td class="markdownTableBodyNone">Attach C++ scripts to entities  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">rmlui</span>  </td><td class="markdownTableBodyNone">UI rendering via RmlUi  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">camera-movement</span>  </td><td class="markdownTableBodyNone">Built-in camera controller  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">rendering-pipeline</span>  </td><td class="markdownTableBodyNone">Rendering pipeline abstraction  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">default-pipeline</span>  </td><td class="markdownTableBodyNone">Pre-assembled default render pipeline  </td></tr>
+</table>
+</div><div align="center"><dl class="section warning"><dt>Warning</dt><dd>Those schedulers may not be up to date as they are not updated automatically.</dd></dl>
+<hr  />
+ </div><h3 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
+<div align="center">How a minimal program looks</div></h3>
+<div align="center"></div><div align="center">Here is a very basic example that can be useful to understand the pattern before contributing:</div><div align="center"><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="Engine_8hpp.html">Engine.hpp</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// A Component should only holds data related to an entity</span></div>
+<div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="structNameComponent.html">NameComponent</a> { std::string <a class="code hl_variable" href="structNameComponent.html#a9bf544d2d46de3affa1093710b368b8c">value</a>; };</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// A System is a callable element (function, class or lambda) that only run logic</span></div>
+<div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="examples_2basic__core__usage_2src_2main_8cpp.html#a05408c25e887ebb65e53caea890a90fa">HelloSystem</a>(<a class="code hl_class" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core) {</div>
+<div class="line">    core.<a class="code hl_function" href="classEngine_1_1Core.html#aefea4646026e43c1a8f3317b77ada312">GetRegistry</a>().view&lt;<a class="code hl_struct" href="structNameComponent.html">NameComponent</a>&gt;().each(</div>
+<div class="line">        [](<span class="keyword">auto</span> &amp;name) { <a class="code hl_function" href="namespaceLog.html#a1423ffcd222d8ec2afefb1c13e9fb3b1">Log::Info</a>(name.value + <span class="stringliteral">&quot; arrived.&quot;</span>); });</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="examples_2basic__core__usage_2src_2main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe">main</a>() {</div>
+<div class="line">    <a class="code hl_class" href="classEngine_1_1Core.html">Engine::Core</a> core;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Register systems on lifecycle schedulers: Startup, Update or Shutdown</span></div>
+<div class="line">    core.<a class="code hl_function" href="classEngine_1_1Core.html#a6e4c8d1631a31aba8de29eb633f98b6e">RegisterSystem</a>&lt;<a class="code hl_class" href="classEngine_1_1Scheduler_1_1Startup.html">Engine::Scheduler::Startup</a>&gt;(<a class="code hl_function" href="examples_2basic__core__usage_2src_2main_8cpp.html#a05408c25e887ebb65e53caea890a90fa">HelloSystem</a>);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Create entities and attach components</span></div>
+<div class="line">    <span class="keyword">auto</span> entity = core.<a class="code hl_function" href="classEngine_1_1Core.html#ae8d49483d71929b61f383056da94c7fb">CreateEntity</a>();</div>
+<div class="line">    entity.AddComponent&lt;<a class="code hl_struct" href="structNameComponent.html">NameComponent</a>&gt;(<span class="stringliteral">&quot;Alice&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">    core.<a class="code hl_function" href="classEngine_1_1Core.html#a33cfa8662f699780d1b83ac0bb328d6b">RunSystems</a>(); <span class="comment">// starts the game loop, RunSystems() run them only one time and RunCore() run all scheduler indefinitely until Stop() is called</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aEngine_8hpp_html"><div class="ttname"><a href="Engine_8hpp.html">Engine.hpp</a></div></div>
+<div class="ttc" id="aclassEngine_1_1Core_html"><div class="ttname"><a href="classEngine_1_1Core.html">Engine::Core</a></div><div class="ttdoc">The core is the place where all the data of the engine is stored. It contains the registry (entities)...</div><div class="ttdef"><b>Definition</b> Core.hpp:33</div></div>
+<div class="ttc" id="aclassEngine_1_1Core_html_a33cfa8662f699780d1b83ac0bb328d6b"><div class="ttname"><a href="classEngine_1_1Core.html#a33cfa8662f699780d1b83ac0bb328d6b">Engine::Core::RunSystems</a></div><div class="ttdeci">void RunSystems()</div><div class="ttdoc">Run all the systems once by calling each scheduler.</div><div class="ttdef"><b>Definition</b> Core.cpp:83</div></div>
+<div class="ttc" id="aclassEngine_1_1Core_html_a6e4c8d1631a31aba8de29eb633f98b6e"><div class="ttname"><a href="classEngine_1_1Core.html#a6e4c8d1631a31aba8de29eb633f98b6e">Engine::Core::RegisterSystem</a></div><div class="ttdeci">decltype(auto) RegisterSystem(Systems... systems)</div><div class="ttdoc">Add one or multiple systems associated with a specific scheduler.</div><div class="ttdef"><b>Definition</b> Core.inl:61</div></div>
+<div class="ttc" id="aclassEngine_1_1Core_html_ae8d49483d71929b61f383056da94c7fb"><div class="ttname"><a href="classEngine_1_1Core.html#ae8d49483d71929b61f383056da94c7fb">Engine::Core::CreateEntity</a></div><div class="ttdeci">Entity CreateEntity()</div><div class="ttdoc">Create an entity in the context of the registry.</div><div class="ttdef"><b>Definition</b> Core.cpp:44</div></div>
+<div class="ttc" id="aclassEngine_1_1Core_html_aefea4646026e43c1a8f3317b77ada312"><div class="ttname"><a href="classEngine_1_1Core.html#aefea4646026e43c1a8f3317b77ada312">Engine::Core::GetRegistry</a></div><div class="ttdeci">Registry &amp; GetRegistry()</div><div class="ttdoc">Get the entt::registry that contains all components. It should be used to update component through sy...</div><div class="ttdef"><b>Definition</b> Core.hpp:50</div></div>
+<div class="ttc" id="aclassEngine_1_1Scheduler_1_1Startup_html"><div class="ttname"><a href="classEngine_1_1Scheduler_1_1Startup.html">Engine::Scheduler::Startup</a></div><div class="ttdoc">Startup scheduler that runs systems only once.</div><div class="ttdef"><b>Definition</b> Startup.hpp:8</div></div>
+<div class="ttc" id="aexamples_2basic__core__usage_2src_2main_8cpp_html_a05408c25e887ebb65e53caea890a90fa"><div class="ttname"><a href="examples_2basic__core__usage_2src_2main_8cpp.html#a05408c25e887ebb65e53caea890a90fa">HelloSystem</a></div><div class="ttdeci">void HelloSystem(Engine::Core &amp;core)</div><div class="ttdef"><b>Definition</b> main.cpp:35</div></div>
+<div class="ttc" id="aexamples_2basic__core__usage_2src_2main_8cpp_html_a840291bc02cba5474a4cb46a9b9566fe"><div class="ttname"><a href="examples_2basic__core__usage_2src_2main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe">main</a></div><div class="ttdeci">int main(void)</div><div class="ttdef"><b>Definition</b> main.cpp:80</div></div>
+<div class="ttc" id="anamespaceLog_html_a1423ffcd222d8ec2afefb1c13e9fb3b1"><div class="ttname"><a href="namespaceLog.html#a1423ffcd222d8ec2afefb1c13e9fb3b1">Log::Info</a></div><div class="ttdeci">void Info(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:47</div></div>
+<div class="ttc" id="astructNameComponent_html"><div class="ttname"><a href="structNameComponent.html">NameComponent</a></div><div class="ttdef"><b>Definition</b> main.cpp:16</div></div>
+<div class="ttc" id="astructNameComponent_html_a9bf544d2d46de3affa1093710b368b8c"><div class="ttname"><a href="structNameComponent.html#a9bf544d2d46de3affa1093710b368b8c">NameComponent::value</a></div><div class="ttdeci">std::string value</div><div class="ttdef"><b>Definition</b> main.cpp:17</div></div>
+</div><!-- fragment --></div><div align="center"><dl class="section warning"><dt>Warning</dt><dd>This example may not be up to date as it's not updated automatically. For concrete working examples, you can check <a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples">examples folder</a>.</dd></dl>
+<hr  />
+ </div><h2 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+<div align="center">Where to go next</div></h2>
+<div align="center"></div><div align="center"><ul>
+<li>📚 <a href="https://github.com/EngineSquared/EngineSquared/wiki">Full documentation &amp; wiki</a>: everything you need to know to understand the project</li>
+<li>💻 <a href="https://enginesquared.github.io/EngineSquared/">Technical documentation</a>: if you want to get in depth in the engine</li>
+<li>🧩 <a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples">All examples</a>: explore graphics, physics, input, sound, and more</li>
+<li>🤝 <a href="https://github.com/EngineSquared/EngineSquared/wiki/Contributing">Contributing guide</a>: how to contribute to the project</li>
+<li>👮‍♀️<a href="https://github.com/EngineSquared/EngineSquared/blob/main/CODE_OF_CONDUCT.md">Code of conduct</a>: how you should behave while interacting in this community</li>
+<li>🧪 Run the test suite: <span class="tt">xmake test -y</span></li>
+<li>🗺️ <a href="https://github.com/orgs/EngineSquared/projects/4/views/1">Roadmap</a>: what are we currently doing</li>
 </ul>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
-Compile the library</h3>
-<ol type="1">
-<li>Run <span class="tt">xmake build</span></li>
-<li>Install required dependencies if needed (or use <span class="tt">xmake build -y</span> to install them automatically)</li>
-</ol>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
-Run unit tests</h2>
-<ol type="1">
-<li>Run <span class="tt">xmake test</span></li>
-<li>Install required dependencies if needed (or use <span class="tt">xmake test -y</span> to install them automatically)</li>
-<li>Tests will be executed individually</li>
-</ol>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
-Apply the coding style</h3>
-<p>For bash users, you can use the following command to apply the coding style to the project: </p><div class="fragment"><div class="line">find . -iname &#39;*.hpp&#39; -o -iname &#39;*.cpp&#39; | xargs clang-format -i</div>
-</div><!-- fragment --><p>For Windows users, you can use the following command to apply the coding style to the project: </p><div class="fragment"><div class="line">Get-ChildItem -Recurse -Include *.cpp, *.hpp | ForEach-Object { clang-format -i $_.FullName }</div>
-</div><!-- fragment --><p>For Visual Studio users, you can use the <a href="https://marketplace.visualstudio.com/items?itemName=LLVMExtensions.ClangFormat">ClangFormat extension</a> to format the code.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
-Documentation</h2>
-<p>The documentation is available at <a href="https://github.com/EngineSquared/EngineSquared/wiki">https://github.com/EngineSquared/EngineSquared/wiki</a>.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
-Code of Conduct</h2>
-<p>Please note that this project is released with a Code of Conduct. By participating in this project you agree to abide by its terms. </p>
-</div></div><!-- PageDoc -->
+</div><div align="center"><hr  />
+ </div><h2 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
+<div align="center">Interested ?</div></h2>
+<div align="center"></div><div align="center">You can start to discover the engine through contribute to it through looking at <a href="https://github.com/EngineSquared/EngineSquared/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-first-issue">good first issues</a> and checking <a href="https://github.com/EngineSquared/EngineSquared/wiki/Contributing">how to contribute</a></div><div align="center"><hr  />
+ </div><h2 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
+<div align="center">Troubleshooting</div></h2>
+<div align="center"></div><div align="center">For now there is no troubleshooting found. If you encounter a problem, please report it by opening a <a href="https://github.com/EngineSquared/EngineSquared/issues/new?template=question.md">question issue</a> 🙏 <em>(before doing that, check the documentation about <a href="https://github.com/EngineSquared/EngineSquared/wiki/Contributing#creating-an-issue">how to create an issue</a>)</em> </div></div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -41,5 +41,6 @@ var searchData=
   ['history_38',['History',['../structHistory.html',1,'']]],
   ['history_39',['history',['../structHistoryStorage.html#a80dfdaa3d266435780b323363e570b58',1,'HistoryStorage']]],
   ['historystorage_40',['HistoryStorage',['../structHistoryStorage.html',1,'']]],
-  ['hours_41',['hours',['../structDirectorResource.html#a8e77bbaf9934140d30f96e0f3e8806b8',1,'DirectorResource::hours'],['../structWorkTimeComponent.html#a5859d0326e9b0b19afb906df3a05183b',1,'WorkTimeComponent::hours']]]
+  ['hours_41',['hours',['../structDirectorResource.html#a8e77bbaf9934140d30f96e0f3e8806b8',1,'DirectorResource::hours'],['../structWorkTimeComponent.html#a5859d0326e9b0b19afb906df3a05183b',1,'WorkTimeComponent::hours']]],
+  ['how_20a_20minimal_20program_20looks_42',['How a minimal program looks',['../index.html#autotoc_md47',1,'']]]
 ];

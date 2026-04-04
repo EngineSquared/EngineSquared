@@ -1,5 +1,8 @@
 var NAVTREEINDEX20 =
 {
+"namespacewgpu.html#aafb680c28ac7c8873ad2caad2025e194":[2,0,19,72],
+"namespacewgpu.html#ab04353eef510946c37986b15544f3c82":[2,0,19,227],
+"namespacewgpu.html#ab106eaf05608b6c95d64ad16c474b83c":[2,0,19,160],
 "namespacewgpu.html#ab120489a3fad1d10b7c13afb4498a344":[2,0,19,450],
 "namespacewgpu.html#ab13063b9f37b3092bad8689a2c9d927b":[2,0,19,411],
 "namespacewgpu.html#ab1394a5c75579512852a3172ec69fec8":[2,0,19,276],
@@ -246,8 +249,5 @@ var NAVTREEINDEX20 =
 "structDefaultPipeline_1_1Component_1_1GPUTransform.html":[4,0,1,0,4],
 "structDefaultPipeline_1_1Component_1_1GPUTransform.html#a23afd7c779cd5a11f28d2ee59a5e665f":[2,0,1,0,4,1],
 "structDefaultPipeline_1_1Component_1_1GPUTransform.html#a23afd7c779cd5a11f28d2ee59a5e665f":[4,0,1,0,4,1],
-"structDefaultPipeline_1_1Component_1_1GPUTransform.html#a85aa57835ed1d2a1231576c101ece234":[2,0,1,0,4,0],
-"structDefaultPipeline_1_1Component_1_1GPUTransform.html#a85aa57835ed1d2a1231576c101ece234":[4,0,1,0,4,0],
-"structDefaultPipeline_1_1Component_1_1GPUTransform.html#a97e47648a7bc2256de526bf8a17860e3":[2,0,1,0,4,2],
-"structDefaultPipeline_1_1Component_1_1GPUTransform.html#a97e47648a7bc2256de526bf8a17860e3":[4,0,1,0,4,2]
+"structDefaultPipeline_1_1Component_1_1GPUTransform.html#a85aa57835ed1d2a1231576c101ece234":[2,0,1,0,4,0]
 };
