@@ -58,9 +58,9 @@ jobs:
         with:
           xmake-version: latest
           actions-cache-folder: ".xmake-cache"
-          actions-cache-key: "${{ matrix.os }}-clang-format"
+          actions-cache-key: "clang-format"
           build-cache: true
-          build-cache-key: "${{ matrix.os }}-clang-format"
+          build-cache-key: "clang-format"
 
       - name: Run clang-format
         run: |
