@@ -250,6 +250,11 @@ void UIContext::Update(Engine::Core &core)
 
 void UIContext::Render(Engine::Core &core)
 {
+    if (_document == nullptr)
+    {
+        return;
+    }
+
     if (!_isReady())
     {
         Log::Warning("Rmlui is not ready to render");
