@@ -145,6 +145,12 @@ jobs:
         if: contains(runner.os, 'linux')
         uses: threeal/gcovr-action@1b53388d5f84b4f3afb1b9082782961dff911ba0
 
+      - name: Check memory leaks (macOS)
+        if: contains(runner.os, 'macos')
+        run: |
+          xmake check_leaks
+        timeout-minutes: 30
+
   check_examples:
     name: Build and test examples
     needs: [check_repository_cleanliness, lint_code]
