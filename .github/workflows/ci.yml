@@ -138,7 +138,6 @@ jobs:
 
       - name: Run tests
         run: |
-          xmake clean
           xmake test -y -v
         timeout-minutes: 30
 
@@ -151,6 +150,11 @@ jobs:
         run: |
           xmake check_leaks
         timeout-minutes: 30
+
+      - name: Clear test artifacts
+        if: contains(runner.os, 'linux')
+        run: |
+          xmake clean -y
 
   check_examples:
     name: Build and test examples
