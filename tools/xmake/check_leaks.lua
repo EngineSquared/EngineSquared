@@ -8,7 +8,6 @@ local function check_leaks_macos(targets, leaks_tool, project, os)
         local target_name = target:name()
         local bin_path = path.join(os.projectdir(), target:targetdir(), "debug", target:filename())
 
-        print(bin_path)
         if not os.isfile(bin_path) then
             print("Executable not found for target: " .. target_name)
             goto continue
