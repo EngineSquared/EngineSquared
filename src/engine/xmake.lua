@@ -49,9 +49,9 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
         add_packages("entt", "gtest", "glm", "fmt", "spdlog")
         add_links("gtest")
         add_tests("default")
-        
+
         add_deps("EngineSquaredCore")
-        
+
         add_files(file)
         add_files("tests/main.cpp")
         if is_mode("debug") then
