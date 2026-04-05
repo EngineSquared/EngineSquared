@@ -138,6 +138,7 @@ jobs:
 
       - name: Run tests
         run: |
+          xmake f -y -m debug
           xmake test -y -v
         timeout-minutes: 30
 
