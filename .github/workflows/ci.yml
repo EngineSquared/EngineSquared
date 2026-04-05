@@ -138,12 +138,24 @@ jobs:
 
       - name: Run tests
         run: |
+          xmake f -y -m debug
           xmake test -y -v
         timeout-minutes: 30
 
       - name: Check test coverage (Linux)
         if: contains(runner.os, 'linux')
         uses: threeal/gcovr-action@1b53388d5f84b4f3afb1b9082782961dff911ba0
+
+      - name: Check memory leaks (macOS)
+        if: contains(runner.os, 'macos')
+        run: |
+          xmake check_leaks
+        timeout-minutes: 30
+
+      - name: Clear test artifacts
+        if: contains(runner.os, 'linux')
+        run: |
+          xmake clean -y
 
   check_examples:
     name: Build and test examples

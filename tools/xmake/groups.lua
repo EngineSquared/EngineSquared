@@ -1,0 +1,3 @@
+TEST_GROUP_NAME = "UnitTests"
+PLUGINS_GROUP_NAME = "Plugins"
+UTILS_GROUP_NAME = "Utils"
