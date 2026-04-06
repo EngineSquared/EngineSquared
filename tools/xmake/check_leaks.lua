@@ -2,7 +2,7 @@ includes(os.scriptdir() .. "/groups.lua")
 
 local TestGroupName = TEST_GROUP_NAME
 
-local function check_leaks_macos(targets, leaks_tool, project, os)
+local function check_leaks_macos(targets, leaks_tool, project, os, verbose)
     local failing_targets = {}
     for _, target in pairs(targets) do
         local target_name = target:name()
@@ -14,7 +14,13 @@ local function check_leaks_macos(targets, leaks_tool, project, os)
         end
 
         print("Running leaks check on: " .. bin_path)
-        local return_value = os.execv(leaks_tool, {"--atExit", "--", bin_path}, {try = true, stdout = os.nuldev(), stderr = os.nuldev()})
+        local params = {"--atExit", "--", bin_path}
+        local options = {try = true}
+        if not verbose then
+            options.stdout = os.nuldev()
+            options.stderr = os.nuldev()
+        end
+        local return_value = os.execv(leaks_tool, params, options)
         if return_value ~= 0 then
             table.insert(failing_targets, target_name)
         end
@@ -30,16 +36,29 @@ task("check_leaks")
         import("core.project.config")
         import("lib.detect.find_program")
 
-        local targets = option.get("targets") or {}
-        if #targets == 0 then
-            -- If no targets specified, check all test targets
-            targets = {}
+        local wanted_target = option.get("targets") or {}
+        local targets = {}
+        if #wanted_target == 0 then
             for _, target in pairs(project:targets()) do
                 local name = target:name()
                 local group = target:info().group
                 local kind = target:kind()
                 if kind == "binary" and group == TestGroupName then
                     table.insert(targets, target)
+                end
+            end
+        else
+            for _, target in pairs(project:targets()) do
+                local name = target:name()
+                local group = target:info().group
+                local kind = target:kind()
+                if kind == "binary" and group == TestGroupName then
+                    for _, wanted in ipairs(wanted_target) do
+                        if name == wanted then
+                            table.insert(targets, target)
+                            break
+                        end
+                    end
                 end
             end
         end
@@ -50,7 +69,7 @@ task("check_leaks")
                 print("leaks tool not found!")
                 return
             end
-            failing_targets = check_leaks_macos(targets, leaks_tool, project, os)
+            failing_targets = check_leaks_macos(targets, leaks_tool, project, os, option.get("verbose"))
         else
             print("Memory leak checking is currently only implemented for macOS.")
         end
