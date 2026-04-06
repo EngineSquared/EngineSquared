@@ -59,25 +59,29 @@ class ArrayOfFloatGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         if (!_buffer)
             throw std::runtime_error("Failed to create GPU Buffer");
 
-        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer.value(), 0, _data.data(),
+        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, _data.data(),
                                                                           sizeof(float) * _data.size());
+        _isCreated = true;
     }
     void Destroy(Engine::Core &) override { Destroy(); }
 
-    void Destroy(void) { _buffer.reset(); }
-
-    bool IsCreated(Engine::Core &) const override { return _buffer.has_value(); }
-    void Update(Engine::Core &) override {}
-    const wgpu::Buffer &GetBuffer() const override
+    void Destroy(void)
     {
-        if (!_buffer.has_value())
-            Log::Error("ArrayOfFloatGPUBuffer is not created");
-        return _buffer.value();
+        if (_isCreated)
+        {
+            _isCreated = false;
+            _buffer.release();
+        }
     }
+
+    bool IsCreated(Engine::Core &) const override { return _isCreated; }
+    void Update(Engine::Core &) override {}
+    const wgpu::Buffer &GetBuffer() const override { return _buffer; }
 
   private:
     std::vector<float> _data;
-    std::optional<wgpu::Buffer> _buffer = nullptr;
+    bool _isCreated = false;
+    wgpu::Buffer _buffer;
 };
 
 Graphic::Resource::Shader CreateShader(Engine::Core &core)
@@ -259,10 +263,12 @@ TEST(BindGroupTest, RefreshUpdatesBufferBindings)
         auto bufferId = entt::hashed_string("bindgroup_buffer_asset");
         auto &gpuBuffers = core.GetResource<Graphic::Resource::GPUBufferContainer>();
 
+        auto replacementBuffer = std::make_unique<ArrayOfFloatGPUBuffer>(std::vector<float>{1.0f});
+        replacementBuffer->Create(core);
+        auto updatedBuffer = replacementBuffer->GetBuffer();
+
         gpuBuffers.Remove(bufferId);
-        gpuBuffers.Add(bufferId, std::make_unique<ArrayOfFloatGPUBuffer>(std::vector<float>{1.0f}));
-        gpuBuffers.Get(bufferId)->Create(core);
-        auto updatedBuffer = gpuBuffers.Get(bufferId)->GetBuffer();
+        gpuBuffers.Add(bufferId, std::move(replacementBuffer));
         EXPECT_NE(bindGroup.GetEntries().at(1).buffer, updatedBuffer);
 
         bindGroup.Refresh(core);
