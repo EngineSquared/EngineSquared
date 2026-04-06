@@ -136,6 +136,10 @@ jobs:
           build-cache: true
           build-cache-key: "${{ matrix.os }}-tests"
 
+      - name: Clean build artifact
+        run: |
+          xmake clean -a
+
       - name: Run tests
         run: |
           xmake f -y -m debug
