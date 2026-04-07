@@ -95,19 +95,19 @@ var NAVTREEINDEX =
 "classPhysics_1_1Resource_1_1PhysicsManager.html#a27a198e8d5e02f700769f9dc9218a89d",
 "classRmlui_1_1Resource_1_1AUIContext.html#af661ce77db48d7d4e420660c9cbfd2ce",
 "classSchedulerTest2.html",
-"classdemo__setup_1_1DemoWindow.html",
-"examples_2graphic__material__usage_2src_2main_8cpp.html",
-"namespaceDefaultPipeline_1_1System.html#a40bb96f5abc1dc9a19eb99625fe6ea69",
-"namespacePhysics_1_1System.html#a6506aa10d93ad0b85ff2d61e61249845",
-"namespacewgpu.html#a29f2ef1757ead648da37a0f28825f31e",
-"namespacewgpu.html#aad8a785a93a5fbb767221f25ed02466a",
-"structDefaultPipeline_1_1Component_1_1GPUTransform.html",
-"structGraphic_1_1Resource_1_1CallbackData.html#adcacd9f5623f4339a7273da137bdad15",
-"structObject_1_1Component_1_1Mesh.html#a9593503174a499395b0cdf35a97b0e50",
-"structPhysics_1_1Component_1_1BoxCollider.html#a3b693d1cc041c9793617cab0f6089051",
-"structPhysics_1_1Component_1_1PointConstraint.html#a7bd91f1ca8bce6a0c91b14a257930bb3",
-"structPhysics_1_1Component_1_1WheelSettings.html#a852d677c97d40a6dceaa02bf27437ed0",
-"webgpu_8hpp.html#a546103539111f013d8f39034b04506ff"
+"classdemo__setup_1_1DemoEventListenerInstancer.html#a39b781bec6110f1c045298e169ffbc48",
+"examples_2graphic__light__usage_2src_2main_8cpp.html",
+"namespaceDefaultPipeline_1_1System.html#a09d19c9b142e8c06fa74b56d56112703",
+"namespacePhysics_1_1System.html#a590c81e848be50801279af428b810552",
+"namespacewgpu.html#a26a49f0732017d6ecae304394270a16f",
+"namespacewgpu.html#aab6d09fe41d7efcba1b4a1482a9257c1",
+"structDefaultPipeline_1_1Component_1_1GPUMesh.html#a93e09c3a54c69cd5737f7379ebac9ee9",
+"structGraphic_1_1Resource_1_1CallbackData.html#a9a76a5bfaee673f2b1c7d02c0fb7abd6",
+"structObject_1_1Component_1_1Mesh.html#a7b1d196012bb879dfa885b38678d7780",
+"structPhysics_1_1Component_1_1BoxCollider.html",
+"structPhysics_1_1Component_1_1PointConstraint.html#a6f256f038289e6f21f49bb22c1ffe428",
+"structPhysics_1_1Component_1_1WheelSettings.html#a54e7057271c13abe7b8baa6bd38d17a4",
+"webgpu_8hpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

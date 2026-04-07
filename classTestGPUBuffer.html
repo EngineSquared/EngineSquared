@@ -107,8 +107,12 @@ Inheritance diagram for TestGPUBuffer:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a31abb43f874f0950ec5d0828a4e9bf19" id="r_a31abb43f874f0950ec5d0828a4e9bf19"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a31abb43f874f0950ec5d0828a4e9bf19">TestGPUBuffer</a> (std::string label, glm::vec4 value)</td></tr>
+<tr class="memitem:a399eacfb35faf32f4746e48b485eef3f" id="r_a399eacfb35faf32f4746e48b485eef3f"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a399eacfb35faf32f4746e48b485eef3f">TestGPUBuffer</a> (const <a class="el" href="classTestGPUBuffer.html">TestGPUBuffer</a> &amp;)=delete</td></tr>
+<tr class="memitem:a761ec8793fea453111cfac8aef90cdd9" id="r_a761ec8793fea453111cfac8aef90cdd9"><td class="memItemLeft"><a class="el" href="classTestGPUBuffer.html">TestGPUBuffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a761ec8793fea453111cfac8aef90cdd9">operator=</a> (const <a class="el" href="classTestGPUBuffer.html">TestGPUBuffer</a> &amp;)=delete</td></tr>
 <tr class="memitem:ad0b5ed668e68c36567a9aabe2a070df1" id="r_ad0b5ed668e68c36567a9aabe2a070df1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad0b5ed668e68c36567a9aabe2a070df1">Create</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core) override</td></tr>
+<tr class="memitem:a61ad231d05cfc056e0d965a548d90524" id="r_a61ad231d05cfc056e0d965a548d90524"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a61ad231d05cfc056e0d965a548d90524">Destroy</a> ()</td></tr>
 <tr class="memitem:a26902de48835d2adf6a52b3b1433131a" id="r_a26902de48835d2adf6a52b3b1433131a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a26902de48835d2adf6a52b3b1433131a">Destroy</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;) override</td></tr>
+<tr class="memitem:a6a1a2ed164638ebb8a9228d0b499cb5b" id="r_a6a1a2ed164638ebb8a9228d0b499cb5b"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6a1a2ed164638ebb8a9228d0b499cb5b">~TestGPUBuffer</a> () override</td></tr>
 <tr class="memitem:ad5fd4e342e576c185bbef42dd19497a9" id="r_ad5fd4e342e576c185bbef42dd19497a9"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ad5fd4e342e576c185bbef42dd19497a9">IsCreated</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;) const override</td></tr>
 <tr class="memitem:ac5eafe27eba40224c47ee66ef4b68410" id="r_ac5eafe27eba40224c47ee66ef4b68410"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac5eafe27eba40224c47ee66ef4b68410">Update</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;) override</td></tr>
 <tr class="memitem:ab4dc6aa6d52b3c8e4eb22ac644bdf915" id="r_ab4dc6aa6d52b3c8e4eb22ac644bdf915"><td class="memItemLeft">const wgpu::Buffer &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab4dc6aa6d52b3c8e4eb22ac644bdf915">GetBuffer</a> () const override</td></tr>
@@ -125,7 +129,7 @@ Private Attributes</h2></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a31abb43f874f0950ec5d0828a4e9bf19" name="a31abb43f874f0950ec5d0828a4e9bf19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31abb43f874f0950ec5d0828a4e9bf19">&#9670;&#160;</a></span>TestGPUBuffer()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a31abb43f874f0950ec5d0828a4e9bf19">&#9670;&#160;</a></span>TestGPUBuffer() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -147,6 +151,56 @@ Private Attributes</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a399eacfb35faf32f4746e48b485eef3f" name="a399eacfb35faf32f4746e48b485eef3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a399eacfb35faf32f4746e48b485eef3f">&#9670;&#160;</a></span>TestGPUBuffer() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TestGPUBuffer::TestGPUBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classTestGPUBuffer.html">TestGPUBuffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6a1a2ed164638ebb8a9228d0b499cb5b" name="a6a1a2ed164638ebb8a9228d0b499cb5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a1a2ed164638ebb8a9228d0b499cb5b">&#9670;&#160;</a></span>~TestGPUBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TestGPUBuffer::~TestGPUBuffer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -181,8 +235,33 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a61ad231d05cfc056e0d965a548d90524" name="a61ad231d05cfc056e0d965a548d90524"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61ad231d05cfc056e0d965a548d90524">&#9670;&#160;</a></span>Destroy() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TestGPUBuffer::Destroy </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a26902de48835d2adf6a52b3b1433131a" name="a26902de48835d2adf6a52b3b1433131a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26902de48835d2adf6a52b3b1433131a">&#9670;&#160;</a></span>Destroy()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a26902de48835d2adf6a52b3b1433131a">&#9670;&#160;</a></span>Destroy() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -281,6 +360,31 @@ Private Attributes</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a761ec8793fea453111cfac8aef90cdd9" name="a761ec8793fea453111cfac8aef90cdd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a761ec8793fea453111cfac8aef90cdd9">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classTestGPUBuffer.html">TestGPUBuffer</a> &amp; TestGPUBuffer::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classTestGPUBuffer.html">TestGPUBuffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

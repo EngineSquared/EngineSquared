@@ -1,5 +1,9 @@
 var NAVTREEINDEX15 =
 {
+"classdemo__setup_1_1DemoEventListenerInstancer.html#a39b781bec6110f1c045298e169ffbc48":[4,0,2,4,2],
+"classdemo__setup_1_1DemoEventListenerInstancer.html#a5c4dfc42660fa2ee5bb83de45389e7d0":[2,0,2,4,1],
+"classdemo__setup_1_1DemoEventListenerInstancer.html#a5c4dfc42660fa2ee5bb83de45389e7d0":[4,0,2,4,1],
+"classdemo__setup_1_1DemoWindow.html":[2,0,2,2],
 "classdemo__setup_1_1DemoWindow.html":[4,0,2,2],
 "classdemo__setup_1_1DemoWindow.html#a0c4b2e1f36dd6ad5f2c4e04a6b4e1fbc":[2,0,2,2,20],
 "classdemo__setup_1_1DemoWindow.html#a0c4b2e1f36dd6ad5f2c4e04a6b4e1fbc":[4,0,2,2,20],
@@ -245,9 +249,5 @@ var NAVTREEINDEX15 =
 "examples_2character__controller__usage_2src_2main_8cpp.html#a9b434a6c209cc01abf6532743b35accf":[5,0,0,1,0,0,4],
 "examples_2character__controller__usage_2src_2main_8cpp.html#ab59482d0380fb646e474717f8ce534d7":[5,0,0,1,0,0,3],
 "examples_2event__usage_2src_2main_8cpp.html":[5,0,0,2,0,0],
-"examples_2event__usage_2src_2main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe":[5,0,0,2,0,0,1],
-"examples_2graphic__light__usage_2src_2main_8cpp.html":[5,0,0,3,0,0],
-"examples_2graphic__light__usage_2src_2main_8cpp.html#a1d6fceb52d931126f407c8229a9db1f4":[5,0,0,3,0,0,3],
-"examples_2graphic__light__usage_2src_2main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe":[5,0,0,3,0,0,2],
-"examples_2graphic__light__usage_2src_2main_8cpp.html#a9b434a6c209cc01abf6532743b35accf":[5,0,0,3,0,0,1]
+"examples_2event__usage_2src_2main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe":[5,0,0,2,0,0,1]
 };

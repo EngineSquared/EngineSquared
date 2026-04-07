@@ -1,5 +1,9 @@
 var NAVTREEINDEX26 =
 {
+"structPhysics_1_1Component_1_1WheelSettings.html#a54e7057271c13abe7b8baa6bd38d17a4":[4,0,12,1,26,3],
+"structPhysics_1_1Component_1_1WheelSettings.html#a7bb4e7061d20aeb0cb5e5e5ea5b11520":[2,0,11,1,26,7],
+"structPhysics_1_1Component_1_1WheelSettings.html#a7bb4e7061d20aeb0cb5e5e5ea5b11520":[4,0,12,1,26,7],
+"structPhysics_1_1Component_1_1WheelSettings.html#a852d677c97d40a6dceaa02bf27437ed0":[2,0,11,1,26,8],
 "structPhysics_1_1Component_1_1WheelSettings.html#a852d677c97d40a6dceaa02bf27437ed0":[4,0,12,1,26,8],
 "structPhysics_1_1Component_1_1WheelSettings.html#a9a11d13dcdbf6cbd6b9592a47acd09e5":[2,0,11,1,26,12],
 "structPhysics_1_1Component_1_1WheelSettings.html#a9a11d13dcdbf6cbd6b9592a47acd09e5":[4,0,12,1,26,12],
@@ -245,9 +249,5 @@ var NAVTREEINDEX26 =
 "structstd_1_1hash_3_01Engine_1_1EntityId_01_4.html#a4ff5f4e9d691a47b55f5f821249d88e5":[4,0,18,0,0],
 "structwgpu_1_1DefaultFlag.html":[2,0,19,0],
 "structwgpu_1_1DefaultFlag.html":[4,0,20,0],
-"todo.html":[1],
-"webgpu_8hpp.html":[5,0,1,1,3,0,4,9],
-"webgpu_8hpp.html#a118d80c54da873ad0da10edbdd5cca7e":[5,0,1,1,3,0,4,9,8],
-"webgpu_8hpp.html#a29fd18bed01c4d836c7ebfe73a125c3f":[5,0,1,1,3,0,4,9,2],
-"webgpu_8hpp.html#a2ef6a18f8fda377447258a5377b2fce8":[5,0,1,1,3,0,4,9,3]
+"todo.html":[1]
 };
