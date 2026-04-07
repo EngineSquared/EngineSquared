@@ -89,6 +89,8 @@ fn fs_main() -> @location(0) vec4f {
 class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
   public:
     explicit TestGPUBuffer(std::string label, glm::vec4 value) : _label(std::move(label)), _value(value) {}
+    TestGPUBuffer(const TestGPUBuffer &) = delete;
+    TestGPUBuffer &operator=(const TestGPUBuffer &) = delete;
 
     void Create(Engine::Core &core) override
     {
@@ -103,7 +105,7 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
                                                                           bufferDesc.size);
         _isCreated = true;
     }
-    void Destroy(Engine::Core &) override
+    void Destroy()
     {
         if (_isCreated)
         {
@@ -111,6 +113,8 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
             _buffer.release();
         }
     }
+    void Destroy(Engine::Core &) override { Destroy(); }
+    virtual ~TestGPUBuffer() { Destroy(); }
     bool IsCreated(Engine::Core &) const override { return _isCreated; }
     void Update(Engine::Core &) override {}
     const wgpu::Buffer &GetBuffer() const override
