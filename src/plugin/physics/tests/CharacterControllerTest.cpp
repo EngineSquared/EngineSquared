@@ -23,6 +23,9 @@ class TestScheduler : public Engine::Scheduler::Update {
 TEST(CharacterControllerPlugin, CharacterControllerCreation)
 {
     Engine::Core core;
+
+    core.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
+
     core.AddPlugins<Physics::Plugin>();
 
     core.RegisterSystem<Engine::Scheduler::Update>(
@@ -39,6 +42,8 @@ TEST(CharacterControllerPlugin, CharacterControllerCreation)
 
     const auto &internal = player.GetComponents<Physics::Component::CharacterControllerInternal>();
     EXPECT_TRUE(internal.IsValid());
+
+    core.GetScheduler<Engine::Scheduler::Shutdown>().RunSystems();
 }
 
 TEST(CharacterControllerPlugin, CharacterFallsUnderGravity)
