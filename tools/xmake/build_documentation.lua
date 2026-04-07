@@ -46,4 +46,3 @@ task("build_documentation")
             {'o', "open", "k", false, "Open generated documentation after building"}
         }
     }
-

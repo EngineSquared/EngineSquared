@@ -268,6 +268,7 @@ class Texture {
 
         encoder.copyTextureToBuffer(srcView, dstView, copySize);
         auto cmd = encoder.finish();
+        encoder.release();
         auto cmdName = fmt::format("{} Readback Command", _name);
         queue.submit(1, &cmd);
         cmd.release();
@@ -288,6 +289,7 @@ class Texture {
             context.deviceContext.GetDevice()->poll(false, nullptr);
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
+        readbackBuffer.release();
         return cbData.data;
     }
 
