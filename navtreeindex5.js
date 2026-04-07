@@ -1,5 +1,8 @@
 var NAVTREEINDEX5 =
 {
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6c3a3474180e6040b35ef4e59d0b866c":[2,0,1,1,1,18],
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6c3a3474180e6040b35ef4e59d0b866c":[4,0,1,1,1,18],
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6f4824c255fcc136fb3d585cd7cf707f":[2,0,1,1,1,12],
 "classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6f4824c255fcc136fb3d585cd7cf707f":[4,0,1,1,1,12],
 "classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a75c472afe54d171b96fec8db884277b6":[2,0,1,1,1,7],
 "classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a75c472afe54d171b96fec8db884277b6":[4,0,1,1,1,7],
@@ -246,8 +249,5 @@ var NAVTREEINDEX5 =
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#ab2d2d0cfd4da2c1072c9a1603c4977c2":[2,0,1,1,8,9],
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#ab2d2d0cfd4da2c1072c9a1603c4977c2":[4,0,1,1,8,9],
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acd3e0bfc52bb1c299218bb7e4b0cc3b4":[2,0,1,1,8,5],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acd3e0bfc52bb1c299218bb7e4b0cc3b4":[4,0,1,1,8,5],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acebf851cc85d28e61f4ff69b5d15bafa":[2,0,1,1,8,10],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acebf851cc85d28e61f4ff69b5d15bafa":[4,0,1,1,8,10],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#ad67dc5277672de0aea3fc80e8fd58543":[2,0,1,1,8,6]
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acd3e0bfc52bb1c299218bb7e4b0cc3b4":[4,0,1,1,8,5]
 };

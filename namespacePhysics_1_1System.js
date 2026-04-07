@@ -46,6 +46,7 @@ var namespacePhysics_1_1System =
     [ "OnVehicleDestroy", "namespacePhysics_1_1System.html#acb9dca435304fbe8d342737d3bdf8e31", null ],
     [ "PhysicsUpdate", "namespacePhysics_1_1System.html#a9845915a4c073e95a895156db7dd69a8", null ],
     [ "ShutdownCharacterControllerSystem", "namespacePhysics_1_1System.html#a99ced9c4e2beb7dd1a0f02b8fcb0a6e9", null ],
+    [ "ShutdownPhysicsSystem", "namespacePhysics_1_1System.html#a2c6aed831f9293f3a97947dc73c31f61", null ],
     [ "ShutdownRigidBodySystem", "namespacePhysics_1_1System.html#a7d831b94b6e362d6fb21d1accfe5e5d4", null ],
     [ "ShutdownSoftBodySystem", "namespacePhysics_1_1System.html#aaaf5a7e97d0af46d08ab2be2f2816b6c", null ],
     [ "SyncSoftBodyVertices", "namespacePhysics_1_1System.html#aa9b722d87a5f2866a96f8c1f03dedb24", null ],

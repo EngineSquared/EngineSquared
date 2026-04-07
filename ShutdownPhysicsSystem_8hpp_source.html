@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Engine²: src/plugin/physics/src/plugin/PluginPhysics.cpp File Reference</title>
+<title>Engine²: src/plugin/physics/src/system/ShutdownPhysicsSystem.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('PluginPhysics_8cpp.html','',''); });
+$(function(){initNavTree('ShutdownPhysicsSystem_8hpp_source.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -91,43 +91,28 @@ $(function(){initNavTree('PluginPhysics_8cpp.html','',''); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">PluginPhysics.cpp File Reference</div></div>
+  <div class="headertitle"><div class="title">ShutdownPhysicsSystem.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="FixedTimeUpdate_8hpp_source.html">scheduler/FixedTimeUpdate.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Shutdown_8hpp_source.html">scheduler/Shutdown.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Startup_8hpp_source.html">scheduler/Startup.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="PluginEvent_8hpp_source.html">plugin/PluginEvent.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="PluginPhysics_8hpp_source.html">plugin/PluginPhysics.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="BodyEntityMap_8hpp_source.html">resource/BodyEntityMap.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="VehicleTelemetry_8hpp_source.html">resource/VehicleTelemetry.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="CharacterControllerSystem_8hpp_source.html">system/CharacterControllerSystem.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="ConstraintSystem_8hpp_source.html">system/ConstraintSystem.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="InitJoltPhysics_8hpp_source.html">system/InitJoltPhysics.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="InitPhysicsManager_8hpp_source.html">system/InitPhysicsManager.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="PhysicsUpdate_8hpp_source.html">system/PhysicsUpdate.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="RigidBodySystem_8hpp_source.html">system/RigidBodySystem.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="ShutdownPhysicsSystem_8hpp_source.html">system/ShutdownPhysicsSystem.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="SoftBodySystem_8hpp_source.html">system/SoftBodySystem.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="SyncTransformSystem_8hpp_source.html">system/SyncTransformSystem.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="VehicleControlSystem_8hpp_source.html">system/VehicleControlSystem.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="VehicleRPMUpdate_8hpp_source.html">system/VehicleRPMUpdate.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="VehicleSystem_8hpp_source.html">system/VehicleSystem.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="WheelTransformSyncSystem_8hpp_source.html">system/WheelTransformSyncSystem.hpp</a>&quot;</code><br />
-</div></div><!-- contents -->
+<a href="ShutdownPhysicsSystem_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="Core_8hpp.html">core/Core.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacePhysics_1_1System.html">Physics::System</a> {</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keywordtype">void</span> <a class="code hl_function" href="namespacePhysics_1_1System.html#a2c6aed831f9293f3a97947dc73c31f61">ShutdownPhysicsSystem</a>(Engine::Core &amp;core);</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>}</div>
+<div class="ttc" id="aCore_8hpp_html"><div class="ttname"><a href="Core_8hpp.html">Core.hpp</a></div></div>
+<div class="ttc" id="anamespacePhysics_1_1System_html"><div class="ttname"><a href="namespacePhysics_1_1System.html">Physics::System</a></div><div class="ttdef"><b>Definition</b> CharacterControllerSystem.cpp:15</div></div>
+<div class="ttc" id="anamespacePhysics_1_1System_html_a2c6aed831f9293f3a97947dc73c31f61"><div class="ttname"><a href="namespacePhysics_1_1System.html#a2c6aed831f9293f3a97947dc73c31f61">Physics::System::ShutdownPhysicsSystem</a></div><div class="ttdeci">void ShutdownPhysicsSystem(Engine::Core &amp;core)</div><div class="ttdef"><b>Definition</b> ShutdownPhysicsSystem.cpp:5</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div id="page-nav" class="page-nav-panel">
-<div id="page-nav-resize-handle"></div>
-<div id="page-nav-tree">
-<div id="page-nav-contents">
-</div><!-- page-nav-contents -->
-</div><!-- page-nav-tree -->
-</div><!-- page-nav -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="dir_40bb855b7b2023435b78cde29725ed48.html">plugin</a></li><li class="navelem"><a href="dir_5b7ceba68d965879945575a042b2c9ab.html">physics</a></li><li class="navelem"><a href="dir_ee8b9a04be87a48dfb3d642b1a0d7f12.html">src</a></li><li class="navelem"><a href="dir_dfd8b878dbf9555f236a26a8634995b7.html">plugin</a></li><li class="navelem"><a href="PluginPhysics_8cpp.html">PluginPhysics.cpp</a></li>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="dir_40bb855b7b2023435b78cde29725ed48.html">plugin</a></li><li class="navelem"><a href="dir_5b7ceba68d965879945575a042b2c9ab.html">physics</a></li><li class="navelem"><a href="dir_ee8b9a04be87a48dfb3d642b1a0d7f12.html">src</a></li><li class="navelem"><a href="dir_27a3e47d6f13453bac481559c55520c5.html">system</a></li><li class="navelem"><a href="ShutdownPhysicsSystem_8hpp.html">ShutdownPhysicsSystem.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>

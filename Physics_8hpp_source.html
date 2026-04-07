@@ -146,28 +146,29 @@ $(function(){initNavTree('Physics_8hpp_source.html','',''); });
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#include &quot;<a class="code" href="InitPhysicsManager_8hpp.html">system/InitPhysicsManager.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#include &quot;<a class="code" href="PhysicsUpdate_8hpp.html">system/PhysicsUpdate.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#include &quot;<a class="code" href="RigidBodySystem_8hpp.html">system/RigidBodySystem.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#include &quot;<a class="code" href="SoftBodySystem_8hpp.html">system/SoftBodySystem.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#include &quot;<a class="code" href="SyncTransformSystem_8hpp.html">system/SyncTransformSystem.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#include &quot;<a class="code" href="VehicleControlSystem_8hpp.html">system/VehicleControlSystem.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#include &quot;<a class="code" href="VehicleRPMUpdate_8hpp.html">system/VehicleRPMUpdate.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#include &quot;<a class="code" href="VehicleSystem_8hpp.html">system/VehicleSystem.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#include &quot;<a class="code" href="WheelTransformSyncSystem_8hpp.html">system/WheelTransformSyncSystem.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="comment">// Builders</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#include &quot;<a class="code" href="VehicleBuilder_8hpp.html">builder/VehicleBuilder.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="comment">// Utils</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#include &quot;<a class="code" href="BiMap_8hpp.html">utils/BiMap.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#include &quot;<a class="code" href="BroadPhaseLayerImpl_8hpp.html">utils/BroadPhaseLayerImpl.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#include &quot;<a class="code" href="BroadPhaseLayers_8hpp.html">utils/BroadPhaseLayers.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#include &quot;<a class="code" href="ContactListenerImpl_8hpp.html">utils/ContactListenerImpl.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#include &quot;<a class="code" href="JoltConversions_8hpp.html">utils/JoltConversions.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#include &quot;<a class="code" href="Layers_8hpp.html">utils/Layers.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#include &quot;<a class="code" href="ObjectLayerPairFilterImpl_8hpp.html">utils/ObjectLayerPairFilterImpl.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">#include &quot;<a class="code" href="ObjectVsBroadPhaseLayerFilterImpl_8hpp.html">utils/ObjectVsBroadPhaseLayerFilterImpl.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment">// Plugin</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#include &quot;<a class="code" href="PluginPhysics_8hpp.html">plugin/PluginPhysics.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#include &quot;<a class="code" href="ShutdownPhysicsSystem_8hpp.html">system/ShutdownPhysicsSystem.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#include &quot;<a class="code" href="SoftBodySystem_8hpp.html">system/SoftBodySystem.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#include &quot;<a class="code" href="SyncTransformSystem_8hpp.html">system/SyncTransformSystem.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#include &quot;<a class="code" href="VehicleControlSystem_8hpp.html">system/VehicleControlSystem.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#include &quot;<a class="code" href="VehicleRPMUpdate_8hpp.html">system/VehicleRPMUpdate.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#include &quot;<a class="code" href="VehicleSystem_8hpp.html">system/VehicleSystem.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#include &quot;<a class="code" href="WheelTransformSyncSystem_8hpp.html">system/WheelTransformSyncSystem.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="comment">// Builders</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#include &quot;<a class="code" href="VehicleBuilder_8hpp.html">builder/VehicleBuilder.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment">// Utils</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#include &quot;<a class="code" href="BiMap_8hpp.html">utils/BiMap.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#include &quot;<a class="code" href="BroadPhaseLayerImpl_8hpp.html">utils/BroadPhaseLayerImpl.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#include &quot;<a class="code" href="BroadPhaseLayers_8hpp.html">utils/BroadPhaseLayers.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#include &quot;<a class="code" href="ContactListenerImpl_8hpp.html">utils/ContactListenerImpl.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#include &quot;<a class="code" href="JoltConversions_8hpp.html">utils/JoltConversions.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#include &quot;<a class="code" href="Layers_8hpp.html">utils/Layers.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">#include &quot;<a class="code" href="ObjectLayerPairFilterImpl_8hpp.html">utils/ObjectLayerPairFilterImpl.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">#include &quot;<a class="code" href="ObjectVsBroadPhaseLayerFilterImpl_8hpp.html">utils/ObjectVsBroadPhaseLayerFilterImpl.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment">// Plugin</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#include &quot;<a class="code" href="PluginPhysics_8hpp.html">plugin/PluginPhysics.hpp</a>&quot;</span></div>
 <div class="ttc" id="aBiMap_8hpp_html"><div class="ttname"><a href="BiMap_8hpp.html">BiMap.hpp</a></div></div>
 <div class="ttc" id="aBodyEntityMap_8hpp_html"><div class="ttname"><a href="BodyEntityMap_8hpp.html">BodyEntityMap.hpp</a></div></div>
 <div class="ttc" id="aBoxCollider_8hpp_html"><div class="ttname"><a href="BoxCollider_8hpp.html">BoxCollider.hpp</a></div></div>
@@ -200,6 +201,7 @@ $(function(){initNavTree('Physics_8hpp_source.html','',''); });
 <div class="ttc" id="aRigidBodyInternal_8hpp_html"><div class="ttname"><a href="RigidBodyInternal_8hpp.html">RigidBodyInternal.hpp</a></div></div>
 <div class="ttc" id="aRigidBodySystem_8hpp_html"><div class="ttname"><a href="RigidBodySystem_8hpp.html">RigidBodySystem.hpp</a></div></div>
 <div class="ttc" id="aRigidBody_8hpp_html"><div class="ttname"><a href="RigidBody_8hpp.html">RigidBody.hpp</a></div></div>
+<div class="ttc" id="aShutdownPhysicsSystem_8hpp_html"><div class="ttname"><a href="ShutdownPhysicsSystem_8hpp.html">ShutdownPhysicsSystem.hpp</a></div></div>
 <div class="ttc" id="aSoftBodyError_8hpp_html"><div class="ttname"><a href="SoftBodyError_8hpp.html">SoftBodyError.hpp</a></div></div>
 <div class="ttc" id="aSoftBodyInternal_8hpp_html"><div class="ttname"><a href="SoftBodyInternal_8hpp.html">SoftBodyInternal.hpp</a></div></div>
 <div class="ttc" id="aSoftBodySystem_8hpp_html"><div class="ttname"><a href="SoftBodySystem_8hpp.html">SoftBodySystem.hpp</a></div></div>
