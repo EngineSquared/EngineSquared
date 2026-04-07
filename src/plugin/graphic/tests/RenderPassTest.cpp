@@ -114,7 +114,7 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         }
     }
     void Destroy(Engine::Core &) override { Destroy(); }
-    ~TestGPUBuffer() final { Destroy(); }
+    ~TestGPUBuffer() override { Destroy(); }
     bool IsCreated(Engine::Core &) const override { return _isCreated; }
     void Update(Engine::Core &) override {}
     const wgpu::Buffer &GetBuffer() const override
