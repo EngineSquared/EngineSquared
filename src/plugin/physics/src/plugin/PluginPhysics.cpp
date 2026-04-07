@@ -14,6 +14,7 @@
 #include "system/InitPhysicsManager.hpp"
 #include "system/PhysicsUpdate.hpp"
 #include "system/RigidBodySystem.hpp"
+#include "system/ShutdownPhysicsSystem.hpp"
 #include "system/SoftBodySystem.hpp"
 #include "system/SyncTransformSystem.hpp"
 #include "system/VehicleControlSystem.hpp"
@@ -47,4 +48,5 @@ void Physics::Plugin::Bind()
     RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownSoftBodySystem);
     RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownRigidBodySystem);
     RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownCharacterControllerSystem);
+    RegisterSystems<Engine::Scheduler::Shutdown>(System::ShutdownPhysicsSystem);
 }
