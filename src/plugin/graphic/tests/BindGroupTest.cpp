@@ -198,7 +198,7 @@ TEST(BindGroupTest, CreatesEntriesForTextureAssets)
         ASSERT_EQ(entries.size(), 3u);
         EXPECT_EQ(entries.at(0).binding, 0u);
         EXPECT_EQ(entries.at(0).textureView,
-                  core.GetResource<Graphic::Resource::TextureContainer>().Get(textureId).GetDefaultView());
+                  core.GetResource<Graphic::Resource::TextureContainer>().Get(textureId).GetDefaultView().GetWebGPUView());
         EXPECT_EQ(entries.at(1).binding, 1u);
         EXPECT_EQ(entries.at(1).buffer, core.GetResource<Graphic::Resource::GPUBufferContainer>()
                                             .Get(entt::hashed_string("bindgroup_buffer_asset"))
@@ -237,7 +237,7 @@ TEST(BindGroupTest, RefreshUpdatesTextureBindings)
             textures.Remove(textureId);
             textures.Add(textureId, std::move(newTexture));
         }
-        auto updatedView = textures.Get(textureId).GetDefaultView();
+        auto updatedView = textures.Get(textureId).GetDefaultView().GetWebGPUView();
         EXPECT_NE(bindGroup.GetEntries().at(0).textureView, updatedView);
 
         bindGroup.Refresh(core);

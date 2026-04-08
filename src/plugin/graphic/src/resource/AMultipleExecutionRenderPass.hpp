@@ -3,6 +3,7 @@
 #include "exception/FailToCreateCommandEncoderError.hpp"
 #include "exception/MissingOutputRenderPassError.hpp"
 #include "resource/ARenderPass.hpp"
+#include "resource/TextureViewContainer.hpp"
 
 namespace Graphic::Resource {
 
@@ -104,7 +105,8 @@ template <typename TDerived> class AMultipleExecutionRenderPass : public ARender
             wgpu::RenderPassColorAttachment colorAttachment(wgpu::Default);
 
             entt::hashed_string textureId = colorTexture.textureId;
-            auto textureView = core.GetResource<Resource::TextureContainer>().Get(textureId).GetDefaultView();
+            auto textureView =
+                core.GetResource<Resource::TextureContainer>().Get(textureId).GetDefaultView().GetWebGPUView();
 
             colorAttachment.view = textureView;
             if (colorTexture.textureResolveTargetName.has_value())
@@ -112,7 +114,8 @@ template <typename TDerived> class AMultipleExecutionRenderPass : public ARender
                 std::string resolveTargetName = colorTexture.textureResolveTargetName.value();
                 auto resolveTextureView = core.GetResource<Resource::TextureContainer>()
                                               .Get(entt::hashed_string{resolveTargetName.c_str()})
-                                              .GetDefaultView();
+                                              .GetDefaultView()
+                                              .GetWebGPUView();
                 colorAttachment.resolveTarget = resolveTextureView;
             }
             colorAttachment.storeOp = colorTexture.storeOp;
@@ -138,14 +141,17 @@ template <typename TDerived> class AMultipleExecutionRenderPass : public ARender
             const auto &depthTexture = this->GetOutputs().depthBuffer.value();
 
             wgpu::TextureView depthView;
-            if (depthTexture.depthTextureView.has_value())
+            if (depthTexture.depthTextureViewId.has_value())
             {
-                depthView = depthTexture.depthTextureView.value();
+                depthView = core.GetResource<Resource::TextureViewContainer>()
+                                .Get(depthTexture.depthTextureViewId.value())
+                                .GetWebGPUView();
             }
             else
             {
                 entt::hashed_string textureId = depthTexture.textureId;
-                depthView = core.GetResource<Resource::TextureContainer>().Get(textureId).GetDefaultView();
+                depthView =
+                    core.GetResource<Resource::TextureContainer>().Get(textureId).GetDefaultView().GetWebGPUView();
             }
 
             depthAttachment.view = depthView;

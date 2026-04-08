@@ -3,6 +3,7 @@
 #include "exception/UnsupportedTextureFormatError.hpp"
 #include "resource/Context.hpp"
 #include "resource/Image.hpp"
+#include "resource/TextureView.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/webgpu.hpp"
 #include <array>
@@ -112,7 +113,7 @@ class Texture {
     Texture(std::string_view name, wgpu::Texture texture, bool ownsResources = true)
         : _webgpuTexture(texture), _defaultView(nullptr), _name(std::string(name)), _ownsResources(ownsResources)
     {
-        _defaultView = _webgpuTexture.createView();
+        _defaultView = Resource::TextureView(_webgpuTexture.createView());
     }
 
     Texture(const Context &context, const wgpu::TextureDescriptor &descriptor)
@@ -135,8 +136,7 @@ class Texture {
 
     ~Texture()
     {
-        if (_defaultView != nullptr)
-            _defaultView.release();
+        _defaultView.Delete();
 
         if (_ownsResources && _webgpuTexture != nullptr)
             _webgpuTexture.release();
@@ -150,7 +150,6 @@ class Texture {
           _name(std::move(other._name)), _ownsResources(other._ownsResources)
     {
         other._webgpuTexture = nullptr;
-        other._defaultView = nullptr;
         other._name.clear();
         other._ownsResources = false;
     }
@@ -159,9 +158,6 @@ class Texture {
     {
         if (this != &other)
         {
-            if (_defaultView != nullptr)
-                _defaultView.release();
-
             if (_ownsResources && _webgpuTexture != nullptr)
             {
                 _webgpuTexture.release();
@@ -173,7 +169,6 @@ class Texture {
             _ownsResources = other._ownsResources;
 
             other._webgpuTexture = nullptr;
-            other._defaultView = nullptr;
             other._name.clear();
             other._ownsResources = false;
         }
@@ -293,9 +288,9 @@ class Texture {
         return cbData.data;
     }
 
-    wgpu::TextureView GetDefaultView() const { return _defaultView; }
+    const Resource::TextureView &GetDefaultView() const { return _defaultView; }
 
-    inline wgpu::TextureView CreateView(const wgpu::TextureViewDescriptor &descriptor) const
+    inline Resource::TextureView CreateView(const wgpu::TextureViewDescriptor &descriptor) const
     {
         return _webgpuTexture.createView(descriptor);
     }
@@ -328,7 +323,7 @@ class Texture {
     uint32_t _GetBytesPerPixel() const { return Utils::GetBytesPerPixel(_webgpuTexture.getFormat()); }
 
     wgpu::Texture _webgpuTexture;
-    wgpu::TextureView _defaultView;
+    Resource::TextureView _defaultView;
     std::string _name;
     bool _ownsResources = true;
 };

@@ -90,7 +90,7 @@ class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
             {
                 auto &lightGPUComponent = entity.GetComponents<Component::GPUDirectionalLight>();
                 auto &outputs = this->GetOutputs();
-                outputs.depthBuffer->depthTextureView = lightGPUComponent.shadowTextureView;
+                outputs.depthBuffer->depthTextureViewId = lightGPUComponent.shadowTextureView;
                 lightGPUComponent.shadowTextureIndex = passIndex;
                 return;
             }

@@ -23,6 +23,8 @@
 #include "resource/Surface.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
+#include "resource/TextureView.hpp"
+#include "resource/TextureViewContainer.hpp"
 
 // Utils
 #include "utils/DefaultSampler.hpp"
@@ -93,3 +95,4 @@
 #include "system/shutdown/ReleaseSampler.hpp"
 #include "system/shutdown/ReleaseShader.hpp"
 #include "system/shutdown/ReleaseTexture.hpp"
+#include "system/shutdown/ReleaseTextureView.hpp"
