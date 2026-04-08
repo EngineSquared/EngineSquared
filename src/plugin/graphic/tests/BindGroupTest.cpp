@@ -197,8 +197,9 @@ TEST(BindGroupTest, CreatesEntriesForTextureAssets)
         const auto &entries = bindGroup.GetEntries();
         ASSERT_EQ(entries.size(), 3u);
         EXPECT_EQ(entries.at(0).binding, 0u);
-        EXPECT_EQ(entries.at(0).textureView,
-                  core.GetResource<Graphic::Resource::TextureContainer>().Get(textureId).GetDefaultView().GetWebGPUView());
+        EXPECT_EQ(
+            entries.at(0).textureView,
+            core.GetResource<Graphic::Resource::TextureContainer>().Get(textureId).GetDefaultView().GetWebGPUView());
         EXPECT_EQ(entries.at(1).binding, 1u);
         EXPECT_EQ(entries.at(1).buffer, core.GetResource<Graphic::Resource::GPUBufferContainer>()
                                             .Get(entt::hashed_string("bindgroup_buffer_asset"))

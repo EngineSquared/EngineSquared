@@ -17,9 +17,7 @@ struct GPUDirectionalLight {
     Id shadowTextureView{};
     uint32_t shadowTextureIndex;
 
-    ~GPUDirectionalLight() {
-
-    }
+    ~GPUDirectionalLight() {}
 
     void Update(const Object::Component::DirectionalLight &light, const Object::Component::Transform &transform)
     {
