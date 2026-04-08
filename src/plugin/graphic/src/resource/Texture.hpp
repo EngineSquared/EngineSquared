@@ -292,7 +292,7 @@ class Texture {
 
     inline Resource::TextureView CreateView(const wgpu::TextureViewDescriptor &descriptor) const
     {
-        return _webgpuTexture.createView(descriptor);
+        return Resource::TextureView(_webgpuTexture.createView(descriptor));
     }
 
     void ReleaseOwnership() { _ownsResources = false; }

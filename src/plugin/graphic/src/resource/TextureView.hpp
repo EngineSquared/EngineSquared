@@ -21,7 +21,7 @@ namespace Graphic::Resource {
 class TextureView {
   public:
     TextureView(void) = default;
-    TextureView(wgpu::TextureView &&textureView) : _webgpuView(textureView) {}
+    explicit TextureView(wgpu::TextureView &&textureView) : _webgpuView(std::move(textureView)) {}
 
     ~TextureView() { Delete(); }
     TextureView(const TextureView &) = delete;
@@ -46,8 +46,6 @@ class TextureView {
         }
         return *this;
     }
-
-    operator wgpu::TextureView() const { return _webgpuView; }
 
     const wgpu::TextureView &GetWebGPUView() const { return _webgpuView; }
 

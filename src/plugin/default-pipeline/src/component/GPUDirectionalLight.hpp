@@ -17,8 +17,6 @@ struct GPUDirectionalLight {
     Id shadowTextureView{};
     uint32_t shadowTextureIndex;
 
-    ~GPUDirectionalLight() {}
-
     void Update(const Object::Component::DirectionalLight &light, const Object::Component::Transform &transform)
     {
         // Why do we negate the forward vector?
