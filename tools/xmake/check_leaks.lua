@@ -9,8 +9,7 @@ local function check_leaks_macos(targets, leaks_tool, project, os, verbose)
         local bin_path = path.join(os.projectdir(), target:targetdir(), "debug", target:filename())
 
         if not os.isfile(bin_path) then
-            print("Executable not found for target: " .. target_name)
-            goto continue
+            raise("Executable not found for target: " .. target_name)
         end
 
         print("Running leaks check on: " .. bin_path)
@@ -24,7 +23,6 @@ local function check_leaks_macos(targets, leaks_tool, project, os, verbose)
         if return_value ~= 0 then
             table.insert(failing_targets, target_name)
         end
-        ::continue::
     end
     return failing_targets
 end
