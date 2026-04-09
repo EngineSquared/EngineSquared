@@ -9,6 +9,7 @@
 #include "resource/SamplerContainer.hpp"
 #include "resource/Texture.hpp"
 #include "resource/TextureContainer.hpp"
+#include "resource/TextureViewContainer.hpp"
 #include "resource/buffer/DirectionalLightBuffer.hpp"
 #include "resource/pass/GBuffer.hpp"
 #include "resource/pass/Shadow.hpp"
@@ -23,6 +24,7 @@ void DefaultPipeline::System::OnDirectionalLightCreation(Engine::Core &core, Eng
     auto &gpuBufferContainer = core.GetResource<Graphic::Resource::GPUBufferContainer>();
     auto &bindGroupManager = core.GetResource<Graphic::Resource::BindGroupManager>();
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
+    auto &textureViewContainer = core.GetResource<Graphic::Resource::TextureViewContainer>();
     auto &samplerContainer = core.GetResource<Graphic::Resource::SamplerContainer>();
     const auto &context = core.GetResource<Graphic::Resource::Context>();
 
@@ -47,7 +49,10 @@ void DefaultPipeline::System::OnDirectionalLightCreation(Engine::Core &core, Eng
     shadowTextureViewDesc.baseArrayLayer = lightIndex;
     shadowTextureViewDesc.arrayLayerCount = 1;
     shadowTextureViewDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment;
-    GPUDirectionalLight.shadowTextureView = directionalShadowsTexture.CreateView(shadowTextureViewDesc);
+
+    entt::hashed_string shadowTextureViewId{textureViewName.data(), textureViewName.size()};
+    textureViewContainer.Add(shadowTextureViewId, directionalShadowsTexture.CreateView(shadowTextureViewDesc));
+    GPUDirectionalLight.shadowTextureView = shadowTextureViewId;
 
     std::string bindGroupName = fmt::format("DIRECTIONAL_LIGHT_BIND_GROUP_{}", entity);
     const uint64_t directionalLightBufferSize = Resource::DirectionalLightBuffer::DirectionalLightTransfer::GPUSize();

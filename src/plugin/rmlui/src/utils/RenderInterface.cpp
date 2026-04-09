@@ -53,7 +53,7 @@ wgpu::BindGroup CreateTextureBindGroup(Engine::Core &core, const wgpu::BindGroup
 {
     std::array<wgpu::BindGroupEntry, 2> entries = {};
     entries[0].binding = 0;
-    entries[0].textureView = texture.GetDefaultView();
+    entries[0].textureView = texture.GetDefaultView().GetWebGPUView();
     entries[1].binding = 1;
     entries[1].sampler = sampler;
 

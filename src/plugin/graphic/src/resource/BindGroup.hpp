@@ -138,7 +138,7 @@ class BindGroup {
         case Asset::Type::Texture: {
             auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
             auto &texture = textureContainer.GetOrDefault(asset.name);
-            entry.textureView = texture.GetDefaultView();
+            entry.textureView = texture.GetDefaultView().GetWebGPUView();
             break;
         }
         default: throw Exception::BindGroupCreationError("Unexpected Asset::Type value in _CreateBindGroupEntry");

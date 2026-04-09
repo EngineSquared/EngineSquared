@@ -16,6 +16,7 @@ void Graphic::Plugin::Bind()
     RegisterResource(Graphic::Resource::GraphicSettings());
     RegisterResource(Graphic::Resource::ShaderContainer());
     RegisterResource(Graphic::Resource::TextureContainer());
+    RegisterResource(Graphic::Resource::TextureViewContainer());
     RegisterResource(Graphic::Resource::GPUBufferContainer());
     RegisterResource(Graphic::Resource::SamplerContainer());
     RegisterResource(Graphic::Resource::BindGroupManager());
@@ -33,7 +34,7 @@ void Graphic::Plugin::Bind()
 
     RegisterSystems<RenderingPipeline::Presentation>(System::Present);
 
-    RegisterSystems<Engine::Scheduler::Shutdown>(System::ReleaseGPUBuffer, System::ReleaseBindingGroup,
-                                                 System::ReleaseShader, System::ReleaseTexture, System::ReleaseSampler,
-                                                 System::ReleaseContext);
+    RegisterSystems<Engine::Scheduler::Shutdown>(
+        System::ReleaseGPUBuffer, System::ReleaseBindingGroup, System::ReleaseShader, System::ReleaseTextureView,
+        System::ReleaseTexture, System::ReleaseSampler, System::ReleaseContext);
 }

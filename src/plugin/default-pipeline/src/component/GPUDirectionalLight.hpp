@@ -14,7 +14,7 @@ struct GPUDirectionalLight {
     glm::mat4 viewProjectionMatrix;
     Id buffer{};
     Id bindGroupData{};
-    wgpu::TextureView shadowTextureView;
+    Id shadowTextureView{};
     uint32_t shadowTextureIndex;
 
     void Update(const Object::Component::DirectionalLight &light, const Object::Component::Transform &transform)
