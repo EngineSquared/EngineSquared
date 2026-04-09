@@ -1,4 +1,5 @@
 <img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Banner.png?raw=true" alt="EngineSquared banner">
+
 # Engine² (or Engine Squared)
 
 [![CI](https://github.com/EngineSquared/EngineSquared/actions/workflows/ci.yml/badge.svg)](https://github.com/EngineSquared/EngineSquared/actions/workflows/ci.yml)
@@ -7,10 +8,26 @@
 [![Issues](https://img.shields.io/github/issues/EngineSquared/EngineSquared)](https://github.com/EngineSquared/EngineSquared/issues)
 [![Stars](https://img.shields.io/github/stars/EngineSquared/EngineSquared)](https://github.com/EngineSquared/EngineSquared/stargazers)
 
-Engine² is a game engine that aims to provide a developer-friendly and open-source alternative for 3D game development.
-It is designed to provide truly open-source project and be accessible to everyone.
+Engine² is an engine focused on 3D game development. The engine is free and remains free in multiple significations of it:
 
----
+### Free as control
+
+Engine² makes you able to understand it, use it, and contribute to it easily, for you, artists. Any kind of artist should be able to take the project in their hands and make stuff with it. If you are an engine programmer, game designer, sound designer, tool programmer, and so on, you will have the possibility to create and express yourself. And as I like to say: "For me, the quality of a game is reflected in the messages it conveys."
+
+### Free as freedom
+
+Engine² is not made to make realistic games nor little arcade ones. This project is made to help you create any kind of project. If you want to make something, you will be able to do it. Anything is possible.
+
+### Free as a price
+
+Engine² will not force you to spend any money to use any kind of services it proposes. It’s 101% free to use.
+
+### Free as liberty
+
+Engine² lets every process, planification, and evolution be visible and understandable by the community. The point here is to know the priorities of the engine, its direction, and to let the community impact most of the engine.
+
+# Technical
+
 ## Examples
 
 <div align="center">
@@ -19,7 +36,9 @@ It is designed to provide truly open-source project and be accessible to everyon
 <a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_light_usage"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Lights.png?raw=true" width="40%" alt="Lights"></a>
 <a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_material_usage"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Material.png?raw=true" width="40%" alt="Material"></a> <br />
 </div>
+
 ---
+
 ## Prerequisites
 
 Make sure the following tools are installed before proceeding:
@@ -33,6 +52,7 @@ Make sure the following tools are installed before proceeding:
 > *(before doing that, check the documentation about [how to create an issue](https://github.com/EngineSquared/EngineSquared/wiki/Contributing#creating-an-issue))*
 
 ---
+
 ## Clone the repository
 
 ```bash
@@ -57,6 +77,7 @@ xmake build -y
 > xmake will automatically pull the MSVC toolchain, so you don't need to have it already installed on your machine.
 
 ---
+
 ## Run a minimal example
 
 Build and run the `basic_core_usage` example to confirm everything works:
@@ -69,6 +90,7 @@ xmake run BasicCoreUsage
 If the basic core usage run without errors, you're all set. ✅
 
 ---
+
 ## Project Overview
 
 Here is a graphical overview of the project:
@@ -77,21 +99,20 @@ Here is a graphical overview of the project:
 graph TD
   ROOT["EngineSquared"]
 
-  ROOT --> SRC["src/"<br/><small>All source files of the project</small>]
-  ROOT --> EX["examples/<br/><small>Runnable demos</small>"]
-  ROOT --> TOOLS["tools/<br/><small>Some useful general tools</small>"]
-  ROOT --> DOCS["docs/<br/><small>Images, doxygen</small>"]
+  ROOT --> SRC["src/"<br/>All source files of the project]
+  ROOT --> EX["examples/<br/>Runnable demos"]
+  ROOT --> TOOLS["tools/<br/>Some useful general tools"]
+  ROOT --> DOCS["docs/<br/>Images, doxygen"]
 
-  SRC --> ENGINE["engine/<br/><small>ECS Core of the engine</small>"]
-  SRC --> PLUGIN["plugin/<br/><small>Groups of context</small>"]
-  SRC --> UTILS["utils/<br/><small>Shared utility stuff</small>"]
+  SRC --> ENGINE["engine/<br/>ECS Core of the engine"]
+  SRC --> PLUGIN["plugin/<br/>Groups of context"]
+  SRC --> UTILS["utils/<br/>Shared utility stuff"]
 
-  PLUGIN --> PLUGIN_SRC["src/<br/><small>Source files</small>"]
-  PLUGIN --> PLUGIN_XMAKE["tests/<br/><small>Tests files</small>"]
+  PLUGIN --> PLUGIN_SRC["src/<br/>Source files"]
+  PLUGIN --> PLUGIN_XMAKE["tests/<br/>Tests files"]
 ```
 
 Engine² is **STRONGLY** built around an [ECS architectural design pattern](https://en.wikipedia.org/wiki/Entity_component_system). The engine core (`src/engine/`) provides all necessary stuff to agglomerate logic and data to create any kind project. The Core class is the entry point of the framework, it allows to manipulate entities and systems through schedulers. All features (graphics, physics, sound, etc.) are implemented as **plugins** that you register into the engine core.
-
 
 ### Available plugins
 
@@ -114,9 +135,10 @@ Here is a list of available plugins:
 | `default-pipeline`   | Pre-assembled default render pipeline |
 
 > [!WARNING]
-> Those schedulers may not be up to date as they are not updated automatically.
+> Those plugins may not be up to date as they are not updated automatically. To check current plugins, you can check [plugins folder](https://github.com/EngineSquared/EngineSquared/tree/main/src/plugin).
 
 ---
+
 ### How a minimal program looks
 
 Here is a very basic example that can be useful to understand the pattern before contributing:
@@ -151,22 +173,25 @@ int main() {
 > This example may not be up to date as it's not updated automatically. For concrete working examples, you can check [examples folder](https://github.com/EngineSquared/EngineSquared/tree/main/examples).
 
 ---
+
 ## Where to go next
 
-- 📚 [Full documentation & wiki](https://github.com/EngineSquared/EngineSquared/wiki): everything you need to know to understand the project
-- 💻 [Technical documentation](https://enginesquared.github.io/EngineSquared/):  if you want to get in depth in the engine
-- 🧩 [All examples](https://github.com/EngineSquared/EngineSquared/tree/main/examples): explore graphics, physics, input, sound, and more
-- 🤝 [Contributing guide](https://github.com/EngineSquared/EngineSquared/wiki/Contributing): how to contribute to the project
-- 👮‍♀️[Code of conduct](https://github.com/EngineSquared/EngineSquared/blob/main/CODE_OF_CONDUCT.md): how you should behave while interacting in this community
+- 📚 [Full documentation & wiki](https://github.com/EngineSquared/EngineSquared/wiki): Everything you need to know to understand the project.
+- 💻 [Technical documentation](https://enginesquared.github.io/EngineSquared/):  If you want to get in depth in the engine.
+- 🧩 [All examples](https://github.com/EngineSquared/EngineSquared/tree/main/examples): Explore graphics, physics, input, sound, and more.
+- 🤝 [Contributing guide](https://github.com/EngineSquared/EngineSquared/wiki/Contributing): How to contribute to the project.
+- 👮‍♀️[Code of conduct](https://github.com/EngineSquared/EngineSquared/blob/main/CODE_OF_CONDUCT.md): How you should behave while interacting in this community.
 - 🧪 Run the test suite: `xmake test -y`
-- 🗺️ [Roadmap](https://github.com/orgs/EngineSquared/projects/4/views/1): what are we currently doing
+- 🗺️ [Roadmap](https://github.com/orgs/EngineSquared/projects/4/views/1): Where the project is going.
 
 ---
-## Interested ? 
+
+## Interested ?
 
 You can start to discover the engine through contribute to it through looking at [good first issues](https://github.com/EngineSquared/EngineSquared/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-first-issue) and checking [how to contribute](https://github.com/EngineSquared/EngineSquared/wiki/Contributing)
 
 ---
+
 ## Troubleshooting
 
 For now there is no troubleshooting found. If you encounter a problem, please report it by opening a [question issue](https://github.com/EngineSquared/EngineSquared/issues/new?template=question.md) 🙏
