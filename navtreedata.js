@@ -25,20 +25,20 @@
 var NAVTREE =
 [
   [ "Engine²", "index.html", [
-    [ "Engine² (or Engine Squared)", "index.html#autotoc_md32", [
-      [ "Examples", "index.html#autotoc_md34", null ],
-      [ "", "index.html#autotoc_md35", null ],
-      [ "Prerequisites", "index.html#autotoc_md36", null ],
-      [ "Clone the repository", "index.html#autotoc_md38", null ],
-      [ "Configure and build", "index.html#autotoc_md40", null ],
-      [ "Run a minimal example", "index.html#autotoc_md42", null ],
-      [ "Project Overview", "index.html#autotoc_md44", [
-        [ "Available plugins", "index.html#autotoc_md45", null ],
-        [ "How a minimal program looks", "index.html#autotoc_md47", null ]
+    [ "Engine² (or Engine Squared)", "index.html#autotoc_md32", null ],
+    [ "Technical", "index.html#autotoc_md37", [
+      [ "Examples", "index.html#autotoc_md38", null ],
+      [ "Prerequisites", "index.html#autotoc_md40", null ],
+      [ "Clone the repository", "index.html#autotoc_md42", null ],
+      [ "Configure and build", "index.html#autotoc_md44", null ],
+      [ "Run a minimal example", "index.html#autotoc_md46", null ],
+      [ "Project Overview", "index.html#autotoc_md48", [
+        [ "Available plugins", "index.html#autotoc_md49", null ],
+        [ "How a minimal program looks", "index.html#autotoc_md51", null ]
       ] ],
-      [ "Where to go next", "index.html#autotoc_md49", null ],
-      [ "Interested ?", "index.html#autotoc_md51", null ],
-      [ "Troubleshooting", "index.html#autotoc_md53", null ]
+      [ "Where to go next", "index.html#autotoc_md53", null ],
+      [ "Interested ?", "index.html#autotoc_md55", null ],
+      [ "Troubleshooting", "index.html#autotoc_md57", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Namespaces", "namespaces.html", [
