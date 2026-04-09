@@ -78,6 +78,7 @@ task("check_leaks")
             for _, target in ipairs(failing_targets) do
                 print("  - " .. target)
             end
+            raise("Memory leaks detected in " .. #failing_targets .. " target(s).")
         else
             print("No memory leaks found.")
         end
