@@ -112,8 +112,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a680b1d8934c39649ed05e9bd21213b32" id="r_a680b1d8934c39649ed05e9bd21213b32"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a680b1d8934c39649ed05e9bd21213b32">Write</a> (const <a class="el" href="classGraphic_1_1Resource_1_1Context.html">Context</a> &amp;context, const <a class="el" href="structGraphic_1_1Resource_1_1Image.html">Image</a> &amp;image)</td></tr>
 <tr class="memitem:acff20a61c2d1567268928db54b4120fe" id="r_acff20a61c2d1567268928db54b4120fe"><td class="memItemLeft"><a class="el" href="structGraphic_1_1Resource_1_1Image.html">Image</a>&#160;</td><td class="memItemRight"><a class="el" href="#acff20a61c2d1567268928db54b4120fe">RetrieveImage</a> (const <a class="el" href="classGraphic_1_1Resource_1_1Context.html">Context</a> &amp;context) const</td></tr>
 <tr class="memdesc:acff20a61c2d1567268928db54b4120fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads back the GPU texture and returns it as an <a class="el" href="structGraphic_1_1Resource_1_1Image.html">Image</a>.  <br /></td></tr>
-<tr class="memitem:a0c450ee9bdf0c4980fc16161fdfbbba1" id="r_a0c450ee9bdf0c4980fc16161fdfbbba1"><td class="memItemLeft">wgpu::TextureView&#160;</td><td class="memItemRight"><a class="el" href="#a0c450ee9bdf0c4980fc16161fdfbbba1">GetDefaultView</a> () const</td></tr>
-<tr class="memitem:a7c9f2e855b52e538e507f494a1db3c1e" id="r_a7c9f2e855b52e538e507f494a1db3c1e"><td class="memItemLeft">wgpu::TextureView&#160;</td><td class="memItemRight"><a class="el" href="#a7c9f2e855b52e538e507f494a1db3c1e">CreateView</a> (const wgpu::TextureViewDescriptor &amp;descriptor) const</td></tr>
+<tr class="memitem:ab0824790d03f554e4c34feadbc19b2a1" id="r_ab0824790d03f554e4c34feadbc19b2a1"><td class="memItemLeft">const <a class="el" href="classGraphic_1_1Resource_1_1TextureView.html">Resource::TextureView</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab0824790d03f554e4c34feadbc19b2a1">GetDefaultView</a> () const</td></tr>
+<tr class="memitem:aeffdf3025bd654fbbf246bec1492373d" id="r_aeffdf3025bd654fbbf246bec1492373d"><td class="memItemLeft"><a class="el" href="classGraphic_1_1Resource_1_1TextureView.html">Resource::TextureView</a>&#160;</td><td class="memItemRight"><a class="el" href="#aeffdf3025bd654fbbf246bec1492373d">CreateView</a> (const wgpu::TextureViewDescriptor &amp;descriptor) const</td></tr>
 <tr class="memitem:ae7612fd1015f6fdfa3c4be5681146150" id="r_ae7612fd1015f6fdfa3c4be5681146150"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae7612fd1015f6fdfa3c4be5681146150">ReleaseOwnership</a> ()</td></tr>
 <tr class="memitem:a678ebeda153df757489897a7ddbf1c49" id="r_a678ebeda153df757489897a7ddbf1c49"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a678ebeda153df757489897a7ddbf1c49">TakeOwnership</a> ()</td></tr>
 <tr class="memitem:a50596af74c402928e05d7fec53ea3c26" id="r_a50596af74c402928e05d7fec53ea3c26"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a50596af74c402928e05d7fec53ea3c26">OwnsResources</a> () const</td></tr>
@@ -130,7 +130,7 @@ Static Private Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a248b8349be134b381197d3a0de7eb5f1" id="r_a248b8349be134b381197d3a0de7eb5f1"><td class="memItemLeft">wgpu::Texture&#160;</td><td class="memItemRight"><a class="el" href="#a248b8349be134b381197d3a0de7eb5f1">_webgpuTexture</a></td></tr>
-<tr class="memitem:aeb5c967036ab19aaef7909591d7fa88f" id="r_aeb5c967036ab19aaef7909591d7fa88f"><td class="memItemLeft">wgpu::TextureView&#160;</td><td class="memItemRight"><a class="el" href="#aeb5c967036ab19aaef7909591d7fa88f">_defaultView</a></td></tr>
+<tr class="memitem:acc42d47a7c5f810a5cc44c857a0d609c" id="r_acc42d47a7c5f810a5cc44c857a0d609c"><td class="memItemLeft"><a class="el" href="classGraphic_1_1Resource_1_1TextureView.html">Resource::TextureView</a>&#160;</td><td class="memItemRight"><a class="el" href="#acc42d47a7c5f810a5cc44c857a0d609c">_defaultView</a></td></tr>
 <tr class="memitem:a5e04e6af59d09cb092810b1bd4d1f89c" id="r_a5e04e6af59d09cb092810b1bd4d1f89c"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a5e04e6af59d09cb092810b1bd4d1f89c">_name</a></td></tr>
 <tr class="memitem:aa7a60bcda20f9e4f1f4649bb5118a49c" id="r_aa7a60bcda20f9e4f1f4649bb5118a49c"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa7a60bcda20f9e4f1f4649bb5118a49c">_ownsResources</a> = true</td></tr>
 </table>
@@ -426,8 +426,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a7c9f2e855b52e538e507f494a1db3c1e" name="a7c9f2e855b52e538e507f494a1db3c1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c9f2e855b52e538e507f494a1db3c1e">&#9670;&#160;</a></span>CreateView()</h2>
+<a id="aeffdf3025bd654fbbf246bec1492373d" name="aeffdf3025bd654fbbf246bec1492373d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeffdf3025bd654fbbf246bec1492373d">&#9670;&#160;</a></span>CreateView()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -436,7 +436,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">wgpu::TextureView Graphic::Resource::Texture::CreateView </td>
+          <td class="memname"><a class="el" href="classGraphic_1_1Resource_1_1TextureView.html">Resource::TextureView</a> Graphic::Resource::Texture::CreateView </td>
           <td>(</td>
           <td class="paramtype">const wgpu::TextureViewDescriptor &amp;</td>          <td class="paramname"><span class="paramname"><em>descriptor</em></span></td><td>)</td>
           <td> const</td>
@@ -451,8 +451,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a0c450ee9bdf0c4980fc16161fdfbbba1" name="a0c450ee9bdf0c4980fc16161fdfbbba1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c450ee9bdf0c4980fc16161fdfbbba1">&#9670;&#160;</a></span>GetDefaultView()</h2>
+<a id="ab0824790d03f554e4c34feadbc19b2a1" name="ab0824790d03f554e4c34feadbc19b2a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0824790d03f554e4c34feadbc19b2a1">&#9670;&#160;</a></span>GetDefaultView()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -461,7 +461,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">wgpu::TextureView Graphic::Resource::Texture::GetDefaultView </td>
+          <td class="memname">const <a class="el" href="classGraphic_1_1Resource_1_1TextureView.html">Resource::TextureView</a> &amp; Graphic::Resource::Texture::GetDefaultView </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -685,8 +685,8 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="aeb5c967036ab19aaef7909591d7fa88f" name="aeb5c967036ab19aaef7909591d7fa88f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb5c967036ab19aaef7909591d7fa88f">&#9670;&#160;</a></span>_defaultView</h2>
+<a id="acc42d47a7c5f810a5cc44c857a0d609c" name="acc42d47a7c5f810a5cc44c857a0d609c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc42d47a7c5f810a5cc44c857a0d609c">&#9670;&#160;</a></span>_defaultView</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -695,7 +695,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">wgpu::TextureView Graphic::Resource::Texture::_defaultView</td>
+          <td class="memname"><a class="el" href="classGraphic_1_1Resource_1_1TextureView.html">Resource::TextureView</a> Graphic::Resource::Texture::_defaultView</td>
         </tr>
       </table>
   </td>

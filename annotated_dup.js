@@ -148,7 +148,8 @@ var annotated_dup =
         [ "ShaderDescriptor", "classGraphic_1_1Resource_1_1ShaderDescriptor.html", "classGraphic_1_1Resource_1_1ShaderDescriptor" ],
         [ "Surface", "structGraphic_1_1Resource_1_1Surface.html", "structGraphic_1_1Resource_1_1Surface" ],
         [ "CallbackData", "structGraphic_1_1Resource_1_1CallbackData.html", "structGraphic_1_1Resource_1_1CallbackData" ],
-        [ "Texture", "classGraphic_1_1Resource_1_1Texture.html", "classGraphic_1_1Resource_1_1Texture" ]
+        [ "Texture", "classGraphic_1_1Resource_1_1Texture.html", "classGraphic_1_1Resource_1_1Texture" ],
+        [ "TextureView", "classGraphic_1_1Resource_1_1TextureView.html", "classGraphic_1_1Resource_1_1TextureView" ]
       ] ],
       [ "Utils", "namespaceGraphic_1_1Utils.html", [
         [ "ValidationError", "structGraphic_1_1Utils_1_1ValidationError.html", "structGraphic_1_1Utils_1_1ValidationError" ],

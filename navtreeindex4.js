@@ -1,5 +1,12 @@
 var NAVTREEINDEX4 =
 {
+"UpdateGPUMaterials_8hpp_source.html":[5,0,1,1,1,0,3,2,9],
+"UpdateGPUMeshes_8cpp.html":[5,0,1,1,1,0,3,2,10],
+"UpdateGPUMeshes_8hpp.html":[5,0,1,1,1,0,3,2,11],
+"UpdateGPUMeshes_8hpp_source.html":[5,0,1,1,1,0,3,2,11],
+"UpdateGPUTransforms_8cpp.html":[5,0,1,1,1,0,3,2,12],
+"UpdateGPUTransforms_8hpp.html":[5,0,1,1,1,0,3,2,13],
+"UpdateGPUTransforms_8hpp_source.html":[5,0,1,1,1,0,3,2,13],
 "UpdatePointLights_8cpp.html":[5,0,1,1,1,0,3,2,14],
 "UpdatePointLights_8hpp.html":[5,0,1,1,1,0,3,2,15],
 "UpdatePointLights_8hpp_source.html":[5,0,1,1,1,0,3,2,15],
@@ -242,12 +249,5 @@ var NAVTREEINDEX4 =
 "classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a0ad7dad76dd57629c7dc48f277bf7bf9":[4,0,1,1,1,6],
 "classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a10b8d19465c21599d1b41ea7642891dd":[2,0,1,1,1,16],
 "classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a10b8d19465c21599d1b41ea7642891dd":[4,0,1,1,1,16],
-"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a485bc074b2fa9f0105dd69a5cc6e4bd1":[2,0,1,1,1,4],
-"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a485bc074b2fa9f0105dd69a5cc6e4bd1":[4,0,1,1,1,4],
-"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a5a3f269bc9d93a1b371db9091d626f6f":[2,0,1,1,1,8],
-"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a5a3f269bc9d93a1b371db9091d626f6f":[4,0,1,1,1,8],
-"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a5b92980b9628ec36ce2b50abf70a9f8e":[2,0,1,1,1,15],
-"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a5b92980b9628ec36ce2b50abf70a9f8e":[4,0,1,1,1,15],
-"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6116bd7d29edfe48b69bc338673d5df8":[2,0,1,1,1,17],
-"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6116bd7d29edfe48b69bc338673d5df8":[4,0,1,1,1,17]
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a485bc074b2fa9f0105dd69a5cc6e4bd1":[2,0,1,1,1,4]
 };

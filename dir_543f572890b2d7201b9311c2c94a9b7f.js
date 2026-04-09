@@ -23,5 +23,7 @@ var dir_543f572890b2d7201b9311c2c94a9b7f =
     [ "ShaderDescriptor.hpp", "ShaderDescriptor_8hpp.html", "ShaderDescriptor_8hpp" ],
     [ "Surface.hpp", "Surface_8hpp.html", "Surface_8hpp" ],
     [ "Texture.hpp", "Texture_8hpp.html", "Texture_8hpp" ],
-    [ "TextureContainer.hpp", "TextureContainer_8hpp.html", "TextureContainer_8hpp" ]
+    [ "TextureContainer.hpp", "TextureContainer_8hpp.html", "TextureContainer_8hpp" ],
+    [ "TextureView.hpp", "TextureView_8hpp.html", "TextureView_8hpp" ],
+    [ "TextureViewContainer.hpp", "TextureViewContainer_8hpp.html", "TextureViewContainer_8hpp" ]
 ];

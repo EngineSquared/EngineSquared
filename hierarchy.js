@@ -377,6 +377,7 @@ var hierarchy =
     [ "TestSystemClass", "classTestSystemClass.html", null ],
     [ "Graphic::Resource::Texture", "classGraphic_1_1Resource_1_1Texture.html", null ],
     [ "Rmlui::Utils::RenderInterface::TextureData", "structRmlui_1_1Utils_1_1RenderInterface_1_1TextureData.html", null ],
+    [ "Graphic::Resource::TextureView", "classGraphic_1_1Resource_1_1TextureView.html", null ],
     [ "Engine::Resource::Time", "structEngine_1_1Resource_1_1Time.html", null ],
     [ "Physics::Component::TorqueCurvePoint", "structPhysics_1_1Component_1_1TorqueCurvePoint.html", null ],
     [ "Object::Component::Transform", "structObject_1_1Component_1_1Transform.html", null ],

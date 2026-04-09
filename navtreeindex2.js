@@ -229,6 +229,9 @@ var NAVTREEINDEX2 =
 "ReleaseShader_8cpp.html":[5,0,1,1,3,0,3,4,8],
 "ReleaseShader_8hpp.html":[5,0,1,1,3,0,3,4,9],
 "ReleaseShader_8hpp_source.html":[5,0,1,1,3,0,3,4,9],
+"ReleaseTextureView_8cpp.html":[5,0,1,1,3,0,3,4,12],
+"ReleaseTextureView_8hpp.html":[5,0,1,1,3,0,3,4,13],
+"ReleaseTextureView_8hpp_source.html":[5,0,1,1,3,0,3,4,13],
 "ReleaseTexture_8cpp.html":[5,0,1,1,3,0,3,4,10],
 "ReleaseTexture_8hpp.html":[5,0,1,1,3,0,3,4,11],
 "ReleaseTexture_8hpp_source.html":[5,0,1,1,3,0,3,4,11],
@@ -246,8 +249,5 @@ var NAVTREEINDEX2 =
 "RenderGraphTest_8cpp.html#a51246b98c89a39e0027da84822fdbab8":[5,0,1,1,3,1,7,3],
 "RenderGraphTest_8cpp.html#a7e4dd14e12df90fb9938305cf7db4077":[5,0,1,1,3,1,7,6],
 "RenderGraphTest_8cpp.html#a80dac11f37d95092981af3e94d568199":[5,0,1,1,3,1,7,4],
-"RenderGraphTest_8cpp.html#a967db5150b16427bd43f90e026cb754f":[5,0,1,1,3,1,7,18],
-"RenderGraphTest_8cpp.html#aa401e7e848eff7e753ac03846a21f86f":[5,0,1,1,3,1,7,2],
-"RenderGraphTest_8cpp.html#aa45268b27575e2b067efb07d3246a820":[5,0,1,1,3,1,7,16],
-"RenderGraphTest_8cpp.html#aa8e2675425f9c171605334d606bdecc4":[5,0,1,1,3,1,7,12]
+"RenderGraphTest_8cpp.html#a967db5150b16427bd43f90e026cb754f":[5,0,1,1,3,1,7,18]
 };

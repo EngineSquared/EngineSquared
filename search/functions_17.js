@@ -69,9 +69,10 @@ var searchData=
   ['_7etestscript_66',['~TestScript',['../classTestScript.html#a252a4b6b3bd9949cb3a17a0d6201e13d',1,'TestScript']]],
   ['_7etexture_67',['~Texture',['../classGraphic_1_1Resource_1_1Texture.html#aeae9e2e7d3ef1c408cae996ddfcbd3d7',1,'Graphic::Resource::Texture']]],
   ['_7etexturebindgrouplayoutentry_68',['~TextureBindGroupLayoutEntry',['../classGraphic_1_1Utils_1_1TextureBindGroupLayoutEntry.html#ad907c99ab0b0ef6186f3309462bb3597',1,'Graphic::Utils::TextureBindGroupLayoutEntry']]],
-  ['_7ethirdplayercamerabehavior_69',['~ThirdPlayerCameraBehavior',['../classThirdPlayerCameraBehavior.html#a106fd4e1626f4186b04793cbb543bf89',1,'ThirdPlayerCameraBehavior']]],
-  ['_7etransformgpubuffer_70',['~TransformGPUBuffer',['../classDefaultPipeline_1_1Resource_1_1TransformGPUBuffer.html#a5fe21b7e5dd40f34c7c857e0f65962a0',1,'DefaultPipeline::Resource::TransformGPUBuffer']]],
-  ['_7euicontext_71',['~UIContext',['../classRmlui_1_1Resource_1_1UIContext.html#a932f07a027c424744b3519827970e57e',1,'Rmlui::Resource::UIContext']]],
-  ['_7evertexbufferlayout_72',['~VertexBufferLayout',['../classGraphic_1_1Utils_1_1VertexBufferLayout.html#a849b41fbf85bc60a25ec8e6c24e10a29',1,'Graphic::Utils::VertexBufferLayout']]],
-  ['_7ewrappedsystem_73',['~WrappedSystem',['../classEngine_1_1WrappedSystem.html#a446a75817a26cc6c8d9ef22439d1c04e',1,'Engine::WrappedSystem']]]
+  ['_7etextureview_69',['~TextureView',['../classGraphic_1_1Resource_1_1TextureView.html#a222c259f293934340ca89e20db06d568',1,'Graphic::Resource::TextureView']]],
+  ['_7ethirdplayercamerabehavior_70',['~ThirdPlayerCameraBehavior',['../classThirdPlayerCameraBehavior.html#a106fd4e1626f4186b04793cbb543bf89',1,'ThirdPlayerCameraBehavior']]],
+  ['_7etransformgpubuffer_71',['~TransformGPUBuffer',['../classDefaultPipeline_1_1Resource_1_1TransformGPUBuffer.html#a5fe21b7e5dd40f34c7c857e0f65962a0',1,'DefaultPipeline::Resource::TransformGPUBuffer']]],
+  ['_7euicontext_72',['~UIContext',['../classRmlui_1_1Resource_1_1UIContext.html#a932f07a027c424744b3519827970e57e',1,'Rmlui::Resource::UIContext']]],
+  ['_7evertexbufferlayout_73',['~VertexBufferLayout',['../classGraphic_1_1Utils_1_1VertexBufferLayout.html#a849b41fbf85bc60a25ec8e6c24e10a29',1,'Graphic::Utils::VertexBufferLayout']]],
+  ['_7ewrappedsystem_74',['~WrappedSystem',['../classEngine_1_1WrappedSystem.html#a446a75817a26cc6c8d9ef22439d1c04e',1,'Engine::WrappedSystem']]]
 ];

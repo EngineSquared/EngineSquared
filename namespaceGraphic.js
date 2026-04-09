@@ -24,6 +24,7 @@ var namespaceGraphic =
       [ "ReleaseSampler", "namespaceGraphic_1_1System.html#ad36bc896ea05c8b305ecb19573d0277f", null ],
       [ "ReleaseShader", "namespaceGraphic_1_1System.html#a4364367914b73b58f6d323149c82779f", null ],
       [ "ReleaseTexture", "namespaceGraphic_1_1System.html#a52c2b30cafbeabd5ccc5c19c5b0764ea", null ],
+      [ "ReleaseTextureView", "namespaceGraphic_1_1System.html#aad11615c57aa11e8b065a659ce36aab8", null ],
       [ "RequestCapabilities", "namespaceGraphic_1_1System.html#adf7ee3af0d66b760423a6badbd4a8f19", null ],
       [ "SetupDeviceDescriptor", "namespaceGraphic_1_1System.html#a0984358dd1d771fcccf80fc0fa797161", null ],
       [ "SetupQueue", "namespaceGraphic_1_1System.html#aa885a79da9dbf02763114acc1d0fa797", null ],

@@ -1,5 +1,12 @@
 var NAVTREEINDEX5 =
 {
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a485bc074b2fa9f0105dd69a5cc6e4bd1":[4,0,1,1,1,4],
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a5a3f269bc9d93a1b371db9091d626f6f":[2,0,1,1,1,8],
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a5a3f269bc9d93a1b371db9091d626f6f":[4,0,1,1,1,8],
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a5b92980b9628ec36ce2b50abf70a9f8e":[2,0,1,1,1,15],
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a5b92980b9628ec36ce2b50abf70a9f8e":[4,0,1,1,1,15],
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6116bd7d29edfe48b69bc338673d5df8":[2,0,1,1,1,17],
+"classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6116bd7d29edfe48b69bc338673d5df8":[4,0,1,1,1,17],
 "classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6c3a3474180e6040b35ef4e59d0b866c":[2,0,1,1,1,18],
 "classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6c3a3474180e6040b35ef4e59d0b866c":[4,0,1,1,1,18],
 "classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html#a6f4824c255fcc136fb3d585cd7cf707f":[2,0,1,1,1,12],
@@ -242,12 +249,5 @@ var NAVTREEINDEX5 =
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a8196b19343594669f0be67e1945239ee":[4,0,1,1,8,7],
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a8997d7cdb75471f7ff53a77cd970ad6f":[2,0,1,1,8,4],
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a8997d7cdb75471f7ff53a77cd970ad6f":[4,0,1,1,8,4],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a92fea9e12839d4d1ad2b16f096765f26":[2,0,1,1,8,12],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a92fea9e12839d4d1ad2b16f096765f26":[4,0,1,1,8,12],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a9495d1762c340687b95cf791ec5f6908":[2,0,1,1,8,13],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a9495d1762c340687b95cf791ec5f6908":[4,0,1,1,8,13],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#ab2d2d0cfd4da2c1072c9a1603c4977c2":[2,0,1,1,8,9],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#ab2d2d0cfd4da2c1072c9a1603c4977c2":[4,0,1,1,8,9],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acd3e0bfc52bb1c299218bb7e4b0cc3b4":[2,0,1,1,8,5],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acd3e0bfc52bb1c299218bb7e4b0cc3b4":[4,0,1,1,8,5]
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a92fea9e12839d4d1ad2b16f096765f26":[2,0,1,1,8,12]
 };

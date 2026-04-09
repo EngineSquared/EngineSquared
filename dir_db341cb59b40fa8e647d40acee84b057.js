@@ -11,5 +11,7 @@ var dir_db341cb59b40fa8e647d40acee84b057 =
     [ "ReleaseShader.cpp", "ReleaseShader_8cpp.html", null ],
     [ "ReleaseShader.hpp", "ReleaseShader_8hpp.html", "ReleaseShader_8hpp" ],
     [ "ReleaseTexture.cpp", "ReleaseTexture_8cpp.html", null ],
-    [ "ReleaseTexture.hpp", "ReleaseTexture_8hpp.html", "ReleaseTexture_8hpp" ]
+    [ "ReleaseTexture.hpp", "ReleaseTexture_8hpp.html", "ReleaseTexture_8hpp" ],
+    [ "ReleaseTextureView.cpp", "ReleaseTextureView_8cpp.html", null ],
+    [ "ReleaseTextureView.hpp", "ReleaseTextureView_8hpp.html", "ReleaseTextureView_8hpp" ]
 ];

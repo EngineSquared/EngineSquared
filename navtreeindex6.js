@@ -1,5 +1,12 @@
 var NAVTREEINDEX6 =
 {
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a92fea9e12839d4d1ad2b16f096765f26":[4,0,1,1,8,12],
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a9495d1762c340687b95cf791ec5f6908":[2,0,1,1,8,13],
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a9495d1762c340687b95cf791ec5f6908":[4,0,1,1,8,13],
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#ab2d2d0cfd4da2c1072c9a1603c4977c2":[2,0,1,1,8,9],
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#ab2d2d0cfd4da2c1072c9a1603c4977c2":[4,0,1,1,8,9],
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acd3e0bfc52bb1c299218bb7e4b0cc3b4":[2,0,1,1,8,5],
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acd3e0bfc52bb1c299218bb7e4b0cc3b4":[4,0,1,1,8,5],
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acebf851cc85d28e61f4ff69b5d15bafa":[2,0,1,1,8,10],
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#acebf851cc85d28e61f4ff69b5d15bafa":[4,0,1,1,8,10],
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#ad67dc5277672de0aea3fc80e8fd58543":[2,0,1,1,8,6],
@@ -242,12 +249,5 @@ var NAVTREEINDEX6 =
 "classEngine_1_1SchedulerContainer.html#a6c7a8748e283515aa860764ee9c0cd4e":[4,0,3,12,19],
 "classEngine_1_1SchedulerContainer.html#a7c48bf8bc394d2be1825a621163a22ab":[2,0,3,12,1],
 "classEngine_1_1SchedulerContainer.html#a7c48bf8bc394d2be1825a621163a22ab":[4,0,3,12,1],
-"classEngine_1_1SchedulerContainer.html#a88536157d2c1c924f393ab02ad67c990":[2,0,3,12,12],
-"classEngine_1_1SchedulerContainer.html#a88536157d2c1c924f393ab02ad67c990":[4,0,3,12,12],
-"classEngine_1_1SchedulerContainer.html#a8a80a624ff22268de3eb32ec22bcfe19":[2,0,3,12,9],
-"classEngine_1_1SchedulerContainer.html#a8a80a624ff22268de3eb32ec22bcfe19":[4,0,3,12,9],
-"classEngine_1_1SchedulerContainer.html#ac73fd3c50d566eaadf225382457e9847":[2,0,3,12,11],
-"classEngine_1_1SchedulerContainer.html#ac73fd3c50d566eaadf225382457e9847":[4,0,3,12,11],
-"classEngine_1_1SchedulerContainer.html#aeb32815c9d09dc967cd2b168917a7f18":[2,0,3,12,13],
-"classEngine_1_1SchedulerContainer.html#aeb32815c9d09dc967cd2b168917a7f18":[4,0,3,12,13]
+"classEngine_1_1SchedulerContainer.html#a88536157d2c1c924f393ab02ad67c990":[2,0,3,12,12]
 };

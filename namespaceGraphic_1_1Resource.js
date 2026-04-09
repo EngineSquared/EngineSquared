@@ -21,12 +21,14 @@ var namespaceGraphic_1_1Resource =
     [ "Surface", "structGraphic_1_1Resource_1_1Surface.html", "structGraphic_1_1Resource_1_1Surface" ],
     [ "CallbackData", "structGraphic_1_1Resource_1_1CallbackData.html", "structGraphic_1_1Resource_1_1CallbackData" ],
     [ "Texture", "classGraphic_1_1Resource_1_1Texture.html", "classGraphic_1_1Resource_1_1Texture" ],
+    [ "TextureView", "classGraphic_1_1Resource_1_1TextureView.html", "classGraphic_1_1Resource_1_1TextureView" ],
     [ "BindGroupManager", "namespaceGraphic_1_1Resource.html#ad4dcad05f916464c812083de1952157b", null ],
     [ "GPUBufferContainer", "namespaceGraphic_1_1Resource.html#a6ffbe09ffde2d6d23b445648803c3106", null ],
     [ "RenderGraphContainer", "namespaceGraphic_1_1Resource.html#ad3a665ebe495e4ac53adb8a8448bceca", null ],
     [ "SamplerContainer", "namespaceGraphic_1_1Resource.html#a01ffa8ec94d7d957bfd320640763146d", null ],
     [ "ShaderContainer", "namespaceGraphic_1_1Resource.html#a71cd42f4e9643a10e2a62e8d41ccbf09", null ],
     [ "TextureContainer", "namespaceGraphic_1_1Resource.html#adf786cf53b9c993c8a81dad181d002f9", null ],
+    [ "TextureViewContainer", "namespaceGraphic_1_1Resource.html#a273cb89c7344de45af0388b6746e4efa", null ],
     [ "PowerPreference", "namespaceGraphic_1_1Resource.html#ad53aae45d666db53fcb656a0dc13e271", [
       [ "LowPower", "namespaceGraphic_1_1Resource.html#ad53aae45d666db53fcb656a0dc13e271a2d130712dfc4e671b01c0e18b33aca29", null ],
       [ "HighPerformance", "namespaceGraphic_1_1Resource.html#ad53aae45d666db53fcb656a0dc13e271afc3d9ab96ac1103a7581af5eade2ad15", null ]
