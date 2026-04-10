@@ -1,19 +1,23 @@
 #include "entity/Entity.hpp"
 
-Engine::Entity::Entity(Core &core, EntityId entityId) : _core(core), _entityId(entityId) {}
+namespace Engine {
 
-bool Engine::Entity::IsAlive() const { return GetCore().IsEntityValid(_entityId); }
+Entity::Entity(Core &core, EntityId entityId) : _core(core), _entityId(entityId) {}
 
-void Engine::Entity::Kill() { GetCore().KillEntity(_entityId); }
+bool Entity::IsAlive() const { return GetCore().IsEntityValid(_entityId); }
 
-Engine::EntityId Engine::Entity::Id() const { return _entityId; }
+void Entity::Kill() { GetCore().KillEntity(_entityId); }
 
-Engine::Entity::operator EntityId() const { return _entityId; }
+EntityId Entity::Id() const { return _entityId; }
 
-void Engine::Entity::RemoveTemporaryComponents(Core &core) { EntityId::RemoveTemporaryComponents(core); }
+Entity::operator EntityId() const { return _entityId; }
 
-bool Engine::Entity::operator==(const Entity &rhs) const { return _entityId.value == rhs._entityId.value; }
+void Entity::RemoveTemporaryComponents(Core &core) { EntityId::RemoveTemporaryComponents(core); }
 
-bool Engine::Entity::operator==(const EntityId &rhs) const { return _entityId.value == rhs.value; }
+bool Entity::operator==(const Entity &rhs) const { return _entityId.value == rhs._entityId.value; }
 
-Engine::Core &Engine::Entity::GetCore() const { return _core.get(); }
+bool Entity::operator==(const EntityId &rhs) const { return _entityId.value == rhs.value; }
+
+Core &Entity::GetCore() const { return _core.get(); }
+
+} // namespace Engine

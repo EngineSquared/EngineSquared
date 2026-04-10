@@ -16,7 +16,7 @@ template <typename TDerived, typename TValue> constexpr bool BasicId<TDerived, T
 
 constexpr Id::Id(ValueType value_) : BasicId<Id, ValueType>{value_} {}
 
-constexpr Id::operator ValueType() const { return value; }
+constexpr Id::operator Id::ValueType() const { return value; }
 
 constexpr Id::ValueType Id::NullValue() { return entt::null; }
 
