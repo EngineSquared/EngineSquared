@@ -2,10 +2,7 @@
 
 #include "SchedulerContainer.hpp"
 
-Engine::SchedulerError::SchedulerError(const std::string &message)
-    : msg(fmt::format("Scheduler error: {}", message))
-{
-}
+Engine::SchedulerError::SchedulerError(const std::string &message) : msg(fmt::format("Scheduler error: {}", message)) {}
 
 const char *Engine::SchedulerError::what() const throw() { return this->msg.c_str(); }
 

@@ -11,8 +11,7 @@ constexpr EntityId EntityId::Null() { return EntityId{NullValue()}; }
 
 bool EntityId::IsValid(const Engine::Core &core) const { return core.IsEntityValid(value); }
 
-template <typename TComponent>
-decltype(auto) EntityId::AddComponent(Engine::Core &core, TComponent &&component)
+template <typename TComponent> decltype(auto) EntityId::AddComponent(Engine::Core &core, TComponent &&component)
 {
     /// @todo put the log in the core emplace
     Log::Debug(fmt::format("[EntityID:{}] AddComponent: {}", value, typeid(TComponent).name()));
@@ -37,8 +36,7 @@ decltype(auto) EntityId::AddComponentIfNotExists(Engine::Core &core, TArgs &&...
     return this->AddComponent<TComponent>(core, std::forward<TArgs>(args)...);
 }
 
-template <typename... TComponent>
-bool EntityId::HasComponents(const Engine::Core &core) const
+template <typename... TComponent> bool EntityId::HasComponents(const Engine::Core &core) const
 {
     return core.GetRegistry().all_of<TComponent...>(value);
 }
@@ -57,26 +55,22 @@ decltype(auto) EntityId::AddTemporaryComponent(Engine::Core &core, TArgs &&...ar
     return this->AddComponent<TTempComponent>(core, std::forward<TArgs>(args)...);
 }
 
-template <typename... TComponent>
-decltype(auto) EntityId::GetComponents(Engine::Core &core)
+template <typename... TComponent> decltype(auto) EntityId::GetComponents(Engine::Core &core)
 {
     return core.GetRegistry().get<TComponent...>(this->value);
 }
 
-template <typename... TComponent>
-decltype(auto) EntityId::GetComponents(Engine::Core &core) const
+template <typename... TComponent> decltype(auto) EntityId::GetComponents(Engine::Core &core) const
 {
     return core.GetRegistry().get<TComponent...>(this->value);
 }
 
-template <typename TComponent>
-decltype(auto) EntityId::TryGetComponent(Engine::Core &core)
+template <typename TComponent> decltype(auto) EntityId::TryGetComponent(Engine::Core &core)
 {
     return core.GetRegistry().try_get<TComponent>(this->value);
 }
 
-template <typename TComponent>
-void EntityId::RemoveComponent(Engine::Core &core)
+template <typename TComponent> void EntityId::RemoveComponent(Engine::Core &core)
 {
     /// @todo put the log in the core emplace
     Log::Debug(fmt::format("[EntityID:{}] RemoveComponent: {}", value, typeid(TComponent).name()));

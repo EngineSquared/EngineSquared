@@ -4,8 +4,8 @@
 
 #include "system/System.hpp"
 
-#include <set>
 #include <list>
+#include <set>
 #include <typeindex>
 
 namespace Engine::Scheduler {

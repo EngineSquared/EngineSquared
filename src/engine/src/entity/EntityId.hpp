@@ -53,8 +53,7 @@ struct EntityId : Id {
     /// @param core The Core instance whose registry is used to store the component.
     /// @param args The arguments to construct the component in-place in the registry.
     /// @return A reference to the added component.
-    template <typename TComponent, typename... TArgs>
-    decltype(auto) AddComponent(Engine::Core &core, TArgs &&...args);
+    template <typename TComponent, typename... TArgs> decltype(auto) AddComponent(Engine::Core &core, TArgs &&...args);
 
     /// @brief Add a component to an entity if it does not already exist.
     /// @tparam TComponent type to add to registry.

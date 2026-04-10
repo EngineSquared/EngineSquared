@@ -7,10 +7,7 @@
 namespace Engine::Scheduler {
 AScheduler::AScheduler(Core &core) : _core(core) {}
 
-const std::list<std::unique_ptr<SystemBase>> &AScheduler::GetSystems()
-{
-    return _enabledSystemsList.GetSystems();
-}
+const std::list<std::unique_ptr<SystemBase>> &AScheduler::GetSystems() { return _enabledSystemsList.GetSystems(); }
 
 bool AScheduler::ShouldRunNextScheduler() const { return _shouldRunNextScheduler; }
 
