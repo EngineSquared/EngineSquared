@@ -9,7 +9,7 @@ constexpr EntityId::operator ValueType() const { return value; }
 
 constexpr EntityId EntityId::Null() { return EntityId{NullValue()}; }
 
-bool EntityId::IsValid(const Engine::Core &core) const { return core.IsEntityValid(value); }
+inline bool EntityId::IsValid(const Engine::Core &core) const { return core.IsEntityValid(value); }
 
 template <typename TComponent> decltype(auto) EntityId::AddComponent(Engine::Core &core, TComponent &&component)
 {
@@ -77,7 +77,7 @@ template <typename TComponent> void EntityId::RemoveComponent(Engine::Core &core
     core.GetRegistry().remove<TComponent>(value);
 }
 
-void EntityId::RemoveTemporaryComponents(Core &core)
+inline void EntityId::RemoveTemporaryComponents(Core &core)
 {
     if (temporaryComponent.empty())
     {
@@ -91,7 +91,7 @@ void EntityId::RemoveTemporaryComponents(Core &core)
 }
 } // namespace Engine
 
-std::size_t std::hash<Engine::EntityId>::operator()(const Engine::EntityId &entityId) const noexcept
+inline std::size_t std::hash<Engine::EntityId>::operator()(const Engine::EntityId &entityId) const noexcept
 {
     return std::hash<entt::id_type>{}(entityId.value);
 }
