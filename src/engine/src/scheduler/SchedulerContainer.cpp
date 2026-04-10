@@ -2,6 +2,13 @@
 
 #include "SchedulerContainer.hpp"
 
+Engine::SchedulerError::SchedulerError(const std::string &message)
+    : msg(fmt::format("Scheduler error: {}", message))
+{
+}
+
+const char *Engine::SchedulerError::what() const throw() { return this->msg.c_str(); }
+
 void Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
 {
     if (this->_schedulers.contains(id))

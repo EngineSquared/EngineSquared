@@ -46,14 +46,12 @@ class Core {
     /// @brief Get the entt::registry that contains all components.
     ///     It should be used to update component through systems.
     /// @return registry that contains all components.
-    /// @todo put the implementation in the cpp file, (remove inline)
-    inline Registry &GetRegistry() { return *_registry; }
+    Registry &GetRegistry();
 
     /// @brief Get the entt::registry that contains all components.
     ///     It should be used to update component through systems.
     /// @return registry that contains all components.
-    /// @todo put the implementation in the cpp file, (remove inline)
-    inline const Registry &GetRegistry() const { return *_registry; }
+    const Registry &GetRegistry() const;
 
     /// @brief Create an entity in the context of the registry.
     /// @return The entity created.
@@ -106,40 +104,24 @@ class Core {
     /// @brief Sets the execution order of two schedulers, ensuring that TSchedulerA is executed before TSchedulerB.
     /// @tparam TSchedulerA The type of the scheduler that should execute first.
     /// @tparam TSchedulerB The type of the scheduler that should execute after TSchedulerA.
-    /// @todo Move the implementation of this function in the .inl file
-    template <typename TSchedulerA, typename TSchedulerB> inline void SetSchedulerBefore()
-    {
-        this->_schedulers.Before<TSchedulerA, TSchedulerB>();
-    }
+    template <typename TSchedulerA, typename TSchedulerB> void SetSchedulerBefore();
 
     /// @brief Sets the execution order of two schedulers by specifying that one scheduler should execute after another.
     /// @tparam TSchedulerA The type of the scheduler that should execute first.
     /// @tparam TSchedulerB The type of the scheduler that should execute after TSchedulerA.
-    /// @todo Move the implementation of this function in the .inl file
-    template <typename TSchedulerA, typename TSchedulerB> inline void SetSchedulerAfter()
-    {
-        this->_schedulers.After<TSchedulerA, TSchedulerB>();
-    }
+    template <typename TSchedulerA, typename TSchedulerB> void SetSchedulerAfter();
 
     /// @brief Removes a dependency between two schedulers, ensuring that TSchedulerB is no longer dependent on
     ///     TSchedulerA.
     /// @tparam TSchedulerA The type of the first scheduler (the one being depended on).
     /// @tparam TSchedulerB The type of the second scheduler (the one depending on TSchedulerA).
-    /// @todo Move the implementation of this function in the .inl file
-    template <typename TSchedulerA, typename TSchedulerB> inline void RemoveDependencyAfter()
-    {
-        this->_schedulers.RemoveDependencyAfter<TSchedulerA, TSchedulerB>();
-    }
+    template <typename TSchedulerA, typename TSchedulerB> void RemoveDependencyAfter();
 
     /// @brief Removes a dependency between two schedulers, ensuring that TSchedulerA is no longer dependent on
     ///     TSchedulerB.
     /// @tparam TSchedulerA The type of the first scheduler (the one depending on TSchedulerB).
     /// @tparam TSchedulerB The type of the second scheduler (the one being depended on).
-    /// @todo Move the implementation of this function in the .inl file
-    template <typename TSchedulerA, typename TSchedulerB> inline void RemoveDependencyBefore()
-    {
-        this->_schedulers.RemoveDependencyBefore<TSchedulerA, TSchedulerB>();
-    }
+    template <typename TSchedulerA, typename TSchedulerB> void RemoveDependencyBefore();
 
     /// @brief Get the running state of the core.
     /// @return The running state.
@@ -224,11 +206,7 @@ class Core {
 
     /// @brief Sets the default scheduler.
     /// @tparam TScheduler The type of the scheduler to be set as default. See Engine::CScheduler.
-    /// @todo Move the implementation of this function in the .inl file.
-    template <CScheduler TScheduler> inline void SetDefaultScheduler()
-    {
-        SetDefaultScheduler(std::type_index(typeid(TScheduler)));
-    }
+    template <CScheduler TScheduler> void SetDefaultScheduler();
 
     /// @brief Sets the default scheduler.
     /// @param scheduler The type index of the scheduler to be set as default.

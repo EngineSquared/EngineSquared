@@ -3,6 +3,14 @@
 #include "resource/Time.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
 
+Engine::Scheduler::FixedTimeUpdate::FixedTimeUpdate(Core &core, float tickRate) : AScheduler(core), _tickRate(tickRate)
+{
+}
+
+float Engine::Scheduler::FixedTimeUpdate::GetTickRate() const { return _tickRate; }
+
+void Engine::Scheduler::FixedTimeUpdate::SetTickRate(float tickRate) { _tickRate = tickRate; }
+
 void Engine::Scheduler::FixedTimeUpdate::RunSystems()
 {
     _bufferedTime += this->_core.GetResource<Engine::Resource::Time>()._elapsedTime;

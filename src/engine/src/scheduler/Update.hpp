@@ -15,8 +15,7 @@ class Update : public AScheduler {
 
     /// @brief Get the current delta time
     /// @return The current delta time
-    /// @todo Put the implementation in the cpp file, (remove inline)
-    inline float GetDeltaTime() const { return _elapsedTime; }
+    float GetDeltaTime() const;
 
   private:
     /// @brief The elapsed time since the last call to RunSystems.

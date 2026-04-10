@@ -11,7 +11,7 @@ class Startup : public AScheduler {
     /// @param core A reference to the Core.
     /// @param callback A callback function that will be called after all systems have been run.
     /// @see Engine::Scheduler::Startup::_callback
-    explicit Startup(Core &core, const std::function<void()> &callback) : AScheduler(core), _callback(callback) {}
+    explicit Startup(Core &core, const std::function<void()> &callback);
 
     /// @copydoc Engine::Scheduler::IScheduler::RunSystems
     void RunSystems() override;

@@ -20,11 +20,11 @@ class SchedulerError : public std::exception {
   public:
     /// @brief Constructor for SchedulerError.
     /// @param message The error message to be included in the exception.
-    explicit SchedulerError(const std::string &message) : msg(fmt::format("Scheduler error: {}", message)) {};
+    explicit SchedulerError(const std::string &message);
 
     /// @brief Gets the error message.
     /// @return The error message as a C-style string.
-    const char *what() const throw() override { return this->msg.c_str(); };
+    const char *what() const throw() override;
 
   private:
     /// @brief The error message associated with the exception.
@@ -67,8 +67,7 @@ class SchedulerContainer {
 
     /// @brief Deletes a scheduler of the specified type.
     /// @tparam TScheduler The type of the scheduler to be deleted.
-    /// @todo Put the implementation in the inl file
-    template <typename TScheduler> void DeleteScheduler() { DeleteScheduler(std::type_index(typeid(TScheduler))); }
+    template <typename TScheduler> void DeleteScheduler();
 
     /// @brief Deletes a scheduler identified by the given type index.
     /// @param id The type index of the scheduler to be deleted.
