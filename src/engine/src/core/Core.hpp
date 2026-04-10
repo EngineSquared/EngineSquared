@@ -261,4 +261,4 @@ class Core {
 };
 } // namespace Engine
 
-#include "core/Core.inl"
+#include "core/Core.ipp"
