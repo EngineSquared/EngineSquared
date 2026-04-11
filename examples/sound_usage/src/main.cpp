@@ -31,7 +31,7 @@ int main(void)
 
     core.RegisterSystem<Engine::Scheduler::Startup>(SetupSound);
 
-    core.RunCore();
+    core.Run();
 
     return 0;
 }
