@@ -310,7 +310,7 @@ int main(void)
     core.RegisterSystem<Engine::Scheduler::Startup>(SetupCharacterControllerScene);
     core.RegisterSystem<Engine::Scheduler::Update>(CharacterControllerInputSystem);
 
-    core.RunCore();
+    core.Run();
 
     return 0;
 }

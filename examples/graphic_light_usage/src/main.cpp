@@ -161,7 +161,7 @@ int main(void)
 
     try
     {
-        core.RunCore();
+        core.Run();
     }
     catch (const GraphicExampleError &e)
     {

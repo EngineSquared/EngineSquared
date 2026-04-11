@@ -238,7 +238,7 @@ int main(void)
     std::cout << "  Running Physics Simulation" << std::endl;
     std::cout << "========================================" << std::endl;
 
-    core.RunCore();
+    core.Run();
 
     std::cout << "\n========================================" << std::endl;
     std::cout << "  Simulation Complete!" << std::endl;

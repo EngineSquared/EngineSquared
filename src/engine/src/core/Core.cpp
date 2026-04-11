@@ -75,7 +75,7 @@ void Engine::Core::Stop()
     _running = false;
 }
 
-void Engine::Core::RunCore()
+void Engine::Core::Run(void)
 {
     _running = true;
     while (_running)

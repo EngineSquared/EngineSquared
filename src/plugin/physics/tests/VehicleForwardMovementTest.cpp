@@ -112,5 +112,5 @@ TEST(VehiclePlugin, VehicleForwardMovement)
         }
     });
 
-    c.RunCore();
+    c.Run();
 }

@@ -118,7 +118,7 @@ int main(void)
     pugo.AddComponent<NameComponent>("Pugo");
     pugo.AddComponent<WorkTimeComponent>({.maxHours = 6});
 
-    core.RunCore();
+    core.Run();
 
     return 0;
 }

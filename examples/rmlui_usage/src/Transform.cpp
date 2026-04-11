@@ -57,7 +57,7 @@ int main(void)
 
     core.RegisterSystem<Engine::Scheduler::Startup>(Setup);
 
-    core.RunCore();
+    core.Run();
 
     return 0;
 }
