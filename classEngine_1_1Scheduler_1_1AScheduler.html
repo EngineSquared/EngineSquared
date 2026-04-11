@@ -124,8 +124,8 @@ Inheritance diagram for Engine::Scheduler::AScheduler:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a809433d1f957e4c2817f6aae0a253b39" id="r_a809433d1f957e4c2817f6aae0a253b39"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a809433d1f957e4c2817f6aae0a253b39">AScheduler</a> (<a class="el" href="classEngine_1_1Core.html">Core</a> &amp;core)</td></tr>
 <tr class="memdesc:a809433d1f957e4c2817f6aae0a253b39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of the <a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html" title="AScheduler is an abstract class that implements the IScheduler interface. It provides common function...">AScheduler</a> class.  <br /></td></tr>
-<tr class="memitem:a62bc8712f544cf5f7b85fd83c68e76a5" id="r_a62bc8712f544cf5f7b85fd83c68e76a5"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a62bc8712f544cf5f7b85fd83c68e76a5">GetSystems</a> ()</td></tr>
-<tr class="memdesc:a62bc8712f544cf5f7b85fd83c68e76a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get systems inside the scheduler.  <br /></td></tr>
+<tr class="memitem:a7a368cdf10cb55b6322e02d890948fc0" id="r_a7a368cdf10cb55b6322e02d890948fc0"><td class="memItemLeft">const std::list&lt; std::unique_ptr&lt; <a class="el" href="namespaceEngine.html#a5fb82be08ce7a8491bb8b31eff0d5391">SystemBase</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a7a368cdf10cb55b6322e02d890948fc0">GetSystems</a> ()</td></tr>
+<tr class="memdesc:a7a368cdf10cb55b6322e02d890948fc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get systems inside the scheduler.  <br /></td></tr>
 <tr class="memitem:ab25ad2fba5d3aede30df4244dc06b8fd" id="r_ab25ad2fba5d3aede30df4244dc06b8fd"><td class="memTemplParams" colspan="2">template&lt;typename... TSystems&gt; </td></tr>
 <tr class="memitem:ab25ad2fba5d3aede30df4244dc06b8fd template"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#ab25ad2fba5d3aede30df4244dc06b8fd">AddSystems</a> (TSystems... systems)</td></tr>
 <tr class="memdesc:ab25ad2fba5d3aede30df4244dc06b8fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add systems to the scheduler.  <br /></td></tr>
@@ -189,7 +189,7 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -213,9 +213,6 @@ Private Attributes</h2></td></tr>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename... TSystems&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">decltype(auto) Engine::Scheduler::AScheduler::AddSystems </td>
@@ -224,11 +221,6 @@ template&lt;typename... TSystems&gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Add systems to the scheduler. </p>
@@ -245,7 +237,6 @@ template&lt;typename... TSystems&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> tuple of FunctionIDs for the added systems. See <a class="el" href="classFunctionUtils_1_1FunctionContainer.html#ab53e5ab18720abc7afe660a6f0dc0173" title="Adds multiple functions to the container.">FunctionUtils::FunctionContainer::AddFunctions</a> for more details. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000060">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -317,7 +308,7 @@ template&lt;typename... TSystems&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -325,39 +316,29 @@ template&lt;typename... TSystems&gt; </div>
 <p>Get the error policy of the scheduler. </p>
 <dl class="section return"><dt>Returns</dt><dd>The error policy of the scheduler. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceEngine_1_1Scheduler.html#adc9f665f0ab46064c8714e86f3089217" title="Enum that defines how the scheduler will handle errors.">Engine::Scheduler::SchedulerErrorPolicy</a> </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000063">Todo</a></b></dt><dd>put the implementation in the cpp file, (remove inline) </dd></dl>
 
 <p>Implements <a class="el" href="classEngine_1_1Scheduler_1_1IScheduler.html#a8636ebb10b1be1b17fd367977099d3c0">Engine::Scheduler::IScheduler</a>.</p>
 
 </div>
 </div>
-<a id="a62bc8712f544cf5f7b85fd83c68e76a5" name="a62bc8712f544cf5f7b85fd83c68e76a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62bc8712f544cf5f7b85fd83c68e76a5">&#9670;&#160;</a></span>GetSystems()</h2>
+<a id="a7a368cdf10cb55b6322e02d890948fc0" name="a7a368cdf10cb55b6322e02d890948fc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a368cdf10cb55b6322e02d890948fc0">&#9670;&#160;</a></span>GetSystems()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">decltype(auto) Engine::Scheduler::AScheduler::GetSystems </td>
+          <td class="memname">const std::list&lt; std::unique_ptr&lt; <a class="el" href="namespaceEngine.html#a5fb82be08ce7a8491bb8b31eff0d5391">SystemBase</a> &gt; &gt; &amp; Engine::Scheduler::AScheduler::GetSystems </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Get systems inside the scheduler. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> <a class="el" href="classEngine_1_1SystemContainer.html" title="Container class for managing multiple systems.">SystemContainer</a> with enabled systems. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classEngine_1_1SystemContainer.html" title="Container class for managing multiple systems.">Engine::SystemContainer</a> </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000059">Todo</a></b></dt><dd>put the implementation in the cpp file, (remove inline) </dd></dl>
 
 </div>
 </div>
@@ -411,11 +392,10 @@ template&lt;typename... TSystems&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">system</td><td>The system to execute. </td></tr>
-    <tr><td class="paramname">core</td><td>The core to pass to the system. </td></tr>
+    <tr><td class="paramname">core</td><td>The core to pass to the system. instead. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000061">Todo</a></b></dt><dd>Remove <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> parameter from the function and use the reference to the core stored in the <a class="el" href="classEngine_1_1Scheduler_1_1AScheduler.html" title="AScheduler is an abstract class that implements the IScheduler interface. It provides common function...">AScheduler</a> class instead. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceEngine.html#a5fb82be08ce7a8491bb8b31eff0d5391">Engine::SystemBase</a> </dd></dl>
 
 </div>
@@ -438,7 +418,7 @@ template&lt;typename... TSystems&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -451,7 +431,6 @@ template&lt;typename... TSystems&gt; </div>
   </dd>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceEngine_1_1Scheduler.html#adc9f665f0ab46064c8714e86f3089217" title="Enum that defines how the scheduler will handle errors.">Engine::Scheduler::SchedulerErrorPolicy</a> </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000064">Todo</a></b></dt><dd>put the implementation in the cpp file, (remove inline) </dd></dl>
 
 <p>Implements <a class="el" href="classEngine_1_1Scheduler_1_1IScheduler.html#a8df9ffa0a0bbdf70252ffd9d0f4c370b">Engine::Scheduler::IScheduler</a>.</p>
 
@@ -462,9 +441,6 @@ template&lt;typename... TSystems&gt; </div>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool Engine::Scheduler::AScheduler::ShouldRunNextScheduler </td>
@@ -473,18 +449,10 @@ template&lt;typename... TSystems&gt; </div>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Get whether the next scheduler should run or not. This is mainly set by the error policy of the scheduler. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the next scheduler should run, false otherwise. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000062">Todo</a></b></dt><dd><p class="startdd">check if we can remove this method and find a cleaner way to handle the error policy of the scheduler. </p>
-<p class="enddd">put the implementation in the cpp file, (remove inline) </p>
-</dd></dl>
 
 </div>
 </div>
@@ -638,6 +606,7 @@ template&lt;typename... TSystems&gt; </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/engine/src/scheduler/<a class="el" href="AScheduler_8hpp_source.html">AScheduler.hpp</a></li>
 <li>src/engine/src/scheduler/<a class="el" href="AScheduler_8cpp.html">AScheduler.cpp</a></li>
+<li>src/engine/src/scheduler/<a class="el" href="AScheduler_8ipp_source.html">AScheduler.ipp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

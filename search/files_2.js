@@ -47,7 +47,7 @@ var searchData=
   ['convexhullmeshcollider_2ehpp_44',['ConvexHullMeshCollider.hpp',['../ConvexHullMeshCollider_8hpp.html',1,'']]],
   ['core_2ecpp_45',['Core.cpp',['../Core_8cpp.html',1,'']]],
   ['core_2ehpp_46',['Core.hpp',['../Core_8hpp.html',1,'']]],
-  ['core_2einl_47',['Core.inl',['../Core_8inl.html',1,'']]],
+  ['core_2eipp_47',['Core.ipp',['../Core_8ipp.html',1,'']]],
   ['create3dgraph_2ecpp_48',['Create3DGraph.cpp',['../Create3DGraph_8cpp.html',1,'']]],
   ['create3dgraph_2ehpp_49',['Create3DGraph.hpp',['../Create3DGraph_8hpp.html',1,'']]],
   ['createadapter_2ecpp_50',['CreateAdapter.cpp',['../CreateAdapter_8cpp.html',1,'']]],

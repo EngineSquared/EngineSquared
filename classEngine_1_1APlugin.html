@@ -179,7 +179,7 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -191,7 +191,6 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000051">Todo</a></b></dt><dd>put the implementation in the cpp file </dd></dl>
 
 </div>
 </div>
@@ -235,9 +234,6 @@ Private Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classEngine_1_1Core.html">Core</a> &amp; Engine::APlugin::GetCore </td>
@@ -246,17 +242,11 @@ Private Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Get a reference to the core. This can be used to register systems and resources in the Bind method. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> reference to the core. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Engine::Core</a> </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000056">Todo</a></b></dt><dd>put the implementation in the cpp file </dd></dl>
 
 </div>
 </div>
@@ -267,9 +257,6 @@ Private Attributes</h2></td></tr>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename TResource&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">TResource &amp; Engine::APlugin::RegisterResource </td>
@@ -278,11 +265,6 @@ template&lt;typename TResource&gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Register a resource in the core. </p>
@@ -300,7 +282,6 @@ template&lt;typename TResource&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> reference to the registered resource. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classEngine_1_1Core.html#ae9dc85a421d332cdc8020fdf18531149" title="Store a resource instance.">Engine::Core::RegisterResource</a> </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000053">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -311,9 +292,6 @@ template&lt;typename TResource&gt; </div>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;CScheduler TScheduler, typename... Args&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">TScheduler &amp; Engine::APlugin::RegisterScheduler </td>
@@ -322,11 +300,6 @@ template&lt;CScheduler TScheduler, typename... Args&gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Register a scheduler in the core. </p>
@@ -347,7 +320,6 @@ template&lt;CScheduler TScheduler, typename... Args&gt; </div>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classEngine_1_1Core.html#a3597bd29a6a5def5c618bac18da527ef" title="Add a new scheduler to the registry.">Engine::Core::RegisterScheduler</a> </dd>
 <dd>
 <a class="el" href="conceptEngine_1_1CScheduler.html">Engine::CScheduler</a> </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000055">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -358,9 +330,6 @@ template&lt;CScheduler TScheduler, typename... Args&gt; </div>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;CScheduler TScheduler, typename... Systems&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">decltype(auto) Engine::APlugin::RegisterSystems </td>
@@ -369,11 +338,6 @@ template&lt;CScheduler TScheduler, typename... Systems&gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Register systems to a scheduler. </p>
@@ -394,7 +358,6 @@ template&lt;CScheduler TScheduler, typename... Systems&gt; </div>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classEngine_1_1Core.html#a6e4c8d1631a31aba8de29eb633f98b6e" title="Add one or multiple systems associated with a specific scheduler.">Engine::Core::RegisterSystem</a> </dd>
 <dd>
 <a class="el" href="conceptEngine_1_1CScheduler.html">Engine::CScheduler</a> </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000052">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -418,7 +381,7 @@ template&lt;CPlugin TPlugin&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -435,7 +398,6 @@ template&lt;CPlugin TPlugin&gt; </div>
 <a class="el" href="classEngine_1_1Core.html#a833a97521d88417c5f7d252b6141c7d0" title="Checks if a plugin is present.">Engine::Core::HasPlugin</a> </dd>
 <dd>
 <a class="el" href="classEngine_1_1Core.html#a8cc206912a07ab15537481fdcbd78289" title="Adds multiple plugins that will be call instantly through the Bind method to agregate their systems a...">Engine::Core::AddPlugins</a> </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000057">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -446,9 +408,6 @@ template&lt;CPlugin TPlugin&gt; </div>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;CPlugin... TPlugins&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void Engine::APlugin::RequirePlugins </td>
@@ -457,11 +416,6 @@ template&lt;CPlugin... TPlugins&gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Add a plugin to the core. </p>
@@ -472,7 +426,6 @@ template&lt;CPlugin... TPlugins&gt; </div>
   </dd>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="#aaa326088787b6f3fc2c6c641b67f6def" title="Add a plugin to the core if it is not already added.">Engine::APlugin::RequirePlugin</a> </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000054">Todo</a></b></dt><dd>put the implementation in the inl file </dd></dl>
 
 </div>
 </div>
@@ -501,8 +454,10 @@ template&lt;CPlugin... TPlugins&gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/engine/src/plugin/<a class="el" href="APlugin_8hpp_source.html">APlugin.hpp</a></li>
+<li>src/engine/src/plugin/<a class="el" href="APlugin_8cpp.html">APlugin.cpp</a></li>
+<li>src/engine/src/plugin/<a class="el" href="APlugin_8ipp_source.html">APlugin.ipp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

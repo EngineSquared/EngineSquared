@@ -95,7 +95,7 @@ $(function(){initNavTree('structEngine_1_1StringId.html','','structEngine_1_1Str
 </div><!--header-->
 <div class="contents">
 
-<p>Static assertion to ensure that the size of <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a> matches the size of entt::id_type, guaranteeing that there is no additional overhead from the wrapper and that it can be used interchangeably with entt::id_type without penalties.  
+<p><a class="el" href="structA.html">A</a> strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a type-safe wrapper around EnTT's hashed_string, designed for efficient compile-time and runtime string hashing. Unlike <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a>, this is specifically for string-based identifiers and does not provide implicit conversion to the underlying type. String hashing allows for fast comparisons while maintaining human-readable identifiers during development and debugging.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Id_8hpp_source.html">Id.hpp</a>&gt;</code></p>
@@ -112,19 +112,27 @@ Inheritance diagram for Engine::StringId:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:af630354b7741f68014f22af5d279325a" id="r_af630354b7741f68014f22af5d279325a"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#af630354b7741f68014f22af5d279325a">ValueType</a> = entt::hashed_string</td></tr>
-<tr class="memdesc:af630354b7741f68014f22af5d279325a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying value type for <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a>, which is entt::hashed_string. This type encapsulates the string data and its hash, allowing for efficient comparisons and lookups while maintaining the original string for debugging purposes.  <br /></td></tr>
+<tr class="memdesc:af630354b7741f68014f22af5d279325a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying value type for <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a>, which is entt::hashed_string. This type encapsulates the string data and its hash, allowing for efficient comparisons and lookups while maintaining the original string for debugging purposes.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9b37122bca97ef87fd32d23601ffefbf" id="r_a9b37122bca97ef87fd32d23601ffefbf"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a9b37122bca97ef87fd32d23601ffefbf">StringId</a> (<a class="el" href="#af630354b7741f68014f22af5d279325a">ValueType</a> v=<a class="el" href="#a0f5f03a4cabab03f52acc02c5e1a3603">NullValue</a>())</td></tr>
-<tr class="memdesc:a9b37122bca97ef87fd32d23601ffefbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a>.  <br /></td></tr>
+<tr class="memitem:a9b37122bca97ef87fd32d23601ffefbf" id="r_a9b37122bca97ef87fd32d23601ffefbf"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a9b37122bca97ef87fd32d23601ffefbf">StringId</a> (<a class="el" href="#af630354b7741f68014f22af5d279325a">ValueType</a> v=<a class="el" href="#a1d3def2aaf6e4c49e3bbd4accf1bb302">NullValue</a>())</td></tr>
+<tr class="memdesc:a9b37122bca97ef87fd32d23601ffefbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a>.  <br /></td></tr>
+<tr class="inherit_header pub_methods_structEngine_1_1BasicId"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_structEngine_1_1BasicId')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="structEngine_1_1BasicId.html">Engine::BasicId&lt; StringId, entt::hashed_string &gt;</a></td></tr>
+<tr class="memitem:ab3b43e245596b18fabd56d5351c9d8bc inherit pub_methods_structEngine_1_1BasicId" id="r_ab3b43e245596b18fabd56d5351c9d8bc"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="structEngine_1_1BasicId.html#ab3b43e245596b18fabd56d5351c9d8bc">explicit</a> (false) <a class="el" href="structEngine_1_1BasicId.html">BasicId</a>(entt::hashed_string value_</td></tr>
+<tr class="memdesc:ab3b43e245596b18fabd56d5351c9d8bc inherit pub_methods_structEngine_1_1BasicId"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="structEngine_1_1BasicId.html" title="An Id class for creating strongly-typed ID wrappers. This template provides a common interface for ID...">BasicId</a>. Allows implicit construction from the underlying value type, defaulting to the null value.  <br /></td></tr>
+<tr class="memitem:a1efa465cfbc05d165c2678ddce767a28 inherit pub_methods_structEngine_1_1BasicId" id="r_a1efa465cfbc05d165c2678ddce767a28"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="structEngine_1_1BasicId.html#a1efa465cfbc05d165c2678ddce767a28">IsNull</a> (void) const</td></tr>
+<tr class="memdesc:a1efa465cfbc05d165c2678ddce767a28 inherit pub_methods_structEngine_1_1BasicId"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the ID is null/invalid by comparing its value to the null value defined by the derived class.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a0f5f03a4cabab03f52acc02c5e1a3603" id="r_a0f5f03a4cabab03f52acc02c5e1a3603"><td class="memItemLeft">static constexpr <a class="el" href="#af630354b7741f68014f22af5d279325a">ValueType</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0f5f03a4cabab03f52acc02c5e1a3603">NullValue</a> ()</td></tr>
-<tr class="memdesc:a0f5f03a4cabab03f52acc02c5e1a3603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the null value for this <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a> type. This returns a default-constructed entt::hashed_string.  <br /></td></tr>
-<tr class="memitem:a19ea0be89a743dead97a127d0ea2302f" id="r_a19ea0be89a743dead97a127d0ea2302f"><td class="memItemLeft">static constexpr <a class="el" href="#a9b37122bca97ef87fd32d23601ffefbf">StringId</a>&#160;</td><td class="memItemRight"><a class="el" href="#a19ea0be89a743dead97a127d0ea2302f">Null</a> ()</td></tr>
-<tr class="memdesc:a19ea0be89a743dead97a127d0ea2302f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a null instance of <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a>, which has its value set to the null value defined by <a class="el" href="#a0f5f03a4cabab03f52acc02c5e1a3603" title="Get the null value for this StringId type. This returns a default-constructed entt::hashed_string.">NullValue()</a>.  <br /></td></tr>
+<tr class="memitem:a1d3def2aaf6e4c49e3bbd4accf1bb302" id="r_a1d3def2aaf6e4c49e3bbd4accf1bb302"><td class="memItemLeft">static constexpr <a class="el" href="#af630354b7741f68014f22af5d279325a">ValueType</a>&#160;</td><td class="memItemRight"><a class="el" href="#a1d3def2aaf6e4c49e3bbd4accf1bb302">NullValue</a> ()</td></tr>
+<tr class="memdesc:a1d3def2aaf6e4c49e3bbd4accf1bb302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the null value for this <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a> type. This returns a default-constructed entt::hashed_string.  <br /></td></tr>
+<tr class="memitem:a0c860cfcad4322f91c5670e1a62994c7" id="r_a0c860cfcad4322f91c5670e1a62994c7"><td class="memItemLeft">static constexpr <a class="el" href="#a9b37122bca97ef87fd32d23601ffefbf">StringId</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0c860cfcad4322f91c5670e1a62994c7">Null</a> ()</td></tr>
+<tr class="memdesc:a0c860cfcad4322f91c5670e1a62994c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a null instance of <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a>, which has its value set to the null value defined by <a class="el" href="#a1d3def2aaf6e4c49e3bbd4accf1bb302" title="Get the null value for this StringId type. This returns a default-constructed entt::hashed_string.">NullValue()</a>.  <br /></td></tr>
+<tr class="inherit_header pub_static_methods_structEngine_1_1BasicId"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_methods_structEngine_1_1BasicId')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Static Public Member Functions inherited from <a class="el" href="structEngine_1_1BasicId.html">Engine::BasicId&lt; StringId, entt::hashed_string &gt;</a></td></tr>
+<tr class="memitem:a0529c2e44020cabca13c01c2cba286d7 inherit pub_static_methods_structEngine_1_1BasicId" id="r_a0529c2e44020cabca13c01c2cba286d7"><td class="memItemLeft">static constexpr <a class="el" href="structEngine_1_1StringId.html">StringId</a>&#160;</td><td class="memItemRight"><a class="el" href="structEngine_1_1BasicId.html#a0529c2e44020cabca13c01c2cba286d7">Null</a> (void)</td></tr>
+<tr class="memdesc:a0529c2e44020cabca13c01c2cba286d7 inherit pub_static_methods_structEngine_1_1BasicId"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the null value for this ID type. This should be defined by the derived class to specify what constitutes a null/invalid ID.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -133,8 +141,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:ae035487a7f647c9548989a9f9c61ffb0 inherit pub_attribs_structEngine_1_1BasicId"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying value of the ID.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Static assertion to ensure that the size of <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a> matches the size of entt::id_type, guaranteeing that there is no additional overhead from the wrapper and that it can be used interchangeably with entt::id_type without penalties. </p>
-<p><a class="el" href="structA.html">A</a> strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a type-safe wrapper around EnTT's hashed_string, designed for efficient compile-time and runtime string hashing. Unlike <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a>, this is specifically for string-based identifiers and does not provide implicit conversion to the underlying type. String hashing allows for fast comparisons while maintaining human-readable identifiers during development and debugging. </p><dl class="section note"><dt>Note</dt><dd>Supports implicit construction from entt::hashed_string values </dd>
+<div class="textblock"><p><a class="el" href="structA.html">A</a> strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a type-safe wrapper around EnTT's hashed_string, designed for efficient compile-time and runtime string hashing. Unlike <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Id</a>, this is specifically for string-based identifiers and does not provide implicit conversion to the underlying type. String hashing allows for fast comparisons while maintaining human-readable identifiers during development and debugging. </p>
+<dl class="section note"><dt>Note</dt><dd>Supports implicit construction from entt::hashed_string values </dd>
 <dd>
 Size is guaranteed to match entt::hashed_string through static assertion </dd>
 <dd>
@@ -152,7 +160,7 @@ Useful for named resources, tags, and other string-based identification schemes 
       </table>
 </div><div class="memdoc">
 
-<p>The underlying value type for <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a>, which is entt::hashed_string. This type encapsulates the string data and its hash, allowing for efficient comparisons and lookups while maintaining the original string for debugging purposes. </p>
+<p>The underlying value type for <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a>, which is entt::hashed_string. This type encapsulates the string data and its hash, allowing for efficient comparisons and lookups while maintaining the original string for debugging purposes. </p>
 
 </div>
 </div>
@@ -169,31 +177,30 @@ Useful for named resources, tags, and other string-based identification schemes 
         <tr>
           <td class="memname">Engine::StringId::StringId </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#af630354b7741f68014f22af5d279325a">ValueType</a></td>          <td class="paramname"><span class="paramname"><em>v</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a0f5f03a4cabab03f52acc02c5e1a3603">NullValue</a>()</span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#af630354b7741f68014f22af5d279325a">ValueType</a></td>          <td class="paramname"><span class="paramname"><em>v</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a1d3def2aaf6e4c49e3bbd4accf1bb302">NullValue</a>()</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor for <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a>. </p>
+<p>Constructor for <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">v</td><td>The value to initialize the <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a> with. Defaults to the null value defined by the <a class="el" href="#a0f5f03a4cabab03f52acc02c5e1a3603" title="Get the null value for this StringId type. This returns a default-constructed entt::hashed_string.">NullValue()</a> method. </td></tr>
+    <tr><td class="paramname">v</td><td>The value to initialize the <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a> with. Defaults to the null value defined by the <a class="el" href="#a1d3def2aaf6e4c49e3bbd4accf1bb302" title="Get the null value for this StringId type. This returns a default-constructed entt::hashed_string.">NullValue()</a> method. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000046">Todo</a></b></dt><dd>Put the implementation in the cpp file if possible </dd></dl>
 
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a19ea0be89a743dead97a127d0ea2302f" name="a19ea0be89a743dead97a127d0ea2302f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19ea0be89a743dead97a127d0ea2302f">&#9670;&#160;</a></span>Null()</h2>
+<a id="a0c860cfcad4322f91c5670e1a62994c7" name="a0c860cfcad4322f91c5670e1a62994c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c860cfcad4322f91c5670e1a62994c7">&#9670;&#160;</a></span>Null()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,27 +209,26 @@ Useful for named resources, tags, and other string-based identification schemes 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="#a9b37122bca97ef87fd32d23601ffefbf">StringId</a> Engine::StringId::Null </td>
+          <td class="memname"><a class="el" href="#a9b37122bca97ef87fd32d23601ffefbf">StringId</a> Engine::StringId::Null </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get a null instance of <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a>, which has its value set to the null value defined by <a class="el" href="#a0f5f03a4cabab03f52acc02c5e1a3603" title="Get the null value for this StringId type. This returns a default-constructed entt::hashed_string.">NullValue()</a>. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> null instance of <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a>. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000048">Todo</a></b></dt><dd>Put the implementation in the cpp file if possible </dd></dl>
+<p>Get a null instance of <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a>, which has its value set to the null value defined by <a class="el" href="#a1d3def2aaf6e4c49e3bbd4accf1bb302" title="Get the null value for this StringId type. This returns a default-constructed entt::hashed_string.">NullValue()</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> null instance of <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a>. </dd></dl>
 
 </div>
 </div>
-<a id="a0f5f03a4cabab03f52acc02c5e1a3603" name="a0f5f03a4cabab03f52acc02c5e1a3603"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f5f03a4cabab03f52acc02c5e1a3603">&#9670;&#160;</a></span>NullValue()</h2>
+<a id="a1d3def2aaf6e4c49e3bbd4accf1bb302" name="a1d3def2aaf6e4c49e3bbd4accf1bb302"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d3def2aaf6e4c49e3bbd4accf1bb302">&#9670;&#160;</a></span>NullValue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -231,7 +237,7 @@ Useful for named resources, tags, and other string-based identification schemes 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="#af630354b7741f68014f22af5d279325a">ValueType</a> Engine::StringId::NullValue </td>
+          <td class="memname"><a class="el" href="#af630354b7741f68014f22af5d279325a">StringId::ValueType</a> Engine::StringId::NullValue </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -239,19 +245,19 @@ Useful for named resources, tags, and other string-based identification schemes 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the null value for this <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a> type. This returns a default-constructed entt::hashed_string. </p>
-<dl class="section return"><dt>Returns</dt><dd>The value representing a null/invalid <a class="el" href="structEngine_1_1StringId.html" title="Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that t...">StringId</a> for this type. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000047">Todo</a></b></dt><dd>Put the implementation in the cpp file if possible </dd></dl>
+<p>Get the null value for this <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a> type. This returns a default-constructed entt::hashed_string. </p>
+<dl class="section return"><dt>Returns</dt><dd>The value representing a null/invalid <a class="el" href="structEngine_1_1StringId.html" title="A strongly-typed string identifier wrapper based on entt::hashed_string. This structure provides a ty...">StringId</a> for this type. </dd></dl>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this struct was generated from the following files:<ul>
 <li>src/engine/src/<a class="el" href="Id_8hpp_source.html">Id.hpp</a></li>
+<li>src/engine/src/<a class="el" href="Id_8ipp_source.html">Id.ipp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

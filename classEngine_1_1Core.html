@@ -111,10 +111,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a706b1589c7441ca20081fd72ded54810"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor of the core. It will initialize the registry and the scheduler container. Some schedulers will be automatically registered like Startup, Update and Shutdown.  <br /></td></tr>
 <tr class="memitem:a2d19fea89a9b35071d1490662c55f5a6" id="r_a2d19fea89a9b35071d1490662c55f5a6"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a2d19fea89a9b35071d1490662c55f5a6">~Core</a> ()</td></tr>
 <tr class="memdesc:a2d19fea89a9b35071d1490662c55f5a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor of the core. It will clear the registry and the scheduler container.  <br /></td></tr>
-<tr class="memitem:aefea4646026e43c1a8f3317b77ada312" id="r_aefea4646026e43c1a8f3317b77ada312"><td class="memItemLeft"><a class="el" href="#a92a3143c58cadead136a795f192ee544">Registry</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aefea4646026e43c1a8f3317b77ada312">GetRegistry</a> ()</td></tr>
-<tr class="memdesc:aefea4646026e43c1a8f3317b77ada312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the entt::registry that contains all components. It should be used to update component through systems.  <br /></td></tr>
-<tr class="memitem:a2894f79041e98bdc8911b09d75ed6ac4" id="r_a2894f79041e98bdc8911b09d75ed6ac4"><td class="memItemLeft">const <a class="el" href="#a92a3143c58cadead136a795f192ee544">Registry</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2894f79041e98bdc8911b09d75ed6ac4">GetRegistry</a> () const</td></tr>
-<tr class="memdesc:a2894f79041e98bdc8911b09d75ed6ac4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the entt::registry that contains all components. It should be used to update component through systems.  <br /></td></tr>
+<tr class="memitem:a815f00fa73a5e52352672006f3e546ea" id="r_a815f00fa73a5e52352672006f3e546ea"><td class="memItemLeft"><a class="el" href="#a92a3143c58cadead136a795f192ee544">Registry</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a815f00fa73a5e52352672006f3e546ea">GetRegistry</a> ()</td></tr>
+<tr class="memdesc:a815f00fa73a5e52352672006f3e546ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the entt::registry that contains all components. It should be used to update component through systems.  <br /></td></tr>
+<tr class="memitem:ad71c175151ac49231344fef45f3d4790" id="r_ad71c175151ac49231344fef45f3d4790"><td class="memItemLeft">const <a class="el" href="#a92a3143c58cadead136a795f192ee544">Registry</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad71c175151ac49231344fef45f3d4790">GetRegistry</a> () const</td></tr>
+<tr class="memdesc:ad71c175151ac49231344fef45f3d4790"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the entt::registry that contains all components. It should be used to update component through systems.  <br /></td></tr>
 <tr class="memitem:ae8d49483d71929b61f383056da94c7fb" id="r_ae8d49483d71929b61f383056da94c7fb"><td class="memItemLeft"><a class="el" href="classEngine_1_1Entity.html">Entity</a>&#160;</td><td class="memItemRight"><a class="el" href="#ae8d49483d71929b61f383056da94c7fb">CreateEntity</a> ()</td></tr>
 <tr class="memdesc:ae8d49483d71929b61f383056da94c7fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an entity in the context of the registry.  <br /></td></tr>
 <tr class="memitem:a8f02138ac4eff08caf9afde49a5205e8" id="r_a8f02138ac4eff08caf9afde49a5205e8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8f02138ac4eff08caf9afde49a5205e8">KillEntity</a> (<a class="el" href="structEngine_1_1Id.html">Id</a> entity)</td></tr>
@@ -444,61 +444,43 @@ template&lt;CScheduler TScheduler&gt; </div>
 
 </div>
 </div>
-<a id="aefea4646026e43c1a8f3317b77ada312" name="aefea4646026e43c1a8f3317b77ada312"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefea4646026e43c1a8f3317b77ada312">&#9670;&#160;</a></span>GetRegistry() <span class="overload">[1/2]</span></h2>
+<a id="a815f00fa73a5e52352672006f3e546ea" name="a815f00fa73a5e52352672006f3e546ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a815f00fa73a5e52352672006f3e546ea">&#9670;&#160;</a></span>GetRegistry() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a92a3143c58cadead136a795f192ee544">Registry</a> &amp; Engine::Core::GetRegistry </td>
+          <td class="memname"><a class="el" href="#a92a3143c58cadead136a795f192ee544">Engine::Core::Registry</a> &amp; Engine::Core::GetRegistry </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Get the entt::registry that contains all components. It should be used to update component through systems. </p>
 <dl class="section return"><dt>Returns</dt><dd>registry that contains all components. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo</a></b></dt><dd>put the implementation in the cpp file, (remove inline) </dd></dl>
 
 </div>
 </div>
-<a id="a2894f79041e98bdc8911b09d75ed6ac4" name="a2894f79041e98bdc8911b09d75ed6ac4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2894f79041e98bdc8911b09d75ed6ac4">&#9670;&#160;</a></span>GetRegistry() <span class="overload">[2/2]</span></h2>
+<a id="ad71c175151ac49231344fef45f3d4790" name="ad71c175151ac49231344fef45f3d4790"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad71c175151ac49231344fef45f3d4790">&#9670;&#160;</a></span>GetRegistry() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="#a92a3143c58cadead136a795f192ee544">Registry</a> &amp; Engine::Core::GetRegistry </td>
+          <td class="memname">const <a class="el" href="#a92a3143c58cadead136a795f192ee544">Engine::Core::Registry</a> &amp; Engine::Core::GetRegistry </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Get the entt::registry that contains all components. It should be used to update component through systems. </p>
 <dl class="section return"><dt>Returns</dt><dd>registry that contains all components. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo</a></b></dt><dd>put the implementation in the cpp file, (remove inline) </dd></dl>
 
 </div>
 </div>
@@ -1073,9 +1055,6 @@ template&lt;CScheduler TScheduler, typename <a class="el" href="namespaceEngine.
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void Engine::Core::RemoveDependencyAfter </td>
@@ -1084,11 +1063,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Removes a dependency between two schedulers, ensuring that TSchedulerB is no longer dependent on TSchedulerA. </p>
@@ -1099,7 +1073,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo</a></b></dt><dd>Move the implementation of this function in the .inl file </dd></dl>
 
 </div>
 </div>
@@ -1110,9 +1083,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void Engine::Core::RemoveDependencyBefore </td>
@@ -1121,11 +1091,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Removes a dependency between two schedulers, ensuring that TSchedulerA is no longer dependent on TSchedulerB. </p>
@@ -1136,7 +1101,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo</a></b></dt><dd>Move the implementation of this function in the .inl file </dd></dl>
 
 </div>
 </div>
@@ -1185,9 +1149,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;CScheduler TScheduler&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void Engine::Core::SetDefaultScheduler </td>
@@ -1196,11 +1157,6 @@ template&lt;CScheduler TScheduler&gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Sets the default scheduler. </p>
@@ -1210,7 +1166,6 @@ template&lt;CScheduler TScheduler&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo</a></b></dt><dd>Move the implementation of this function in the .inl file. </dd></dl>
 
 </div>
 </div>
@@ -1280,9 +1235,6 @@ template&lt;CScheduler TScheduler&gt; </div>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void Engine::Core::SetSchedulerAfter </td>
@@ -1291,11 +1243,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Sets the execution order of two schedulers by specifying that one scheduler should execute after another. </p>
@@ -1306,7 +1253,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo</a></b></dt><dd>Move the implementation of this function in the .inl file </dd></dl>
 
 </div>
 </div>
@@ -1317,9 +1263,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void Engine::Core::SetSchedulerBefore </td>
@@ -1328,11 +1271,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Sets the execution order of two schedulers, ensuring that TSchedulerA is executed before TSchedulerB. </p>
@@ -1343,7 +1281,6 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo</a></b></dt><dd>Move the implementation of this function in the .inl file </dd></dl>
 
 </div>
 </div>
@@ -1514,7 +1451,7 @@ template&lt;typename TSchedulerA, typename TSchedulerB&gt; </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/engine/src/core/<a class="el" href="Core_8hpp_source.html">Core.hpp</a></li>
 <li>src/engine/src/core/<a class="el" href="Core_8cpp.html">Core.cpp</a></li>
-<li>src/engine/src/core/<a class="el" href="Core_8inl_source.html">Core.inl</a></li>
+<li>src/engine/src/core/<a class="el" href="Core_8ipp_source.html">Core.ipp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

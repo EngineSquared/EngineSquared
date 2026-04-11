@@ -12,5 +12,6 @@ var searchData=
   ['windowerror_2ehpp_9',['WindowError.hpp',['../WindowError_8hpp.html',1,'']]],
   ['windowsystem_2ecpp_10',['WindowSystem.cpp',['../WindowSystem_8cpp.html',1,'']]],
   ['windowsystem_2ehpp_11',['WindowSystem.hpp',['../WindowSystem_8hpp.html',1,'']]],
-  ['wrappedsystem_2ehpp_12',['WrappedSystem.hpp',['../WrappedSystem_8hpp.html',1,'']]]
+  ['wrappedsystem_2ehpp_12',['WrappedSystem.hpp',['../WrappedSystem_8hpp.html',1,'']]],
+  ['wrappedsystem_2eipp_13',['WrappedSystem.ipp',['../WrappedSystem_8ipp.html',1,'']]]
 ];

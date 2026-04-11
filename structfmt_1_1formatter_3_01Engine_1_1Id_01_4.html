@@ -108,23 +108,20 @@ Inheritance diagram for fmt::formatter&lt; Engine::Id &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5b184cccfffabb6e5e1d2f4ff1ba791e" id="r_a5b184cccfffabb6e5e1d2f4ff1ba791e"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext&gt; </td></tr>
-<tr class="memitem:a5b184cccfffabb6e5e1d2f4ff1ba791e template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a5b184cccfffabb6e5e1d2f4ff1ba791e">format</a> (const <a class="el" href="structEngine_1_1Id.html">Engine::Id</a> &amp;id, FormatContext &amp;ctx) const</td></tr>
-<tr class="memdesc:a5b184cccfffabb6e5e1d2f4ff1ba791e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format an <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Engine::Id</a> using the underlying entt::id_type formatter.  <br /></td></tr>
+<tr class="memitem:aa81a03b234bf313f5d2329ada5be7daf" id="r_aa81a03b234bf313f5d2329ada5be7daf"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext&gt; </td></tr>
+<tr class="memitem:aa81a03b234bf313f5d2329ada5be7daf template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#aa81a03b234bf313f5d2329ada5be7daf">format</a> (const <a class="el" href="structEngine_1_1Id.html">Engine::Id</a> &amp;id, FormatContext &amp;context) const</td></tr>
+<tr class="memdesc:aa81a03b234bf313f5d2329ada5be7daf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format an <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Engine::Id</a> using the underlying entt::id_type formatter.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Specialization of fmt::formatter for <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Engine::Id</a>, allowing it to be formatted using the fmt library. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a5b184cccfffabb6e5e1d2f4ff1ba791e" name="a5b184cccfffabb6e5e1d2f4ff1ba791e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b184cccfffabb6e5e1d2f4ff1ba791e">&#9670;&#160;</a></span>format()</h2>
+<a id="aa81a03b234bf313f5d2329ada5be7daf" name="aa81a03b234bf313f5d2329ada5be7daf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa81a03b234bf313f5d2329ada5be7daf">&#9670;&#160;</a></span>format()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename FormatContext&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">auto fmt::formatter&lt; <a class="el" href="structEngine_1_1Id.html">Engine::Id</a> &gt;::format </td>
@@ -134,14 +131,9 @@ template&lt;typename FormatContext&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">FormatContext &amp;</td>          <td class="paramname"><span class="paramname"><em>ctx</em></span>&#160;) const</td>
+          <td class="paramtype">FormatContext &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>&#160;) const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Format an <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Engine::Id</a> using the underlying entt::id_type formatter. </p>
@@ -154,17 +146,17 @@ template&lt;typename FormatContext&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>The <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Engine::Id</a> instance to format. </td></tr>
-    <tr><td class="paramname">ctx</td><td>The format context provided by fmt. </td></tr>
+    <tr><td class="paramname">context</td><td>The format context provided by fmt. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The result of formatting the underlying entt::id_type value of the <a class="el" href="structEngine_1_1Id.html" title="A strongly-typed identifier wrapper based on entt::id_type. This structure provides a type-safe wrapp...">Engine::Id</a> instance using the appropriate formatter for entt::id_type. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000049">Todo</a></b></dt><dd>Put the implementation in the inl file if possible </dd></dl>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this struct was generated from the following files:<ul>
 <li>src/engine/src/<a class="el" href="Id_8hpp_source.html">Id.hpp</a></li>
+<li>src/engine/src/<a class="el" href="Id_8ipp_source.html">Id.ipp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
