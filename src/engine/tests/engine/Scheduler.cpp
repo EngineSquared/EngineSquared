@@ -15,7 +15,7 @@ struct ResourceTest {
     std::vector<int> data;
 };
 
-class SchedulerTest1 : public Engine::Scheduler::AScheduler {
+class SchedulerTest1 final : public Engine::Scheduler::AScheduler {
   public:
     explicit SchedulerTest1(Core &core) : AScheduler(core) {};
     ~SchedulerTest1() final = default;
@@ -23,7 +23,7 @@ class SchedulerTest1 : public Engine::Scheduler::AScheduler {
     void RunSystems() override { _core.GetResource<ResourceTest>().data.push_back(1); }
 };
 
-class SchedulerTest2 : public Engine::Scheduler::AScheduler {
+class SchedulerTest2 final : public Engine::Scheduler::AScheduler {
   public:
     explicit SchedulerTest2(Core &core) : AScheduler(core) {};
     ~SchedulerTest2() final = default;

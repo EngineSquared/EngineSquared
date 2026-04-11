@@ -3,7 +3,7 @@
 #include "plugin/APlugin.hpp"
 
 namespace Physics {
-class Plugin : public Engine::APlugin {
+class Plugin final : public Engine::APlugin {
   public:
     explicit Plugin(Engine::Core &core)
         : Engine::APlugin(core) {
