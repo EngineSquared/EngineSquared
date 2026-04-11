@@ -73,7 +73,7 @@ var searchData=
   ['rmluirenderpass_70',['RmluiRenderPass',['../classRmlui_1_1Utils_1_1RmluiRenderPass.html#a5f673441572818a0dc02e39a8f62004e',1,'Rmlui::Utils::RmluiRenderPass']]],
   ['rope_71',['Rope',['../structPhysics_1_1Component_1_1SoftBodySettings.html#aa058e674882882a7177933466a70a617',1,'Physics::Component::SoftBodySettings']]],
   ['rotatequaternion_72',['RotateQuaternion',['../namespaceCameraMovement_1_1Utils.html#a13038400d4a236e767186777e25b41f7',1,'CameraMovement::Utils']]],
-  ['runcore_73',['RunCore',['../classEngine_1_1Core.html#af97b4393eabf3464b5959ed3e406f45c',1,'Engine::Core']]],
+  ['run_73',['Run',['../classEngine_1_1Core.html#a95cc0f5af86bec828da23085d26d03d3',1,'Engine::Core']]],
   ['runningphysicssimulationsystem_74',['RunningPhysicsSimulationSystem',['../examples_2physics__usage_2src_2main_8cpp.html#abf46de3695818c0531a9acb09b39a868',1,'main.cpp']]],
   ['runschedulers_75',['RunSchedulers',['../classEngine_1_1SchedulerContainer.html#a49324e0da554d4d02d2761b7b71e3374',1,'Engine::SchedulerContainer']]],
   ['runsystem_76',['RunSystem',['../classEngine_1_1Scheduler_1_1AScheduler.html#acbc942e1b2b4e31ab083ed24981c71ee',1,'Engine::Scheduler::AScheduler']]],

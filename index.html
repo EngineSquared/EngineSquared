@@ -227,7 +227,7 @@ How a minimal program looks</h3>
 <div class="line">    <span class="keyword">auto</span> entity = core.<a class="code hl_function" href="classEngine_1_1Core.html#ae8d49483d71929b61f383056da94c7fb">CreateEntity</a>();</div>
 <div class="line">    entity.AddComponent&lt;<a class="code hl_struct" href="structNameComponent.html">NameComponent</a>&gt;(<span class="stringliteral">&quot;Alice&quot;</span>);</div>
 <div class="line"> </div>
-<div class="line">    core.<a class="code hl_function" href="classEngine_1_1Core.html#a33cfa8662f699780d1b83ac0bb328d6b">RunSystems</a>(); <span class="comment">// starts the game loop, RunSystems() run them only one time and RunCore() run all scheduler indefinitely until Stop() is called</span></div>
+<div class="line">    core.<a class="code hl_function" href="classEngine_1_1Core.html#a33cfa8662f699780d1b83ac0bb328d6b">RunSystems</a>(); <span class="comment">// Executes systems once; use Run() to run the scheduler repeatedly until Stop() is called.</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aEngine_8hpp_html"><div class="ttname"><a href="Engine_8hpp.html">Engine.hpp</a></div></div>
 <div class="ttc" id="aclassEngine_1_1Core_html"><div class="ttname"><a href="classEngine_1_1Core.html">Engine::Core</a></div><div class="ttdoc">The core is the place where all the data of the engine is stored. It contains the registry (entities)...</div><div class="ttdef"><b>Definition</b> Core.hpp:33</div></div>

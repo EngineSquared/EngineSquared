@@ -29,7 +29,7 @@ var classEngine_1_1Core =
     [ "RegisterSystemWithErrorHandler", "classEngine_1_1Core.html#a5cafe4497a3fb76c853cdc0be98417c7", null ],
     [ "RemoveDependencyAfter", "classEngine_1_1Core.html#a4ff148cbcd686b127708e2526fc8d8e3", null ],
     [ "RemoveDependencyBefore", "classEngine_1_1Core.html#a8d3dff49691e01f85d96dd7112513df6", null ],
-    [ "RunCore", "classEngine_1_1Core.html#af97b4393eabf3464b5959ed3e406f45c", null ],
+    [ "Run", "classEngine_1_1Core.html#a95cc0f5af86bec828da23085d26d03d3", null ],
     [ "RunSystems", "classEngine_1_1Core.html#a33cfa8662f699780d1b83ac0bb328d6b", null ],
     [ "SetDefaultScheduler", "classEngine_1_1Core.html#a5d5e3ddb1c2607715df3cabcb7889f7f", null ],
     [ "SetDefaultScheduler", "classEngine_1_1Core.html#a00150f3dd7171274b9527cd864092919", null ],
