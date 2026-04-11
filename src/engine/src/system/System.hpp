@@ -4,6 +4,7 @@
 #include <entt/entt.hpp>
 #include <functional>
 #include <iostream>
+#include <list>
 #include <memory>
 #include <vector>
 
@@ -28,30 +29,26 @@ class SystemContainer : public FunctionUtils::FunctionContainer<void, Core &> {
     /// @param ...systems Systems to add.
     /// @return a tuple of FunctionIDs for the added systems.
     /// @see FunctionUtils::FunctionID
-    /// @todo Put the implementation in the inl file
-    template <typename... TSystem> inline decltype(auto) AddSystems(TSystem... systems)
-    {
-        return AddFunctions(systems...);
-    }
+    template <typename... TSystem> decltype(auto) AddSystems(TSystem... systems);
 
     /// @brief Gets the list of systems in the container.
     /// @return Const reference to the vector of unique pointers to SystemBase.
-    /// @todo Put the implementation in the cpp file, (remove inline)
-    inline decltype(auto) GetSystems() { return GetFunctions(); }
+    const std::list<std::unique_ptr<SystemBase>> &GetSystems();
 
     /// @brief Deletes a system from the container by its FunctionID.
     /// @param id The FunctionID of the system to delete.
     /// @return A unique pointer to the deleted system, or nullptr if not found.
     /// @see FunctionUtils::FunctionID
-    /// @todo Put the implementation in the cpp file, (remove inline)
-    inline decltype(auto) DeleteSystem(const FunctionUtils::FunctionID &id) { return DeleteFunction(id); }
+    std::unique_ptr<SystemBase> DeleteSystem(const FunctionUtils::FunctionID &id);
 
   private:
     /// @brief Add a system to the container.
     /// @tparam TCallable Type of the callable system.
     /// @param callable The callable system to be added.
     /// @see FunctionUtils::CallableFunction
-    template <typename TCallable> void AddSystem(TCallable callable) { AddFunction(callable); }
+    template <typename TCallable> void AddSystem(TCallable callable);
 };
 
 } // namespace Engine
+
+#include "System.ipp"

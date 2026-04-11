@@ -63,6 +63,26 @@ template <CScheduler TScheduler, typename... Systems> inline decltype(auto) Core
     return this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
 }
 
+template <typename TSchedulerA, typename TSchedulerB> void Core::SetSchedulerBefore()
+{
+    this->_schedulers.Before<TSchedulerA, TSchedulerB>();
+}
+
+template <typename TSchedulerA, typename TSchedulerB> void Core::SetSchedulerAfter()
+{
+    this->_schedulers.After<TSchedulerA, TSchedulerB>();
+}
+
+template <typename TSchedulerA, typename TSchedulerB> void Core::RemoveDependencyAfter()
+{
+    this->_schedulers.RemoveDependencyAfter<TSchedulerA, TSchedulerB>();
+}
+
+template <typename TSchedulerA, typename TSchedulerB> void Core::RemoveDependencyBefore()
+{
+    this->_schedulers.RemoveDependencyBefore<TSchedulerA, TSchedulerB>();
+}
+
 template <typename... Systems> inline decltype(auto) Core::RegisterSystem(Systems... systems)
 {
     if (!this->_schedulers.Contains(_defaultScheduler))
@@ -100,6 +120,11 @@ template <CPlugin TPlugin> void Core::AddPlugin()
 template <CPlugin TPlugin> bool Core::HasPlugin() const
 {
     return this->_plugins.contains(std::type_index(typeid(TPlugin)));
+}
+
+template <CScheduler TScheduler> void Core::SetDefaultScheduler()
+{
+    SetDefaultScheduler(std::type_index(typeid(TScheduler)));
 }
 
 inline void Core::SetDefaultScheduler(std::type_index scheduler)

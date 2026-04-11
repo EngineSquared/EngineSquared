@@ -28,25 +28,22 @@ class FixedTimeUpdate : public AScheduler {
     ///   to 1/60 seconds or 1/120 seconds.
     /// @see Engine::Core
     /// @see Engine::Scheduler::FixedTimeUpdate::DEFAULT_TICK_RATE
-    /// @todo Put the implementation inside cpp file
-    FixedTimeUpdate(Core &core, float tickRate = DEFAULT_TICK_RATE) : AScheduler(core), _tickRate(tickRate) {}
+    FixedTimeUpdate(Core &core, float tickRate = DEFAULT_TICK_RATE);
 
     /// @copydoc Engine::Scheduler::IScheduler
     void RunSystems() override;
 
     /// @brief Get the fixed tick rate.
     /// @return The tick rate in seconds
-    /// @todo Put the implementation inside a cpp file (remove inline)
     /// @see Engine::Scheduler::FixedTimeUpdate::_tickRate
-    inline float GetTickRate() const { return _tickRate; }
+    float GetTickRate() const;
 
     /// @brief Set the fixed tick rate.
     /// @param tickRate The fixed tick rate
     /// @note This can cause issues if the value is changed during an update. It is recommended to change this value
     ///   before the update loop starts.
     /// @see Engine::Scheduler::FixedTimeUpdate::_tickRate
-    /// @todo Put the implementation inside a cpp file (remove inline)
-    inline void SetTickRate(float tickRate) { _tickRate = tickRate; }
+    void SetTickRate(float tickRate);
 
   private:
     /// @brief The tick rate correspond to the number of update the scheduler should do in a second.

@@ -77,6 +77,11 @@ template <typename TScheduler> inline bool Engine::SchedulerContainer::Contains(
     return Contains(std::type_index(typeid(TScheduler)));
 }
 
+template <typename TScheduler> inline void Engine::SchedulerContainer::DeleteScheduler()
+{
+    DeleteScheduler(std::type_index(typeid(TScheduler)));
+}
+
 inline std::shared_ptr<Engine::Scheduler::AScheduler> Engine::SchedulerContainer::GetScheduler(std::type_index id)
 {
     auto it = this->_schedulers.find(id);

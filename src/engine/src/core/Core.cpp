@@ -41,6 +41,10 @@ Engine::Core::Core() : _registry(nullptr)
 
 Engine::Core::~Core() { Log::Debug("Destroy Core"); }
 
+Engine::Core::Registry &Engine::Core::GetRegistry() { return *_registry; }
+
+const Engine::Core::Registry &Engine::Core::GetRegistry() const { return *_registry; }
+
 Engine::Entity Engine::Core::CreateEntity()
 {
     EntityId entity = this->_registry->create();

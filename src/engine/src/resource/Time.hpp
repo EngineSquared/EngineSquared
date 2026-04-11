@@ -17,13 +17,6 @@ struct Time {
     ///     update the elapsed time. This is a system.
     /// @param core Reference to the core.
     /// @see Engine::Resource::Time::_elapsedTime
-    /// @todo put the implementation in the cpp file
-    static void Update(Core &core)
-    {
-        auto &time = core.GetResource<Time>();
-        auto now = std::chrono::high_resolution_clock::now();
-        time._elapsedTime = std::chrono::duration<float>(now - time._lastTime).count();
-        time._lastTime = now;
-    }
+    static void Update(Core &core);
 };
 } // namespace Engine::Resource

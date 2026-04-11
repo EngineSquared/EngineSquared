@@ -4,6 +4,7 @@
 
 #include "system/System.hpp"
 
+#include <list>
 #include <set>
 #include <typeindex>
 
@@ -17,24 +18,19 @@ class AScheduler : public IScheduler {
     /// @brief Constructor of the AScheduler class.
     /// @param core Reference to the core.
     /// @see Engine::Core
-    explicit AScheduler(Core &core) : _core(core) {}
+    explicit AScheduler(Core &core);
 
     /// @brief Get systems inside the scheduler.
     /// @return A SystemContainer with enabled systems.
     /// @see Engine::SystemContainer
-    /// @todo put the implementation in the cpp file, (remove inline)
-    inline decltype(auto) GetSystems() { return _enabledSystemsList.GetSystems(); }
+    const std::list<std::unique_ptr<SystemBase>> &GetSystems();
 
     /// @brief Add systems to the scheduler.
     /// @tparam TSystems Types of the systems to add.
     /// @param systems The systems to add.
     /// @return A tuple of FunctionIDs for the added systems. See FunctionUtils::FunctionContainer::AddFunctions for
     /// more details.
-    /// @todo put the implementation in the inl file
-    template <typename... TSystems> inline decltype(auto) AddSystems(TSystems... systems)
-    {
-        return _enabledSystemsList.AddSystems(systems...);
-    }
+    template <typename... TSystems> decltype(auto) AddSystems(TSystems... systems);
 
     /// @brief Disable a system.
     /// @param id The system to disable
@@ -48,7 +44,6 @@ class AScheduler : public IScheduler {
     /// @note The system will be executed according to the scheduler policy of the scheduler.
     /// @param system The system to execute.
     /// @param core The core to pass to the system.
-    /// @todo Remove Core parameter from the function and use the reference to the core stored in the AScheduler class
     /// instead.
     /// @see Engine::SystemBase
     void RunSystem(const SystemBase *system, Core &core);
@@ -56,21 +51,17 @@ class AScheduler : public IScheduler {
     /// @brief Get whether the next scheduler should run or not. This is mainly set by the error policy of the
     ///   scheduler.
     /// @return true if the next scheduler should run, false otherwise.
-    /// @todo check if we can remove this method and find a cleaner way to handle the error policy of the scheduler.
-    /// @todo put the implementation in the cpp file, (remove inline)
-    inline bool ShouldRunNextScheduler() const { return _shouldRunNextScheduler; }
+    bool ShouldRunNextScheduler() const;
 
     /// @brief Get the error policy of the scheduler.
     /// @return The error policy of the scheduler.
     /// @see Engine::Scheduler::SchedulerErrorPolicy
-    /// @todo put the implementation in the cpp file, (remove inline)
-    inline SchedulerErrorPolicy GetErrorPolicy() const override { return _errorPolicy; }
+    SchedulerErrorPolicy GetErrorPolicy() const override;
 
     /// @brief Set the error policy of the scheduler.
     /// @param errorPolicy The error policy to set.
     /// @see Engine::Scheduler::SchedulerErrorPolicy
-    /// @todo put the implementation in the cpp file, (remove inline)
-    inline void SetErrorPolicy(SchedulerErrorPolicy errorPolicy) override { _errorPolicy = errorPolicy; }
+    void SetErrorPolicy(SchedulerErrorPolicy errorPolicy) override;
 
     /// @brief Remove a system from the scheduler.
     /// @param id The system to remove.
@@ -100,3 +91,5 @@ class AScheduler : public IScheduler {
     SchedulerErrorPolicy _errorPolicy = SchedulerErrorPolicy::LogAndContinue;
 };
 } // namespace Engine::Scheduler
+
+#include "scheduler/AScheduler.ipp"

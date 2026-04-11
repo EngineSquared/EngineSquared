@@ -5,6 +5,16 @@
 #include "Logger.hpp"
 
 namespace Engine::Scheduler {
+AScheduler::AScheduler(Core &core) : _core(core) {}
+
+const std::list<std::unique_ptr<SystemBase>> &AScheduler::GetSystems() { return _enabledSystemsList.GetSystems(); }
+
+bool AScheduler::ShouldRunNextScheduler() const { return _shouldRunNextScheduler; }
+
+SchedulerErrorPolicy AScheduler::GetErrorPolicy() const { return _errorPolicy; }
+
+void AScheduler::SetErrorPolicy(SchedulerErrorPolicy errorPolicy) { _errorPolicy = errorPolicy; }
+
 void AScheduler::Disable(FunctionUtils::FunctionID id)
 {
     if (_enabledSystemsList.Contains(id))

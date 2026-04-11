@@ -21,22 +21,18 @@ template <typename TDerived, typename TValue> struct BasicId {
 
     /// @brief Constructor for BasicId. Allows implicit construction from the underlying value type, defaulting to the
     ///     null value.
-    /// @param v The value to initialize the ID with. Defaults to the null value defined by the derived class.
+    /// @param value_ The value to initialize the ID with. Defaults to the null value defined by the derived class.
     /// @return An instance of the derived ID type initialized with the given value.
-    /// @todo rename v to something more descriptive, like idValue or rawValue
-    /// @todo Put the implementation in the cpp file if possible
-    constexpr explicit(false) BasicId(TValue v = TDerived::NullValue()) : value{v} {}
+    constexpr explicit(false) BasicId(TValue value_ = TDerived::NullValue());
 
     /// @brief Get the null value for this ID type. This should be defined by the derived class to specify what
     ///     constitutes a null/invalid ID.
     /// @return The value representing a null/invalid ID for this type.
-    /// @todo Put the implementation in the cpp file if possible
-    static constexpr TDerived Null() { return TDerived::Null(); }
+    static constexpr TDerived Null(void);
 
     /// @brief Checks if the ID is null/invalid by comparing its value to the null value defined by the derived class.
     /// @return True if the ID is null/invalid, false otherwise.
-    /// @todo Put the implementation in the cpp file if possible
-    constexpr bool IsNull() const { return value == TDerived::NullValue(); }
+    constexpr bool IsNull(void) const;
 };
 
 /// @struct Id
@@ -50,30 +46,23 @@ struct Id : public BasicId<Id, entt::id_type> {
     using ValueType = entt::id_type;
 
     /// @brief Constructor for Id.
-    /// @param v The value to initialize the ID with. Defaults to the null value defined by the NullValue() method.
-    /// @todo Put the implementation in the cpp file if possible
-    /// @todo rename v to something more descriptive, like idValue or rawValue
-    constexpr Id(ValueType v = NullValue()) : BasicId<Id, ValueType>{v} {}
+    /// @param value_ The value to initialize the ID with. Defaults to the null value defined by the NullValue() method.
+    constexpr Id(ValueType value_ = NullValue());
 
     /// @brief Implicit conversion operator to the underlying entt::id_type, allowing seamless use of Id instances where
     ///     entt::id_type is expected.
-    constexpr operator ValueType() const { return value; }
+    constexpr operator ValueType() const;
 
     /// @brief Get the null value for this ID type. This returns the null value defined by EnTT's id_type, which is
     ///     typically
     /// @return The value representing a null/invalid ID for this type.
-    /// @todo Put the implementation in the cpp file if possible
-    static constexpr ValueType NullValue() { return entt::null; }
+    static constexpr ValueType NullValue(void);
 
     /// @brief Get a null instance of Id, which has its value set to the null value defined by NullValue().
     /// @return A null instance of Id.
-    /// @todo Put the implementation in the cpp file if possible
-    static constexpr Id Null() { return Id{NullValue()}; }
+    static constexpr Id Null(void);
 };
 
-/// @brief Static assertion to ensure that the size of Id matches the size of entt::id_type, guaranteeing that there is
-///     no additional overhead from the wrapper and that it can be used interchangeably with entt::id_type without
-///     penalties.
 static_assert(sizeof(Id) == sizeof(Id::ValueType), "Id size must be equal to entt::id_type size");
 
 /// @struct StringId
@@ -94,18 +83,15 @@ struct StringId : public BasicId<StringId, entt::hashed_string> {
     /// @brief Constructor for StringId.
     /// @param v The value to initialize the StringId with. Defaults to the null value defined by the NullValue()
     ///     method.
-    /// @todo Put the implementation in the cpp file if possible
-    constexpr StringId(ValueType v = NullValue()) : BasicId<StringId, ValueType>{v} {}
+    constexpr StringId(ValueType v = NullValue());
 
     /// @brief Get the null value for this StringId type. This returns a default-constructed entt::hashed_string.
     /// @return The value representing a null/invalid StringId for this type.
-    /// @todo Put the implementation in the cpp file if possible
-    static constexpr ValueType NullValue() { return entt::hashed_string{}; }
+    static constexpr ValueType NullValue();
 
     /// @brief Get a null instance of StringId, which has its value set to the null value defined by NullValue().
     /// @return A null instance of StringId.
-    /// @todo Put the implementation in the cpp file if possible
-    static constexpr StringId Null() { return StringId{NullValue()}; }
+    static constexpr StringId Null();
 };
 /// @brief Static assertion to ensure that the size of StringId matches the size of entt::hashed_string, guaranteeing
 ///     that there is no additional overhead from the wrapper and that it can be used interchangeably with
@@ -127,14 +113,10 @@ template <> struct fmt::formatter<Engine::Id> : fmt::formatter<entt::id_type> {
     /// @brief Format an Engine::Id using the underlying entt::id_type formatter.
     /// @tparam FormatContext The type of the format context provided by fmt during formatting.
     /// @param id The Engine::Id instance to format.
-    /// @param ctx The format context provided by fmt.
+    /// @param context The format context provided by fmt.
     /// @return The result of formatting the underlying entt::id_type value of the Engine::Id instance using the
     ///     appropriate formatter for entt::id_type.
-    /// @todo Put the implementation in the inl file if possible
-    template <typename FormatContext> auto format(const Engine::Id &id, FormatContext &ctx) const
-    {
-        return fmt::formatter<entt::id_type>::format(id.value, ctx);
-    }
+    template <typename FormatContext> auto format(const Engine::Id &id, FormatContext &context) const;
 };
 
 /// @brief Specialization of fmt::formatter for Engine::StringId, allowing it to be formatted using the fmt library.
@@ -146,12 +128,10 @@ template <> struct fmt::formatter<Engine::StringId> : fmt::formatter<std::string
     ///     std::string_view.
     /// @tparam FormatContext The type of the format context provided by fmt during formatting.
     /// @param id The Engine::StringId instance to format.
-    /// @param ctx The format context provided by fmt.
+    /// @param context The format context provided by fmt.
     /// @return The result of formatting the original string representation of the Engine::StringId instance, extracted
     ///     from its underlying entt::hashed_string value, as a std::string_view for human-readable output.
-    /// @todo Put the implementation in the inl file if possible
-    template <typename FormatContext> auto format(const Engine::StringId &id, FormatContext &ctx) const
-    {
-        return fmt::formatter<std::string_view>::format(std::string_view(id.value.data(), id.value.size()), ctx);
-    }
+    template <typename FormatContext> auto format(const Engine::StringId &id, FormatContext &context) const;
 };
+
+#include "Id.ipp"

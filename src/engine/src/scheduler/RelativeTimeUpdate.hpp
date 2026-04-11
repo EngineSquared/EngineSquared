@@ -33,8 +33,7 @@ class RelativeTimeUpdate : public AScheduler {
     /// @see Engine::Scheduler::RelativeTimeUpdate::DEFAULT_TARGET_TICK_RATE
     /// @see Engine::Scheduler::RelativeTimeUpdate::_tickRate
     /// @see Engine::Scheduler::RelativeTimeUpdate::AScheduler
-    /// @todo put the implementation in the cpp file
-    RelativeTimeUpdate(Core &core, float tickRate = DEFAULT_TARGET_TICK_RATE) : AScheduler(core), _tickRate(tickRate) {}
+    RelativeTimeUpdate(Core &core, float tickRate = DEFAULT_TARGET_TICK_RATE);
 
     /// @copydoc AScheduler::RunSystems
     void RunSystems() override;
@@ -43,21 +42,18 @@ class RelativeTimeUpdate : public AScheduler {
     /// @return The target tick rate
     /// @see Engine::Scheduler::RelativeTimeUpdate::DEFAULT_TARGET_TICK_RATE
     /// @see Engine::Scheduler::RelativeTimeUpdate::_tickRate
-    /// @todo put the implementation in the cpp file, (remove inline)
-    inline float GetTargetTickRate() const { return _tickRate; }
+    float GetTargetTickRate() const;
 
     /// @brief Set the target tick rate
     /// @param tickRate The target tick rate
     /// @see Engine::Scheduler::RelativeTimeUpdate::DEFAULT_TARGET_TICK_RATE
     /// @see Engine::Scheduler::RelativeTimeUpdate::_tickRate
-    /// @todo put the implementation in the cpp file, (remove inline)
-    inline void SetTargetTickRate(float tickRate) { _tickRate = tickRate; }
+    void SetTargetTickRate(float tickRate);
 
     /// @brief Get the current delta time
     /// @return The current delta time
     /// @see Engine::Scheduler::RelativeTimeUpdate::_deltaTime
-    /// @todo put the implementation in the cpp file, (remove inline)
-    inline float GetCurrentDeltaTime() const { return _deltaTime; }
+    float GetCurrentDeltaTime() const;
 
   private:
     /// @brief The target tick rate for the scheduler. It is the maximum time we want between each system run. If the

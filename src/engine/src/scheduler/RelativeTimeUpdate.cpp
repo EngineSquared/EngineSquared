@@ -3,6 +3,17 @@
 #include "resource/Time.hpp"
 #include "scheduler/RelativeTimeUpdate.hpp"
 
+Engine::Scheduler::RelativeTimeUpdate::RelativeTimeUpdate(Core &core, float tickRate)
+    : AScheduler(core), _tickRate(tickRate)
+{
+}
+
+float Engine::Scheduler::RelativeTimeUpdate::GetTargetTickRate() const { return _tickRate; }
+
+void Engine::Scheduler::RelativeTimeUpdate::SetTargetTickRate(float tickRate) { _tickRate = tickRate; }
+
+float Engine::Scheduler::RelativeTimeUpdate::GetCurrentDeltaTime() const { return _deltaTime; }
+
 void Engine::Scheduler::RelativeTimeUpdate::RunSystems()
 {
     _bufferedTime += this->_core.GetResource<Engine::Resource::Time>()._elapsedTime;
