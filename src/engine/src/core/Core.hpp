@@ -130,8 +130,8 @@ class Core {
     /// @brief Stop the core execution. It will finish the current loop, call shutdown systems if any and stop.
     void Stop();
 
-    /// @brief Execute the core loop, which will run all the schedulers.
-    void RunCore();
+    /// @brief Run a loop of schedulers until _running is false.
+    void Run(void);
 
     /// @brief Add one or multiple systems associated with a specific scheduler.
     /// @tparam TScheduler The type of the scheduler to use. It must be derived from AScheduler. You can look at

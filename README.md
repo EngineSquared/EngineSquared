@@ -165,7 +165,7 @@ int main() {
     auto entity = core.CreateEntity();
     entity.AddComponent<NameComponent>("Alice");
 
-    core.RunSystems(); // starts the game loop, RunSystems() run them only one time and RunCore() run all scheduler indefinitely until Stop() is called
+    core.RunSystems(); // Executes systems once; use Run() to run the scheduler repeatedly until Stop() is called.
 }
 ```
 

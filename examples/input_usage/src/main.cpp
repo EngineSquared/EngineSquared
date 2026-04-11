@@ -73,7 +73,7 @@ int main(void)
         }
     });
 
-    core.RunCore();
+    core.Run();
 
     return 0;
 }

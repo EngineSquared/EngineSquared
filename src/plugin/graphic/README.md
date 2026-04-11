@@ -151,7 +151,7 @@ int main() {
 
     core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Graphic::Plugin>();
     // Configure GraphicSettings in Init if needed (see Configuration)
-    core.RunCore();
+    core.Run();
     return 0;
 }
 ```
