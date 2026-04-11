@@ -34,12 +34,8 @@ jobs:
           build-cache-key: 'xmake-build-cache-key-${{ runner.os }}-doxygen'
           build-cache-path: 'build/.build_cache'
 
-      - name: Install Doxygen
-        # IMPORTANT: If you update the Doxygen version here, make sure to also update it in the tools/xmake/build_documentation.lua file.
-        run: xmake require -yvD "doxygen 669aeeefca743c148e2d935b3d3c69535c7491e6"
-
       - name: Build documentation
-        run: xmake build_documentation
+        run: xmake build_documentation -yvD
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4

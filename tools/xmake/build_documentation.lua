@@ -1,20 +1,38 @@
 -- IMPORTANT: if you want to update the doxygen version, please also update the version in .github/workflows/deploy_doxygen_page.yml
 local doxygen_version = "669aeeefca743c148e2d935b3d3c69535c7491e6"
 
-add_requires("doxygen " .. doxygen_version, { debug = is_mode("debug"), optional = true })
-
 task("build_documentation")
     on_run(function ()
         import("core.base.option")
         import("core.project.project")
         import("devel.git")
+        import("lib.detect.find_tool")
+        import("private.action.require.impl.install_packages")
+        import("private.action.require.impl.packagenv")
 
-        local doxygen_package = project.required_package("doxygen")
-        if not doxygen_package then
-            raise("Doxygen package not found. Please install it first. By running:\n\nxmake require -yvD \"doxygen " .. doxygen_version .. "\"\n")
+        local doxygen = find_tool("doxygen")
+        if not doxygen then
+            local oldenvs = packagenv.enter("doxygen")
+            local packages = {}
+            doxygen = find_tool("doxygen")
+            if not doxygen then
+                table.join2(packages, install_packages("doxygen " .. doxygen_version))
+            end
+
+            for _, instance in ipairs(packages) do
+                instance:envs_enter()
+            end
+
+            if not doxygen then
+                doxygen = find_tool("doxygen", {force = true})
+            end
+
+            os.setenvs(oldenvs)
         end
 
-        local doxygen = path.join(doxygen_package:installdir(), "bin", "doxygen")
+        assert(doxygen, "doxygen not found!")
+
+        local doxygen = doxygen.program
 
         local docs_doxygen = path.join(os.projectdir(), "docs", "doxygen")
 
