@@ -98,25 +98,36 @@ target("EngineSquared")
     end
 target_end()
 
-local ALL_EXAMPLES_FLAG_NAME = "all_examples"
-local EXECUTABLE_EXAMPLES_FLAG_NAME = "executable_examples"
+local ALL_EXAMPLES_FLAG = "AllExamples"
+local ALL_PRIMARY_EXAMPLES_FLAG = "AllPrimaryExamples"
+local EXECUTABLE_EXAMPLES_FLAG = "ExecutableExamples"
 
-option(ALL_EXAMPLES_FLAG_NAME, {default = false, description = "Enable all examples"})
-option(EXECUTABLE_EXAMPLES_FLAG_NAME, {default = false, description = "Enable executable examples"})
+option(ALL_EXAMPLES_FLAG, {default = false, description = "Enable all examples"})
+option(ALL_PRIMARY_EXAMPLES_FLAG, {default = false, description = "Enable all primary examples"})
+option(EXECUTABLE_EXAMPLES_FLAG, {default = false, description = "Enable executable examples"})
 
-for _, dir in ipairs(os.dirs("examples/*")) do
+local all_examples_folder = {}
+
+table.join2(all_examples_folder, os.dirs(path.join("src", "**", "examples", "*")))
+table.join2(all_examples_folder, os.dirs(path.join(".", "examples", "*")))
+
+for _, dir in ipairs(all_examples_folder) do
     local name = path.basename(dir)
 
     option(name, {default = false, description = "Enable \"" .. name .. "\" Example"})
 
-    if has_config(ALL_EXAMPLES_FLAG_NAME) or has_config(name) or has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) then
+    if has_config(ALL_EXAMPLES_FLAG) or has_config(name) or has_config(EXECUTABLE_EXAMPLES_FLAG) or has_config(ALL_PRIMARY_EXAMPLES_FLAG) then
         if (not os.isfile(path.join(dir, "xmake.lua"))) then
             print("Warning: No xmake.lua found in " .. dir .. ", skipping...")
         else
-            if has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) and os.isfile(path.join("examples", name, ".ci_run_target")) then
-                includes(path.join("examples", name, "xmake.lua"))
-            elseif has_config(ALL_EXAMPLES_FLAG_NAME) or not has_config(EXECUTABLE_EXAMPLES_FLAG_NAME) then
-                includes(path.join("examples", name, "xmake.lua"))
+            if has_config(name) then
+                includes(path.join(dir, "xmake.lua"))
+            elseif has_config(EXECUTABLE_EXAMPLES_FLAG) and os.isfile(path.join(dir, ".ci_run_target")) then
+                includes(path.join(dir, "xmake.lua"))
+            elseif has_config(ALL_PRIMARY_EXAMPLES_FLAG) and not os.isfile(path.join(dir, ".secondary")) then
+                includes(path.join(dir, "xmake.lua"))
+            elseif has_config(ALL_EXAMPLES_FLAG) then
+                includes(path.join(dir, "xmake.lua"))
             end
         end
     end

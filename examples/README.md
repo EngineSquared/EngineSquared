@@ -4,40 +4,40 @@ This directory contains example projects that demonstrate how to use EngineSquar
 
 ## Building and Running Examples
 
-To build and run an example, be at the root of the EngineSquared repository and use the following commands, replacing `[name_of_example]` with the name of the example you want to run:
+To build and run an example, be at the root of the EngineSquared repository and use the following commands, replacing `[NameOfExample]` with the name of the example you want to run:
 
 ```bash
-xmake f --[name_of_example]=y
-xmake run -y [name_of_example_target_name]
+xmake f --[NameOfExample]=y
+xmake run -y [NameOfExamplesTargetName]
 ```
 
-for example, to run the `basic_core_usage` example, you would use:
+for example, to run the `BasicCoreUsage` example, you would use:
 
 ```bash
-xmake f --basic_core_usage=y
+xmake f --BasicCoreUsage=y
 xmake run -y BasicCoreUsage
 ```
 
 ## Non-exhaustive list of examples
 
-- `basic_core_usage`: A simple example demonstrating the basic usage of EngineSquared's core features.
-- `event_usage`: An example showcasing how to use the event system.
-- `graphic_light_usage`: An example illustrating how to use lighting features.
-- `graphic_material_usage`: An example demonstrating how to use materials.
-- `graphic_usage`: An example showcasing the basic graphics features.
-- `graphic_usage_with_physics_usage`: An example demonstrating how to use graphics features with physics features.
-- `input_usage`: An example illustrating how to handle user input.
-- `nativescripting_usage`: An example showcasing how to use native scripting.
-- `physics_usage`: An example showcasing the basic physics features.
-- `character_controller_usage`: An example demonstrating how to use the CharacterController component.
-- `relationships_usage`: An example demonstrating how to use relationships between entities.
-- `rmlui_usage`: An example showcasing how to use RmlUI for user interfaces.
-- `softbody_usage`: An example demonstrating how to use soft body physics features.
-- `sound_usage`: An example showcasing how to use sound features.
-- `vehicle_usage`: An example demonstrating how to use vehicle physics features.
+- `BasicCoreUsage`: A simple example demonstrating the basic usage of EngineSquared's core features.
+- `EventUsage`: An example showcasing how to use the event system.
+- `GraphicLightUsage`: An example illustrating how to use lighting features.
+- `GraphicMaterialUsage`: An example demonstrating how to use materials.
+- `GraphicUsage`: An example showcasing the basic graphics features.
+- `GraphicUsageWithPhysicsUsage`: An example demonstrating how to use graphics features with physics features.
+- `InputUsage`: An example illustrating how to handle user input.
+- `NativeScriptingUsage`: An example showcasing how to use native scripting.
+- `PhysicsUsage`: An example showcasing the basic physics features.
+- `CharacterControllerUsage`: An example demonstrating how to use the CharacterController component.
+- `RelationshipsUsage`: An example demonstrating how to use relationships between entities.
+- `RmluiUsage`: An example showcasing how to use RmlUI for user interfaces.
+- `SoftbodyUsage`: An example demonstrating how to use soft body physics features.
+- `SoundUsage`: An example showcasing how to use sound features.
+- `VehicleUsage`: An example demonstrating how to use vehicle physics features.
 
 ## Some flags that you can use when building examples
 
-- `--all_examples=[y/n]`: Add all examples to the build.
-- `--[name_of_example]=[y/n]`: Add a specific example to the build, replacing `[name_of_example]` with the name of the example you want to add. For example, `--basic_core_usage=y` will add the `basic_core_usage` example to the build.
-- `--executable_examples=[y/n]`: Add all examples that can be built and run in a container. This is useful for running examples in a CI environment or on platforms where you cannot run the examples directly on the host machine.
+- `--AllExamples=[y/n]`: Add all examples to the build.
+- `--[NameOfExample]=[y/n]`: Add a specific example to the build, replacing `[NameOfExample]` with the name of the example you want to add. For example, `--BasicCoreUsage=y` will add the `BasicCoreUsage` example to the build.
+- `--ExecutableExamples=[y/n]`: Add all examples that can be built and run in a container. This is useful for running examples in a CI environment or on platforms where you cannot run the examples directly on the host machine.

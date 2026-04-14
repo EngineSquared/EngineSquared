@@ -1,0 +1,118 @@
+/**************************************************************************
+ * EngineSquared - Graphic Usage Example
+ *
+ * This example demonstrates how to use the Graphic plugin.
+ **************************************************************************/
+
+#include "Engine.hpp"
+
+#include "CameraMovement.hpp"
+#include "DefaultPipeline.hpp"
+#include "Graphic.hpp"
+#include "Input.hpp"
+#include "Object.hpp"
+#include "RenderingPipeline.hpp"
+#include "plugin/PluginWindow.hpp"
+#include "resource/Window.hpp"
+
+void EscapeKeySystem(Engine::Core &core)
+{
+    auto &inputManager = core.GetResource<Input::Resource::InputManager>();
+
+    if (inputManager.IsKeyPressed(GLFW_KEY_ESCAPE))
+    {
+        core.Stop();
+    }
+}
+
+void Setup(Engine::Core &core)
+{
+    // Option to lock the cursor to the window
+    // auto &window = core.GetResource<Window::Resource::Window>(); //NOSONAR
+    // window.MaskCursor(); //NOSONAR
+
+    // Default Material
+    auto cube = core.CreateEntity();
+    cube.AddComponent<Object::Component::Transform>(glm::vec3(-2.0f, 0.0f, 0.0f));
+    cube.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
+
+    // Custom Material from file
+    Object::Component::Material materialWithTexture;
+    materialWithTexture.diffuseTexName = "examples/GraphicMaterialUsage/asset/texture.png";
+    auto cube1 = core.CreateEntity();
+    cube1.AddComponent<Object::Component::Transform>();
+    cube1.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
+    cube1.AddComponent<Object::Component::Material>(std::move(materialWithTexture));
+
+    // Custom Material from local texture
+    Object::Component::Material materialFromLocalTexture;
+    materialFromLocalTexture.diffuseTexName = "LocalTextureName";
+    auto &textureManager = core.GetResource<Graphic::Resource::TextureContainer>();
+    auto texture =
+        Graphic::Resource::Texture(core.GetResource<Graphic::Resource::Context>(), "LocalTexture", glm::uvec2(255, 255),
+                                   [](glm::uvec2 pos) { return glm::u8vec4(pos.x, pos.y, 0, 255); });
+    textureManager.Add("LocalTextureName", std::move(texture));
+    auto cube2 = core.CreateEntity();
+    cube2.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 2.0f, 0.0f));
+    cube2.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
+    cube2.AddComponent<Object::Component::Material>(std::move(materialFromLocalTexture));
+
+    // Custom Material without Texture
+    Object::Component::Material materialWithoutTexture;
+    auto cube3 = core.CreateEntity();
+    cube3.AddComponent<Object::Component::Transform>(glm::vec3(2.0f, 0.0f, 0.0f));
+    cube3.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
+    cube3.AddComponent<Object::Component::Material>(std::move(materialWithoutTexture));
+
+    // Camera
+    auto camera = core.CreateEntity();
+    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -5.0f));
+    camera.AddComponent<Object::Component::Camera>();
+
+    auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
+    cameraManager.SetActiveCamera(camera);
+    cameraManager.SetMovementSpeed(3.0f);
+
+    core.RegisterSystem(EscapeKeySystem);
+}
+
+class GraphicExampleError : public std::runtime_error {
+  public:
+    using std::runtime_error::runtime_error;
+};
+
+int main(void)
+{
+    Engine::Core core;
+
+    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Input::Plugin, CameraMovement::Plugin>();
+
+    core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
+        core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(
+            [](WGPUDevice const *, WGPUErrorType type, WGPUStringView message, WGPU_NULLABLE void *,
+               WGPU_NULLABLE void *) {
+                Log::Error(fmt::format("Custom uncaptured device error: type {:x} ({})", static_cast<uint32_t>(type),
+                                       std::string(message.data, message.length)));
+                throw GraphicExampleError("Custom uncaptured device error occurred");
+            });
+    });
+
+    core.RegisterSystem<Engine::Scheduler::Startup>(Setup);
+
+    try
+    {
+        core.Run();
+    }
+    catch (const GraphicExampleError &e)
+    {
+        Log::Error(fmt::format("GraphicExampleError: {}", e.what()));
+        return EXIT_FAILURE;
+    }
+    catch (const std::exception &e)
+    {
+        Log::Error(fmt::format("Unhandled exception: {}", e.what()));
+        return EXIT_FAILURE;
+    }
+
+    return 0;
+}
