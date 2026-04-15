@@ -90,6 +90,28 @@ var annotated_dup =
       ] ],
       [ "Plugin", "classEvent_1_1Plugin.html", "classEvent_1_1Plugin" ]
     ] ],
+    [ "Example", "namespaceExample.html", [
+      [ "Resource", "namespaceExample_1_1Resource.html", [
+        [ "DirectorResource", "structExample_1_1Resource_1_1DirectorResource.html", "structExample_1_1Resource_1_1DirectorResource" ]
+      ] ],
+      [ "Component", "namespaceExample_1_1Component.html", [
+        [ "Name", "structExample_1_1Component_1_1Name.html", "structExample_1_1Component_1_1Name" ],
+        [ "WorkTime", "structExample_1_1Component_1_1WorkTime.html", "structExample_1_1Component_1_1WorkTime" ]
+      ] ],
+      [ "System", "namespaceExample_1_1System.html", [
+        [ "DirectorMonitor", "classExample_1_1System_1_1DirectorMonitor.html", "classExample_1_1System_1_1DirectorMonitor" ],
+        [ "WorkHoursUpdate", "classExample_1_1System_1_1WorkHoursUpdate.html", "classExample_1_1System_1_1WorkHoursUpdate" ]
+      ] ],
+      [ "App", "classExample_1_1App.html", "classExample_1_1App" ],
+      [ "PreRender", "classExample_1_1PreRender.html", null ],
+      [ "Render", "classExample_1_1Render.html", null ],
+      [ "PostRender", "classExample_1_1PostRender.html", null ],
+      [ "NcursesPlugin", "classExample_1_1NcursesPlugin.html", "classExample_1_1NcursesPlugin" ],
+      [ "Player", "structExample_1_1Player.html", "structExample_1_1Player" ],
+      [ "RaylibPlugin", "classExample_1_1RaylibPlugin.html", "classExample_1_1RaylibPlugin" ],
+      [ "Text", "structExample_1_1Text.html", "structExample_1_1Text" ],
+      [ "SfmlPlugin", "classExample_1_1SfmlPlugin.html", "classExample_1_1SfmlPlugin" ]
+    ] ],
     [ "fmt", null, [
       [ "formatter&lt; Engine::Entity &gt;", "structfmt_1_1formatter_3_01Engine_1_1Entity_01_4.html", "structfmt_1_1formatter_3_01Engine_1_1Entity_01_4" ],
       [ "formatter&lt; Engine::EntityId &gt;", "structfmt_1_1formatter_3_01Engine_1_1EntityId_01_4.html", "structfmt_1_1formatter_3_01Engine_1_1EntityId_01_4" ],
@@ -361,8 +383,6 @@ var annotated_dup =
     [ "CharacterControllerExampleRuntime", "structCharacterControllerExampleRuntime.html", "structCharacterControllerExampleRuntime" ],
     [ "ChaseCameraBehavior", "classChaseCameraBehavior.html", "classChaseCameraBehavior" ],
     [ "CounterComponent", "structCounterComponent.html", "structCounterComponent" ],
-    [ "DirectorMonitorSystem", "classDirectorMonitorSystem.html", "classDirectorMonitorSystem" ],
-    [ "DirectorResource", "structDirectorResource.html", "structDirectorResource" ],
     [ "EventExample", "structEventExample.html", "structEventExample" ],
     [ "FunctionContainerTest", "classFunctionContainerTest.html", "classFunctionContainerTest" ],
     [ "Functor", "structFunctor.html", "structFunctor" ],
@@ -394,7 +414,5 @@ var annotated_dup =
     [ "TestSchedulerB", "classTestSchedulerB.html", "classTestSchedulerB" ],
     [ "TestScript", "classTestScript.html", "classTestScript" ],
     [ "TestSystemClass", "classTestSystemClass.html", "classTestSystemClass" ],
-    [ "ThirdPlayerCameraBehavior", "classThirdPlayerCameraBehavior.html", "classThirdPlayerCameraBehavior" ],
-    [ "WorkHoursUpdateSystem", "classWorkHoursUpdateSystem.html", "classWorkHoursUpdateSystem" ],
-    [ "WorkTimeComponent", "structWorkTimeComponent.html", "structWorkTimeComponent" ]
+    [ "ThirdPlayerCameraBehavior", "classThirdPlayerCameraBehavior.html", "classThirdPlayerCameraBehavior" ]
 ];

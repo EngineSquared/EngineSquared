@@ -8,7 +8,7 @@ var searchData=
   ['maxconvexradius_5',['maxConvexRadius',['../structPhysics_1_1Component_1_1ConvexHullMeshCollider.html#a72f74a10ef9773fb4d11bb13d9a5063e',1,'Physics::Component::ConvexHullMeshCollider']]],
   ['maxdistance_6',['maxDistance',['../structPhysics_1_1Component_1_1DistanceConstraint.html#a94732649f1b70044dd5486bd357bbc1f',1,'Physics::Component::DistanceConstraint']]],
   ['maxhandbraketorque_7',['maxHandBrakeTorque',['../structPhysics_1_1Component_1_1WheelSettings.html#a7bb4e7061d20aeb0cb5e5e5ea5b11520',1,'Physics::Component::WheelSettings']]],
-  ['maxhours_8',['maxHours',['../structWorkTimeComponent.html#ae26253ba638b63e7b615656f3dcafb67',1,'WorkTimeComponent']]],
+  ['maxhours_8',['maxHours',['../structExample_1_1Component_1_1WorkTime.html#ade07ff8154c9e51608ff335fe1a63584',1,'Example::Component::WorkTime']]],
   ['maxlinearvelocity_9',['maxLinearVelocity',['../structPhysics_1_1Component_1_1SoftBodySettings.html#aa0822837e4df6c34ae07dcf0256314b3',1,'Physics::Component::SoftBodySettings']]],
   ['maxrpm_10',['maxRPM',['../structPhysics_1_1Component_1_1EngineSettings.html#a1beed2e08f736988ff6d8259961c70b2',1,'Physics::Component::EngineSettings']]],
   ['maxslopeangle_11',['maxSlopeAngle',['../structPhysics_1_1Component_1_1CharacterController.html#aedb63f5bc45f145c4506178455a2e1ba',1,'Physics::Component::CharacterController']]],

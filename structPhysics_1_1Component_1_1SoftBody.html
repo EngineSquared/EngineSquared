@@ -136,7 +136,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Soft body physics component. </p>
 <p>Represents the physics simulation data for a deformable object using Jolt's <a class="el" href="structPhysics_1_1Component_1_1SoftBody.html" title="Soft body physics component.">SoftBody</a> system. This component works in conjunction with <a class="el" href="structObject_1_1Component_1_1Mesh.html" title="Mesh structure.">Object::Component::Mesh</a> which holds the geometry.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
 Architecture</h2>
 <ul>
 <li><b>Mesh</b> (<a class="el" href="namespaceObject.html">Object</a> plugin): Contains vertices[], normals[], indices[] for rendering</li>
@@ -147,7 +147,7 @@ Architecture</h2>
 <li>On construct: <b>Auto-detects</b> Mesh component and initializes physics data</li>
 <li>On update: Writes Jolt simulation results back to Mesh.vertices</li>
 </ol>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
 Usage</h2>
 <p><b>From existing Mesh</b> (e.g., imported .obj): </p><div class="fragment"><div class="line"><span class="keyword">auto</span> mesh = OBJLoader(<span class="stringliteral">&quot;model.obj&quot;</span>).GetMesh();</div>
 <div class="line"><span class="keyword">auto</span> teapot = core.CreateEntity();</div>

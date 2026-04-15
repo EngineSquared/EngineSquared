@@ -10,7 +10,7 @@ var searchData=
   ['initconstraintsystem_7',['InitConstraintSystem',['../namespacePhysics_1_1System.html#a39566de928e393d0d0e1007bfef6a9fa',1,'Physics::System']]],
   ['initglfw_8',['InitGLFW',['../namespaceWindow_1_1System.html#afa017ba0bece69e39b09c470c448eb9d',1,'Window::System']]],
   ['initialize_9',['Initialize',['../classdemo__setup_1_1DemoWindow.html#a91286c95f92ff1ac207037fa5e346dba',1,'demo_setup::DemoWindow']]],
-  ['initializeanimationoverlay_10',['InitializeAnimationOverlay',['../examples_2rmlui__usage_2src_2main_8cpp.html#afe71faf89f34272629570c0d04e4ca52',1,'main.cpp']]],
+  ['initializeanimationoverlay_10',['InitializeAnimationOverlay',['../examples_2RmluiUsage_2src_2main_8cpp.html#afe71faf89f34272629570c0d04e4ca52',1,'main.cpp']]],
   ['initjoltphysics_11',['InitJoltPhysics',['../namespacePhysics_1_1System.html#a4bb69f15db8835d5875a535db4cd320a',1,'Physics::System']]],
   ['initphysicsmanager_12',['InitPhysicsManager',['../namespacePhysics_1_1System.html#ab3ac16a98125641e649aa8060019db69',1,'Physics::System']]],
   ['initrigidbodysystem_13',['InitRigidBodySystem',['../namespacePhysics_1_1System.html#ac2a4d862222600d45b01545bd242c18a',1,'Physics::System']]],
