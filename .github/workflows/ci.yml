@@ -194,8 +194,8 @@ jobs:
 
       - name: Build and test examples
         run: |
-          xmake f --all_examples=y -y -m debug
+          xmake f --AllPrimaryExamples=y -y -m debug
           xmake build -y
-          xmake f --executable_examples=y -y -m debug
+          xmake f --ExecutableExamples=y -y -m debug
           xmake run -y -v
         timeout-minutes: 30

@@ -13,4 +13,7 @@
 #include "scheduler/Startup.hpp"
 #include "scheduler/Update.hpp"
 
+#include "plugin/APlugin.hpp"
+#include "plugin/IPlugin.hpp"
+
 #include "Id.hpp"
