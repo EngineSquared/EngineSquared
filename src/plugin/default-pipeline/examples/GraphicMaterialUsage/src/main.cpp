@@ -6,24 +6,12 @@
 
 #include "Engine.hpp"
 
-#include "CameraMovement.hpp"
 #include "DefaultPipeline.hpp"
 #include "Graphic.hpp"
-#include "Input.hpp"
 #include "Object.hpp"
 #include "RenderingPipeline.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "resource/Window.hpp"
-
-void EscapeKeySystem(Engine::Core &core)
-{
-    auto &inputManager = core.GetResource<Input::Resource::InputManager>();
-
-    if (inputManager.IsKeyPressed(GLFW_KEY_ESCAPE))
-    {
-        core.Stop();
-    }
-}
 
 void Setup(Engine::Core &core)
 {
@@ -38,7 +26,7 @@ void Setup(Engine::Core &core)
 
     // Custom Material from file
     Object::Component::Material materialWithTexture;
-    materialWithTexture.diffuseTexName = "examples/GraphicMaterialUsage/asset/texture.png";
+    materialWithTexture.diffuseTexName = "src/plugin/default-pipeline/examples/GraphicMaterialUsage/asset/texture.png";
     auto cube1 = core.CreateEntity();
     cube1.AddComponent<Object::Component::Transform>();
     cube1.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
@@ -66,14 +54,8 @@ void Setup(Engine::Core &core)
 
     // Camera
     auto camera = core.CreateEntity();
-    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -5.0f));
+    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 1.0f, -4.2f));
     camera.AddComponent<Object::Component::Camera>();
-
-    auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
-    cameraManager.SetActiveCamera(camera);
-    cameraManager.SetMovementSpeed(3.0f);
-
-    core.RegisterSystem(EscapeKeySystem);
 }
 
 class GraphicExampleError : public std::runtime_error {
@@ -85,7 +67,7 @@ int main(void)
 {
     Engine::Core core;
 
-    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Input::Plugin, CameraMovement::Plugin>();
+    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
         core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(

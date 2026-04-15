@@ -1,29 +1,11 @@
-/**************************************************************************
- * EngineSquared - Graphic Usage Example
- *
- * This example demonstrates how to use the Graphic plugin.
- **************************************************************************/
-
 #include "Engine.hpp"
 
-#include "CameraMovement.hpp"
 #include "DefaultPipeline.hpp"
 #include "Graphic.hpp"
-#include "Input.hpp"
 #include "Object.hpp"
 #include "RenderingPipeline.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "resource/Window.hpp"
-
-void EscapeKeySystem(Engine::Core &core)
-{
-    auto &inputManager = core.GetResource<Input::Resource::InputManager>();
-
-    if (inputManager.IsKeyPressed(GLFW_KEY_ESCAPE))
-    {
-        core.Stop();
-    }
-}
 
 void Setup(Engine::Core &core)
 {
@@ -36,7 +18,8 @@ void Setup(Engine::Core &core)
     plane.AddComponent<Object::Component::Mesh>(Object::Utils::GeneratePlaneMesh(5.0f, 5.0f, 10u, 10u));
 
     auto camera = core.CreateEntity();
-    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -5.0f));
+    camera.AddComponent<Object::Component::Transform>(glm::vec3{4.33f, 1.93f, 1.13f}, glm::vec3{1.0f},
+                                                      glm::quat{-0.57f, -0.14f, 0.78f, -0.19f});
     camera.AddComponent<Object::Component::Camera>();
 
     auto directionalLight = core.CreateEntity();
@@ -44,10 +27,6 @@ void Setup(Engine::Core &core)
         .SetRotation(0.19305186, 0.7857022, -0.30020833, 0.5052504);
     directionalLight.AddComponent<Object::Component::DirectionalLight>(
         {.color = glm::vec4(0.3f), .projection = glm::orthoLH_ZO(-5.0f, 5.0f, -5.0f, 5.0f, 0.1f, 50.0f)});
-
-    auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
-    cameraManager.SetActiveCamera(camera);
-    cameraManager.SetMovementSpeed(3.0f);
 
     auto ambientLight = core.CreateEntity();
     ambientLight.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 1.0f, 0.0f));
@@ -76,64 +55,6 @@ void Setup(Engine::Core &core)
                                       .intensity = 1.0f,
                                       .radius = 2.0f,
                                       .falloff = 1.0f});
-
-    core.RegisterSystem(EscapeKeySystem);
-
-    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback(
-        [](Engine::Core &core, int key, int, int action, int) {
-            if (!(action == GLFW_PRESS))
-                return;
-
-            auto lightView = core.GetRegistry().view<Object::Component::AmbientLight>();
-            if (lightView.empty())
-                return;
-
-            Engine::Entity ambientLightEntity{core, lightView.front()};
-            auto &ambientLightColor = ambientLightEntity.GetComponents<Object::Component::AmbientLight>().color;
-            if (key == GLFW_KEY_R)
-            {
-                ambientLightColor += glm::vec3(0.1f);
-            }
-            else if (key == GLFW_KEY_F)
-            {
-                ambientLightColor -= glm::vec3(0.1f);
-            }
-        });
-    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback(
-        [](Engine::Core &core, int key, int, int action, int) {
-            if (!(action == GLFW_PRESS))
-                return;
-
-            core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>().each(
-                [key](Object::Component::PointLight &light, Object::Component::Transform &transform) {
-                    if (key == GLFW_KEY_T)
-                    {
-                        light.intensity += 0.5f;
-                    }
-                    else if (key == GLFW_KEY_G)
-                    {
-                        light.intensity = std::max(0.0f, light.intensity - 0.5f);
-                    }
-                });
-        });
-
-    core.GetResource<Input::Resource::InputManager>().RegisterKeyCallback(
-        [](Engine::Core &core, int key, int, int action, int) {
-            if (!(action == GLFW_PRESS))
-                return;
-
-            core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>().each(
-                [key](Object::Component::PointLight &light, Object::Component::Transform &transform) {
-                    if (key == GLFW_KEY_Y)
-                    {
-                        transform.SetPosition(transform.GetPosition() + glm::vec3(0.0f, 0.5f, 0.0f));
-                    }
-                    else if (key == GLFW_KEY_H)
-                    {
-                        transform.SetPosition(transform.GetPosition() - glm::vec3(0.0f, 0.5f, 0.0f));
-                    }
-                });
-        });
 }
 
 class GraphicExampleError : public std::runtime_error {
@@ -145,7 +66,7 @@ int main(void)
 {
     Engine::Core core;
 
-    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Input::Plugin, CameraMovement::Plugin>();
+    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
         core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(

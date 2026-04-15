@@ -6,24 +6,12 @@
 
 #include "Engine.hpp"
 
-#include "CameraMovement.hpp"
 #include "DefaultPipeline.hpp"
 #include "Graphic.hpp"
-#include "Input.hpp"
 #include "Object.hpp"
 #include "RenderingPipeline.hpp"
 #include "plugin/PluginWindow.hpp"
 #include "resource/Window.hpp"
-
-void EscapeKeySystem(Engine::Core &core)
-{
-    auto &inputManager = core.GetResource<Input::Resource::InputManager>();
-
-    if (inputManager.IsKeyPressed(GLFW_KEY_ESCAPE))
-    {
-        core.Stop();
-    }
-}
 
 Object::Component::Mesh CreateCustomMesh(void)
 {
@@ -68,14 +56,8 @@ void Setup(Engine::Core &core)
 
     auto camera = core.CreateEntity();
 
-    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, -2.0f));
+    camera.AddComponent<Object::Component::Transform>(glm::vec3(0.75f, 1.0f, -2.5f), glm::vec3(1.0f), glm::quat(glm::vec3(glm::radians(20.0f), 0.0f, 0.0f)));
     camera.AddComponent<Object::Component::Camera>();
-
-    auto &cameraManager = core.GetResource<CameraMovement::Resource::CameraManager>();
-    cameraManager.SetActiveCamera(camera);
-    cameraManager.SetMovementSpeed(3.0f);
-
-    core.RegisterSystem(EscapeKeySystem);
 }
 
 class GraphicExampleError : public std::runtime_error {
@@ -87,7 +69,7 @@ int main(void)
 {
     Engine::Core core;
 
-    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin, Input::Plugin, CameraMovement::Plugin>();
+    core.AddPlugins<Window::Plugin, DefaultPipeline::Plugin>();
 
     core.RegisterSystem<RenderingPipeline::Init>([](Engine::Core &core) {
         core.GetResource<Graphic::Resource::GraphicSettings>().SetOnErrorCallback(
