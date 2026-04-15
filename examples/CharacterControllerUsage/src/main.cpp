@@ -84,7 +84,7 @@ class ThirdPlayerCameraBehavior : public CameraMovement::Utils::ICameraBehavior 
         {
             Log::Error(fmt::format(
                 "Failed to unregister camera behavior callbacks: {}",
-                e.what())); // TODO: fix namming of log function (Warn rather than Warning or Err rather than Error)
+                e.what()));
         }
     }
 

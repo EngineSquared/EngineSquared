@@ -1,7 +1,6 @@
 #include "Engine.hpp"
 namespace Nc {
 #include <ncurses.h>
-// #include <curses.h>
 } // namespace Nc
 
 namespace Example {
@@ -38,14 +37,6 @@ class NcursesPlugin : public Engine::APlugin {
         // Startup -> (Update -> PreRender -> Render -> PostRender) -> Shutdown
 
         RegisterSystems<Engine::Scheduler::Startup>([](Engine::Core &) { Nc::initscr(); });
-
-        RegisterSystems<Engine::Scheduler::Update>([](Engine::Core &core) {
-
-        });
-
-        RegisterSystems<PreRender>([](Engine::Core &) {});
-
-        RegisterSystems<PostRender>([](Engine::Core &) {});
 
         RegisterSystems<Engine::Scheduler::Shutdown>([](Engine::Core &) { Nc::endwin(); });
     }
