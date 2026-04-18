@@ -40,7 +40,8 @@ Engine² lets every process, planification, and evolution be visible and underst
 
 ## Hello World
 
-You can find some basics examples inside `**/examples` folder like if you want kind of *hello world* example, check [this one](https://github.com/EngineSquared/EngineSquared/tree/main/src/engine/examples/BasicCoreUsage)
+You can find basic examples in the `examples/` (in `root`, `src/engine/examples` and `examples` folder in any plugin folder in `src/plugin/`) folders throughout the project. For a "hello world" example, check [this one](https://github.com/EngineSquared/EngineSquared/tree/main/src/engine/examples/BasicCoreUsage).
+
 
 ---
 
