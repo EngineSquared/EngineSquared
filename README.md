@@ -33,9 +33,14 @@ Engine² lets every process, planification, and evolution be visible and underst
 <div align="center">
 <a href="https://github.com/EngineSquared/ES-RS"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/ES-RS-Menu.png?raw=true" width="40%" alt="ES-RS Menu"></a>
 <a href="https://github.com/EngineSquared/ES-RS"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/ES-RS-InGame.png?raw=true" width="40%" alt="ES-RS In-Game"></a> <br />
-<a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_light_usage"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Lights.png?raw=true" width="40%" alt="Lights"></a>
-<a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples/graphic_material_usage"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Material.png?raw=true" width="40%" alt="Material"></a> <br />
+<a href="https://github.com/EngineSquared/EngineSquared/tree/main/src/plugin/default-pipeline/examples/GraphicLightUsage"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Lights.png?raw=true" width="40%" alt="Lights"></a>
+<a href="https://github.com/EngineSquared/EngineSquared/tree/main/src/plugin/default-pipeline/examples/GraphicMaterialUsage"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Material.png?raw=true" width="40%" alt="Material"></a> <br />
 </div>
+
+
+## Hello World
+
+You can find some basics examples inside `**/examples` folder like if you want kind of *hello world* example, check [this one](https://github.com/EngineSquared/EngineSquared/tree/main/src/engine/examples/BasicCoreUsage)
 
 ---
 
