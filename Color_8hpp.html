@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Engine²: src/plugin/graphic/src/utils/GetBytesPerPixel.hpp Source File</title>
+<title>Engine²: src/plugin/graphic/src/utils/Color.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('GetBytesPerPixel_8hpp_source.html','',''); });
+$(function(){initNavTree('Color_8hpp.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -91,26 +91,38 @@ $(function(){initNavTree('GetBytesPerPixel_8hpp_source.html','',''); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">GetBytesPerPixel.hpp</div></div>
+  <div class="headertitle"><div class="title">Color.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="GetBytesPerPixel_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="webgpu_8hpp.html">utils/webgpu.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceGraphic_1_1Utils.html">Graphic::Utils</a> {</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>uint32_t <a class="code hl_function" href="namespaceGraphic_1_1Utils.html#af1e1ac6004bfb6a6b3a3a7e80801a23e">GetBytesPerPixel</a>(wgpu::TextureFormat format);</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>};</div>
-<div class="ttc" id="anamespaceGraphic_1_1Utils_html"><div class="ttname"><a href="namespaceGraphic_1_1Utils.html">Graphic::Utils</a></div><div class="ttdef"><b>Definition</b> Color.hpp:6</div></div>
-<div class="ttc" id="anamespaceGraphic_1_1Utils_html_af1e1ac6004bfb6a6b3a3a7e80801a23e"><div class="ttname"><a href="namespaceGraphic_1_1Utils.html#af1e1ac6004bfb6a6b3a3a7e80801a23e">Graphic::Utils::GetBytesPerPixel</a></div><div class="ttdeci">uint32_t GetBytesPerPixel(wgpu::TextureFormat format)</div><div class="ttdoc">Determines the number of bytes per pixel for a given wgpu texture format.</div><div class="ttdef"><b>Definition</b> GetBytesPerPixel.cpp:13</div></div>
-<div class="ttc" id="awebgpu_8hpp_html"><div class="ttname"><a href="webgpu_8hpp.html">webgpu.hpp</a></div></div>
-</div><!-- fragment --></div><!-- contents -->
+<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;glm/glm.hpp&gt;</code><br />
+</div>
+<p><a href="Color_8hpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:Graphic_3A_3AUtils_3A_3AColor" id="r_Graphic_3A_3AUtils_3A_3AColor"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classGraphic_1_1Utils_1_1Color.html">Graphic::Utils::Color</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classGraphic_1_1Utils_1_1Color.html" title="Color utility functions for converting RGB values to normalized vectors.">Color</a> utility functions for converting RGB values to normalized vectors.  <a href="classGraphic_1_1Utils_1_1Color.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:Graphic" id="r_Graphic"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespaceGraphic.html">Graphic</a></td></tr>
+<tr class="memitem:Graphic_3A_3AUtils" id="r_Graphic_3A_3AUtils"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespaceGraphic_1_1Utils.html">Graphic::Utils</a></td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="dir_40bb855b7b2023435b78cde29725ed48.html">plugin</a></li><li class="navelem"><a href="dir_456e1ed94ccb5b3e2842ecc161ff9b22.html">graphic</a></li><li class="navelem"><a href="dir_fa8302fd033936ee5801aa7d771955c7.html">src</a></li><li class="navelem"><a href="dir_9174e44736a71902fa2b7a4ca7b24804.html">utils</a></li><li class="navelem"><a href="GetBytesPerPixel_8hpp.html">GetBytesPerPixel.hpp</a></li>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="dir_40bb855b7b2023435b78cde29725ed48.html">plugin</a></li><li class="navelem"><a href="dir_456e1ed94ccb5b3e2842ecc161ff9b22.html">graphic</a></li><li class="navelem"><a href="dir_fa8302fd033936ee5801aa7d771955c7.html">src</a></li><li class="navelem"><a href="dir_9174e44736a71902fa2b7a4ca7b24804.html">utils</a></li><li class="navelem"><a href="Color_8hpp.html">Color.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>

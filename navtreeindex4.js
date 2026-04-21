@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"UnsupportedTextureFormatError_8hpp_source.html":[6,0,1,1,3,0,0,19],
+"UpdateAmbientLight_8cpp.html":[6,0,1,1,1,1,3,2,0],
 "UpdateAmbientLight_8hpp.html":[6,0,1,1,1,1,3,2,1],
 "UpdateAmbientLight_8hpp_source.html":[6,0,1,1,1,1,3,2,1],
 "UpdateBufferError_8hpp.html":[6,0,1,1,3,0,0,20],
@@ -104,9 +106,10 @@ var NAVTREEINDEX4 =
 "WrappedSystem_8hpp_source.html":[6,0,1,0,1,6,3],
 "WrappedSystem_8ipp.html":[6,0,1,0,1,6,4],
 "WrappedSystem_8ipp_source.html":[6,0,1,0,1,6,4],
-"_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2physics_2src_2system_2ConstraintSystem_8hpp-example.html":[7,25],
-"_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html":[7,26],
-"_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2window_2src_2resource_2Window_8hpp-example.html":[7,27],
+"_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2graphic_2src_2utils_2Color_8hpp-example.html":[7,2],
+"_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2physics_2src_2system_2ConstraintSystem_8hpp-example.html":[7,26],
+"_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2sound_2src_2resource_2SoundManager_8hpp-example.html":[7,27],
+"_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2window_2src_2resource_2Window_8hpp-example.html":[7,28],
 "annotated.html":[5,0],
 "classCameraMovement_1_1CameraMovementError.html":[3,0,0,3],
 "classCameraMovement_1_1CameraMovementError.html":[5,0,0,2],
@@ -246,8 +249,5 @@ var NAVTREEINDEX4 =
 "classChaseCameraBehavior.html":[5,0,29],
 "classChaseCameraBehavior.html#a408e6efafc6cde6e111bbaee42324136":[5,0,29,4],
 "classChaseCameraBehavior.html#a4eb243f758780aaf9967697adfc21fed":[5,0,29,0],
-"classChaseCameraBehavior.html#adc57444b1185f0722c4a5c19afe72856":[5,0,29,3],
-"classChaseCameraBehavior.html#ae99a063556e47493141743ede18d2a4f":[5,0,29,2],
-"classChaseCameraBehavior.html#aeac27548fe449d18a5a1e30083beaf76":[5,0,29,5],
-"classChaseCameraBehavior.html#afa76926b45b1146c9798175db1be03a1":[5,0,29,1]
+"classChaseCameraBehavior.html#adc57444b1185f0722c4a5c19afe72856":[5,0,29,3]
 };

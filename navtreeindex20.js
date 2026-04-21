@@ -1,5 +1,14 @@
 var NAVTREEINDEX20 =
 {
+"namespacewgpu.html#a78ee776ec4d5b2b6f94ba1acbf068ad9":[3,0,22,346],
+"namespacewgpu.html#a78fdfc03298b6c36f48f343d2715a152":[3,0,22,455],
+"namespacewgpu.html#a791f2affd7110a11e50018cc1e131f28":[3,0,22,2],
+"namespacewgpu.html#a7a28ae5a40f47effcc20c3e485b650b3":[3,0,22,352],
+"namespacewgpu.html#a7a6a577ee0805ba08f3055e67824cdb0":[3,0,22,91],
+"namespacewgpu.html#a7a91d0e7e7deed7bb622a76ecbb4afe1":[3,0,22,95],
+"namespacewgpu.html#a7bc70e750b3a3eeaeae1168e941c58b1":[3,0,22,345],
+"namespacewgpu.html#a7c22f7a97ef43878156603bf10f79b0a":[3,0,22,282],
+"namespacewgpu.html#a7cc37079b5d0839a4304c8f59a562359":[3,0,22,128],
 "namespacewgpu.html#a7d528ff4480fa798bc719a265b663db2":[3,0,22,180],
 "namespacewgpu.html#a7dcb204ea0fc303f798ee2d5396b40a9":[3,0,22,110],
 "namespacewgpu.html#a7e6ce9330cb77fef1c9ebc70d5c42b37":[3,0,22,375],
@@ -240,14 +249,5 @@ var NAVTREEINDEX20 =
 "namespacewgpu.html#afd790a9299bdc3c6d8e5ab2770ec6f1b":[3,0,22,137],
 "namespacewgpu.html#afe941d52887f48ce1a85b3d99d740990":[3,0,22,318],
 "namespacewgpu.html#affc8717320e312f24fd5f6d4d11a8b53":[3,0,22,370],
-"namespacewgpu.html#affedc46cbd35d7c998959b3eb6c14ab5":[3,0,22,10],
-"object_2src_2component_2AmbientLight_8hpp.html":[6,0,1,1,6,0,0,0],
-"object_2src_2component_2AmbientLight_8hpp_source.html":[6,0,1,1,6,0,0,0],
-"pages.html":[],
-"src_2engine_2examples_2BasicCoreUsage_2src_2main_8cpp.html":[6,0,1,0,0,0,0,0],
-"src_2engine_2examples_2BasicCoreUsage_2src_2main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe":[6,0,1,0,0,0,0,0,9],
-"src_2engine_2tests_2main_8cpp.html":[6,0,1,0,2,1],
-"src_2engine_2tests_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[6,0,1,0,2,1,0],
-"src_2plugin_2camera-movement_2tests_2main_8cpp.html":[6,0,1,1,0,1,1],
-"src_2plugin_2camera-movement_2tests_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[6,0,1,1,0,1,1,0]
+"namespacewgpu.html#affedc46cbd35d7c998959b3eb6c14ab5":[3,0,22,10]
 };

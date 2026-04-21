@@ -2,6 +2,7 @@ var examples =
 [
     [ "Catching an exception", "Catching_01an_01exception-example.html", null ],
     [ "Throwing an exception", "Throwing_01an_01exception-example.html", null ],
+    [ "/home/runner/work/EngineSquared/EngineSquared/src/plugin/graphic/src/utils/Color.hpp", "_2home_2runner_2work_2EngineSquared_2EngineSquared_2src_2plugin_2graphic_2src_2utils_2Color_8hpp-example.html", null ],
     [ "Creating a cube entity:", "Creating_01a_01cube_01entity_1-example.html", null ],
     [ "Creating a sphere entity:", "Creating_01a_01sphere_01entity_1-example.html", null ],
     [ "Creating a plane entity:", "Creating_01a_01plane_01entity_1-example.html", null ],

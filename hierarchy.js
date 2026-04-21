@@ -87,6 +87,7 @@ var hierarchy =
     [ "Physics::Event::CollisionAddedEvent", "structPhysics_1_1Event_1_1CollisionAddedEvent.html", null ],
     [ "Physics::Event::CollisionPersistedEvent", "structPhysics_1_1Event_1_1CollisionPersistedEvent.html", null ],
     [ "Physics::Event::CollisionRemovedEvent", "structPhysics_1_1Event_1_1CollisionRemovedEvent.html", null ],
+    [ "Graphic::Utils::Color", "classGraphic_1_1Utils_1_1Color.html", null ],
     [ "Graphic::Resource::ColorOutput", "structGraphic_1_1Resource_1_1ColorOutput.html", null ],
     [ "Physics::System::ConstraintContext", "structPhysics_1_1System_1_1ConstraintContext.html", null ],
     [ "Physics::Component::ConstraintInternal", "structPhysics_1_1Component_1_1ConstraintInternal.html", null ],

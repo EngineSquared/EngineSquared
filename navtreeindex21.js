@@ -1,5 +1,14 @@
 var NAVTREEINDEX21 =
 {
+"object_2src_2component_2AmbientLight_8hpp.html":[6,0,1,1,6,0,0,0],
+"object_2src_2component_2AmbientLight_8hpp_source.html":[6,0,1,1,6,0,0,0],
+"pages.html":[],
+"src_2engine_2examples_2BasicCoreUsage_2src_2main_8cpp.html":[6,0,1,0,0,0,0,0],
+"src_2engine_2examples_2BasicCoreUsage_2src_2main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe":[6,0,1,0,0,0,0,0,9],
+"src_2engine_2tests_2main_8cpp.html":[6,0,1,0,2,1],
+"src_2engine_2tests_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[6,0,1,0,2,1,0],
+"src_2plugin_2camera-movement_2tests_2main_8cpp.html":[6,0,1,1,0,1,1],
+"src_2plugin_2camera-movement_2tests_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[6,0,1,1,0,1,1,0],
 "src_2plugin_2default-pipeline_2examples_2GraphicLightUsage_2src_2main_8cpp.html":[6,0,1,1,1,0,0,0,0],
 "src_2plugin_2default-pipeline_2examples_2GraphicLightUsage_2src_2main_8cpp.html#a1d6fceb52d931126f407c8229a9db1f4":[6,0,1,1,1,0,0,0,0,2],
 "src_2plugin_2default-pipeline_2examples_2GraphicLightUsage_2src_2main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe":[6,0,1,1,1,0,0,0,0,1],
@@ -58,8 +67,8 @@ var NAVTREEINDEX21 =
 "src_2utils_2function-container_2tests_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[6,0,1,2,0,1,2,0],
 "src_2utils_2log_2src_2tests_2main_8cpp.html":[6,0,1,2,1,0,0,1],
 "src_2utils_2log_2src_2tests_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[6,0,1,2,1,0,0,1,0],
-"stb__image__impl_8cpp.html":[6,0,1,1,3,0,4,8],
-"stb__image__impl_8cpp.html#a18372412ad2fc3ce1e3240b3cf0efe78":[6,0,1,1,3,0,4,8,0],
+"stb__image__impl_8cpp.html":[6,0,1,1,3,0,4,9],
+"stb__image__impl_8cpp.html#a18372412ad2fc3ce1e3240b3cf0efe78":[6,0,1,1,3,0,4,9,0],
 "structA.html":[5,0,23],
 "structA.html#a28aa1d3f6118f1446e8e1fed8f6f4a49":[5,0,23,0],
 "structActionHistory.html":[5,0,24],
@@ -240,14 +249,5 @@ var NAVTREEINDEX21 =
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#ab41a5622f18088836a48b028af77a90d":[3,0,1,1,8,0,5],
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#ab41a5622f18088836a48b028af77a90d":[5,0,1,1,8,0,5],
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#acbf253e1b956a5a3d518ff3299d29686":[3,0,1,1,8,0,3],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#acbf253e1b956a5a3d518ff3299d29686":[5,0,1,1,8,0,3],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html":[3,0,1,1,8,1],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html":[5,0,1,1,8,1],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a70dbd90ae5bcd87ea17413faf74eef98":[3,0,1,1,8,1,1],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a70dbd90ae5bcd87ea17413faf74eef98":[5,0,1,1,8,1,1],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a946e23df2d4cf0fdf7d0eabfd169f232":[3,0,1,1,8,1,0],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a946e23df2d4cf0fdf7d0eabfd169f232":[5,0,1,1,8,1,0],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#aca39c951e1669c85fd0f4e89e38d18c0":[3,0,1,1,8,1,2],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#aca39c951e1669c85fd0f4e89e38d18c0":[5,0,1,1,8,1,2],
-"structDefaultPipeline_1_1Resource_1_1TransformGPUData.html":[3,0,1,1,9]
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#acbf253e1b956a5a3d518ff3299d29686":[5,0,1,1,8,0,3]
 };

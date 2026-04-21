@@ -1,5 +1,8 @@
 var NAVTREEINDEX5 =
 {
+"classChaseCameraBehavior.html#ae99a063556e47493141743ede18d2a4f":[5,0,29,2],
+"classChaseCameraBehavior.html#aeac27548fe449d18a5a1e30083beaf76":[5,0,29,5],
+"classChaseCameraBehavior.html#afa76926b45b1146c9798175db1be03a1":[5,0,29,1],
 "classDefaultPipeline_1_1Plugin.html":[3,0,1,4],
 "classDefaultPipeline_1_1Plugin.html":[5,0,1,2],
 "classDefaultPipeline_1_1Plugin.html#a139b535563ddcefb4140ec3c4e58a753":[3,0,1,4,1],
@@ -246,8 +249,5 @@ var NAVTREEINDEX5 =
 "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#a98c89639c933c27ca9b03aa84a3d4452":[5,0,1,1,7,6],
 "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#aa2ecd60805a256c9318635a8ca51443c":[3,0,1,1,7,1],
 "classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#aa2ecd60805a256c9318635a8ca51443c":[5,0,1,1,7,1],
-"classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#af49bc3cfb292527f855a4509233f7663":[3,0,1,1,7,3],
-"classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#af49bc3cfb292527f855a4509233f7663":[5,0,1,1,7,3],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html":[3,0,1,1,8],
-"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html":[5,0,1,1,8]
+"classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#af49bc3cfb292527f855a4509233f7663":[3,0,1,1,7,3]
 };

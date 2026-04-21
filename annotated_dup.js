@@ -174,6 +174,7 @@ var annotated_dup =
         [ "TextureView", "classGraphic_1_1Resource_1_1TextureView.html", "classGraphic_1_1Resource_1_1TextureView" ]
       ] ],
       [ "Utils", "namespaceGraphic_1_1Utils.html", [
+        [ "Color", "classGraphic_1_1Utils_1_1Color.html", "classGraphic_1_1Utils_1_1Color" ],
         [ "ValidationError", "structGraphic_1_1Utils_1_1ValidationError.html", "structGraphic_1_1Utils_1_1ValidationError" ],
         [ "IValidable", "classGraphic_1_1Utils_1_1IValidable.html", "classGraphic_1_1Utils_1_1IValidable" ],
         [ "ABindGroupLayoutEntry", "classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html", "classGraphic_1_1Utils_1_1ABindGroupLayoutEntry" ],

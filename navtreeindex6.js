@@ -1,5 +1,8 @@
 var NAVTREEINDEX6 =
 {
+"classDefaultPipeline_1_1Resource_1_1PointGPUBuffer.html#af49bc3cfb292527f855a4509233f7663":[5,0,1,1,7,3],
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html":[3,0,1,1,8],
+"classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html":[5,0,1,1,8],
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a0c9bf42279963095b2aca53d698fd868":[3,0,1,1,8,3],
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a0c9bf42279963095b2aca53d698fd868":[5,0,1,1,8,3],
 "classDefaultPipeline_1_1Resource_1_1PointLightsBuffer.html#a101bdae0bbcfee8f3fb2b4a24f4480a5":[3,0,1,1,8,14],
@@ -246,8 +249,5 @@ var NAVTREEINDEX6 =
 "classEngine_1_1SchedulerContainer.html#a2ebc90dc34fc277763824d6364e1d791":[5,0,3,12,0],
 "classEngine_1_1SchedulerContainer.html#a3602743fd93857b8763c0a0b9f95f250":[3,0,3,12,4],
 "classEngine_1_1SchedulerContainer.html#a3602743fd93857b8763c0a0b9f95f250":[5,0,3,12,4],
-"classEngine_1_1SchedulerContainer.html#a3ae1ddea23ac7cb1c0cf26ac79bba480":[3,0,3,12,3],
-"classEngine_1_1SchedulerContainer.html#a3ae1ddea23ac7cb1c0cf26ac79bba480":[5,0,3,12,3],
-"classEngine_1_1SchedulerContainer.html#a48af2db9bb0782115c8b04d4c1c49e3d":[3,0,3,12,6],
-"classEngine_1_1SchedulerContainer.html#a48af2db9bb0782115c8b04d4c1c49e3d":[5,0,3,12,6]
+"classEngine_1_1SchedulerContainer.html#a3ae1ddea23ac7cb1c0cf26ac79bba480":[3,0,3,12,3]
 };

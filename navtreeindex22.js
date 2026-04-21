@@ -1,5 +1,14 @@
 var NAVTREEINDEX22 =
 {
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html":[3,0,1,1,8,1],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html":[5,0,1,1,8,1],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a70dbd90ae5bcd87ea17413faf74eef98":[3,0,1,1,8,1,1],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a70dbd90ae5bcd87ea17413faf74eef98":[5,0,1,1,8,1,1],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a946e23df2d4cf0fdf7d0eabfd169f232":[3,0,1,1,8,1,0],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a946e23df2d4cf0fdf7d0eabfd169f232":[5,0,1,1,8,1,0],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#aca39c951e1669c85fd0f4e89e38d18c0":[3,0,1,1,8,1,2],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#aca39c951e1669c85fd0f4e89e38d18c0":[5,0,1,1,8,1,2],
+"structDefaultPipeline_1_1Resource_1_1TransformGPUData.html":[3,0,1,1,9],
 "structDefaultPipeline_1_1Resource_1_1TransformGPUData.html":[5,0,1,1,9],
 "structDefaultPipeline_1_1Resource_1_1TransformGPUData.html#a378154565ae82ef5ea8ff8191ab2649e":[3,0,1,1,9,0],
 "structDefaultPipeline_1_1Resource_1_1TransformGPUData.html#a378154565ae82ef5ea8ff8191ab2649e":[5,0,1,1,9,0],
@@ -240,14 +249,5 @@ var NAVTREEINDEX22 =
 "structGraphic_1_1Resource_1_1Surface.html":[3,0,7,1,18],
 "structGraphic_1_1Resource_1_1Surface.html":[5,0,9,1,18],
 "structGraphic_1_1Resource_1_1Surface.html#a16327fd3988de1f27ad4a771f6d4c437":[3,0,7,1,18,3],
-"structGraphic_1_1Resource_1_1Surface.html#a16327fd3988de1f27ad4a771f6d4c437":[5,0,9,1,18,3],
-"structGraphic_1_1Resource_1_1Surface.html#a5a83d504564462225e293d25287e2f56":[3,0,7,1,18,6],
-"structGraphic_1_1Resource_1_1Surface.html#a5a83d504564462225e293d25287e2f56":[5,0,9,1,18,6],
-"structGraphic_1_1Resource_1_1Surface.html#a876f470494d45ca31b83692a776b1a96":[3,0,7,1,18,1],
-"structGraphic_1_1Resource_1_1Surface.html#a876f470494d45ca31b83692a776b1a96":[5,0,9,1,18,1],
-"structGraphic_1_1Resource_1_1Surface.html#aa8bfe27e046af8baadee99de63f03256":[3,0,7,1,18,4],
-"structGraphic_1_1Resource_1_1Surface.html#aa8bfe27e046af8baadee99de63f03256":[5,0,9,1,18,4],
-"structGraphic_1_1Resource_1_1Surface.html#ab29f9626ac5b816c077411d5e4637d32":[3,0,7,1,18,2],
-"structGraphic_1_1Resource_1_1Surface.html#ab29f9626ac5b816c077411d5e4637d32":[5,0,9,1,18,2],
-"structGraphic_1_1Resource_1_1Surface.html#acd99a945463dc98fe247e9a769c93d8b":[3,0,7,1,18,0]
+"structGraphic_1_1Resource_1_1Surface.html#a16327fd3988de1f27ad4a771f6d4c437":[5,0,9,1,18,3]
 };

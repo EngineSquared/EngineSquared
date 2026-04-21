@@ -1,5 +1,6 @@
 var namespaceGraphic_1_1Utils =
 [
+    [ "Color", "classGraphic_1_1Utils_1_1Color.html", "classGraphic_1_1Utils_1_1Color" ],
     [ "ValidationError", "structGraphic_1_1Utils_1_1ValidationError.html", "structGraphic_1_1Utils_1_1ValidationError" ],
     [ "IValidable", "classGraphic_1_1Utils_1_1IValidable.html", "classGraphic_1_1Utils_1_1IValidable" ],
     [ "ABindGroupLayoutEntry", "classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html", "classGraphic_1_1Utils_1_1ABindGroupLayoutEntry" ],
