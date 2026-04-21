@@ -1,5 +1,6 @@
 var NAVTREEINDEX21 =
 {
+"src_2plugin_2default-pipeline_2examples_2GraphicLightUsage_2src_2main_8cpp.html":[6,0,1,1,1,0,0,0,0],
 "src_2plugin_2default-pipeline_2examples_2GraphicLightUsage_2src_2main_8cpp.html#a1d6fceb52d931126f407c8229a9db1f4":[6,0,1,1,1,0,0,0,0,2],
 "src_2plugin_2default-pipeline_2examples_2GraphicLightUsage_2src_2main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe":[6,0,1,1,1,0,0,0,0,1],
 "src_2plugin_2default-pipeline_2examples_2GraphicMaterialUsage_2src_2main_8cpp.html":[6,0,1,1,1,0,1,0,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX21 =
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a946e23df2d4cf0fdf7d0eabfd169f232":[5,0,1,1,8,1,0],
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#aca39c951e1669c85fd0f4e89e38d18c0":[3,0,1,1,8,1,2],
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#aca39c951e1669c85fd0f4e89e38d18c0":[5,0,1,1,8,1,2],
-"structDefaultPipeline_1_1Resource_1_1TransformGPUData.html":[3,0,1,1,9],
-"structDefaultPipeline_1_1Resource_1_1TransformGPUData.html":[5,0,1,1,9]
+"structDefaultPipeline_1_1Resource_1_1TransformGPUData.html":[3,0,1,1,9]
 };

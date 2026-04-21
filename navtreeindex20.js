@@ -1,5 +1,6 @@
 var NAVTREEINDEX20 =
 {
+"namespacewgpu.html#a7d528ff4480fa798bc719a265b663db2":[3,0,22,180],
 "namespacewgpu.html#a7dcb204ea0fc303f798ee2d5396b40a9":[3,0,22,110],
 "namespacewgpu.html#a7e6ce9330cb77fef1c9ebc70d5c42b37":[3,0,22,375],
 "namespacewgpu.html#a7f3f2983cc781bda0e1fb06972b386db":[3,0,22,175],
@@ -248,6 +249,5 @@ var NAVTREEINDEX20 =
 "src_2engine_2tests_2main_8cpp.html":[6,0,1,0,2,1],
 "src_2engine_2tests_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[6,0,1,0,2,1,0],
 "src_2plugin_2camera-movement_2tests_2main_8cpp.html":[6,0,1,1,0,1,1],
-"src_2plugin_2camera-movement_2tests_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[6,0,1,1,0,1,1,0],
-"src_2plugin_2default-pipeline_2examples_2GraphicLightUsage_2src_2main_8cpp.html":[6,0,1,1,1,0,0,0,0]
+"src_2plugin_2camera-movement_2tests_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[6,0,1,1,0,1,1,0]
 };

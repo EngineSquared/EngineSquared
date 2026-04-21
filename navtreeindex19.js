@@ -1,5 +1,6 @@
 var NAVTREEINDEX19 =
 {
+"namespacemembers_t.html":[3,1,0,19],
 "namespacemembers_type.html":[3,1,3],
 "namespacemembers_u.html":[3,1,0,20],
 "namespacemembers_v.html":[3,1,0,21],
@@ -248,6 +249,5 @@ var NAVTREEINDEX19 =
 "namespacewgpu.html#a7a91d0e7e7deed7bb622a76ecbb4afe1":[3,0,22,95],
 "namespacewgpu.html#a7bc70e750b3a3eeaeae1168e941c58b1":[3,0,22,345],
 "namespacewgpu.html#a7c22f7a97ef43878156603bf10f79b0a":[3,0,22,282],
-"namespacewgpu.html#a7cc37079b5d0839a4304c8f59a562359":[3,0,22,128],
-"namespacewgpu.html#a7d528ff4480fa798bc719a265b663db2":[3,0,22,180]
+"namespacewgpu.html#a7cc37079b5d0839a4304c8f59a562359":[3,0,22,128]
 };

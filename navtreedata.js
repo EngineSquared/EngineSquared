@@ -28,17 +28,18 @@ var NAVTREE =
     [ "Engine² (or Engine Squared)", "index.html#autotoc_md36", null ],
     [ "Technical", "index.html#autotoc_md41", [
       [ "Examples", "index.html#autotoc_md42", null ],
-      [ "Prerequisites", "index.html#autotoc_md44", null ],
-      [ "Clone the repository", "index.html#autotoc_md46", null ],
-      [ "Configure and build", "index.html#autotoc_md48", null ],
-      [ "Run a minimal example", "index.html#autotoc_md50", null ],
-      [ "Project Overview", "index.html#autotoc_md52", [
-        [ "Available plugins", "index.html#autotoc_md53", null ],
-        [ "How a minimal program looks", "index.html#autotoc_md55", null ]
+      [ "Hello World", "index.html#autotoc_md43", null ],
+      [ "Prerequisites", "index.html#autotoc_md45", null ],
+      [ "Clone the repository", "index.html#autotoc_md47", null ],
+      [ "Configure and build", "index.html#autotoc_md49", null ],
+      [ "Run a minimal example", "index.html#autotoc_md51", null ],
+      [ "Project Overview", "index.html#autotoc_md53", [
+        [ "Available plugins", "index.html#autotoc_md54", null ],
+        [ "How a minimal program looks", "index.html#autotoc_md56", null ]
       ] ],
-      [ "Where to go next", "index.html#autotoc_md57", null ],
-      [ "Interested ?", "index.html#autotoc_md59", null ],
-      [ "Troubleshooting", "index.html#autotoc_md61", null ]
+      [ "Where to go next", "index.html#autotoc_md58", null ],
+      [ "Interested ?", "index.html#autotoc_md60", null ],
+      [ "Troubleshooting", "index.html#autotoc_md62", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Namespaces", "namespaces.html", [
@@ -98,16 +99,16 @@ var NAVTREEINDEX =
 "classWindow_1_1Exception_1_1WindowError.html#ae1c9019aab8eba86417c0cd9f7359e62",
 "dir_86fbf4f36ff5f289284492281a43ff04.html",
 "globals_m.html",
-"namespaceNativeScripting_1_1Component.html",
-"namespacemembers_type.html",
-"namespacewgpu.html#a7dcb204ea0fc303f798ee2d5396b40a9",
-"src_2plugin_2default-pipeline_2examples_2GraphicLightUsage_2src_2main_8cpp.html#a1d6fceb52d931126f407c8229a9db1f4",
-"structDefaultPipeline_1_1Resource_1_1TransformGPUData.html#a378154565ae82ef5ea8ff8191ab2649e",
-"structGraphic_1_1Resource_1_1Surface.html#af6d0586e45686eab80a54c840a6d61dc",
+"namespaceNativeScripting.html",
+"namespacemembers_t.html",
+"namespacewgpu.html#a7d528ff4480fa798bc719a265b663db2",
+"src_2plugin_2default-pipeline_2examples_2GraphicLightUsage_2src_2main_8cpp.html",
+"structDefaultPipeline_1_1Resource_1_1TransformGPUData.html",
+"structGraphic_1_1Resource_1_1Surface.html#acd99a945463dc98fe247e9a769c93d8b",
 "structObject_1_1Helper_1_1CreateCapsuleInfo.html#a37d51309adadec7ef33d5be9257ef464",
-"structPhysics_1_1Component_1_1ConstraintSettings.html#a7b7a6e8eba416abc865103c98318f13f",
-"structPhysics_1_1Component_1_1SoftBodyInternal.html#acd526ddb0246c8a7c323d47e36914206",
-"structRmlui_1_1Resource_1_1UIContext_1_1EventListenerEntry.html#a7c89fd9031b69ed9ddb82c09fcb07ad2"
+"structPhysics_1_1Component_1_1ConstraintSettings.html#a78bc61c2034a8887acfdc8052438e09f",
+"structPhysics_1_1Component_1_1SoftBodyInternal.html#ac0d4e7420f4e7dce05508a209fd38d30",
+"structRmlui_1_1Resource_1_1UIContext_1_1EventListenerEntry.html#a633873968ebb5fadf94da1471aa4838f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';
