@@ -82,9 +82,7 @@ class ThirdPlayerCameraBehavior : public CameraMovement::Utils::ICameraBehavior 
         }
         catch (const std::exception &e)
         {
-            Log::Error(fmt::format(
-                "Failed to unregister camera behavior callbacks: {}",
-                e.what()));
+            Log::Error(fmt::format("Failed to unregister camera behavior callbacks: {}", e.what()));
         }
     }
 
