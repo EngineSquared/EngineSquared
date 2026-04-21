@@ -1,4 +1,4 @@
-<!-- This template come from MADR (https://adr.github.io/madr/) -->
+<!-- This template comes from MADR (https://adr.github.io/madr/) -->
 
 # {short title, representative of solved problem and found solution}
 
