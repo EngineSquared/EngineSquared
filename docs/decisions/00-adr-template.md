@@ -1,5 +1,17 @@
-<!-- This template comes from MADR (https://adr.github.io/madr/) -->
+---
+# This template comes from MADR (https://adr.github.io/madr/)
 
+issue: ADR-000          # ADR identifier
+title: …
+branch: …               # feature branch name
+status: todo            # see lifecycle below
+pr: ~                   # GitHub PR number, or ~ if not yet opened
+pr_url: ~               # full URL to the PR, or ~
+github_issue: ~         # GitHub Issue number, or ~
+github_issue_url: ~     # full URL to the issue, or ~
+depends_on: []          # ADRs that must be completed before this one starts
+required_by: []         # ADRs that cannot start until this one is completed
+---
 # {short title, representative of solved problem and found solution}
 
 ## Status
@@ -72,3 +84,7 @@ Chosen option: "{title of option 1}", because {justification. e.g., only option,
 
 {You might want to provide additional evidence/confidence for the decision outcome here and/or document the team agreement on the decision and/or define when/how this decision should be realized and if/when it should be re-visited. Links to other decisions and resources might appear here as well.}
 
+<!-- This is an optional element. Feel free to remove. -->
+## Abandonment
+
+{Why was this ADR dropped and what replaces it, if anything?}
