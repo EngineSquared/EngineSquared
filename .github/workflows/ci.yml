@@ -96,7 +96,7 @@ jobs:
           build-cache-key: "clang-tidy"
       - name: Run clang-tidy
         run: |
-          xmake check -y clang.tidy
+          xmake check -yvD clang.tidy --configfile=./.clang-tidy
 
   check_program_compilation:
     name: Build and verify binaries
