@@ -1,6 +1,5 @@
 ---
-Checks: >
-  bugprone-string-constructor
+Checks: "-*, bugprone-string-constructor"
 
 WarningsAsErrors: "*"
 HeaderFileExtensions:
@@ -15,7 +14,7 @@ ImplementationFileExtensions:
   - cc
   - cpp
   - cxx
-HeaderFilterRegex: ""
+HeaderFilterRegex: "^src/"
 FormatStyle: file
 User: miouzora
 CheckOptions: {}
