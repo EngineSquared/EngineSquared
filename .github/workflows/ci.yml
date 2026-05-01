@@ -55,7 +55,7 @@ jobs:
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
           sudo ./llvm.sh 22
-          sudo apt install clang-format-22 clang-tidy-22
+          sudo apt install clang-format-22
 
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
@@ -70,6 +70,30 @@ jobs:
         run: |
           xmake format -c
 
+  tidy:
+    name: Run clang-tidy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Install clang-format
+        run: |
+          sudo apt update
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 22
+          sudo apt install clang-tidy-22
+
+      - name: Install xmake
+        uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
+        with:
+          xmake-version: latest
+          actions-cache-folder: ".xmake-cache"
+          actions-cache-key: "clang-tidy"
+          build-cache: true
+          build-cache-key: "clang-tidy"
       - name: Run clang-tidy
         run: |
           xmake check -y clang.tidy
