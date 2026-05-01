@@ -100,7 +100,8 @@ void FinalizeConstraint(ConstraintContext &ctx, Engine::Entity entity, JPH::Cons
         }
         catch (const std::exception &removeError)
         {
-            Log::Error(fmt::format("{}: Failed to remove constraint after storage failure: {}", safeName, removeError.what()));
+            Log::Error(
+                fmt::format("{}: Failed to remove constraint after storage failure: {}", safeName, removeError.what()));
         }
         joltConstraint->Release();
         return;
