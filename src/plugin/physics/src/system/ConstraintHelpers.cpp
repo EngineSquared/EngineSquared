@@ -98,8 +98,9 @@ void FinalizeConstraint(ConstraintContext &ctx, Engine::Entity entity, JPH::Cons
         {
             ctx.physicsSystem.RemoveConstraint(joltConstraint);
         }
-        catch (...)
+        catch (const std::exception &removeError)
         {
+            Log::Error(fmt::format("{}: Failed to remove constraint after storage failure: {}", safeName, removeError.what()));
         }
         joltConstraint->Release();
         return;
