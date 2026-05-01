@@ -1,0 +1,24 @@
+---
+Checks: >
+  bugprone-string-constructor
+
+WarningsAsErrors: "*"
+HeaderFileExtensions:
+  - ""
+  - h
+  - hh
+  - hpp
+  - hxx
+  - ipp
+ImplementationFileExtensions:
+  - c
+  - cc
+  - cpp
+  - cxx
+HeaderFilterRegex: ""
+ExcludeHeaderFilterRegex: ""
+FormatStyle: file
+User: miouzora
+CheckOptions: {}
+SystemHeaders: false
+...
