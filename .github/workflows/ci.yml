@@ -4,19 +4,23 @@ on:
   push:
   pull_request:
   release:
-    types: [published]
+    types: [ published ]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.base_ref }}-${{ github.head_ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.base_ref }}-${{
+    github.head_ref }}
   cancel-in-progress: true
 
 env:
-  UNWANTED_REGEX: '^(?!.*tests\/).*gc(no|da|ov)$|(.*\.(a|o|so|lib))$|(.*~)$|^(#.*#)$|^tmp\/.*|.*\/tmp\/.*'
+  UNWANTED_REGEX: "^(?!.*tests\\/).*gc(no|da|ov)$|(.*\\.(a|o|so|lib))$|(.*~)$|^(#\
+    .*#)$|^tmp\\/.*|.*\\/tmp\\/.*"
 
 jobs:
   check_repository_cleanliness:
-    if: ${{ github.event_name != 'pull_request' || (!startsWith(github.head_ref, 'ga-ignore-') && github.head_ref != 'gh-pages') }}
-    name: Checks if the repository is clean and void of any unwanted files (temp files, binary files, etc.)
+    if: ${{ github.event_name != 'pull_request' || (!startsWith(github.head_ref,
+      'ga-ignore-') && github.head_ref != 'gh-pages') }}
+    name: Checks if the repository is clean and void of any unwanted files (temp
+      files, binary files, etc.)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -50,8 +54,7 @@ jobs:
           sudo apt update
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
-          sudo ./llvm.sh 22
-          sudo apt install clang-format-22
+          sudo apt install clang-format-22 clang-tidy-22
 
       - name: Install xmake
         uses: xmake-io/github-action-setup-xmake@fadadea1162ec75ce1541d5bb68226fb147c221e
@@ -66,9 +69,13 @@ jobs:
         run: |
           xmake format -c
 
+      - name: Run clang-tidy
+        run: |
+          xmake check clang.tidy
+
   check_program_compilation:
     name: Build and verify binaries
-    needs: [check_repository_cleanliness, lint_code]
+    needs: [ check_repository_cleanliness, lint_code ]
     strategy:
       matrix:
         include:
@@ -105,7 +112,7 @@ jobs:
 
   run_tests:
     name: Run tests
-    needs: [check_repository_cleanliness, lint_code]
+    needs: [ check_repository_cleanliness, lint_code ]
     strategy:
       matrix:
         include:
@@ -163,7 +170,7 @@ jobs:
 
   check_examples:
     name: Build and test examples
-    needs: [check_repository_cleanliness, lint_code]
+    needs: [ check_repository_cleanliness, lint_code ]
     strategy:
       matrix:
         include:
