@@ -1,5 +1,8 @@
 ---
-Checks: "-*, bugprone-string-constructor"
+Checks: "-*, bugprone-string-constructor, bugprone-terminating-continue,
+  bugprone-swapped-arguments, bugprone-suspicious-string-compare,
+  bugprone-redundant-branch-condition, bugprone-parent-virtual-call,
+  bugprone-empty-catch, -bugprone-reserved-identifier"
 
 WarningsAsErrors: "*"
 HeaderFileExtensions:
