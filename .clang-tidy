@@ -16,7 +16,6 @@ ImplementationFileExtensions:
   - cpp
   - cxx
 HeaderFilterRegex: ""
-ExcludeHeaderFilterRegex: ""
 FormatStyle: file
 User: miouzora
 CheckOptions: {}
