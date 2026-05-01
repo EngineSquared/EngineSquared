@@ -72,7 +72,7 @@ jobs:
 
       - name: Run clang-tidy
         run: |
-          xmake check clang.tidy
+          xmake check -y clang.tidy
 
   check_program_compilation:
     name: Build and verify binaries
