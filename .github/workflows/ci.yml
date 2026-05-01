@@ -54,6 +54,7 @@ jobs:
           sudo apt update
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
+          sudo ./llvm.sh 22
           sudo apt install clang-format-22 clang-tidy-22
 
       - name: Install xmake
