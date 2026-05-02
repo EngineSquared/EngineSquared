@@ -11,8 +11,8 @@ class GPUBufferTest : public Graphic::Resource::AGPUBuffer {
     void Create(Engine::Core &core) override
     {
         const auto &context = core.GetResource<Graphic::Resource::Context>();
-
-        if (!context.deviceContext.GetDevice().has_value())
+        const auto &optDevice = context.deviceContext.GetDevice();
+        if (!optDevice.has_value())
         {
             Log::Error("GPUBufferTest: context.deviceContext.GetDevice has no value");
             return;
@@ -24,7 +24,7 @@ class GPUBufferTest : public Graphic::Resource::AGPUBuffer {
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
         bufferDesc.size = sizeof(int) * _data.size();
 
-        _buffer = context.deviceContext.GetDevice()->createBuffer(bufferDesc);
+        _buffer = optDevice.value().createBuffer(bufferDesc);
         _isCreated = true;
     }
     void Destroy(Engine::Core &) override
