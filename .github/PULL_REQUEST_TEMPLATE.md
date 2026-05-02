@@ -25,7 +25,7 @@ List of the main changes in this PR:
 - Change 2
 - Change 3
 
-## Testing
+## Testing (Optional, put "None" if you didn't have to test anything)
 <!-- Describe the tests you ran to verify your changes. Please delete options that are not relevant. -->
 - Unit tests pass (`xmake test`)
 - Code follows the project's style guidelines (`clang-format`)
