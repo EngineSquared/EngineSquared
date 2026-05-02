@@ -52,7 +52,7 @@ List of the main changes in this PR:
 - [ ] Any dependent changes have been merged and published
 
 ## Time Spent (Optional, put "None" if you don't know)
-<!-- Put here the time you were actively working on it like: 5 minutes, 4 hours, somes days, at least 1 month -->
+<!-- Put here the time you were actively working on it like: 5 minutes, 4 hours, some days, at least 1 month -->
 
 ## Screenshots/Videos (Optional, put "None" if it's not relevant)
 <!-- Add screenshots or videos to help explain your changes. -->
