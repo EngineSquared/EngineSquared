@@ -22,6 +22,13 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
     auto &samplerContainer = core.GetResource<Graphic::Resource::SamplerContainer>();
     const auto &context = core.GetResource<Graphic::Resource::Context>();
+    const auto &device = context.deviceContext.GetDevice();
+
+    if (!device.has_value())
+    {
+        Log::Error("DefaultPipeline::System::OnMaterialCreation: device is empty");
+        return;
+    }
 
     auto &GPUMaterial = entity.AddComponent<Component::GPUMaterial>();
 
@@ -46,7 +53,7 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
 
     if (!samplerContainer.Contains(samplerId))
     {
-        Graphic::Resource::Sampler sampler{context.deviceContext.GetDevice().value()};
+        Graphic::Resource::Sampler sampler{device.value()};
         samplerContainer.Add(samplerId, std::move(sampler));
     }
     GPUMaterial.sampler = samplerId;

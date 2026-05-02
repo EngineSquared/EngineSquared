@@ -7,7 +7,7 @@ void Graphic::System::Present(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
 
-    if (!context.surface.has_value() || !context.surface->configured)
+    if (!context.surface.has_value() || !context.surface->value.has_value() || !context.surface->configured)
         return;
 
     context.surface->value->present();

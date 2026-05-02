@@ -45,6 +45,11 @@ void UpdateScreenBuffer(Engine::Core &core, wgpu::Buffer const &buffer)
     const auto size = window.GetSize();
     const std::array<float, 4> data = {static_cast<float>(size.x), static_cast<float>(size.y), 0.0F, 0.0F};
     const auto &context = core.GetResource<Graphic::Resource::Context>();
+    if (!context.queue.has_value())
+    {
+        Log::Error("UpdateScreenBuffer: context.queue has no value");
+        return;
+    }
     context.queue.value().writeBuffer(buffer, 0, data.data(), sizeof(data));
 }
 
@@ -62,8 +67,12 @@ wgpu::BindGroup CreateTextureBindGroup(Engine::Core &core, const wgpu::BindGroup
     descriptor.entryCount = 2;
     descriptor.entries = entries.data();
 
-    const auto &context = core.GetResource<Graphic::Resource::Context>();
-    return context.deviceContext.GetDevice()->createBindGroup(descriptor);
+    const auto &optDevice = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+    if (!optDevice.has_value())
+    {
+        throw std::runtime_error("CreateTextureBindGroup: context.deviceContext.GetDevice() is empty");
+    }
+    return optDevice.value().createBindGroup(descriptor);
 }
 } // namespace
 
@@ -151,7 +160,14 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
     }
 
     const auto &context = _core.GetResource<Graphic::Resource::Context>();
-    const auto &device = context.deviceContext.GetDevice().value();
+    const auto &optDevice = context.deviceContext.GetDevice();
+    if (!optDevice.has_value())
+    {
+        return;
+    }
+    const auto &device = optDevice.value();
+    if (!context.queue.has_value())
+        return;
     const auto &queue = context.queue.value();
 
     std::vector<Rml::Vertex> translatedVertices = geometry.vertices;
@@ -436,7 +452,10 @@ void RenderInterface::BeginFrame()
     _drawCommands.clear();
 
     const auto &context = _core.GetResource<Graphic::Resource::Context>();
-    const auto &device = context.deviceContext.GetDevice().value();
+    const auto &optDevice = context.deviceContext.GetDevice();
+    if (!optDevice)
+        return;
+    const auto &device = optDevice.value();
 
     if (_screenBuffer == nullptr)
     {

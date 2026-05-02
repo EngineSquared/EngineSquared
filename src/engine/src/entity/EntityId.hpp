@@ -25,10 +25,6 @@ struct EntityId : Id {
     /// @param id The Engine::Id to convert.
     constexpr EntityId(Id id);
 
-    /// @brief Implicit conversion operator to the underlying ValueType. This allows for seamless use of EntityId where
-    ///     a ValueType is expected.
-    constexpr operator ValueType() const;
-
     /// @brief Returns a null EntityId. A null EntityId is an EntityId that does not correspond to any valid entity in
     ///     the registry.
     /// @return A null EntityId.

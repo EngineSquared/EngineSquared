@@ -24,9 +24,16 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
     if (config.height == 0)
         config.height = 1;
 
+    auto &optDevice = context.deviceContext.GetDevice();
+    if (!context.surface.has_value() || !context.surface.value().capabilities.has_value() || !optDevice.has_value() ||
+        !context.surface.value().value.has_value())
+    {
+        return;
+    }
+
     config.usage = wgpu::TextureUsage::RenderAttachment;
     config.format = context.surface->capabilities->formats[0];
-    config.device = context.deviceContext.GetDevice().value();
+    config.device = optDevice.value();
     config.presentMode = wgpu::PresentMode::Fifo;
     config.alphaMode = wgpu::CompositeAlphaMode::Auto;
 

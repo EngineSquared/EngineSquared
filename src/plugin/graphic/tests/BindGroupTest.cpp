@@ -7,7 +7,7 @@
 
 namespace {
 
-const std::string bindGroupShaderSource = R"(
+const char *bindGroupShaderSource = R"(
 // Texture
 @group(0) @binding(0) var testTexture: texture_2d<f32>;
 // Buffer
@@ -53,14 +53,20 @@ class ArrayOfFloatGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         bufferDescriptor.size = sizeof(float) * _data.size();
         bufferDescriptor.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst;
 
-        _buffer =
-            core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice()->createBuffer(bufferDescriptor);
+        const auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+        if (!device.has_value())
+            throw std::runtime_error("Failed to create GPU Buffer");
+
+        _buffer = device.value().createBuffer(bufferDescriptor);
 
         if (!_buffer)
             throw std::runtime_error("Failed to create GPU Buffer");
 
-        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, _data.data(),
-                                                                          sizeof(float) * _data.size());
+        const auto &queue = core.GetResource<Graphic::Resource::Context>().queue;
+        if (!queue.has_value())
+            throw std::runtime_error("Failed to create GPU Buffer");
+
+        queue.value().writeBuffer(_buffer, 0, _data.data(), sizeof(float) * _data.size());
         _isCreated = true;
     }
     void Destroy(Engine::Core &) override { Destroy(); }
@@ -151,6 +157,10 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
     auto bufferId = entt::hashed_string("bindgroup_buffer_asset");
     auto samplerId = entt::hashed_string("bindgroup_sampler_asset");
 
+    auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+    if (!device.has_value())
+        throw std::runtime_error("CreateBindGroup: device has no value");
+
     core.GetResource<Graphic::Resource::ShaderContainer>().Add(shaderId, CreateShader(core));
 
     { // Create texture asset
@@ -167,8 +177,7 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
     }
     { // Create sampler asset
         auto &samplers = core.GetResource<Graphic::Resource::SamplerContainer>();
-        auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice().value();
-        samplers.Add(samplerId, Graphic::Resource::Sampler(device));
+        samplers.Add(samplerId, Graphic::Resource::Sampler(device.value()));
     }
 
     return Graphic::Resource::BindGroup(

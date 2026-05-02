@@ -12,7 +12,6 @@ static void SetupDeviceDescriptor(wgpu::DeviceDescriptor &deviceDesc, Graphic::R
     deviceDesc.requiredLimits = dynamic_cast<wgpu::Limits *>(&settings.GetWantedLimits());
     deviceDesc.defaultQueue.nextInChain = nullptr;
     deviceDesc.defaultQueue.label = wgpu::StringView("The default queue");
-    deviceDesc.deviceLostCallbackInfo = {};
     deviceDesc.deviceLostCallbackInfo.nextInChain = nullptr;
     deviceDesc.deviceLostCallbackInfo.mode = wgpu::CallbackMode::AllowProcessEvents;
     deviceDesc.deviceLostCallbackInfo.callback = [](WGPUDevice const *device, WGPUDeviceLostReason reason,
@@ -21,7 +20,6 @@ static void SetupDeviceDescriptor(wgpu::DeviceDescriptor &deviceDesc, Graphic::R
         Log::Error(fmt::format("Device lost: reason {:x} ({})", static_cast<uint32_t>(reason),
                                std::string(message.data, message.length)));
     };
-    deviceDesc.uncapturedErrorCallbackInfo = {};
     deviceDesc.uncapturedErrorCallbackInfo.nextInChain = nullptr;
     deviceDesc.uncapturedErrorCallbackInfo.callback = settings.GetOnErrorCallback();
 }

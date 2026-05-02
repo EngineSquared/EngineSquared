@@ -19,12 +19,6 @@ template <typename TDerived, typename TValue> struct BasicId {
     /// @brief The underlying value of the ID.
     TValue value;
 
-    /// @brief Constructor for BasicId. Allows implicit construction from the underlying value type, defaulting to the
-    ///     null value.
-    /// @param value_ The value to initialize the ID with. Defaults to the null value defined by the derived class.
-    /// @return An instance of the derived ID type initialized with the given value.
-    constexpr explicit(false) BasicId(TValue value_ = TDerived::NullValue());
-
     /// @brief Get the null value for this ID type. This should be defined by the derived class to specify what
     ///     constitutes a null/invalid ID.
     /// @return The value representing a null/invalid ID for this type.
@@ -33,6 +27,14 @@ template <typename TDerived, typename TValue> struct BasicId {
     /// @brief Checks if the ID is null/invalid by comparing its value to the null value defined by the derived class.
     /// @return True if the ID is null/invalid, false otherwise.
     constexpr bool IsNull(void) const;
+
+  private:
+    /// @brief Constructor for BasicId. Allows implicit construction from the underlying value type, defaulting to the
+    ///     null value.
+    /// @param value_ The value to initialize the ID with. Defaults to the null value defined by the derived class.
+    /// @return An instance of the derived ID type initialized with the given value.
+    constexpr explicit(false) BasicId(TValue value_ = TDerived::NullValue());
+    friend TDerived;
 };
 
 /// @struct Id
