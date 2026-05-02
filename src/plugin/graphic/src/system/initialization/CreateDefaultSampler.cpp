@@ -26,7 +26,9 @@ void CreateDefaultSampler(Engine::Core &core)
     {
         Resource::Sampler defaultSampler(context.deviceContext.GetDevice().value(), samplerDesc);
         samplerContainer.Add(Utils::DEFAULT_SAMPLER_ID, std::move(defaultSampler));
-    } else {
+    }
+    else
+    {
         Log::Error("Graphic::System::CreateDefaultSampler: Graphic device not found");
     }
 }

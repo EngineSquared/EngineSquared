@@ -41,7 +41,7 @@ void Scene::Resource::SceneManager::_loadScene(Engine::Core &core, const std::st
 
 void Scene::Resource::SceneManager::_unloadScene(Engine::Core &core, const std::string &name)
 {
-        if (!_currentScene.has_value())
+    if (!_currentScene.has_value())
     {
         Log::Error("Scene::Resource::SceneManager::_unloadScene: _currentScene is empty");
         return;
