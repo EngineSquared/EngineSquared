@@ -94,15 +94,7 @@ void FinalizeConstraint(ConstraintContext &ctx, Engine::Entity entity, JPH::Cons
     catch (const std::exception &e)
     {
         Log::Error(fmt::format("{}: Failed to store ConstraintInternal: {}", safeName, e.what()));
-        try
-        {
-            ctx.physicsSystem.RemoveConstraint(joltConstraint);
-        }
-        catch (const std::exception &removeError)
-        {
-            Log::Error(
-                fmt::format("{}: Failed to remove constraint after storage failure: {}", safeName, removeError.what()));
-        }
+        ctx.physicsSystem.RemoveConstraint(joltConstraint);
         joltConstraint->Release();
         return;
     }
