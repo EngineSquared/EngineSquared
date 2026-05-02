@@ -6,7 +6,7 @@ namespace Window::Resource {
 Window::Window(uint32_t width, uint32_t height, const std::string &title, GLFWmonitor *monitor, GLFWwindow *share)
     : _title(title), _window(nullptr), _monitor(monitor), _share(share)
 {
-    _window = glfwCreateWindow(width, height, _title.c_str(), _monitor, _share);
+    _window = glfwCreateWindow(static_cast<int>(width), static_cast<int>(height), _title.c_str(), _monitor, _share);
     if (!_window)
         Log::Error("Failed to create window");
 }

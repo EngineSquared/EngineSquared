@@ -99,10 +99,15 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
         bufferDesc.size = sizeof(glm::vec4);
 
-        _buffer = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice()->createBuffer(bufferDesc);
+        const auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+        if (!device.has_value())
+            return;
+        _buffer = device.value().createBuffer(bufferDesc);
 
-        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, glm::value_ptr(_value),
-                                                                          bufferDesc.size);
+        const auto &queue = core.GetResource<Graphic::Resource::Context>().queue;
+        if (!queue.has_value())
+            return;
+        queue.value().writeBuffer(_buffer, 0, glm::value_ptr(_value), bufferDesc.size);
         _isCreated = true;
     }
     void Destroy()

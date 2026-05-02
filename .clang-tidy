@@ -1,0 +1,26 @@
+---
+
+# bugprone-exception-escape, bugprone-throwing-static-initialization, bugprone-easily-swappable-parameters should be removed but require to modify a lot of stuff in the project
+Checks: "-*, bugprone-*, -bugprone-reserved-identifier,
+  -bugprone-exception-escape, -bugprone-easily-swappable-parameters,
+  -bugprone-throwing-static-initialization"
+
+WarningsAsErrors: "*"
+HeaderFileExtensions:
+  - ""
+  - h
+  - hh
+  - hpp
+  - hxx
+  - ipp
+ImplementationFileExtensions:
+  - c
+  - cc
+  - cpp
+  - cxx
+HeaderFilterRegex: "^src/(?!.*/webgpu\\.hpp$).*"
+FormatStyle: file
+User: miouzora
+CheckOptions: {}
+SystemHeaders: false
+...

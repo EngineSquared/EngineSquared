@@ -19,7 +19,7 @@ Component::Mesh GenerateSphereMesh(float radius, uint32_t segments, uint32_t rin
     mesh.ReserveVertices(vertexCount);
     mesh.ReserveNormals(vertexCount);
     mesh.ReserveTexCoords(vertexCount);
-    mesh.ReserveIndices(rings * segments * 6u);
+    mesh.ReserveIndices(static_cast<size_t>(rings * segments) * 6u);
 
     for (uint32_t ring = 0u; ring <= rings; ++ring)
     {

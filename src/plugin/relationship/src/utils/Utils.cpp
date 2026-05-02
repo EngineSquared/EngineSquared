@@ -20,6 +20,12 @@ auto Relationship::Utils::SetChildOf(Engine::Entity child, Engine::Entity parent
         return;
     }
 
+    if (!parentRS.first.has_value())
+    {
+        Log::Error("Relationship::Utils::SetChildOf: parentRS.first is empty");
+        return;
+    }
+
     auto &firstChildRS = parentRS.first->GetComponents<Relationship::Component::Relationship>();
     firstChildRS.prev = child;
     newChildRS.next = parentRS.first;

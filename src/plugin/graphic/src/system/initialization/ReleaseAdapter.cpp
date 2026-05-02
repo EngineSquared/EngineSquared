@@ -6,6 +6,9 @@
 void Graphic::System::ReleaseAdapter(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
-    context.adapter->release();
-    context.adapter.reset();
+    if (context.adapter.has_value())
+    {
+        context.adapter->release();
+        context.adapter.reset();
+    }
 }

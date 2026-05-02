@@ -21,6 +21,8 @@ static std::optional<wgpu::BackendType> getBackendType(const wgpu::Adapter &adap
 
 static std::optional<wgpu::Adapter> findVulkanAdapter(const Graphic::Resource::Context &context)
 {
+    if (!context.instance.has_value())
+        return std::nullopt;
     wgpu::InstanceEnumerateAdapterOptions enumOpts(wgpu::Default);
     size_t count = context.instance->enumerateAdapters(enumOpts, nullptr);
     if (count == 0)
@@ -67,6 +69,12 @@ void Graphic::System::CreateAdapter(Engine::Core &core)
     auto &context = core.GetResource<Resource::Context>();
     const auto &graphicSettings = core.GetResource<Resource::GraphicSettings>();
 
+    if (!context.instance.has_value())
+    {
+        Log::Error("Graphic::System::CreateAdapter: context.instance has no value");
+        return;
+    }
+
     wgpu::RequestAdapterOptions adapterOpts(wgpu::Default);
 
     if (graphicSettings.GetPowerPreference() == Resource::PowerPreference::LowPower)
@@ -78,7 +86,7 @@ void Graphic::System::CreateAdapter(Engine::Core &core)
         adapterOpts.powerPreference = wgpu::PowerPreference::HighPerformance;
     }
 
-    if (context.surface.has_value())
+    if (context.surface.has_value() && context.surface->value.has_value())
         adapterOpts.compatibleSurface = context.surface->value.value();
 
     wgpu::Adapter adapter = context.instance->requestAdapter(adapterOpts);

@@ -65,7 +65,7 @@ TEST(PluginPhysics, BodyEntityMapRemoval)
             entity.AddComponent<Physics::Component::RigidBody>();
         }
 
-        for (std::uint8_t cursor = 0; cursor < entities.size(); cursor++)
+        for (std::uint64_t cursor = 0; cursor < entities.size(); cursor++)
         {
             EXPECT_EQ(bodyEntityMap.Size(), entities.size() - cursor);
             entities[cursor].Kill();
