@@ -67,12 +67,12 @@ wgpu::BindGroup CreateTextureBindGroup(Engine::Core &core, const wgpu::BindGroup
     descriptor.entryCount = 2;
     descriptor.entries = entries.data();
 
-    const auto &context = core.GetResource<Graphic::Resource::Context>();
-    if (!context.deviceContext.GetDevice().has_value())
+    const auto &optDevice = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+    if (!optDevice.has_value())
     {
         throw std::runtime_error("CreateTextureBindGroup: context.deviceContext.GetDevice() is empty");
     }
-    return context.deviceContext.GetDevice().value().createBindGroup(descriptor);
+    return optDevice.value().createBindGroup(descriptor);
 }
 } // namespace
 
