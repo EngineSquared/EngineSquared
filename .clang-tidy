@@ -1,8 +1,18 @@
 ---
-Checks: "-*, bugprone-string-constructor, bugprone-terminating-continue,
+Checks: >
+  -*, bugprone-string-constructor, bugprone-terminating-continue,
   bugprone-swapped-arguments, bugprone-suspicious-string-compare,
   bugprone-redundant-branch-condition, bugprone-parent-virtual-call,
-  bugprone-empty-catch, -bugprone-reserved-identifier"
+  bugprone-empty-catch, bugprone-argument-comment, bugprone-assert-side-effect,
+  bugprone-assignment-in-if-condition, bugprone-argument-comment,
+  bugprone-assert-side-effect, bugprone-assignment-in-if-condition,
+  bugprone-assignment-in-selection-statement,
+  bugprone-bad-signal-to-kill-thread, bugprone-bitwise-pointer-cast,
+  bugprone-bool-pointer-implicit-conversion, bugprone-branch-clone,
+  bugprone-capturing-this-in-member-variable, bugprone-casting-through-void,
+  bugprone-chained-comparison, bugprone-command-processor,
+  bugprone-compare-pointer-to-member-virtual-function,
+  -bugprone-reserved-identifier
 
 WarningsAsErrors: "*"
 HeaderFileExtensions:
