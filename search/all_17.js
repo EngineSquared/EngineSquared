@@ -2,7 +2,7 @@ var searchData=
 [
   ['waitany_0',['waitAny',['../namespacewgpu.html#a78458f6c214eaf67c14343e83a8d7109',1,'wgpu']]],
   ['wantedlimits_1',['wantedLimits',['../classGraphic_1_1Resource_1_1GraphicSettings.html#ae6a62046b2e550678d99dab55c700f14',1,'Graphic::Resource::GraphicSettings']]],
-  ['warning_2',['Warning',['../structGraphic_1_1Utils_1_1ValidationError.html#a9e4243b82956b06b32ffe6c08e157218a0eaadb4fcb48a0a0ed7bc9868be9fbaa',1,'Graphic::Utils::ValidationError::Warning'],['../namespaceLog.html#a000853d1578cb42daa38a357883416ab',1,'Log::Warning(const T &amp;msg) noexcept']]],
+  ['warning_2',['Warning',['../structGraphic_1_1Utils_1_1ValidationError.html#a9e4243b82956b06b32ffe6c08e157218a0eaadb4fcb48a0a0ed7bc9868be9fbaa',1,'Graphic::Utils::ValidationError::Warning'],['../namespaceLog.html#afd812198560a76cbcbad7179c8f50dcd',1,'Log::Warning(const T &amp;msg) noexcept(false)']]],
   ['warning_3',['warning',['../namespaceLog.html#afb5d4c945d835d194a295461d752531ea7b83d3f08fa392b79e3f553b585971cd',1,'Log']]],
   ['wascursormasked_4',['WasCursorMasked',['../classCameraMovement_1_1Resource_1_1CameraManager.html#ad2ff574e53659b6ada9feb7bb62b8403',1,'CameraMovement::Resource::CameraManager']]],
   ['webgpu_2ehpp_5',['webgpu.hpp',['../webgpu_8hpp.html',1,'']]],

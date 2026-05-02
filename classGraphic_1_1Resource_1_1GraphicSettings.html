@@ -553,10 +553,10 @@ Private Attributes</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">                                            = [](WGPUDevice <span class="keyword">const</span> *device, WGPUErrorType type,</div>
 <div class="line">                                                 WGPUStringView message, WGPU_NULLABLE <span class="keywordtype">void</span> *userdata1,</div>
 <div class="line">                                                 WGPU_NULLABLE <span class="keywordtype">void</span> *userdata2) {</div>
-<div class="line">    <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Uncaptured device error: type {:x} ({})&quot;</span>, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(type),</div>
+<div class="line">    <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Uncaptured device error: type {:x} ({})&quot;</span>, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(type),</div>
 <div class="line">                           std::string(message.data, message.length)));</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespaceLog_html_a57f205dd59a28db869b6be0bd2441660"><div class="ttname"><a href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a></div><div class="ttdeci">void Error(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:51</div></div>
+<div class="ttc" id="anamespaceLog_html_ace32f5d9e3017ba4c4527f1d1e1cff4b"><div class="ttname"><a href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a></div><div class="ttdeci">void Error(const T &amp;msg) noexcept(false)</div><div class="ttdef"><b>Definition</b> Logger.hpp:34</div></div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -347,20 +347,20 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        _result = ma_device_init(NULL, &amp;_deviceConfig, &amp;_device);</div>
 <div class="line">        <span class="keywordflow">if</span> (_result != MA_SUCCESS)</div>
 <div class="line">        {</div>
-<div class="line">            <a id="a14" name="a14"></a><a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to init audio device: {}&quot;</span>, ma_result_description(_result)));</div>
+<div class="line">            <a id="a14" name="a14"></a><a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to init audio device: {}&quot;</span>, ma_result_description(_result)));</div>
 <div class="line">            <span class="keywordflow">return</span>;</div>
 <div class="line">        }</div>
 <div class="line"> </div>
 <div class="line">        _result = ma_device_start(&amp;_device);</div>
 <div class="line">        <span class="keywordflow">if</span> (_result != MA_SUCCESS)</div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to start audio device: {}&quot;</span>, ma_result_description(_result)));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to start audio device: {}&quot;</span>, ma_result_description(_result)));</div>
 <div class="line">            ma_device_uninit(&amp;_device);</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
 <div class="line">            _deviceInit = <span class="keyword">true</span>;</div>
-<div class="line">            <a id="a15" name="a15"></a><a class="code hl_function" href="namespaceLog.html#a1423ffcd222d8ec2afefb1c13e9fb3b1">Log::Info</a>(fmt::format(<span class="stringliteral">&quot;[Audio] Device started successfully. Device format={}, sample rate={}, channels={}&quot;</span>,</div>
+<div class="line">            <a id="a15" name="a15"></a><a class="code hl_function" href="namespaceLog.html#aa35ccb6dc10dd6d7f172a359b3c87423">Log::Info</a>(fmt::format(<span class="stringliteral">&quot;[Audio] Device started successfully. Device format={}, sample rate={}, channels={}&quot;</span>,</div>
 <div class="line">                                  <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(_device.playback.format), _device.sampleRate,</div>
 <div class="line">                                  _device.playback.channels));</div>
 <div class="line">        }</div>
@@ -371,15 +371,15 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        uint32_t errors = _callbackErrorFlags.exchange(0, std::memory_order_relaxed);</div>
 <div class="line">        <span class="keywordflow">if</span> (errors &amp; ERROR_FRAME_TOO_LARGE)</div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(<span class="stringliteral">&quot;[Audio] Frame count too large for mix buffer&quot;</span>);</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(<span class="stringliteral">&quot;[Audio] Frame count too large for mix buffer&quot;</span>);</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">if</span> (errors &amp; ERROR_DECODER_READ)</div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(<span class="stringliteral">&quot;[Audio] Decoder read error occurred during playback&quot;</span>);</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(<span class="stringliteral">&quot;[Audio] Decoder read error occurred during playback&quot;</span>);</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">if</span> (errors &amp; ERROR_UNKNOWN_FORMAT)</div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(<span class="stringliteral">&quot;[Audio] Unknown audio format encountered during playback&quot;</span>);</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(<span class="stringliteral">&quot;[Audio] Unknown audio format encountered during playback&quot;</span>);</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -387,7 +387,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">    {</div>
 <div class="line">        <span class="keywordflow">if</span> (_soundsToPlay.contains(soundName))</div>
 <div class="line">        {</div>
-<div class="line">            <a id="a16" name="a16"></a><a class="code hl_function" href="namespaceLog.html#a000853d1578cb42daa38a357883416ab">Log::Warning</a>(fmt::format(<span class="stringliteral">&quot;Could not register: Sound \&quot;{}\&quot; already exists&quot;</span>, soundName));</div>
+<div class="line">            <a id="a16" name="a16"></a><a class="code hl_function" href="namespaceLog.html#afd812198560a76cbcbad7179c8f50dcd">Log::Warning</a>(fmt::format(<span class="stringliteral">&quot;Could not register: Sound \&quot;{}\&quot; already exists&quot;</span>, soundName));</div>
 <div class="line">            <span class="keywordflow">return</span>;</div>
 <div class="line">        }</div>
 <div class="line"> </div>
@@ -412,7 +412,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not unregister: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not unregister: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -429,7 +429,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">                _result = ma_decoder_init_file(snd.path.c_str(), &amp;decoderConfig, &amp;snd.decoder);</div>
 <div class="line">                <span class="keywordflow">if</span> (_result != MA_SUCCESS)</div>
 <div class="line">                {</div>
-<div class="line">                    <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to initialize the audio decoder for &#39;{}&#39;: {}&quot;</span>, snd.name,</div>
+<div class="line">                    <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to initialize the audio decoder for &#39;{}&#39;: {}&quot;</span>, snd.name,</div>
 <div class="line">                                           ma_result_description(_result)));</div>
 <div class="line">                    <span class="keywordflow">return</span>;</div>
 <div class="line">                }</div>
@@ -446,7 +446,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not play: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not play: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -474,7 +474,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not stop: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not stop: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -493,7 +493,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not pause: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not pause: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -504,7 +504,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        {</div>
 <div class="line">            <span class="keywordflow">return</span> it-&gt;second.isPlaying &amp;&amp; !it-&gt;second.isPaused;</div>
 <div class="line">        }</div>
-<div class="line">        <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not verify playing status: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
+<div class="line">        <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not verify playing status: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
 <div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -517,7 +517,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not set volume: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not set volume: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -537,7 +537,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">                ma_result r = ma_engine_init(&amp;cfg, &amp;_engine);</div>
 <div class="line">                <span class="keywordflow">if</span> (r != MA_SUCCESS)</div>
 <div class="line">                {</div>
-<div class="line">                    <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to init ma_engine: {}&quot;</span>, ma_result_description(r)));</div>
+<div class="line">                    <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to init ma_engine: {}&quot;</span>, ma_result_description(r)));</div>
 <div class="line">                    <span class="keywordflow">return</span>;</div>
 <div class="line">                }</div>
 <div class="line">                _engineInit = <span class="keyword">true</span>;</div>
@@ -549,7 +549,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">                                                      &amp;snd.engineSound);</div>
 <div class="line">                <span class="keywordflow">if</span> (r != MA_SUCCESS)</div>
 <div class="line">                {</div>
-<div class="line">                    <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to init ma_sound for &#39;{}&#39;: {}&quot;</span>, snd.name, ma_result_description(r)));</div>
+<div class="line">                    <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Failed to init ma_sound for &#39;{}&#39;: {}&quot;</span>, snd.name, ma_result_description(r)));</div>
 <div class="line">                    <span class="keywordflow">return</span>;</div>
 <div class="line">                }</div>
 <div class="line">                snd.hasEngineSound = <span class="keyword">true</span>;</div>
@@ -577,7 +577,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not set pitch: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not set pitch: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -590,7 +590,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not set loop: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not set loop: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -604,7 +604,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">            ma_uint64 totalFrames;</div>
 <div class="line">            <span class="keywordflow">if</span> (ma_decoder_get_length_in_pcm_frames(&amp;decoder, &amp;totalFrames) != MA_SUCCESS)</div>
 <div class="line">            {</div>
-<div class="line">                <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(</div>
+<div class="line">                <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(</div>
 <div class="line">                    fmt::format(<span class="stringliteral">&quot;Something went wrong while computing PCM frames length of sound \&quot;{}\&quot;&quot;</span>, soundName));</div>
 <div class="line">                <span class="keywordflow">return</span>;</div>
 <div class="line">            }</div>
@@ -614,7 +614,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (startFrame &gt;= totalFrames || endFrame &gt; totalFrames || startFrame &gt;= endFrame)</div>
 <div class="line">            {</div>
-<div class="line">                <a class="code hl_function" href="namespaceLog.html#a000853d1578cb42daa38a357883416ab">Log::Warning</a>(fmt::format(<span class="stringliteral">&quot;Invalid loop range for \&quot;{}\&quot;: {}s to {}s, ignored&quot;</span>, soundName, startSeconds,</div>
+<div class="line">                <a class="code hl_function" href="namespaceLog.html#afd812198560a76cbcbad7179c8f50dcd">Log::Warning</a>(fmt::format(<span class="stringliteral">&quot;Invalid loop range for \&quot;{}\&quot;: {}s to {}s, ignored&quot;</span>, soundName, startSeconds,</div>
 <div class="line">                                         endSeconds));</div>
 <div class="line">                <span class="keywordflow">return</span>;</div>
 <div class="line">            }</div>
@@ -623,7 +623,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not set loop points: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not set loop points: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
@@ -632,14 +632,14 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        <span class="keyword">auto</span> it = _soundsToPlay.find(soundName);</div>
 <div class="line">        <span class="keywordflow">if</span> (it == _soundsToPlay.end())</div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not get the playback position: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not get the playback position: Sound \&quot;{}\&quot; does not exist&quot;</span>, soundName));</div>
 <div class="line">            <span class="keywordflow">return</span> -1.0f;</div>
 <div class="line">        }</div>
 <div class="line"> </div>
 <div class="line">        <a class="code hl_namespace" href="namespaceSound.html">Sound</a> &amp;sound = it-&gt;second;</div>
 <div class="line">        <span class="keywordflow">if</span> (!sound.isPlaying)</div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a000853d1578cb42daa38a357883416ab">Log::Warning</a>(fmt::format(<span class="stringliteral">&quot;Sound \&quot;{}\&quot; is not currently playing&quot;</span>, soundName));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#afd812198560a76cbcbad7179c8f50dcd">Log::Warning</a>(fmt::format(<span class="stringliteral">&quot;Sound \&quot;{}\&quot; is not currently playing&quot;</span>, soundName));</div>
 <div class="line">            <span class="keywordflow">return</span> 0.0f;</div>
 <div class="line">        }</div>
 <div class="line"> </div>
@@ -647,7 +647,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">        _result = ma_decoder_get_cursor_in_pcm_frames(&amp;sound.decoder, &amp;currentFrame);</div>
 <div class="line">        <span class="keywordflow">if</span> (_result != MA_SUCCESS)</div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not get the playback position: {}&quot;</span>, ma_result_description(_result)));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not get the playback position: {}&quot;</span>, ma_result_description(_result)));</div>
 <div class="line">            <span class="keywordflow">return</span> -1.0f;</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordtype">double</span> position = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(currentFrame) / sound.decoder.outputSampleRate;</div>
@@ -663,7 +663,7 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="line">    {</div>
 <div class="line">        <span class="keywordflow">if</span> (!_customCallbacks.<a id="a19" name="a19"></a><a class="code hl_function" href="classFunctionUtils_1_1FunctionContainer.html#ad576785cd9f69968ea6af38cb55fb3fb">Contains</a>(<span class="keywordtype">id</span>))</div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not remove: Custom callback with ID {} does not exist&quot;</span>, <span class="keywordtype">id</span>));</div>
+<div class="line">            <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Could not remove: Custom callback with ID {} does not exist&quot;</span>, <span class="keywordtype">id</span>));</div>
 <div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line">        }</div>
 <div class="line">        _customCallbacks.<a id="a20" name="a20"></a><a class="code hl_function" href="classFunctionUtils_1_1FunctionContainer.html#aec76d963da335a93184ec8412f0376b7">DeleteFunction</a>(<span class="keywordtype">id</span>);</div>
@@ -708,9 +708,9 @@ $(function(){initNavTree('_2home_2runner_2work_2EngineSquared_2EngineSquared_2sr
 <div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_aea53c4d6cd115e58a2e27b39ca5a617f"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#aea53c4d6cd115e58a2e27b39ca5a617f">Sound::Resource::SoundManager::ERROR_FRAME_TOO_LARGE</a></div><div class="ttdeci">static constexpr uint32_t ERROR_FRAME_TOO_LARGE</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:29</div></div>
 <div class="ttc" id="aclassSound_1_1Resource_1_1SoundManager_html_aecb012c6c549a9e61f03eba0d54335fe"><div class="ttname"><a href="classSound_1_1Resource_1_1SoundManager.html#aecb012c6c549a9e61f03eba0d54335fe">Sound::Resource::SoundManager::ERROR_DECODER_READ</a></div><div class="ttdeci">static constexpr uint32_t ERROR_DECODER_READ</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:30</div></div>
 <div class="ttc" id="anamespaceFunctionUtils_html_ab5353af47186eee5ae03e3c0fdef63e9"><div class="ttname"><a href="namespaceFunctionUtils.html#ab5353af47186eee5ae03e3c0fdef63e9">FunctionUtils::FunctionID</a></div><div class="ttdeci">std::size_t FunctionID</div><div class="ttdoc">FunctionID class to represent a unique identifier for functions.</div><div class="ttdef"><b>Definition</b> FunctionID.hpp:9</div></div>
-<div class="ttc" id="anamespaceLog_html_a000853d1578cb42daa38a357883416ab"><div class="ttname"><a href="namespaceLog.html#a000853d1578cb42daa38a357883416ab">Log::Warning</a></div><div class="ttdeci">void Warning(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:49</div></div>
-<div class="ttc" id="anamespaceLog_html_a1423ffcd222d8ec2afefb1c13e9fb3b1"><div class="ttname"><a href="namespaceLog.html#a1423ffcd222d8ec2afefb1c13e9fb3b1">Log::Info</a></div><div class="ttdeci">void Info(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:47</div></div>
-<div class="ttc" id="anamespaceLog_html_a57f205dd59a28db869b6be0bd2441660"><div class="ttname"><a href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a></div><div class="ttdeci">void Error(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:51</div></div>
+<div class="ttc" id="anamespaceLog_html_aa35ccb6dc10dd6d7f172a359b3c87423"><div class="ttname"><a href="namespaceLog.html#aa35ccb6dc10dd6d7f172a359b3c87423">Log::Info</a></div><div class="ttdeci">void Info(const T &amp;msg) noexcept(false)</div><div class="ttdef"><b>Definition</b> Logger.hpp:30</div></div>
+<div class="ttc" id="anamespaceLog_html_ace32f5d9e3017ba4c4527f1d1e1cff4b"><div class="ttname"><a href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a></div><div class="ttdeci">void Error(const T &amp;msg) noexcept(false)</div><div class="ttdef"><b>Definition</b> Logger.hpp:34</div></div>
+<div class="ttc" id="anamespaceLog_html_afd812198560a76cbcbad7179c8f50dcd"><div class="ttname"><a href="namespaceLog.html#afd812198560a76cbcbad7179c8f50dcd">Log::Warning</a></div><div class="ttdeci">void Warning(const T &amp;msg) noexcept(false)</div><div class="ttdef"><b>Definition</b> Logger.hpp:32</div></div>
 <div class="ttc" id="anamespaceSound_1_1Resource_html"><div class="ttname"><a href="namespaceSound_1_1Resource.html">Sound::Resource</a></div><div class="ttdef"><b>Definition</b> SoundManager.cpp:5</div></div>
 <div class="ttc" id="anamespaceSound_1_1Resource_html_a7af500789573be7915124dcf7926d585"><div class="ttname"><a href="namespaceSound_1_1Resource.html#a7af500789573be7915124dcf7926d585">Sound::Resource::CustomDataCallback</a></div><div class="ttdeci">std::function&lt; void(ma_device *pDevice, void *pOutput, ma_uint32 frameCount)&gt; CustomDataCallback</div><div class="ttdef"><b>Definition</b> SoundManager.hpp:15</div></div>
 <div class="ttc" id="anamespaceSound_html"><div class="ttname"><a href="namespaceSound.html">Sound</a></div><div class="ttdef"><b>Definition</b> PluginSound.hpp:5</div></div>

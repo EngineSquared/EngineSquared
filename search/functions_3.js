@@ -144,7 +144,7 @@ var searchData=
   ['createview_141',['createView',['../namespacewgpu.html#a35373a8cdf53b30722d00edc05e4ddfb',1,'wgpu']]],
   ['createwindowsystem_142',['CreateWindowSystem',['../namespaceWindow_1_1System.html#a347fe4d189a0183f389c50d3585b9cea',1,'Window::System']]],
   ['createwithrange_143',['CreateWithRange',['../structPhysics_1_1Component_1_1DistanceConstraint.html#a8c548570fa672e5940c1e99ff9c3b14b',1,'Physics::Component::DistanceConstraint']]],
-  ['critical_144',['Critical',['../namespaceLog.html#a8315359ae1c60331cbfcb5851fb6ad02',1,'Log']]],
+  ['critical_144',['Critical',['../namespaceLog.html#a8c0e76d199582e6739c517dfd338c2d8',1,'Log']]],
   ['cursorentercallback_145',['CursorEnterCallback',['../BindCallbacksToGLFW_8cpp.html#ad4837458ef8ddc985b98078bdb29fc57',1,'BindCallbacksToGLFW.cpp']]],
   ['cursorposcallback_146',['CursorPosCallback',['../classCameraMovement_1_1Utils_1_1DefaultBehavior.html#a7a8eff149c1e5b59df850102c70456b3',1,'CameraMovement::Utils::DefaultBehavior::CursorPosCallback()'],['../BindCallbacksToGLFW_8cpp.html#a347b0c82b05d893c671a494197709260',1,'CursorPosCallback():&#160;BindCallbacksToGLFW.cpp']]]
 ];

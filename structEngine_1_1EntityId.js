@@ -12,7 +12,6 @@ var structEngine_1_1EntityId =
     [ "HasComponents", "structEngine_1_1EntityId.html#a79e56d53a5bd5702df1a8364c2a0cea6", null ],
     [ "IsValid", "structEngine_1_1EntityId.html#a2531ae5ebb4db11c0739c019fcd679f2", null ],
     [ "Null", "structEngine_1_1EntityId.html#a230dbfa3bf5e25867d2e06d2384239d4", null ],
-    [ "operator ValueType", "structEngine_1_1EntityId.html#ae3b809dedab8e2cc44cbc6c334b7fba9", null ],
     [ "RemoveComponent", "structEngine_1_1EntityId.html#a71e566dc10b5477cfbd517226e385610", null ],
     [ "RemoveTemporaryComponents", "structEngine_1_1EntityId.html#aa0d9e39669bdd06b1007c5cb246b9d64", null ],
     [ "TryGetComponent", "structEngine_1_1EntityId.html#ab00b7735c8a79574bf091c5579b43152", null ],

@@ -214,12 +214,12 @@ Uncaptured device errors</h2>
 <div class="fragment"><div class="line">settings.SetOnErrorCallback(</div>
 <div class="line">    [](WGPUDevice <span class="keyword">const</span>*, WGPUErrorType type, WGPUStringView message,</div>
 <div class="line">       <span class="keywordtype">void</span>*, <span class="keywordtype">void</span>*) {</div>
-<div class="line">        <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;WebGPU error: type {:x} ({})&quot;</span>,</div>
+<div class="line">        <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;WebGPU error: type {:x} ({})&quot;</span>,</div>
 <div class="line">            <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(type),</div>
 <div class="line">            std::string(message.data, message.length)));</div>
 <div class="line">        <span class="comment">// optionally: throw or abort</span></div>
 <div class="line">    });</div>
-<div class="ttc" id="anamespaceLog_html_a57f205dd59a28db869b6be0bd2441660"><div class="ttname"><a href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a></div><div class="ttdeci">void Error(const T &amp;msg) noexcept</div><div class="ttdef"><b>Definition</b> Logger.hpp:51</div></div>
+<div class="ttc" id="anamespaceLog_html_ace32f5d9e3017ba4c4527f1d1e1cff4b"><div class="ttname"><a href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a></div><div class="ttdeci">void Error(const T &amp;msg) noexcept(false)</div><div class="ttdef"><b>Definition</b> Logger.hpp:34</div></div>
 </div><!-- fragment --><hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
 Usage</h1>
@@ -259,7 +259,7 @@ Configuring settings at startup</h2>
 <div class="line">    settings.<a class="code hl_function" href="classGraphic_1_1Resource_1_1GraphicSettings.html#ac9a261888f78fee62653db3e0d2d1f7e">SetPowerPreference</a>(<a class="code hl_enumvalue" href="namespaceGraphic_1_1Resource.html#ad53aae45d666db53fcb656a0dc13e271afc3d9ab96ac1103a7581af5eade2ad15">Graphic::Resource::PowerPreference::HighPerformance</a>);</div>
 <div class="line">    settings.<a class="code hl_function" href="classGraphic_1_1Resource_1_1GraphicSettings.html#a55c06cc3133421493e42038482544572">SetOnErrorCallback</a>([](WGPUDevice <span class="keyword">const</span>*, WGPUErrorType type,</div>
 <div class="line">                                   WGPUStringView message, <span class="keywordtype">void</span>*, <span class="keywordtype">void</span>*) {</div>
-<div class="line">        <a class="code hl_function" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Device error: {}&quot;</span>, std::string(message.data, message.length)));</div>
+<div class="line">        <a class="code hl_function" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a>(fmt::format(<span class="stringliteral">&quot;Device error: {}&quot;</span>, std::string(message.data, message.length)));</div>
 <div class="line">    });</div>
 <div class="line">});</div>
 <div class="ttc" id="aclassEngine_1_1Core_html_a29ab23da9acb31dbd5b13fa935754451"><div class="ttname"><a href="classEngine_1_1Core.html#a29ab23da9acb31dbd5b13fa935754451">Engine::Core::GetResource</a></div><div class="ttdeci">TResource &amp; GetResource()</div><div class="ttdoc">Get a reference of a resource.</div><div class="ttdef"><b>Definition</b> Core.ipp:14</div></div>

@@ -13,6 +13,6 @@ var searchData=
   ['loadoverlaydocumentfailuretest_10',['LoadOverlayDocumentFailureTest',['../LoadDocumentTest_8cpp.html#a2f838c64bb579d2c80d8d8975c03f7a0',1,'LoadDocumentTest.cpp']]],
   ['loadoverlaydocumenttest_11',['LoadOverlayDocumentTest',['../LoadDocumentTest_8cpp.html#a46fffbba1d4a427399eba3906219bff3',1,'LoadDocumentTest.cpp']]],
   ['loadtexture_12',['LoadTexture',['../classRmlui_1_1Utils_1_1RenderInterface.html#af278ab79092ec1d496925e62e297b18d',1,'Rmlui::Utils::RenderInterface']]],
-  ['log_13',['Log',['../namespaceLog.html#a7a65059e96f4759d4932476294075ba3',1,'Log']]],
+  ['log_13',['Log',['../namespaceLog.html#aeaf1aa7d986b0998b35bfe4535504876',1,'Log']]],
   ['logmessage_14',['LogMessage',['../classRmlui_1_1Utils_1_1SystemInterface.html#a56c016b5ee62ff6af66cd5365e064289',1,'Rmlui::Utils::SystemInterface']]]
 ];

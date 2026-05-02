@@ -109,34 +109,34 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:afb5d4c945d835d194a295461d752531e" id="r_afb5d4c945d835d194a295461d752531e"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531e">Log::Level</a> { <br />
-&#160;&#160;<a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531ea04a75036e9d520bb983c5ed03b8d0182">Log::trace</a>
-, <a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531eaad42f6697b035b7580e4fef93be20b4d">Log::debug</a>
-, <a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531eacaf9b6b99962bf5c2264824231d7a40c">Log::info</a>
-, <a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531ea7b83d3f08fa392b79e3f553b585971cd">Log::warning</a>
+&#160;&#160;<a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531ea04a75036e9d520bb983c5ed03b8d0182">Log::trace</a> = spdlog::level::level_enum::trace
+, <a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531eaad42f6697b035b7580e4fef93be20b4d">Log::debug</a> = spdlog::level::level_enum::debug
+, <a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531eacaf9b6b99962bf5c2264824231d7a40c">Log::info</a> = spdlog::level::level_enum::info
+, <a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531ea7b83d3f08fa392b79e3f553b585971cd">Log::warning</a> = spdlog::level::level_enum::warn
 , <br />
-&#160;&#160;<a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531eacb5e100e5a9a3e7f6d1fd97512215282">Log::error</a>
-, <a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531ea7e85bcb66fb9a809d5ab4f62a8b8bea8">Log::critical</a>
-, <a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531ea3262d48df5d75e3452f0f16b313b7808">Log::off</a>
+&#160;&#160;<a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531eacb5e100e5a9a3e7f6d1fd97512215282">Log::error</a> = spdlog::level::level_enum::err
+, <a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531ea7e85bcb66fb9a809d5ab4f62a8b8bea8">Log::critical</a> = spdlog::level::level_enum::critical
+, <a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531ea3262d48df5d75e3452f0f16b313b7808">Log::off</a> = spdlog::level::level_enum::off
 <br />
  }</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aa59a822a34e03f69f1e7918e1c0433b1" id="r_aa59a822a34e03f69f1e7918e1c0433b1"><td class="memItemLeft">constexpr spdlog::level::level_enum&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#aa59a822a34e03f69f1e7918e1c0433b1">Log::ToSpdlogLevel</a> (<a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531e">Level</a> level) noexcept</td></tr>
-<tr class="memitem:a7b4e13507856ddf944bb7786034abeea" id="r_a7b4e13507856ddf944bb7786034abeea"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a7b4e13507856ddf944bb7786034abeea template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#a7b4e13507856ddf944bb7786034abeea">Log::Debug</a> (const T &amp;msg) noexcept</td></tr>
-<tr class="memitem:a1423ffcd222d8ec2afefb1c13e9fb3b1" id="r_a1423ffcd222d8ec2afefb1c13e9fb3b1"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a1423ffcd222d8ec2afefb1c13e9fb3b1 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#a1423ffcd222d8ec2afefb1c13e9fb3b1">Log::Info</a> (const T &amp;msg) noexcept</td></tr>
-<tr class="memitem:a000853d1578cb42daa38a357883416ab" id="r_a000853d1578cb42daa38a357883416ab"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a000853d1578cb42daa38a357883416ab template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#a000853d1578cb42daa38a357883416ab">Log::Warning</a> (const T &amp;msg) noexcept</td></tr>
-<tr class="memitem:a57f205dd59a28db869b6be0bd2441660" id="r_a57f205dd59a28db869b6be0bd2441660"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a57f205dd59a28db869b6be0bd2441660 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#a57f205dd59a28db869b6be0bd2441660">Log::Error</a> (const T &amp;msg) noexcept</td></tr>
-<tr class="memitem:a8315359ae1c60331cbfcb5851fb6ad02" id="r_a8315359ae1c60331cbfcb5851fb6ad02"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a8315359ae1c60331cbfcb5851fb6ad02 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#a8315359ae1c60331cbfcb5851fb6ad02">Log::Critical</a> (const T &amp;msg) noexcept</td></tr>
-<tr class="memitem:a77c30c3e141216a5550227cf1e1b2236" id="r_a77c30c3e141216a5550227cf1e1b2236"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a77c30c3e141216a5550227cf1e1b2236 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#a77c30c3e141216a5550227cf1e1b2236">Log::Trace</a> (const T &amp;msg) noexcept</td></tr>
-<tr class="memitem:a7a65059e96f4759d4932476294075ba3" id="r_a7a65059e96f4759d4932476294075ba3"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a7a65059e96f4759d4932476294075ba3 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#a7a65059e96f4759d4932476294075ba3">Log::Log</a> (<a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531e">Level</a> level, const T &amp;msg) noexcept</td></tr>
+<tr class="memitem:ac1091f8d9c066a3eae46b46a622a3006" id="r_ac1091f8d9c066a3eae46b46a622a3006"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:ac1091f8d9c066a3eae46b46a622a3006 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#ac1091f8d9c066a3eae46b46a622a3006">Log::Debug</a> (const T &amp;msg) noexcept(false)</td></tr>
+<tr class="memitem:aa35ccb6dc10dd6d7f172a359b3c87423" id="r_aa35ccb6dc10dd6d7f172a359b3c87423"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:aa35ccb6dc10dd6d7f172a359b3c87423 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#aa35ccb6dc10dd6d7f172a359b3c87423">Log::Info</a> (const T &amp;msg) noexcept(false)</td></tr>
+<tr class="memitem:afd812198560a76cbcbad7179c8f50dcd" id="r_afd812198560a76cbcbad7179c8f50dcd"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:afd812198560a76cbcbad7179c8f50dcd template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#afd812198560a76cbcbad7179c8f50dcd">Log::Warning</a> (const T &amp;msg) noexcept(false)</td></tr>
+<tr class="memitem:ace32f5d9e3017ba4c4527f1d1e1cff4b" id="r_ace32f5d9e3017ba4c4527f1d1e1cff4b"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:ace32f5d9e3017ba4c4527f1d1e1cff4b template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#ace32f5d9e3017ba4c4527f1d1e1cff4b">Log::Error</a> (const T &amp;msg) noexcept(false)</td></tr>
+<tr class="memitem:a8c0e76d199582e6739c517dfd338c2d8" id="r_a8c0e76d199582e6739c517dfd338c2d8"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a8c0e76d199582e6739c517dfd338c2d8 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#a8c0e76d199582e6739c517dfd338c2d8">Log::Critical</a> (const T &amp;msg) noexcept(false)</td></tr>
+<tr class="memitem:adbc62446538a6dddde2857a3863164df" id="r_adbc62446538a6dddde2857a3863164df"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:adbc62446538a6dddde2857a3863164df template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#adbc62446538a6dddde2857a3863164df">Log::Trace</a> (const T &amp;msg) noexcept(false)</td></tr>
+<tr class="memitem:aeaf1aa7d986b0998b35bfe4535504876" id="r_aeaf1aa7d986b0998b35bfe4535504876"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:aeaf1aa7d986b0998b35bfe4535504876 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#aeaf1aa7d986b0998b35bfe4535504876">Log::Log</a> (<a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531e">Level</a> level, const T &amp;msg) noexcept(false)</td></tr>
 <tr class="memitem:a1b6ae8345ea62ad1532444fa36accafe" id="r_a1b6ae8345ea62ad1532444fa36accafe"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#a1b6ae8345ea62ad1532444fa36accafe">Log::SetLevel</a> (<a class="el" href="namespaceLog.html#afb5d4c945d835d194a295461d752531e">Level</a> level)</td></tr>
 <tr class="memitem:aee3302dafd0de172d9634ebf03a2de7e" id="r_aee3302dafd0de172d9634ebf03a2de7e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespaceLog.html#aee3302dafd0de172d9634ebf03a2de7e">Log::SetPattern</a> (const std::string &amp;pattern, spdlog::pattern_time_type time_type=spdlog::pattern_time_type::local)</td></tr>
 </table>
