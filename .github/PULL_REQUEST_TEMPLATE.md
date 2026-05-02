@@ -17,6 +17,7 @@ Relates to #(issue)
 - Performance improvement
 - Code refactoring
 - Build/CI configuration change
+- Project related stuff
 
 ## Changes Made
 List of the main changes in this PR:
