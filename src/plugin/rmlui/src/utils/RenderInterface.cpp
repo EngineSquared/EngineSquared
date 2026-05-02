@@ -160,11 +160,12 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
     }
 
     const auto &context = _core.GetResource<Graphic::Resource::Context>();
-    if (!context.deviceContext.GetDevice().has_value())
+    const auto &optDevice = context.deviceContext.GetDevice();
+    if (!optDevice.has_value())
     {
         return;
     }
-    const auto &device = context.deviceContext.GetDevice().value();
+    const auto &device = optDevice.value();
     if (!context.queue.has_value())
         return;
     const auto &queue = context.queue.value();
@@ -451,9 +452,10 @@ void RenderInterface::BeginFrame()
     _drawCommands.clear();
 
     const auto &context = _core.GetResource<Graphic::Resource::Context>();
-    if (!context.deviceContext.GetDevice())
+    const auto &optDevice = context.deviceContext.GetDevice();
+    if (!optDevice)
         return;
-    const auto &device = context.deviceContext.GetDevice().value();
+    const auto &device = optDevice.value();
 
     if (_screenBuffer == nullptr)
     {
