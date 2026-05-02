@@ -17,7 +17,7 @@ Component::Mesh GeneratePlaneMesh(float width, float depth, uint32_t subdivision
     mesh.ReserveVertices(vertexCount);
     mesh.ReserveNormals(vertexCount);
     mesh.ReserveTexCoords(vertexCount);
-    mesh.ReserveIndices(subdivisionsX * subdivisionsZ * 6u);
+    mesh.ReserveIndices(static_cast<size_t>(subdivisionsX * subdivisionsZ) * 6u);
 
     for (uint32_t z = 0u; z <= subdivisionsZ; ++z)
     {

@@ -5,8 +5,6 @@ constexpr EntityId::EntityId(ValueType v) : Id{v} {}
 
 constexpr EntityId::EntityId(Id id) : Id{id} {}
 
-constexpr EntityId::operator ValueType() const { return value; }
-
 constexpr EntityId EntityId::Null() { return EntityId{NullValue()}; }
 
 inline bool EntityId::IsValid(const Engine::Core &core) const { return core.IsEntityValid(value); }

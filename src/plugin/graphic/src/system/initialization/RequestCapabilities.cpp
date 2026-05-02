@@ -8,7 +8,7 @@ void RequestCapabilities(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
 
-    if (context.surface == std::nullopt)
+    if (context.surface == std::nullopt || !context.adapter.has_value())
         return;
     if (context.surface->updateCapabilities(context.adapter.value()) == wgpu::Status::Error)
     {

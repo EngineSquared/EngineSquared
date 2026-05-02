@@ -16,12 +16,21 @@ void Scene::Resource::SceneManager::Update(Engine::Core &core)
     {
         _unloadScene(core, _currentScene.value());
     }
+    if (!_nextScene.has_value())
+    {
+        return;
+    }
     _loadScene(core, _nextScene.value());
     _currentScene = _nextScene;
     _nextScene.reset();
 }
 void Scene::Resource::SceneManager::_loadScene(Engine::Core &core, const std::string &name)
 {
+    if (!_nextScene.has_value())
+    {
+        Log::Error("Scene::Resource::SceneManager::_loadScene: _nextScene is empty");
+        return;
+    }
     Log::Info("Loading scene: " + _nextScene.value());
     std::optional<std::shared_ptr<Utils::AScene>> scene = _getScene(name);
     if (scene.has_value())
@@ -32,6 +41,11 @@ void Scene::Resource::SceneManager::_loadScene(Engine::Core &core, const std::st
 
 void Scene::Resource::SceneManager::_unloadScene(Engine::Core &core, const std::string &name)
 {
+        if (!_currentScene.has_value())
+    {
+        Log::Error("Scene::Resource::SceneManager::_unloadScene: _currentScene is empty");
+        return;
+    }
     Log::Info("Unloading scene: " + _currentScene.value());
     std::optional<std::shared_ptr<Utils::AScene>> scene = _getScene(name);
     if (scene.has_value())

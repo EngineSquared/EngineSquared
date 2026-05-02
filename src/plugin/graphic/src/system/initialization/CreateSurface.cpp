@@ -10,8 +10,13 @@ void Graphic::System::CreateSurface(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
     auto &graphicSettings = core.GetResource<Resource::GraphicSettings>();
-    auto &instance = context.instance.value();
+    auto &instance = context.instance;
 
+    if (!instance.has_value())
+    {
+        Log::Error("Graphic::System::CreateSurface: context.instance has no value");
+        return;
+    }
     wgpu::Surface surface = nullptr;
 
     if (graphicSettings.GetWindowSystem() == Resource::WindowSystem::None)
@@ -19,7 +24,7 @@ void Graphic::System::CreateSurface(Engine::Core &core)
     else if (graphicSettings.GetWindowSystem() == Resource::WindowSystem::GLFW)
     {
         auto glfwWindow = core.GetResource<Window::Resource::Window>().GetGLFWWindow();
-        surface = glfwCreateWindowWGPUSurface(instance, glfwWindow);
+        surface = glfwCreateWindowWGPUSurface(instance.value(), glfwWindow);
     }
     else
     {

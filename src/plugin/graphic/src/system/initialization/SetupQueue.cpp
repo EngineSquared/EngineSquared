@@ -11,6 +11,8 @@ void Graphic::System::SetupQueue(Engine::Core &core)
         return;
 
     auto &context = core.GetResource<Resource::Context>();
+    if (!context.queue.has_value())
+        return;
 
     auto onQueueWorkDone = [](WGPUQueueWorkDoneStatus status, [[maybe_unused]] WGPU_NULLABLE void *userdata1,
                               [[maybe_unused]] WGPU_NULLABLE void *userdata2) {

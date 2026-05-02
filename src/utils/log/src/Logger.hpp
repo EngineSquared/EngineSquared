@@ -25,19 +25,19 @@ constexpr spdlog::level::level_enum ToSpdlogLevel(Level level) noexcept
     return static_cast<spdlog::level::level_enum>(level);
 }
 
-template <typename T> inline void Debug(const T &msg) noexcept { spdlog::debug(msg); };
+template <typename T> inline void Debug(const T &msg) noexcept(false) { spdlog::debug(msg); };
 
-template <typename T> inline void Info(const T &msg) noexcept { spdlog::info(msg); };
+template <typename T> inline void Info(const T &msg) noexcept(false) { spdlog::info(msg); };
 
-template <typename T> inline void Warning(const T &msg) noexcept { spdlog::warn(msg); };
+template <typename T> inline void Warning(const T &msg) noexcept(false) { spdlog::warn(msg); };
 
-template <typename T> inline void Error(const T &msg) noexcept { spdlog::error(msg); };
+template <typename T> inline void Error(const T &msg) noexcept(false) { spdlog::error(msg); };
 
-template <typename T> inline void Critical(const T &msg) noexcept { spdlog::critical(msg); };
+template <typename T> inline void Critical(const T &msg) noexcept(false) { spdlog::critical(msg); };
 
-template <typename T> inline void Trace(const T &msg) noexcept { spdlog::trace(msg); };
+template <typename T> inline void Trace(const T &msg) noexcept(false) { spdlog::trace(msg); };
 
-template <typename T> inline void Log(Level level, const T &msg) noexcept
+template <typename T> inline void Log(Level level, const T &msg) noexcept(false)
 {
     using enum Log::Level;
 

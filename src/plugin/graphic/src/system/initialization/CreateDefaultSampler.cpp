@@ -22,8 +22,12 @@ void CreateDefaultSampler(Engine::Core &core)
     samplerDesc.addressModeV = wgpu::AddressMode::ClampToEdge;
     samplerDesc.addressModeW = wgpu::AddressMode::ClampToEdge;
 
-    Resource::Sampler defaultSampler(context.deviceContext.GetDevice().value(), samplerDesc);
-
-    samplerContainer.Add(Utils::DEFAULT_SAMPLER_ID, std::move(defaultSampler));
+    if (context.deviceContext.GetDevice().has_value())
+    {
+        Resource::Sampler defaultSampler(context.deviceContext.GetDevice().value(), samplerDesc);
+        samplerContainer.Add(Utils::DEFAULT_SAMPLER_ID, std::move(defaultSampler));
+    } else {
+        Log::Error("Graphic::System::CreateDefaultSampler: Graphic device not found");
+    }
 }
 } // namespace Graphic::System
