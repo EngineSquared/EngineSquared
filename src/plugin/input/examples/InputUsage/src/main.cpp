@@ -10,11 +10,6 @@ void Setup(Engine::Core &core)
     inputManager.RegisterKeyCallback([](Engine::Core &core, int key, int scancode, int action, int mods) {
         if (action == GLFW_PRESS)
         {
-            if (key == GLFW_KEY_ESCAPE)
-            {
-                core.Stop();
-                return;
-            }
             auto name = glfwGetKeyName(key, scancode);
             if (name == nullptr)
             {
@@ -40,6 +35,7 @@ int main(void)
 
     core.AddPlugins<Input::Plugin>();
 
+    core.RegisterSystem<Engine::Scheduler::Startup>(Input::System::EscapeKeyCloseSystem);
     core.RegisterSystem<Engine::Scheduler::Startup>(Setup);
     core.RegisterSystem([](Engine::Core &core) {
         static std::vector<float> lastAxes;
