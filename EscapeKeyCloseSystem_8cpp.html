@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Engine²: Input::System Namespace Reference</title>
+<title>Engine²: src/plugin/input/src/system/EscapeKeyCloseSystem.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('namespaceInput_1_1System.html','',''); });
+$(function(){initNavTree('EscapeKeyCloseSystem_8cpp.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -91,56 +91,58 @@ $(function(){initNavTree('namespaceInput_1_1System.html','',''); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Input::System Namespace Reference</div></div>
+  <div class="headertitle"><div class="title">EscapeKeyCloseSystem.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="EscapeKeyCloseSystem_8hpp_source.html">system/EscapeKeyCloseSystem.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Core_8hpp_source.html">core/Core.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="InputManager_8hpp_source.html">resource/InputManager.hpp</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a490e12330f1155581e39ab1aa37bfd5e" id="r_a490e12330f1155581e39ab1aa37bfd5e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a490e12330f1155581e39ab1aa37bfd5e">BindCallbacksToGLFW</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
-<tr class="memdesc:a490e12330f1155581e39ab1aa37bfd5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bind GLFW callbacks to the InputManager.  <br /></td></tr>
-<tr class="memitem:aeb1ab53218899e7477f0c2d21bb4a1a7" id="r_aeb1ab53218899e7477f0c2d21bb4a1a7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aeb1ab53218899e7477f0c2d21bb4a1a7">EscapeKeyCloseSystem</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
+<tr class="memitem:ae05322f35e89a18c8c87a318e5bdb682" id="r_ae05322f35e89a18c8c87a318e5bdb682"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#ae05322f35e89a18c8c87a318e5bdb682">EscapeKeyCloseCallback</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core, int key, int scancode, int action, int mods)</td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
-<a id="a490e12330f1155581e39ab1aa37bfd5e" name="a490e12330f1155581e39ab1aa37bfd5e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a490e12330f1155581e39ab1aa37bfd5e">&#9670;&#160;</a></span>BindCallbacksToGLFW()</h2>
+<a id="ae05322f35e89a18c8c87a318e5bdb682" name="ae05322f35e89a18c8c87a318e5bdb682"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae05322f35e89a18c8c87a318e5bdb682">&#9670;&#160;</a></span>EscapeKeyCloseCallback()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Input::System::BindCallbacksToGLFW </td>
+          <td class="memname">void EscapeKeyCloseCallback </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span></td><td>)</td>
-          <td></td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Bind GLFW callbacks to the InputManager. </p>
-<p>This function binds the GLFW callbacks to the InputManager. It should be called after the window is created.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">core</td><td>The Engine² Core. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aeb1ab53218899e7477f0c2d21bb4a1a7" name="aeb1ab53218899e7477f0c2d21bb4a1a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb1ab53218899e7477f0c2d21bb4a1a7">&#9670;&#160;</a></span>EscapeKeyCloseSystem()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">void Input::System::EscapeKeyCloseSystem </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>scancode</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>action</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>mods</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -158,7 +160,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespaceInput.html">Input</a></li><li class="navelem"><a href="namespaceInput_1_1System.html">System</a></li>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="dir_40bb855b7b2023435b78cde29725ed48.html">plugin</a></li><li class="navelem"><a href="dir_972d27b34336feb05c373e5dcd867bb2.html">input</a></li><li class="navelem"><a href="dir_c9a14fd19f16a660f9b0e87f8dee852e.html">src</a></li><li class="navelem"><a href="dir_1ca1c945eb63b4b82c96abba82372620.html">system</a></li><li class="navelem"><a href="EscapeKeyCloseSystem_8cpp.html">EscapeKeyCloseSystem.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>

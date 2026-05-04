@@ -1,5 +1,9 @@
 var NAVTREEINDEX4 =
 {
+"UnknownFormatType_8hpp_source.html":[6,0,1,1,3,0,0,17],
+"UnsetAttributeTextureDescriptor_8hpp.html":[6,0,1,1,3,0,0,18],
+"UnsetAttributeTextureDescriptor_8hpp_source.html":[6,0,1,1,3,0,0,18],
+"UnsupportedTextureFormatError_8hpp.html":[6,0,1,1,3,0,0,19],
 "UnsupportedTextureFormatError_8hpp_source.html":[6,0,1,1,3,0,0,19],
 "UpdateAmbientLight_8cpp.html":[6,0,1,1,1,1,3,2,0],
 "UpdateAmbientLight_8hpp.html":[6,0,1,1,1,1,3,2,1],
@@ -245,9 +249,5 @@ var NAVTREEINDEX4 =
 "classCameraMovement_1_1Utils_1_1ICameraBehavior.html#ad2558a3ddd91059600046ce491cf52d2":[5,0,0,1,0,3],
 "classCameraMovement_1_1Utils_1_1ICameraBehavior.html#aee4668f025ff71425adce6a89cc0fac8":[3,0,0,1,0,1],
 "classCameraMovement_1_1Utils_1_1ICameraBehavior.html#aee4668f025ff71425adce6a89cc0fac8":[5,0,0,1,0,1],
-"classCharacterControllerExampleError.html":[5,0,27],
-"classChaseCameraBehavior.html":[5,0,29],
-"classChaseCameraBehavior.html#a408e6efafc6cde6e111bbaee42324136":[5,0,29,4],
-"classChaseCameraBehavior.html#a4eb243f758780aaf9967697adfc21fed":[5,0,29,0],
-"classChaseCameraBehavior.html#adc57444b1185f0722c4a5c19afe72856":[5,0,29,3]
+"classCharacterControllerExampleError.html":[5,0,27]
 };

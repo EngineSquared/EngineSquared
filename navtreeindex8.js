@@ -1,5 +1,9 @@
 var NAVTREEINDEX8 =
 {
+"classExample_1_1App.html#a9c178d0a64b688df1bd3ab677853e18e":[5,0,6,3,3],
+"classExample_1_1NcursesPlugin.html":[3,0,5,7],
+"classExample_1_1NcursesPlugin.html":[5,0,6,7],
+"classExample_1_1NcursesPlugin.html#a2f5be5be68552710eeb2770987fb021a":[3,0,5,7,0],
 "classExample_1_1NcursesPlugin.html#a2f5be5be68552710eeb2770987fb021a":[5,0,6,7,0],
 "classExample_1_1NcursesPlugin.html#a6598715c04da08b69b633b5db2b69f8d":[3,0,5,7,1],
 "classExample_1_1NcursesPlugin.html#a6598715c04da08b69b633b5db2b69f8d":[5,0,6,7,1],
@@ -245,9 +249,5 @@ var NAVTREEINDEX8 =
 "classGraphic_1_1Resource_1_1ARenderPass.html#ad4fe34606a0b06426667bc888d87a847":[5,0,9,1,6,2],
 "classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html":[3,0,7,1,7],
 "classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html":[5,0,9,1,7],
-"classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html#a504608886bc86471d41f3fd4dba6195b":[3,0,7,1,7,4],
-"classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html#a504608886bc86471d41f3fd4dba6195b":[5,0,9,1,7,4],
-"classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html#a6c93b64483f409643446136c90f6f60f":[3,0,7,1,7,1],
-"classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html#a6c93b64483f409643446136c90f6f60f":[5,0,9,1,7,1],
-"classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html#ac248a40b515337df917d9b929f7746b5":[3,0,7,1,7,2]
+"classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html#a504608886bc86471d41f3fd4dba6195b":[3,0,7,1,7,4]
 };

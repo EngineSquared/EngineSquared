@@ -1,5 +1,10 @@
 var NAVTREEINDEX22 =
 {
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#aa71e014d1ee82487c5b32508708e1a3b":[5,0,1,1,8,0,2],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#ab41a5622f18088836a48b028af77a90d":[3,0,1,1,8,0,5],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#ab41a5622f18088836a48b028af77a90d":[5,0,1,1,8,0,5],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#acbf253e1b956a5a3d518ff3299d29686":[3,0,1,1,8,0,3],
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#acbf253e1b956a5a3d518ff3299d29686":[5,0,1,1,8,0,3],
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html":[3,0,1,1,8,1],
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html":[5,0,1,1,8,1],
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a70dbd90ae5bcd87ea17413faf74eef98":[3,0,1,1,8,1,1],
@@ -244,10 +249,5 @@ var NAVTREEINDEX22 =
 "structGraphic_1_1Resource_1_1OutputContainer.html#a4c40223bc335eb652fa7a8c687299bfd":[5,0,9,1,4,0],
 "structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html":[3,0,7,1,14,0],
 "structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html":[5,0,9,1,14,0],
-"structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html#a8fcfd8a9423e0c7bddd52d6dd627e0e0":[3,0,7,1,14,0,0],
-"structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html#a8fcfd8a9423e0c7bddd52d6dd627e0e0":[5,0,9,1,14,0,0],
-"structGraphic_1_1Resource_1_1Surface.html":[3,0,7,1,18],
-"structGraphic_1_1Resource_1_1Surface.html":[5,0,9,1,18],
-"structGraphic_1_1Resource_1_1Surface.html#a16327fd3988de1f27ad4a771f6d4c437":[3,0,7,1,18,3],
-"structGraphic_1_1Resource_1_1Surface.html#a16327fd3988de1f27ad4a771f6d4c437":[5,0,9,1,18,3]
+"structGraphic_1_1Resource_1_1RenderGraph_1_1IDHash.html#a8fcfd8a9423e0c7bddd52d6dd627e0e0":[3,0,7,1,14,0,0]
 };

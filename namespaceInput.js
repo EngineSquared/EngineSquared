@@ -2,7 +2,8 @@ var namespaceInput =
 [
     [ "Resource", "namespaceInput_1_1Resource.html", "namespaceInput_1_1Resource" ],
     [ "System", "namespaceInput_1_1System.html", [
-      [ "BindCallbacksToGLFW", "namespaceInput_1_1System.html#a490e12330f1155581e39ab1aa37bfd5e", null ]
+      [ "BindCallbacksToGLFW", "namespaceInput_1_1System.html#a490e12330f1155581e39ab1aa37bfd5e", null ],
+      [ "EscapeKeyCloseSystem", "namespaceInput_1_1System.html#aeb1ab53218899e7477f0c2d21bb4a1a7", null ]
     ] ],
     [ "Utils", "namespaceInput_1_1Utils.html", [
       [ "JoystickAxes", "namespaceInput_1_1Utils.html#a14fb94220cfae8bce9af0f2e3136b8cf", null ],

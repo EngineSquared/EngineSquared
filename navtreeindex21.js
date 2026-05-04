@@ -1,5 +1,10 @@
 var NAVTREEINDEX21 =
 {
+"namespacewgpu.html#afcd7985ec8539d40505d750ea0830714":[3,0,22,302],
+"namespacewgpu.html#afd790a9299bdc3c6d8e5ab2770ec6f1b":[3,0,22,137],
+"namespacewgpu.html#afe941d52887f48ce1a85b3d99d740990":[3,0,22,318],
+"namespacewgpu.html#affc8717320e312f24fd5f6d4d11a8b53":[3,0,22,370],
+"namespacewgpu.html#affedc46cbd35d7c998959b3eb6c14ab5":[3,0,22,10],
 "object_2src_2component_2AmbientLight_8hpp.html":[6,0,1,1,6,0,0,0],
 "object_2src_2component_2AmbientLight_8hpp_source.html":[6,0,1,1,6,0,0,0],
 "pages.html":[],
@@ -244,10 +249,5 @@ var NAVTREEINDEX21 =
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#aa41d2ac0717e8f3916dd6ce5d94c117d":[5,0,1,1,8,0,0],
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#aa55ed511f344b5d760157be1454cb072":[3,0,1,1,8,0,1],
 "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#aa55ed511f344b5d760157be1454cb072":[5,0,1,1,8,0,1],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#aa71e014d1ee82487c5b32508708e1a3b":[3,0,1,1,8,0,2],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#aa71e014d1ee82487c5b32508708e1a3b":[5,0,1,1,8,0,2],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#ab41a5622f18088836a48b028af77a90d":[3,0,1,1,8,0,5],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#ab41a5622f18088836a48b028af77a90d":[5,0,1,1,8,0,5],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#acbf253e1b956a5a3d518ff3299d29686":[3,0,1,1,8,0,3],
-"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#acbf253e1b956a5a3d518ff3299d29686":[5,0,1,1,8,0,3]
+"structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html#aa71e014d1ee82487c5b32508708e1a3b":[3,0,1,1,8,0,2]
 };

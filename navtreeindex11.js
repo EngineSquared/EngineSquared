@@ -1,5 +1,9 @@
 var NAVTREEINDEX11 =
 {
+"classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#a8a44a179406f4918a518160fcee2ed36":[5,0,9,2,9,3],
+"classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#aa8985b703d6a435e448c03dc62d224aa":[3,0,7,3,9,4],
+"classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#aa8985b703d6a435e448c03dc62d224aa":[5,0,9,2,9,4],
+"classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#abbb5baa2f64398e445551b444ca02b76":[3,0,7,3,9,2],
 "classGraphic_1_1Utils_1_1SamplerBindGroupLayoutEntry.html#abbb5baa2f64398e445551b444ca02b76":[5,0,9,2,9,2],
 "classGraphic_1_1Utils_1_1TextureBindGroupLayoutEntry.html":[3,0,7,3,10],
 "classGraphic_1_1Utils_1_1TextureBindGroupLayoutEntry.html":[5,0,9,2,10],
@@ -245,9 +249,5 @@ var NAVTREEINDEX11 =
 "classObject_1_1Resource_1_1ResourceManager.html#a1f41534d3c560548b8acec4342a880a1":[5,0,12,2,0,4],
 "classObject_1_1Resource_1_1ResourceManager.html#a3107dd8a91e1c16f87f51659faa99751":[3,0,12,2,0,8],
 "classObject_1_1Resource_1_1ResourceManager.html#a3107dd8a91e1c16f87f51659faa99751":[5,0,12,2,0,8],
-"classObject_1_1Resource_1_1ResourceManager.html#a3ad2089bea25b1e874a7ddd3d85c1b34":[3,0,12,2,0,17],
-"classObject_1_1Resource_1_1ResourceManager.html#a3ad2089bea25b1e874a7ddd3d85c1b34":[5,0,12,2,0,17],
-"classObject_1_1Resource_1_1ResourceManager.html#a4dab20c304b93a24c930b9a776ef9e8b":[3,0,12,2,0,2],
-"classObject_1_1Resource_1_1ResourceManager.html#a4dab20c304b93a24c930b9a776ef9e8b":[5,0,12,2,0,2],
-"classObject_1_1Resource_1_1ResourceManager.html#a51625c3c859e8e162c28508b8f6286be":[3,0,12,2,0,20]
+"classObject_1_1Resource_1_1ResourceManager.html#a3ad2089bea25b1e874a7ddd3d85c1b34":[3,0,12,2,0,17]
 };
