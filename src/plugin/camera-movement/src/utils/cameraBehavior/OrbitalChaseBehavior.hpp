@@ -1,7 +1,5 @@
 #pragma once
 
-// TODO: Put this class inside E2
-
 #include <algorithm>
 #include <cmath>
 
