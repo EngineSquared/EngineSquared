@@ -1,5 +1,5 @@
 #include "core/Core.hpp"
-#include "utils/DontMoveBehavior.hpp"
+#include "utils/cameraBehavior/DontMoveBehavior.hpp"
 
 namespace CameraMovement::System {
 
