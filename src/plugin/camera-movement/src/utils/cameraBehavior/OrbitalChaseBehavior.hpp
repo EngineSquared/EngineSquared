@@ -48,9 +48,6 @@ class OrbitalChaseBehavior : public CameraMovement::Utils::ICameraBehavior {
 
     ~OrbitalChaseBehavior() override
     {
-        if (!_core)
-            return;
-
         try
         {
             if (_core->HasResource<Input::Resource::InputManager>())
