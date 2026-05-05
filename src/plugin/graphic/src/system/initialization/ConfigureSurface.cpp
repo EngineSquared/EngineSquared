@@ -13,11 +13,13 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
 
     auto &context = core.GetResource<Resource::Context>();
     const auto &window = core.GetResource<Window::Resource::Window>();
-    const auto surfaceSize = window.GetSize();
+    // const auto surfaceSize = window.GetSize();
+    int frameBufferSizeX, frameBufferSizeY;
+    glfwGetFramebufferSize(window.GetGLFWWindow(), &frameBufferSizeX, &frameBufferSizeY);
 
     wgpu::SurfaceConfiguration config(wgpu::Default);
-    config.width = surfaceSize.x;
-    config.height = surfaceSize.y;
+    config.width = frameBufferSizeX;
+    config.height = frameBufferSizeY;
 
     if (config.width == 0)
         config.width = 1;
