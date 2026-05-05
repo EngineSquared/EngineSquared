@@ -295,6 +295,8 @@ class Texture {
         return Resource::TextureView(_webgpuTexture.createView(descriptor));
     }
 
+    wgpu::TextureFormat GetFormat() { return _webgpuTexture.getFormat(); }
+
     void ReleaseOwnership() { _ownsResources = false; }
 
     void TakeOwnership() { _ownsResources = true; }
