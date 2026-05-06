@@ -189,12 +189,13 @@ int main() {
 - 👮‍♀️[Code of conduct](https://github.com/EngineSquared/EngineSquared/blob/main/CODE_OF_CONDUCT.md): How you should behave while interacting in this community.
 - 🧪 Run the test suite: `xmake test -y`
 - 🗺️ [Roadmap](https://github.com/orgs/EngineSquared/projects/4/views/1): Where the project is going.
+- 👥 [Discord](https://discord.gg/QM4faSYZqQ): If you want to join the community.
 
 ---
 
 ## Interested ?
 
-You can start to discover the engine through contribute to it through looking at [good first issues](https://github.com/EngineSquared/EngineSquared/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-first-issue) and checking [how to contribute](https://github.com/EngineSquared/EngineSquared/wiki/Contributing)
+You can start to discover the engine through contribute to it through looking at [good first issues](https://github.com/EngineSquared/EngineSquared/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-first-issue) and checking [how to contribute](https://github.com/EngineSquared/EngineSquared/wiki/Contributing). Don't hesitate to join the [Discord](https://discord.gg/QM4faSYZqQ) too.
 
 ---
 
