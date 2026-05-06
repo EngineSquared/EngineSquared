@@ -27,9 +27,13 @@ class OrbitalChaseBehavior : public CameraMovement::Utils::ICameraBehavior {
             Log::Warning("InputManager resource not found in core. OrbitalChaseBehavior will not function properly.");
             return;
         }
+        if (!core.HasResource<CameraMovement::Resource::CameraManager>())
+        {
+            Log::Warning("CameraManager resource not found in core. OrbitalChaseBehavior will not function properly.");
+            return;
+        }
 
         auto &inputManager = core.GetResource<Input::Resource::InputManager>();
-
         _mouseButtonCallbackId =
             inputManager.RegisterMouseButtonCallback([this](Engine::Core &core, int button, int action, int mods) {
                 HandleMouseButton(core, button, action, mods);
