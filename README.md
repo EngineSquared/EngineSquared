@@ -195,7 +195,7 @@ int main() {
 
 ## Interested ?
 
-You can start to discover the engine through contribute to it through looking at [good first issues](https://github.com/EngineSquared/EngineSquared/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-first-issue) and checking [how to contribute](https://github.com/EngineSquared/EngineSquared/wiki/Contributing). Don't hesitate to join the [Discord](https://discord.gg/QM4faSYZqQ) too.
+You can start discovering the engine by contributing to it. Take a look at [good first issues](https://github.com/EngineSquared/EngineSquared/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-first-issue) and check [how to contribute](https://github.com/EngineSquared/EngineSquared/wiki/Contributing). Don't hesitate to join the [Discord](https://discord.gg/QM4faSYZqQ) too.
 
 ---
 
