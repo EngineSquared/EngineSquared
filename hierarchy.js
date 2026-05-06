@@ -108,6 +108,7 @@ var hierarchy =
     [ "Object::Helper::CreateRopeInfo", "structObject_1_1Helper_1_1CreateRopeInfo.html", null ],
     [ "Physics::System::CreateSettingsResult", "structPhysics_1_1System_1_1CreateSettingsResult.html", null ],
     [ "Object::Helper::CreateSphereInfo", "structObject_1_1Helper_1_1CreateSphereInfo.html", null ],
+    [ "Example::CurrentCameraBehavior", "structExample_1_1CurrentCameraBehavior.html", null ],
     [ "Physics::System::DeduplicatedMesh", "structPhysics_1_1System_1_1DeduplicatedMesh.html", null ],
     [ "Physics::Component::DefaultCollider", "structPhysics_1_1Component_1_1DefaultCollider.html", null ],
     [ "wgpu::DefaultFlag", "structwgpu_1_1DefaultFlag.html", null ],
@@ -149,6 +150,7 @@ var hierarchy =
         [ "CharacterControllerExampleError", "classCharacterControllerExampleError.html", null ],
         [ "Engine::Exception::MissingResourceError", "classEngine_1_1Exception_1_1MissingResourceError.html", null ],
         [ "Engine::Exception::MissingSchedulerError", "classEngine_1_1Exception_1_1MissingSchedulerError.html", null ],
+        [ "Example::GraphicExampleError", "classExample_1_1GraphicExampleError.html", null ],
         [ "Graphic::Exception::AdapterCreationError", "classGraphic_1_1Exception_1_1AdapterCreationError.html", null ],
         [ "Graphic::Exception::BindGroupCreationError", "classGraphic_1_1Exception_1_1BindGroupCreationError.html", null ],
         [ "Graphic::Exception::CapabilitiesRequestError", "classGraphic_1_1Exception_1_1CapabilitiesRequestError.html", null ],
@@ -227,6 +229,7 @@ var hierarchy =
     [ "CameraMovement::Utils::ICameraBehavior", "classCameraMovement_1_1Utils_1_1ICameraBehavior.html", [
       [ "CameraMovement::Utils::DefaultBehavior", "classCameraMovement_1_1Utils_1_1DefaultBehavior.html", null ],
       [ "CameraMovement::Utils::DontMoveBehavior", "classCameraMovement_1_1Utils_1_1DontMoveBehavior.html", null ],
+      [ "CameraMovement::Utils::OrbitalChaseBehavior", "classCameraMovement_1_1Utils_1_1OrbitalChaseBehavior.html", null ],
       [ "ChaseCameraBehavior", "classChaseCameraBehavior.html", null ],
       [ "ThirdPlayerCameraBehavior", "classThirdPlayerCameraBehavior.html", null ]
     ] ],

@@ -8,7 +8,8 @@ var annotated_dup =
       [ "Utils", "namespaceCameraMovement_1_1Utils.html", [
         [ "ICameraBehavior", "classCameraMovement_1_1Utils_1_1ICameraBehavior.html", "classCameraMovement_1_1Utils_1_1ICameraBehavior" ],
         [ "DefaultBehavior", "classCameraMovement_1_1Utils_1_1DefaultBehavior.html", "classCameraMovement_1_1Utils_1_1DefaultBehavior" ],
-        [ "DontMoveBehavior", "classCameraMovement_1_1Utils_1_1DontMoveBehavior.html", "classCameraMovement_1_1Utils_1_1DontMoveBehavior" ]
+        [ "DontMoveBehavior", "classCameraMovement_1_1Utils_1_1DontMoveBehavior.html", "classCameraMovement_1_1Utils_1_1DontMoveBehavior" ],
+        [ "OrbitalChaseBehavior", "classCameraMovement_1_1Utils_1_1OrbitalChaseBehavior.html", "classCameraMovement_1_1Utils_1_1OrbitalChaseBehavior" ]
       ] ],
       [ "CameraMovementError", "classCameraMovement_1_1CameraMovementError.html", null ],
       [ "Plugin", "classCameraMovement_1_1Plugin.html", "classCameraMovement_1_1Plugin" ]
@@ -103,6 +104,8 @@ var annotated_dup =
         [ "WorkHoursUpdate", "classExample_1_1System_1_1WorkHoursUpdate.html", "classExample_1_1System_1_1WorkHoursUpdate" ]
       ] ],
       [ "App", "classExample_1_1App.html", "classExample_1_1App" ],
+      [ "CurrentCameraBehavior", "structExample_1_1CurrentCameraBehavior.html", "structExample_1_1CurrentCameraBehavior" ],
+      [ "GraphicExampleError", "classExample_1_1GraphicExampleError.html", null ],
       [ "PreRender", "classExample_1_1PreRender.html", null ],
       [ "Render", "classExample_1_1Render.html", null ],
       [ "PostRender", "classExample_1_1PostRender.html", null ],

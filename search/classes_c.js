@@ -5,6 +5,7 @@ var searchData=
   ['objloader_2',['OBJLoader',['../classObject_1_1OBJLoader.html',1,'Object']]],
   ['objloadererror_3',['OBJLoaderError',['../classObject_1_1OBJLoaderError.html',1,'Object']]],
   ['onresize_4',['OnResize',['../structWindow_1_1Event_1_1OnResize.html',1,'Window::Event']]],
-  ['outputcontainer_5',['OutputContainer',['../structGraphic_1_1Resource_1_1OutputContainer.html',1,'Graphic::Resource']]],
-  ['overlaystate_6',['OverlayState',['../structOverlayState.html',1,'']]]
+  ['orbitalchasebehavior_5',['OrbitalChaseBehavior',['../classCameraMovement_1_1Utils_1_1OrbitalChaseBehavior.html',1,'CameraMovement::Utils']]],
+  ['outputcontainer_6',['OutputContainer',['../structGraphic_1_1Resource_1_1OutputContainer.html',1,'Graphic::Resource']]],
+  ['overlaystate_7',['OverlayState',['../structOverlayState.html',1,'']]]
 ];

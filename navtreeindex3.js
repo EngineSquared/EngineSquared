@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"ReleaseTextureView_8hpp_source.html":[6,0,1,1,3,0,3,4,13],
+"ReleaseTexture_8cpp.html":[6,0,1,1,3,0,3,4,10],
 "ReleaseTexture_8hpp.html":[6,0,1,1,3,0,3,4,11],
 "ReleaseTexture_8hpp_source.html":[6,0,1,1,3,0,3,4,11],
 "RenderGraphContainer_8hpp.html":[6,0,1,1,3,0,2,14],
@@ -236,8 +238,8 @@ var NAVTREEINDEX3 =
 "Tools_8hpp_source.html":[6,0,1,2,2,0,2],
 "TransformGPUBuffer_8hpp.html":[6,0,1,1,1,1,2,0,8],
 "TransformGPUBuffer_8hpp_source.html":[6,0,1,1,1,1,2,0,8],
-"Transform_8cpp.html":[6,0,0,4,0,4],
-"Transform_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe":[6,0,0,4,0,4,0],
+"Transform_8cpp.html":[6,0,0,5,0,4],
+"Transform_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe":[6,0,0,5,0,4,0],
 "Transform_8hpp.html":[6,0,1,1,6,0,0,6],
 "Transform_8hpp.html#abd75661fe7969e19439052a5f69ba5d1":[6,0,1,1,6,0,0,6,1],
 "Transform_8hpp_source.html":[6,0,1,1,6,0,0,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "UIContext_8hpp_source.html":[6,0,1,1,10,0,2,2],
 "UncapturedDeviceError_8hpp.html":[6,0,1,1,3,0,0,15],
 "UncapturedDeviceError_8hpp_source.html":[6,0,1,1,3,0,0,15],
-"UnknownFileError_8hpp.html":[6,0,1,1,3,0,0,16],
-"UnknownFileError_8hpp_source.html":[6,0,1,1,3,0,0,16],
-"UnknownFormatType_8hpp.html":[6,0,1,1,3,0,0,17]
+"UnknownFileError_8hpp.html":[6,0,1,1,3,0,0,16]
 };

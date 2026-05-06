@@ -11,6 +11,6 @@ var searchData=
   ['gpumesh_8',['GPUMesh',['../structDefaultPipeline_1_1Component_1_1GPUMesh.html',1,'DefaultPipeline::Component']]],
   ['gpupointlight_9',['GPUPointLight',['../structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1GPUPointLight.html',1,'DefaultPipeline::Resource::PointLightsBuffer']]],
   ['gputransform_10',['GPUTransform',['../structDefaultPipeline_1_1Component_1_1GPUTransform.html',1,'DefaultPipeline::Component']]],
-  ['graphicexampleerror_11',['GraphicExampleError',['../classGraphicExampleError.html',1,'']]],
+  ['graphicexampleerror_11',['GraphicExampleError',['../classExample_1_1GraphicExampleError.html',1,'Example::GraphicExampleError'],['../classGraphicExampleError.html',1,'GraphicExampleError']]],
   ['graphicsettings_12',['GraphicSettings',['../classGraphic_1_1Resource_1_1GraphicSettings.html',1,'Graphic::Resource']]]
 ];

@@ -111,6 +111,8 @@ var NAVTREEINDEX2 =
 "OnTransformDestruction_8cpp.html":[6,0,1,1,1,1,3,0,18],
 "OnTransformDestruction_8hpp.html":[6,0,1,1,1,1,3,0,19],
 "OnTransformDestruction_8hpp_source.html":[6,0,1,1,1,1,3,0,19],
+"OrbitalChaseBehavior_8hpp.html":[6,0,1,1,0,0,4,0,2],
+"OrbitalChaseBehavior_8hpp_source.html":[6,0,1,1,0,0,4,0,2],
 "Pendulum-example.html":[7,22],
 "PhysicsManager_8cpp.html":[6,0,1,1,7,1,5,1],
 "PhysicsManager_8hpp.html":[6,0,1,1,7,1,5,2],
@@ -129,8 +131,8 @@ var NAVTREEINDEX2 =
 "PlaneGenerator_8cpp.html":[6,0,1,1,6,0,4,14],
 "PlaneGenerator_8hpp.html":[6,0,1,1,6,0,4,15],
 "PlaneGenerator_8hpp_source.html":[6,0,1,1,6,0,4,15],
-"PlayerVehicle_8hpp.html":[6,0,0,7,0,0,0],
-"PlayerVehicle_8hpp_source.html":[6,0,0,7,0,0,0],
+"PlayerVehicle_8hpp.html":[6,0,0,8,0,0,0],
+"PlayerVehicle_8hpp_source.html":[6,0,0,8,0,0,0],
 "PluginCameraMovement_8cpp.html":[6,0,1,1,0,0,1,0],
 "PluginCameraMovement_8hpp.html":[6,0,1,1,0,0,1,1],
 "PluginCameraMovement_8hpp_source.html":[6,0,1,1,0,0,1,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "ReleaseShader_8hpp.html":[6,0,1,1,3,0,3,4,9],
 "ReleaseShader_8hpp_source.html":[6,0,1,1,3,0,3,4,9],
 "ReleaseTextureView_8cpp.html":[6,0,1,1,3,0,3,4,12],
-"ReleaseTextureView_8hpp.html":[6,0,1,1,3,0,3,4,13],
-"ReleaseTextureView_8hpp_source.html":[6,0,1,1,3,0,3,4,13],
-"ReleaseTexture_8cpp.html":[6,0,1,1,3,0,3,4,10]
+"ReleaseTextureView_8hpp.html":[6,0,1,1,3,0,3,4,13]
 };

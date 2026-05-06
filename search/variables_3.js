@@ -25,6 +25,7 @@ var searchData=
   ['core_22',['core',['../structPhysics_1_1System_1_1ConstraintContext.html#a7ad2a8eb61cee9ea25a84a0c5056a56c',1,'Physics::System::ConstraintContext']]],
   ['count_23',['count',['../structDefaultPipeline_1_1Resource_1_1DirectionalLightsBuffer_1_1GPUDirectionalLights.html#afb9147f824db9ee8a79546ff848098cd',1,'DefaultPipeline::Resource::DirectionalLightsBuffer::GPUDirectionalLights::count'],['../structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html#a70dbd90ae5bcd87ea17413faf74eef98',1,'DefaultPipeline::Resource::PointLightsBuffer::PointLightsData::count'],['../SystemSetTest_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count:&#160;SystemSetTest.cpp']]],
   ['counter_24',['counter',['../structCounterComponent.html#a195b35782c2f538153b7d8f863575827',1,'CounterComponent']]],
-  ['currentgear_25',['currentGear',['../structPhysics_1_1Component_1_1GearboxSettings.html#a23ef4f41f61c0ce9afef6e5dc86bf57e',1,'Physics::Component::GearboxSettings']]],
-  ['cursorposcallbackid_26',['cursorPosCallbackId',['../structRmlui_1_1Resource_1_1UIContext_1_1InputCallbackIds.html#a0afce2b7d354ba8b05b7e30a580875a1',1,'Rmlui::Resource::UIContext::InputCallbackIds']]]
+  ['current_5fbehavior_25',['current_behavior',['../structExample_1_1CurrentCameraBehavior.html#aa966a36720defa3ef5a937d2fd4437b6',1,'Example::CurrentCameraBehavior']]],
+  ['currentgear_26',['currentGear',['../structPhysics_1_1Component_1_1GearboxSettings.html#a23ef4f41f61c0ce9afef6e5dc86bf57e',1,'Physics::Component::GearboxSettings']]],
+  ['cursorposcallbackid_27',['cursorPosCallbackId',['../structRmlui_1_1Resource_1_1UIContext_1_1InputCallbackIds.html#a0afce2b7d354ba8b05b7e30a580875a1',1,'Rmlui::Resource::UIContext::InputCallbackIds']]]
 ];
