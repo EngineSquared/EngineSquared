@@ -86,10 +86,10 @@ xmake build -y
 
 ## Run a minimal example
 
-Build and run the `basic_core_usage` example to confirm everything works:
+Build and run the `BasicCoreUsage` example to confirm everything works:
 
 ```bash
-xmake f --basic_core_usage=y -y
+xmake f --BasicCoreUsage=y -y
 xmake run BasicCoreUsage
 ```
 
@@ -184,17 +184,21 @@ int main() {
 
 - 📚 [Full documentation & wiki](https://github.com/EngineSquared/EngineSquared/wiki): Everything you need to know to understand the project.
 - 💻 [Technical documentation](https://enginesquared.github.io/EngineSquared/):  If you want to get in depth in the engine.
-- 🧩 [All examples](https://github.com/EngineSquared/EngineSquared/tree/main/examples): Explore graphics, physics, input, sound, and more.
+- 🧩 All examples:
+  - At the [root of the project](https://github.com/EngineSquared/EngineSquared/tree/main/examples)
+  - In the [core examples folder](https://github.com/EngineSquared/EngineSquared/tree/main/src/engine/examples/BasicCoreUsage)
+  - In plugin examples such as [default-pipeline](https://github.com/EngineSquared/EngineSquared/tree/main/src/plugin/default-pipeline/examples) or [event](https://github.com/EngineSquared/EngineSquared/blob/main/src/plugin/event/examples/EventUsage/src/main.cpp)
 - 🤝 [Contributing guide](https://github.com/EngineSquared/EngineSquared/wiki/Contributing): How to contribute to the project.
 - 👮‍♀️[Code of conduct](https://github.com/EngineSquared/EngineSquared/blob/main/CODE_OF_CONDUCT.md): How you should behave while interacting in this community.
 - 🧪 Run the test suite: `xmake test -y`
 - 🗺️ [Roadmap](https://github.com/orgs/EngineSquared/projects/4/views/1): Where the project is going.
+- 👥 [Discord](https://discord.gg/QM4faSYZqQ): If you want to join the community.
 
 ---
 
 ## Interested ?
 
-You can start to discover the engine through contribute to it through looking at [good first issues](https://github.com/EngineSquared/EngineSquared/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-first-issue) and checking [how to contribute](https://github.com/EngineSquared/EngineSquared/wiki/Contributing)
+You can start discovering the engine by contributing to it. Take a look at [good first issues](https://github.com/EngineSquared/EngineSquared/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-first-issue) and check [how to contribute](https://github.com/EngineSquared/EngineSquared/wiki/Contributing). Don't hesitate to join the [Discord](https://discord.gg/QM4faSYZqQ) too.
 
 ---
 
