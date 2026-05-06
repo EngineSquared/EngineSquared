@@ -86,10 +86,10 @@ xmake build -y
 
 ## Run a minimal example
 
-Build and run the `basic_core_usage` example to confirm everything works:
+Build and run the `BasicCoreUsage` example to confirm everything works:
 
 ```bash
-xmake f --basic_core_usage=y -y
+xmake f --BasicCoreUsage=y -y
 xmake run BasicCoreUsage
 ```
 
@@ -184,7 +184,7 @@ int main() {
 
 - 📚 [Full documentation & wiki](https://github.com/EngineSquared/EngineSquared/wiki): Everything you need to know to understand the project.
 - 💻 [Technical documentation](https://enginesquared.github.io/EngineSquared/):  If you want to get in depth in the engine.
-- 🧩 [All examples](https://github.com/EngineSquared/EngineSquared/tree/main/examples): Explore graphics, physics, input, sound, and more.
+- 🧩 All examples: Some examples can be found at the [root of the project](https://github.com/EngineSquared/EngineSquared/tree/main/examples) or in examples folder of core or each plugins like [here](https://github.com/EngineSquared/EngineSquared/tree/main/src/engine/examples/BasicCoreUsage), [here](https://github.com/EngineSquared/EngineSquared/tree/main/src/plugin/default-pipeline/examples) or [here](https://github.com/EngineSquared/EngineSquared/blob/main/src/plugin/event/examples/EventUsage/src/main.cpp).
 - 🤝 [Contributing guide](https://github.com/EngineSquared/EngineSquared/wiki/Contributing): How to contribute to the project.
 - 👮‍♀️[Code of conduct](https://github.com/EngineSquared/EngineSquared/blob/main/CODE_OF_CONDUCT.md): How you should behave while interacting in this community.
 - 🧪 Run the test suite: `xmake test -y`
