@@ -90,9 +90,15 @@ class OrbitalChaseBehavior : public CameraMovement::Utils::ICameraBehavior {
 
         if (!_target.IsAlive())
         {
-            Log::Warning("Camera target entity is not alive. OrbitalChaseBehavior will not update.");
+            if (!_hasWarnedInvalidTarget)
+            {
+                Log::Warning("Camera target entity is not alive. OrbitalChaseBehavior will not update.");
+                _hasWarnedInvalidTarget = true;
+            }
             return;
         }
+        _hasWarnedInvalidTarget = false;
+
         manager.SetWasCursorMasked(window.IsCursorMasked());
 
         this->UpdatePosition(cameraTransform);
@@ -109,11 +115,25 @@ class OrbitalChaseBehavior : public CameraMovement::Utils::ICameraBehavior {
 
     float GetMinDistance() const { return _minDistance; }
 
-    void SetMinDistance(float newMinDistance) { _minDistance = newMinDistance; }
+    void SetMinDistance(float newMinDistance)
+    {
+        _minDistance = newMinDistance;
+        if (_minDistance > _maxDistance)
+        {
+            Log::Warning("MinDistance of OrbitalChaseBehavior is greater than MaxDistance");
+        }
+    }
 
     float GetMaxDistance() const { return _maxDistance; }
 
-    void SetMaxDistance(float newMaxDistance) { _maxDistance = newMaxDistance; }
+    void SetMaxDistance(float newMaxDistance)
+    {
+        _maxDistance = newMaxDistance;
+        if (_minDistance > _maxDistance)
+        {
+            Log::Warning("MaxDistance of OrbitalChaseBehavior is less than MinDistance");
+        }
+    }
 
   private:
     void UpdatePosition(Object::Component::Transform &cameraTransform)
@@ -200,5 +220,7 @@ class OrbitalChaseBehavior : public CameraMovement::Utils::ICameraBehavior {
     FunctionUtils::FunctionID _mouseButtonCallbackId = 0;
     FunctionUtils::FunctionID _cursorPosCallbackId = 0;
     FunctionUtils::FunctionID _scrollCallbackId = 0;
+
+    bool _hasWarnedInvalidTarget = false;
 };
 } // namespace CameraMovement::Utils
