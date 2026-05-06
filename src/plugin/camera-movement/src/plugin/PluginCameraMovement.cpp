@@ -8,7 +8,7 @@
 #include "scheduler/Startup.hpp"
 #include "system/CameraControlSystem.hpp"
 #include "system/ResetCameraBehavior.hpp"
-#include "utils/DefaultBehavior.hpp"
+#include "utils/cameraBehavior/DefaultBehavior.hpp"
 #include <memory>
 
 namespace CameraMovement {
