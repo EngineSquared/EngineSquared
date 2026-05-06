@@ -184,7 +184,10 @@ int main() {
 
 - 📚 [Full documentation & wiki](https://github.com/EngineSquared/EngineSquared/wiki): Everything you need to know to understand the project.
 - 💻 [Technical documentation](https://enginesquared.github.io/EngineSquared/):  If you want to get in depth in the engine.
-- 🧩 All examples: Some examples can be found at the [root of the project](https://github.com/EngineSquared/EngineSquared/tree/main/examples) or in examples folder of core or each plugins like [here](https://github.com/EngineSquared/EngineSquared/tree/main/src/engine/examples/BasicCoreUsage), [here](https://github.com/EngineSquared/EngineSquared/tree/main/src/plugin/default-pipeline/examples) or [here](https://github.com/EngineSquared/EngineSquared/blob/main/src/plugin/event/examples/EventUsage/src/main.cpp).
+- 🧩 All examples:
+  - At the [root of the project](https://github.com/EngineSquared/EngineSquared/tree/main/examples)
+  - In the [core examples folder](https://github.com/EngineSquared/EngineSquared/tree/main/src/engine/examples/BasicCoreUsage)
+  - In plugin examples such as [default-pipeline](https://github.com/EngineSquared/EngineSquared/tree/main/src/plugin/default-pipeline/examples) or [event](https://github.com/EngineSquared/EngineSquared/blob/main/src/plugin/event/examples/EventUsage/src/main.cpp)
 - 🤝 [Contributing guide](https://github.com/EngineSquared/EngineSquared/wiki/Contributing): How to contribute to the project.
 - 👮‍♀️[Code of conduct](https://github.com/EngineSquared/EngineSquared/blob/main/CODE_OF_CONDUCT.md): How you should behave while interacting in this community.
 - 🧪 Run the test suite: `xmake test -y`
