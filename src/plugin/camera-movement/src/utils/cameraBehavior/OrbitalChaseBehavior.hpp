@@ -69,9 +69,13 @@ class OrbitalChaseBehavior : public CameraMovement::Utils::ICameraBehavior {
         }
         catch (const std::exception &e)
         {
-            Log::Error(fmt::format(
-                "Failed to unregister camera behavior callbacks: {}",
-                e.what())); // TODO: fix namming of log function (Warn rather than Warning or Err rather than Error)
+            try
+            {
+                Log::Error(fmt::format("Failed to unregister camera behavior callbacks: {}", e.what()));
+            }
+            catch (const std::exception &logError)
+            {
+            }
         }
     }
 
