@@ -47,7 +47,7 @@ struct CallbackData {
  * @throws Exception::UnsupportedTextureFormatError If the texture format in CallbackData is not supported for
  * retrieval.
  */
-static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView message, void *userdata1, void *userdata2)
+static void TextureRetrieveCallback(WGPUMapAsyncStatus status, WGPUStringView message, void *userdata1, void *)
 {
     auto data = static_cast<CallbackData *>(userdata1);
     if (status != wgpu::MapAsyncStatus::Success)
