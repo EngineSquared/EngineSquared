@@ -22,3 +22,6 @@
 
 docs/doxygen/output
 docs/doxygen/doxygen-awesome-css
+
+# dynamic library
+libs.json

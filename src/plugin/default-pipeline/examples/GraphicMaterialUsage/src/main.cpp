@@ -26,7 +26,7 @@ void Setup(Engine::Core &core)
 
     // Custom Material from file
     Object::Component::Material materialWithTexture;
-    materialWithTexture.diffuseTexName = "src/plugin/default-pipeline/examples/GraphicMaterialUsage/asset/texture.png";
+    materialWithTexture.diffuseTexName = "./asset/texture.png";
     auto cube1 = core.CreateEntity();
     cube1.AddComponent<Object::Component::Transform>();
     cube1.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());

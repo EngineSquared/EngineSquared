@@ -7,7 +7,7 @@ target("EngineSquaredCore")
     set_kind("static")
     set_languages("cxx20")
 
-    add_packages("entt", "spdlog", "fmt")
+    add_packages("entt", "spdlog", "fmt", {public = true})
     add_deps("UtilsLog")
     add_deps("UtilsFunctionContainer")
 
