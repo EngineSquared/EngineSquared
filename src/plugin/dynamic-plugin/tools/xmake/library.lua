@@ -8,12 +8,9 @@ rule("library")
         local target_name = target:name()
         local target_file_path = path(target:targetfile()):absolute():rawstr()
 
-        print(target_name)
-        print(target_file_path)
-
         import("core.base.json")
 
-        local libs_db_file_path = "libs.json"
+        local libs_db_file_path = path.join(target:scriptdir(), "libs.json")
 
         if (not os.exists(libs_db_file_path)) then
             json.savefile(libs_db_file_path, {})

@@ -1,6 +1,6 @@
 includes("../../engine/xmake.lua")
 
-includes("./tests/dynamicPlugins/casual/xmake.lua")
+includes("./tests/dynamicPlugins/*/xmake.lua")
 
 local PLUGIN_NAME = "PluginDynamicPlugin"
 local PLUGIN_DIR = os.scriptdir()
@@ -10,6 +10,7 @@ target(PLUGIN_NAME)
     set_group(PLUGINS_GROUP_NAME)
 
     add_deps("EngineSquaredCore")
+    add_packages("nlohmann_json", {public = true})
 
     add_files("src/**.cpp")
 
