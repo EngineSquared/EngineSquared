@@ -2,6 +2,7 @@
 #include "exception/SurfaceCreationError.hpp"
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/Instance.hpp"
 #include "resource/Surface.hpp"
 #include "resource/Window.hpp"
 #include <glfw3webgpu.h>
@@ -10,13 +11,13 @@ void Graphic::System::CreateSurface(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
     auto &graphicSettings = core.GetResource<Resource::GraphicSettings>();
-    auto &instance = context.instance;
 
-    if (!instance.has_value())
+    if (!core.HasResource<Resource::Instance>())
     {
         Log::Error("Graphic::System::CreateSurface: context.instance has no value");
         return;
     }
+    auto &instance = core.GetResource<Resource::Instance>();
     wgpu::Surface surface = nullptr;
 
     if (graphicSettings.GetWindowSystem() == Resource::WindowSystem::None)
@@ -24,7 +25,7 @@ void Graphic::System::CreateSurface(Engine::Core &core)
     else if (graphicSettings.GetWindowSystem() == Resource::WindowSystem::GLFW)
     {
         auto glfwWindow = core.GetResource<Window::Resource::Window>().GetGLFWWindow();
-        surface = glfwCreateWindowWGPUSurface(instance.value(), glfwWindow);
+        surface = glfwCreateWindowWGPUSurface(*instance, glfwWindow);
     }
     else
     {

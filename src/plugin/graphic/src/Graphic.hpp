@@ -7,6 +7,7 @@
 #include "resource/ASingleExecutionRenderPass.hpp"
 #include "resource/Adapter.hpp"
 #include "resource/BindGroup.hpp"
+#include "resource/Instance.hpp"
 #include "resource/BindGroupManager.hpp"
 #include "resource/Context.hpp"
 #include "resource/DeviceContext.hpp"
