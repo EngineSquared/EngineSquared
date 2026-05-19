@@ -191,6 +191,8 @@ class Core {
     /// @tparam TPlugins Types of the plugins to add. See Engine::CPlugin.
     template <CPlugin... TPlugins> void AddPlugins();
 
+    void AddPlugin(std::string name, std::unique_ptr<IPlugin> plugin);
+
     /// @brief Checks if a plugin is present.
     /// @tparam TPlugin The type of the plugin to check for. See Engine::CPlugin.
     /// @return true if the plugin is present, false otherwise.
@@ -236,6 +238,15 @@ class Core {
     /// @brief The running state of the core. It is true if the core is running, false otherwise. It is used to stop the
     ///     core loop.
     bool _running = false;
+
+    struct TransparentHash {
+        using is_transparent = void;
+        std::size_t operator()(const std::string &str) const noexcept { return std::hash<std::string>{}(str); }
+        std::size_t operator()(std::string_view str) const noexcept { return std::hash<std::string_view>{}(str); }
+        std::size_t operator()(const char *str) const noexcept { return std::hash<std::string_view>{}(str); }
+    };
+    /// @brief The named plugins added to the core
+    std::unordered_map<std::string, std::unique_ptr<IPlugin>, TransparentHash, std::equal_to<>> _namedPlugins;
 };
 } // namespace Engine
 

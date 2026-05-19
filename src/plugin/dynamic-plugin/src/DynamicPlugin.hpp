@@ -1,7 +1,8 @@
 #pragma once
 
 // Resource
-#include "resource/LibraryMediator.hpp"
+#include "resource/DynamicLibraryContainer.hpp"
+#include "resource/RegistryMediator.hpp"
 
 // Plugin
 #include "plugin/PluginDynamicPlugin.hpp"

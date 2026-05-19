@@ -6,18 +6,18 @@
 #    define DYNAMIC_TEST_EXPORT extern "C"
 #endif
 
-class Plugin : public Engine::APlugin {
+class CasualPlugin : public Engine::APlugin {
   public:
-    explicit Plugin(Engine::Core &core)
-        : Engine::APlugin(core) {
-              // empty
-          };
-    ~Plugin() = default;
+    using Engine::APlugin::APlugin;
+    ~CasualPlugin() = default;
 
-    void Bind() final
+    void Bind(void) override
     {
         RegisterSystems<Engine::Scheduler::Update>([](Engine::Core &) { Log::Info("Hello world!"); });
     }
+
+  private:
+    entt::hashed_string _dynamicLibraryId;
 };
 
-DYNAMIC_TEST_EXPORT Engine::APlugin *CreatePlugin(Engine::Core &core) { return new Plugin(core); }
+DYNAMIC_TEST_EXPORT Engine::APlugin *CreatePlugin(Engine::Core *core) { return new CasualPlugin(*core); }

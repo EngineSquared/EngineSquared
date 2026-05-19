@@ -11,6 +11,7 @@ rule("library")
         import("core.base.json")
 
         local libs_db_file_path = path.join(target:scriptdir(), "libs.json")
+        -- Check if we can put options in rule to put the libs file into a default location
 
         if (not os.exists(libs_db_file_path)) then
             json.savefile(libs_db_file_path, {})

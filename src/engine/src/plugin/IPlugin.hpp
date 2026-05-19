@@ -13,5 +13,7 @@ class IPlugin {
     /// @see Engine::Core
     /// @see Engine::APlugin
     virtual void Bind(void) = 0;
+
+    virtual void Unbind(void) = 0;
 };
 } // namespace Engine

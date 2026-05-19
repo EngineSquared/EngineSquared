@@ -3,7 +3,10 @@
 namespace Engine {
 template <CScheduler TScheduler, typename... Systems> decltype(auto) APlugin::RegisterSystems(Systems... systems)
 {
-    return _core.RegisterSystem<TScheduler>(systems...);
+    auto systemIds = _core.RegisterSystem<TScheduler>(systems...);
+
+    std::apply([this](auto &&...args) { (this->_systemIds.emplace(args), ...); }, systemIds);
+    return systemIds;
 }
 
 template <typename TResource> TResource &APlugin::RegisterResource(TResource &&resource)

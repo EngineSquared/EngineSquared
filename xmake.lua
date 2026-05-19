@@ -24,6 +24,7 @@ add_requires(
     "wgpu-native ^24.0.0",
     "glfw3webgpu v1.3.0-alpha",
     "nlohmann_json v3.12.0",
+    "dylib v3.0.1",
     { debug = is_mode("debug") }
 )
 add_requires("joltphysics v5.4.0", { configs = { symbols = is_mode("debug") }, debug = is_mode("debug") })

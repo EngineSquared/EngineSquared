@@ -13,8 +13,6 @@ class APlugin : public IPlugin {
     /// @param core Reference to the Core, which is used to register systems and resources in the Bind method.
     explicit APlugin(Core &core);
 
-    /// @copydoc Engine::IPlugin::Bind
-    virtual void Bind(void) = 0;
 
     /// @brief Register systems to a scheduler.
     /// @tparam TScheduler The type of the scheduler to register the systems to.
@@ -53,6 +51,8 @@ class APlugin : public IPlugin {
     /// @see Engine::Core
     Core &GetCore();
 
+    virtual void Unbind(void) override {};
+
   private:
     /// @brief Add a plugin to the core if it is not already added.
     /// @tparam TPlugin The type of the plugin to add.
@@ -63,6 +63,8 @@ class APlugin : public IPlugin {
 
     /// @brief Reference to the core, which is used to register systems and resources in the Bind method.
     Core &_core;
+
+    std::set<FunctionUtils::FunctionID> _systemIds;
 };
 } // namespace Engine
 

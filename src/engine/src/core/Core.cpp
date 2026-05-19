@@ -106,3 +106,13 @@ void Engine::Core::SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolic
 {
     _schedulers.SetErrorPolicyForAllSchedulers(policy);
 }
+
+void Engine::Core::AddPlugin(std::string name, std::unique_ptr<IPlugin> plugin)
+{
+    if (this->_namedPlugins.contains(name))
+    {
+        Log::Warning(fmt::format("Plugin {} already added", name));
+    }
+    this->_namedPlugins.try_emplace(name, std::move(plugin));
+    this->_namedPlugins[name]->Bind();
+}
