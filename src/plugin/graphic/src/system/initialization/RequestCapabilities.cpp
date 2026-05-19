@@ -10,9 +10,11 @@ void RequestCapabilities(Engine::Core &core)
     auto &context = core.GetResource<Resource::Context>();
     auto &adapter = core.GetResource<Resource::Adapter>();
 
-    if (context.surface == std::nullopt)
+    if (!core.HasResource<Resource::Surface>())
         return;
-    if (context.surface->updateCapabilities(*adapter) == wgpu::Status::Error)
+    auto &surface = core.GetResource<Resource::Surface>();
+
+    if (surface.updateCapabilities(*adapter) == wgpu::Status::Error)
     {
         throw Exception::CapabilitiesRequestError("Failed to get surface capabilities");
     }

@@ -7,10 +7,16 @@ void Graphic::System::Present(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
 
-    if (!context.surface.has_value() || !context.surface->value.has_value() || !context.surface->configured)
+    if (!core.HasResource<Resource::Surface>())
+    {
+        return;
+    }
+    auto &surface = core.GetResource<Resource::Surface>();
+
+    if (!surface.value.has_value() || !surface.configured)
         return;
 
-    context.surface->value->present();
+    surface.value->present();
     {
         auto &textureContainer = core.GetResource<Resource::TextureContainer>();
         if (textureContainer.Contains(Utils::END_RENDER_TEXTURE_ID))

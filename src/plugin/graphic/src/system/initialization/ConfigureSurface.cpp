@@ -25,15 +25,18 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
     if (config.height == 0)
         config.height = 1;
 
+    if (core.HasResource<Resource::Surface>())
+        return;
+    auto &surface = core.GetResource<Resource::Surface>();
+
     auto &optDevice = context.deviceContext.GetDevice();
-    if (!context.surface.has_value() || !context.surface.value().capabilities.has_value() || !optDevice.has_value() ||
-        !context.surface.value().value.has_value())
+    if (!surface.capabilities.has_value() || !optDevice.has_value() || !surface.value.has_value())
     {
         return;
     }
 
     config.usage = wgpu::TextureUsage::RenderAttachment;
-    config.format = context.surface->capabilities->formats[0];
+    config.format = surface.capabilities->formats[0];
     config.device = optDevice.value();
     config.presentMode = wgpu::PresentMode::Fifo;
     config.alphaMode = wgpu::CompositeAlphaMode::Auto;
@@ -49,6 +52,6 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
         }
         info.freeMembers();
     }
-    context.surface->value->configure(config);
-    context.surface->configured = true;
+    surface.value->configure(config);
+    surface.configured = true;
 }

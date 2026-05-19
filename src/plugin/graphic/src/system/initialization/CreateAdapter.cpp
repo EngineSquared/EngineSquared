@@ -87,8 +87,14 @@ void Graphic::System::CreateAdapter(Engine::Core &core)
         adapterOpts.powerPreference = wgpu::PowerPreference::HighPerformance;
     }
 
-    if (context.surface.has_value() && context.surface->value.has_value())
-        adapterOpts.compatibleSurface = context.surface->value.value();
+    if (core.HasResource<Resource::Surface>())
+    {
+        auto &surface = core.GetResource<Resource::Surface>();
+        if (surface.value.has_value())
+        {
+            adapterOpts.compatibleSurface = surface.value.value();
+        }
+    }
 
     wgpu::Adapter adapter = context.instance->requestAdapter(adapterOpts);
 

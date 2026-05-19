@@ -33,24 +33,23 @@ static void EnsurePlaceholderEndRenderTexture(Graphic::Resource::Context &contex
     }
 }
 
-static void EnsureSurfaceEndRenderTexture(Graphic::Resource::Context &context,
+static void EnsureSurfaceEndRenderTexture(Graphic::Resource::Surface &surface, Graphic::Resource::Context &context,
                                           Graphic::Resource::TextureContainer &textureContainer)
 {
-    if (!context.surface.has_value() || !context.surface->value.has_value())
+    if (!surface.value.has_value())
     {
         throw Graphic::Exception::EndRenderTextureCreationError(
             "Surface is not created, cannot prepare the end render texture.");
     }
 
-    if (!context.surface->configured)
+    if (!surface.configured)
     {
         EnsurePlaceholderEndRenderTexture(context, textureContainer);
         return;
     }
 
-    const wgpu::Surface &surface = context.surface->value.value();
     wgpu::SurfaceTexture surfaceTexture(wgpu::Default);
-    surface.getCurrentTexture(&surfaceTexture);
+    surface.value->getCurrentTexture(&surfaceTexture);
 
     if (surfaceTexture.status != wgpu::SurfaceGetCurrentTextureStatus::SuccessOptimal &&
         surfaceTexture.status != wgpu::SurfaceGetCurrentTextureStatus::SuccessSuboptimal)
@@ -134,7 +133,7 @@ void Graphic::System::PrepareEndRenderTexture(Engine::Core &core)
     }
     else
     {
-        EnsureSurfaceEndRenderTexture(context, textureContainer);
+        EnsureSurfaceEndRenderTexture(core.GetResource<Resource::Surface>(), context, textureContainer);
     }
 
     const auto &endRenderTexture = textureContainer.Get(Utils::END_RENDER_TEXTURE_ID);

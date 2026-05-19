@@ -35,5 +35,5 @@ void Graphic::System::CreateSurface(Engine::Core &core)
     if (surface == nullptr)
         throw Exception::SurfaceCreationError("Could not create surface");
 
-    context.surface = Resource::Surface(surface);
+    core.RegisterResource(Resource::Surface(surface));
 }
