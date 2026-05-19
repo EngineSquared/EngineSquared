@@ -1,5 +1,6 @@
 #include "CreateAdapter.hpp"
 #include "exception/AdapterCreationError.hpp"
+#include "resource/Adapter.hpp"
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
 
@@ -96,5 +97,5 @@ void Graphic::System::CreateAdapter(Engine::Core &core)
 
     selectVulkanAdapter(context, adapter);
 
-    context.adapter = adapter;
+    core.RegisterResource(Resource::Adapter(adapter));
 }

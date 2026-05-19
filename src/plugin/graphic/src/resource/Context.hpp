@@ -1,5 +1,6 @@
 #pragma once
 
+#include "resource/Adapter.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/Surface.hpp"
 #include "utils/webgpu.hpp"
@@ -10,7 +11,10 @@ class Context {
     Context() = default;
     ~Context() = default;
 
-    void RequestDevice(void) { deviceContext.GetDevice() = adapter->requestDevice(deviceContext.GetDescriptor()); }
+    void RequestDevice(Adapter &adapter)
+    {
+        deviceContext.GetDevice() = adapter->requestDevice(deviceContext.GetDescriptor());
+    }
 
     void Release()
     {
@@ -19,11 +23,11 @@ class Context {
             instance->release();
             instance.reset();
         }
-        if (adapter.has_value())
-        {
-            adapter->release();
-            adapter.reset();
-        }
+        // if (adapter.has_value())
+        // {
+        //     adapter->release();
+        //     adapter.reset();
+        // }
         if (queue.has_value())
         {
             queue->release();
@@ -39,7 +43,7 @@ class Context {
 
     std::optional<wgpu::Instance> instance;
     std::optional<Surface> surface;
-    std::optional<wgpu::Adapter> adapter;
+    // std::optional<wgpu::Adapter> adapter;
     DeviceContext deviceContext;
     std::optional<wgpu::Queue> queue;
 };
