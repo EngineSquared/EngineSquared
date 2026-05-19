@@ -13,7 +13,8 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
 
     void Execute(Engine::Core &core) override
     {
-        Resource::Context &context = core.GetResource<Resource::Context>();
+        auto &context = core.GetResource<Resource::Context>();
+        auto &queue = core.GetResource<Resource::Queue>();
 
         if (this->GetOutputs().colorBuffers.empty() && !this->GetOutputs().depthBuffer.has_value())
         {
@@ -44,7 +45,7 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
         auto commandBuffer = _commandEncoder.finish(cmdBufferDescriptor);
         _commandEncoder.release();
 
-        context.queue.value().submit(1, &commandBuffer);
+        queue->submit(1, &commandBuffer);
         commandBuffer.release();
     }
 

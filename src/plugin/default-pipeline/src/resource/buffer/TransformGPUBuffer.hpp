@@ -35,9 +35,10 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
     {
         const auto &transformComponent = _entity.GetComponents<Object::Component::Transform>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
         _buffer = _CreateBuffer(context.deviceContext);
-        _UpdateBuffer(transformComponent, context);
+        _UpdateBuffer(transformComponent, queue);
         _isCreated = true;
     };
     void Destroy(Engine::Core &core) override { Destroy(); };
@@ -61,7 +62,8 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
 
         const auto &transformComponent = _entity.GetComponents<Object::Component::Transform>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
-        _UpdateBuffer(transformComponent, context);
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+        _UpdateBuffer(transformComponent, queue);
     };
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
@@ -90,7 +92,7 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
      * @param context Graphics context containing the queue used to write to the GPU buffer.
      */
     void _UpdateBuffer(const Object::Component::Transform &transformComponent,
-                       const Graphic::Resource::Context &context)
+                       const Graphic::Resource::Queue &queue)
     {
         const glm::mat4 &modelMatrix = transformComponent.ComputeTransformationMatrix();
 
@@ -100,7 +102,7 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
         gpuData.modelMatrix = modelMatrix;
         gpuData.normalMatrix = normalMatrix;
 
-        context.queue->writeBuffer(_buffer, 0, &gpuData, sizeof(TransformGPUData));
+        queue->writeBuffer(_buffer, 0, &gpuData, sizeof(TransformGPUData));
     }
 
     wgpu::Buffer _buffer;

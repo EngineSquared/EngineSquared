@@ -6,6 +6,7 @@
 #include "exception/UpdateBufferError.hpp"
 #include "resource/AGPUBuffer.hpp"
 #include "resource/Context.hpp"
+#include "resource/Queue.hpp"
 
 namespace DefaultPipeline::Resource {
 class IndexGPUBuffer : public Graphic::Resource::AGPUBuffer {
@@ -32,10 +33,11 @@ class IndexGPUBuffer : public Graphic::Resource::AGPUBuffer {
         bufferDesc.label = wgpu::StringView(label);
 
         const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
         _buffer = context.deviceContext.GetDevice()->createBuffer(bufferDesc);
 
-        context.queue->writeBuffer(_buffer, 0, indices.data(), bufferDesc.size);
+        queue->writeBuffer(_buffer, 0, indices.data(), bufferDesc.size);
 
         _isCreated = true;
     };

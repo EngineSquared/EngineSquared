@@ -23,16 +23,10 @@ class Context {
             instance->release();
             instance.reset();
         }
-        if (queue.has_value())
-        {
-            queue->release();
-            queue.reset();
-        }
         deviceContext.Release();
     }
 
     std::optional<wgpu::Instance> instance;
     DeviceContext deviceContext;
-    std::optional<wgpu::Queue> queue;
 };
 } // namespace Graphic::Resource

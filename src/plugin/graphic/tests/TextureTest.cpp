@@ -6,14 +6,15 @@
 void TextureTest(Engine::Core &core)
 {
     auto &context = core.GetResource<Graphic::Resource::Context>();
+    auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
     std::string testAssetPath = std::filesystem::current_path().string() + "/assets/test_texture.png";
 
     auto image = Graphic::Resource::Image(testAssetPath);
 
-    Graphic::Resource::Texture texture(context, testAssetPath, image);
+    Graphic::Resource::Texture texture(context, queue, testAssetPath, image);
 
-    auto data = texture.RetrieveImage(context);
+    auto data = texture.RetrieveImage(context, queue);
 
     EXPECT_EQ(data.width, image.width);
     EXPECT_EQ(data.height, image.height);

@@ -1,6 +1,7 @@
 #include "system/initialization/SetupQueue.hpp"
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/Queue.hpp"
 #include "utils/webgpu.hpp"
 
 void Graphic::System::SetupQueue(Engine::Core &core)
@@ -9,10 +10,10 @@ void Graphic::System::SetupQueue(Engine::Core &core)
 
     if (settings.GetWindowSystem() == Resource::WindowSystem::None)
         return;
-
-    auto &context = core.GetResource<Resource::Context>();
-    if (!context.queue.has_value())
+    if (!core.HasResource<Resource::Queue>())
         return;
+
+    auto &queue = core.GetResource<Resource::Queue>();
 
     auto onQueueWorkDone = [](WGPUQueueWorkDoneStatus status, [[maybe_unused]] WGPU_NULLABLE void *userdata1,
                               [[maybe_unused]] WGPU_NULLABLE void *userdata2) {
@@ -21,5 +22,5 @@ void Graphic::System::SetupQueue(Engine::Core &core)
 
     wgpu::QueueWorkDoneCallbackInfo callbackInfo(wgpu::Default);
     callbackInfo.callback = onQueueWorkDone;
-    context.queue->onSubmittedWorkDone(callbackInfo);
+    queue->onSubmittedWorkDone(callbackInfo);
 }

@@ -36,9 +36,10 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         const auto &camera = _entity.GetComponents<Object::Component::Camera>();
         const auto &transform = _entity.GetComponents<Object::Component::Transform>();
         const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
         _buffer = _CreateBuffer(context.deviceContext);
-        _UpdateBuffer(camera, transform, context);
+        _UpdateBuffer(camera, transform, queue);
         _isCreated = true;
     }
 
@@ -63,8 +64,8 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         }
         const auto &cameraComponent = _entity.GetComponents<Object::Component::Camera>();
         const auto &transform = _entity.GetComponents<Object::Component::Transform>();
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
-        _UpdateBuffer(cameraComponent, transform, context);
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+        _UpdateBuffer(cameraComponent, transform, queue);
     }
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; }
@@ -82,10 +83,10 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
     }
 
     void _UpdateBuffer(const Object::Component::Camera &camera, const Object::Component::Transform &transform,
-                       const Graphic::Resource::Context &context)
+                       const Graphic::Resource::Queue &queue)
     {
         const CameraTransfer cameraTransfer(camera, transform);
-        context.queue->writeBuffer(_buffer, 0, std::addressof(cameraTransfer), CameraTransfer::CPUSize());
+        queue->writeBuffer(_buffer, 0, std::addressof(cameraTransfer), CameraTransfer::CPUSize());
     }
 
     Engine::Entity _entity;

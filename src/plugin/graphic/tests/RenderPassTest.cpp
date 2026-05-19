@@ -104,10 +104,10 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
             return;
         _buffer = device.value().createBuffer(bufferDesc);
 
-        const auto &queue = core.GetResource<Graphic::Resource::Context>().queue;
-        if (!queue.has_value())
+        if (!core.HasResource<Graphic::Resource::Queue>())
             return;
-        queue.value().writeBuffer(_buffer, 0, glm::value_ptr(_value), bufferDesc.size);
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+        queue->writeBuffer(_buffer, 0, glm::value_ptr(_value), bufferDesc.size);
         _isCreated = true;
     }
     void Destroy()
@@ -141,6 +141,7 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
 void TestSystem(Engine::Core &core)
 {
     auto &context = core.GetResource<Graphic::Resource::Context>();
+    auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
     SingleExecutionRenderPassTest renderPass{};
 
@@ -161,7 +162,7 @@ void TestSystem(Engine::Core &core)
     core.GetResource<Graphic::Resource::BindGroupManager>().Add("TestBindGroup1"_hs, std::move(inputBindGroup));
 
     core.GetResource<Graphic::Resource::TextureContainer>().Add(
-        "returnTextureTest"_hs, context, "returnTextureTest",
+        "returnTextureTest"_hs, context, queue, "returnTextureTest",
         Graphic::Resource::Image(glm::uvec2(256, 256), [](glm::uvec2) { return glm::u8vec4(255, 0, 0, 255); }));
 
     renderPass.BindShader("DefaultTestShader");
@@ -185,8 +186,9 @@ void TestSystem(Engine::Core &core)
         FAIL() << "RenderPass validation failed with errors.";
     }
 
-    auto image =
-        core.GetResource<Graphic::Resource::TextureContainer>().Get("returnTextureTest"_hs).RetrieveImage(context);
+    auto image = core.GetResource<Graphic::Resource::TextureContainer>()
+                     .Get("returnTextureTest"_hs)
+                     .RetrieveImage(context, queue);
 
     EXPECT_EQ(image.width, 256);
     EXPECT_EQ(image.height, 256);

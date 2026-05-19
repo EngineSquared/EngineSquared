@@ -48,23 +48,24 @@ void TestSystem(Engine::Core &core)
 void ExtractTextures(Engine::Core &core)
 {
     auto &context = core.GetResource<Graphic::Resource::Context>();
+    auto &queue = core.GetResource<Graphic::Resource::Queue>();
     auto &textures = core.GetResource<Graphic::Resource::TextureContainer>();
 
     auto &normalTexture = textures.Get(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_NORMAL_ID);
-    auto normalImage = normalTexture.RetrieveImage(context);
+    auto normalImage = normalTexture.RetrieveImage(context, queue);
 
     auto &albedoTexture = textures.Get(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_ALBEDO_ID);
-    auto albedoImage = albedoTexture.RetrieveImage(context);
+    auto albedoImage = albedoTexture.RetrieveImage(context, queue);
 
     auto &depthTexture = textures.Get(DefaultPipeline::Resource::GBUFFER_PASS_OUTPUT_DEPTH_ID);
-    auto depthImage = depthTexture.RetrieveImage(context);
+    auto depthImage = depthTexture.RetrieveImage(context, queue);
 
     auto &outputTexture = textures.Get(Graphic::Utils::END_RENDER_TEXTURE_ID);
-    auto outputTextureImage = outputTexture.RetrieveImage(context);
+    auto outputTextureImage = outputTexture.RetrieveImage(context, queue);
 
     auto view = core.GetRegistry().view<DefaultPipeline::Component::GPUDirectionalLight>();
     auto &shadowOneTexture = textures.Get(DefaultPipeline::Utils::DIRECTIONAL_LIGHTS_SHADOW_TEXTURE_ID);
-    auto shadowOneTextureImage = shadowOneTexture.RetrieveImage(context);
+    auto shadowOneTextureImage = shadowOneTexture.RetrieveImage(context, queue);
 
     normalImage.ToPng("GBUFFER_NORMAL.png");
     albedoImage.ToPng("GBUFFER_ALBEDO.png");

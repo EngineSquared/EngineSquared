@@ -2,12 +2,12 @@
 #include "exception/QueueCreationError.hpp"
 #include "resource/Context.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/Queue.hpp"
 #include "utils/webgpu.hpp"
 
 void Graphic::System::CreateQueue(Engine::Core &core)
 {
     auto &context = core.GetResource<Resource::Context>();
-    const auto &settings = core.GetResource<Resource::GraphicSettings>();
     auto &device = context.deviceContext.GetDevice();
 
     if (!device.has_value())
@@ -18,5 +18,5 @@ void Graphic::System::CreateQueue(Engine::Core &core)
     if (queue == nullptr)
         throw Exception::QueueCreationError("Could not create WebGPU queue");
 
-    context.queue = queue;
+    core.RegisterResource(Resource::Queue(queue));
 }

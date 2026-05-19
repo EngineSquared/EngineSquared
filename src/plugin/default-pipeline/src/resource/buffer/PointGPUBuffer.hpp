@@ -5,6 +5,7 @@
 #include "exception/NonexistentComponentError.hpp"
 #include "exception/UpdateBufferError.hpp"
 #include "resource/AGPUBuffer.hpp"
+#include "resource/Queue.hpp"
 
 namespace DefaultPipeline::Resource {
 class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
@@ -93,8 +94,8 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
             pointData.emplace_back(texCoords[i].y);
         }
 
-        core.GetResource<Graphic::Resource::Context>().queue->writeBuffer(_buffer, 0, pointData.data(),
-                                                                          sizeof(float) * pointData.size());
+        core.GetResource<Graphic::Resource::Queue>()->writeBuffer(_buffer, 0, pointData.data(),
+                                                                  sizeof(float) * pointData.size());
     };
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };

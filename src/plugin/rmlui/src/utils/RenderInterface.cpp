@@ -44,13 +44,13 @@ void UpdateScreenBuffer(Engine::Core &core, wgpu::Buffer const &buffer)
     const auto &window = core.GetResource<Window::Resource::Window>();
     const auto size = window.GetSize();
     const std::array<float, 4> data = {static_cast<float>(size.x), static_cast<float>(size.y), 0.0F, 0.0F};
-    const auto &context = core.GetResource<Graphic::Resource::Context>();
-    if (!context.queue.has_value())
+    if (!core.HasResource<Graphic::Resource::Queue>())
     {
         Log::Error("UpdateScreenBuffer: context.queue has no value");
         return;
     }
-    context.queue.value().writeBuffer(buffer, 0, data.data(), sizeof(data));
+    const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+    queue->writeBuffer(buffer, 0, data.data(), sizeof(data));
 }
 
 wgpu::BindGroup CreateTextureBindGroup(Engine::Core &core, const wgpu::BindGroupLayout &layout,
@@ -166,9 +166,9 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
         return;
     }
     const auto &device = optDevice.value();
-    if (!context.queue.has_value())
+    if (!_core.HasResource<Graphic::Resource::Queue>())
         return;
-    const auto &queue = context.queue.value();
+    const auto &queue = _core.GetResource<Graphic::Resource::Queue>();
 
     std::vector<Rml::Vertex> translatedVertices = geometry.vertices;
     for (auto &vertex : translatedVertices)
@@ -217,13 +217,13 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
     vertexDesc.size = translatedVertices.size() * sizeof(Rml::Vertex);
     vertexDesc.usage = wgpu::BufferUsage::Vertex | wgpu::BufferUsage::CopyDst;
     wgpu::Buffer vertexBuffer = device.createBuffer(vertexDesc);
-    queue.writeBuffer(vertexBuffer, 0, translatedVertices.data(), vertexDesc.size);
+    queue->writeBuffer(vertexBuffer, 0, translatedVertices.data(), vertexDesc.size);
 
     wgpu::BufferDescriptor indexDesc(wgpu::Default);
     indexDesc.size = indices.size() * sizeof(uint32_t);
     indexDesc.usage = wgpu::BufferUsage::Index | wgpu::BufferUsage::CopyDst;
     wgpu::Buffer indexBuffer = device.createBuffer(indexDesc);
-    queue.writeBuffer(indexBuffer, 0, indices.data(), indexDesc.size);
+    queue->writeBuffer(indexBuffer, 0, indices.data(), indexDesc.size);
 
     wgpu::BindGroup textureBindGroup = ResolveTextureBindGroup(texture_handle);
 
@@ -374,6 +374,7 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
     }
 
     const auto &context = _core.GetResource<Graphic::Resource::Context>();
+    const auto &queue = _core.GetResource<Graphic::Resource::Queue>();
     const std::string textureName = fmt::format("rmlui_texture_{}", _textureCounter);
 
     _textureCounter += 1UL;
@@ -390,7 +391,7 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
         textureDesc.viewFormats = nullptr;
         textureDesc.viewFormatCount = 0;
         texture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, textureDesc);
-        texture->gpuTexture->Write(context, image);
+        texture->gpuTexture->Write(context, image, queue);
     }
 
     if (const auto &samplers = _core.GetResource<Graphic::Resource::SamplerContainer>();
@@ -452,6 +453,7 @@ void RenderInterface::BeginFrame()
     _drawCommands.clear();
 
     const auto &context = _core.GetResource<Graphic::Resource::Context>();
+    const auto &queue = _core.GetResource<Graphic::Resource::Queue>();
     const auto &optDevice = context.deviceContext.GetDevice();
     if (!optDevice)
         return;
@@ -513,7 +515,7 @@ void RenderInterface::BeginFrame()
                 textureDesc.viewFormats = nullptr;
                 textureDesc.viewFormatCount = 0;
                 _defaultTexture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, textureDesc);
-                _defaultTexture->gpuTexture->Write(context, image);
+                _defaultTexture->gpuTexture->Write(context, image, queue);
             }
 
             const auto &samplers = _core.GetResource<Graphic::Resource::SamplerContainer>();

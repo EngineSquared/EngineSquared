@@ -62,11 +62,11 @@ class ArrayOfFloatGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         if (!_buffer)
             throw std::runtime_error("Failed to create GPU Buffer");
 
-        const auto &queue = core.GetResource<Graphic::Resource::Context>().queue;
-        if (!queue.has_value())
+        if (!core.HasResource<Graphic::Resource::Queue>())
             throw std::runtime_error("Failed to create GPU Buffer");
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
-        queue.value().writeBuffer(_buffer, 0, _data.data(), sizeof(float) * _data.size());
+        queue->writeBuffer(_buffer, 0, _data.data(), sizeof(float) * _data.size());
         _isCreated = true;
     }
     void Destroy(Engine::Core &) override { Destroy(); }
@@ -165,9 +165,10 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
 
     { // Create texture asset
         auto &context = core.GetResource<Graphic::Resource::Context>();
+        auto &queue = core.GetResource<Graphic::Resource::Queue>();
         auto &textures = core.GetResource<Graphic::Resource::TextureContainer>();
         auto image = Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(255, 0, 0, 255); });
-        textures.Add(textureId, context, "BindGroupTextureA", image);
+        textures.Add(textureId, context, queue, "BindGroupTextureA", image);
     }
 
     { // Create buffer asset
@@ -238,11 +239,12 @@ TEST(BindGroupTest, RefreshUpdatesTextureBindings)
         auto textureId = entt::hashed_string("bindgroup_texture_asset");
         auto &textures = core.GetResource<Graphic::Resource::TextureContainer>();
         auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
         auto initialView = bindGroup.GetEntries().front().textureView;
 
         {
             auto newTexture = Graphic::Resource::Texture(
-                context, "bindgroup_texture_asset_name",
+                context, queue, "bindgroup_texture_asset_name",
                 Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(200, 100, 50, 255); }));
             textures.Remove(textureId);
             textures.Add(textureId, std::move(newTexture));

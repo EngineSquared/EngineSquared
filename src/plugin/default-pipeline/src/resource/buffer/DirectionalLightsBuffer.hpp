@@ -36,13 +36,14 @@ class DirectionalLightsBuffer : public Graphic::Resource::AGPUBuffer {
     void Create(Engine::Core &core) override
     {
         const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
         _buffer = _CreateBuffer(context.deviceContext);
         _isCreated = true;
 
         GPUDirectionalLights data{};
         data.count = 0;
-        context.queue->writeBuffer(_buffer, 0, &data, sizeof(GPUDirectionalLights));
+        queue->writeBuffer(_buffer, 0, &data, sizeof(GPUDirectionalLights));
     }
 
     void Destroy(Engine::Core &core) override { Destroy(); }
@@ -66,7 +67,7 @@ class DirectionalLightsBuffer : public Graphic::Resource::AGPUBuffer {
                 "Cannot update a GPU directional lights buffer that is not created.");
         }
 
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
         GPUDirectionalLights data{};
         auto view = core.GetRegistry()
                         .view<Object::Component::DirectionalLight, Component::GPUDirectionalLight,
@@ -99,7 +100,7 @@ class DirectionalLightsBuffer : public Graphic::Resource::AGPUBuffer {
                                      Utils::MAX_DIRECTIONAL_LIGHTS, skippedCount));
         }
 
-        context.queue->writeBuffer(_buffer, 0, &data, sizeof(GPUDirectionalLights));
+        queue->writeBuffer(_buffer, 0, &data, sizeof(GPUDirectionalLights));
     }
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; }

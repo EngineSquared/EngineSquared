@@ -3,6 +3,7 @@
 #include "exception/UnsupportedTextureFormatError.hpp"
 #include "resource/Context.hpp"
 #include "resource/Image.hpp"
+#include "resource/Queue.hpp"
 #include "resource/TextureView.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/webgpu.hpp"
@@ -122,15 +123,15 @@ class Texture {
     {
     }
 
-    Texture(const Context &context, std::string_view name, const Image &image)
+    Texture(const Context &context, const Queue &queue, std::string_view name, const Image &image)
         : Texture(context, _BuildDescriptor(name, image))
     {
-        Write(context, image);
+        Write(context, image, queue);
     }
 
-    Texture(const Context &context, std::string_view name, const glm::uvec2 &size,
+    Texture(const Context &context, const Queue &queue, std::string_view name, const glm::uvec2 &size,
             const std::function<glm::u8vec4(glm::uvec2 pos)> &callback)
-        : Texture(context, name, Image(size, callback))
+        : Texture(context, queue, name, Image(size, callback))
     {
     }
 
@@ -178,7 +179,7 @@ class Texture {
     inline glm::uvec2 GetSize() const { return glm::uvec2{_webgpuTexture.getWidth(), _webgpuTexture.getHeight()}; }
 
     // We assume the image is correctly formatted (width * height = pixels.size())
-    void Write(const Context &context, const Image &image)
+    void Write(const Context &context, const Image &image, const Queue &queue)
     {
         if (image.width != this->_webgpuTexture.getWidth() || image.height != this->_webgpuTexture.getHeight())
         {
@@ -197,12 +198,11 @@ class Texture {
         source.bytesPerRow = image.channels * textureSize.width;
         source.rowsPerImage = textureSize.height;
 
-        const wgpu::Queue &queue = context.queue.value();
         const uint32_t rowBytes = source.bytesPerRow;
         const uint32_t alignedRowBytes = (rowBytes + 255u) & ~255u;
         if (alignedRowBytes == rowBytes)
         {
-            queue.writeTexture(destination, image.pixels.data(), rowBytes * source.rowsPerImage, source, textureSize);
+            queue->writeTexture(destination, image.pixels.data(), rowBytes * source.rowsPerImage, source, textureSize);
             return;
         }
 
@@ -214,7 +214,7 @@ class Texture {
         }
 
         source.bytesPerRow = alignedRowBytes;
-        queue.writeTexture(destination, padded.data(), alignedRowBytes * source.rowsPerImage, source, textureSize);
+        queue->writeTexture(destination, padded.data(), alignedRowBytes * source.rowsPerImage, source, textureSize);
     }
 
     /**
@@ -226,10 +226,8 @@ class Texture {
      *
      * @return Image The retrieved image with width and height matching the texture and 4 channels (RGBA).
      */
-    Image RetrieveImage(const Context &context) const
+    Image RetrieveImage(const Context &context, const Queue &queue) const
     {
-        const wgpu::Queue &queue = context.queue.value();
-
         wgpu::Extent3D copySize(_webgpuTexture.getWidth(), _webgpuTexture.getHeight(), 1);
 
         wgpu::CommandEncoder encoder = context.deviceContext.GetDevice()->createCommandEncoder();
@@ -265,7 +263,7 @@ class Texture {
         auto cmd = encoder.finish();
         encoder.release();
         auto cmdName = fmt::format("{} Readback Command", _name);
-        queue.submit(1, &cmd);
+        queue->submit(1, &cmd);
         cmd.release();
 
         CallbackData cbData = {readbackBuffer, {}, bytesPerRow, _webgpuTexture.getFormat(), false};

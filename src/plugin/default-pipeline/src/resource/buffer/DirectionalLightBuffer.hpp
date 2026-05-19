@@ -54,8 +54,8 @@ class DirectionalLightBuffer : public Graphic::Resource::AGPUBuffer {
             return;
         }
         const auto &gpuDirectionalLight = _entity.GetComponents<Component::GPUDirectionalLight>();
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
-        _UpdateBuffer(context, gpuDirectionalLight);
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+        _UpdateBuffer(queue, gpuDirectionalLight);
     };
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
@@ -75,12 +75,10 @@ class DirectionalLightBuffer : public Graphic::Resource::AGPUBuffer {
         return context.GetDevice()->createBuffer(bufferDesc);
     }
 
-    void _UpdateBuffer(const Graphic::Resource::Context &context,
-                       const Component::GPUDirectionalLight &GPUDirectionalLight)
+    void _UpdateBuffer(const Graphic::Resource::Queue &queue, const Component::GPUDirectionalLight &GPUDirectionalLight)
     {
         DirectionalLightTransfer directionalLightTransfer(GPUDirectionalLight);
-        context.queue->writeBuffer(_buffer, 0, std::addressof(directionalLightTransfer),
-                                   DirectionalLightTransfer::CPUSize());
+        queue->writeBuffer(_buffer, 0, std::addressof(directionalLightTransfer), DirectionalLightTransfer::CPUSize());
     }
 
     wgpu::Buffer _buffer;
