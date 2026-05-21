@@ -26,10 +26,17 @@ class Queue {
     }
 
     // @note While using && assignement, you're destroying the previous Queue and will be invalid
-    Queue &operator=(Queue &&other)
+    Queue &operator=(Queue &&other) noexcept
     {
-        wgpuQueue = other.wgpuQueue;
-        other.wgpuQueue = nullptr;
+        if (this != &other)
+        {
+            if (wgpuQueue)
+            {
+                wgpuQueue.release();
+            }
+            wgpuQueue = std::move(other.wgpuQueue);
+            other.wgpuQueue = nullptr;
+        }
         return *this;
     }
 

@@ -28,8 +28,15 @@ class Adapter {
     // @note While using && assignement, you're destroying the previous adapter and will be invalid
     Adapter &operator=(Adapter &&other)
     {
-        wgpuAdapter = other.wgpuAdapter;
-        other.wgpuAdapter = nullptr;
+        if (this != &other)
+        {
+            if (wgpuAdapter)
+            {
+                wgpuAdapter.release();
+            }
+            wgpuAdapter = std::move(other.wgpuAdapter);
+            other.wgpuAdapter = nullptr;
+        }
         return *this;
     }
 

@@ -26,10 +26,17 @@ class Instance {
     }
 
     // @note While using && assignement, you're destroying the previous Instance and will be invalid
-    Instance &operator=(Instance &&other)
+    Instance &operator=(Instance &&other) noexcept
     {
-        wgpuInstance = other.wgpuInstance;
-        other.wgpuInstance = nullptr;
+        if (this != &other)
+        {
+            if (wgpuInstance)
+            {
+                wgpuInstance.release();
+            }
+            wgpuInstance = std::move(other.wgpuInstance);
+            other.wgpuInstance = nullptr;
+        }
         return *this;
     }
 
