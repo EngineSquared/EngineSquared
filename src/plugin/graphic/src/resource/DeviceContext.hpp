@@ -9,6 +9,12 @@ struct DeviceContext {
     DeviceContext(void) = default;
     ~DeviceContext() { Release(); }
 
+    DeviceContext(DeviceContext &other) = delete;
+    DeviceContext &operator=(DeviceContext &other) = delete;
+
+    DeviceContext(DeviceContext &&) = default;
+    DeviceContext &operator=(DeviceContext &&) = default;
+
     auto &GetDescriptor() { return _descriptor; }
     auto &GetDevice() { return _device; }
     const auto &GetDevice() const { return _device; }

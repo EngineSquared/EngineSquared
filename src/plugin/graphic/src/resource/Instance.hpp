@@ -19,11 +19,7 @@ class Instance {
     Instance &operator=(Instance &other) = delete;
 
     // @note While using && ctor, you're destroying the previous Instance and will be invalid
-    Instance(Instance &&other)
-    {
-        wgpuInstance = other.wgpuInstance;
-        other.wgpuInstance = nullptr;
-    }
+    Instance(Instance &&other) noexcept : wgpuInstance(other.wgpuInstance) { other.wgpuInstance = nullptr; }
 
     // @note While using && assignement, you're destroying the previous Instance and will be invalid
     Instance &operator=(Instance &&other) noexcept
@@ -41,10 +37,10 @@ class Instance {
     }
 
     wgpu::Instance &operator*(void) { return wgpuInstance; };
-    wgpu::Instance *const operator->(void) { return &wgpuInstance; };
+    wgpu::Instance *operator->(void) { return &wgpuInstance; };
 
     const wgpu::Instance &operator*(void) const { return wgpuInstance; };
-    const wgpu::Instance *const operator->(void) const { return &wgpuInstance; };
+    const wgpu::Instance *operator->(void) const { return &wgpuInstance; };
 
   private:
     // @note We will assume that Instance is not null all the time
