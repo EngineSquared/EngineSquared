@@ -37,7 +37,7 @@ void Setup(Engine::Core &core)
     materialFromLocalTexture.diffuseTexName = "LocalTextureName";
     auto &textureManager = core.GetResource<Graphic::Resource::TextureContainer>();
     auto texture =
-        Graphic::Resource::Texture(core.GetResource<Graphic::Resource::Context>(), "LocalTexture", glm::uvec2(255, 255),
+        Graphic::Resource::Texture(core.GetResource<Graphic::Resource::DeviceContext>(), core.GetResource<Graphic::Resource::Queue>(), "LocalTexture", glm::uvec2(255, 255),
                                    [](glm::uvec2 pos) { return glm::u8vec4(pos.x, pos.y, 0, 255); });
     textureManager.Add("LocalTextureName", std::move(texture));
     auto cube2 = core.CreateEntity();
