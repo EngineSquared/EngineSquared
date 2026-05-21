@@ -27,7 +27,7 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
     if (config.height == 0)
         config.height = 1;
 
-    if (core.HasResource<Resource::Surface>())
+    if (!core.HasResource<Resource::Surface>())
         return;
     auto &surface = core.GetResource<Resource::Surface>();
 
