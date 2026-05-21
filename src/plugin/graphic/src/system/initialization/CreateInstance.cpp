@@ -15,7 +15,6 @@ void CreateInstance(Engine::Core &core)
     if (instance == nullptr)
         throw Exception::InstanceCreationError("Could not create WebGPU instance, wgpuCreateInstance returned nullptr");
 
-    // core.GetResource<Graphic::Resource::Context>().instance = instance;
     core.RegisterResource(Resource::Instance(instance));
 }
 
