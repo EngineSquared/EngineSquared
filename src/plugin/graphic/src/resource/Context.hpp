@@ -16,10 +16,10 @@ class Context {
         deviceContext.GetDevice() = adapter->requestDevice(deviceContext.GetDescriptor());
     }
 
-    void Release()
-    {
-        deviceContext.Release();
-    }
+    // void Release()
+    // {
+    //     deviceContext.Release();
+    // }
 
     DeviceContext deviceContext;
 };
