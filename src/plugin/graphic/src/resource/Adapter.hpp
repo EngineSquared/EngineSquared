@@ -19,14 +19,13 @@ class Adapter {
     Adapter &operator=(Adapter &other) = delete;
 
     // @note While using && ctor, you're destroying the previous adapter and will be invalid
-    Adapter(Adapter &&other)
+    Adapter(Adapter &&other) noexcept : wgpuAdapter(other.wgpuAdapter)
     {
-        wgpuAdapter = other.wgpuAdapter;
         other.wgpuAdapter = nullptr;
     }
 
     // @note While using && assignement, you're destroying the previous adapter and will be invalid
-    Adapter &operator=(Adapter &&other)
+    Adapter &operator=(Adapter &&other) noexcept
     {
         if (this != &other)
         {
@@ -41,7 +40,7 @@ class Adapter {
     }
 
     wgpu::Adapter &operator*(void) { return wgpuAdapter; };
-    wgpu::Adapter *const operator->(void) { return &wgpuAdapter; };
+    wgpu::Adapter *operator->(void) { return &wgpuAdapter; };
 
   private:
     // @note We will assume that adapter is not null all the time
