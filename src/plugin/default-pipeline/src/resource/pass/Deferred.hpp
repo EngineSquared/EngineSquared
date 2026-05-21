@@ -273,7 +273,7 @@ class Deferred : public Graphic::Resource::ASingleExecutionRenderPass<Deferred> 
         renderPass.draw(6, 1, 0, 0);
     }
 
-    static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext)
+    static Graphic::Resource::Shader CreateShader(Graphic::Resource::DeviceContext &deviceContext)
     {
         Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
@@ -353,7 +353,7 @@ class Deferred : public Graphic::Resource::ASingleExecutionRenderPass<Deferred> 
                 }
             }
         }
-        return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
+        return Graphic::Resource::Shader::Create(shaderDescriptor, deviceContext);
     }
 };
 

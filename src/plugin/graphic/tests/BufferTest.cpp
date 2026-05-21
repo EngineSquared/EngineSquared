@@ -10,8 +10,8 @@ class GPUBufferTest : public Graphic::Resource::AGPUBuffer {
 
     void Create(Engine::Core &core) override
     {
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
-        const auto &optDevice = context.deviceContext.GetDevice();
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
+        const auto &optDevice = deviceContext.GetDevice();
         if (!optDevice.has_value())
         {
             Log::Error("GPUBufferTest: context.deviceContext.GetDevice has no value");

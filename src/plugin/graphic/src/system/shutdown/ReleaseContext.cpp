@@ -1,4 +1,4 @@
 #include "system/shutdown/ReleaseContext.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 
-void Graphic::System::ReleaseContext(Engine::Core &core) { core.DeleteResource<Resource::Context>(); }
+void Graphic::System::ReleaseContext(Engine::Core &core) { core.DeleteResource<Resource::DeviceContext>(); }

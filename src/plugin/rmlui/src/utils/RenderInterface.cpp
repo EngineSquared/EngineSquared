@@ -8,6 +8,7 @@
 #include "core/Core.hpp"
 #include "fmt/format.h"
 #include "glm/ext/vector_uint4_sized.hpp"
+#include "resource/DeviceContext.hpp"
 #include "spdlog/fmt/bundled/format.h"
 
 #include "RmlUi/Config/Config.h"
@@ -17,7 +18,7 @@
 
 #include "exception/FileReadingError.hpp"
 #include "exception/UnknownFileError.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/Image.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "resource/ShaderContainer.hpp"
@@ -67,7 +68,7 @@ wgpu::BindGroup CreateTextureBindGroup(Engine::Core &core, const wgpu::BindGroup
     descriptor.entryCount = 2;
     descriptor.entries = entries.data();
 
-    const auto &optDevice = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+    const auto &optDevice = core.GetResource<Graphic::Resource::DeviceContext>().GetDevice();
     if (!optDevice.has_value())
     {
         throw std::runtime_error("CreateTextureBindGroup: context.deviceContext.GetDevice() is empty");
@@ -159,8 +160,8 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
         return;
     }
 
-    const auto &context = _core.GetResource<Graphic::Resource::Context>();
-    const auto &optDevice = context.deviceContext.GetDevice();
+    const auto &deviceContext = _core.GetResource<Graphic::Resource::DeviceContext>();
+    const auto &optDevice = deviceContext.GetDevice();
     if (!optDevice.has_value())
     {
         return;
@@ -373,7 +374,7 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
         }
     }
 
-    const auto &context = _core.GetResource<Graphic::Resource::Context>();
+    const auto &deviceContext = _core.GetResource<Graphic::Resource::DeviceContext>();
     const auto &queue = _core.GetResource<Graphic::Resource::Queue>();
     const std::string textureName = fmt::format("rmlui_texture_{}", _textureCounter);
 
@@ -390,8 +391,8 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
                             wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
         textureDesc.viewFormats = nullptr;
         textureDesc.viewFormatCount = 0;
-        texture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, textureDesc);
-        texture->gpuTexture->Write(context, image, queue);
+        texture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(deviceContext, textureDesc);
+        texture->gpuTexture->Write(deviceContext, image, queue);
     }
 
     if (const auto &samplers = _core.GetResource<Graphic::Resource::SamplerContainer>();
@@ -452,9 +453,9 @@ void RenderInterface::BeginFrame()
     _active = this;
     _drawCommands.clear();
 
-    const auto &context = _core.GetResource<Graphic::Resource::Context>();
+    const auto &deviceContext = _core.GetResource<Graphic::Resource::DeviceContext>();
     const auto &queue = _core.GetResource<Graphic::Resource::Queue>();
-    const auto &optDevice = context.deviceContext.GetDevice();
+    const auto &optDevice = deviceContext.GetDevice();
     if (!optDevice)
         return;
     const auto &device = optDevice.value();
@@ -514,8 +515,8 @@ void RenderInterface::BeginFrame()
                                     wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
                 textureDesc.viewFormats = nullptr;
                 textureDesc.viewFormatCount = 0;
-                _defaultTexture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, textureDesc);
-                _defaultTexture->gpuTexture->Write(context, image, queue);
+                _defaultTexture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(deviceContext, textureDesc);
+                _defaultTexture->gpuTexture->Write(deviceContext, image, queue);
             }
 
             const auto &samplers = _core.GetResource<Graphic::Resource::SamplerContainer>();

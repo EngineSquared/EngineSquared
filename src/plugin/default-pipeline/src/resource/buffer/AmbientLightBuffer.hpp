@@ -5,7 +5,7 @@
 #include "exception/UpdateBufferError.hpp"
 #include "resource/AGPUBuffer.hpp"
 #include "resource/Queue.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
 namespace DefaultPipeline::Resource {
@@ -34,9 +34,9 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
     ~AmbientLightBuffer() override { Destroy(); }
     void Create(Engine::Core &core) override
     {
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
 
-        _buffer = _CreateBuffer(context.deviceContext);
+        _buffer = _CreateBuffer(deviceContext);
         _isCreated = true;
     };
     void Destroy(Engine::Core &core) override { Destroy(); };

@@ -1,9 +1,10 @@
 #include "CreateAdapter.hpp"
 #include "exception/AdapterCreationError.hpp"
 #include "resource/Adapter.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Instance.hpp"
+#include "resource/Surface.hpp"
 
 #include <optional>
 #include <vector>
@@ -66,7 +67,6 @@ static void selectVulkanAdapter(const Graphic::Resource::Instance &instance, wgp
 
 void Graphic::System::CreateAdapter(Engine::Core &core)
 {
-    auto &context = core.GetResource<Resource::Context>();
     const auto &graphicSettings = core.GetResource<Resource::GraphicSettings>();
 
     if (!core.HasResource<Resource::Instance>())

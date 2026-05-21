@@ -13,7 +13,7 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
 
     void Execute(Engine::Core &core) override
     {
-        auto &context = core.GetResource<Resource::Context>();
+        auto &deviceContext = core.GetResource<Resource::DeviceContext>();
         auto &queue = core.GetResource<Resource::Queue>();
 
         if (this->GetOutputs().colorBuffers.empty() && !this->GetOutputs().depthBuffer.has_value())
@@ -22,7 +22,7 @@ template <typename TDerived> class ASingleExecutionRenderPass : public ARenderPa
                 fmt::format("RenderPass {}: No outputs defined for render pass, cannot execute.", this->GetName()));
         }
 
-        wgpu::RenderPassEncoder renderPass = this->_CreateRenderPass(context.deviceContext, core);
+        wgpu::RenderPassEncoder renderPass = this->_CreateRenderPass(deviceContext, core);
 
         auto &shader = core.GetResource<Graphic::Resource::ShaderContainer>().Get(this->GetBoundShader().value());
         renderPass.setPipeline(shader.GetPipeline());

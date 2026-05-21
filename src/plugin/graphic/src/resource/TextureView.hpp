@@ -1,7 +1,7 @@
 #pragma once
 
 #include "exception/UnsupportedTextureFormatError.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/Image.hpp"
 #include "utils/GetBytesPerPixel.hpp"
 #include "utils/webgpu.hpp"

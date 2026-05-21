@@ -1,11 +1,10 @@
 #include "system/presentation/Present.hpp"
-#include "resource/Context.hpp"
+#include "resource/Surface.hpp"
 #include "resource/TextureContainer.hpp"
 #include "utils/EndRenderTexture.hpp"
 
 void Graphic::System::Present(Engine::Core &core)
 {
-    auto &context = core.GetResource<Resource::Context>();
 
     if (!core.HasResource<Resource::Surface>())
     {

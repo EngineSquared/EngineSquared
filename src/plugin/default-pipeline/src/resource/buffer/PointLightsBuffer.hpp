@@ -5,7 +5,7 @@
 #include "entity/Entity.hpp"
 #include "exception/UpdateBufferError.hpp"
 #include "resource/AGPUBuffer.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "utils/PointLights.hpp"
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
@@ -41,10 +41,10 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
 
     void Create(Engine::Core &core) override
     {
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
         const auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
-        _buffer = _CreateBuffer(context.deviceContext);
+        _buffer = _CreateBuffer(deviceContext);
         _isCreated = true;
 
         PointLightsData data{};

@@ -25,7 +25,7 @@ class SingleExecutionRenderPassTest
     }
 };
 
-Graphic::Resource::Shader CreateTestShader1(Graphic::Resource::Context &graphicContext)
+Graphic::Resource::Shader CreateTestShader1(Graphic::Resource::DeviceContext &deviceContext)
 {
     const std::string shaderSource = R"(
 
@@ -83,7 +83,7 @@ fn fs_main() -> @location(0) vec4f {
             throw std::runtime_error("ShaderDescriptor validation failed");
     }
 
-    return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
+    return Graphic::Resource::Shader::Create(shaderDescriptor, deviceContext);
 }
 
 class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
@@ -99,7 +99,7 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
         bufferDesc.size = sizeof(glm::vec4);
 
-        const auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+        const auto &device = core.GetResource<Graphic::Resource::DeviceContext>().GetDevice();
         if (!device.has_value())
             return;
         _buffer = device.value().createBuffer(bufferDesc);
@@ -140,12 +140,12 @@ class TestGPUBuffer final : public Graphic::Resource::AGPUBuffer {
 
 void TestSystem(Engine::Core &core)
 {
-    auto &context = core.GetResource<Graphic::Resource::Context>();
+    auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
     auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
     SingleExecutionRenderPassTest renderPass{};
 
-    auto shader = CreateTestShader1(context);
+    auto shader = CreateTestShader1(deviceContext);
     core.GetResource<Graphic::Resource::ShaderContainer>().Add("DefaultTestShader"_hs, std::move(shader));
 
     core.GetResource<Graphic::Resource::GPUBufferContainer>().Add(
@@ -162,7 +162,7 @@ void TestSystem(Engine::Core &core)
     core.GetResource<Graphic::Resource::BindGroupManager>().Add("TestBindGroup1"_hs, std::move(inputBindGroup));
 
     core.GetResource<Graphic::Resource::TextureContainer>().Add(
-        "returnTextureTest"_hs, context, queue, "returnTextureTest",
+        "returnTextureTest"_hs, deviceContext, queue, "returnTextureTest",
         Graphic::Resource::Image(glm::uvec2(256, 256), [](glm::uvec2) { return glm::u8vec4(255, 0, 0, 255); }));
 
     renderPass.BindShader("DefaultTestShader");
@@ -188,7 +188,7 @@ void TestSystem(Engine::Core &core)
 
     auto image = core.GetResource<Graphic::Resource::TextureContainer>()
                      .Get("returnTextureTest"_hs)
-                     .RetrieveImage(context, queue);
+                     .RetrieveImage(deviceContext, queue);
 
     EXPECT_EQ(image.width, 256);
     EXPECT_EQ(image.height, 256);

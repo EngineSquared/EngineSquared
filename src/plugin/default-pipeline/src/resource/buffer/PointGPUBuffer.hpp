@@ -36,8 +36,8 @@ class PointGPUBuffer : public Graphic::Resource::AGPUBuffer {
         std::string label = fmt::format("PointGPUBuffer_{}", _entity);
         bufferDesc.label = wgpu::StringView(label);
 
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
-        _buffer = context.deviceContext.GetDevice()->createBuffer(bufferDesc);
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
+        _buffer = deviceContext.GetDevice()->createBuffer(bufferDesc);
 
         _isCreated = true;
         Update(core);

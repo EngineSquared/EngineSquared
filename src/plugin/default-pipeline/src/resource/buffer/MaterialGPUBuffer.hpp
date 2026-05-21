@@ -37,9 +37,9 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
     ~MaterialGPUBuffer() override { Destroy(); }
     void Create(Engine::Core &core) override
     {
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
 
-        _buffer = _CreateBuffer(context.deviceContext);
+        _buffer = _CreateBuffer(deviceContext);
         _isCreated = true;
     };
     void Destroy(Engine::Core &core) override { Destroy(); };

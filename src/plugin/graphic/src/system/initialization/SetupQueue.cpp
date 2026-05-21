@@ -1,5 +1,5 @@
 #include "system/initialization/SetupQueue.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Queue.hpp"
 #include "utils/webgpu.hpp"

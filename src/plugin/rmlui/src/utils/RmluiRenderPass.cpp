@@ -1,7 +1,7 @@
 #include "Logger.hpp"
 #include "fmt/format.h"
 
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/Shader.hpp"
 #include "resource/ShaderDescriptor.hpp"
 
@@ -20,7 +20,7 @@
 #include <RmlUi/Core/Vertex.h>
 #include <cstddef>
 
-Graphic::Resource::Shader Rmlui::Utils::RmluiRenderPass::CreateShader(Graphic::Resource::Context &graphicContext)
+Graphic::Resource::Shader Rmlui::Utils::RmluiRenderPass::CreateShader(Graphic::Resource::DeviceContext &deviceContext)
 {
     Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
@@ -88,5 +88,5 @@ Graphic::Resource::Shader Rmlui::Utils::RmluiRenderPass::CreateShader(Graphic::R
         }
     }
 
-    return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
+    return Graphic::Resource::Shader::Create(shaderDescriptor, deviceContext);
 }

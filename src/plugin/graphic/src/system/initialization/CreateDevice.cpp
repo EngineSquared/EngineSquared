@@ -1,6 +1,7 @@
 #include "system/initialization/CreateDevice.hpp"
 #include "exception/DeviceCreationError.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
+#include "resource/Adapter.hpp"
 #include "resource/GraphicSettings.hpp"
 
 namespace Graphic::System {
@@ -26,15 +27,15 @@ static void SetupDeviceDescriptor(wgpu::DeviceDescriptor &deviceDesc, Graphic::R
 
 void CreateDevice(Engine::Core &core)
 {
-    auto &context = core.GetResource<Resource::Context>();
+    auto &deviceContext = core.GetResource<Resource::DeviceContext>();
     auto &adapter = core.GetResource<Resource::Adapter>();
     auto &settings = core.GetResource<Resource::GraphicSettings>();
 
-    SetupDeviceDescriptor(context.deviceContext.GetDescriptor(), settings);
+    SetupDeviceDescriptor(deviceContext.GetDescriptor(), settings);
 
-    context.deviceContext.GetDevice() = adapter->requestDevice(context.deviceContext.GetDescriptor());
+    deviceContext.GetDevice() = adapter->requestDevice(deviceContext.GetDescriptor());
 
-    if (!context.deviceContext.GetDevice())
+    if (!deviceContext.GetDevice())
         throw Exception::DeviceCreationError("Failed to create WebGPU device");
 }
 } // namespace Graphic::System

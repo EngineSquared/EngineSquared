@@ -35,10 +35,10 @@ class CameraGPUBuffer final : public Graphic::Resource::AGPUBuffer {
     {
         const auto &camera = _entity.GetComponents<Object::Component::Camera>();
         const auto &transform = _entity.GetComponents<Object::Component::Transform>();
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
         const auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
-        _buffer = _CreateBuffer(context.deviceContext);
+        _buffer = _CreateBuffer(deviceContext);
         _UpdateBuffer(camera, transform, queue);
         _isCreated = true;
     }

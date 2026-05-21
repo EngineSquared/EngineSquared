@@ -1,6 +1,6 @@
 #include "CreateSurface.hpp"
 #include "exception/SurfaceCreationError.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
 #include "resource/Instance.hpp"
 #include "resource/Surface.hpp"
@@ -9,7 +9,6 @@
 
 void Graphic::System::CreateSurface(Engine::Core &core)
 {
-    auto &context = core.GetResource<Resource::Context>();
     auto &graphicSettings = core.GetResource<Resource::GraphicSettings>();
 
     if (!core.HasResource<Resource::Instance>())

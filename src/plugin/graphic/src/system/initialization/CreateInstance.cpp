@@ -1,6 +1,6 @@
 #include "CreateInstance.hpp"
 #include "exception/InstanceCreationError.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/Instance.hpp"
 #include "utils/webgpu.hpp"
 

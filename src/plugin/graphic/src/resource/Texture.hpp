@@ -1,7 +1,7 @@
 #pragma once
 
 #include "exception/UnsupportedTextureFormatError.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/Image.hpp"
 #include "resource/Queue.hpp"
 #include "resource/TextureView.hpp"
@@ -117,21 +117,21 @@ class Texture {
         _defaultView = Resource::TextureView(_webgpuTexture.createView());
     }
 
-    Texture(const Context &context, const wgpu::TextureDescriptor &descriptor)
+    Texture(const DeviceContext &deviceContext, const wgpu::TextureDescriptor &descriptor)
         : Texture(std::string(descriptor.label.data, descriptor.label.length),
-                  context.deviceContext.GetDevice()->createTexture(descriptor))
+                  deviceContext.GetDevice()->createTexture(descriptor))
     {
     }
 
-    Texture(const Context &context, const Queue &queue, std::string_view name, const Image &image)
-        : Texture(context, _BuildDescriptor(name, image))
+    Texture(const DeviceContext &deviceContext, const Queue &queue, std::string_view name, const Image &image)
+        : Texture(deviceContext, _BuildDescriptor(name, image))
     {
-        Write(context, image, queue);
+        Write(deviceContext, image, queue);
     }
 
-    Texture(const Context &context, const Queue &queue, std::string_view name, const glm::uvec2 &size,
+    Texture(const DeviceContext &deviceContext, const Queue &queue, std::string_view name, const glm::uvec2 &size,
             const std::function<glm::u8vec4(glm::uvec2 pos)> &callback)
-        : Texture(context, queue, name, Image(size, callback))
+        : Texture(deviceContext, queue, name, Image(size, callback))
     {
     }
 
@@ -179,7 +179,7 @@ class Texture {
     inline glm::uvec2 GetSize() const { return glm::uvec2{_webgpuTexture.getWidth(), _webgpuTexture.getHeight()}; }
 
     // We assume the image is correctly formatted (width * height = pixels.size())
-    void Write(const Context &context, const Image &image, const Queue &queue)
+    void Write(const DeviceContext &deviceContext, const Image &image, const Queue &queue)
     {
         if (image.width != this->_webgpuTexture.getWidth() || image.height != this->_webgpuTexture.getHeight())
         {
@@ -226,18 +226,18 @@ class Texture {
      *
      * @return Image The retrieved image with width and height matching the texture and 4 channels (RGBA).
      */
-    Image RetrieveImage(const Context &context, const Queue &queue) const
+    Image RetrieveImage(const DeviceContext &deviceContext, const Queue &queue) const
     {
         wgpu::Extent3D copySize(_webgpuTexture.getWidth(), _webgpuTexture.getHeight(), 1);
 
-        wgpu::CommandEncoder encoder = context.deviceContext.GetDevice()->createCommandEncoder();
+        wgpu::CommandEncoder encoder = deviceContext.GetDevice()->createCommandEncoder();
 
         const uint32_t bytesPerRow = (copySize.width * _GetBytesPerPixel() + 255) / 256 * 256;
         wgpu::BufferDescriptor bufDesc(wgpu::Default);
         bufDesc.size = copySize.height * bytesPerRow;
         bufDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
         bufDesc.label = wgpu::StringView("Depth Readback Buffer");
-        wgpu::Buffer readbackBuffer = context.deviceContext.GetDevice()->createBuffer(bufDesc);
+        wgpu::Buffer readbackBuffer = deviceContext.GetDevice()->createBuffer(bufDesc);
 
         wgpu::TexelCopyTextureInfo srcView(wgpu::Default);
         srcView.texture = _webgpuTexture;
@@ -279,7 +279,7 @@ class Texture {
         readbackBuffer.mapAsync(wgpu::MapMode::Read, 0, readbackBuffer.getSize(), cbInfo);
         while (!cbData.done)
         {
-            context.deviceContext.GetDevice()->poll(false, nullptr);
+            deviceContext.GetDevice()->poll(false, nullptr);
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
         readbackBuffer.release();

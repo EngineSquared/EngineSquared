@@ -1,6 +1,8 @@
 #include "system/initialization/ConfigureSurface.hpp"
-#include "resource/Context.hpp"
+#include "resource/Adapter.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/Surface.hpp"
 #include "resource/Window.hpp"
 #include "utils/webgpu.hpp"
 
@@ -11,7 +13,7 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
     if (settings.GetWindowSystem() == Resource::WindowSystem::None)
         return;
 
-    auto &context = core.GetResource<Resource::Context>();
+    auto &deviceContext = core.GetResource<Resource::DeviceContext>();
     auto &adapter = core.GetResource<Resource::Adapter>();
     const auto &window = core.GetResource<Window::Resource::Window>();
     const auto surfaceSize = window.GetSize();
@@ -29,7 +31,7 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
         return;
     auto &surface = core.GetResource<Resource::Surface>();
 
-    auto &optDevice = context.deviceContext.GetDevice();
+    auto &optDevice = deviceContext.GetDevice();
     if (!surface.capabilities.has_value() || !optDevice.has_value() || !surface.value.has_value())
     {
         return;

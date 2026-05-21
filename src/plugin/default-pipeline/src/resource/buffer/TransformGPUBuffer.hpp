@@ -34,10 +34,10 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
     void Create(Engine::Core &core) override
     {
         const auto &transformComponent = _entity.GetComponents<Object::Component::Transform>();
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
         const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
 
-        _buffer = _CreateBuffer(context.deviceContext);
+        _buffer = _CreateBuffer(deviceContext);
         _UpdateBuffer(transformComponent, queue);
         _isCreated = true;
     };
@@ -61,7 +61,6 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
         }
 
         const auto &transformComponent = _entity.GetComponents<Object::Component::Transform>();
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
         const auto &queue = core.GetResource<Graphic::Resource::Queue>();
         _UpdateBuffer(transformComponent, queue);
     };
