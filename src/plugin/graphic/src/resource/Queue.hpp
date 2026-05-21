@@ -19,11 +19,7 @@ class Queue {
     Queue &operator=(Queue &other) = delete;
 
     // @note While using && ctor, you're destroying the previous Queue and will be invalid
-    Queue(Queue &&other)
-    {
-        wgpuQueue = other.wgpuQueue;
-        other.wgpuQueue = nullptr;
-    }
+    Queue(Queue &&other) noexcept : wgpuQueue(other.wgpuQueue) { other.wgpuQueue = nullptr; }
 
     // @note While using && assignement, you're destroying the previous Queue and will be invalid
     Queue &operator=(Queue &&other) noexcept
@@ -41,10 +37,10 @@ class Queue {
     }
 
     wgpu::Queue &operator*(void) { return wgpuQueue; };
-    wgpu::Queue *const operator->(void) { return &wgpuQueue; };
+    wgpu::Queue *operator->(void) { return &wgpuQueue; };
 
     const wgpu::Queue &operator*(void) const { return wgpuQueue; };
-    const wgpu::Queue *const operator->(void) const { return &wgpuQueue; };
+    const wgpu::Queue *operator->(void) const { return &wgpuQueue; };
 
   private:
     // @note We will assume that Queue is not null all the time
