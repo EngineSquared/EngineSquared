@@ -1,7 +1,7 @@
 #include "system/initialization/CreateDevice.hpp"
 #include "exception/DeviceCreationError.hpp"
-#include "resource/DeviceContext.hpp"
 #include "resource/Adapter.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
 
 namespace Graphic::System {

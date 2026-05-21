@@ -1,9 +1,9 @@
 #include "system/initialization/RequestCapabilities.hpp"
 #include "exception/CapabilitiesRequestError.hpp"
 #include "resource/Adapter.hpp"
-#include "resource/Surface.hpp"
 #include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/Surface.hpp"
 
 namespace Graphic::System {
 void RequestCapabilities(Engine::Core &core)

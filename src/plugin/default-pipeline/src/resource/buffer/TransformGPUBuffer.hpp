@@ -90,8 +90,7 @@ class TransformGPUBuffer : public Graphic::Resource::AGPUBuffer {
      * @param transformComponent Component used to compute the model transformation matrix.
      * @param context Graphics context containing the queue used to write to the GPU buffer.
      */
-    void _UpdateBuffer(const Object::Component::Transform &transformComponent,
-                       const Graphic::Resource::Queue &queue)
+    void _UpdateBuffer(const Object::Component::Transform &transformComponent, const Graphic::Resource::Queue &queue)
     {
         const glm::mat4 &modelMatrix = transformComponent.ComputeTransformationMatrix();
 

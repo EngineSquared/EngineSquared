@@ -4,8 +4,8 @@
 #include "entity/Entity.hpp"
 #include "exception/UpdateBufferError.hpp"
 #include "resource/AGPUBuffer.hpp"
-#include "resource/Queue.hpp"
 #include "resource/DeviceContext.hpp"
+#include "resource/Queue.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
 namespace DefaultPipeline::Resource {
