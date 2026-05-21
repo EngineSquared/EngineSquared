@@ -32,7 +32,7 @@ void CreateDevice(Engine::Core &core)
 
     SetupDeviceDescriptor(context.deviceContext.GetDescriptor(), settings);
 
-    context.RequestDevice(adapter);
+    context.deviceContext.GetDevice() = adapter->requestDevice(context.deviceContext.GetDescriptor());
 
     if (!context.deviceContext.GetDevice())
         throw Exception::DeviceCreationError("Failed to create WebGPU device");

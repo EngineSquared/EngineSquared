@@ -11,16 +11,6 @@ class Context {
     Context() = default;
     ~Context() = default;
 
-    void RequestDevice(Adapter &adapter)
-    {
-        deviceContext.GetDevice() = adapter->requestDevice(deviceContext.GetDescriptor());
-    }
-
-    // void Release()
-    // {
-    //     deviceContext.Release();
-    // }
-
     DeviceContext deviceContext;
 };
 } // namespace Graphic::Resource
