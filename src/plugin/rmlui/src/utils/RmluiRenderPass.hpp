@@ -4,7 +4,7 @@
 #include "entt/core/fwd.hpp"
 
 #include "resource/ASingleExecutionRenderPass.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/Shader.hpp"
 
 #include "utils/RenderInterface.hpp"
@@ -76,6 +76,6 @@ class RmluiRenderPass : public Graphic::Resource::ASingleExecutionRenderPass<Rml
         renderer->FlushDrawCommands(renderPass);
     }
 
-    static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext);
+    static Graphic::Resource::Shader CreateShader(Graphic::Resource::DeviceContext &deviceContext);
 };
 } // namespace Rmlui::Utils

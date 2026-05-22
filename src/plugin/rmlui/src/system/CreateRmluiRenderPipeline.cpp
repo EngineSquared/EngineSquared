@@ -7,7 +7,7 @@
 #include "system/CreateRmluiRenderPipeline.hpp"
 
 #include "resource/ARenderPass.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/RenderGraph.hpp"
 #include "resource/RenderGraphContainer.hpp"
 #include "resource/Shader.hpp"
@@ -34,7 +34,7 @@ void Rmlui::System::CreateRmluiRenderPipeline(Engine::Core &core)
 
     Utils::RmluiRenderPass renderPass{};
     Graphic::Resource::Shader shader =
-        Utils::RmluiRenderPass::CreateShader(core.GetResource<Graphic::Resource::Context>());
+        Utils::RmluiRenderPass::CreateShader(core.GetResource<Graphic::Resource::DeviceContext>());
     core.GetResource<Graphic::Resource::ShaderContainer>().Add(Utils::RMLUI_RENDER_PASS_SHADER_ID, std::move(shader));
     renderPass.BindShader(std::string_view(Utils::RMLUI_RENDER_PASS_SHADER_NAME));
 

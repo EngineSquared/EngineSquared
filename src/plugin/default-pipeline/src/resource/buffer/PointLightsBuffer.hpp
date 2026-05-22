@@ -5,7 +5,7 @@
 #include "entity/Entity.hpp"
 #include "exception/UpdateBufferError.hpp"
 #include "resource/AGPUBuffer.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "utils/PointLights.hpp"
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
@@ -41,14 +41,15 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
 
     void Create(Engine::Core &core) override
     {
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
-        _buffer = _CreateBuffer(context.deviceContext);
+        _buffer = _CreateBuffer(deviceContext);
         _isCreated = true;
 
         PointLightsData data{};
         data.count = 0;
-        context.queue->writeBuffer(_buffer, 0, &data, sizeof(PointLightsData));
+        queue->writeBuffer(_buffer, 0, &data, sizeof(PointLightsData));
     }
 
     void Destroy(Engine::Core &core) override { Destroy(); }
@@ -71,7 +72,7 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU point lights buffer that is not created.");
         }
 
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
         PointLightsData data{};
 
         auto view = core.GetRegistry().view<Object::Component::PointLight, Object::Component::Transform>();
@@ -103,7 +104,7 @@ class PointLightsBuffer : public Graphic::Resource::AGPUBuffer {
                                      Utils::MAX_POINT_LIGHTS, skippedCount));
         }
 
-        context.queue->writeBuffer(_buffer, 0, &data, sizeof(PointLightsData));
+        queue->writeBuffer(_buffer, 0, &data, sizeof(PointLightsData));
     }
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; }

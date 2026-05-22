@@ -5,7 +5,7 @@
 #include "resource/AGPUBuffer.hpp"
 #include "resource/BindGroup.hpp"
 #include "resource/BindGroupManager.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/CameraGPUBuffer.hpp"
 #include "resource/pass/GBuffer.hpp"

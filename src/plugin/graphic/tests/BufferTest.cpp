@@ -10,8 +10,8 @@ class GPUBufferTest : public Graphic::Resource::AGPUBuffer {
 
     void Create(Engine::Core &core) override
     {
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
-        const auto &optDevice = context.deviceContext.GetDevice();
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
+        const auto &optDevice = deviceContext.GetDevice();
         if (!optDevice.has_value())
         {
             Log::Error("GPUBufferTest: context.deviceContext.GetDevice has no value");
@@ -42,13 +42,13 @@ class GPUBufferTest : public Graphic::Resource::AGPUBuffer {
         {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU buffer that is not created.");
         }
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
-        if (!context.queue.has_value())
+        if (!core.HasResource<Graphic::Resource::Queue>())
         {
             Log::Error("GPUBufferTest::Update: context.queue has no value");
             return;
         }
-        context.queue->writeBuffer(_buffer, 0, _data.data(), sizeof(int) * _data.size());
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+        queue->writeBuffer(_buffer, 0, _data.data(), sizeof(int) * _data.size());
     }
     const wgpu::Buffer &GetBuffer() const override { return _buffer; }
 

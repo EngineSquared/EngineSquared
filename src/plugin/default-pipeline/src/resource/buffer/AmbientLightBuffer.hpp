@@ -4,7 +4,8 @@
 #include "entity/Entity.hpp"
 #include "exception/UpdateBufferError.hpp"
 #include "resource/AGPUBuffer.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
+#include "resource/Queue.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
 namespace DefaultPipeline::Resource {
@@ -33,9 +34,9 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
     ~AmbientLightBuffer() override { Destroy(); }
     void Create(Engine::Core &core) override
     {
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
 
-        _buffer = _CreateBuffer(context.deviceContext);
+        _buffer = _CreateBuffer(deviceContext);
         _isCreated = true;
     };
     void Destroy(Engine::Core &core) override { Destroy(); };
@@ -74,8 +75,8 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
                 "Cannot update a GPU ambient light buffer that is not created.");
         }
 
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
-        _UpdateBuffer(context, ambientLight);
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+        _UpdateBuffer(queue, ambientLight);
     }
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
@@ -105,11 +106,11 @@ class AmbientLightBuffer : public Graphic::Resource::AGPUBuffer {
         return context.GetDevice()->createBuffer(bufferDesc);
     }
 
-    void _UpdateBuffer(const Graphic::Resource::Context &context,
+    void _UpdateBuffer(const Graphic::Resource::Queue &queue,
                        const Object::Component::AmbientLight &ambientLightComponent)
     {
         AmbientLightTransfer ambientLightTransfer(ambientLightComponent);
-        context.queue->writeBuffer(_buffer, 0, std::addressof(ambientLightTransfer), AmbientLightTransfer::CPUSize());
+        queue->writeBuffer(_buffer, 0, std::addressof(ambientLightTransfer), AmbientLightTransfer::CPUSize());
     }
 
     wgpu::Buffer _buffer;

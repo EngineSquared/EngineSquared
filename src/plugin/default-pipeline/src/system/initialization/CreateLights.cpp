@@ -13,8 +13,8 @@ static void CreateDirectionalLightsShadowTextures(Engine::Core &core)
 {
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
     auto &samplerContainer = core.GetResource<Graphic::Resource::SamplerContainer>();
-    const auto &context = core.GetResource<Graphic::Resource::Context>();
-    const auto &device = context.deviceContext.GetDevice();
+    const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
+    const auto &device = deviceContext.GetDevice();
 
     if (!device.has_value())
     {
@@ -29,7 +29,7 @@ static void CreateDirectionalLightsShadowTextures(Engine::Core &core)
     textureDescriptor.format = wgpu::TextureFormat::Depth32Float;
     textureDescriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment |
                               wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
-    Graphic::Resource::Texture shadowTexture(context, textureDescriptor);
+    Graphic::Resource::Texture shadowTexture(deviceContext, textureDescriptor);
     textureContainer.Add(Utils::DIRECTIONAL_LIGHTS_SHADOW_TEXTURE_ID, std::move(shadowTexture));
 
     wgpu::SamplerDescriptor samplerDescriptor(wgpu::Default);

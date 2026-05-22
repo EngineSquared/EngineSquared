@@ -2,7 +2,7 @@
 
 #include "component/GPUMesh.hpp"
 #include "component/Mesh.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/PointGPUBuffer.hpp"
 

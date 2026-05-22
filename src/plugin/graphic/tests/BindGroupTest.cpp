@@ -53,7 +53,7 @@ class ArrayOfFloatGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         bufferDescriptor.size = sizeof(float) * _data.size();
         bufferDescriptor.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst;
 
-        const auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+        const auto &device = core.GetResource<Graphic::Resource::DeviceContext>().GetDevice();
         if (!device.has_value())
             throw std::runtime_error("Failed to create GPU Buffer");
 
@@ -62,11 +62,11 @@ class ArrayOfFloatGPUBuffer final : public Graphic::Resource::AGPUBuffer {
         if (!_buffer)
             throw std::runtime_error("Failed to create GPU Buffer");
 
-        const auto &queue = core.GetResource<Graphic::Resource::Context>().queue;
-        if (!queue.has_value())
+        if (!core.HasResource<Graphic::Resource::Queue>())
             throw std::runtime_error("Failed to create GPU Buffer");
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
 
-        queue.value().writeBuffer(_buffer, 0, _data.data(), sizeof(float) * _data.size());
+        queue->writeBuffer(_buffer, 0, _data.data(), sizeof(float) * _data.size());
         _isCreated = true;
     }
     void Destroy(Engine::Core &) override { Destroy(); }
@@ -130,7 +130,7 @@ Graphic::Resource::Shader CreateShader(Engine::Core &core)
         .addOutputColorFormat(colorOutput)
         .setOutputDepthFormat(depthState);
 
-    return Graphic::Resource::Shader::Create(shaderDescriptor, core.GetResource<Graphic::Resource::Context>());
+    return Graphic::Resource::Shader::Create(shaderDescriptor, core.GetResource<Graphic::Resource::DeviceContext>());
 }
 
 void ConfigureHeadlessGraphics(Engine::Core &core)
@@ -157,17 +157,18 @@ Graphic::Resource::BindGroup CreateBindGroup(Engine::Core &core)
     auto bufferId = entt::hashed_string("bindgroup_buffer_asset");
     auto samplerId = entt::hashed_string("bindgroup_sampler_asset");
 
-    auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+    auto &device = core.GetResource<Graphic::Resource::DeviceContext>().GetDevice();
     if (!device.has_value())
         throw std::runtime_error("CreateBindGroup: device has no value");
 
     core.GetResource<Graphic::Resource::ShaderContainer>().Add(shaderId, CreateShader(core));
 
     { // Create texture asset
-        auto &context = core.GetResource<Graphic::Resource::Context>();
+        auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
+        auto &queue = core.GetResource<Graphic::Resource::Queue>();
         auto &textures = core.GetResource<Graphic::Resource::TextureContainer>();
         auto image = Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(255, 0, 0, 255); });
-        textures.Add(textureId, context, "BindGroupTextureA", image);
+        textures.Add(textureId, deviceContext, queue, "BindGroupTextureA", image);
     }
 
     { // Create buffer asset
@@ -237,12 +238,13 @@ TEST(BindGroupTest, RefreshUpdatesTextureBindings)
 
         auto textureId = entt::hashed_string("bindgroup_texture_asset");
         auto &textures = core.GetResource<Graphic::Resource::TextureContainer>();
-        auto &context = core.GetResource<Graphic::Resource::Context>();
+        auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
         auto initialView = bindGroup.GetEntries().front().textureView;
 
         {
             auto newTexture = Graphic::Resource::Texture(
-                context, "bindgroup_texture_asset_name",
+                deviceContext, queue, "bindgroup_texture_asset_name",
                 Graphic::Resource::Image(glm::uvec2(2, 2), [](glm::uvec2) { return glm::u8vec4(200, 100, 50, 255); }));
             textures.Remove(textureId);
             textures.Add(textureId, std::move(newTexture));
@@ -304,7 +306,7 @@ TEST(BindGroupTest, RefreshUpdatesSamplerBindings)
         auto samplerId = entt::hashed_string("bindgroup_sampler_asset");
         auto &samplers = core.GetResource<Graphic::Resource::SamplerContainer>();
 
-        auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice().value();
+        auto &device = core.GetResource<Graphic::Resource::DeviceContext>().GetDevice().value();
         {
             auto newSampler = Graphic::Resource::Sampler(device);
             samplers.Remove(samplerId);

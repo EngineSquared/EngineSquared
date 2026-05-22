@@ -5,7 +5,7 @@
 
 Graphic::Resource::Sampler CreateTestSampler(Engine::Core &core)
 {
-    auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+    auto &device = core.GetResource<Graphic::Resource::DeviceContext>().GetDevice();
 
     if (!device.has_value())
     {
@@ -17,7 +17,7 @@ Graphic::Resource::Sampler CreateTestSampler(Engine::Core &core)
 
 Graphic::Resource::Sampler CreateTestSamplerWithDescriptor(Engine::Core &core)
 {
-    auto &device = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+    auto &device = core.GetResource<Graphic::Resource::DeviceContext>().GetDevice();
 
     if (!device.has_value())
     {

@@ -187,7 +187,7 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
      * @param graphicContext Graphics resource context used to create the shader.
      * @return Graphic::Resource::Shader A shader instance configured for the G-buffer rendering pass.
      */
-    static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext)
+    static Graphic::Resource::Shader CreateShader(Graphic::Resource::DeviceContext &deviceContext)
     {
         Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
@@ -268,7 +268,7 @@ class GBuffer : public Graphic::Resource::ASingleExecutionRenderPass<GBuffer> {
                 }
             }
         }
-        return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
+        return Graphic::Resource::Shader::Create(shaderDescriptor, deviceContext);
     }
 };
 
