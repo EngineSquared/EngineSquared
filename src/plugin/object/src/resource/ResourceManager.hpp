@@ -2,7 +2,6 @@
 
 #include "Logger.hpp"
 #include "exception/ResourceManagerError.hpp"
-
 #include <entt/core/hashed_string.hpp>
 #include <entt/resource/cache.hpp>
 #include <fmt/format.h>
@@ -62,6 +61,11 @@ template <typename ResourceType> class ResourceManager {
         return ret.first->second;
     }
 
+    template <typename... Args> entt::resource<ResourceType> Add(std::string_view id, Args &&...args)
+    {
+        return Add(entt::hashed_string{id.data(), id.size()}, std::forward<Args>(args)...);
+    }
+
     /**
      * @brief Get the reference to a stored resource.
      *
@@ -79,6 +83,8 @@ template <typename ResourceType> class ResourceManager {
 
         return *resource;
     }
+
+    [[nodiscard]] ResourceType &Get(std::string_view id) { return Get(entt::hashed_string{id.data(), id.size()}); }
 
     /**
      * @brief Get the reference to a stored resource.
@@ -99,12 +105,19 @@ template <typename ResourceType> class ResourceManager {
         return *resource;
     }
 
+    [[nodiscard]] const ResourceType &Get(std::string_view id) const
+    {
+        return Get(entt::hashed_string{id.data(), id.size()});
+    }
+
     /**
      * @brief Delete an resource from the manager.
      *
      * @param id  id of the resource to delete
      */
     void Remove(const entt::hashed_string &id) { cache.erase(id); }
+
+    void Remove(std::string_view id) { Remove(entt::hashed_string{id.data(), id.size()}); }
 
     /**
      * @brief Check whenever the resource with given id exists in the manager.
@@ -113,6 +126,11 @@ template <typename ResourceType> class ResourceManager {
      * @return true if the resource exists, false otherwise.
      */
     [[nodiscard]] bool Contains(const entt::hashed_string &id) const { return cache.contains(id); }
+
+    [[nodiscard]] bool Contains(std::string_view id) const
+    {
+        return Contains(entt::hashed_string{id.data(), id.size()});
+    }
 
     /**
      * @brief Set the default resource that will be used as fallback.
@@ -182,6 +200,11 @@ template <typename ResourceType> class ResourceManager {
         return *defaultResource;
     }
 
+    [[nodiscard]] ResourceType &GetOrDefault(std::string_view id)
+    {
+        return GetOrDefault(entt::hashed_string{id.data(), id.size()});
+    }
+
     /**
      * @brief Get the reference to a stored resource, or the default resource if it doesn't exist.
      *
@@ -202,6 +225,11 @@ template <typename ResourceType> class ResourceManager {
                 fmt::format("Resource with id {} not found and no default resource is set.", id.data()));
 
         return *defaultResource;
+    }
+
+    [[nodiscard]] const ResourceType &GetOrDefault(std::string_view id) const
+    {
+        return GetOrDefault(entt::hashed_string{id.data(), id.size()});
     }
 
     /**
