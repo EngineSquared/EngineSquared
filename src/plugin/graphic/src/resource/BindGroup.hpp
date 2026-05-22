@@ -100,8 +100,8 @@ class BindGroup {
         descriptor.entryCount = static_cast<uint32_t>(_entries.size());
         descriptor.entries = _entries.empty() ? nullptr : _entries.data();
 
-        auto &deviceContext = core.GetResource<Graphic::Resource::Context>();
-        auto bindGroup = deviceContext.deviceContext.GetDevice()->createBindGroup(descriptor);
+        auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
+        auto bindGroup = deviceContext.GetDevice()->createBindGroup(descriptor);
 
         layout.release();
 

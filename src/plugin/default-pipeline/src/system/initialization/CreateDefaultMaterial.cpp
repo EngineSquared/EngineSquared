@@ -3,7 +3,7 @@
 #include "component/Material.hpp"
 #include "resource/BindGroup.hpp"
 #include "resource/BindGroupManager.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GPUBufferContainer.hpp"
 #include "resource/buffer/MaterialGPUBuffer.hpp"
 #include "resource/pass/GBuffer.hpp"

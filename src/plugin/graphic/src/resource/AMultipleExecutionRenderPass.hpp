@@ -41,7 +41,8 @@ template <typename TDerived> class AMultipleExecutionRenderPass : public ARender
 
     void ExecuteSinglePass(Engine::Core &core)
     {
-        Resource::Context &context = core.GetResource<Resource::Context>();
+        auto &deviceContext = core.GetResource<Resource::DeviceContext>();
+        auto &queue = core.GetResource<Resource::Queue>();
 
         if (this->GetOutputs().colorBuffers.empty() && !this->GetOutputs().depthBuffer.has_value())
         {
@@ -50,7 +51,7 @@ template <typename TDerived> class AMultipleExecutionRenderPass : public ARender
             return;
         }
 
-        wgpu::RenderPassEncoder renderPass = this->_CreateRenderPass(context.deviceContext, core);
+        wgpu::RenderPassEncoder renderPass = this->_CreateRenderPass(deviceContext, core);
 
         auto &shader = core.GetResource<Graphic::Resource::ShaderContainer>().Get(this->GetBoundShader().value());
         renderPass.setPipeline(shader.GetPipeline());
@@ -73,7 +74,7 @@ template <typename TDerived> class AMultipleExecutionRenderPass : public ARender
         auto commandBuffer = _commandEncoder.finish(cmdBufferDescriptor);
         _commandEncoder.release();
 
-        context.queue.value().submit(1, &commandBuffer);
+        queue->submit(1, &commandBuffer);
         commandBuffer.release();
     }
 

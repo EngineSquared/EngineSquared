@@ -1,6 +1,7 @@
 #include "CreateInstance.hpp"
 #include "exception/InstanceCreationError.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
+#include "resource/Instance.hpp"
 #include "utils/webgpu.hpp"
 
 namespace Graphic::System {
@@ -14,7 +15,7 @@ void CreateInstance(Engine::Core &core)
     if (instance == nullptr)
         throw Exception::InstanceCreationError("Could not create WebGPU instance, wgpuCreateInstance returned nullptr");
 
-    core.GetResource<Graphic::Resource::Context>().instance = instance;
+    core.RegisterResource(Resource::Instance(instance));
 }
 
 } // namespace Graphic::System

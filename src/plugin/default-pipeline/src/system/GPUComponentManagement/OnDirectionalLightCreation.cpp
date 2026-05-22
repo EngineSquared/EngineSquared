@@ -26,7 +26,6 @@ void DefaultPipeline::System::OnDirectionalLightCreation(Engine::Core &core, Eng
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
     auto &textureViewContainer = core.GetResource<Graphic::Resource::TextureViewContainer>();
     auto &samplerContainer = core.GetResource<Graphic::Resource::SamplerContainer>();
-    const auto &context = core.GetResource<Graphic::Resource::Context>();
 
     auto &GPUDirectionalLight = entity.AddComponent<Component::GPUDirectionalLight>();
 

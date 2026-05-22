@@ -1,13 +1,14 @@
 #include "system/preparation/PrepareEndRenderTexture.hpp"
 #include "exception/EndRenderTextureCreationError.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/Surface.hpp"
 #include "resource/TextureContainer.hpp"
 #include "utils/EndRenderTexture.hpp"
 #include "utils/webgpu.hpp"
 #include <glm/vec2.hpp>
 
-static void EnsurePlaceholderEndRenderTexture(Graphic::Resource::Context &context,
+static void EnsurePlaceholderEndRenderTexture(Graphic::Resource::DeviceContext &deviceContext,
                                               Graphic::Resource::TextureContainer &textureContainer)
 {
     wgpu::TextureDescriptor textureDesc(wgpu::Default);
@@ -20,7 +21,7 @@ static void EnsurePlaceholderEndRenderTexture(Graphic::Resource::Context &contex
     textureDesc.viewFormats = nullptr;
     textureDesc.viewFormatCount = 0;
 
-    Graphic::Resource::Texture texture(context, textureDesc);
+    Graphic::Resource::Texture texture(deviceContext, textureDesc);
 
     if (textureContainer.Contains(Graphic::Utils::END_RENDER_TEXTURE_ID))
     {
@@ -33,24 +34,24 @@ static void EnsurePlaceholderEndRenderTexture(Graphic::Resource::Context &contex
     }
 }
 
-static void EnsureSurfaceEndRenderTexture(Graphic::Resource::Context &context,
+static void EnsureSurfaceEndRenderTexture(Graphic::Resource::Surface &surface,
+                                          Graphic::Resource::DeviceContext &deviceContext,
                                           Graphic::Resource::TextureContainer &textureContainer)
 {
-    if (!context.surface.has_value() || !context.surface->value.has_value())
+    if (!surface.value.has_value())
     {
         throw Graphic::Exception::EndRenderTextureCreationError(
             "Surface is not created, cannot prepare the end render texture.");
     }
 
-    if (!context.surface->configured)
+    if (!surface.configured)
     {
-        EnsurePlaceholderEndRenderTexture(context, textureContainer);
+        EnsurePlaceholderEndRenderTexture(deviceContext, textureContainer);
         return;
     }
 
-    const wgpu::Surface &surface = context.surface->value.value();
     wgpu::SurfaceTexture surfaceTexture(wgpu::Default);
-    surface.getCurrentTexture(&surfaceTexture);
+    surface.value->getCurrentTexture(&surfaceTexture);
 
     if (surfaceTexture.status != wgpu::SurfaceGetCurrentTextureStatus::SuccessOptimal &&
         surfaceTexture.status != wgpu::SurfaceGetCurrentTextureStatus::SuccessSuboptimal)
@@ -92,7 +93,7 @@ static void EnsureSurfaceEndRenderTexture(Graphic::Resource::Context &context,
  */
 static void EnsureDepthTexture(Engine::Core &core, const glm::uvec2 &requiredSize)
 {
-    auto &context = core.GetResource<Graphic::Resource::Context>();
+    auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
 
     if (textureContainer.Contains(Graphic::System::END_DEPTH_RENDER_TEXTURE_ID))
@@ -119,22 +120,22 @@ static void EnsureDepthTexture(Engine::Core &core, const glm::uvec2 &requiredSiz
     textureDesc.viewFormats = nullptr;
     textureDesc.viewFormatCount = 0;
 
-    Graphic::Resource::Texture depthTexture(context, textureDesc);
+    Graphic::Resource::Texture depthTexture(deviceContext, textureDesc);
     textureContainer.Add(Graphic::System::END_DEPTH_RENDER_TEXTURE_ID, std::move(depthTexture));
 }
 
 void Graphic::System::PrepareEndRenderTexture(Engine::Core &core)
 {
-    auto &context = core.GetResource<Resource::Context>();
+    auto &deviceContext = core.GetResource<Resource::DeviceContext>();
     auto &textureContainer = core.GetResource<Resource::TextureContainer>();
 
     if (core.GetResource<Resource::GraphicSettings>().GetWindowSystem() == Resource::WindowSystem::None)
     {
-        EnsurePlaceholderEndRenderTexture(context, textureContainer);
+        EnsurePlaceholderEndRenderTexture(deviceContext, textureContainer);
     }
     else
     {
-        EnsureSurfaceEndRenderTexture(context, textureContainer);
+        EnsureSurfaceEndRenderTexture(core.GetResource<Resource::Surface>(), deviceContext, textureContainer);
     }
 
     const auto &endRenderTexture = textureContainer.Get(Utils::END_RENDER_TEXTURE_ID);

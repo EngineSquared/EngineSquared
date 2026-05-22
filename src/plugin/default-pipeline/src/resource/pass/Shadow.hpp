@@ -131,7 +131,7 @@ class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
         }
     }
 
-    static Graphic::Resource::Shader CreateShader(Graphic::Resource::Context &graphicContext)
+    static Graphic::Resource::Shader CreateShader(Graphic::Resource::DeviceContext &deviceContext)
     {
         Graphic::Resource::ShaderDescriptor shaderDescriptor;
 
@@ -185,7 +185,7 @@ class Shadow : public Graphic::Resource::AMultipleExecutionRenderPass<Shadow> {
                 }
             }
         }
-        return Graphic::Resource::Shader::Create(shaderDescriptor, graphicContext);
+        return Graphic::Resource::Shader::Create(shaderDescriptor, deviceContext);
     }
 };
 

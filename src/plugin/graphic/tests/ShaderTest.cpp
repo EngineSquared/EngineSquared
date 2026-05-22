@@ -99,7 +99,7 @@ auto TestSystem(Engine::Core &core) -> void
     }
 
     Graphic::Resource::Shader shader =
-        Graphic::Resource::Shader::Create(shaderDescriptor, core.GetResource<Graphic::Resource::Context>());
+        Graphic::Resource::Shader::Create(shaderDescriptor, core.GetResource<Graphic::Resource::DeviceContext>());
 }
 
 TEST(ShaderTest, GlobalRun)

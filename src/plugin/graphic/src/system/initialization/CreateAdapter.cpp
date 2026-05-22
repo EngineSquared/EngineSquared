@@ -1,7 +1,10 @@
 #include "CreateAdapter.hpp"
 #include "exception/AdapterCreationError.hpp"
-#include "resource/Context.hpp"
+#include "resource/Adapter.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/Instance.hpp"
+#include "resource/Surface.hpp"
 
 #include <optional>
 #include <vector>
@@ -19,17 +22,15 @@ static std::optional<wgpu::BackendType> getBackendType(const wgpu::Adapter &adap
     return backendType;
 }
 
-static std::optional<wgpu::Adapter> findVulkanAdapter(const Graphic::Resource::Context &context)
+static std::optional<wgpu::Adapter> findVulkanAdapter(const Graphic::Resource::Instance &instance)
 {
-    if (!context.instance.has_value())
-        return std::nullopt;
     wgpu::InstanceEnumerateAdapterOptions enumOpts(wgpu::Default);
-    size_t count = context.instance->enumerateAdapters(enumOpts, nullptr);
+    size_t count = instance->enumerateAdapters(enumOpts, nullptr);
     if (count == 0)
         return std::nullopt;
 
     std::vector<wgpu::Adapter> adapters(count);
-    context.instance->enumerateAdapters(enumOpts, adapters.data());
+    instance->enumerateAdapters(enumOpts, adapters.data());
     for (auto &cand : adapters)
     {
         wgpu::AdapterInfo info(wgpu::Default);
@@ -51,7 +52,7 @@ static std::optional<wgpu::Adapter> findVulkanAdapter(const Graphic::Resource::C
     return std::nullopt;
 }
 
-static void selectVulkanAdapter(const Graphic::Resource::Context &context, wgpu::Adapter &adapter)
+static void selectVulkanAdapter(const Graphic::Resource::Instance &instance, wgpu::Adapter &adapter)
 {
     auto currentBackend = getBackendType(adapter);
     if (!currentBackend.has_value())
@@ -60,20 +61,20 @@ static void selectVulkanAdapter(const Graphic::Resource::Context &context, wgpu:
     if (currentBackend.value() == wgpu::BackendType::Vulkan)
         return;
 
-    if (auto vulkan = findVulkanAdapter(context))
+    if (auto vulkan = findVulkanAdapter(instance))
         adapter = *vulkan;
 }
 
 void Graphic::System::CreateAdapter(Engine::Core &core)
 {
-    auto &context = core.GetResource<Resource::Context>();
     const auto &graphicSettings = core.GetResource<Resource::GraphicSettings>();
 
-    if (!context.instance.has_value())
+    if (!core.HasResource<Resource::Instance>())
     {
         Log::Error("Graphic::System::CreateAdapter: context.instance has no value");
         return;
     }
+    auto &instance = core.GetResource<Resource::Instance>();
 
     wgpu::RequestAdapterOptions adapterOpts(wgpu::Default);
 
@@ -86,15 +87,21 @@ void Graphic::System::CreateAdapter(Engine::Core &core)
         adapterOpts.powerPreference = wgpu::PowerPreference::HighPerformance;
     }
 
-    if (context.surface.has_value() && context.surface->value.has_value())
-        adapterOpts.compatibleSurface = context.surface->value.value();
+    if (core.HasResource<Resource::Surface>())
+    {
+        auto &surface = core.GetResource<Resource::Surface>();
+        if (surface.value.has_value())
+        {
+            adapterOpts.compatibleSurface = surface.value.value();
+        }
+    }
 
-    wgpu::Adapter adapter = context.instance->requestAdapter(adapterOpts);
+    wgpu::Adapter adapter = instance->requestAdapter(adapterOpts);
 
     if (adapter == nullptr)
         throw Exception::AdapterCreationError("Could not get WebGPU adapter");
 
-    selectVulkanAdapter(context, adapter);
+    selectVulkanAdapter(instance, adapter);
 
-    context.adapter = adapter;
+    core.RegisterResource(Resource::Adapter(adapter));
 }

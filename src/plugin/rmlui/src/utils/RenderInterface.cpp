@@ -8,6 +8,7 @@
 #include "core/Core.hpp"
 #include "fmt/format.h"
 #include "glm/ext/vector_uint4_sized.hpp"
+#include "resource/DeviceContext.hpp"
 #include "spdlog/fmt/bundled/format.h"
 
 #include "RmlUi/Config/Config.h"
@@ -17,7 +18,7 @@
 
 #include "exception/FileReadingError.hpp"
 #include "exception/UnknownFileError.hpp"
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/Image.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "resource/ShaderContainer.hpp"
@@ -44,13 +45,13 @@ void UpdateScreenBuffer(Engine::Core &core, wgpu::Buffer const &buffer)
     const auto &window = core.GetResource<Window::Resource::Window>();
     const auto size = window.GetSize();
     const std::array<float, 4> data = {static_cast<float>(size.x), static_cast<float>(size.y), 0.0F, 0.0F};
-    const auto &context = core.GetResource<Graphic::Resource::Context>();
-    if (!context.queue.has_value())
+    if (!core.HasResource<Graphic::Resource::Queue>())
     {
         Log::Error("UpdateScreenBuffer: context.queue has no value");
         return;
     }
-    context.queue.value().writeBuffer(buffer, 0, data.data(), sizeof(data));
+    const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+    queue->writeBuffer(buffer, 0, data.data(), sizeof(data));
 }
 
 wgpu::BindGroup CreateTextureBindGroup(Engine::Core &core, const wgpu::BindGroupLayout &layout,
@@ -67,7 +68,7 @@ wgpu::BindGroup CreateTextureBindGroup(Engine::Core &core, const wgpu::BindGroup
     descriptor.entryCount = 2;
     descriptor.entries = entries.data();
 
-    const auto &optDevice = core.GetResource<Graphic::Resource::Context>().deviceContext.GetDevice();
+    const auto &optDevice = core.GetResource<Graphic::Resource::DeviceContext>().GetDevice();
     if (!optDevice.has_value())
     {
         throw std::runtime_error("CreateTextureBindGroup: context.deviceContext.GetDevice() is empty");
@@ -159,16 +160,16 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
         return;
     }
 
-    const auto &context = _core.GetResource<Graphic::Resource::Context>();
-    const auto &optDevice = context.deviceContext.GetDevice();
+    const auto &deviceContext = _core.GetResource<Graphic::Resource::DeviceContext>();
+    const auto &optDevice = deviceContext.GetDevice();
     if (!optDevice.has_value())
     {
         return;
     }
     const auto &device = optDevice.value();
-    if (!context.queue.has_value())
+    if (!_core.HasResource<Graphic::Resource::Queue>())
         return;
-    const auto &queue = context.queue.value();
+    const auto &queue = _core.GetResource<Graphic::Resource::Queue>();
 
     std::vector<Rml::Vertex> translatedVertices = geometry.vertices;
     for (auto &vertex : translatedVertices)
@@ -217,13 +218,13 @@ void RenderInterface::RenderGeometry(Rml::CompiledGeometryHandle handle, Rml::Ve
     vertexDesc.size = translatedVertices.size() * sizeof(Rml::Vertex);
     vertexDesc.usage = wgpu::BufferUsage::Vertex | wgpu::BufferUsage::CopyDst;
     wgpu::Buffer vertexBuffer = device.createBuffer(vertexDesc);
-    queue.writeBuffer(vertexBuffer, 0, translatedVertices.data(), vertexDesc.size);
+    queue->writeBuffer(vertexBuffer, 0, translatedVertices.data(), vertexDesc.size);
 
     wgpu::BufferDescriptor indexDesc(wgpu::Default);
     indexDesc.size = indices.size() * sizeof(uint32_t);
     indexDesc.usage = wgpu::BufferUsage::Index | wgpu::BufferUsage::CopyDst;
     wgpu::Buffer indexBuffer = device.createBuffer(indexDesc);
-    queue.writeBuffer(indexBuffer, 0, indices.data(), indexDesc.size);
+    queue->writeBuffer(indexBuffer, 0, indices.data(), indexDesc.size);
 
     wgpu::BindGroup textureBindGroup = ResolveTextureBindGroup(texture_handle);
 
@@ -373,7 +374,8 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
         }
     }
 
-    const auto &context = _core.GetResource<Graphic::Resource::Context>();
+    const auto &deviceContext = _core.GetResource<Graphic::Resource::DeviceContext>();
+    const auto &queue = _core.GetResource<Graphic::Resource::Queue>();
     const std::string textureName = fmt::format("rmlui_texture_{}", _textureCounter);
 
     _textureCounter += 1UL;
@@ -389,8 +391,8 @@ Rml::TextureHandle RenderInterface::CreateTexture(Rml::Span<const Rml::byte> sou
                             wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
         textureDesc.viewFormats = nullptr;
         textureDesc.viewFormatCount = 0;
-        texture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, textureDesc);
-        texture->gpuTexture->Write(context, image);
+        texture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(deviceContext, textureDesc);
+        texture->gpuTexture->Write(deviceContext, image, queue);
     }
 
     if (const auto &samplers = _core.GetResource<Graphic::Resource::SamplerContainer>();
@@ -451,8 +453,9 @@ void RenderInterface::BeginFrame()
     _active = this;
     _drawCommands.clear();
 
-    const auto &context = _core.GetResource<Graphic::Resource::Context>();
-    const auto &optDevice = context.deviceContext.GetDevice();
+    const auto &deviceContext = _core.GetResource<Graphic::Resource::DeviceContext>();
+    const auto &queue = _core.GetResource<Graphic::Resource::Queue>();
+    const auto &optDevice = deviceContext.GetDevice();
     if (!optDevice)
         return;
     const auto &device = optDevice.value();
@@ -512,8 +515,8 @@ void RenderInterface::BeginFrame()
                                     wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
                 textureDesc.viewFormats = nullptr;
                 textureDesc.viewFormatCount = 0;
-                _defaultTexture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(context, textureDesc);
-                _defaultTexture->gpuTexture->Write(context, image);
+                _defaultTexture->gpuTexture = std::make_unique<Graphic::Resource::Texture>(deviceContext, textureDesc);
+                _defaultTexture->gpuTexture->Write(deviceContext, image, queue);
             }
 
             const auto &samplers = _core.GetResource<Graphic::Resource::SamplerContainer>();

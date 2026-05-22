@@ -7,7 +7,13 @@ namespace Graphic::Resource {
 struct DeviceContext {
   public:
     DeviceContext(void) = default;
-    ~DeviceContext() = default;
+    ~DeviceContext() { Release(); }
+
+    DeviceContext(DeviceContext &other) = delete;
+    DeviceContext &operator=(DeviceContext &other) = delete;
+
+    DeviceContext(DeviceContext &&) = default;
+    DeviceContext &operator=(DeviceContext &&) = default;
 
     auto &GetDescriptor() { return _descriptor; }
     auto &GetDevice() { return _device; }
