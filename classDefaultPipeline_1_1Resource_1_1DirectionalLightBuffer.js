@@ -4,7 +4,7 @@ var classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer =
     [ "DirectionalLightBuffer", "classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer.html#a6448bedcd247a65217798eb27e1a7a97", null ],
     [ "~DirectionalLightBuffer", "classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer.html#a8adf3e3facd23fd8db16240e17a3fb71", null ],
     [ "_CreateBuffer", "classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer.html#a8326eeefaa3cd245fd035d5c37c3995a", null ],
-    [ "_UpdateBuffer", "classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer.html#ae5437b335e261c91cc2593a69383971e", null ],
+    [ "_UpdateBuffer", "classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer.html#ae5410ebe662f1c2950e05b860151bd17", null ],
     [ "_UpdateDebugName", "classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer.html#abbf551d7594c59d18fb06e8fb94c90f2", null ],
     [ "Create", "classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer.html#af837c6046cf2bd24416d30c9f8cf586f", null ],
     [ "Destroy", "classDefaultPipeline_1_1Resource_1_1DirectionalLightBuffer.html#ade58053dfdacb6401b835ce62fb93a18", null ],

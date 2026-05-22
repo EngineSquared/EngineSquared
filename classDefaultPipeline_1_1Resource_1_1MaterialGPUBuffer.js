@@ -5,7 +5,7 @@ var classDefaultPipeline_1_1Resource_1_1MaterialGPUBuffer =
     [ "MaterialGPUBuffer", "classDefaultPipeline_1_1Resource_1_1MaterialGPUBuffer.html#a560827423dd97885bb25e8d377d2aabf", null ],
     [ "~MaterialGPUBuffer", "classDefaultPipeline_1_1Resource_1_1MaterialGPUBuffer.html#adbfa9878768f002e2a0b96c3ebf60f78", null ],
     [ "_CreateBuffer", "classDefaultPipeline_1_1Resource_1_1MaterialGPUBuffer.html#a338efa66edf6acc4be8845dbf7e7578c", null ],
-    [ "_UpdateBuffer", "classDefaultPipeline_1_1Resource_1_1MaterialGPUBuffer.html#a52dc7f5f67368ed4364c54c3c47423ed", null ],
+    [ "_UpdateBuffer", "classDefaultPipeline_1_1Resource_1_1MaterialGPUBuffer.html#a40ad8b83c6cfa97639563951055b333b", null ],
     [ "_UpdateDebugName", "classDefaultPipeline_1_1Resource_1_1MaterialGPUBuffer.html#a89d94cc4562225408d29e63f0d2cc2de", null ],
     [ "Create", "classDefaultPipeline_1_1Resource_1_1MaterialGPUBuffer.html#af7bce6eae6ca7d8e0a053f224dd9ac36", null ],
     [ "Destroy", "classDefaultPipeline_1_1Resource_1_1MaterialGPUBuffer.html#a8148aac2d8806e171f6f9f05c9da33db", null ],

@@ -21,9 +21,10 @@ var searchData=
   ['inputmanager_2ehpp_18',['InputManager.hpp',['../InputManager_8hpp.html',1,'']]],
   ['inpututils_2ecpp_19',['InputUtils.cpp',['../InputUtils_8cpp.html',1,'']]],
   ['inpututils_2ehpp_20',['InputUtils.hpp',['../InputUtils_8hpp.html',1,'']]],
-  ['instancecreationerror_2ehpp_21',['InstanceCreationError.hpp',['../InstanceCreationError_8hpp.html',1,'']]],
-  ['iplugin_2ehpp_22',['IPlugin.hpp',['../IPlugin_8hpp.html',1,'']]],
-  ['irenderer_2ehpp_23',['IRenderer.hpp',['../IRenderer_8hpp.html',1,'']]],
-  ['ischeduler_2ehpp_24',['IScheduler.hpp',['../IScheduler_8hpp.html',1,'']]],
-  ['ivalidable_2ehpp_25',['IValidable.hpp',['../IValidable_8hpp.html',1,'']]]
+  ['instance_2ehpp_21',['Instance.hpp',['../Instance_8hpp.html',1,'']]],
+  ['instancecreationerror_2ehpp_22',['InstanceCreationError.hpp',['../InstanceCreationError_8hpp.html',1,'']]],
+  ['iplugin_2ehpp_23',['IPlugin.hpp',['../IPlugin_8hpp.html',1,'']]],
+  ['irenderer_2ehpp_24',['IRenderer.hpp',['../IRenderer_8hpp.html',1,'']]],
+  ['ischeduler_2ehpp_25',['IScheduler.hpp',['../IScheduler_8hpp.html',1,'']]],
+  ['ivalidable_2ehpp_26',['IValidable.hpp',['../IValidable_8hpp.html',1,'']]]
 ];

@@ -153,6 +153,7 @@ var annotated_dup =
         [ "VertexAttributeOverlappingError", "classGraphic_1_1Exception_1_1VertexAttributeOverlappingError.html", null ]
       ] ],
       [ "Resource", "namespaceGraphic_1_1Resource.html", [
+        [ "Adapter", "classGraphic_1_1Resource_1_1Adapter.html", "classGraphic_1_1Resource_1_1Adapter" ],
         [ "AGPUBuffer", "classGraphic_1_1Resource_1_1AGPUBuffer.html", "classGraphic_1_1Resource_1_1AGPUBuffer" ],
         [ "AMultipleExecutionRenderPass", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass.html", "classGraphic_1_1Resource_1_1AMultipleExecutionRenderPass" ],
         [ "ColorOutput", "structGraphic_1_1Resource_1_1ColorOutput.html", "structGraphic_1_1Resource_1_1ColorOutput" ],
@@ -162,11 +163,12 @@ var annotated_dup =
         [ "ARenderPass", "classGraphic_1_1Resource_1_1ARenderPass.html", "classGraphic_1_1Resource_1_1ARenderPass" ],
         [ "ASingleExecutionRenderPass", "classGraphic_1_1Resource_1_1ASingleExecutionRenderPass.html", "classGraphic_1_1Resource_1_1ASingleExecutionRenderPass" ],
         [ "BindGroup", "classGraphic_1_1Resource_1_1BindGroup.html", "classGraphic_1_1Resource_1_1BindGroup" ],
-        [ "Context", "classGraphic_1_1Resource_1_1Context.html", "classGraphic_1_1Resource_1_1Context" ],
         [ "DeviceContext", "structGraphic_1_1Resource_1_1DeviceContext.html", "structGraphic_1_1Resource_1_1DeviceContext" ],
         [ "GraphicSettings", "classGraphic_1_1Resource_1_1GraphicSettings.html", "classGraphic_1_1Resource_1_1GraphicSettings" ],
         [ "Image", "structGraphic_1_1Resource_1_1Image.html", "structGraphic_1_1Resource_1_1Image" ],
+        [ "Instance", "classGraphic_1_1Resource_1_1Instance.html", "classGraphic_1_1Resource_1_1Instance" ],
         [ "Limits", "structGraphic_1_1Resource_1_1Limits.html", "structGraphic_1_1Resource_1_1Limits" ],
+        [ "Queue", "classGraphic_1_1Resource_1_1Queue.html", "classGraphic_1_1Resource_1_1Queue" ],
         [ "RenderGraph", "classGraphic_1_1Resource_1_1RenderGraph.html", "classGraphic_1_1Resource_1_1RenderGraph" ],
         [ "Sampler", "classGraphic_1_1Resource_1_1Sampler.html", "classGraphic_1_1Resource_1_1Sampler" ],
         [ "Shader", "classGraphic_1_1Resource_1_1Shader.html", "classGraphic_1_1Resource_1_1Shader" ],

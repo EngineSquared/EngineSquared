@@ -234,6 +234,8 @@ var NAVTREEINDEX1 =
 "Input_8pch_8hpp_source.html":[6,0,1,1,4,1,6],
 "InstanceCreationError_8hpp.html":[6,0,1,1,3,0,0,9],
 "InstanceCreationError_8hpp_source.html":[6,0,1,1,3,0,0,9],
+"Instance_8hpp.html":[6,0,1,1,3,0,2,11],
+"Instance_8hpp_source.html":[6,0,1,1,3,0,2,11],
 "JellyCubeGenerator_8cpp.html":[6,0,1,1,6,0,4,10],
 "JellyCubeGenerator_8hpp.html":[6,0,1,1,6,0,4,11],
 "JellyCubeGenerator_8hpp_source.html":[6,0,1,1,6,0,4,11],
@@ -243,11 +245,9 @@ var NAVTREEINDEX1 =
 "Layers_8hpp_source.html":[6,0,1,1,7,1,7,7],
 "Lights_8hpp.html":[6,0,1,1,1,1,4,3],
 "Lights_8hpp_source.html":[6,0,1,1,1,1,4,3],
-"Limits_8hpp.html":[6,0,1,1,3,0,2,11],
-"Limits_8hpp_source.html":[6,0,1,1,3,0,2,11],
+"Limits_8hpp.html":[6,0,1,1,3,0,2,12],
+"Limits_8hpp_source.html":[6,0,1,1,3,0,2,12],
 "LoadDocumentTest_8cpp.html":[6,0,1,1,10,1,1],
 "LoadDocumentTest_8cpp.html#a2271f4ed20ec8541962c46eec4737cff":[6,0,1,1,10,1,1,5],
-"LoadDocumentTest_8cpp.html#a2e9d9c4aa2cff73fa34b85c552adcac1":[6,0,1,1,10,1,1,4],
-"LoadDocumentTest_8cpp.html#a2f838c64bb579d2c80d8d8975c03f7a0":[6,0,1,1,10,1,1,2],
-"LoadDocumentTest_8cpp.html#a2ff32c9cdcbe5759d41f4540d1366bc7":[6,0,1,1,10,1,1,9]
+"LoadDocumentTest_8cpp.html#a2e9d9c4aa2cff73fa34b85c552adcac1":[6,0,1,1,10,1,1,4]
 };

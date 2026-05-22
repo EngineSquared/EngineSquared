@@ -12,10 +12,11 @@ var searchData=
   ['inputcontainer_9',['InputContainer',['../structGraphic_1_1Resource_1_1InputContainer.html',1,'Graphic::Resource']]],
   ['inputerror_10',['InputError',['../classInput_1_1InputError.html',1,'Input']]],
   ['inputmanager_11',['InputManager',['../classInput_1_1Resource_1_1InputManager.html',1,'Input::Resource']]],
-  ['instancecreationerror_12',['InstanceCreationError',['../classGraphic_1_1Exception_1_1InstanceCreationError.html',1,'Graphic::Exception']]],
-  ['iplugin_13',['IPlugin',['../classEngine_1_1IPlugin.html',1,'Engine']]],
-  ['irenderer_14',['IRenderer',['../classRmlui_1_1Utils_1_1IRenderer.html',1,'Rmlui::Utils']]],
-  ['is_5fderived_5ffrom_5ffunction_5ftype_15',['is_derived_from_function_type',['../structFunctionUtils_1_1FunctionContainer_1_1is__derived__from__function__type.html',1,'FunctionUtils::FunctionContainer']]],
-  ['ischeduler_16',['IScheduler',['../classEngine_1_1Scheduler_1_1IScheduler.html',1,'Engine::Scheduler']]],
-  ['ivalidable_17',['IValidable',['../classGraphic_1_1Utils_1_1IValidable.html',1,'Graphic::Utils']]]
+  ['instance_12',['Instance',['../classGraphic_1_1Resource_1_1Instance.html',1,'Graphic::Resource']]],
+  ['instancecreationerror_13',['InstanceCreationError',['../classGraphic_1_1Exception_1_1InstanceCreationError.html',1,'Graphic::Exception']]],
+  ['iplugin_14',['IPlugin',['../classEngine_1_1IPlugin.html',1,'Engine']]],
+  ['irenderer_15',['IRenderer',['../classRmlui_1_1Utils_1_1IRenderer.html',1,'Rmlui::Utils']]],
+  ['is_5fderived_5ffrom_5ffunction_5ftype_16',['is_derived_from_function_type',['../structFunctionUtils_1_1FunctionContainer_1_1is__derived__from__function__type.html',1,'FunctionUtils::FunctionContainer']]],
+  ['ischeduler_17',['IScheduler',['../classEngine_1_1Scheduler_1_1IScheduler.html',1,'Engine::Scheduler']]],
+  ['ivalidable_18',['IValidable',['../classGraphic_1_1Utils_1_1IValidable.html',1,'Graphic::Utils']]]
 ];

@@ -4,7 +4,7 @@ var classDefaultPipeline_1_1Resource_1_1CameraGPUBuffer =
     [ "CameraGPUBuffer", "classDefaultPipeline_1_1Resource_1_1CameraGPUBuffer.html#aa0846964a9497cd3a252d90d5f28b8ab", null ],
     [ "~CameraGPUBuffer", "classDefaultPipeline_1_1Resource_1_1CameraGPUBuffer.html#a2537733a3f265794f0f089b6af0b7b3a", null ],
     [ "_CreateBuffer", "classDefaultPipeline_1_1Resource_1_1CameraGPUBuffer.html#abf60325f48e275ea0b19814fc57a7196", null ],
-    [ "_UpdateBuffer", "classDefaultPipeline_1_1Resource_1_1CameraGPUBuffer.html#a28a75219da6994e211dbec3c4fbce8b9", null ],
+    [ "_UpdateBuffer", "classDefaultPipeline_1_1Resource_1_1CameraGPUBuffer.html#a1340433a407830b2b826f9964012d4c4", null ],
     [ "Create", "classDefaultPipeline_1_1Resource_1_1CameraGPUBuffer.html#a63561e38db148fe182a7b6241b965aa3", null ],
     [ "Destroy", "classDefaultPipeline_1_1Resource_1_1CameraGPUBuffer.html#ad6bcba2937fd66882e685083b55871f3", null ],
     [ "Destroy", "classDefaultPipeline_1_1Resource_1_1CameraGPUBuffer.html#aeab72a014ead8b4b272bb54279a8f40c", null ],

@@ -2,6 +2,7 @@ var hierarchy =
 [
     [ "A", "structA.html", null ],
     [ "ActionHistory", "structActionHistory.html", null ],
+    [ "Graphic::Resource::Adapter", "classGraphic_1_1Resource_1_1Adapter.html", null ],
     [ "Graphic::Resource::AGPUBuffer", "classGraphic_1_1Resource_1_1AGPUBuffer.html", [
       [ "DefaultPipeline::Resource::AmbientLightBuffer", "classDefaultPipeline_1_1Resource_1_1AmbientLightBuffer.html", null ],
       [ "DefaultPipeline::Resource::CameraGPUBuffer", "classDefaultPipeline_1_1Resource_1_1CameraGPUBuffer.html", null ],
@@ -95,7 +96,6 @@ var hierarchy =
     [ "JPH::ContactListener", null, [
       [ "Physics::Utils::ContactListenerImpl", "classPhysics_1_1Utils_1_1ContactListenerImpl.html", null ]
     ] ],
-    [ "Graphic::Resource::Context", "classGraphic_1_1Resource_1_1Context.html", null ],
     [ "Physics::Component::ConvexHullMeshCollider", "structPhysics_1_1Component_1_1ConvexHullMeshCollider.html", null ],
     [ "Engine::Core", "classEngine_1_1Core.html", null ],
     [ "CounterComponent", "structCounterComponent.html", null ],
@@ -240,6 +240,7 @@ var hierarchy =
     [ "Graphic::Resource::Image", "structGraphic_1_1Resource_1_1Image.html", null ],
     [ "Rmlui::Resource::UIContext::InputCallbackIds", "structRmlui_1_1Resource_1_1UIContext_1_1InputCallbackIds.html", null ],
     [ "Input::Resource::InputManager", "classInput_1_1Resource_1_1InputManager.html", null ],
+    [ "Graphic::Resource::Instance", "classGraphic_1_1Resource_1_1Instance.html", null ],
     [ "Engine::IPlugin", "classEngine_1_1IPlugin.html", [
       [ "Engine::APlugin", "classEngine_1_1APlugin.html", [
         [ "CameraMovement::Plugin", "classCameraMovement_1_1Plugin.html", null ],
@@ -354,6 +355,7 @@ var hierarchy =
     [ "Physics::Component::PointConstraint", "structPhysics_1_1Component_1_1PointConstraint.html", null ],
     [ "Object::Component::PointLight", "structObject_1_1Component_1_1PointLight.html", null ],
     [ "DefaultPipeline::Resource::PointLightsBuffer::PointLightsData", "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html", null ],
+    [ "Graphic::Resource::Queue", "classGraphic_1_1Resource_1_1Queue.html", null ],
     [ "Relationship::Component::Relationship", "structRelationship_1_1Component_1_1Relationship.html", null ],
     [ "Graphic::Resource::RenderGraph", "classGraphic_1_1Resource_1_1RenderGraph.html", null ],
     [ "Rml::RenderInterface", null, [
