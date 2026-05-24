@@ -28,7 +28,8 @@ void DefaultPipeline::Plugin::Bind()
                       &System::OnTransformDestruction>(this->GetCore());
     SetupGPUComponent<Object::Component::Material, Component::GPUMaterial, &System::OnMaterialCreation,
                       &System::OnMaterialDestruction>(this->GetCore());
-    this->GetCore().GetRegistry().on_update<Object::Component::Material>().connect<&System::OnMaterialUpdate>(this->GetCore());
+    this->GetCore().GetRegistry().on_update<Object::Component::Material>().connect<&System::OnMaterialUpdate>(
+        this->GetCore());
     SetupGPUComponent<Object::Component::DirectionalLight, Component::GPUDirectionalLight,
                       &System::OnDirectionalLightCreation, &System::OnDirectionalLightDestruction>(this->GetCore());
 
