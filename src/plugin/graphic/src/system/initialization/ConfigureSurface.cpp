@@ -47,15 +47,12 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
         auto &adapter = core.GetResource<Resource::Adapter>();
         wgpu::AdapterInfo info(wgpu::Default);
         // TODO: create a class to handle RAII release properly
-        if (adapter->getInfo(&info) == wgpu::Status::Success)
+        if (
         {
-            if (info.backendType == wgpu::BackendType::OpenGL || info.backendType == wgpu::BackendType::OpenGLES)
-            {
-                info.freeMembers();
-                return;
-            }
             info.freeMembers();
+            return;
         }
+        info.freeMembers();
     }
     surface.value->configure(config);
     surface.configured = true;
