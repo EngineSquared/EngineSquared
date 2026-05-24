@@ -19,6 +19,7 @@ var classEngine_1_1Entity =
     [ "RemoveComponent", "classEngine_1_1Entity.html#ae29ffec08bec57123c16a045e47a6368", null ],
     [ "RemoveTemporaryComponents", "classEngine_1_1Entity.html#a2c3e9f60e2b67a288d8ca7c4c089e54b", null ],
     [ "TryGetComponent", "classEngine_1_1Entity.html#a9c234a44f74acc04f5c46ba8d61d471c", null ],
+    [ "UpdateComponent", "classEngine_1_1Entity.html#a660d7405616fed4e26bb2e43d97ccb28", null ],
     [ "_core", "classEngine_1_1Entity.html#ae1e735de0eb632f3cbe82febb1e7215d", null ],
     [ "_entityId", "classEngine_1_1Entity.html#ac53032c0815a8327d50d3989f98c090b", null ]
 ];

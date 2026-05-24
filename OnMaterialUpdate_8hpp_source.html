@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Engine²: src/plugin/graphic/src/resource/BindGroupManager.hpp Source File</title>
+<title>Engine²: src/plugin/default-pipeline/src/system/GPUComponentManagement/OnMaterialUpdate.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('BindGroupManager_8hpp_source.html','',''); });
+$(function(){initNavTree('OnMaterialUpdate_8hpp_source.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -91,31 +91,28 @@ $(function(){initNavTree('BindGroupManager_8hpp_source.html','',''); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">BindGroupManager.hpp</div></div>
+  <div class="headertitle"><div class="title">OnMaterialUpdate.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="BindGroupManager_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<a href="OnMaterialUpdate_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="BindGroup_8hpp.html">resource/BindGroup.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="ResourceManager_8hpp.html">resource/ResourceManager.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="Core_8hpp.html">core/Core.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="Entity_8hpp.html">entity/Entity.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceGraphic_1_1Resource.html">Graphic::Resource</a> {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="namespaceGraphic_1_1Resource.html#ad4dcad05f916464c812083de1952157b">   17</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespaceGraphic_1_1Resource.html#ad4dcad05f916464c812083de1952157b">BindGroupManager</a> = <a class="code hl_class" href="classObject_1_1Resource_1_1ResourceManager.html">Object::Resource::ResourceManager&lt;BindGroup&gt;</a>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>} <span class="comment">// namespace Graphic::Resource</span></div>
-<div class="ttc" id="aBindGroup_8hpp_html"><div class="ttname"><a href="BindGroup_8hpp.html">BindGroup.hpp</a></div></div>
-<div class="ttc" id="aResourceManager_8hpp_html"><div class="ttname"><a href="ResourceManager_8hpp.html">ResourceManager.hpp</a></div></div>
-<div class="ttc" id="aclassObject_1_1Resource_1_1ResourceManager_html"><div class="ttname"><a href="classObject_1_1Resource_1_1ResourceManager.html">Object::Resource::ResourceManager</a></div><div class="ttdef"><b>Definition</b> ResourceManager.hpp:22</div></div>
-<div class="ttc" id="anamespaceGraphic_1_1Resource_html"><div class="ttname"><a href="namespaceGraphic_1_1Resource.html">Graphic::Resource</a></div><div class="ttdef"><b>Definition</b> Adapter.hpp:5</div></div>
-<div class="ttc" id="anamespaceGraphic_1_1Resource_html_ad4dcad05f916464c812083de1952157b"><div class="ttname"><a href="namespaceGraphic_1_1Resource.html#ad4dcad05f916464c812083de1952157b">Graphic::Resource::BindGroupManager</a></div><div class="ttdeci">Object::Resource::ResourceManager&lt; BindGroup &gt; BindGroupManager</div><div class="ttdoc">BindGroupManager is a resource that stores BindGroup resources.</div><div class="ttdef"><b>Definition</b> BindGroupManager.hpp:17</div></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceDefaultPipeline_1_1System.html">DefaultPipeline::System</a> {</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceDefaultPipeline_1_1System.html#a57b95bdc135b893b520018c3c3b35889">OnMaterialUpdate</a>(Engine::Core &amp;core, Engine::EntityId entityId);</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>} <span class="comment">// namespace DefaultPipeline::System</span></div>
+<div class="ttc" id="aCore_8hpp_html"><div class="ttname"><a href="Core_8hpp.html">Core.hpp</a></div></div>
+<div class="ttc" id="aEntity_8hpp_html"><div class="ttname"><a href="Entity_8hpp.html">Entity.hpp</a></div></div>
+<div class="ttc" id="anamespaceDefaultPipeline_1_1System_html"><div class="ttname"><a href="namespaceDefaultPipeline_1_1System.html">DefaultPipeline::System</a></div><div class="ttdef"><b>Definition</b> OnCameraCreation.hpp:6</div></div>
+<div class="ttc" id="anamespaceDefaultPipeline_1_1System_html_a57b95bdc135b893b520018c3c3b35889"><div class="ttname"><a href="namespaceDefaultPipeline_1_1System.html#a57b95bdc135b893b520018c3c3b35889">DefaultPipeline::System::OnMaterialUpdate</a></div><div class="ttdeci">void OnMaterialUpdate(Engine::Core &amp;core, Engine::EntityId entityId)</div><div class="ttdef"><b>Definition</b> OnMaterialUpdate.cpp:6</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="dir_40bb855b7b2023435b78cde29725ed48.html">plugin</a></li><li class="navelem"><a href="dir_456e1ed94ccb5b3e2842ecc161ff9b22.html">graphic</a></li><li class="navelem"><a href="dir_fa8302fd033936ee5801aa7d771955c7.html">src</a></li><li class="navelem"><a href="dir_543f572890b2d7201b9311c2c94a9b7f.html">resource</a></li><li class="navelem"><a href="BindGroupManager_8hpp.html">BindGroupManager.hpp</a></li>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="dir_40bb855b7b2023435b78cde29725ed48.html">plugin</a></li><li class="navelem"><a href="dir_af70f78072289c69aa61f887fb0946a2.html">default-pipeline</a></li><li class="navelem"><a href="dir_bff7d8881d8d3d19c2e296c2b9dc000a.html">src</a></li><li class="navelem"><a href="dir_ebb7006683767b04c7d3c2d19cb00734.html">system</a></li><li class="navelem"><a href="dir_96777df83bc55e568bd556ae5c551527.html">GPUComponentManagement</a></li><li class="navelem"><a href="OnMaterialUpdate_8hpp.html">OnMaterialUpdate.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>

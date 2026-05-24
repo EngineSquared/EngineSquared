@@ -149,6 +149,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab00b7735c8a79574bf091c5579b43152" id="r_ab00b7735c8a79574bf091c5579b43152"><td class="memTemplParams" colspan="2">template&lt;typename TComponent&gt; </td></tr>
 <tr class="memitem:ab00b7735c8a79574bf091c5579b43152 template"><td class="memItemLeft">decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#ab00b7735c8a79574bf091c5579b43152">TryGetComponent</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
 <tr class="memdesc:ab00b7735c8a79574bf091c5579b43152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to get a component of type TComponent from the entity. It returns a pointer to the component if it exists, or nullptr if it does not exist.  <br /></td></tr>
+<tr class="memitem:a02d056e74a0fc3ae7803217f5037846f" id="r_a02d056e74a0fc3ae7803217f5037846f"><td class="memTemplParams" colspan="2">template&lt;typename TComponent, class... TFunctions&gt; </td></tr>
+<tr class="memitem:a02d056e74a0fc3ae7803217f5037846f template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a02d056e74a0fc3ae7803217f5037846f">UpdateComponent</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core, TFunctions &amp;&amp;...functions)</td></tr>
+<tr class="memdesc:a02d056e74a0fc3ae7803217f5037846f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a component values through functions. This allows user so also call <span class="tt">on_update</span> registry's callback.  <br /></td></tr>
 <tr class="memitem:a71e566dc10b5477cfbd517226e385610" id="r_a71e566dc10b5477cfbd517226e385610"><td class="memTemplParams" colspan="2">template&lt;typename TComponent&gt; </td></tr>
 <tr class="memitem:a71e566dc10b5477cfbd517226e385610 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a71e566dc10b5477cfbd517226e385610">RemoveComponent</a> (<a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;core)</td></tr>
 <tr class="memdesc:a71e566dc10b5477cfbd517226e385610"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a component from an entity.  <br /></td></tr>
@@ -702,6 +705,45 @@ template&lt;typename TComponent&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structA.html">A</a> pointer to the component of type TComponent from the entity if it exists, or nullptr if it does not exist. </dd></dl>
+
+</div>
+</div>
+<a id="a02d056e74a0fc3ae7803217f5037846f" name="a02d056e74a0fc3ae7803217f5037846f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02d056e74a0fc3ae7803217f5037846f">&#9670;&#160;</a></span>UpdateComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TComponent, class... TFunctions&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void Engine::EntityId::UpdateComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Core.html">Engine::Core</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TFunctions &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>functions</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update a component values through functions. This allows user so also call <span class="tt">on_update</span> registry's callback. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TComponent</td><td>The type of the component to update. </td></tr>
+    <tr><td class="paramname">...TFunctions</td><td>Function types that will be applied to component </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">core</td><td>The <a class="el" href="classEngine_1_1Core.html" title="The core is the place where all the data of the engine is stored. It contains the registry (entities)...">Core</a> instance whose registry is used to store the component. </td></tr>
+    <tr><td class="paramname">...functions</td><td>Function types that will be applied to component </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

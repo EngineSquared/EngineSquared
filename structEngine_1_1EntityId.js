@@ -15,5 +15,6 @@ var structEngine_1_1EntityId =
     [ "RemoveComponent", "structEngine_1_1EntityId.html#a71e566dc10b5477cfbd517226e385610", null ],
     [ "RemoveTemporaryComponents", "structEngine_1_1EntityId.html#aa0d9e39669bdd06b1007c5cb246b9d64", null ],
     [ "TryGetComponent", "structEngine_1_1EntityId.html#ab00b7735c8a79574bf091c5579b43152", null ],
+    [ "UpdateComponent", "structEngine_1_1EntityId.html#a02d056e74a0fc3ae7803217f5037846f", null ],
     [ "temporaryComponent", "structEngine_1_1EntityId.html#afd5a4b9039b2fc2441e6c9ef8a78f347", null ]
 ];

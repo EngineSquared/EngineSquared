@@ -12,6 +12,8 @@ var dir_96777df83bc55e568bd556ae5c551527 =
     [ "OnMaterialCreation.hpp", "OnMaterialCreation_8hpp.html", "OnMaterialCreation_8hpp" ],
     [ "OnMaterialDestruction.cpp", "OnMaterialDestruction_8cpp.html", null ],
     [ "OnMaterialDestruction.hpp", "OnMaterialDestruction_8hpp.html", "OnMaterialDestruction_8hpp" ],
+    [ "OnMaterialUpdate.cpp", "OnMaterialUpdate_8cpp.html", null ],
+    [ "OnMaterialUpdate.hpp", "OnMaterialUpdate_8hpp.html", "OnMaterialUpdate_8hpp" ],
     [ "OnMeshCreation.cpp", "OnMeshCreation_8cpp.html", null ],
     [ "OnMeshCreation.hpp", "OnMeshCreation_8hpp.html", "OnMeshCreation_8hpp" ],
     [ "OnMeshDestruction.cpp", "OnMeshDestruction_8cpp.html", null ],

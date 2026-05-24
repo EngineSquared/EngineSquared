@@ -5,5 +5,6 @@ var searchData=
   ['crenderinterface_2',['CRenderInterface',['../conceptCRenderInterface.html',1,'']]],
   ['crenderpass_3',['CRenderPass',['../conceptCRenderPass.html',1,'']]],
   ['cscheduler_4',['CScheduler',['../conceptEngine_1_1CScheduler.html',1,'Engine']]],
-  ['csysteminterface_5',['CSystemInterface',['../conceptCSystemInterface.html',1,'']]]
+  ['csysteminterface_5',['CSystemInterface',['../conceptCSystemInterface.html',1,'']]],
+  ['cviewstringable_6',['CViewStringable',['../conceptObject_1_1Resource_1_1CViewStringable.html',1,'Object::Resource']]]
 ];
