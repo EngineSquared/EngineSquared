@@ -68,6 +68,12 @@ template <typename TComponent> decltype(auto) EntityId::TryGetComponent(Engine::
     return core.GetRegistry().try_get<TComponent>(this->value);
 }
 
+template <typename TComponent, class... TFunctions>
+void EntityId::UpdateComponent(Engine::Core &core, TFunctions &&...functions)
+{
+    core.GetRegistry().patch<TComponent>(this->value, std::forward<TFunctions>(functions)...);
+}
+
 template <typename TComponent> void EntityId::RemoveComponent(Engine::Core &core)
 {
     /// @todo put the log in the core emplace

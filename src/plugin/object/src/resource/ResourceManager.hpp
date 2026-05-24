@@ -2,13 +2,18 @@
 
 #include "Logger.hpp"
 #include "exception/ResourceManagerError.hpp"
-
+#include <concepts>
 #include <entt/core/hashed_string.hpp>
 #include <entt/resource/cache.hpp>
 #include <fmt/format.h>
 #include <optional>
+#include <type_traits>
 
 namespace Object::Resource {
+
+template <typename TType>
+concept CViewStringable = std::is_constructible_v<std::string_view, const TType &> &&
+                          !std::is_same_v<std::decay_t<TType>, entt::hashed_string>;
 
 /**
  * ResourceManager is a simple class that store resources. It provides methods to add, get, and remove resources.
@@ -62,6 +67,13 @@ template <typename ResourceType> class ResourceManager {
         return ret.first->second;
     }
 
+    template <CViewStringable TViewStringable, typename... Args>
+    entt::resource<ResourceType> Add(const TViewStringable &id, Args &&...args)
+    {
+        std::string_view stringViewId{id};
+        return Add(entt::hashed_string{stringViewId.data(), stringViewId.size()}, std::forward<Args>(args)...);
+    }
+
     /**
      * @brief Get the reference to a stored resource.
      *
@@ -78,6 +90,12 @@ template <typename ResourceType> class ResourceManager {
             throw ResourceManagerError(fmt::format("Resource with id {} not found.", id.data()));
 
         return *resource;
+    }
+
+    template <CViewStringable TViewStringable> [[nodiscard]] ResourceType &Get(const TViewStringable &id)
+    {
+        std::string_view stringViewId{id};
+        return Get(entt::hashed_string{stringViewId.data(), stringViewId.size()});
     }
 
     /**
@@ -98,6 +116,11 @@ template <typename ResourceType> class ResourceManager {
 
         return *resource;
     }
+    template <CViewStringable TViewStringable> [[nodiscard]] const ResourceType &Get(const TViewStringable &id) const
+    {
+        std::string_view stringViewId{id};
+        return Get(entt::hashed_string{stringViewId.data(), stringViewId.size()});
+    }
 
     /**
      * @brief Delete an resource from the manager.
@@ -106,6 +129,12 @@ template <typename ResourceType> class ResourceManager {
      */
     void Remove(const entt::hashed_string &id) { cache.erase(id); }
 
+    template <CViewStringable TViewStringable> void Remove(const TViewStringable &id)
+    {
+        std::string_view stringViewId{id};
+        Remove(entt::hashed_string{stringViewId.data(), stringViewId.size()});
+    }
+
     /**
      * @brief Check whenever the resource with given id exists in the manager.
      *
@@ -113,6 +142,12 @@ template <typename ResourceType> class ResourceManager {
      * @return true if the resource exists, false otherwise.
      */
     [[nodiscard]] bool Contains(const entt::hashed_string &id) const { return cache.contains(id); }
+
+    template <CViewStringable TViewStringable> [[nodiscard]] bool Contains(const TViewStringable &id) const
+    {
+        std::string_view stringViewId{id};
+        return Contains(entt::hashed_string{stringViewId.data(), stringViewId.size()});
+    }
 
     /**
      * @brief Set the default resource that will be used as fallback.
@@ -182,6 +217,12 @@ template <typename ResourceType> class ResourceManager {
         return *defaultResource;
     }
 
+    template <CViewStringable TViewStringable> [[nodiscard]] ResourceType &GetOrDefault(const TViewStringable &id)
+    {
+        std::string_view stringViewId{id};
+        return GetOrDefault(entt::hashed_string{stringViewId.data(), stringViewId.size()});
+    }
+
     /**
      * @brief Get the reference to a stored resource, or the default resource if it doesn't exist.
      *
@@ -202,6 +243,13 @@ template <typename ResourceType> class ResourceManager {
                 fmt::format("Resource with id {} not found and no default resource is set.", id.data()));
 
         return *defaultResource;
+    }
+
+    template <CViewStringable TViewStringable>
+    [[nodiscard]] const ResourceType &GetOrDefault(const TViewStringable &id) const
+    {
+        std::string_view stringViewId{id};
+        return GetOrDefault(entt::hashed_string{stringViewId.data(), stringViewId.size()});
     }
 
     /**

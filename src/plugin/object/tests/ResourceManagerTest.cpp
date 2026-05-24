@@ -121,3 +121,31 @@ TEST(ResourceManagerTest, GetOrDefaultConst)
     const auto &constManager = resource_manager;
     EXPECT_EQ(constManager.GetOrDefault(missingId).value, 100);
 }
+
+TEST(ResourceManagerTest, VariableUsage)
+{
+    ResourceManager<int> intManager;
+
+    intManager.SetDefault(42);
+
+    std::string id = "Id";
+    std::string invalidId = "InvalidId";
+
+    EXPECT_EQ(*(intManager.Add(id, 67).handle().get()), 67);
+
+    auto &idRef = intManager.Get(id);
+    EXPECT_EQ(idRef, 67);
+
+    const auto &idConstRef = intManager.Get(id);
+    EXPECT_EQ(idConstRef, 67);
+
+    EXPECT_EQ(intManager.Contains(id), true);
+
+    auto &defaultRef = intManager.GetOrDefault(invalidId);
+    EXPECT_EQ(defaultRef, 42);
+
+    const auto &defaultConstRef = intManager.GetOrDefault(invalidId);
+    EXPECT_EQ(defaultConstRef, 42);
+
+    intManager.Remove(id);
+}

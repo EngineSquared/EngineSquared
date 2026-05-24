@@ -103,6 +103,13 @@ class Entity {
     /// @return The component of type TComponent from the entity if it exists, or nullptr if it does not exist.
     template <typename TComponent> decltype(auto) TryGetComponent();
 
+    /// @brief Update a component values through functions. This allows user so also call `on_update` registry's
+    ///     callback.
+    /// @tparam TComponent The type of the component to update.
+    /// @tparam ...TFunctions Function types that will be applied to the component
+    /// @param ...functions Function types that will be applied to the component
+    template <typename TComponent, class... TFunctions> void UpdateComponent(TFunctions &&...functions);
+
     /// @brief Equality operator for Entity. It compares the underlying EntityId values to determine if two Entity
     ///     instances refer to the same entity in the registry.
     /// @param rhs The other Entity to compare with.
