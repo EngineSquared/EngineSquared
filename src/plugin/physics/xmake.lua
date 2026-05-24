@@ -18,6 +18,7 @@ target("PluginPhysics")
 
     add_headerfiles("src/(exception/*.hpp)")
     add_headerfiles("src/(plugin/*.hpp)")
+    add_headerfiles("src/(event/*.hpp)")
     add_headerfiles("src/(resource/*.hpp)")
     add_headerfiles("src/(component/*.hpp)")
     add_headerfiles("src/(system/*.hpp)")
