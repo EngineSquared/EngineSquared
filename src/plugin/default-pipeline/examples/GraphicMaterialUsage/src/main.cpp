@@ -13,6 +13,31 @@
 #include "plugin/PluginWindow.hpp"
 #include "resource/Window.hpp"
 
+void UpdateTexture(Engine::Core &core)
+{
+    static float timeBuffer = 0;
+    timeBuffer += core.GetScheduler<Engine::Scheduler::Update>().GetDeltaTime();
+
+    if (timeBuffer >= 1.f)
+    {
+        timeBuffer -= 1.f;
+        auto &cubeTextured = core.GetResource<Engine::Entity>();
+        cubeTextured.UpdateComponent<Object::Component::Material>([](Object::Component::Material &component) {
+            if (component.diffuseTexName ==
+                "src/plugin/default-pipeline/examples/GraphicMaterialUsage/asset/texture.png")
+            {
+                component.diffuseTexName =
+                    "src/plugin/default-pipeline/examples/GraphicMaterialUsage/asset/texture2.jpg";
+            }
+            else
+            {
+                component.diffuseTexName =
+                    "src/plugin/default-pipeline/examples/GraphicMaterialUsage/asset/texture.png";
+            }
+        });
+    }
+}
+
 void Setup(Engine::Core &core)
 {
     // Option to lock the cursor to the window
@@ -27,7 +52,7 @@ void Setup(Engine::Core &core)
     // Custom Material from file
     Object::Component::Material materialWithTexture;
     materialWithTexture.diffuseTexName = "src/plugin/default-pipeline/examples/GraphicMaterialUsage/asset/texture.png";
-    auto cube1 = core.CreateEntity();
+    auto &cube1 = core.RegisterResource(core.CreateEntity());
     cube1.AddComponent<Object::Component::Transform>();
     cube1.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
     cube1.AddComponent<Object::Component::Material>(std::move(materialWithTexture));
@@ -80,6 +105,7 @@ int main(void)
     });
 
     core.RegisterSystem<Engine::Scheduler::Startup>(Setup);
+    core.RegisterSystem(UpdateTexture);
 
     try
     {

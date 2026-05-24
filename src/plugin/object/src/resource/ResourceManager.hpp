@@ -2,12 +2,18 @@
 
 #include "Logger.hpp"
 #include "exception/ResourceManagerError.hpp"
+#include <concepts>
 #include <entt/core/hashed_string.hpp>
 #include <entt/resource/cache.hpp>
 #include <fmt/format.h>
 #include <optional>
+#include <type_traits>
 
 namespace Object::Resource {
+
+template <typename TType>
+concept CViewStringable = std::is_constructible_v<std::string_view, const TType &> &&
+                          !std::is_same_v<std::decay_t<TType>, entt::hashed_string>;
 
 /**
  * ResourceManager is a simple class that store resources. It provides methods to add, get, and remove resources.
@@ -61,9 +67,11 @@ template <typename ResourceType> class ResourceManager {
         return ret.first->second;
     }
 
-    template <typename... Args> entt::resource<ResourceType> Add(std::string_view id, Args &&...args)
+    template <CViewStringable TViewStringable, typename... Args>
+    entt::resource<ResourceType> Add(const TViewStringable &id, Args &&...args)
     {
-        return Add(entt::hashed_string{id.data(), id.size()}, std::forward<Args>(args)...);
+        std::string_view stringViewId{id};
+        return Add(entt::hashed_string{stringViewId.data(), stringViewId.size()}, std::forward<Args>(args)...);
     }
 
     /**
@@ -84,7 +92,11 @@ template <typename ResourceType> class ResourceManager {
         return *resource;
     }
 
-    [[nodiscard]] ResourceType &Get(std::string_view id) { return Get(entt::hashed_string{id.data(), id.size()}); }
+    template <CViewStringable TViewStringable> [[nodiscard]] ResourceType &Get(const TViewStringable &id)
+    {
+        std::string_view stringViewId{id};
+        return Get(entt::hashed_string{stringViewId.data(), stringViewId.size()});
+    }
 
     /**
      * @brief Get the reference to a stored resource.
@@ -104,10 +116,10 @@ template <typename ResourceType> class ResourceManager {
 
         return *resource;
     }
-
-    [[nodiscard]] const ResourceType &Get(std::string_view id) const
+    template <CViewStringable TViewStringable> [[nodiscard]] const ResourceType &Get(const TViewStringable &id) const
     {
-        return Get(entt::hashed_string{id.data(), id.size()});
+        std::string_view stringViewId{id};
+        return Get(entt::hashed_string{stringViewId.data(), stringViewId.size()});
     }
 
     /**
@@ -117,7 +129,11 @@ template <typename ResourceType> class ResourceManager {
      */
     void Remove(const entt::hashed_string &id) { cache.erase(id); }
 
-    void Remove(std::string_view id) { Remove(entt::hashed_string{id.data(), id.size()}); }
+    template <CViewStringable TViewStringable> void Remove(const TViewStringable &id)
+    {
+        std::string_view stringViewId{id};
+        Remove(entt::hashed_string{stringViewId.data(), stringViewId.size()});
+    }
 
     /**
      * @brief Check whenever the resource with given id exists in the manager.
@@ -127,9 +143,10 @@ template <typename ResourceType> class ResourceManager {
      */
     [[nodiscard]] bool Contains(const entt::hashed_string &id) const { return cache.contains(id); }
 
-    [[nodiscard]] bool Contains(std::string_view id) const
+    template <CViewStringable TViewStringable> [[nodiscard]] bool Contains(const TViewStringable &id) const
     {
-        return Contains(entt::hashed_string{id.data(), id.size()});
+        std::string_view stringViewId{id};
+        return Contains(entt::hashed_string{stringViewId.data(), stringViewId.size()});
     }
 
     /**
@@ -200,9 +217,10 @@ template <typename ResourceType> class ResourceManager {
         return *defaultResource;
     }
 
-    [[nodiscard]] ResourceType &GetOrDefault(std::string_view id)
+    template <CViewStringable TViewStringable> [[nodiscard]] ResourceType &GetOrDefault(const TViewStringable &id)
     {
-        return GetOrDefault(entt::hashed_string{id.data(), id.size()});
+        std::string_view stringViewId{id};
+        return GetOrDefault(entt::hashed_string{stringViewId.data(), stringViewId.size()});
     }
 
     /**
@@ -227,9 +245,11 @@ template <typename ResourceType> class ResourceManager {
         return *defaultResource;
     }
 
-    [[nodiscard]] const ResourceType &GetOrDefault(std::string_view id) const
+    template <CViewStringable TViewStringable>
+    [[nodiscard]] const ResourceType &GetOrDefault(const TViewStringable &id) const
     {
-        return GetOrDefault(entt::hashed_string{id.data(), id.size()});
+        std::string_view stringViewId{id};
+        return GetOrDefault(entt::hashed_string{stringViewId.data(), stringViewId.size()});
     }
 
     /**

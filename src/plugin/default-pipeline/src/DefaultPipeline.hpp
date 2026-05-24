@@ -36,6 +36,7 @@
 #include "system/GPUComponentManagement/OnDirectionalLightCreation.hpp"
 #include "system/GPUComponentManagement/OnDirectionalLightDestruction.hpp"
 #include "system/GPUComponentManagement/OnMaterialCreation.hpp"
+#include "system/GPUComponentManagement/OnMaterialUpdate.hpp"
 #include "system/GPUComponentManagement/OnMaterialDestruction.hpp"
 #include "system/GPUComponentManagement/OnMeshCreation.hpp"
 #include "system/GPUComponentManagement/OnMeshDestruction.hpp"
