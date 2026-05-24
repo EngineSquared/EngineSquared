@@ -42,6 +42,11 @@ template <typename TComponent> decltype(auto) Entity::TryGetComponent()
 {
     return _entityId.TryGetComponent<TComponent>(GetCore());
 }
+
+template <typename TComponent, class... TFunctions> void Entity::UpdateComponent(TFunctions &&...functions)
+{
+    return _entityId.UpdateComponent<TComponent>(GetCore(), std::forward<TFunctions>(functions)...);
+}
 } // namespace Engine
 
 template <typename FormatContext>
