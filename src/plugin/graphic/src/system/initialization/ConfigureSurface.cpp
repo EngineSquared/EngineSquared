@@ -14,7 +14,6 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
         return;
 
     auto &deviceContext = core.GetResource<Resource::DeviceContext>();
-    auto &adapter = core.GetResource<Resource::Adapter>();
     const auto &window = core.GetResource<Window::Resource::Window>();
     const auto surfaceSize = window.GetSize();
 
@@ -43,16 +42,20 @@ void Graphic::System::ConfigureSurface(Engine::Core &core)
     config.presentMode = wgpu::PresentMode::Fifo;
     config.alphaMode = wgpu::CompositeAlphaMode::Auto;
 
-    wgpu::AdapterInfo info(wgpu::Default);
-    // TODO: create a class to handle RAII release properly
-    if (adapter->getInfo(&info) == wgpu::Status::Success)
+    if (core.HasResource<Resource::Adapter>())
     {
-        if (info.backendType == wgpu::BackendType::OpenGL || info.backendType == wgpu::BackendType::OpenGLES)
+        auto &adapter = core.GetResource<Resource::Adapter>();
+        wgpu::AdapterInfo info(wgpu::Default);
+        // TODO: create a class to handle RAII release properly
+        if (adapter->getInfo(&info) == wgpu::Status::Success)
         {
+            if (info.backendType == wgpu::BackendType::OpenGL || info.backendType == wgpu::BackendType::OpenGLES)
+            {
+                info.freeMembers();
+                return;
+            }
             info.freeMembers();
-            return;
         }
-        info.freeMembers();
     }
     surface.value->configure(config);
     surface.configured = true;
