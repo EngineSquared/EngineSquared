@@ -4,6 +4,10 @@
 #include "core/Core.hpp"
 #include "utils/Utils.hpp"
 
+struct TestComponent {
+    int value = 10;
+};
+
 TEST(Relationship, initialization)
 {
     Engine::Core core;
@@ -170,4 +174,48 @@ TEST(Relationship, for_each_child)
     ASSERT_EQ(children[0], child3);
     ASSERT_EQ(children[1], child2);
     ASSERT_EQ(children[2], child1);
+}
+
+TEST(Relationship, try_get_child_components)
+{
+    Engine::Core core;
+
+    auto child1 = core.CreateEntity();
+    auto child2 = core.CreateEntity();
+    auto child3 = core.CreateEntity();
+    auto parent = core.CreateEntity();
+
+    child1.AddComponent<Relationship::Component::Relationship>();
+    child1.AddComponent<TestComponent>(TestComponent{.value = 42});
+    child2.AddComponent<Relationship::Component::Relationship>();
+    child3.AddComponent<Relationship::Component::Relationship>();
+    parent.AddComponent<Relationship::Component::Relationship>();
+
+    Relationship::Utils::SetChildOf(child1, parent);
+    Relationship::Utils::SetChildOf(child2, parent);
+    Relationship::Utils::SetChildOf(child3, parent);
+
+    auto childComponents = Relationship::Utils::TryGetChildComponents<TestComponent>(parent);
+
+    ASSERT_EQ(childComponents.size(), 1);
+    ASSERT_EQ(childComponents[0].value, 42);
+}
+
+TEST(Relationship, try_get_parent_component)
+{
+    Engine::Core core;
+
+    auto child = core.CreateEntity();
+    auto parent = core.CreateEntity();
+
+    child.AddComponent<Relationship::Component::Relationship>();
+    parent.AddComponent<Relationship::Component::Relationship>();
+    parent.AddComponent<TestComponent>(TestComponent{.value = 42});
+
+    Relationship::Utils::SetChildOf(child, parent);
+
+    auto parentComponent = Relationship::Utils::TryGetParentComponent<TestComponent>(child);
+
+    ASSERT_TRUE(parentComponent.has_value());
+    ASSERT_EQ(parentComponent->value, 42);
 }

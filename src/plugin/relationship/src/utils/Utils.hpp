@@ -57,6 +57,48 @@ auto RemoveParent(Engine::Entity child) -> void;
  */
 auto GetParent(Engine::Entity child) -> std::optional<Engine::Entity>;
 
+/**
+ * Get a specific list of a component for each child of an entity.
+ *
+ * @param   parent  parent entity
+ * @return  a vector containing the list of the specified component for each child of the parent entity
+ */
+
+template <typename TComponent> auto TryGetChildComponents(Engine::Entity parent) -> std::vector<TComponent>
+{
+    std::vector<TComponent> childComponents;
+    ForEachChild(parent, [&childComponents](Engine::Entity child) {
+        const TComponent *childComponent = child.TryGetComponent<TComponent>();
+        if (childComponent)
+        {
+            childComponents.push_back(*childComponent);
+        }
+    });
+    return childComponents;
+}
+
+/**
+ * Get a Component of a parent of an Entity.
+ *
+ * @param   child   child entity
+ * @return  the pointer to the component if the parent entity has it, or nullopt if the entity has no
+ */
+template <typename TComponent> auto TryGetParentComponent(Engine::Entity child) -> std::optional<TComponent>
+{
+    std::optional<Engine::Entity> parentOpt = GetParent(child);
+    if (!parentOpt.has_value())
+    {
+        return std::nullopt;
+    }
+    Engine::Entity parent = parentOpt.value();
+    const TComponent *parentComponent = parent.TryGetComponent<TComponent>();
+    if (!parentComponent)
+    {
+        return std::nullopt;
+    }
+    return *parentComponent;
+}
+
 template <typename TFunc> auto ForEachChild(Engine::Entity parent, TFunc func) -> void
 {
     const Relationship::Component::Relationship *parentRS =

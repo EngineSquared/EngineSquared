@@ -75,5 +75,23 @@ int main(void)
 
     Log::Info(fmt::format("Child's component value: {}", component.value));
 
+    auto child4Comps = Relationship::Utils::TryGetChildComponents<TestComponent>(parent);
+
+    if (child4Comps.empty())
+    {
+        Log::Error(fmt::format("TryGetChildComponents should have found a TestComponent in child4 but found none"));
+    }
+    else
+    {
+        Log::Info(fmt::format("Child's component value got with TryGetChildComponents: {}", child4Comps[0].value));
+    }
+
+    auto parentComp = Relationship::Utils::TryGetParentComponent<NameComponent>(child4); // except Tom
+
+    if (parentComp.has_value())
+    {
+        Log::Info(fmt::format("Parent's component value got with TryGetParentComponent: {}", parentComp.value().name));
+    }
+
     return 0;
 }
