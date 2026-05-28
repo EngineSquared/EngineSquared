@@ -198,7 +198,8 @@ TEST(Relationship, try_get_child_components)
     auto childComponents = Relationship::Utils::TryGetChildComponents<TestComponent>(parent);
 
     ASSERT_EQ(childComponents.size(), 1);
-    ASSERT_EQ(childComponents[0].value, 42);
+    ASSERT_NE(childComponents[0], nullptr);
+    ASSERT_EQ(childComponents[0]->value, 42);
 }
 
 TEST(Relationship, try_get_parent_component)
@@ -214,8 +215,8 @@ TEST(Relationship, try_get_parent_component)
 
     Relationship::Utils::SetChildOf(child, parent);
 
-    auto parentComponent = Relationship::Utils::TryGetParentComponent<TestComponent>(child);
+    auto *parentComponent = Relationship::Utils::TryGetParentComponent<TestComponent>(child);
 
-    ASSERT_TRUE(parentComponent.has_value());
+    ASSERT_NE(parentComponent, nullptr);
     ASSERT_EQ(parentComponent->value, 42);
 }
