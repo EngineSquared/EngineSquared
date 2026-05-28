@@ -98,6 +98,18 @@ template <typename TFunc> auto ForEachChild(Engine::Entity parent, TFunc func) -
 template <typename TComponent> auto TryGetChildComponents(Engine::Entity parent) -> std::vector<TComponent *>
 {
     std::vector<TComponent *> childComponents;
+
+    const auto *parentRS = parent.TryGetComponent<Relationship::Component::Relationship>();
+    if (parentRS)
+    {
+        childComponents.reserve(parentRS->children);
+    }
+    else
+    {
+        Log::Warning(fmt::format("Entity({}) has no Relationship component in TryGetChildComponents", parent));
+        return childComponents;
+    }
+
     ForEachChild(parent, [&childComponents](Engine::Entity child) {
         TComponent *childComponent = child.TryGetComponent<TComponent>();
         if (childComponent)
@@ -120,12 +132,15 @@ template <typename TComponent> auto TryGetParentComponent(Engine::Entity child) 
     std::optional<Engine::Entity> parentOpt = GetParent(child);
     if (!parentOpt.has_value())
     {
+        Log::Warning(fmt::format("Entity({}) has no parent in TryGetParentComponent", child));
         return nullptr;
     }
     Engine::Entity parent = parentOpt.value();
     TComponent *parentComponent = parent.TryGetComponent<TComponent>();
     if (!parentComponent)
     {
+        Log::Warning(
+            fmt::format("Parent Entity({}) has no component of the requested type in TryGetParentComponent", parent));
         return nullptr;
     }
     return parentComponent;

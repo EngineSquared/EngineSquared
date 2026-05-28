@@ -220,3 +220,66 @@ TEST(Relationship, try_get_parent_component)
     ASSERT_NE(parentComponent, nullptr);
     ASSERT_EQ(parentComponent->value, 42);
 }
+
+TEST(Relationship, try_get_parent_component_no_parent)
+{
+    Engine::Core core;
+
+    auto child = core.CreateEntity();
+
+    child.AddComponent<Relationship::Component::Relationship>();
+
+    auto *parentComponent = Relationship::Utils::TryGetParentComponent<TestComponent>(child);
+
+    ASSERT_EQ(parentComponent, nullptr);
+}
+
+TEST(Relationship, try_get_parent_component_parent_has_no_component)
+{
+    Engine::Core core;
+
+    auto child = core.CreateEntity();
+    auto parent = core.CreateEntity();
+
+    child.AddComponent<Relationship::Component::Relationship>();
+    parent.AddComponent<Relationship::Component::Relationship>();
+
+    Relationship::Utils::SetChildOf(child, parent);
+
+    auto *parentComponent = Relationship::Utils::TryGetParentComponent<TestComponent>(child);
+
+    ASSERT_EQ(parentComponent, nullptr);
+}
+
+TEST(Relationship, try_get_child_components_no_children)
+{
+    Engine::Core core;
+
+    auto parent = core.CreateEntity();
+
+    parent.AddComponent<Relationship::Component::Relationship>();
+
+    auto childComponents = Relationship::Utils::TryGetChildComponents<TestComponent>(parent);
+
+    ASSERT_TRUE(childComponents.empty());
+}
+
+TEST(Relationship, try_get_child_components_children_have_no_component)
+{
+    Engine::Core core;
+
+    auto child1 = core.CreateEntity();
+    auto child2 = core.CreateEntity();
+    auto parent = core.CreateEntity();
+
+    child1.AddComponent<Relationship::Component::Relationship>();
+    child2.AddComponent<Relationship::Component::Relationship>();
+    parent.AddComponent<Relationship::Component::Relationship>();
+
+    Relationship::Utils::SetChildOf(child1, parent);
+    Relationship::Utils::SetChildOf(child2, parent);
+
+    auto childComponents = Relationship::Utils::TryGetChildComponents<TestComponent>(parent);
+
+    ASSERT_TRUE(childComponents.empty());
+}
