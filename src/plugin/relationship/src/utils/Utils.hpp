@@ -124,13 +124,6 @@ template <typename TComponent> auto TryGetParentComponent(Engine::Entity child) 
         return nullptr;
     }
     Engine::Entity parent = parentOpt.value();
-    TComponent *parentComponent = parent.TryGetComponent<TComponent>();
-    if (!parentComponent)
-    {
-        Log::Warning(
-            fmt::format("Parent Entity({}) has no component of the requested type in TryGetParentComponent", parent));
-        return nullptr;
-    }
-    return parentComponent;
+    return parent.TryGetComponent<TComponent>();
 }
 } // namespace Relationship::Utils
