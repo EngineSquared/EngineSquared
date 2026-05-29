@@ -98,23 +98,11 @@ template <typename TFunc> auto ForEachChild(Engine::Entity parent, TFunc func) -
 template <typename TComponent> auto TryGetChildComponents(Engine::Entity parent) -> std::vector<TComponent *>
 {
     std::vector<TComponent *> childComponents;
-
-    const auto *parentRS = parent.TryGetComponent<Relationship::Component::Relationship>();
-    if (parentRS)
-    {
-        childComponents.reserve(parentRS->children);
-    }
-    else
-    {
-        Log::Warning(fmt::format("Entity({}) has no Relationship component in TryGetChildComponents", parent));
-        return childComponents;
-    }
-
     ForEachChild(parent, [&childComponents](Engine::Entity child) {
         TComponent *childComponent = child.TryGetComponent<TComponent>();
         if (childComponent)
         {
-            childComponents.push_back(childComponent);
+            childComponents.emplace_back(childComponent);
         }
     });
     return childComponents;
