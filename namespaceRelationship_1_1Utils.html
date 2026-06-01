@@ -103,6 +103,10 @@ Functions</h2></td></tr>
 <tr class="memitem:aa89056bd4fb39b7accdd50759ab65615" id="r_aa89056bd4fb39b7accdd50759ab65615"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#aa89056bd4fb39b7accdd50759ab65615">GetParent</a> (<a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> child) -&gt; std::optional&lt; <a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> &gt;</td></tr>
 <tr class="memitem:a8d3ae37b2027458153b3c6389087fc20" id="r_a8d3ae37b2027458153b3c6389087fc20"><td class="memTemplParams" colspan="2">template&lt;typename TFunc&gt; </td></tr>
 <tr class="memitem:a8d3ae37b2027458153b3c6389087fc20 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a8d3ae37b2027458153b3c6389087fc20">ForEachChild</a> (<a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> parent, TFunc func) -&gt; void</td></tr>
+<tr class="memitem:ac2efc900f85692cc90e890f4c032590e" id="r_ac2efc900f85692cc90e890f4c032590e"><td class="memTemplParams" colspan="2">template&lt;typename TComponent&gt; </td></tr>
+<tr class="memitem:ac2efc900f85692cc90e890f4c032590e template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#ac2efc900f85692cc90e890f4c032590e">GetChildComponents</a> (<a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> parent) -&gt; std::vector&lt; std::reference_wrapper&lt; TComponent &gt; &gt;</td></tr>
+<tr class="memitem:a5d58d9a297be83a2ec8e9365ffe96a9e" id="r_a5d58d9a297be83a2ec8e9365ffe96a9e"><td class="memTemplParams" colspan="2">template&lt;typename TComponent&gt; </td></tr>
+<tr class="memitem:a5d58d9a297be83a2ec8e9365ffe96a9e template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a5d58d9a297be83a2ec8e9365ffe96a9e">TryGetParentComponent</a> (<a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a> child) -&gt; TComponent *</td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a8d3ae37b2027458153b3c6389087fc20" name="a8d3ae37b2027458153b3c6389087fc20"></a>
@@ -125,6 +129,41 @@ template&lt;typename TFunc&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Apply a function to each child of an entity.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>parent entity </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>no return value </dd></dl>
+
+</div>
+</div>
+<a id="ac2efc900f85692cc90e890f4c032590e" name="ac2efc900f85692cc90e890f4c032590e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2efc900f85692cc90e890f4c032590e">&#9670;&#160;</a></span>GetChildComponents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TComponent&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Relationship::Utils::GetChildComponents </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a></td>          <td class="paramname"><span class="paramname"><em>parent</em></span></td><td>)</td>
+          <td> -&gt; std::vector&lt; std::reference_wrapper&lt; TComponent &gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get a specific pointer list of a component for each child of an entity.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>parent entity </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a vector containing pointers to the specified component for each child of the parent entity </dd></dl>
 
 </div>
 </div>
@@ -233,6 +272,33 @@ template&lt;typename TFunc&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a5d58d9a297be83a2ec8e9365ffe96a9e" name="a5d58d9a297be83a2ec8e9365ffe96a9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d58d9a297be83a2ec8e9365ffe96a9e">&#9670;&#160;</a></span>TryGetParentComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TComponent&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Relationship::Utils::TryGetParentComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1Entity.html">Engine::Entity</a></td>          <td class="paramname"><span class="paramname"><em>child</em></span></td><td>)</td>
+          <td> -&gt; TComponent *</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the pointer to a component of a parent of an Entity.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">child</td><td>child entity </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the pointer to the component if the parent entity has it, or nullptr if the entity has no parent or the parent has no such component </dd></dl>
 
 </div>
 </div>

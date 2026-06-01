@@ -1,5 +1,13 @@
 var NAVTREEINDEX21 =
 {
+"namespacewgpu.html#aa894057fe540729c0830786a09f1d3c8":[3,0,22,5],
+"namespacewgpu.html#aa899e93487a70bf128f07cd16d4b4ffd":[3,0,22,287],
+"namespacewgpu.html#aa8e4b9fe59785e39a43986cbae4b1fdc":[3,0,22,266],
+"namespacewgpu.html#aa8e80319930b3c88500479ae18055d3f":[3,0,22,104],
+"namespacewgpu.html#aa93c31b01b9639f1c93076fad2df4d57":[3,0,22,121],
+"namespacewgpu.html#aa9e8b53c2d20a2bcc6ac54d6c4856878":[3,0,22,298],
+"namespacewgpu.html#aa9f9e90f7a1e36a8524b2702f4c1951a":[3,0,22,73],
+"namespacewgpu.html#aaaa61deced375de4f94060cedae28f4e":[3,0,22,389],
 "namespacewgpu.html#aaac9058b69bc2d91dbc2042db3f556bf":[3,0,22,147],
 "namespacewgpu.html#aab211c9afa2f6b10c7fe4d1e5cc6a6e0":[3,0,22,33],
 "namespacewgpu.html#aab51666ad32a1161905f73426d37c940":[3,0,22,216],
@@ -241,13 +249,5 @@ var NAVTREEINDEX21 =
 "structCharacterControllerExampleRuntime.html":[5,0,28],
 "structCharacterControllerExampleRuntime.html#a41dc4894d4c86f6aeb42e5fae27a3360":[5,0,28,1],
 "structCharacterControllerExampleRuntime.html#accab14136543325c2795309c3882cfcb":[5,0,28,0],
-"structCounterComponent.html":[5,0,30],
-"structCounterComponent.html#a195b35782c2f538153b7d8f863575827":[5,0,30,1],
-"structCounterComponent.html#a5ba6107b8b34edddcf1c8a2a84f4c116":[5,0,30,0],
-"structCounterComponent.html#aea6fc9fb3034575e624335b7fd60551d":[5,0,30,2],
-"structDefaultPipeline_1_1Component_1_1GPUCamera.html":[3,0,1,0,0],
-"structDefaultPipeline_1_1Component_1_1GPUCamera.html":[5,0,1,0,0],
-"structDefaultPipeline_1_1Component_1_1GPUCamera.html#a09ff57c3c50de3dcac51464a2b4fbfb7":[3,0,1,0,0,1],
-"structDefaultPipeline_1_1Component_1_1GPUCamera.html#a09ff57c3c50de3dcac51464a2b4fbfb7":[5,0,1,0,0,1],
-"structDefaultPipeline_1_1Component_1_1GPUCamera.html#a59a6d1a607463061cdef031a399d6ca5":[3,0,1,0,0,2]
+"structCounterComponent.html":[5,0,30]
 };

@@ -99,6 +99,10 @@ $(function(){initNavTree('Relationship_8cpp.html','',''); });
 <code>#include &quot;<a class="el" href="Core_8hpp_source.html">core/Core.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Utils_8hpp_source.html">utils/Utils.hpp</a>&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:TestComponent" id="r_TestComponent"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structTestComponent.html">TestComponent</a></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aacf6f4725972cba351060ecd088d4899" id="r_aacf6f4725972cba351060ecd088d4899"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aacf6f4725972cba351060ecd088d4899">TEST</a> (<a class="el" href="namespaceRelationship.html">Relationship</a>, initialization)</td></tr>
@@ -107,10 +111,16 @@ Functions</h2></td></tr>
 <tr class="memitem:aaafe6db838ac5167716b59334a051fc8" id="r_aaafe6db838ac5167716b59334a051fc8"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aaafe6db838ac5167716b59334a051fc8">TEST</a> (<a class="el" href="namespaceRelationship.html">Relationship</a>, remove_parent)</td></tr>
 <tr class="memitem:a352f78dc8508082ecf242c7a1d277bef" id="r_a352f78dc8508082ecf242c7a1d277bef"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a352f78dc8508082ecf242c7a1d277bef">TEST</a> (<a class="el" href="namespaceRelationship.html">Relationship</a>, get_parent_of_child_without_relationship_component)</td></tr>
 <tr class="memitem:ad49792051eee1131a249e75293ebad1e" id="r_ad49792051eee1131a249e75293ebad1e"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad49792051eee1131a249e75293ebad1e">TEST</a> (<a class="el" href="namespaceRelationship.html">Relationship</a>, for_each_child)</td></tr>
+<tr class="memitem:a23802754be3e1bab25fd92f642e13dc0" id="r_a23802754be3e1bab25fd92f642e13dc0"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a23802754be3e1bab25fd92f642e13dc0">TEST</a> (<a class="el" href="namespaceRelationship.html">Relationship</a>, try_get_child_components)</td></tr>
+<tr class="memitem:a9f5f3529d18a05da41b1e9787efbc6d7" id="r_a9f5f3529d18a05da41b1e9787efbc6d7"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9f5f3529d18a05da41b1e9787efbc6d7">TEST</a> (<a class="el" href="namespaceRelationship.html">Relationship</a>, try_get_parent_component)</td></tr>
+<tr class="memitem:a3b8e60b69a6219e5d5e7ff016d254754" id="r_a3b8e60b69a6219e5d5e7ff016d254754"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a3b8e60b69a6219e5d5e7ff016d254754">TEST</a> (<a class="el" href="namespaceRelationship.html">Relationship</a>, try_get_parent_component_no_parent)</td></tr>
+<tr class="memitem:afd01246242184a8d0f10f3200f2f401a" id="r_afd01246242184a8d0f10f3200f2f401a"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#afd01246242184a8d0f10f3200f2f401a">TEST</a> (<a class="el" href="namespaceRelationship.html">Relationship</a>, try_get_parent_component_parent_has_no_component)</td></tr>
+<tr class="memitem:a6e938727143ad5d78b623423df015c6f" id="r_a6e938727143ad5d78b623423df015c6f"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6e938727143ad5d78b623423df015c6f">TEST</a> (<a class="el" href="namespaceRelationship.html">Relationship</a>, try_get_child_components_no_children)</td></tr>
+<tr class="memitem:a0a486a9d272ad90e86e7b4bef97cc2b9" id="r_a0a486a9d272ad90e86e7b4bef97cc2b9"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0a486a9d272ad90e86e7b4bef97cc2b9">TEST</a> (<a class="el" href="namespaceRelationship.html">Relationship</a>, try_get_child_components_children_have_no_component)</td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="ad49792051eee1131a249e75293ebad1e" name="ad49792051eee1131a249e75293ebad1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad49792051eee1131a249e75293ebad1e">&#9670;&#160;</a></span>TEST() <span class="overload">[1/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad49792051eee1131a249e75293ebad1e">&#9670;&#160;</a></span>TEST() <span class="overload">[1/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +141,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a352f78dc8508082ecf242c7a1d277bef" name="a352f78dc8508082ecf242c7a1d277bef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a352f78dc8508082ecf242c7a1d277bef">&#9670;&#160;</a></span>TEST() <span class="overload">[2/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a352f78dc8508082ecf242c7a1d277bef">&#9670;&#160;</a></span>TEST() <span class="overload">[2/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,7 +162,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="aacf6f4725972cba351060ecd088d4899" name="aacf6f4725972cba351060ecd088d4899"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacf6f4725972cba351060ecd088d4899">&#9670;&#160;</a></span>TEST() <span class="overload">[3/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aacf6f4725972cba351060ecd088d4899">&#9670;&#160;</a></span>TEST() <span class="overload">[3/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,7 +183,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="aa77f1f48ceca13164f4a18b98d334149" name="aa77f1f48ceca13164f4a18b98d334149"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa77f1f48ceca13164f4a18b98d334149">&#9670;&#160;</a></span>TEST() <span class="overload">[4/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa77f1f48ceca13164f4a18b98d334149">&#9670;&#160;</a></span>TEST() <span class="overload">[4/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -194,7 +204,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a2462eb880219e88d76a686798c11450d" name="a2462eb880219e88d76a686798c11450d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2462eb880219e88d76a686798c11450d">&#9670;&#160;</a></span>TEST() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2462eb880219e88d76a686798c11450d">&#9670;&#160;</a></span>TEST() <span class="overload">[5/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +225,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="aaafe6db838ac5167716b59334a051fc8" name="aaafe6db838ac5167716b59334a051fc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaafe6db838ac5167716b59334a051fc8">&#9670;&#160;</a></span>TEST() <span class="overload">[6/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaafe6db838ac5167716b59334a051fc8">&#9670;&#160;</a></span>TEST() <span class="overload">[6/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -229,6 +239,132 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">remove_parent</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a23802754be3e1bab25fd92f642e13dc0" name="a23802754be3e1bab25fd92f642e13dc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23802754be3e1bab25fd92f642e13dc0">&#9670;&#160;</a></span>TEST() <span class="overload">[7/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceRelationship.html">Relationship</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">try_get_child_components</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0a486a9d272ad90e86e7b4bef97cc2b9" name="a0a486a9d272ad90e86e7b4bef97cc2b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a486a9d272ad90e86e7b4bef97cc2b9">&#9670;&#160;</a></span>TEST() <span class="overload">[8/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceRelationship.html">Relationship</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">try_get_child_components_children_have_no_component</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6e938727143ad5d78b623423df015c6f" name="a6e938727143ad5d78b623423df015c6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e938727143ad5d78b623423df015c6f">&#9670;&#160;</a></span>TEST() <span class="overload">[9/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceRelationship.html">Relationship</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">try_get_child_components_no_children</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9f5f3529d18a05da41b1e9787efbc6d7" name="a9f5f3529d18a05da41b1e9787efbc6d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f5f3529d18a05da41b1e9787efbc6d7">&#9670;&#160;</a></span>TEST() <span class="overload">[10/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceRelationship.html">Relationship</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">try_get_parent_component</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3b8e60b69a6219e5d5e7ff016d254754" name="a3b8e60b69a6219e5d5e7ff016d254754"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b8e60b69a6219e5d5e7ff016d254754">&#9670;&#160;</a></span>TEST() <span class="overload">[11/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceRelationship.html">Relationship</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">try_get_parent_component_no_parent</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afd01246242184a8d0f10f3200f2f401a" name="afd01246242184a8d0f10f3200f2f401a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd01246242184a8d0f10f3200f2f401a">&#9670;&#160;</a></span>TEST() <span class="overload">[12/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceRelationship.html">Relationship</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">try_get_parent_component_parent_has_no_component</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

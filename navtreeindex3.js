@@ -1,5 +1,11 @@
 var NAVTREEINDEX3 =
 {
+"ReleaseGPUBuffer_8hpp.html":[6,0,1,1,3,0,3,4,5],
+"ReleaseGPUBuffer_8hpp_source.html":[6,0,1,1,3,0,3,4,5],
+"ReleaseInstance_8cpp.html":[6,0,1,1,3,0,3,1,20],
+"ReleaseInstance_8hpp.html":[6,0,1,1,3,0,3,1,21],
+"ReleaseInstance_8hpp_source.html":[6,0,1,1,3,0,3,1,21],
+"ReleaseSampler_8cpp.html":[6,0,1,1,3,0,3,4,6],
 "ReleaseSampler_8hpp.html":[6,0,1,1,3,0,3,4,7],
 "ReleaseSampler_8hpp_source.html":[6,0,1,1,3,0,3,4,7],
 "ReleaseShader_8cpp.html":[6,0,1,1,3,0,3,4,8],
@@ -243,11 +249,5 @@ var NAVTREEINDEX3 =
 "Time_8hpp.html":[6,0,1,0,1,4,1],
 "Time_8hpp_source.html":[6,0,1,0,1,4,1],
 "Tools_8hpp.html":[6,0,1,2,2,0,2],
-"Tools_8hpp_source.html":[6,0,1,2,2,0,2],
-"TransformGPUBuffer_8hpp.html":[6,0,1,1,1,1,2,0,8],
-"TransformGPUBuffer_8hpp_source.html":[6,0,1,1,1,1,2,0,8],
-"Transform_8cpp.html":[6,0,0,5,0,4],
-"Transform_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe":[6,0,0,5,0,4,0],
-"Transform_8hpp.html":[6,0,1,1,6,0,0,6],
-"Transform_8hpp.html#abd75661fe7969e19439052a5f69ba5d1":[6,0,1,1,6,0,0,6,1]
+"Tools_8hpp_source.html":[6,0,1,2,2,0,2]
 };
