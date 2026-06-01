@@ -95,14 +95,15 @@ template <typename TFunc> auto ForEachChild(Engine::Entity parent, TFunc func) -
  * @return  a vector containing pointers to the specified component for each child of the parent entity
  */
 
-template <typename TComponent> auto TryGetChildComponents(Engine::Entity parent) -> std::vector<TComponent *>
+template <typename TComponent>
+auto GetChildComponents(Engine::Entity parent) -> std::vector<std::reference_wrapper<TComponent>>
 {
-    std::vector<TComponent *> childComponents;
+    std::vector<std::reference_wrapper<TComponent>> childComponents;
     ForEachChild(parent, [&childComponents](Engine::Entity child) {
         TComponent *childComponent = child.TryGetComponent<TComponent>();
         if (childComponent)
         {
-            childComponents.emplace_back(childComponent);
+            childComponents.emplace_back(*childComponent);
         }
     });
     return childComponents;

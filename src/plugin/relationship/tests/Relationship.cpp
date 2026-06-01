@@ -195,11 +195,10 @@ TEST(Relationship, try_get_child_components)
     Relationship::Utils::SetChildOf(child2, parent);
     Relationship::Utils::SetChildOf(child3, parent);
 
-    auto childComponents = Relationship::Utils::TryGetChildComponents<TestComponent>(parent);
+    auto childComponents = Relationship::Utils::GetChildComponents<TestComponent>(parent);
 
     ASSERT_EQ(childComponents.size(), 1);
-    ASSERT_NE(childComponents[0], nullptr);
-    ASSERT_EQ(childComponents[0]->value, 42);
+    ASSERT_EQ(childComponents[0].get().value, 42);
 }
 
 TEST(Relationship, try_get_parent_component)
@@ -259,7 +258,7 @@ TEST(Relationship, try_get_child_components_no_children)
 
     parent.AddComponent<Relationship::Component::Relationship>();
 
-    auto childComponents = Relationship::Utils::TryGetChildComponents<TestComponent>(parent);
+    auto childComponents = Relationship::Utils::GetChildComponents<TestComponent>(parent);
 
     ASSERT_TRUE(childComponents.empty());
 }
@@ -279,7 +278,7 @@ TEST(Relationship, try_get_child_components_children_have_no_component)
     Relationship::Utils::SetChildOf(child1, parent);
     Relationship::Utils::SetChildOf(child2, parent);
 
-    auto childComponents = Relationship::Utils::TryGetChildComponents<TestComponent>(parent);
+    auto childComponents = Relationship::Utils::GetChildComponents<TestComponent>(parent);
 
     ASSERT_TRUE(childComponents.empty());
 }
