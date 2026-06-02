@@ -26,7 +26,7 @@ TEST(DynamicPlugin, SmokeTest)
             dylib::library dynlib = LoadDynamicLibrary(dynLibPath);
             entt::hashed_string libIdName{dynLibName.c_str(), dynLibName.size()};
             dynLibContainer.Add(libIdName, std::move(dynlib));
-            std::unique_ptr<Engine::APlugin> newPlugin{
+            std::shared_ptr<Engine::APlugin> newPlugin{
                 dynLibContainer.Get(libIdName).get_function<Engine::APlugin *(Engine::Core *)>("CreatePlugin")(&core)};
             core.AddPlugin(dynLibName, std::move(newPlugin));
         }

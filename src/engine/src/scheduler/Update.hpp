@@ -1,12 +1,14 @@
 #pragma once
 
 #include "scheduler/AScheduler.hpp"
+#include "scheduler/SchedulerCategory.hpp"
 
 namespace Engine::Scheduler {
 /// @class Update
 /// @brief Update scheduler that runs systems every time it is called
 class Update : public AScheduler {
   public:
+    inline static const SchedulerCategory Category = SchedulerCategory::Runtime;
     /// @copydoc Engine::Scheduler::AScheduler::AScheduler
     using AScheduler::AScheduler;
 

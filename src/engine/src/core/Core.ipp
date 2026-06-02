@@ -35,8 +35,8 @@ template <typename TResource> inline const TResource &Core::GetResource() const
 
 template <CScheduler TScheduler, typename... Args> inline TScheduler &Core::RegisterScheduler(Args &&...args)
 {
-    this->_schedulers.AddScheduler<TScheduler>(*this, std::forward<Args>(args)...);
-    return this->_schedulers.GetScheduler<TScheduler>();
+    this->_schedulingContext.AddScheduler<TScheduler>(*this, std::forward<Args>(args)...);
+    return this->_schedulingContext.GetScheduler<TScheduler>();
 }
 
 template <CScheduler TScheduler> void Core::DeleteScheduler()
@@ -46,51 +46,51 @@ template <CScheduler TScheduler> void Core::DeleteScheduler()
 
 template <CScheduler TScheduler> inline TScheduler &Core::GetScheduler()
 {
-    return this->_schedulers.GetScheduler<TScheduler>();
+    return this->_schedulingContext.GetScheduler<TScheduler>();
 }
 
 inline Scheduler::AScheduler &Core::GetScheduler(std::type_index id)
 {
-    if (!this->_schedulers.Contains(id))
+    if (!this->_schedulingContext.Contains(id))
     {
         throw Exception::MissingSchedulerError(fmt::format("Scheduler not found in the core: {}", id.name()));
     }
-    return *(this->_schedulers.GetScheduler(id));
+    return *(this->_schedulingContext.GetScheduler(id));
 }
 
 template <CScheduler TScheduler, typename... Systems> inline decltype(auto) Core::RegisterSystem(Systems... systems)
 {
-    return this->_schedulers.GetScheduler<TScheduler>().AddSystems(systems...);
+    return this->_schedulingContext.GetScheduler<TScheduler>().AddSystems(systems...);
 }
 
 template <typename TSchedulerA, typename TSchedulerB> void Core::SetSchedulerBefore()
 {
-    this->_schedulers.Before<TSchedulerA, TSchedulerB>();
+    this->_schedulingContext.Before<TSchedulerA, TSchedulerB>();
 }
 
 template <typename TSchedulerA, typename TSchedulerB> void Core::SetSchedulerAfter()
 {
-    this->_schedulers.After<TSchedulerA, TSchedulerB>();
+    this->_schedulingContext.After<TSchedulerA, TSchedulerB>();
 }
 
 template <typename TSchedulerA, typename TSchedulerB> void Core::RemoveDependencyAfter()
 {
-    this->_schedulers.RemoveDependencyAfter<TSchedulerA, TSchedulerB>();
+    this->_schedulingContext.RemoveDependencyAfter<TSchedulerA, TSchedulerB>();
 }
 
 template <typename TSchedulerA, typename TSchedulerB> void Core::RemoveDependencyBefore()
 {
-    this->_schedulers.RemoveDependencyBefore<TSchedulerA, TSchedulerB>();
+    this->_schedulingContext.RemoveDependencyBefore<TSchedulerA, TSchedulerB>();
 }
 
 template <typename... Systems> inline decltype(auto) Core::RegisterSystem(Systems... systems)
 {
-    if (!this->_schedulers.Contains(_defaultScheduler))
+    if (!this->_schedulingContext.Contains(_defaultScheduler))
     {
         Log::Warning(fmt::format("Trying to register systems with a default scheduler that does not exist: {}",
                                  _defaultScheduler.name()));
     }
-    return this->_schedulers.GetScheduler(_defaultScheduler)->AddSystems(systems...);
+    return this->_schedulingContext.GetScheduler(_defaultScheduler)->AddSystems(systems...);
 }
 
 template <CScheduler TScheduler, typename System, typename ErrorCallback>
@@ -109,18 +109,31 @@ template <CPlugin... TPlugins> void Core::AddPlugins() { (AddPlugin<TPlugins>(),
 
 template <CPlugin TPlugin> void Core::AddPlugin()
 {
-    if (this->_plugins.contains(std::type_index(typeid(TPlugin))))
+    if (this->_plugins.Contains(std::type_index(typeid(TPlugin))))
     {
         Log::Warning(fmt::format("Plugin {} already added", typeid(TPlugin).name()));
     }
-    this->_plugins.emplace(std::type_index(typeid(TPlugin)), std::make_unique<TPlugin>(*this));
-    this->_plugins.at(std::type_index(typeid(TPlugin)))->Bind();
+    this->_plugins.Add<TPlugin>(*this);
+    std::optional<std::shared_ptr<Engine::IPlugin>> pluginOpt = this->_plugins.Get<TPlugin>();
+    if (!pluginOpt.has_value())
+    {
+        Log::Error("Plugin don't exist in plugin container");
+        return;
+    }
+    auto plugin = pluginOpt.value();
+    plugin->Bind();
 }
 
-template <CPlugin TPlugin> bool Core::HasPlugin() const
+template <CPlugin TPlugin> std::optional<std::shared_ptr<IPlugin>> Core::GetPlugin(void)
 {
-    return this->_plugins.contains(std::type_index(typeid(TPlugin)));
+    return this->_plugins.Get<TPlugin>();
 }
+inline std::optional<std::shared_ptr<IPlugin>> Core::GetPlugin(std::type_index type)
+{
+    return this->_plugins.Get(type);
+}
+
+template <CPlugin TPlugin> bool Core::HasPlugin() const { return this->_plugins.Contains<TPlugin>(); }
 
 template <CScheduler TScheduler> void Core::SetDefaultScheduler()
 {
@@ -129,7 +142,7 @@ template <CScheduler TScheduler> void Core::SetDefaultScheduler()
 
 inline void Core::SetDefaultScheduler(std::type_index scheduler)
 {
-    if (!this->_schedulers.Contains(scheduler))
+    if (!this->_schedulingContext.Contains(scheduler))
     {
         Log::Warning(fmt::format("Trying to set a default scheduler that does not exist: {}", scheduler.name()));
     }

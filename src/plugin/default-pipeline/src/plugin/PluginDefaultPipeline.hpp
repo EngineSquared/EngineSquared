@@ -11,6 +11,6 @@ class Plugin : public Engine::APlugin {
           };
     ~Plugin() override = default;
 
-    void Bind() final;
+    void Attach() final;
 };
 } // namespace DefaultPipeline

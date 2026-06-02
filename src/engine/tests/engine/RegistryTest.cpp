@@ -69,6 +69,7 @@ TEST(Core, DeleteResource)
 class TestSchedulerA : public Scheduler::AScheduler {
   public:
     using Scheduler::AScheduler::AScheduler;
+    inline static const Engine::SchedulerCategory Category = Engine::SchedulerCategory::Runtime;
     void RunSystems() override
     {
         for (auto const &system : this->GetSystems())
@@ -80,6 +81,7 @@ class TestSchedulerA : public Scheduler::AScheduler {
 
 class TestSchedulerB : public Scheduler::AScheduler {
   public:
+    inline static const Engine::SchedulerCategory Category = Engine::SchedulerCategory::Runtime;
     using Scheduler::AScheduler::AScheduler;
     void RunSystems() override
     {

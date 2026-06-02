@@ -11,7 +11,8 @@
 #include "Id.hpp"
 #include "Logger.hpp"
 #include "plugin/IPlugin.hpp"
-#include "scheduler/SchedulerContainer.hpp"
+#include "plugin/PluginContainer.hpp"
+#include "scheduler/SchedulingContext.hpp"
 #include "scheduler/Update.hpp"
 
 namespace Engine {
@@ -101,6 +102,9 @@ class Core {
     /// @return The scheduler.
     Scheduler::AScheduler &GetScheduler(std::type_index id);
 
+    template <CScheduler TScheduler> bool HasScheduler() { return this->HasScheduler<TScheduler>(); }
+    bool HasScheduler(std::type_index id) { return this->HasScheduler(id); }
+
     /// @brief Sets the execution order of two schedulers, ensuring that TSchedulerA is executed before TSchedulerB.
     /// @tparam TSchedulerA The type of the scheduler that should execute first.
     /// @tparam TSchedulerB The type of the scheduler that should execute after TSchedulerA.
@@ -185,13 +189,15 @@ class Core {
     /// @return true if the entity is valid, false otherwise.
     bool IsEntityValid(Id entity) const;
 
-    /// @brief Adds multiple plugins that will be call instantly through the Bind method to agregate their systems and
+    /// @brief Adds multiple plugins that will be call instantly through the Attach method to agregate their systems and
     /// resources to the core.
     /// @note 2 same plugins can't be added.
     /// @tparam TPlugins Types of the plugins to add. See Engine::CPlugin.
     template <CPlugin... TPlugins> void AddPlugins();
 
-    void AddPlugin(std::string name, std::unique_ptr<IPlugin> plugin);
+    void AddPlugin(std::string name, std::shared_ptr<IPlugin> plugin);
+    template <CPlugin TPlugin> std::optional<std::shared_ptr<IPlugin>> GetPlugin(void);
+    std::optional<std::shared_ptr<IPlugin>> GetPlugin(std::type_index type);
 
     /// @brief Checks if a plugin is present.
     /// @tparam TPlugin The type of the plugin to check for. See Engine::CPlugin.
@@ -219,6 +225,8 @@ class Core {
     /// @param policy The error policy to set for all schedulers. See Engine::Scheduler::SchedulerErrorPolicy.
     void SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy policy);
 
+    PluginContainer &GetPlugins(void) { return _plugins; }
+
   private:
     /// @brief Adds a plugin.
     /// @tparam TPlugin The type of the plugin to add. See Engine::CPlugin.
@@ -227,14 +235,13 @@ class Core {
   private:
     /// @brief The registry that contains all components (and by definition, the entities).
     std::unique_ptr<Registry> _registry;
-    /// @brief The container that contains all the schedulers.
-    Engine::SchedulerContainer _schedulers;
+
+    Engine::SchedulingContext _schedulingContext;
     /// @brief The default scheduler type index. It is used when adding systems without specifying a scheduler.
     std::type_index _defaultScheduler = typeid(Engine::Scheduler::Update);
     /// @brief The list of schedulers to delete at the end of the current loop.
     std::vector<std::type_index> _schedulersToDelete;
-    /// @brief The plugins added to the core.
-    std::unordered_map<std::type_index, std::unique_ptr<IPlugin>> _plugins;
+    PluginContainer _plugins;
     /// @brief The running state of the core. It is true if the core is running, false otherwise. It is used to stop the
     ///     core loop.
     bool _running = false;
@@ -246,7 +253,7 @@ class Core {
         std::size_t operator()(const char *str) const noexcept { return std::hash<std::string_view>{}(str); }
     };
     /// @brief The named plugins added to the core
-    std::unordered_map<std::string, std::unique_ptr<IPlugin>, TransparentHash, std::equal_to<>> _namedPlugins;
+    std::unordered_map<std::string, std::shared_ptr<IPlugin>, TransparentHash, std::equal_to<>> _namedPlugins;
 };
 } // namespace Engine
 

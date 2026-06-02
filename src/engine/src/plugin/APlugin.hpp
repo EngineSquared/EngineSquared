@@ -9,10 +9,9 @@ namespace Engine {
 class APlugin : public IPlugin {
   public:
     /// @brief Constructor for APlugin. It takes a reference to the Core, which is used to register systems and
-    ///     resources in the Bind method.
-    /// @param core Reference to the Core, which is used to register systems and resources in the Bind method.
+    ///     resources in the Attach method.
+    /// @param core Reference to the Core, which is used to register systems and resources in the Attach method.
     explicit APlugin(Core &core);
-
 
     /// @brief Register systems to a scheduler.
     /// @tparam TScheduler The type of the scheduler to register the systems to.
@@ -46,14 +45,143 @@ class APlugin : public IPlugin {
     /// @see Engine::CScheduler
     template <CScheduler TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&...args);
 
-    /// @brief Get a reference to the core. This can be used to register systems and resources in the Bind method.
+    /// @brief Get a reference to the core. This can be used to register systems and resources in the Attach method.
     /// @return A reference to the core.
     /// @see Engine::Core
     Core &GetCore();
 
-    virtual void Unbind(void) override {};
+    /// Should we put this final ?
+    virtual void Unbind(void) override
+    {
+        std::set<std::type_index> invalidPluginIds{};
+        for (const auto &requiredPluginId : _requiredPluginIds)
+        {
+            auto requiredPluginOpt = GetCore().GetPlugin(requiredPluginId);
+            if (!requiredPluginOpt.has_value())
+            {
+                invalidPluginIds.insert(requiredPluginId);
+                continue;
+            }
+            requiredPluginOpt.value().get()->Unbind();
+        }
+        for (const auto &invalidPluginId : invalidPluginIds)
+        {
+            _requiredPluginIds.erase(invalidPluginId);
+        }
+        _unbinding = true;
+    };
+
+    virtual PluginState GetState() const override { return _state; }
+
+    virtual void EmitStateFinished(PluginState state) override
+    {
+        if (_state != state)
+            return;
+        switch (state)
+        {
+        case PluginState::JustAdded:
+            Attach();
+            EnableSystems(SchedulerCategory::Startup);
+            EnableSystems(SchedulerCategory::Runtime);
+            DisableSystems(SchedulerCategory::Shutdown);
+            this->_state = PluginState::StartingUp;
+            break;
+        case PluginState::StartingUp:
+            DisableSystems(SchedulerCategory::Startup);
+            EnableSystems(SchedulerCategory::Runtime);
+            DisableSystems(SchedulerCategory::Shutdown);
+            this->_state = PluginState::Running;
+            break;
+        case PluginState::Running:
+            if (_unbinding)
+            {
+                DisableSystems(SchedulerCategory::Startup);
+                DisableSystems(SchedulerCategory::Runtime);
+                EnableSystems(SchedulerCategory::Shutdown);
+                this->_state = PluginState::ShuttingDown;
+            }
+            break;
+        case PluginState::ShuttingDown:
+            DisableSystems(SchedulerCategory::Startup);
+            DisableSystems(SchedulerCategory::Runtime);
+            DisableSystems(SchedulerCategory::Shutdown);
+            this->_state = PluginState::ShuttedDown;
+            Detach();
+            _unbinding = false;
+            break;
+        case PluginState::ShuttedDown:
+        default:
+            DisableSystems(SchedulerCategory::Startup);
+            DisableSystems(SchedulerCategory::Runtime);
+            DisableSystems(SchedulerCategory::Shutdown);
+        }
+    }
 
   private:
+    void Detach(void)
+    {
+        std::set<FunctionUtils::FunctionID> unsyncSystems{};
+        for (const auto &[category, systems] : _systems)
+        {
+            for (const auto &[systemId, schedulerId] : _systems.at(category))
+            {
+                if (GetCore().HasPlugin(schedulerId))
+                    GetCore().GetScheduler(schedulerId).Remove(systemId);
+                else
+                    unsyncSystems.insert(systemId);
+            }
+            for (const auto &systemId : unsyncSystems)
+            {
+                _systems.at(category).erase(systemId);
+            }
+        }
+        for (auto &resourceDeleter : this->_resourceDeleters)
+        {
+            resourceDeleter(_core);
+        }
+    }
+
+    void EnableSystems(SchedulerCategory category)
+    {
+        if (!_systems.contains(category))
+        {
+            return;
+        }
+        std::vector<FunctionUtils::FunctionID> unsyncSystems{};
+        for (const auto &[systemId, schedulerId] : _systems.at(category))
+        {
+            try
+            {
+                GetCore().GetScheduler(schedulerId).Enable(systemId);
+            }
+            catch (const Exception::MissingSchedulerError &error)
+            {
+                Log::Warning(fmt::format("MissingSchedulerError: {}", error.what()));
+                unsyncSystems.emplace_back(systemId);
+            }
+        }
+        for (const auto &systemId : unsyncSystems)
+        {
+            _systems.at(category).erase(systemId);
+        }
+    }
+
+    void DisableSystems(SchedulerCategory category)
+    {
+        if (!_systems.contains(category))
+        {
+            return;
+        }
+        for (const auto &[systemId, schedulerId] : _systems.at(category))
+        {
+            GetCore().GetScheduler(schedulerId).Disable(systemId);
+        }
+    }
+
+    virtual void Bind(void) override {};
+
+    template <CHasCategory TScheduler> static SchedulerCategory GetCategory(void) { return TScheduler::Category; }
+
     /// @brief Add a plugin to the core if it is not already added.
     /// @tparam TPlugin The type of the plugin to add.
     /// @see Engine::APlugin::RequirePlugins
@@ -61,10 +189,19 @@ class APlugin : public IPlugin {
     /// @see Engine::Core::AddPlugins
     template <CPlugin TPlugin> void RequirePlugin();
 
-    /// @brief Reference to the core, which is used to register systems and resources in the Bind method.
+    /// @brief Reference to the core, which is used to register systems and resources in the Attach method.
     Core &_core;
 
-    std::set<FunctionUtils::FunctionID> _systemIds;
+    PluginState _state = PluginState::JustAdded;
+
+    std::unordered_map<SchedulerCategory, std::map<FunctionUtils::FunctionID, std::type_index>> _systems;
+    std::list<std::function<void(Engine::Core &)>> _resourceDeleters;
+
+    bool _unbinding = false;
+
+    std::set<std::type_index> _requiredPluginIds;
+
+    // std::set<FunctionUtils::FunctionID> _systemIds;
 };
 } // namespace Engine
 

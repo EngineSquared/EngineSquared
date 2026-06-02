@@ -2,7 +2,7 @@
 #include "resource/DynamicLibraryContainer.hpp"
 #include "resource/RegistryMediator.hpp"
 
-void DynamicPlugin::Plugin::Bind()
+void DynamicPlugin::Plugin::Attach()
 {
     RegisterResource(DynamicPlugin::Resource::RegistryMediator{});
     RegisterResource(DynamicPlugin::Resource::DynamicLibraryContainer{});

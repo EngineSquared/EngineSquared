@@ -24,7 +24,7 @@ class NcursesPlugin : public Engine::APlugin {
     using APlugin::APlugin;
     ~NcursesPlugin() = default;
 
-    void Bind(void) override
+    void Attach(void) override
     {
         RegisterScheduler<PreRender>();
         RegisterScheduler<Render>();
@@ -52,7 +52,7 @@ class App : public Engine::APlugin {
     using APlugin::APlugin;
     ~App() = default;
 
-    void Bind(void) override
+    void Attach(void) override
     {
         RegisterResource(Player{Nc::LINES / 2, Nc::COLS / 2});
 

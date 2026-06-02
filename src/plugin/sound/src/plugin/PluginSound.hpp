@@ -11,6 +11,6 @@ class Plugin : public Engine::APlugin {
           };
     ~Plugin() = default;
 
-    void Bind() final;
+    void Attach() final;
 };
 } // namespace Sound

@@ -8,6 +8,7 @@ namespace RenderingPipeline {
  */
 class Extraction : public Engine::Scheduler::Update {
   public:
+    inline static const Engine::SchedulerCategory Category = Engine::SchedulerCategory::Runtime;
     using Engine::Scheduler::Update::Update;
 };
 } // namespace RenderingPipeline

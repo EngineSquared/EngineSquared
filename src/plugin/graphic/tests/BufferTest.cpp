@@ -4,6 +4,7 @@
 #include "Graphic.hpp"
 #include "RenderingPipeline.hpp"
 
+namespace Example {
 class GPUBufferTest : public Graphic::Resource::AGPUBuffer {
   public:
     explicit GPUBufferTest(std::array<int, 5> &&data) : _data(std::move(data)) {}
@@ -76,6 +77,24 @@ void TestSystem(Engine::Core &core)
     EXPECT_FALSE(buffer.IsCreated(core));
 }
 
+class PluginBufferTest : public Engine::APlugin {
+  public:
+    explicit PluginBufferTest(Engine::Core &core)
+        : Engine::APlugin(core) {
+              // empty
+          };
+    ~PluginBufferTest() override = default;
+
+    void Bind(void) override { RequirePlugins<Graphic::Plugin>(); }
+
+    void Attach() final
+    {
+        this->RegisterSystems<RenderingPipeline::Init>([](Engine::Core &c) {
+            c.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
+        });
+    }
+};
+} // namespace Example
 TEST(GraphicPlugin, GlobalRun)
 {
     Engine::Core core;
@@ -86,7 +105,7 @@ TEST(GraphicPlugin, GlobalRun)
         c.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
     });
 
-    core.RegisterSystem(TestSystem);
+    core.RegisterSystem(Example::TestSystem);
 
     EXPECT_NO_THROW(core.RunSystems());
 }

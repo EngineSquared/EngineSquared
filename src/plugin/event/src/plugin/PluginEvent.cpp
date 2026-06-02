@@ -8,7 +8,7 @@
 #include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
 
-void Event::Plugin::Bind()
+void Event::Plugin::Attach()
 {
     RegisterResource<Resource::EventManager>(Resource::EventManager());
     RegisterSystems<Engine::Scheduler::Startup>(System::ProcessEvents<Engine::Scheduler::Startup>);

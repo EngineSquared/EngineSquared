@@ -3,7 +3,7 @@
 #include "scheduler/Update.hpp"
 #include "system/UpdateScene.hpp"
 
-void Scene::Plugin::Bind()
+void Scene::Plugin::Attach()
 {
     RegisterResource<Resource::SceneManager>(Resource::SceneManager());
     RegisterSystems<Engine::Scheduler::Update>(System::UpdateScene);

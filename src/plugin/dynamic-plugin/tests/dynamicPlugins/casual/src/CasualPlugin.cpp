@@ -11,7 +11,7 @@ class CasualPlugin : public Engine::APlugin {
     using Engine::APlugin::APlugin;
     ~CasualPlugin() = default;
 
-    void Bind(void) override
+    void Attach(void) override
     {
         RegisterSystems<Engine::Scheduler::Update>([](Engine::Core &) { Log::Info("Hello world!"); });
     }

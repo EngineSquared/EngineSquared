@@ -24,7 +24,7 @@ class RaylibPlugin : public Engine::APlugin {
     using APlugin::APlugin;
     ~RaylibPlugin() = default;
 
-    void Bind(void) override
+    void Attach(void) override
     {
         RegisterScheduler<PreRender>();
         RegisterScheduler<Render>();
@@ -63,7 +63,7 @@ class App : public Engine::APlugin {
     using APlugin::APlugin;
     ~App() = default;
 
-    void Bind(void) override
+    void Attach(void) override
     {
         RegisterSystems<Render>([](Engine::Core &) {
             Rl::ClearBackground(Rl::RAYWHITE);

@@ -21,6 +21,6 @@ class Plugin : public Engine::APlugin {
     using APlugin::APlugin;
     virtual ~Plugin() = default;
 
-    void Bind() final;
+    void Attach() final;
 };
 } // namespace RenderingPipeline

@@ -22,7 +22,7 @@
 #include "system/VehicleSystem.hpp"
 #include "system/WheelTransformSyncSystem.hpp"
 
-void Physics::Plugin::Bind()
+void Physics::Plugin::Attach()
 {
     RequirePlugins<Event::Plugin>();
 

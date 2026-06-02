@@ -21,7 +21,7 @@ class Plugin : public Engine::APlugin {
     explicit Plugin(Engine::Core &core);
     ~Plugin() override = default;
 
-    void Bind() override;
+    void Attach() override;
 };
 
 } // namespace CameraMovement

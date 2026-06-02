@@ -5,6 +5,7 @@
 #include "resource/EventManager.hpp"
 #include "resource/Time.hpp"
 #include "scheduler/FixedTimeUpdate.hpp"
+#include "scheduler/Startup.hpp"
 
 struct TestResource {
     int value = 0;
@@ -19,25 +20,29 @@ TEST(Event, integration_test)
     Engine::Core core;
 
     core.AddPlugins<Event::Plugin>();
-    core.RegisterResource<TestResource>(TestResource{});
 
-    auto &eventManager = core.GetResource<Event::Resource::EventManager>();
+    core.RegisterSystem([](Engine::Core &core) {
+        core.RegisterResource<TestResource>(TestResource{});
 
-    auto callbackID = eventManager.RegisterCallback<TestEvent>([&core](const TestEvent &event) {
+        auto &eventManager = core.GetResource<Event::Resource::EventManager>();
+
+        auto callbackID = eventManager.RegisterCallback<TestEvent>([&core](const TestEvent &event) {
+            auto &res = core.GetResource<TestResource>();
+            res.value = event.value;
+        });
+
+        eventManager.PushEvent(TestEvent{42});
+
         auto &res = core.GetResource<TestResource>();
-        res.value = event.value;
+        EXPECT_EQ(res.value, 42);
+
+        res.value = 0;
+        eventManager.UnregisterCallback<TestEvent>(callbackID);
+        eventManager.PushEvent(TestEvent{42});
+
+        EXPECT_EQ(res.value, 0);
     });
-
-    eventManager.PushEvent(TestEvent{42});
-
-    auto &res = core.GetResource<TestResource>();
-    EXPECT_EQ(res.value, 42);
-
-    res.value = 0;
-    eventManager.UnregisterCallback<TestEvent>(callbackID);
-    eventManager.PushEvent(TestEvent{42});
-
-    EXPECT_EQ(res.value, 0);
+    core.RunSystems();
 }
 
 TEST(Event, multi_scheduler_test)
@@ -45,32 +50,36 @@ TEST(Event, multi_scheduler_test)
     Engine::Core core;
 
     core.AddPlugins<Event::Plugin>();
+
     core.RegisterResource<TestResource>(TestResource{});
+    core.RegisterSystem<Engine::Scheduler::Startup>([](Engine::Core &core) {
+        auto &eventManager = core.GetResource<Event::Resource::EventManager>();
 
-    auto &eventManager = core.GetResource<Event::Resource::EventManager>();
+        eventManager.RegisterCallback<TestEvent, Engine::Scheduler::Update>([&core](const TestEvent &event) {
+            auto &res = core.GetResource<TestResource>();
+            res.value += event.value;
+        });
 
-    eventManager.RegisterCallback<TestEvent, Engine::Scheduler::Update>([&core](const TestEvent &event) {
+        eventManager.RegisterCallback<TestEvent, Engine::Scheduler::FixedTimeUpdate>([&core](const TestEvent &event) {
+            auto &res = core.GetResource<TestResource>();
+            res.value += event.value * 2;
+        });
+
+        eventManager.PushEvent(TestEvent{10});
+
+        eventManager.ProcessEvents<Engine::Scheduler::Update>();
+
         auto &res = core.GetResource<TestResource>();
-        res.value += event.value;
+        EXPECT_EQ(res.value, 10);
+        eventManager.ProcessEvents<Engine::Scheduler::FixedTimeUpdate>();
+        EXPECT_EQ(res.value, 30);
+
+        res.value = 0;
+        eventManager.PushEvent(TestEvent{5});
     });
-
-    eventManager.RegisterCallback<TestEvent, Engine::Scheduler::FixedTimeUpdate>([&core](const TestEvent &event) {
-        auto &res = core.GetResource<TestResource>();
-        res.value += event.value * 2;
-    });
-
-    eventManager.PushEvent(TestEvent{10});
-
-    eventManager.ProcessEvents<Engine::Scheduler::Update>();
-
+    core.RunSystems();
     auto &res = core.GetResource<TestResource>();
-    EXPECT_EQ(res.value, 10);
-    eventManager.ProcessEvents<Engine::Scheduler::FixedTimeUpdate>();
-    EXPECT_EQ(res.value, 30);
-
-    res.value = 0;
-    eventManager.PushEvent(TestEvent{5});
-
+    auto &eventManager = core.GetResource<Event::Resource::EventManager>();
     core.GetResource<Engine::Resource::Time>()._elapsedTime = 0.001f;
     core.RunSystems();
     EXPECT_EQ(res.value, 5);

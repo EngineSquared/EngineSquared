@@ -4,7 +4,7 @@
 #include "resource/Window.hpp"
 #include "system/WindowSystem.hpp"
 
-void Window::Plugin::Bind()
+void Window::Plugin::Attach()
 {
     RequirePlugins<RenderingPipeline::Plugin>();
 

@@ -17,6 +17,7 @@ struct ResourceTest {
 
 class SchedulerTest1 : public Engine::Scheduler::AScheduler {
   public:
+    inline static const Engine::SchedulerCategory Category = Engine::SchedulerCategory::Runtime;
     explicit SchedulerTest1(Core &core) : AScheduler(core) {};
     ~SchedulerTest1() override = default;
 
@@ -25,6 +26,7 @@ class SchedulerTest1 : public Engine::Scheduler::AScheduler {
 
 class SchedulerTest2 : public Engine::Scheduler::AScheduler {
   public:
+    inline static const Engine::SchedulerCategory Category = Engine::SchedulerCategory::Runtime;
     explicit SchedulerTest2(Core &core) : AScheduler(core) {};
     ~SchedulerTest2() override = default;
 

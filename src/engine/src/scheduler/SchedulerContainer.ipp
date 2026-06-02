@@ -56,7 +56,7 @@ template <typename TAfter, typename TBefore> void Engine::SchedulerContainer::Re
     RemoveDependencyBefore<TBefore, TAfter>();
 }
 
-inline void Engine::SchedulerContainer::RunSchedulers()
+inline bool Engine::SchedulerContainer::RunSchedulers()
 {
     Update();
     for (const auto &scheduler : _orderedSchedulers)
@@ -65,9 +65,10 @@ inline void Engine::SchedulerContainer::RunSchedulers()
 
         if (!scheduler->ShouldRunNextScheduler())
         {
-            break;
+            return false;
         }
     }
+    return true;
 }
 
 inline bool Engine::SchedulerContainer::Contains(std::type_index id) const { return this->_schedulers.contains(id); }

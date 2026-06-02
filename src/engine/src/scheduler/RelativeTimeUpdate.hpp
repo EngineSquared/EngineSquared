@@ -1,10 +1,9 @@
 #pragma once
 
 #include <entt/entt.hpp>
-
 #include <chrono>
-
 #include "scheduler/AScheduler.hpp"
+#include "scheduler/SchedulerCategory.hpp"
 
 namespace Engine::Scheduler {
 /// @class RelativeTimeUpdate
@@ -24,6 +23,7 @@ class RelativeTimeUpdate : public AScheduler {
     inline static constexpr float REMAINDER_THRESHOLD = 0.0001f;
 
   public:
+    inline static const SchedulerCategory Category = SchedulerCategory::Runtime;
     /// @brief Constructor of the RelativeTimeUpdate scheduler. It takes a reference to the core and an optional tick
     ///   rate.
     /// @param core Reference to the core.

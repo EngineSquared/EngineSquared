@@ -63,7 +63,8 @@ class SchedulerContainer {
     /// @brief Runs all schedulers in the container. This function iterates through the ordered list of schedulers and
     ///   calls the RunSystems method on each scheduler. It ensures that the schedulers are executed in the order
     ///   defined by their dependencies.
-    void RunSchedulers();
+    /// @return true if core should run other categories, false otherwise
+    bool RunSchedulers();
 
     /// @brief Deletes a scheduler of the specified type.
     /// @tparam TScheduler The type of the scheduler to be deleted.

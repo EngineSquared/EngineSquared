@@ -9,6 +9,7 @@
 
 #include "scheduler/FixedTimeUpdate.hpp"
 #include "scheduler/RelativeTimeUpdate.hpp"
+#include "scheduler/SchedulingContext.hpp"
 #include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
 #include "scheduler/Update.hpp"

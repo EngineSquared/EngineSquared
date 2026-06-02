@@ -1,8 +1,8 @@
 #pragma once
 
 namespace Engine {
-class Core;
-}
+enum class SchedulerCategory;
+} // namespace Engine
 
 namespace Engine::Scheduler {
 /// @brief Enum that defines how the scheduler will handle errors

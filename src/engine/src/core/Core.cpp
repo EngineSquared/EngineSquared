@@ -7,6 +7,7 @@
 #include "scheduler/RelativeTimeUpdate.hpp"
 #include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
+#include <ranges>
 
 Engine::Core::Core() : _registry(nullptr)
 {
@@ -15,7 +16,7 @@ Engine::Core::Core() : _registry(nullptr)
 
     this->RegisterResource<Resource::Time>(Resource::Time());
 
-    this->RegisterScheduler<Scheduler::Startup>([this]() { this->DeleteScheduler<Scheduler::Startup>(); });
+    this->RegisterScheduler<Scheduler::Startup>();
 
     this->RegisterScheduler<Scheduler::Update>();
     this->RegisterScheduler<Scheduler::FixedTimeUpdate>();
@@ -86,11 +87,31 @@ void Engine::Core::Run(void)
 
 void Engine::Core::RunSystems()
 {
-    this->_schedulers.RunSchedulers();
-
+    for (auto &plugin : this->_plugins.Get())
+    {
+        plugin->EmitStateFinished(PluginState::JustAdded);
+    }
+    if (!this->_schedulingContext.RunSchedulers(SchedulerCategory::Startup))
+        return;
+    for (auto &plugin : this->_plugins.Get())
+    {
+        plugin->EmitStateFinished(PluginState::StartingUp);
+    }
+    if (!this->_schedulingContext.RunSchedulers(SchedulerCategory::Runtime))
+        return;
+    for (auto &plugin : this->_plugins.Get())
+    {
+        plugin->EmitStateFinished(PluginState::Running);
+    }
+    if (!this->_schedulingContext.RunSchedulers(SchedulerCategory::Shutdown))
+        return;
+    for (auto &plugin : this->_plugins.Get())
+    {
+        plugin->EmitStateFinished(PluginState::ShuttingDown);
+    }
     for (const auto &scheduler : this->_schedulersToDelete)
     {
-        this->_schedulers.DeleteScheduler(scheduler);
+        this->_schedulingContext.DeleteScheduler(scheduler);
     }
 
     this->_schedulersToDelete.clear();
@@ -100,14 +121,14 @@ bool Engine::Core::IsEntityValid(Engine::Id entity) const { return GetRegistry()
 
 void Engine::Core::ClearEntities() { this->_registry->clear(); }
 
-bool Engine::Core::HasPlugin(std::type_index type) const { return this->_plugins.contains(type); }
+bool Engine::Core::HasPlugin(std::type_index type) const { return this->_plugins.Contains(type); }
 
 void Engine::Core::SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy policy)
 {
-    _schedulers.SetErrorPolicyForAllSchedulers(policy);
+    _schedulingContext.SetErrorPolicyForAllSchedulers(policy);
 }
 
-void Engine::Core::AddPlugin(std::string name, std::unique_ptr<IPlugin> plugin)
+void Engine::Core::AddPlugin(std::string name, std::shared_ptr<IPlugin> plugin)
 {
     if (this->_namedPlugins.contains(name))
     {

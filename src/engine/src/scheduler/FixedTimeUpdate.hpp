@@ -1,6 +1,7 @@
 #pragma once
 
 #include "scheduler/AScheduler.hpp"
+#include "scheduler/SchedulerCategory.hpp"
 #include <chrono>
 #include <entt/entt.hpp>
 
@@ -19,6 +20,8 @@ class FixedTimeUpdate : public AScheduler {
     inline static constexpr float DEFAULT_TICK_RATE = 1.0f / 50.0f;
 
   public:
+    inline static const SchedulerCategory Category = SchedulerCategory::Runtime;
+
     /// @brief Constructor of the FixedTimeUpdate scheduler. It takes a reference to the core and an optional tick rate.
     ///   If the tick rate is not provided, it will be set to the default tick rate (DEFAULT_TICK_RATE).
     /// @param core Reference to the core.

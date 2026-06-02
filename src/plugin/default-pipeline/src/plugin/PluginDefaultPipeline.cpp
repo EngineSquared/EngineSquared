@@ -14,7 +14,7 @@ static void SetupGPUComponent(Engine::Core &core)
     registry.on_destroy<GPUComponent>().template connect<DestructionFunction>(core);
 }
 
-void DefaultPipeline::Plugin::Bind()
+void DefaultPipeline::Plugin::Attach()
 {
     RequirePlugins<RenderingPipeline::Plugin, Graphic::Plugin>();
 

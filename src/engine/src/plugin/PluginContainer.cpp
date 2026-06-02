@@ -1,17 +1,17 @@
 #include "Engine.pch.hpp"
 
-#include "SchedulerContainer.hpp"
+#include "plugin/PluginContainer.hpp"
 
-Engine::SchedulerError::SchedulerError(const std::string &message) : msg(fmt::format("Scheduler error: {}", message)) {}
+Engine::PluginError::PluginError(const std::string &message) : msg(fmt::format("Plugin error: {}", message)) {}
 
-const char *Engine::SchedulerError::what() const throw() { return this->msg.c_str(); }
+const char *Engine::PluginError::what() const throw() { return this->msg.c_str(); }
 
-void Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
+void Engine::PluginContainer::Delete(std::type_index id)
 {
-    if (this->_schedulers.contains(id))
+    if (this->_plugins.contains(id))
     {
         Log::Debug(fmt::format("Deleting scheduler: {}", id.name()));
-        this->_schedulers.erase(id);
+        this->_plugins.erase(id);
         this->_dirty = true;
         if (this->_dependencies.contains(id))
         {
@@ -27,12 +27,12 @@ void Engine::SchedulerContainer::DeleteScheduler(std::type_index id)
     }
     else
     {
-        Log::Warning(fmt::format("Trying to delete Scheduler but it does not exist: {}", id.name()));
+        Log::Warning(fmt::format("Trying to delete Plugin but it does not exist: {}", id.name()));
     }
 }
 
-void Engine::SchedulerContainer::ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
-                                                     std::map<std::type_index, size_t> &inDegree) const
+void Engine::PluginContainer::ProcessDependencies(std::type_index current, std::queue<std::type_index> &q,
+                                                  std::map<std::type_index, size_t> &inDegree) const
 {
     for (const auto &[after, befores] : _dependencies)
     {
@@ -47,12 +47,12 @@ void Engine::SchedulerContainer::ProcessDependencies(std::type_index current, st
     }
 }
 
-void Engine::SchedulerContainer::TopologicalSort()
+void Engine::PluginContainer::TopologicalSort()
 {
-    _orderedSchedulers.clear();
+    _orderedPlugins.clear();
 
     std::map<std::type_index, size_t> inDegree;
-    for (const auto &[type, _] : _schedulers)
+    for (const auto &[type, _] : _plugins)
     {
         inDegree[type] = 0;
     }
@@ -62,7 +62,7 @@ void Engine::SchedulerContainer::TopologicalSort()
         uint8_t validBefores = 0;
         for (const auto &before : befores)
         {
-            if (_schedulers.contains(before))
+            if (_plugins.contains(before))
                 validBefores += 1;
         }
         inDegree[after] += validBefores;
@@ -82,32 +82,24 @@ void Engine::SchedulerContainer::TopologicalSort()
         auto current = q.front();
         q.pop();
 
-        if (auto it = _schedulers.find(current); it != _schedulers.end())
+        if (auto it = _plugins.find(current); it != _plugins.end())
         {
-            _orderedSchedulers.push_back(it->second);
+            _orderedPlugins.push_back(it->second);
         }
 
         ProcessDependencies(current, q, inDegree);
     }
 
-    if (_orderedSchedulers.size() != _schedulers.size())
+    if (_orderedPlugins.size() != _plugins.size())
     {
-        throw SchedulerError("Cyclic dependency detected between schedulers.");
+        throw PluginError("Cyclic dependency detected between schedulers.");
     }
 }
 
-void Engine::SchedulerContainer::Update()
+void Engine::PluginContainer::Update()
 {
     if (!_dirty)
         return;
     TopologicalSort();
     _dirty = false;
-}
-
-void Engine::SchedulerContainer::SetErrorPolicyForAllSchedulers(Scheduler::SchedulerErrorPolicy policy)
-{
-    for (const auto &[_, scheduler] : _schedulers)
-    {
-        scheduler->SetErrorPolicy(policy);
-    }
 }

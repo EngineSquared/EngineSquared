@@ -2,17 +2,19 @@
 
 #include "scheduler/Startup.hpp"
 
-Engine::Scheduler::Startup::Startup(Core &core, const std::function<void()> &callback)
-    : AScheduler(core), _callback(callback)
-{
-}
+Engine::Scheduler::Startup::Startup(Core &core) : AScheduler(core) {}
 
 void Engine::Scheduler::Startup::RunSystems()
 {
+    std::set<FunctionUtils::FunctionID> systemIdsToDisable{};
     for (auto const &system : this->GetSystems())
     {
         RunSystem(system.get(), _core);
+        systemIdsToDisable.insert(system.get()->GetID());
     }
 
-    _callback();
+    for (auto const &systemIdToDisable : systemIdsToDisable)
+    {
+        this->Disable(systemIdToDisable);
+    }
 }

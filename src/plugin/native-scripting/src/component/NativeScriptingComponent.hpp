@@ -18,7 +18,7 @@ struct NativeScripting {
     std::function<void(Utils::ScriptableEntity *)> OnDestroy;
     std::function<void(Utils::ScriptableEntity *)> OnUpdate;
 
-    template <typename T> void Bind(Engine::Core &core)
+    template <typename T> void Attach(Engine::Core &core)
     {
         Instantiate = [this, &core](Engine::Entity entity) { seInstance = std::make_unique<T>(entity); };
         DestroyInstance = [this]() { seInstance.reset(); };

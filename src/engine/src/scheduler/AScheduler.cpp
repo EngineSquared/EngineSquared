@@ -21,11 +21,7 @@ void AScheduler::Disable(FunctionUtils::FunctionID id)
     {
         _disabledSystemsList.AddFunction(_enabledSystemsList.DeleteFunction(id));
     }
-    else if (_disabledSystemsList.Contains(id))
-    {
-        Log::Warning(fmt::format("System with id {} is already disabled", id));
-    }
-    else
+    else if (!_disabledSystemsList.Contains(id))
     {
         Log::Warning(fmt::format("System with id {} don't exist in the scheduler", id));
     }
@@ -37,11 +33,7 @@ void AScheduler::Enable(FunctionUtils::FunctionID id)
     {
         _enabledSystemsList.AddFunction(_disabledSystemsList.DeleteFunction(id));
     }
-    else if (_enabledSystemsList.Contains(id))
-    {
-        Log::Warning(fmt::format("System with id {} is already enabled", id));
-    }
-    else
+    else if (!_enabledSystemsList.Contains(id))
     {
         Log::Warning(fmt::format("System with id {} don't exist in the scheduler", id));
     }

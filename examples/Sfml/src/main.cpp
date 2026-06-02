@@ -31,7 +31,7 @@ class SfmlPlugin : public Engine::APlugin {
     using APlugin::APlugin;
     ~SfmlPlugin() = default;
 
-    void Bind(void) override
+    void Attach(void) override
     {
         RequirePlugins<Event::Plugin>();
 
@@ -91,7 +91,7 @@ class App : public Engine::APlugin {
     using APlugin::APlugin;
     ~App() = default;
 
-    void Bind(void) override
+    void Attach(void) override
     {
         RegisterSystems<Engine::Scheduler::Startup>([](Engine::Core &core) {
             auto &window = core.GetResource<sf::RenderWindow>();
