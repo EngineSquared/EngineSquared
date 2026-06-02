@@ -16,11 +16,11 @@ target("PluginPhysics")
 
     add_files("src/**.cpp")
 
-    add_headerfiles("src/(exception/*.hpp)")
-    add_headerfiles("src/(plugin/*.hpp)")
-    add_headerfiles("src/(resource/*.hpp)")
-    add_headerfiles("src/(system/*.hpp)")
-    add_headerfiles("src/(utils/*.hpp)")
+    for _, file in ipairs(os.filedirs("src/*")) do
+        if os.isdir(file) then
+            add_headerfiles("src/(" .. path.filename(file) .. "/*.hpp)")
+        end
+    end
     add_headerfiles("src/(*.hpp)")
 
     add_includedirs("src/", {public = true})

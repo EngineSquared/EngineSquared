@@ -1,6 +1,6 @@
 #pragma once
 
-#include "resource/Context.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/ShaderDescriptor.hpp"
 #include "utils/shader/BindGroupLayout.hpp"
 #include "utils/shader/ColorTargetState.hpp"
@@ -42,9 +42,9 @@ class Shader {
     Shader(const Shader &) = delete;
     Shader &operator=(const Shader &) = delete;
 
-    static Shader Create(const ShaderDescriptor &descriptor, Context &context)
+    static Shader Create(const ShaderDescriptor &descriptor, DeviceContext &deviceContext)
     {
-        wgpu::Device device = context.deviceContext.GetDevice().value();
+        wgpu::Device device = deviceContext.GetDevice().value();
         Shader shader;
         shader.descriptor = descriptor;
 

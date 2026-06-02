@@ -37,9 +37,9 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
     ~MaterialGPUBuffer() override { Destroy(); }
     void Create(Engine::Core &core) override
     {
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
+        const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
 
-        _buffer = _CreateBuffer(context.deviceContext);
+        _buffer = _CreateBuffer(deviceContext);
         _isCreated = true;
     };
     void Destroy(Engine::Core &core) override { Destroy(); };
@@ -67,8 +67,8 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
         }
 
         const auto &materialComponent = _entity->GetComponents<Object::Component::Material>();
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
-        _UpdateBuffer(materialComponent, context);
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+        _UpdateBuffer(materialComponent, queue);
     };
 
     void SetMaterial(const Engine::Core &core, const Object::Component::Material &material)
@@ -78,8 +78,8 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
             throw Graphic::Exception::UpdateBufferError("Cannot update a GPU material buffer that is not created.");
         }
 
-        const auto &context = core.GetResource<Graphic::Resource::Context>();
-        _UpdateBuffer(material, context);
+        const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+        _UpdateBuffer(material, queue);
     }
 
     const wgpu::Buffer &GetBuffer() const override { return _buffer; };
@@ -105,10 +105,10 @@ class MaterialGPUBuffer : public Graphic::Resource::AGPUBuffer {
         return context.GetDevice()->createBuffer(bufferDesc);
     }
 
-    void _UpdateBuffer(const Object::Component::Material &materialComponent, const Graphic::Resource::Context &context)
+    void _UpdateBuffer(const Object::Component::Material &materialComponent, const Graphic::Resource::Queue &queue)
     {
         MaterialTransfer materialTransfer(materialComponent);
-        context.queue->writeBuffer(_buffer, 0, std::addressof(materialTransfer), MaterialTransfer::CPUSize());
+        queue->writeBuffer(_buffer, 0, std::addressof(materialTransfer), MaterialTransfer::CPUSize());
     }
 
     wgpu::Buffer _buffer;

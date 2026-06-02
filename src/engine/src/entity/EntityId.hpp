@@ -97,6 +97,15 @@ struct EntityId : Id {
     /// exist.
     template <typename TComponent> decltype(auto) TryGetComponent(Engine::Core &core);
 
+    /// @brief Update a component values through functions. This allows user so also call `on_update` registry's
+    ///     callback.
+    /// @tparam TComponent The type of the component to update.
+    /// @tparam ...TFunctions Function types that will be applied to component
+    /// @param core The Core instance whose registry is used to store the component.
+    /// @param ...functions Function types that will be applied to component
+    template <typename TComponent, class... TFunctions>
+    void UpdateComponent(Engine::Core &core, TFunctions &&...functions);
+
     /// @brief Remove a component from an entity.
     /// @tparam TComponent The type of the component to remove from the registry.
     /// @param core The Core instance whose registry is used to store the component.

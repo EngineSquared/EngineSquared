@@ -68,7 +68,7 @@ Graphic::Resource::Shader CreateTestShader(const std::string &name, Engine::Core
         .addOutputColorFormat(colorOutput)
         .setOutputDepthFormat(depthStencilOutput);
 
-    return Graphic::Resource::Shader::Create(shaderDescriptor, core.GetResource<Graphic::Resource::Context>());
+    return Graphic::Resource::Shader::Create(shaderDescriptor, core.GetResource<Graphic::Resource::DeviceContext>());
 }
 
 auto TestShaderContainerSystem(Engine::Core &core) -> void

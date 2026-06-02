@@ -1,16 +1,20 @@
 #include "system/initialization/RequestCapabilities.hpp"
 #include "exception/CapabilitiesRequestError.hpp"
-#include "resource/Context.hpp"
+#include "resource/Adapter.hpp"
+#include "resource/DeviceContext.hpp"
 #include "resource/GraphicSettings.hpp"
+#include "resource/Surface.hpp"
 
 namespace Graphic::System {
 void RequestCapabilities(Engine::Core &core)
 {
-    auto &context = core.GetResource<Resource::Context>();
+    auto &adapter = core.GetResource<Resource::Adapter>();
 
-    if (context.surface == std::nullopt || !context.adapter.has_value())
+    if (!core.HasResource<Resource::Surface>())
         return;
-    if (context.surface->updateCapabilities(context.adapter.value()) == wgpu::Status::Error)
+    auto &surface = core.GetResource<Resource::Surface>();
+
+    if (surface.updateCapabilities(*adapter) == wgpu::Status::Error)
     {
         throw Exception::CapabilitiesRequestError("Failed to get surface capabilities");
     }

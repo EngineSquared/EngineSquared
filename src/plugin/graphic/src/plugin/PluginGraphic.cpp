@@ -12,7 +12,7 @@ void Graphic::Plugin::Bind()
 {
     RequirePlugins<RenderingPipeline::Plugin, Event::Plugin>();
 
-    RegisterResource(Graphic::Resource::Context());
+    RegisterResource(Graphic::Resource::DeviceContext());
     RegisterResource(Graphic::Resource::GraphicSettings());
     RegisterResource(Graphic::Resource::ShaderContainer());
     RegisterResource(Graphic::Resource::TextureContainer());

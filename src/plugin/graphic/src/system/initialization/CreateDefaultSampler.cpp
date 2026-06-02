@@ -1,6 +1,5 @@
 #include "system/initialization/CreateDefaultSampler.hpp"
 #include "core/Core.hpp"
-#include "resource/Context.hpp"
 #include "resource/Sampler.hpp"
 #include "resource/SamplerContainer.hpp"
 #include "utils/DefaultSampler.hpp"
@@ -10,7 +9,7 @@
 namespace Graphic::System {
 void CreateDefaultSampler(Engine::Core &core)
 {
-    const auto &context = core.GetResource<Resource::Context>();
+    const auto &deviceContext = core.GetResource<Resource::DeviceContext>();
     Resource::SamplerContainer &samplerContainer = core.GetResource<Resource::SamplerContainer>();
 
     wgpu::SamplerDescriptor samplerDesc(wgpu::Default);
@@ -22,7 +21,7 @@ void CreateDefaultSampler(Engine::Core &core)
     samplerDesc.addressModeV = wgpu::AddressMode::ClampToEdge;
     samplerDesc.addressModeW = wgpu::AddressMode::ClampToEdge;
 
-    const auto &optDevice = context.deviceContext.GetDevice();
+    const auto &optDevice = deviceContext.GetDevice();
     if (!optDevice.has_value())
     {
         Log::Error("Graphic::System::CreateDefaultSampler: Graphic device not found");

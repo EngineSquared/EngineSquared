@@ -13,6 +13,31 @@
 #include "plugin/PluginWindow.hpp"
 #include "resource/Window.hpp"
 
+void UpdateTexture(Engine::Core &core)
+{
+    static float timeBuffer = 0;
+    timeBuffer += core.GetScheduler<Engine::Scheduler::Update>().GetDeltaTime();
+
+    if (timeBuffer >= 1.f)
+    {
+        timeBuffer -= 1.f;
+        auto &cubeTextured = core.GetResource<Engine::Entity>();
+        cubeTextured.UpdateComponent<Object::Component::Material>([](Object::Component::Material &component) {
+            if (component.diffuseTexName ==
+                "src/plugin/default-pipeline/examples/GraphicMaterialUsage/asset/texture.png")
+            {
+                component.diffuseTexName =
+                    "src/plugin/default-pipeline/examples/GraphicMaterialUsage/asset/texture2.jpg";
+            }
+            else
+            {
+                component.diffuseTexName =
+                    "src/plugin/default-pipeline/examples/GraphicMaterialUsage/asset/texture.png";
+            }
+        });
+    }
+}
+
 void Setup(Engine::Core &core)
 {
     // Option to lock the cursor to the window
@@ -26,8 +51,8 @@ void Setup(Engine::Core &core)
 
     // Custom Material from file
     Object::Component::Material materialWithTexture;
-    materialWithTexture.diffuseTexName = "./asset/texture.png";
-    auto cube1 = core.CreateEntity();
+    materialWithTexture.diffuseTexName = "src/plugin/default-pipeline/examples/GraphicMaterialUsage/asset/texture.png";
+    auto &cube1 = core.RegisterResource(core.CreateEntity());
     cube1.AddComponent<Object::Component::Transform>();
     cube1.AddComponent<Object::Component::Mesh>(Object::Utils::GenerateCubeMesh());
     cube1.AddComponent<Object::Component::Material>(std::move(materialWithTexture));
@@ -36,9 +61,9 @@ void Setup(Engine::Core &core)
     Object::Component::Material materialFromLocalTexture;
     materialFromLocalTexture.diffuseTexName = "LocalTextureName";
     auto &textureManager = core.GetResource<Graphic::Resource::TextureContainer>();
-    auto texture =
-        Graphic::Resource::Texture(core.GetResource<Graphic::Resource::Context>(), "LocalTexture", glm::uvec2(255, 255),
-                                   [](glm::uvec2 pos) { return glm::u8vec4(pos.x, pos.y, 0, 255); });
+    auto texture = Graphic::Resource::Texture(
+        core.GetResource<Graphic::Resource::DeviceContext>(), core.GetResource<Graphic::Resource::Queue>(),
+        "LocalTexture", glm::uvec2(255, 255), [](glm::uvec2 pos) { return glm::u8vec4(pos.x, pos.y, 0, 255); });
     textureManager.Add("LocalTextureName", std::move(texture));
     auto cube2 = core.CreateEntity();
     cube2.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 2.0f, 0.0f));
@@ -80,6 +105,7 @@ int main(void)
     });
 
     core.RegisterSystem<Engine::Scheduler::Startup>(Setup);
+    core.RegisterSystem(UpdateTexture);
 
     try
     {

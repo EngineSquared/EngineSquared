@@ -57,6 +57,12 @@ auto RemoveParent(Engine::Entity child) -> void;
  */
 auto GetParent(Engine::Entity child) -> std::optional<Engine::Entity>;
 
+/**
+ * Apply a function to each child of an entity.
+ *
+ * @param   parent  parent entity
+ * @return  no return value
+ */
 template <typename TFunc> auto ForEachChild(Engine::Entity parent, TFunc func) -> void
 {
     const Relationship::Component::Relationship *parentRS =
@@ -80,5 +86,45 @@ template <typename TFunc> auto ForEachChild(Engine::Entity parent, TFunc func) -
         }
         currentChildOpt = currentChildRS->next;
     }
+}
+
+/**
+ * Get a specific pointer list of a component for each child of an entity.
+ *
+ * @param   parent  parent entity
+ * @return  a vector containing pointers to the specified component for each child of the parent entity
+ */
+
+template <typename TComponent>
+auto GetChildComponents(Engine::Entity parent) -> std::vector<std::reference_wrapper<TComponent>>
+{
+    std::vector<std::reference_wrapper<TComponent>> childComponents;
+    ForEachChild(parent, [&childComponents](Engine::Entity child) {
+        TComponent *childComponent = child.TryGetComponent<TComponent>();
+        if (childComponent)
+        {
+            childComponents.emplace_back(*childComponent);
+        }
+    });
+    return childComponents;
+}
+
+/**
+ * Get the pointer to a component of a parent of an Entity.
+ *
+ * @param   child   child entity
+ * @return  the pointer to the component if the parent entity has it, or nullptr if the entity has no parent or the
+ * parent has no such component
+ */
+template <typename TComponent> auto TryGetParentComponent(Engine::Entity child) -> TComponent *
+{
+    std::optional<Engine::Entity> parentOpt = GetParent(child);
+    if (!parentOpt.has_value())
+    {
+        Log::Warning(fmt::format("Entity({}) has no parent in TryGetParentComponent", child));
+        return nullptr;
+    }
+    Engine::Entity parent = parentOpt.value();
+    return parent.TryGetComponent<TComponent>();
 }
 } // namespace Relationship::Utils

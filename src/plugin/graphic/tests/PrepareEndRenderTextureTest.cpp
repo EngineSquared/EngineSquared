@@ -14,10 +14,9 @@ TEST(PrepareEndRenderTextureTest, CreatesTextureWhenWindowSystemIsNone)
     });
 
     core.RegisterSystem<RenderingPipeline::Extraction>([](Engine::Core &core) {
-        auto const &context = core.GetResource<Graphic::Resource::Context>();
         auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
 
-        EXPECT_FALSE(context.surface.has_value());
+        EXPECT_FALSE(core.HasResource<Graphic::Resource::Surface>());
         EXPECT_TRUE(textureContainer.Contains(Graphic::Utils::END_RENDER_TEXTURE_ID));
     });
 

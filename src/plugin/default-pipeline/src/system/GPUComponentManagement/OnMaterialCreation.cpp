@@ -21,8 +21,9 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     const auto &material = entity.GetComponents<Object::Component::Material>();
     auto &textureContainer = core.GetResource<Graphic::Resource::TextureContainer>();
     auto &samplerContainer = core.GetResource<Graphic::Resource::SamplerContainer>();
-    const auto &context = core.GetResource<Graphic::Resource::Context>();
-    const auto &device = context.deviceContext.GetDevice();
+    const auto &deviceContext = core.GetResource<Graphic::Resource::DeviceContext>();
+    const auto &queue = core.GetResource<Graphic::Resource::Queue>();
+    const auto &device = deviceContext.GetDevice();
 
     if (!device.has_value())
     {
@@ -41,7 +42,7 @@ void DefaultPipeline::System::OnMaterialCreation(Engine::Core &core, Engine::Ent
     }
     else if (std::filesystem::exists(material.diffuseTexName))
     {
-        Graphic::Resource::Texture texture{context, material.diffuseTexName,
+        Graphic::Resource::Texture texture{deviceContext, queue, material.diffuseTexName,
                                            Graphic::Resource::Image(material.diffuseTexName)};
         textureContainer.Add(textureId, std::move(texture));
         GPUMaterial.texture = textureId;
