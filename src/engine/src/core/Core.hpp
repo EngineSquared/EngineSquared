@@ -102,8 +102,8 @@ class Core {
     /// @return The scheduler.
     Scheduler::AScheduler &GetScheduler(std::type_index id);
 
-    template <CScheduler TScheduler> bool HasScheduler() { return this->HasScheduler<TScheduler>(); }
-    bool HasScheduler(std::type_index id) { return this->HasScheduler(id); }
+    template <CScheduler TScheduler> bool HasScheduler() { return this->_schedulingContext.Contains<TScheduler>(); }
+    bool HasScheduler(std::type_index id) { return this->_schedulingContext.Contains(id); }
 
     /// @brief Sets the execution order of two schedulers, ensuring that TSchedulerA is executed before TSchedulerB.
     /// @tparam TSchedulerA The type of the scheduler that should execute first.
@@ -189,7 +189,7 @@ class Core {
     /// @return true if the entity is valid, false otherwise.
     bool IsEntityValid(Id entity) const;
 
-    /// @brief Adds multiple plugins that will be call instantly through the Attach method to agregate their systems and
+    /// @brief Adds multiple plugins that will be call instantly through the Bind method to agregate their systems and
     /// resources to the core.
     /// @note 2 same plugins can't be added.
     /// @tparam TPlugins Types of the plugins to add. See Engine::CPlugin.

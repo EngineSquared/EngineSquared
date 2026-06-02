@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <sstream>
 
-void Graphic::Plugin::Attach()
+void Graphic::Plugin::Bind()
 {
     RequirePlugins<RenderingPipeline::Plugin, Event::Plugin>();
 

@@ -4,7 +4,7 @@
 
 #include "RenderingPipeline.hpp"
 
-void RenderingPipeline::Plugin::Attach()
+void RenderingPipeline::Plugin::Bind()
 {
     this->RegisterScheduler<Init>();
     this->RegisterScheduler<Setup>();

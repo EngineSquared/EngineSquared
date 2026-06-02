@@ -15,7 +15,7 @@ namespace CameraMovement {
 
 Plugin::Plugin(Engine::Core &core) : APlugin(core) {}
 
-void Plugin::Attach()
+void Plugin::Bind()
 {
     RequirePlugins<Input::Plugin, Window::Plugin>();
 

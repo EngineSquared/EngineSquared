@@ -1,9 +1,24 @@
 #include "plugin/APlugin.hpp"
 
-namespace Engine {
-template <CScheduler TScheduler, typename... Systems> decltype(auto) APlugin::RegisterSystems(Systems... systems)
+template <typename System> inline FunctionUtils::FunctionID GetId(System system)
 {
-    auto systemIds = _core.RegisterSystem<TScheduler>(systems...);
+    if constexpr (Engine::SystemContainer::is_derived_from_function_type<System>::value)
+    {
+        return system.GetID();
+    }
+    else
+    {
+        return FunctionUtils::CallableFunction<System, void, Engine::Core &>::GetCallableID(system);
+    }
+}
+inline FunctionUtils::FunctionID GetId(const std::unique_ptr<FunctionUtils::BaseFunction<void, Engine::Core &>> &system)
+{
+    return system->GetID();
+}
+
+namespace Engine {
+template <CScheduler TScheduler, typename... Systems> void APlugin::RegisterSystems(Systems... systems)
+{
     const auto schedulerCategory = GetCategory<TScheduler>();
 
     if (!this->_systems.contains(schedulerCategory))
@@ -13,13 +28,22 @@ template <CScheduler TScheduler, typename... Systems> decltype(auto) APlugin::Re
     }
     auto &filteredSystems = this->_systems.at(schedulerCategory);
 
-    std::apply([&filteredSystems, schedulerCategory](
-                   auto &&...args) { ((filteredSystems.insert_or_assign(args, typeid(TScheduler))), ...); },
-               systemIds);
-    return systemIds;
+    _registerers.emplace_back([&filteredSystems, schedulerCategory,
+                               systems = std::tuple(std::forward<Systems>(systems)...)](Engine::Core &core) mutable {
+        std::apply(
+            [&filteredSystems, schedulerCategory, &core](auto &&...system) {
+                auto systemIds = core.RegisterSystem<TScheduler>(std::forward<decltype(system)>(system)...);
+                std::apply(
+                    [&filteredSystems, schedulerCategory](auto &&...args) {
+                        ((filteredSystems.insert_or_assign(args, std::type_index(typeid(TScheduler)))), ...);
+                    },
+                    systemIds);
+            },
+            std::move(systems));
+    });
 }
 
-template <typename TResource> TResource &APlugin::RegisterResource(TResource &&resource)
+template <typename TResource> void APlugin::RegisterResource(TResource &&resource)
 {
     _resourceDeleters.emplace_back([](Engine::Core &core) {
         if (core.HasResource<TResource>())
@@ -27,7 +51,7 @@ template <typename TResource> TResource &APlugin::RegisterResource(TResource &&r
         else
             Log::Error("Trying to remove a non-existing resource");
     });
-    return _core.RegisterResource(std::forward<TResource>(resource));
+    _core.RegisterResource(std::forward<TResource>(resource));
 }
 
 template <CPlugin... TPlugins> void APlugin::RequirePlugins() { (RequirePlugin<TPlugins>(), ...); }

@@ -52,7 +52,7 @@ TEST(Event, multi_scheduler_test)
     core.AddPlugins<Event::Plugin>();
 
     core.RegisterResource<TestResource>(TestResource{});
-    core.RegisterSystem<Engine::Scheduler::Startup>([](Engine::Core &core) {
+    auto [sys1] = core.RegisterSystem<Engine::Scheduler::Startup>([](Engine::Core &core) {
         auto &eventManager = core.GetResource<Event::Resource::EventManager>();
 
         eventManager.RegisterCallback<TestEvent, Engine::Scheduler::Update>([&core](const TestEvent &event) {

@@ -4,7 +4,7 @@
 
 namespace Input::System {
 /**
- * @brief Attach GLFW callbacks to the InputManager.
+ * @brief Bind GLFW callbacks to the InputManager.
  *
  * This function binds the GLFW callbacks to the InputManager.
  * It should be called after the window is created.

@@ -7,7 +7,7 @@ namespace Physics::Component {
 /**
  * @brief Vehicle input controller component
  *
- * Attach this component to a vehicle chassis entity to control it.
+ * Bind this component to a vehicle chassis entity to control it.
  * Set input values between -1.0 and 1.0, which will be applied
  * to the Jolt vehicle controller during the physics update.
  */

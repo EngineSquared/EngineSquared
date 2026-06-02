@@ -15,10 +15,128 @@
 #include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
 
+namespace Example {
 class TestScheduler : public Engine::Scheduler::Update {
   public:
     using Engine::Scheduler::Update::Update;
 };
+
+class TestSchedulerSetupPlugin : public Engine::APlugin {
+  public:
+    explicit TestSchedulerSetupPlugin(Engine::Core &core)
+        : Engine::APlugin(core) {
+              // empty
+          };
+    ~TestSchedulerSetupPlugin() = default;
+
+    void Bind() final
+    {
+        auto &core = GetCore();
+        core.RegisterScheduler<Example::TestScheduler>();
+        core.SetSchedulerAfter<Example::TestScheduler, Engine::Scheduler::Update>();
+        core.SetSchedulerAfter<Example::TestScheduler, Engine::Scheduler::FixedTimeUpdate>();
+        core.SetSchedulerBefore<Example::TestScheduler, Engine::Scheduler::Shutdown>();
+    }
+};
+
+class CharacterControllerCreationPlugin : public Engine::APlugin {
+  public:
+    explicit CharacterControllerCreationPlugin(Engine::Core &core)
+        : Engine::APlugin(core) {
+              // empty
+          };
+    ~CharacterControllerCreationPlugin() = default;
+
+    void Bind() final
+    {
+        RequirePlugins<Physics::Plugin>();
+
+        RegisterSystems<Engine::Scheduler::Startup>([](Engine::Core &core) {
+            auto player = core.CreateEntity();
+            player.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 5.0f, 0.0f));
+            player.AddComponent<Physics::Component::CapsuleCollider>(0.8f, 0.3f);
+            player.AddComponent<Physics::Component::CharacterController>();
+
+            ASSERT_TRUE(player.HasComponents<Physics::Component::CharacterControllerInternal>());
+
+            const auto &internal = player.GetComponents<Physics::Component::CharacterControllerInternal>();
+            EXPECT_TRUE(internal.IsValid());
+        });
+    }
+};
+
+class CharacterFallsUnderGravityPlugin : public Engine::APlugin {
+  public:
+    explicit CharacterFallsUnderGravityPlugin(Engine::Core &core)
+        : Engine::APlugin(core) {
+              // empty
+          };
+    ~CharacterFallsUnderGravityPlugin() = default;
+
+    void Bind() final
+    {
+        RequirePlugins<Physics::Plugin>();
+        RequirePlugins<TestSchedulerSetupPlugin>();
+
+        float startY = 10.f;
+        RegisterSystems<Engine::Scheduler::Startup>([startY](Engine::Core &core) {
+            auto player = core.RegisterResource(core.CreateEntity());
+            player.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 10.f, 0.0f));
+            player.AddComponent<Physics::Component::CapsuleCollider>(0.8f, 0.3f);
+            player.AddComponent<Physics::Component::CharacterController>();
+        });
+
+        RegisterSystems<Engine::Scheduler::Update>(
+            [&](Engine::Core &core) { core.GetResource<Engine::Resource::Time>()._elapsedTime = 2.0f; });
+
+        RegisterSystems<Example::TestScheduler>([startY](Engine::Core &core) {
+            auto player = core.GetResource<Engine::Entity>();
+            const auto &transform = player.GetComponents<Object::Component::Transform>();
+            EXPECT_LT(transform.GetPosition().y, startY);
+        });
+    }
+};
+
+class CharacterLandsOnFloorPlugin : public Engine::APlugin {
+  public:
+    explicit CharacterLandsOnFloorPlugin(Engine::Core &core)
+        : Engine::APlugin(core) {
+              // empty
+          };
+    ~CharacterLandsOnFloorPlugin() = default;
+
+    void Bind() final
+    {
+        RequirePlugins<Physics::Plugin>();
+        RequirePlugins<TestSchedulerSetupPlugin>();
+
+        RegisterSystems<Engine::Scheduler::Update>(
+            [&](Engine::Core &core) { core.GetResource<Engine::Resource::Time>()._elapsedTime = 2.0f; });
+
+        float startY = 5.0f;
+        RegisterSystems<Engine::Scheduler::Startup>([startY](Engine::Core &core) {
+            auto player = core.RegisterResource(core.CreateEntity());
+            auto floor = core.CreateEntity();
+            floor.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, 0.0f));
+            floor.AddComponent<Physics::Component::BoxCollider>(glm::vec3(50.0f, 0.5f, 50.0f));
+            floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
+
+            player.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, startY, 0.0f));
+            player.AddComponent<Physics::Component::CapsuleCollider>(0.8f, 0.3f);
+            player.AddComponent<Physics::Component::CharacterController>();
+        });
+
+        RegisterSystems<Example::TestScheduler>([startY](Engine::Core &core) {
+            auto player = core.GetResource<Engine::Entity>();
+            const auto &transform = player.GetComponents<Object::Component::Transform>();
+            const float y = transform.GetPosition().y;
+            EXPECT_LT(y, startY);
+            EXPECT_GT(y, -1.0f);
+        });
+    }
+};
+
+} // namespace Example
 
 TEST(CharacterControllerPlugin, CharacterControllerCreation)
 {
@@ -26,53 +144,14 @@ TEST(CharacterControllerPlugin, CharacterControllerCreation)
 
     core.SetErrorPolicyForAllSchedulers(Engine::Scheduler::SchedulerErrorPolicy::Nothing);
 
-    core.AddPlugins<Physics::Plugin>();
-
-    core.RegisterSystem<Engine::Scheduler::Update>(
-        [&](Engine::Core &c) { c.GetResource<Engine::Resource::Time>()._elapsedTime = 0.016f; });
-
-    core.GetScheduler<Engine::Scheduler::Startup>().RunSystems();
-
-    auto player = core.CreateEntity();
-    player.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 5.0f, 0.0f));
-    player.AddComponent<Physics::Component::CapsuleCollider>(0.8f, 0.3f);
-    player.AddComponent<Physics::Component::CharacterController>();
-
-    ASSERT_TRUE(player.HasComponents<Physics::Component::CharacterControllerInternal>());
-
-    const auto &internal = player.GetComponents<Physics::Component::CharacterControllerInternal>();
-    EXPECT_TRUE(internal.IsValid());
-
-    core.GetScheduler<Engine::Scheduler::Shutdown>().RunSystems();
+    core.AddPlugins<Example::CharacterControllerCreationPlugin>();
 }
 
 TEST(CharacterControllerPlugin, CharacterFallsUnderGravity)
 {
     Engine::Core c;
 
-    c.RegisterScheduler<TestScheduler>();
-    c.SetSchedulerAfter<TestScheduler, Engine::Scheduler::Update>();
-    c.SetSchedulerAfter<TestScheduler, Engine::Scheduler::FixedTimeUpdate>();
-    c.SetSchedulerBefore<TestScheduler, Engine::Scheduler::Shutdown>();
-
-    c.RegisterSystem<Engine::Scheduler::Update>(
-        [&](Engine::Core &core) { core.GetResource<Engine::Resource::Time>()._elapsedTime = 2.0f; });
-
-    c.AddPlugins<Physics::Plugin>();
-
-    auto player = c.CreateEntity();
-    float startY = 10.0f;
-
-    c.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core & /*core*/) {
-        player.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, startY, 0.0f));
-        player.AddComponent<Physics::Component::CapsuleCollider>(0.8f, 0.3f);
-        player.AddComponent<Physics::Component::CharacterController>();
-    });
-
-    c.RegisterSystem<TestScheduler>([&](Engine::Core & /*core*/) {
-        const auto &transform = player.GetComponents<Object::Component::Transform>();
-        EXPECT_LT(transform.GetPosition().y, startY);
-    });
+    c.AddPlugins<Example::CharacterFallsUnderGravityPlugin>();
 
     c.RunSystems();
 }
@@ -81,38 +160,7 @@ TEST(CharacterControllerPlugin, CharacterLandsOnFloor)
 {
     Engine::Core c;
 
-    c.RegisterScheduler<TestScheduler>();
-    c.SetSchedulerAfter<TestScheduler, Engine::Scheduler::Update>();
-    c.SetSchedulerAfter<TestScheduler, Engine::Scheduler::FixedTimeUpdate>();
-    c.SetSchedulerBefore<TestScheduler, Engine::Scheduler::Shutdown>();
-
-    c.RegisterSystem<Engine::Scheduler::Update>(
-        [&](Engine::Core &core) { core.GetResource<Engine::Resource::Time>()._elapsedTime = 3.0f; });
-
-    c.AddPlugins<Physics::Plugin>();
-
-    auto player = c.CreateEntity();
-    auto floor = c.CreateEntity();
-    float startY = 5.0f;
-
-    c.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core & /*core*/) {
-        floor.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, 0.0f, 0.0f));
-        floor.AddComponent<Physics::Component::BoxCollider>(glm::vec3(50.0f, 0.5f, 50.0f));
-        floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
-
-        player.AddComponent<Object::Component::Transform>(glm::vec3(0.0f, startY, 0.0f));
-        player.AddComponent<Physics::Component::CapsuleCollider>(0.8f, 0.3f);
-        player.AddComponent<Physics::Component::CharacterController>();
-    });
-
-    c.RegisterSystem<TestScheduler>([&](Engine::Core & /*core*/) {
-        const auto &transform = player.GetComponents<Object::Component::Transform>();
-        const float y = transform.GetPosition().y;
-
-        EXPECT_LT(y, startY);
-
-        EXPECT_GT(y, -1.0f);
-    });
+    c.AddPlugins<Example::CharacterLandsOnFloorPlugin>();
 
     c.RunSystems();
 }

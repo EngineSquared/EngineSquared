@@ -11,6 +11,6 @@ class Plugin : public Engine::APlugin {
           };
     ~Plugin() override = default;
 
-    void Attach() final;
+    void Bind() final;
 };
 } // namespace Graphic

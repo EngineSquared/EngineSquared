@@ -147,7 +147,7 @@ struct RollbarSettings {
  * @brief Main vehicle component containing all configuration
  *
  * This is the user-facing component that defines vehicle behavior.
- * Attach this to the chassis entity to create a drivable vehicle.
+ * Bind this to the chassis entity to create a drivable vehicle.
  */
 struct Vehicle {
     /// Wheel settings for all 4 wheels (indexed by WheelIndex)

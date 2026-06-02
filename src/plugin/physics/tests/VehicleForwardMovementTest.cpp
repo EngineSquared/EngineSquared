@@ -22,10 +22,109 @@
 #include "scheduler/Shutdown.hpp"
 #include "scheduler/Startup.hpp"
 
+namespace Example {
 class TestScheduler : public Engine::Scheduler::Update {
   public:
     using Engine::Scheduler::Update::Update;
 };
+
+class TestSchedulerSetupPlugin : public Engine::APlugin {
+  public:
+    explicit TestSchedulerSetupPlugin(Engine::Core &core)
+        : Engine::APlugin(core) {
+              // empty
+          };
+    ~TestSchedulerSetupPlugin() = default;
+
+    void Bind() final
+    {
+        auto &core = GetCore();
+        core.RegisterScheduler<Example::TestScheduler>();
+        core.SetSchedulerAfter<Example::TestScheduler, Engine::Scheduler::Update>();
+        core.SetSchedulerAfter<Example::TestScheduler, Engine::Scheduler::FixedTimeUpdate>();
+        core.SetSchedulerBefore<Example::TestScheduler, Engine::Scheduler::Shutdown>();
+    }
+};
+
+class VehicleForwardMovementPlugin : public Engine::APlugin {
+  public:
+    explicit VehicleForwardMovementPlugin(Engine::Core &core) : Engine::APlugin(core) {}
+    ~VehicleForwardMovementPlugin() = default;
+    void Bind() final
+    {
+        RequirePlugins<Physics::Plugin, TestSchedulerSetupPlugin>();
+        RegisterSystems<Engine::Scheduler::Update>(
+            [&](Engine::Core &c) { c.GetResource<Engine::Resource::Time>()._elapsedTime = 3.2f; });
+
+        RegisterSystems<Engine::Scheduler::Startup>([](Engine::Core &core) {
+            auto floor = Object::Helper::CreatePlane(
+                core, {.width = 50.0f, .depth = 50.0f, .position = glm::vec3(0.0f, 0.0f, 0.0f)});
+            auto floorCollider = Physics::Component::BoxCollider(glm::vec3(25.0f, 0.5f, 25.0f));
+            floor.AddComponent<Physics::Component::BoxCollider>(floorCollider);
+            floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
+
+            Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);
+            Object::Component::Mesh wheelMesh = Object::Utils::GenerateWheelMesh(0.3f, 0.2f);
+
+            Physics::Component::WheelSettings frontWheel = Physics::Component::WheelSettings::CreateFrontWheel();
+            frontWheel.radius = 0.3f;
+
+            Physics::Component::WheelSettings rearWheel = Physics::Component::WheelSettings::CreateRearWheel();
+            rearWheel.radius = 0.3f;
+
+            Physics::Builder::VehicleBuilder<4> builder;
+            core.RegisterResource(builder.SetChassisMesh(chassisMesh, glm::vec3(0.0f, 1.0f, 0.0f))
+                                      .SetWheelMesh(Physics::Component::WheelIndex::FrontLeft, wheelMesh)
+                                      .SetWheelMesh(Physics::Component::WheelIndex::FrontRight, wheelMesh)
+                                      .SetWheelMesh(Physics::Component::WheelIndex::RearLeft, wheelMesh)
+                                      .SetWheelMesh(Physics::Component::WheelIndex::RearRight, wheelMesh)
+                                      .SetWheelSettings(Physics::Component::WheelIndex::FrontLeft, frontWheel)
+                                      .SetWheelSettings(Physics::Component::WheelIndex::FrontRight, frontWheel)
+                                      .SetWheelSettings(Physics::Component::WheelIndex::RearLeft, rearWheel)
+                                      .SetWheelSettings(Physics::Component::WheelIndex::RearRight, rearWheel)
+                                      .SetDrivetrain(Physics::Component::DrivetrainType::RWD)
+                                      .SetChassisMass(1000.0f)
+                                      .Build(core));
+        });
+
+        RegisterSystems<TestScheduler>([](Engine::Core &core) {
+            static bool firstStepMade = false;
+            static glm::vec3 startPos;
+            auto vehicle = core.GetResource<Engine::Entity>();
+            if (!firstStepMade)
+            {
+                // Record starting position
+                auto transform = vehicle.TryGetComponent<Object::Component::Transform>();
+                ASSERT_NE(transform, nullptr);
+                startPos = transform->GetPosition();
+
+                // Apply forward input
+                auto controller = vehicle.TryGetComponent<Physics::Component::VehicleController>();
+                ASSERT_NE(controller, nullptr);
+                controller->SetForward(1.0f); // Full throttle
+                firstStepMade = true;
+            }
+            else
+            {
+                auto transform = vehicle.TryGetComponent<Object::Component::Transform>();
+                glm::vec3 endPos = transform->GetPosition();
+                glm::vec3 displacement = endPos - startPos;
+
+                // Calculate horizontal movement (X/Z plane)
+                float horizontalDistance = std::sqrt(displacement.x * displacement.x + displacement.z * displacement.z);
+
+                EXPECT_GT(horizontalDistance, 3.0f)
+                    << "Vehicle should move at least 3 meters horizontally with full throttle";
+
+                // Verify vehicle actually moved (not just vibrating in place)
+                EXPECT_TRUE(std::abs(displacement.x) > 0.5f || std::abs(displacement.z) > 0.5f)
+                    << "Vehicle should have significant movement in X or Z direction";
+                core.Stop();
+            }
+        });
+    }
+};
+} // namespace Example
 
 /**
  * @brief Test that a vehicle moves forward when forward input is applied
@@ -34,83 +133,7 @@ TEST(VehiclePlugin, VehicleForwardMovement)
 {
     Engine::Core c;
 
-    c.RegisterScheduler<TestScheduler>();
-    c.SetSchedulerAfter<TestScheduler, Engine::Scheduler::Update>();
-    c.SetSchedulerAfter<TestScheduler, Engine::Scheduler::FixedTimeUpdate>();
-    c.SetSchedulerBefore<TestScheduler, Engine::Scheduler::Shutdown>();
-
-    c.RegisterSystem<Engine::Scheduler::Update>(
-        [&](Engine::Core &c) { c.GetResource<Engine::Resource::Time>()._elapsedTime = 3.2f; });
-
-    c.AddPlugins<Physics::Plugin>();
-
-    Engine::Entity vehicle = c.CreateEntity();
-    glm::vec3 startPos;
-
-    c.RegisterSystem<Engine::Scheduler::Startup>([&](Engine::Core &core) {
-        auto floor = Object::Helper::CreatePlane(
-            core, {.width = 50.0f, .depth = 50.0f, .position = glm::vec3(0.0f, 0.0f, 0.0f)});
-        auto floorCollider = Physics::Component::BoxCollider(glm::vec3(25.0f, 0.5f, 25.0f));
-        floor.AddComponent<Physics::Component::BoxCollider>(floorCollider);
-        floor.AddComponent<Physics::Component::RigidBody>(Physics::Component::RigidBody::CreateStatic());
-
-        Object::Component::Mesh chassisMesh = Object::Utils::GenerateCubeMesh(1.0f);
-        Object::Component::Mesh wheelMesh = Object::Utils::GenerateWheelMesh(0.3f, 0.2f);
-
-        Physics::Component::WheelSettings frontWheel = Physics::Component::WheelSettings::CreateFrontWheel();
-        frontWheel.radius = 0.3f;
-
-        Physics::Component::WheelSettings rearWheel = Physics::Component::WheelSettings::CreateRearWheel();
-        rearWheel.radius = 0.3f;
-
-        Physics::Builder::VehicleBuilder<4> builder;
-        vehicle = builder.SetChassisMesh(chassisMesh, glm::vec3(0.0f, 1.0f, 0.0f))
-                      .SetWheelMesh(Physics::Component::WheelIndex::FrontLeft, wheelMesh)
-                      .SetWheelMesh(Physics::Component::WheelIndex::FrontRight, wheelMesh)
-                      .SetWheelMesh(Physics::Component::WheelIndex::RearLeft, wheelMesh)
-                      .SetWheelMesh(Physics::Component::WheelIndex::RearRight, wheelMesh)
-                      .SetWheelSettings(Physics::Component::WheelIndex::FrontLeft, frontWheel)
-                      .SetWheelSettings(Physics::Component::WheelIndex::FrontRight, frontWheel)
-                      .SetWheelSettings(Physics::Component::WheelIndex::RearLeft, rearWheel)
-                      .SetWheelSettings(Physics::Component::WheelIndex::RearRight, rearWheel)
-                      .SetDrivetrain(Physics::Component::DrivetrainType::RWD)
-                      .SetChassisMass(1000.0f)
-                      .Build(core);
-    });
-
-    c.RegisterSystem<TestScheduler>([&](Engine::Core &core) {
-        static bool firstStepMade = false;
-        if (!firstStepMade)
-        {
-            // Record starting position
-            auto transform = vehicle.TryGetComponent<Object::Component::Transform>();
-            ASSERT_NE(transform, nullptr);
-            startPos = transform->GetPosition();
-
-            // Apply forward input
-            auto controller = vehicle.TryGetComponent<Physics::Component::VehicleController>();
-            ASSERT_NE(controller, nullptr);
-            controller->SetForward(1.0f); // Full throttle
-            firstStepMade = true;
-        }
-        else
-        {
-            auto transform = vehicle.TryGetComponent<Object::Component::Transform>();
-            glm::vec3 endPos = transform->GetPosition();
-            glm::vec3 displacement = endPos - startPos;
-
-            // Calculate horizontal movement (X/Z plane)
-            float horizontalDistance = std::sqrt(displacement.x * displacement.x + displacement.z * displacement.z);
-
-            EXPECT_GT(horizontalDistance, 3.0f)
-                << "Vehicle should move at least 3 meters horizontally with full throttle";
-
-            // Verify vehicle actually moved (not just vibrating in place)
-            EXPECT_TRUE(std::abs(displacement.x) > 0.5f || std::abs(displacement.z) > 0.5f)
-                << "Vehicle should have significant movement in X or Z direction";
-            core.Stop();
-        }
-    });
+    c.AddPlugins<Example::VehicleForwardMovementPlugin>();
 
     c.Run();
 }

@@ -115,6 +115,10 @@ void Engine::Core::RunSystems()
     }
 
     this->_schedulersToDelete.clear();
+    for (auto &plugin : this->_plugins.Get())
+    {
+        plugin->EmitStateFinished(PluginState::ShuttedDown);
+    }
 }
 
 bool Engine::Core::IsEntityValid(Engine::Id entity) const { return GetRegistry().valid(entity); }

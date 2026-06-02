@@ -3,7 +3,7 @@
 #include "scheduler/Startup.hpp"
 #include "system/InitSound.hpp"
 
-void Sound::Plugin::Attach()
+void Sound::Plugin::Bind()
 {
     RegisterResource<Resource::SoundManager>(Resource::SoundManager());
     RegisterSystems<Engine::Scheduler::Startup>(Sound::System::InitSounds);

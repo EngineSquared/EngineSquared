@@ -8,6 +8,6 @@ class Plugin : public Engine::APlugin {
     using APlugin::APlugin;
     ~Plugin() override = default;
 
-    void Attach() final;
+    void Bind() final;
 };
 } // namespace Rmlui

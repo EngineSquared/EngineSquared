@@ -9,6 +9,6 @@ class Plugin : public Engine::APlugin {
     ;
     ~Plugin() = default;
 
-    void Attach() final;
+    void Bind() final;
 };
 } // namespace Window

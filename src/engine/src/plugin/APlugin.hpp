@@ -9,8 +9,8 @@ namespace Engine {
 class APlugin : public IPlugin {
   public:
     /// @brief Constructor for APlugin. It takes a reference to the Core, which is used to register systems and
-    ///     resources in the Attach method.
-    /// @param core Reference to the Core, which is used to register systems and resources in the Attach method.
+    ///     resources in the Bind method.
+    /// @param core Reference to the Core, which is used to register systems and resources in the Bind method.
     explicit APlugin(Core &core);
 
     /// @brief Register systems to a scheduler.
@@ -22,14 +22,14 @@ class APlugin : public IPlugin {
     /// @return The registered systems.
     /// @see Engine::Core::RegisterSystem
     /// @see Engine::CScheduler
-    template <CScheduler TScheduler, typename... Systems> decltype(auto) RegisterSystems(Systems... systems);
+    template <CScheduler TScheduler, typename... Systems> void RegisterSystems(Systems... systems);
 
     /// @brief Register a resource in the core.
     /// @tparam TResource The type of the resource to register.
     /// @param resource The resource to register.
     /// @return A reference to the registered resource.
     /// @see Engine::Core::RegisterResource
-    template <typename TResource> TResource &RegisterResource(TResource &&resource);
+    template <typename TResource> void RegisterResource(TResource &&resource);
 
     /// @brief Add a plugin to the core
     /// @tparam ...TPlugins The types of the plugins to add. They should be derived from APlugin.
@@ -45,7 +45,7 @@ class APlugin : public IPlugin {
     /// @see Engine::CScheduler
     template <CScheduler TScheduler, typename... Args> TScheduler &RegisterScheduler(Args &&...args);
 
-    /// @brief Get a reference to the core. This can be used to register systems and resources in the Attach method.
+    /// @brief Get a reference to the core. This can be used to register systems and resources in the Bind method.
     /// @return A reference to the core.
     /// @see Engine::Core
     Core &GetCore();
@@ -114,7 +114,19 @@ class APlugin : public IPlugin {
             DisableSystems(SchedulerCategory::Startup);
             DisableSystems(SchedulerCategory::Runtime);
             DisableSystems(SchedulerCategory::Shutdown);
+            if (!_registerers.empty())
+            {
+                this->_state = PluginState::JustAdded;
+            }
         }
+    }
+    void Attach(void) final
+    {
+        for (auto &registrer : this->_registerers)
+        {
+            registrer(_core);
+        }
+        this->_registerers.clear();
     }
 
   private:
@@ -125,20 +137,27 @@ class APlugin : public IPlugin {
         {
             for (const auto &[systemId, schedulerId] : _systems.at(category))
             {
-                if (GetCore().HasPlugin(schedulerId))
+                if (GetCore().HasScheduler(schedulerId))
                     GetCore().GetScheduler(schedulerId).Remove(systemId);
                 else
+                {
+                    Log::Warning(fmt::format("Scheduler with id {} not found in core while detaching a plugin",
+                                             schedulerId.name()));
                     unsyncSystems.insert(systemId);
+                }
             }
             for (const auto &systemId : unsyncSystems)
             {
                 _systems.at(category).erase(systemId);
             }
         }
+        _systems.clear();
         for (auto &resourceDeleter : this->_resourceDeleters)
         {
             resourceDeleter(_core);
         }
+        _resourceDeleters.clear();
+        _requiredPluginIds.clear();
     }
 
     void EnableSystems(SchedulerCategory category)
@@ -189,13 +208,15 @@ class APlugin : public IPlugin {
     /// @see Engine::Core::AddPlugins
     template <CPlugin TPlugin> void RequirePlugin();
 
-    /// @brief Reference to the core, which is used to register systems and resources in the Attach method.
+    /// @brief Reference to the core, which is used to register systems and resources in the Bind method.
     Core &_core;
 
     PluginState _state = PluginState::JustAdded;
 
     std::unordered_map<SchedulerCategory, std::map<FunctionUtils::FunctionID, std::type_index>> _systems;
     std::list<std::function<void(Engine::Core &)>> _resourceDeleters;
+
+    std::list<std::function<void(Engine::Core &)>> _registerers;
 
     bool _unbinding = false;
 

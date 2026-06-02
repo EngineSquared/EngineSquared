@@ -105,7 +105,7 @@ class App : public Engine::APlugin {
   public:
     using Engine::APlugin::APlugin;
 
-    void Attach(void) override
+    void Bind(void) override
     {
         RegisterSystems<Engine::Scheduler::Startup>([](Engine::Core &core) {
             auto tom = core.CreateEntity();
@@ -156,7 +156,7 @@ int main(void)
     // Core stores entities, components, resources, and schedulers for the app.
     Engine::Core core;
 
-    // App::Attach registers the example setup (systems + resource) into the core.
+    // App::Bind registers the example setup (systems + resource) into the core.
     core.AddPlugins<Example::App>();
 
     /// Run until `System::Close` calls `core.Stop()`.

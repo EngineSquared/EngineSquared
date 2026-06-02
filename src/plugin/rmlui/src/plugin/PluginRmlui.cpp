@@ -18,7 +18,7 @@
 #include "system/InitUI.hpp"
 #include "system/UpdateUI.hpp"
 
-void Rmlui::Plugin::Attach()
+void Rmlui::Plugin::Bind()
 {
     RequirePlugins<RenderingPipeline::Plugin, Window::Plugin, Input::Plugin, Graphic::Plugin>();
 

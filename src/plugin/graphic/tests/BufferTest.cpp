@@ -85,10 +85,9 @@ class PluginBufferTest : public Engine::APlugin {
           };
     ~PluginBufferTest() override = default;
 
-    void Bind(void) override { RequirePlugins<Graphic::Plugin>(); }
-
-    void Attach() final
+    void Bind() final
     {
+        RequirePlugins<Graphic::Plugin>();
         this->RegisterSystems<RenderingPipeline::Init>([](Engine::Core &c) {
             c.GetResource<Graphic::Resource::GraphicSettings>().SetWindowSystem(Graphic::Resource::WindowSystem::None);
         });
