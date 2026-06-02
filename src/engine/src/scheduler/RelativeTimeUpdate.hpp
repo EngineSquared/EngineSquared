@@ -1,9 +1,9 @@
 #pragma once
 
-#include <entt/entt.hpp>
-#include <chrono>
 #include "scheduler/AScheduler.hpp"
 #include "scheduler/SchedulerCategory.hpp"
+#include <chrono>
+#include <entt/entt.hpp>
 
 namespace Engine::Scheduler {
 /// @class RelativeTimeUpdate
