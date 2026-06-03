@@ -22,7 +22,7 @@ class APlugin : public IPlugin {
     /// @return The registered systems.
     /// @see Engine::Core::RegisterSystem
     /// @see Engine::CScheduler
-    template <CScheduler TScheduler, typename... Systems> void RegisterSystems(Systems... systems);
+    template <CScheduler TScheduler, typename... Systems> decltype(auto) RegisterSystems(Systems... systems);
 
     /// @brief Register a resource in the core.
     /// @tparam TResource The type of the resource to register.

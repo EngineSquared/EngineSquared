@@ -6,19 +6,8 @@ template <typename TReturn, typename... TArgs>
 template <typename TCallable>
 FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(TCallable callable)
 {
-    FunctionUtils::FunctionID id;
-    std::string name;
-
-    if constexpr (is_derived_from_function_type<TCallable>::value)
-    {
-        id = callable.GetID();
-        name = callable.GetName();
-    }
-    else
-    {
-        id = CallableFunction<TCallable, TReturn, TArgs...>::GetCallableID(callable);
-        name = CallableFunction<TCallable, TReturn, TArgs...>::GetCallableName(callable);
-    }
+    FunctionUtils::FunctionID id = CallableFunction<TCallable, TReturn, TArgs...>::GetCallableID(callable);
+    std::string name = CallableFunction<TCallable, TReturn, TArgs...>::GetCallableName(callable);
 
     if (_idToIterator.contains(id))
     {
@@ -39,11 +28,16 @@ template <typename TReturn, typename... TArgs>
 FunctionUtils::FunctionID FunctionUtils::FunctionContainer<TReturn, TArgs...>::AddFunction(
     std::unique_ptr<BaseFunction<TReturn, TArgs...>> &&function)
 {
-    FunctionUtils::FunctionID id = function->GetID();
+    FunctionUtils::FunctionID id =
+        CallableFunction<const std::unique_ptr<BaseFunction<TReturn, TArgs...>> &, TReturn, TArgs...>::GetCallableID(
+            function);
 
     if (_idToIterator.contains(id))
     {
-        Log::Warning("Function already exists: " + function->GetName()); // TODO: be able to change container thing name
+        Log::Warning(
+            "Function already exists: " +
+            CallableFunction<const std::unique_ptr<BaseFunction<TReturn, TArgs...>> &, TReturn,
+                             TArgs...>::GetCallableName(function)); // TODO: be able to change container thing name
         return id;
     }
 

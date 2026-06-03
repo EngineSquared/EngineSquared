@@ -17,7 +17,7 @@ inline FunctionUtils::FunctionID GetId(const std::unique_ptr<FunctionUtils::Base
 }
 
 namespace Engine {
-template <CScheduler TScheduler, typename... Systems> void APlugin::RegisterSystems(Systems... systems)
+template <CScheduler TScheduler, typename... Systems> decltype(auto) APlugin::RegisterSystems(Systems... systems)
 {
     const auto schedulerCategory = GetCategory<TScheduler>();
 
@@ -41,6 +41,8 @@ template <CScheduler TScheduler, typename... Systems> void APlugin::RegisterSyst
             },
             std::move(systems));
     });
+    std::array<FunctionUtils::FunctionID, sizeof...(Systems)> temp{System<Systems>::GetCallableID(systems)...};
+    return std::tuple_cat(temp);
 }
 
 template <typename TResource> void APlugin::RegisterResource(TResource &&resource)

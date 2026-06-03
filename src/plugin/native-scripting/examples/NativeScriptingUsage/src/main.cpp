@@ -1,7 +1,7 @@
 #include "Engine.hpp"
 #include "NativeScripting.hpp"
 
-class TestScript : public NativeScripting::Utils::ScriptableEntity {
+class TestScript final : public NativeScripting::Utils::ScriptableEntity {
   public:
     explicit TestScript(Engine::Entity entity) : ScriptableEntity(entity) {}
     ~TestScript() final { std::cout << "TestScript Destroyed" << std::endl; }

@@ -2,8 +2,19 @@
 
 #include "BaseFunction.hpp"
 #include "Demangle.hpp"
+#include <concepts>
 #include <string>
 #include <typeinfo>
+
+template <typename TIdGettable>
+concept CIdGettable = requires(TIdGettable idGettable) {
+    { idGettable->GetID() } -> std::convertible_to<FunctionUtils::FunctionID>;
+};
+
+template <typename TNameGettable>
+concept CNameGettable = requires(TNameGettable nameGettable) {
+    { nameGettable->GetName() } -> std::convertible_to<std::string>;
+};
 
 namespace FunctionUtils {
 /**
@@ -12,6 +23,15 @@ namespace FunctionUtils {
 template <typename TCallable, typename TReturn, typename... TArgs>
 class CallableFunction : public BaseFunction<TReturn, TArgs...> {
   public:
+    using FunctionType = BaseFunction<TReturn, TArgs...>;
+
+    /**
+     * @brief Type trait to check if a type is derived from BaseFunction.
+     * @tparam T The type to check.
+     * @tparam TReturn The return type of the function.
+     * @tparam TArgs The argument types of the function.
+     */
+    template <typename T> struct is_derived_from_function_type : std::is_base_of<FunctionType, std::decay_t<T>> {};
     /**
      * @brief Constructor for CallableFunction.
      * @param callable The callable object to be stored.
@@ -54,7 +74,15 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
      */
     static FunctionID GetCallableID(TCallable callable)
     {
-        if constexpr (std::is_class_v<TCallable>)
+        if constexpr (is_derived_from_function_type<TCallable>::value)
+        {
+            return callable.GetID();
+        }
+        else if constexpr (CIdGettable<TCallable>)
+        {
+            return callable->GetID();
+        }
+        else if constexpr (std::is_class_v<TCallable>)
         {
             return typeid(callable).hash_code();
         }
@@ -66,7 +94,15 @@ class CallableFunction : public BaseFunction<TReturn, TArgs...> {
 
     static std::string GetCallableName(TCallable callable)
     {
-        if constexpr (std::is_class_v<TCallable>)
+        if constexpr (is_derived_from_function_type<TCallable>::value)
+        {
+            return callable.GetName();
+        }
+        else if constexpr (CNameGettable<TCallable>)
+        {
+            return callable->GetName();
+        }
+        else if constexpr (std::is_class_v<TCallable>)
         {
             return FunctionUtils::DemangleTypeName(typeid(callable));
         }
