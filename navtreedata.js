@@ -30,16 +30,22 @@ var NAVTREE =
       [ "Examples", "index.html#autotoc_md42", null ],
       [ "Hello World", "index.html#autotoc_md43", null ],
       [ "Prerequisites", "index.html#autotoc_md45", null ],
-      [ "Clone the repository", "index.html#autotoc_md47", null ],
-      [ "Configure and build", "index.html#autotoc_md49", null ],
-      [ "Run a minimal example", "index.html#autotoc_md51", null ],
-      [ "Project Overview", "index.html#autotoc_md53", [
-        [ "Available plugins", "index.html#autotoc_md54", null ],
-        [ "How a minimal program looks", "index.html#autotoc_md56", null ]
+      [ "Create your project", "index.html#autotoc_md47", [
+        [ "Save the registry", "index.html#autotoc_md48", null ],
+        [ "Use the project template", "index.html#autotoc_md49", null ]
       ] ],
-      [ "Where to go next", "index.html#autotoc_md58", null ],
-      [ "Interested ?", "index.html#autotoc_md60", null ],
-      [ "Troubleshooting", "index.html#autotoc_md62", null ]
+      [ "Check examples", "index.html#autotoc_md50", [
+        [ "Clone the repository", "index.html#autotoc_md51", null ],
+        [ "Configure and build", "index.html#autotoc_md52", null ],
+        [ "Run a minimal example", "index.html#autotoc_md53", null ]
+      ] ],
+      [ "Project Overview", "index.html#autotoc_md55", [
+        [ "Available plugins", "index.html#autotoc_md56", null ],
+        [ "How a minimal program looks", "index.html#autotoc_md58", null ]
+      ] ],
+      [ "Where to go next", "index.html#autotoc_md60", null ],
+      [ "Interested ?", "index.html#autotoc_md62", null ],
+      [ "Troubleshooting", "index.html#autotoc_md64", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Namespaces", "namespaces.html", [
@@ -99,17 +105,17 @@ var NAVTREEINDEX =
 "classSchedulerTest1.html#a34eac1934b74099f073db232eae11588",
 "classdemo__setup_1_1DemoEventListenerInstancer.html#a39b781bec6110f1c045298e169ffbc48",
 "dir_f8830b99f0956ea83115cb86d9350314.html",
-"namespaceDefaultPipeline_1_1System.html#a90c46711ebf12c2ba0f7e6ca58d310f1",
-"namespacePhysics_1_1System.html#a2969beceb7203851461261f885c68aad",
-"namespacewgpu.html#a2150a50a5bf537718c862da2418ca04c",
-"namespacewgpu.html#aa894057fe540729c0830786a09f1d3c8",
-"structCounterComponent.html#a195b35782c2f538153b7d8f863575827",
-"structEngine_1_1Resource_1_1Time.html#adc0ba52bf4a6b4a5dd42eaf7803cc8f8",
-"structObject_1_1Component_1_1Camera.html#aa0ae308c1e4e42bc1bffb5be314c9b3b",
-"structObject_1_1Helper_1_1CreateJellyCubeInfo.html#a747658c63ffc75f1635d66cb9959c496",
-"structPhysics_1_1Component_1_1DistanceConstraint.html#a94732649f1b70044dd5486bd357bbc1f",
-"structPhysics_1_1Component_1_1SphereCollider.html#a96ab14e8d8490aa958ab65f4f0fdfef7",
-"structScene_1_1Resource_1_1SceneManager_1_1TransparentHash.html#a83b63d256566af61c8661c692182fac0"
+"namespaceDefaultPipeline_1_1System.html#a7228832e8a754268526236a04093fe2f",
+"namespacePhysics_1_1System.html#a0511fc1429cacea58b95b8af68fc4dd5",
+"namespacewgpu.html#a1e8449b009eb7654a917ea9e0518d5f4",
+"namespacewgpu.html#aa45f1d44e7e5fa51e7398442ade20c3c",
+"structCharacterControllerExampleRuntime.html",
+"structEngine_1_1Resource_1_1Time.html#a8abe008bf942228a2510463771d717f1",
+"structObject_1_1Component_1_1Camera.html#a6e86f12e7cae512ccf06cdc60d0e39ac",
+"structObject_1_1Helper_1_1CreateJellyCubeInfo.html#a40a795acc8f91fecbfe7420363be8e76",
+"structPhysics_1_1Component_1_1DistanceConstraint.html#a825dc7dc5f205f1ea5645508531db40d",
+"structPhysics_1_1Component_1_1SphereCollider.html#a7a85b9bcf4e1f994f2554d453bdcbf23",
+"structScene_1_1Resource_1_1SceneManager_1_1TransparentHash.html#a4f853b59eaae64479b264dd2974d8f69"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

@@ -74,9 +74,10 @@ var searchData=
   ['updateui_2ecpp_71',['UpdateUI.cpp',['../UpdateUI_8cpp.html',1,'']]],
   ['updateui_2ehpp_72',['UpdateUI.hpp',['../UpdateUI_8hpp.html',1,'']]],
   ['usage_73',['Usage',['../dir_456e1ed94ccb5b3e2842ecc161ff9b22.html#autotoc_md20',1,'Usage'],['../structPhysics_1_1Component_1_1SoftBody.html#autotoc_md31',1,'Usage']]],
-  ['use_20when_20building_20examples_74',['Some flags that you can use when building examples',['../dir_d28a4824dc47e487b107a5db32ef43c4.html#autotoc_md35',1,'']]],
-  ['usecapture_75',['useCapture',['../structRmlui_1_1Resource_1_1UIContext_1_1EventListenerEntry.html#a3c0210899aac889e29396de895b1cdca',1,'Rmlui::Resource::UIContext::EventListenerEntry']]],
-  ['usingengine_76',['usingEngine',['../structSound_1_1Resource_1_1SoundManager_1_1Sound.html#a16f731cf03ccf043bf6fe5452991d762',1,'Sound::Resource::SoundManager::Sound']]],
-  ['utils_2ecpp_77',['Utils.cpp',['../Utils_8cpp.html',1,'']]],
-  ['utils_2ehpp_78',['Utils.hpp',['../Utils_8hpp.html',1,'']]]
+  ['use_20the_20project_20template_74',['Use the project template',['../index.html#autotoc_md49',1,'']]],
+  ['use_20when_20building_20examples_75',['Some flags that you can use when building examples',['../dir_d28a4824dc47e487b107a5db32ef43c4.html#autotoc_md35',1,'']]],
+  ['usecapture_76',['useCapture',['../structRmlui_1_1Resource_1_1UIContext_1_1EventListenerEntry.html#a3c0210899aac889e29396de895b1cdca',1,'Rmlui::Resource::UIContext::EventListenerEntry']]],
+  ['usingengine_77',['usingEngine',['../structSound_1_1Resource_1_1SoundManager_1_1Sound.html#a16f731cf03ccf043bf6fe5452991d762',1,'Sound::Resource::SoundManager::Sound']]],
+  ['utils_2ecpp_78',['Utils.cpp',['../Utils_8cpp.html',1,'']]],
+  ['utils_2ehpp_79',['Utils.hpp',['../Utils_8hpp.html',1,'']]]
 ];

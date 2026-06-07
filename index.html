@@ -133,27 +133,35 @@ Prerequisites</h2>
 <dl class="section warning"><dt>Warning</dt><dd>No other tools should be needed. If you get stuck at some step, please report it by opening a <a href="https://github.com/EngineSquared/EngineSquared/issues/new?template=bug_report.md">bug issue</a> 🙏 <em>(before doing that, check the documentation about <a href="https://github.com/EngineSquared/EngineSquared/wiki/Contributing#creating-an-issue">how to create an issue</a>)</em></dd></dl>
 <hr  />
 <h2 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
-Clone the repository</h2>
+Create your project</h2>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
+Save the registry</h3>
+<div class="fragment"><div class="line">xrepo add-repo engine-squared-xmake-repo https://github.com/EngineSquared/xrepo</div>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+Use the project template</h3>
+<div class="fragment"><div class="line">xmake create -l c++ -t engine-squared YOUR_PROJECT_NAME</div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+Check examples</h2>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
+Clone the repository</h3>
 <div class="fragment"><div class="line">git clone https://github.com/EngineSquared/EngineSquared.git</div>
 <div class="line">cd EngineSquared</div>
-</div><!-- fragment --><hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
-Configure and build</h2>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md52"></a>
+Configure and build</h3>
 <div class="fragment"><div class="line"># Configure (downloads dependencies automatically)</div>
 <div class="line">xmake f -y</div>
 <div class="line"> </div>
 <div class="line"># Build the engine</div>
 <div class="line">xmake build -y</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><b>Windows only</b> xmake will automatically pull the MSVC toolchain, so you don't need to have it already installed on your machine.</dd></dl>
-<hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
-Run a minimal example</h2>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
+Run a minimal example</h3>
 <p>Build and run the <span class="tt">BasicCoreUsage</span> example to confirm everything works:</p>
 <div class="fragment"><div class="line">xmake f --BasicCoreUsage=y -y</div>
 <div class="line">xmake run BasicCoreUsage</div>
 </div><!-- fragment --><p>If the basic core usage run without errors, you're all set. ✅</p>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
 Project Overview</h2>
 <p>Here is a graphical overview of the project:</p>
 <div class="fragment"><div class="line">graph TD</div>
@@ -171,7 +179,7 @@ Project Overview</h2>
 <div class="line">  PLUGIN --&gt; PLUGIN_SRC[&quot;src/&lt;br/&gt;Source files&quot;]</div>
 <div class="line">  PLUGIN --&gt; PLUGIN_XMAKE[&quot;tests/&lt;br/&gt;Tests files&quot;]</div>
 </div><!-- fragment --><p>Engine² is <b>STRONGLY</b> built around an <a href="https://en.wikipedia.org/wiki/Entity_component_system">ECS architectural design pattern</a>. The engine core (<span class="tt">src/engine/</span>) provides all necessary stuff to agglomerate logic and data to create any kind project. The Core class is the entry point of the framework, it allows to manipulate entities and systems through schedulers. All features (graphics, physics, sound, etc.) are implemented as <b>plugins</b> that you register into the engine core.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
 Available plugins</h3>
 <p>Here is a list of available plugins:</p>
 <table class="markdownTable">
@@ -206,7 +214,7 @@ Available plugins</h3>
 </table>
 <dl class="section warning"><dt>Warning</dt><dd>Those plugins may not be up to date as they are not updated automatically. To check current plugins, you can check <a href="https://github.com/EngineSquared/EngineSquared/tree/main/src/plugin">plugins folder</a>.</dd></dl>
 <hr  />
-<h3 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
 How a minimal program looks</h3>
 <p>Here is a very basic example that can be useful to understand the pattern before contributing:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="Engine_8hpp.html">Engine.hpp</a>&quot;</span></div>
@@ -244,7 +252,7 @@ How a minimal program looks</h3>
 <div class="ttc" id="astructNameComponent_html"><div class="ttname"><a href="structNameComponent.html">NameComponent</a></div><div class="ttdef"><b>Definition</b> main.cpp:8</div></div>
 </div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>This example may not be up to date as it's not updated automatically. For concrete working examples, you can check <a href="https://github.com/EngineSquared/EngineSquared/tree/main/examples">examples folder</a>.</dd></dl>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
 Where to go next</h2>
 <ul>
 <li>📚 <a href="https://github.com/EngineSquared/EngineSquared/wiki">Full documentation &amp; wiki</a>: Everything you need to know to understand the project.</li>
@@ -262,11 +270,11 @@ Where to go next</h2>
 <li>👥 <a href="https://discord.gg/QM4faSYZqQ">Discord</a>: If you want to join the community.</li>
 </ul>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md62"></a>
 Interested ?</h2>
 <p>You can start discovering the engine by contributing to it. Take a look at <a href="https://github.com/EngineSquared/EngineSquared/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-first-issue">good first issues</a> and check <a href="https://github.com/EngineSquared/EngineSquared/wiki/Contributing">how to contribute</a>. Don't hesitate to join the <a href="https://discord.gg/QM4faSYZqQ">Discord</a> too.</p>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md62"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md64"></a>
 Troubleshooting</h2>
 <p>For now there is no troubleshooting found. If you encounter a problem, please report it by opening a <a href="https://github.com/EngineSquared/EngineSquared/issues/new?template=question.md">question issue</a> 🙏 <em>(before doing that, check the documentation about <a href="https://github.com/EngineSquared/EngineSquared/wiki/Contributing#creating-an-issue">how to create an issue</a>)</em> </p>
 </div></div><!-- PageDoc -->
