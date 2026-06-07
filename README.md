@@ -37,11 +37,9 @@ Engine² lets every process, planification, and evolution be visible and underst
 <a href="https://github.com/EngineSquared/EngineSquared/tree/main/src/plugin/default-pipeline/examples/GraphicMaterialUsage"><img src="https://github.com/EngineSquared/EngineSquared/blob/main/docs/images/Material.png?raw=true" width="40%" alt="Material"></a> <br />
 </div>
 
-
 ## Hello World
 
 You can find basic examples in the `examples/` (in `root`, `src/engine/examples` and `examples` folder in any plugin folder in `src/plugin/`) folders throughout the project. For a "hello world" example, check [this one](https://github.com/EngineSquared/EngineSquared/tree/main/src/engine/examples/BasicCoreUsage).
-
 
 ---
 
@@ -59,16 +57,30 @@ Make sure the following tools are installed before proceeding:
 
 ---
 
-## Clone the repository
+## Create your project
+
+### Save the registry
+
+```sh
+xrepo add-repo engine-squared-xmake-repo https://github.com/EngineSquared/xrepo
+```
+
+### Use the project template
+
+```sh
+xmake create -l c++ -t engine-squared YOUR_PROJECT_NAME
+```
+
+## Check examples
+
+### Clone the repository
 
 ```bash
 git clone https://github.com/EngineSquared/EngineSquared.git
 cd EngineSquared
 ```
 
----
-
-## Configure and build
+### Configure and build
 
 ```bash
 # Configure (downloads dependencies automatically)
@@ -82,9 +94,7 @@ xmake build -y
 > **Windows only**
 > xmake will automatically pull the MSVC toolchain, so you don't need to have it already installed on your machine.
 
----
-
-## Run a minimal example
+### Run a minimal example
 
 Build and run the `BasicCoreUsage` example to confirm everything works:
 
