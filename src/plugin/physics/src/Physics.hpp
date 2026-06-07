@@ -65,13 +65,13 @@
 #include "utils/BiMap.hpp"
 #include "utils/BroadPhaseLayerImpl.hpp"
 #include "utils/BroadPhaseLayers.hpp"
+#include "utils/CastRay.hpp"
 #include "utils/ContactListenerImpl.hpp"
+#include "utils/HitRecord.hpp"
 #include "utils/JoltConversions.hpp"
 #include "utils/Layers.hpp"
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
-#include "utils/HitRecord.hpp"
-#include "utils/CastRay.hpp"
 #include "utils/Ray.hpp"
 
 // Plugin
