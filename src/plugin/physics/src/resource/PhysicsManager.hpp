@@ -49,6 +49,7 @@ class PhysicsManager {
      * @return JPH::PhysicsSystem&
      */
     inline JPH::PhysicsSystem &GetPhysicsSystem() { return *_physicsSystem; }
+    inline const JPH::PhysicsSystem &GetPhysicsSystem() const { return *_physicsSystem; }
 
     /**
      * @brief Get a reference to the body interface for manipulating bodies.

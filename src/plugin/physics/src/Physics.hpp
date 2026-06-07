@@ -70,6 +70,9 @@
 #include "utils/Layers.hpp"
 #include "utils/ObjectLayerPairFilterImpl.hpp"
 #include "utils/ObjectVsBroadPhaseLayerFilterImpl.hpp"
+#include "utils/HitRecord.hpp"
+#include "utils/CastRay.hpp"
+#include "utils/Ray.hpp"
 
 // Plugin
 #include "plugin/PluginPhysics.hpp"
