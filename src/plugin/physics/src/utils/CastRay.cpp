@@ -8,7 +8,8 @@
 namespace Physics::Utils {
 std::optional<HitRecord> CastRay(const Engine::Core &core, const Ray &ray, float maxDistance)
 {
-
+    if (maxDistance <= 0)
+        return std::nullopt;
     const glm::vec3 rayDisplacement = ray.direction * maxDistance;
 
     JPH::RRayCast jphRay{
