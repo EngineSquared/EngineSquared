@@ -23,7 +23,7 @@ std::optional<HitRecord> CastRay(const Engine::Core &core, const Ray &ray, float
         return std::nullopt;
     }
     const auto &physicsBodyToEntityMap = core.GetResource<Resource::BodyEntityMap>();
-    HitRecord hitRecord{.t = hit.mFraction, .hittedEntityId = physicsBodyToEntityMap.Get(hit.mBodyID)};
+    HitRecord hitRecord{.t = hit.mFraction, .hitEntityId = physicsBodyToEntityMap.Get(hit.mBodyID)};
     return hitRecord;
 }
 } // namespace Physics::Utils

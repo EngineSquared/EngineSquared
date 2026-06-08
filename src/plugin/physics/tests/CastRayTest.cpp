@@ -53,7 +53,7 @@ TEST(CastRay, Hit)
             core, Physics::Utils::Ray{glm::vec3(-2.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f)}, 4.0f);
 
         ASSERT_TRUE(hit.has_value());
-        EXPECT_EQ(hit->hittedEntityId, entity.Id());
+        EXPECT_EQ(hit->hitEntityId, entity.Id());
         EXPECT_NEAR(hit->t, 0.375f, 0.05f);
     });
 

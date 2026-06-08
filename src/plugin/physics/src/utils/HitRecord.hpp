@@ -4,6 +4,6 @@
 namespace Physics {
 struct HitRecord {
     float t;
-    Engine::EntityId hittedEntityId;
+    Engine::EntityId hitEntityId;
 };
 } // namespace Physics
