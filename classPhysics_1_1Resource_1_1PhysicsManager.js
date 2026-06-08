@@ -9,6 +9,7 @@ var classPhysics_1_1Resource_1_1PhysicsManager =
     [ "GetContactListener", "classPhysics_1_1Resource_1_1PhysicsManager.html#a5218b31768c0e98b1eeadbe74fe8b89f", null ],
     [ "GetJobSystem", "classPhysics_1_1Resource_1_1PhysicsManager.html#a27640a451f65b2ce0eb9e558fac4500b", null ],
     [ "GetPhysicsSystem", "classPhysics_1_1Resource_1_1PhysicsManager.html#a72908afd09166411413362426a5ce745", null ],
+    [ "GetPhysicsSystem", "classPhysics_1_1Resource_1_1PhysicsManager.html#a78144c4e2fff750472e4734ef63a1779", null ],
     [ "GetTempAllocator", "classPhysics_1_1Resource_1_1PhysicsManager.html#a10eb94f504e9e9ca488a81990ad7bf63", null ],
     [ "Init", "classPhysics_1_1Resource_1_1PhysicsManager.html#a27a198e8d5e02f700769f9dc9218a89d", null ],
     [ "IsPhysicsActivated", "classPhysics_1_1Resource_1_1PhysicsManager.html#a79f667aea673310b4cafea02d2af96f9", null ],

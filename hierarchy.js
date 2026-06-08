@@ -226,6 +226,7 @@ var hierarchy =
     [ "std::hash&lt; Engine::EntityId &gt;", "structstd_1_1hash_3_01Engine_1_1EntityId_01_4.html", null ],
     [ "History", "structHistory.html", null ],
     [ "HistoryStorage", "structHistoryStorage.html", null ],
+    [ "Physics::HitRecord", "structPhysics_1_1HitRecord.html", null ],
     [ "CameraMovement::Utils::ICameraBehavior", "classCameraMovement_1_1Utils_1_1ICameraBehavior.html", [
       [ "CameraMovement::Utils::DefaultBehavior", "classCameraMovement_1_1Utils_1_1DefaultBehavior.html", null ],
       [ "CameraMovement::Utils::DontMoveBehavior", "classCameraMovement_1_1Utils_1_1DontMoveBehavior.html", null ],
@@ -356,6 +357,7 @@ var hierarchy =
     [ "Object::Component::PointLight", "structObject_1_1Component_1_1PointLight.html", null ],
     [ "DefaultPipeline::Resource::PointLightsBuffer::PointLightsData", "structDefaultPipeline_1_1Resource_1_1PointLightsBuffer_1_1PointLightsData.html", null ],
     [ "Graphic::Resource::Queue", "classGraphic_1_1Resource_1_1Queue.html", null ],
+    [ "Physics::Utils::Ray", "structPhysics_1_1Utils_1_1Ray.html", null ],
     [ "Relationship::Component::Relationship", "structRelationship_1_1Component_1_1Relationship.html", null ],
     [ "Graphic::Resource::RenderGraph", "classGraphic_1_1Resource_1_1RenderGraph.html", null ],
     [ "Rml::RenderInterface", null, [

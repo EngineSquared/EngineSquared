@@ -306,9 +306,11 @@ var annotated_dup =
         [ "ContactCallback", "classPhysics_1_1Utils_1_1ContactCallback.html", "classPhysics_1_1Utils_1_1ContactCallback" ],
         [ "ContactListenerImpl", "classPhysics_1_1Utils_1_1ContactListenerImpl.html", "classPhysics_1_1Utils_1_1ContactListenerImpl" ],
         [ "ObjectLayerPairFilterImpl", "classPhysics_1_1Utils_1_1ObjectLayerPairFilterImpl.html", "classPhysics_1_1Utils_1_1ObjectLayerPairFilterImpl" ],
-        [ "ObjectVsBroadPhaseLayerFilterImpl", "classPhysics_1_1Utils_1_1ObjectVsBroadPhaseLayerFilterImpl.html", "classPhysics_1_1Utils_1_1ObjectVsBroadPhaseLayerFilterImpl" ]
+        [ "ObjectVsBroadPhaseLayerFilterImpl", "classPhysics_1_1Utils_1_1ObjectVsBroadPhaseLayerFilterImpl.html", "classPhysics_1_1Utils_1_1ObjectVsBroadPhaseLayerFilterImpl" ],
+        [ "Ray", "structPhysics_1_1Utils_1_1Ray.html", "structPhysics_1_1Utils_1_1Ray" ]
       ] ],
-      [ "Plugin", "classPhysics_1_1Plugin.html", "classPhysics_1_1Plugin" ]
+      [ "Plugin", "classPhysics_1_1Plugin.html", "classPhysics_1_1Plugin" ],
+      [ "HitRecord", "structPhysics_1_1HitRecord.html", "structPhysics_1_1HitRecord" ]
     ] ],
     [ "Relationship", "namespaceRelationship.html", [
       [ "Component", "namespaceRelationship_1_1Component.html", [

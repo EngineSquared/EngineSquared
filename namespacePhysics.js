@@ -7,5 +7,6 @@ var namespacePhysics =
     [ "Resource", "namespacePhysics_1_1Resource.html", "namespacePhysics_1_1Resource" ],
     [ "System", "namespacePhysics_1_1System.html", "namespacePhysics_1_1System" ],
     [ "Utils", "namespacePhysics_1_1Utils.html", "namespacePhysics_1_1Utils" ],
-    [ "Plugin", "classPhysics_1_1Plugin.html", "classPhysics_1_1Plugin" ]
+    [ "Plugin", "classPhysics_1_1Plugin.html", "classPhysics_1_1Plugin" ],
+    [ "HitRecord", "structPhysics_1_1HitRecord.html", "structPhysics_1_1HitRecord" ]
 ];

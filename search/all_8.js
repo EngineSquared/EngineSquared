@@ -42,6 +42,9 @@ var searchData=
   ['history_39',['History',['../structHistory.html',1,'']]],
   ['history_40',['history',['../structHistoryStorage.html#a80dfdaa3d266435780b323363e570b58',1,'HistoryStorage']]],
   ['historystorage_41',['HistoryStorage',['../structHistoryStorage.html',1,'']]],
-  ['hours_42',['hours',['../structExample_1_1Resource_1_1DirectorResource.html#aa459c8997286cb629e973ad957bec26b',1,'Example::Resource::DirectorResource::hours'],['../structExample_1_1Component_1_1WorkTime.html#a6d69fd962ece4c62893ccea0dc1d3e3e',1,'Example::Component::WorkTime::hours']]],
-  ['how_20a_20minimal_20program_20looks_43',['How a minimal program looks',['../index.html#autotoc_md58',1,'']]]
+  ['hitentityid_42',['hitEntityId',['../structPhysics_1_1HitRecord.html#acf1d4787a2721ddc61ca9e427720519d',1,'Physics::HitRecord']]],
+  ['hitrecord_43',['HitRecord',['../structPhysics_1_1HitRecord.html',1,'Physics']]],
+  ['hitrecord_2ehpp_44',['HitRecord.hpp',['../HitRecord_8hpp.html',1,'']]],
+  ['hours_45',['hours',['../structExample_1_1Resource_1_1DirectorResource.html#aa459c8997286cb629e973ad957bec26b',1,'Example::Resource::DirectorResource::hours'],['../structExample_1_1Component_1_1WorkTime.html#a6d69fd962ece4c62893ccea0dc1d3e3e',1,'Example::Component::WorkTime::hours']]],
+  ['how_20a_20minimal_20program_20looks_46',['How a minimal program looks',['../index.html#autotoc_md58',1,'']]]
 ];

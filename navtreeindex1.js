@@ -1,5 +1,11 @@
 var NAVTREEINDEX1 =
 {
+"CreateInstance_8hpp.html":[6,0,1,1,3,0,3,1,13],
+"CreateInstance_8hpp_source.html":[6,0,1,1,3,0,3,1,13],
+"CreateLights_8cpp.html":[6,0,1,1,1,1,3,1,8],
+"CreateLights_8hpp.html":[6,0,1,1,1,1,3,1,9],
+"CreateLights_8hpp_source.html":[6,0,1,1,1,1,3,1,9],
+"CreatePointLights_8cpp.html":[6,0,1,1,1,1,3,1,10],
 "CreatePointLights_8hpp.html":[6,0,1,1,1,1,3,1,11],
 "CreatePointLights_8hpp_source.html":[6,0,1,1,1,1,3,1,11],
 "CreateQueue_8cpp.html":[6,0,1,1,3,0,3,1,14],
@@ -188,6 +194,8 @@ var NAVTREEINDEX1 =
 "Graphic_8hpp_source.html":[6,0,1,1,3,0,5],
 "HasChanged_8hpp.html":[6,0,1,2,2,0,1],
 "HasChanged_8hpp_source.html":[6,0,1,2,2,0,1],
+"HitRecord_8hpp.html":[6,0,1,1,7,1,7,8],
+"HitRecord_8hpp_source.html":[6,0,1,1,7,1,7,8],
 "IBindGroupLayoutEntry_8hpp.html":[6,0,1,1,3,0,4,0,5],
 "IBindGroupLayoutEntry_8hpp_source.html":[6,0,1,1,3,0,4,0,5],
 "IPlugin_8hpp.html":[6,0,1,0,1,3,3],
@@ -239,15 +247,7 @@ var NAVTREEINDEX1 =
 "JellyCubeGenerator_8cpp.html":[6,0,1,1,6,0,4,10],
 "JellyCubeGenerator_8hpp.html":[6,0,1,1,6,0,4,11],
 "JellyCubeGenerator_8hpp_source.html":[6,0,1,1,6,0,4,11],
-"JoltConversions_8hpp.html":[6,0,1,1,7,1,7,6],
-"JoltConversions_8hpp_source.html":[6,0,1,1,7,1,7,6],
-"Layers_8hpp.html":[6,0,1,1,7,1,7,7],
-"Layers_8hpp_source.html":[6,0,1,1,7,1,7,7],
-"Lights_8hpp.html":[6,0,1,1,1,1,4,3],
-"Lights_8hpp_source.html":[6,0,1,1,1,1,4,3],
-"Limits_8hpp.html":[6,0,1,1,3,0,2,12],
-"Limits_8hpp_source.html":[6,0,1,1,3,0,2,12],
-"LoadDocumentTest_8cpp.html":[6,0,1,1,10,1,1],
-"LoadDocumentTest_8cpp.html#a2271f4ed20ec8541962c46eec4737cff":[6,0,1,1,10,1,1,5],
-"LoadDocumentTest_8cpp.html#a2e9d9c4aa2cff73fa34b85c552adcac1":[6,0,1,1,10,1,1,4]
+"JoltConversions_8hpp.html":[6,0,1,1,7,1,7,9],
+"JoltConversions_8hpp_source.html":[6,0,1,1,7,1,7,9],
+"Layers_8hpp.html":[6,0,1,1,7,1,7,10]
 };

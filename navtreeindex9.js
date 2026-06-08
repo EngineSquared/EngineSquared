@@ -1,5 +1,15 @@
 var NAVTREEINDEX9 =
 {
+"classGraphic_1_1Exception_1_1UnknownFileError.html":[5,0,9,0,16],
+"classGraphic_1_1Exception_1_1UnknownFormatType.html":[3,0,7,0,17],
+"classGraphic_1_1Exception_1_1UnknownFormatType.html":[5,0,9,0,17],
+"classGraphic_1_1Exception_1_1UnsetAttributeTextureDescriptor.html":[3,0,7,0,18],
+"classGraphic_1_1Exception_1_1UnsetAttributeTextureDescriptor.html":[5,0,9,0,18],
+"classGraphic_1_1Exception_1_1UnsupportedTextureFormatError.html":[3,0,7,0,19],
+"classGraphic_1_1Exception_1_1UnsupportedTextureFormatError.html":[5,0,9,0,19],
+"classGraphic_1_1Exception_1_1UpdateBufferError.html":[3,0,7,0,20],
+"classGraphic_1_1Exception_1_1UpdateBufferError.html":[5,0,9,0,20],
+"classGraphic_1_1Exception_1_1VertexAttributeOverlappingError.html":[3,0,7,0,21],
 "classGraphic_1_1Exception_1_1VertexAttributeOverlappingError.html":[5,0,9,0,21],
 "classGraphic_1_1Plugin.html":[3,0,7,5],
 "classGraphic_1_1Plugin.html":[5,0,9,4],
@@ -239,15 +249,5 @@ var NAVTREEINDEX9 =
 "classGraphic_1_1Resource_1_1Queue.html#abcc3211c18025fd8c0141ce945a1ddb1":[5,0,9,1,15,5],
 "classGraphic_1_1Resource_1_1Queue.html#ac5043d55400c429c2dc0767348e6eb75":[3,0,7,1,15,9],
 "classGraphic_1_1Resource_1_1Queue.html#ac5043d55400c429c2dc0767348e6eb75":[5,0,9,1,15,9],
-"classGraphic_1_1Resource_1_1Queue.html#af4defc7f608508702b1618b29c09886f":[3,0,7,1,15,7],
-"classGraphic_1_1Resource_1_1Queue.html#af4defc7f608508702b1618b29c09886f":[5,0,9,1,15,7],
-"classGraphic_1_1Resource_1_1Queue.html#af562b44eb5d51181b0b524f34f74c578":[3,0,7,1,15,1],
-"classGraphic_1_1Resource_1_1Queue.html#af562b44eb5d51181b0b524f34f74c578":[5,0,9,1,15,1],
-"classGraphic_1_1Resource_1_1Queue.html#afb1c21c41fdeb400e9a05d6836abe00e":[3,0,7,1,15,10],
-"classGraphic_1_1Resource_1_1Queue.html#afb1c21c41fdeb400e9a05d6836abe00e":[5,0,9,1,15,10],
-"classGraphic_1_1Resource_1_1RenderGraph.html":[3,0,7,1,16],
-"classGraphic_1_1Resource_1_1RenderGraph.html":[5,0,9,1,16],
-"classGraphic_1_1Resource_1_1RenderGraph.html#a1c6a771ad917edbd1c4f48fadcf014e8":[3,0,7,1,16,10],
-"classGraphic_1_1Resource_1_1RenderGraph.html#a1c6a771ad917edbd1c4f48fadcf014e8":[5,0,9,1,16,10],
-"classGraphic_1_1Resource_1_1RenderGraph.html#a2637e3891d3fe15f9f126583f07b775c":[3,0,7,1,16,12]
+"classGraphic_1_1Resource_1_1Queue.html#af4defc7f608508702b1618b29c09886f":[3,0,7,1,15,7]
 };

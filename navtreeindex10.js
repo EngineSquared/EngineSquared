@@ -1,5 +1,15 @@
 var NAVTREEINDEX10 =
 {
+"classGraphic_1_1Resource_1_1Queue.html#af4defc7f608508702b1618b29c09886f":[5,0,9,1,15,7],
+"classGraphic_1_1Resource_1_1Queue.html#af562b44eb5d51181b0b524f34f74c578":[3,0,7,1,15,1],
+"classGraphic_1_1Resource_1_1Queue.html#af562b44eb5d51181b0b524f34f74c578":[5,0,9,1,15,1],
+"classGraphic_1_1Resource_1_1Queue.html#afb1c21c41fdeb400e9a05d6836abe00e":[3,0,7,1,15,10],
+"classGraphic_1_1Resource_1_1Queue.html#afb1c21c41fdeb400e9a05d6836abe00e":[5,0,9,1,15,10],
+"classGraphic_1_1Resource_1_1RenderGraph.html":[3,0,7,1,16],
+"classGraphic_1_1Resource_1_1RenderGraph.html":[5,0,9,1,16],
+"classGraphic_1_1Resource_1_1RenderGraph.html#a1c6a771ad917edbd1c4f48fadcf014e8":[3,0,7,1,16,10],
+"classGraphic_1_1Resource_1_1RenderGraph.html#a1c6a771ad917edbd1c4f48fadcf014e8":[5,0,9,1,16,10],
+"classGraphic_1_1Resource_1_1RenderGraph.html#a2637e3891d3fe15f9f126583f07b775c":[3,0,7,1,16,12],
 "classGraphic_1_1Resource_1_1RenderGraph.html#a2637e3891d3fe15f9f126583f07b775c":[5,0,9,1,16,12],
 "classGraphic_1_1Resource_1_1RenderGraph.html#a28c234bc8ee405bba9f95d682b614df6":[3,0,7,1,16,2],
 "classGraphic_1_1Resource_1_1RenderGraph.html#a28c234bc8ee405bba9f95d682b614df6":[5,0,9,1,16,2],
@@ -239,15 +249,5 @@ var NAVTREEINDEX10 =
 "classGraphic_1_1Resource_1_1TextureView.html#abbd972437fb1cf3683249dadfb7b3e49":[5,0,9,1,23,7],
 "classGraphic_1_1Resource_1_1TextureView.html#af6044ea33563d92f324c781ff09e2780":[3,0,7,1,23,9],
 "classGraphic_1_1Resource_1_1TextureView.html#af6044ea33563d92f324c781ff09e2780":[5,0,9,1,23,9],
-"classGraphic_1_1Tests_1_1Exception_1_1TestGraphicalError.html":[3,0,7,4,1,0],
-"classGraphic_1_1Tests_1_1Exception_1_1TestGraphicalError.html":[5,0,9,3,0,0],
-"classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html":[3,0,7,3,3],
-"classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html":[5,0,9,2,3],
-"classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#a12670e2577f1ae689afc58929b83ad57":[3,0,7,3,3,2],
-"classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#a12670e2577f1ae689afc58929b83ad57":[5,0,9,2,3,2],
-"classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#a2e5e93be3d30de160a10335f9cb9c387":[3,0,7,3,3,10],
-"classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#a2e5e93be3d30de160a10335f9cb9c387":[5,0,9,2,3,10],
-"classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#a4de4c59ed2dba39b27bc06dff6028221":[3,0,7,3,3,3],
-"classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#a4de4c59ed2dba39b27bc06dff6028221":[5,0,9,2,3,3],
-"classGraphic_1_1Utils_1_1ABindGroupLayoutEntry.html#a5108f705054c1b6f2c4fd95f352fd0e9":[3,0,7,3,3,6]
+"classGraphic_1_1Tests_1_1Exception_1_1TestGraphicalError.html":[3,0,7,4,1,0]
 };

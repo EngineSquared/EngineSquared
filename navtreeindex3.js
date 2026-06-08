@@ -1,5 +1,15 @@
 var NAVTREEINDEX3 =
 {
+"ReleaseAdapter_8cpp.html":[6,0,1,1,3,0,3,1,18],
+"ReleaseAdapter_8hpp.html":[6,0,1,1,3,0,3,1,19],
+"ReleaseAdapter_8hpp_source.html":[6,0,1,1,3,0,3,1,19],
+"ReleaseBindingGroup_8cpp.html":[6,0,1,1,3,0,3,4,0],
+"ReleaseBindingGroup_8hpp.html":[6,0,1,1,3,0,3,4,1],
+"ReleaseBindingGroup_8hpp_source.html":[6,0,1,1,3,0,3,4,1],
+"ReleaseContext_8cpp.html":[6,0,1,1,3,0,3,4,2],
+"ReleaseContext_8hpp.html":[6,0,1,1,3,0,3,4,3],
+"ReleaseContext_8hpp_source.html":[6,0,1,1,3,0,3,4,3],
+"ReleaseGPUBuffer_8cpp.html":[6,0,1,1,3,0,3,4,4],
 "ReleaseGPUBuffer_8hpp.html":[6,0,1,1,3,0,3,4,5],
 "ReleaseGPUBuffer_8hpp_source.html":[6,0,1,1,3,0,3,4,5],
 "ReleaseInstance_8cpp.html":[6,0,1,1,3,0,3,1,20],
@@ -239,15 +249,5 @@ var NAVTREEINDEX3 =
 "TextureViewContainer_8hpp_source.html":[6,0,1,1,3,0,2,27],
 "TextureView_8hpp.html":[6,0,1,1,3,0,2,26],
 "TextureView_8hpp_source.html":[6,0,1,1,3,0,2,26],
-"Texture_8hpp.html":[6,0,1,1,3,0,2,24],
-"Texture_8hpp_source.html":[6,0,1,1,3,0,2,24],
-"ThrowErrorIfGraphicalErrorHappened_8cpp.html":[6,0,1,1,3,1,0,3],
-"ThrowErrorIfGraphicalErrorHappened_8hpp.html":[6,0,1,1,3,1,0,4],
-"ThrowErrorIfGraphicalErrorHappened_8hpp_source.html":[6,0,1,1,3,1,0,4],
-"Throwing_01an_01exception-example.html":[7,1],
-"Time_8cpp.html":[6,0,1,0,1,4,0],
-"Time_8hpp.html":[6,0,1,0,1,4,1],
-"Time_8hpp_source.html":[6,0,1,0,1,4,1],
-"Tools_8hpp.html":[6,0,1,2,2,0,2],
-"Tools_8hpp_source.html":[6,0,1,2,2,0,2]
+"Texture_8hpp.html":[6,0,1,1,3,0,2,24]
 };
