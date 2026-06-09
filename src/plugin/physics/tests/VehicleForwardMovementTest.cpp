@@ -10,10 +10,10 @@
 #include "component/VehicleInternal.hpp"
 #include "component/WheelSettings.hpp"
 #include "core/Core.hpp"
-#include "helper/CreateShape.hpp"
 #include "plugin/PluginPhysics.hpp"
 #include "resource/Time.hpp"
 #include "utils/ShapeGenerator.hpp"
+#include "utils/helper/CreateShape.hpp"
 
 #include <cmath>
 #include <glm/glm.hpp>
