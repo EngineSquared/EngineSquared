@@ -6,7 +6,7 @@ int main(void)
 
     core.AddPlugins<PluginNamespace::Plugin>();
 
-    core.RegisterSystem([](Engine::Core &core) { Log::Info("Hello World"); });
+    core.RegisterSystem([](Engine::Core &) { Log::Info("Hello World"); });
 
     core.RunSystems();
 
