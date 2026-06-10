@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 rm -rf ./src/plugin/template/
 xmake plugin --create
 xmake f --ExampleName=y
