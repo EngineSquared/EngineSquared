@@ -2,5 +2,5 @@
 
 void PluginNamespace::Plugin::Bind()
 {
-    
+    // empty
 }
