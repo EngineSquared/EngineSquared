@@ -9,11 +9,11 @@
 #include "component/VehicleController.hpp"
 #include "component/VehicleInternal.hpp"
 #include "core/Core.hpp"
-#include "helper/CreateShape.hpp"
 #include "plugin/PluginPhysics.hpp"
 #include "resource/Time.hpp"
 #include "scheduler/Startup.hpp"
 #include "utils/ShapeGenerator.hpp"
+#include "utils/helper/CreateShape.hpp"
 
 #include <glm/glm.hpp>
 

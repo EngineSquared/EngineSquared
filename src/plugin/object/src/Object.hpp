@@ -18,7 +18,7 @@
 #include "resource/Shape.hpp"
 
 // Helpers
-#include "helper/CreateShape.hpp"
+#include "utils/helper/CreateShape.hpp"
 
 // Utils
 #include "utils/ShapeGenerator.hpp"
