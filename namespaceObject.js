@@ -1,7 +1,6 @@
 var namespaceObject =
 [
     [ "Component", "namespaceObject_1_1Component.html", "namespaceObject_1_1Component" ],
-    [ "Helper", "namespaceObject_1_1Helper.html", "namespaceObject_1_1Helper" ],
     [ "Resource", "namespaceObject_1_1Resource.html", "namespaceObject_1_1Resource" ],
     [ "Utils", "namespaceObject_1_1Utils.html", [
       [ "GenerateBoxMesh", "namespaceObject_1_1Utils.html#a627cf35890ad9e765e97a19820ef4f34", null ],
@@ -18,6 +17,7 @@ var namespaceObject =
       [ "RecalculateNormals", "namespaceObject_1_1Utils.html#a7477219f06796f6c77928590f05c00ad", null ],
       [ "ValidateMeshArraySizes", "namespaceObject_1_1Utils.html#a77f0e971a1f062fe50376f0948bfe668", null ]
     ] ],
+    [ "Helper", "namespaceObject_1_1Helper.html", "namespaceObject_1_1Helper" ],
     [ "OBJLoaderError", "classObject_1_1OBJLoaderError.html", "classObject_1_1OBJLoaderError" ],
     [ "ResourceManagerError", "classObject_1_1ResourceManagerError.html", "classObject_1_1ResourceManagerError" ],
     [ "OBJLoader", "classObject_1_1OBJLoader.html", "classObject_1_1OBJLoader" ]

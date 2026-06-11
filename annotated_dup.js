@@ -225,6 +225,10 @@ var annotated_dup =
         [ "PointLight", "structObject_1_1Component_1_1PointLight.html", "structObject_1_1Component_1_1PointLight" ],
         [ "Transform", "structObject_1_1Component_1_1Transform.html", "structObject_1_1Component_1_1Transform" ]
       ] ],
+      [ "Resource", "namespaceObject_1_1Resource.html", [
+        [ "ResourceManager", "classObject_1_1Resource_1_1ResourceManager.html", "classObject_1_1Resource_1_1ResourceManager" ],
+        [ "Shape", "structObject_1_1Resource_1_1Shape.html", "structObject_1_1Resource_1_1Shape" ]
+      ] ],
       [ "Helper", "namespaceObject_1_1Helper.html", [
         [ "CreateCubeInfo", "structObject_1_1Helper_1_1CreateCubeInfo.html", "structObject_1_1Helper_1_1CreateCubeInfo" ],
         [ "CreateSphereInfo", "structObject_1_1Helper_1_1CreateSphereInfo.html", "structObject_1_1Helper_1_1CreateSphereInfo" ],
@@ -234,10 +238,6 @@ var annotated_dup =
         [ "CreateClothInfo", "structObject_1_1Helper_1_1CreateClothInfo.html", "structObject_1_1Helper_1_1CreateClothInfo" ],
         [ "CreateRopeInfo", "structObject_1_1Helper_1_1CreateRopeInfo.html", "structObject_1_1Helper_1_1CreateRopeInfo" ],
         [ "CreateJellyCubeInfo", "structObject_1_1Helper_1_1CreateJellyCubeInfo.html", "structObject_1_1Helper_1_1CreateJellyCubeInfo" ]
-      ] ],
-      [ "Resource", "namespaceObject_1_1Resource.html", [
-        [ "ResourceManager", "classObject_1_1Resource_1_1ResourceManager.html", "classObject_1_1Resource_1_1ResourceManager" ],
-        [ "Shape", "structObject_1_1Resource_1_1Shape.html", "structObject_1_1Resource_1_1Shape" ]
       ] ],
       [ "OBJLoaderError", "classObject_1_1OBJLoaderError.html", "classObject_1_1OBJLoaderError" ],
       [ "ResourceManagerError", "classObject_1_1ResourceManagerError.html", "classObject_1_1ResourceManagerError" ],
