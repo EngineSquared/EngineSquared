@@ -5,7 +5,7 @@ var classRmlui_1_1Utils_1_1RenderInterface =
     [ "DrawCommand", "structRmlui_1_1Utils_1_1RenderInterface_1_1DrawCommand.html", "structRmlui_1_1Utils_1_1RenderInterface_1_1DrawCommand" ],
     [ "RenderInterface", "classRmlui_1_1Utils_1_1RenderInterface.html#ace0038869b5fc74a7e337813a760ad2b", null ],
     [ "RenderInterface", "classRmlui_1_1Utils_1_1RenderInterface.html#a60b62cec0eae55c85bbbc469b5c670ed", null ],
-    [ "~RenderInterface", "classRmlui_1_1Utils_1_1RenderInterface.html#ae34a0d4a0e4d54b99a40793fb4342282", null ],
+    [ "~RenderInterface", "classRmlui_1_1Utils_1_1RenderInterface.html#a44dab0892766cb3264593cd6030e9bab", null ],
     [ "BeginFrame", "classRmlui_1_1Utils_1_1RenderInterface.html#abf35a751aa719bf4fb68b896d0e32ddc", null ],
     [ "CompileGeometry", "classRmlui_1_1Utils_1_1RenderInterface.html#a79392548f33b3a796ee5f2c87838b7bf", null ],
     [ "CreateTexture", "classRmlui_1_1Utils_1_1RenderInterface.html#a57c64cebf8d5e5445d47d097ed709902", null ],
