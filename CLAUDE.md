@@ -135,7 +135,7 @@ Pages worth reading in full when relevant: Contributing, Testing Policy, and "Gr
 
 A rustlings-style exercise track for the engine core, tracked by epic **#617**. Design, constraints and rejected options: ADR [`docs/decisions/01-learning-track.md`](docs/decisions/01-learning-track.md) — read it before changing the track or its integration points.
 
-- Ships as an installable xmake plugin, not a template: `xmake plugin --install github:EngineSquared/learn` then `xmake learn init`. Templates were rejected because `xmake create -t` cannot update a project after generation. Needs xmake 3.1.0+, above this repo's stated 3.0.x floor.
+- Ships as an installable xmake addon, not a template: `xmake addon --install github:EngineSquared/learn` then `xmake learn init`. `xmake plugin --install` is the deprecated alias of the same manager on 3.1.1. Templates were rejected because `xmake create -t` cannot update a project after generation. Needs at least xmake 3.1.0, above this repo's stated 3.0.x floor; #618 records the exact floor for the `addon` spelling.
 - Lives in the separate `EngineSquared/learn` repo (#619) so learners never clone the engine; the engine arrives as the `enginesquared` xrepo package with a `core_only` config (EngineSquared/xrepo#1).
 - This repo gains only an ADR (#637) and a README link (#638).
 - The tutor contract for AI assistants lives in `TUTOR.md` in the learn repo, referenced from `AGENTS.md` — not here, and not Claude-specific.
