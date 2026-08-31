@@ -2,7 +2,7 @@
 set -e
 
 rm -rf ./src/plugin/template/
-xmake plugin --create
+xmake scaffold --create
 xmake f --ExampleName=y
 xmake build ExampleName
 xmake run ExampleName
