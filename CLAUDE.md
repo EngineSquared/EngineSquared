@@ -46,7 +46,7 @@ An example dir gets a `.secondary` file when it needs external deps (raylib/sfml
 
 Docs: `xmake build_documentation [-o]` (doxygen, auto-installs; theme cloned into `docs/doxygen/doxygen-awesome-css`).
 
-Plugin scaffolding: `xmake plugin --create` copies `tools/xmake/plugins/template` into `src/plugin/template`; `xmake plugin --verify` checks every plugin has `xmake.lua`, only template-approved `src/` subdirectory names, and a `tests/main.cpp` if it has tests.
+Plugin scaffolding: `xmake scaffold --create` copies `tools/xmake/plugins/template` into `src/plugin/template`; `xmake scaffold --verify` checks every plugin has `xmake.lua`, only template-approved `src/` subdirectory names, and a `tests/main.cpp` if it has tests.
 
 ## Architecture
 
@@ -62,7 +62,7 @@ Layout: `src/engine` (core, target `EngineSquaredCore`), `src/plugin/<name>` (ta
 
 ### Plugin internals convention
 
-Inside `src/plugin/<name>/src/`, only these subdirectories are allowed (enforced by `xmake plugin --verify`, mirrored from the template): `component`, `system`, `resource`, `scheduler`, `event`, `exception`, `utils`, `plugin`, plus optional extras already present in the template. Namespaces mirror the folders: `Physics::Component`, `Physics::System`, `Physics::Resource`, `Physics::Utils`, `Physics::Exception`, and the plugin class is always `<Name>::Plugin` in `src/plugin/Plugin<Name>.hpp`.
+Inside `src/plugin/<name>/src/`, only these subdirectories are allowed (enforced by `xmake scaffold --verify`, mirrored from the template): `component`, `system`, `resource`, `scheduler`, `event`, `exception`, `utils`, `plugin`, plus optional extras already present in the template. Namespaces mirror the folders: `Physics::Component`, `Physics::System`, `Physics::Resource`, `Physics::Utils`, `Physics::Exception`, and the plugin class is always `<Name>::Plugin` in `src/plugin/Plugin<Name>.hpp`.
 
 Each plugin ships an umbrella header `src/<Name>.hpp` that includes its whole public surface, and usually a `src/<Name>.pch.hpp` wired via `set_pcxxheader`. Headers are exported with `add_headerfiles("src/(<dir>/*.hpp)")` and `add_includedirs("src", {public = true})`, so cross-plugin includes are path-relative to a plugin's `src/` (e.g. `#include "plugin/APlugin.hpp"`, `#include "component/RigidBody.hpp"`).
 
