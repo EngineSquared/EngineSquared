@@ -56,7 +56,7 @@ The addon is installed with:
 xmake addon --install github:EngineSquared/learn
 ```
 
-The learning track requires xmake 3.1.0 or newer because that version introduced the manager used by the installation command. xmake 3.1.1 spells it `xmake addon` and keeps `xmake plugin` as a deprecated alias that prints a warning, so the documented command is the `addon` one and [#618](https://github.com/EngineSquared/EngineSquared/issues/618) records which spellings the supported versions accept. The addon and curriculum live in the [EngineSquared/learn repository](https://github.com/EngineSquared/learn). Learning projects consume EngineSquared through the `enginesquared` xrepo package with its `core_only` configuration, so learners receive the core without cloning or building this repository.
+The learning track requires xmake 3.1.1 or newer. 3.1.0 reworked `xmake plugin --install`, but the pieces the track relies on — the `addon.lua` manifest, addon versions, `add_addons()` in a learner's project and the `xmake-addons.lock` it writes — arrived with `xmake addon` in 3.1.1. `xmake plugin` survives there as a deprecated alias that prints a warning and offers none of them, so the documented command is the `addon` one. [#618](https://github.com/EngineSquared/EngineSquared/issues/618) records the rest of the measurements behind that floor. The addon and curriculum live in the [EngineSquared/learn repository](https://github.com/EngineSquared/learn). Learning projects consume EngineSquared through the `enginesquared` xrepo package with its `core_only` configuration, so learners receive the core without cloning or building this repository.
 
 An xmake project template still ships in [EngineSquared/xrepo](https://github.com/EngineSquared/xrepo) as a thin fallback for people who prefer a scaffold; the project it generates only tells the learner to install the addon, so there is one source of truth for the curriculum.
 
@@ -85,7 +85,7 @@ The decision is confirmed when the learning track installs through xmake, initia
 ### An installable xmake addon in a separate learning repository
 
 * Good, because one xmake command installs the learning workflow.
-* Good, because addon updates can deliver new chapters and API-drift fixes after a learner initializes a project.
+* Good, because addon updates can deliver new chapters and API-drift fixes after a learner initializes a project. The learner's project declares the addon with `add_addons`, which pins it in `xmake-addons.lock` and makes `xmake addon --upgrade` the update path; a directly installed addon has to be removed before it can be installed again (#618).
 * Good, because EngineSquared remains a package dependency instead of becoming learner workspace content.
 * Neutral, because the curriculum and engine are maintained in separate repositories.
 * Bad, because this depends on xmake's addon distribution support and a compatible `core_only` package.
