@@ -50,7 +50,7 @@ for _, file in ipairs(os.files("tests/**.cpp")) do
             add_ldflags("--coverage")
         end
         set_languages("cxx20")
-        add_packages("entt", "gtest", "glm", "fmt", "spdlog")
+        add_packages("entt", "gtest", "fmt", "spdlog")
         add_links("gtest")
         add_tests("default")
 
