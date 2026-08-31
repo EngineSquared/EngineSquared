@@ -9,32 +9,37 @@ if is_plat("windows") then
     set_toolchains("@msvc")
 end
 
-add_requires(
-    "entt v3.15.0",
-    "gtest v1.17.0",
-    "spdlog v1.16.0",
-    "tinyobjloader v2.0.0rc13",
-    "glm 1.0.1",
-    "glfw 3.4",
-    "freetype 2.14.1",
-    "zlib 1.3.1",
-    "stb 2025.03.14",
-    "miniaudio 0.11.23",
-    "lodepng 2025.05.06",
-    "wgpu-native ^24.0.0",
-    "glfw3webgpu v1.3.0-alpha",
-    { debug = is_mode("debug") }
-)
-
-add_requires("joltphysics v5.4.0", { configs = { symbols = is_mode("debug") }, debug = is_mode("debug") })
-add_requires("fmt 12.1.0", { configs = { header_only = true }, debug = is_mode("debug") })
-add_requires("rmlui 6.2", { configs = { transform = true, font_effects = true }, debug = is_mode("debug") })
-
 set_languages("c++20")
 
+local CORE_ONLY_FLAG = "CoreOnly"
+option(CORE_ONLY_FLAG, {default = false, description = "Build the engine core and the utils only, without the plugins"})
+
+add_requires("entt v3.15.0",
+        "gtest v1.17.0",
+        "spdlog v1.16.0")
+add_requires("fmt 12.1.0", { configs = { header_only = true }, debug = is_mode("debug") })
+
 includes("src/engine/xmake.lua")
-includes("src/plugin/*/xmake.lua")
 includes("src/utils/*/xmake.lua")
+
+if not has_config(CORE_ONLY_FLAG) then
+    add_requires(
+        "tinyobjloader v2.0.0rc13",
+        "glm 1.0.1",
+        "glfw 3.4",
+        "freetype 2.14.1",
+        "zlib 1.3.1",
+        "stb 2025.03.14",
+        "miniaudio 0.11.23",
+        "lodepng 2025.05.06",
+        "wgpu-native ^24.0.0",
+        "glfw3webgpu v1.3.0-alpha",
+        { debug = is_mode("debug") }
+    )
+    add_requires("joltphysics v5.4.0", { configs = { symbols = is_mode("debug") }, debug = is_mode("debug") })
+    add_requires("rmlui 6.2", { configs = { transform = true, font_effects = true }, debug = is_mode("debug") })
+    includes("src/plugin/*/xmake.lua")
+end
 
 add_rules("plugin.vsxmake.autoupdate")
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
@@ -44,30 +49,35 @@ target("EngineSquared")
 
     add_deps("EngineSquaredCore")
 
-    add_deps("PluginInput")
-    add_deps("PluginObject")
-    add_deps("PluginScene")
-    add_deps("PluginSound")
-    add_deps("PluginWindow")
-    add_deps("PluginRelationship")
-    add_deps("PluginNativeScripting")
-    add_deps("PluginRenderingPipeline")
-    add_deps("PluginGraphic")
-    add_deps("UtilsTools")
-    add_deps("PluginPhysics")
-    add_deps("PluginCameraMovement")
-    add_deps("UtilsLog")
-    add_deps("PluginEvent")
-    add_deps("PluginDefaultPipeline")
-    add_deps("PluginRmlui")
+    if not has_config(CORE_ONLY_FLAG) then
+        add_deps("PluginInput")
+        add_deps("PluginObject")
+        add_deps("PluginScene")
+        add_deps("PluginSound")
+        add_deps("PluginWindow")
+        add_deps("PluginRelationship")
+        add_deps("PluginNativeScripting")
+        add_deps("PluginRenderingPipeline")
+        add_deps("PluginGraphic")
+        add_deps("PluginPhysics")
+        add_deps("PluginCameraMovement")
+        add_deps("PluginEvent")
+        add_deps("PluginDefaultPipeline")
+        add_deps("PluginRmlui")
 
-    add_packages("entt", "glfw", "glm", "spdlog", "tinyobjloader", "fmt", "stb", "joltphysics", "wgpu-native",
-                 "rmlui", "freetype", "zlib")
-    if is_plat("windows") then
-        add_links("freetype", "zlib")
-    else
-        add_links("freetype", "z")
+        add_packages("glfw", "glm", "tinyobjloader", "stb", "joltphysics", "wgpu-native",
+                    "rmlui", "freetype", "zlib")
+
+        if is_plat("windows") then
+            add_links("freetype", "zlib")
+        else
+            add_links("freetype", "z")
+        end
     end
+
+    add_deps("UtilsTools")
+    add_deps("UtilsLog")
+    add_packages("entt", "spdlog", "fmt")
 
     if is_mode("debug") then
         add_defines("DEBUG")
@@ -93,8 +103,12 @@ option(EXECUTABLE_EXAMPLES_FLAG, {default = false, description = "Enable executa
 
 local all_examples_folder = {}
 
-table.join2(all_examples_folder, os.dirs(path.join("src", "**", "examples", "*")))
-table.join2(all_examples_folder, os.dirs(path.join(".", "examples", "*")))
+if has_config(CORE_ONLY_FLAG) then
+    table.join2(all_examples_folder, os.dirs(path.join("src", "engine", "examples", "*")))
+else
+    table.join2(all_examples_folder, os.dirs(path.join("src", "**", "examples", "*")))
+    table.join2(all_examples_folder, os.dirs(path.join(".", "examples", "*")))
+end
 
 for _, dir in ipairs(all_examples_folder) do
     local name = path.basename(dir)

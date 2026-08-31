@@ -4,5 +4,5 @@ target("BasicCoreUsage")
 
     add_files("src/**.cpp")
     add_includedirs("$(projectdir)/src/")
-    add_packages("entt", "glm", "spdlog", "fmt")
+    add_packages("entt", "spdlog", "fmt")
     set_rundir("$(projectdir)")
